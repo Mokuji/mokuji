@@ -1,0 +1,30 @@
+{
+  "title": "Update component",
+  "description": "Zorgt voor update-functionaliteit van de verschillende componenten.",
+  "type": "manual",
+  "dbUpdates": true,
+  "versions": [
+    {
+      "version": "1.1",
+      "date": "2012-09-27",
+      "description": "Automatische installatie mogelijk gemaakt.",
+      "changes": [
+        {
+          "title": "Automtische installatie",
+          "description": "Sinds deze update is het mogelijk om het update component zichzelf te laten installeren."
+        }
+      ]
+    },
+    {
+      "version": "1.0",
+      "date": "2012-07-11",
+      "description": "Eerste versie van update-beheer.",
+      "changes": [
+        {
+          "title": "Update-beheer",
+          "description": "Aan het tuxion.cms is functionaliteit toegevoegd voor het beheren van updates. Deze updates bevatten meldingen van de belangrijkste wijzigingen die zijn gedaan."
+        }
+      ]
+    }
+  ]
+}

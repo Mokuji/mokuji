@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC   "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>jQuery comboselect Demo</title>
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js">
+    </script>
+
+    <script type="text/javascript" src="jquery.comboselect.js">
+    </script>
+
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $('#demo_select').comboselect({
+          sort: 'both',
+          addremall : true, 
+		      add_allbtn: ' &gt;&gt; ',
+          rem_allbtn: ' &lt;&lt; ',
+	        addbtn: ' v Add v ',
+ 		      rembtn: ' ^ Remove ^ ',
+	        cs_container: 'fieldset',
+          btn_container: 'div'
+        });
+      });
+    </script>
+    
+  </head>
+  <body>
+    <h1>jQuery Comboselect Demo</h1>
+    <h2>Multi-select without plugin</h2>
+    <form method="" id="one" action="">
+      <select id="first_select" multiple="multiple">
+        <option value="1" selected="selected">This is selected by default.</option>
+        <option value="2">This is not</option>
+        <option value="3" selected="selected">Another Selected</option>
+        <option value="4">Something else</option>
+        <option value="5">Soup, the good food.</option>
+      </select>
+    </form>
+
+    <h2>Multi-select with plugin - A combo select!</h2>
+    <form method="" id="two" action="">
+      <select id="demo_select" multiple="multiple">
+        <option value="1" selected="selected">This is selected by default.</option>
+        <option value="2">This is not</option>
+        <option value="3" selected="selected">Another Selected</option>
+        <option value="4">Something else</option>
+        <option value="5">Soup, the good food.</option>
+      </select>
+    </form>
+
+  </body>
+</html>

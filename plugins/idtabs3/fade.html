@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><title>fadeTabs</title>
+<meta http-equiv="Content-Language" content="en" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+* { margin:0; padding:0; }
+a { outline:none; }
+.fade { width:300px; margin:20px auto; background:#EEE; padding:12px; overflow:hidden; }
+.fade .tabs { float:left; overflow:auto; }
+.fade .tabs li {
+  float:left; list-style:none; border:1px solid #444; margin:1px; -moz-border-radius:2px; }
+.fade .tabs li a { 
+  display:block; float:left; width:16px; height:16px; text-align:center; color:#000;
+  text-decoration:none; font:bold 10pt Verdana; background:#CCC; border:1px solid #FFF; }
+.fade .tabs li:hover { margin:0; border-width:2px; }
+.fade .tabs li a.selected { border-color:#444; }
+.fade .items { clear:both; padding:6px 0; position:relative; top:0; left:0; height:1em; }
+.fade .items div { display:none; position:absolute; top:0; left:0; padding-top:6px; }
+</style>
+</head><body>
+<!-- Lets start with a basic html structure -->
+<div class="fade">
+  <ul class="tabs">
+    <li><a href="#item1">1</a></li>
+    <li><a href="#item2">2</a></li>
+    <li><a href="#item3">3</a></li>
+    <li><a href="#item4">4</a></li>
+  </ul>
+  <div class="items">
+    <div id="item1">This will have a fade effect.</div>
+    <div id="item2">The second tab appears!</div>
+    <div id="item3">And this sort of thing continues.</div>
+    <div id="item4">Check out the source code.</div>
+  </div>
+</div>
+<!-- Load jQuery and idTabs -->
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="jquery.idTabs.js"></script>
+<script type="text/javascript">
+var fade = function(id,s){
+  s.tabs.removeClass(s.selected);
+  s.tab(id).addClass(s.selected);
+  s.items.fadeOut();
+  s.item(id).fadeIn();
+  return false;
+};
+$.fn.fadeTabs = $.idTabs.extend(fade);
+$(".fade").fadeTabs();
+</script>
+</body></html>
+

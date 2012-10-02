@@ -1,0 +1,14 @@
+{
+  "title": "Minimal thema",
+  "description": "Geeft de meest uitgekleede versie van een pagina.",
+  "type": "manual",
+  "dbUpdates": true,
+  "versions": [
+    {
+      "version": "1.0",
+      "date": "2012-10-02",
+      "description": "Installatie mogelijk gemaakt.",
+      "changes": []
+    }
+  ]
+}

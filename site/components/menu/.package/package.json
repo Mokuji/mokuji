@@ -1,0 +1,19 @@
+{
+  "title": "Menu component",
+  "description": "Verzorgt het weergeven en beheren van menu-structuren.",
+  "type": "manual",
+  "dbUpdates": true,
+  "versions": [
+    {
+      "version": "1.1",
+      "date": "2012-09-27",
+      "description": "Automatische installatie mogelijk gemaakt.",
+      "changes": [
+        {
+          "title": "Automatische installatie",
+          "description": "Sinds deze update is het mogelijk om het menu component zichzelf te laten installeren via het update component."
+        }
+      ]
+    }
+  ]
+}

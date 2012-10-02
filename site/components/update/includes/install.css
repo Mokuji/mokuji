@@ -1,0 +1,53 @@
+.install-steps-header{
+  margin:22px 20px 10px;
+}
+#install-steps{
+  margin:10px 20px 10px 25px;
+}
+  #install-steps .step{
+    margin-left:15px;
+    line-height:15px;
+  }
+    #install-steps .step.active{
+      font-weight:bold;
+    }
+
+#install_step_app{
+  margin:10px auto;
+  width:800px;
+  border-color: #FFFFFF #D2D2D2 #B2BFC9;
+  border-style: solid;
+  border-width: 1px 1px 2px;
+}
+  #install_step_app .body{
+    background:#fff;
+  }
+  #install_step_app p{
+    font-size:11pt;
+    margin:0 0 1em;
+  }
+    #install_step_app p.actions{
+      margin:1em 0 0;
+    }
+    #install_step_app p.notes{
+      font-size:8pt;
+      font-style:italic;
+    }
+  
+  #install_step_app #install-db-message,
+  #install_step_app #install-site-message,
+  #install_step_app #create-admin-message{
+    margin:1em 0 0;
+  }
+  #install_step_app #create-admin-message{
+    color:#10B910;
+  }
+  
+  #install_step_app .requirements span.passed{ color:#10B910; }
+  #install_step_app .requirements span.failed{ color:#FF2222; }
+  
+  #install_step_app .advanced{ display:none; }
+  
+  #install_step_app .install-site-form .setting{
+    margin-bottom:10px;
+  }

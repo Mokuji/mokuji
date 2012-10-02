@@ -1,0 +1,14 @@
+{
+  "title": "tx.Login template",
+  "description": "Geeft het login scherm in Tuxion stijl weer.",
+  "type": "manual",
+  "dbUpdates": true,
+  "versions": [
+    {
+      "version": "1.0",
+      "date": "2012-10-02",
+      "description": "Installatie mogelijk gemaakt.",
+      "changes": []
+    }
+  ]
+}

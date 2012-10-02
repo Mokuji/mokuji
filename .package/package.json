@@ -1,0 +1,40 @@
+{
+  "title": "Tuxion CMS core",
+  "description": "De core van het Tuxion CMS.",
+  "type": "manual",
+  "dbUpdates": true,
+  "versions": [
+    {
+      "version": "3.2.0",
+      "date": "2012-09-27",
+      "description": "Publiekelijk gezet van het Tuxion CMS en nieuw installatie script.",
+      "changes": [
+        {
+          "title": "Open ontwikkeling",
+          "description": "Het Tuxion CMS is nu verplaatst naar publiekelijke GitHub repositories. Dit houd in dat er door meer mensen wordt gekeken naar de kwaliteit. Gezamenlijk leggen we hiermee de lat hoger en geniet iedereen van een beter CMS.",
+          "url": "http://wiki.tuxion.nl/index.php/Tuxion_CMS/Open_source"
+        },
+        {
+          "title": "Installatie- en update-mogelijkheden",
+          "description": "Het CMS is nu te installeren bij nieuwe websites. Voor bestaande websites is het mogelijk om makkelijker updates uit te voeren.",
+          "url": "http://wiki.tuxion.nl/index.php/Tuxion_CMS/Installeren_of_updaten"
+        }
+      ]
+    },
+    {
+      "version": "3.1.1",
+      "date": "2012-09-11",
+      "description": "Nieuwe corefunctionaliteit.",
+      "changes": [
+        {
+          "title": "Component aanwezigheid",
+          "description": "Er is een programmeursfunctie toegevoegd die controleert of een component aanwezig is."
+        },
+        {
+          "title": "URL manipulatie",
+          "description": "Met de core URL-functies kunnen nu URL's gemakkelijker gemanipuleerd worden in de programmacode."
+        }
+      ]
+    }
+  ]
+}

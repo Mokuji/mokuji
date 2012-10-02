@@ -1,0 +1,29 @@
+.notification{
+  display:block;
+  position:absolute;
+  z-index:2;
+  top:5px;
+  left:245px;
+  padding:15px;
+  background:#ccc;
+  color:#222;
+  border:1px solid #000;
+  border-radius:4px;
+  cursor:pointer;
+}
+
+.notification.success{
+  background:#cfc;
+  color:#080;
+}
+
+.notification.error{
+  background:#fcc;
+  color:#800;
+}
+
+form .validation-error{
+  color:#f22;
+  font-weight:bold;
+  margin-left:4px;
+}

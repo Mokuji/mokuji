@@ -1,0 +1,24 @@
+.btn-icon{
+  padding-left:25px;
+}
+
+.small-icon{
+  width:20px;
+  height:20px;
+  background-position:center center;
+  background-repeat:no-repeat;
+}
+
+/* =List icons
+-------------------------------------------------------------- */
+
+.icon-edit{
+  display:block;
+  text-indent:-9999px;
+  background-image:url("../img/icons/list/edit.png");
+}
+.icon-delete{
+  display:block;
+  text-indent:-9999px;
+  background-image:url("../img/icons/list/delete.png");
+}

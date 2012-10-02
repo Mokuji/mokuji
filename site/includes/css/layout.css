@@ -1,0 +1,21 @@
+
+.tx-module-wrapper {  
+  min-width:30px;
+  min-height:30px;
+}
+
+.tx-component-wrapper {
+  min-width:30px;
+}
+
+.tx-layout-split-v > .tx-layout-part {
+  float:left;
+}
+
+.tx-layout-split-h > .tx-layout-part {
+  width:100%;
+}
+
+.tx-layout-part > .tx-layout-part {
+  height:100%;
+}

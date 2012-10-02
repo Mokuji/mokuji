@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>jQuery idTabs</title>
+    <style>
+      * { margin:0; padding:0; border:0; outline:0; }
+      body { font:25pt Tahoma; background:#FFF; color:#000; }
+      .idTabs { margin:40px; }
+      .idTabs ul { background:#222; padding:5px; float:left; }
+      .idTabs li { list-style:none; /*Try deleting this float*/ float:left; }
+      .idTabs a { display:block; background:#222; color:snow; padding:0 13px; font:bold 25pt Arial; text-decoration:none; }
+      .idTabs a.selected { background:#FFF; color:#000; }
+      .items>div { display:none; float:left; margin:0.1em 0 0 0.5em; }
+      .idTabs ul, .idTabs a { border-radius:4px; -moz-border-radius:4px; }
+    </style>
+  </head>
+  <body>
+    <div class="idTabs">
+      <ul>
+        <li><a href="#one">1</a></li>
+        <li><a href="#two">2</a></li>
+        <!-- Try adding this <br/> tag here -->
+        <li><a href="#three">3</a></li>
+        <li><a href="#four">4</a></li>
+      </ul>
+      <div class="items">
+        <div id="one">Welcome to <b>idTabs</b>!</div>
+        <div id="two">You can do anything with <b>idTabs</b>.</div>
+        <div id="three">Anything at all.</div>
+        <div class="four">The only limit,</div>
+        <div class="four">is your imagination.</div>
+      </div>
+    </div>
+    <script src="jquery.js"></script>
+    <script src="jquery.idTabs.js"></script>
+    <script>
+      // Try uncommenting some of these examples
+
+      // Mouseover Tabs
+      //$(".idTabs").idTabs("!mouseover");
+
+      // Url Saving Tabs
+      //$(".idTabs").idTabs(true,location.hash);
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,19 @@
+{
+  "title": "Text component",
+  "description": "Verzorgt het opslaan van tekst met extra functies als meertaligheid en het toepassen van WYSIWYG editors in de backend.",
+  "type": "manual",
+  "dbUpdates": true,
+  "versions": [
+    {
+      "version": "1.1",
+      "date": "2012-09-27",
+      "description": "Automatische installatie mogelijk gemaakt.",
+      "changes": [
+        {
+          "title": "Automtische installatie",
+          "description": "Sinds deze update is het mogelijk om het text component zichzelf te laten installeren via het update component."
+        }
+      ]
+    }
+  ]
+}
