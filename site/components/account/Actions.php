@@ -6,10 +6,84 @@ class Actions extends \dependencies\BaseComponent
   protected
     $default_permission = 2,
     $permissions = array(
+      'login' => 0,
+      'logout' => 1,
+      'register' => 0,
       'edit_profile' => 1,
       'claim_account' => 0,
       'save_avatar' => 1
     );
+  
+  protected function login($data)
+  {
+
+    $data = $data->having('email', 'pass');
+
+    tx('Logging in.', function()use($data){
+
+      $data
+        -> email   ->validate('Email address', array())->back()
+        -> pass    ->validate('Password', array('required', 'not_empty', 'between'=>array(3, 30)));
+
+      tx('Account')->login($data->email, $data->pass);
+
+    })
+
+    ->failure(function($info){
+
+      tx('Controller')->message(array(
+        'error' => $info->get_user_message()
+      ));
+
+    });
+
+    $prev = tx('Url')->previous();
+
+    if($prev !== false){
+      tx('Url')->redirect($prev);
+    }
+
+    tx('Url')->redirect(url('email=NULL&pass=NULL', false, ($prev !== false)));
+
+  }
+
+  protected function logout($data)
+  {
+
+    tx('Logging out.', function(){tx('Account')->logout();})->failure(function($info){
+      tx('Controller')->message(array(
+        'error' => $info->get_user_message()
+      ));
+
+    });
+
+  }
+
+  protected function register($data)
+  {
+
+    $data = $data->having('email', 'username', 'password');
+
+    tx('Registering a new account.', function()use($data){
+
+      $data
+        -> email   ->validate('Email address', array('required', 'not_empty', 'email'))->back()
+        -> username->validate('Username', array('no_html'))->back()
+        -> password->validate('Password', array('required', 'not_empty', 'between'=>array(3, 30)));
+      tx('Account')->register($data->email, $data->username, $data->password);
+
+    })
+
+    ->failure(function($info){
+      tx('Controller')->message(array(
+        'error' => $info->get_user_message()
+      ));
+
+    });
+
+    tx('Url')->redirect('email=NULL&username=NULL&password=NULL');
+
+  }
   
   protected function edit_profile($data)
   {
