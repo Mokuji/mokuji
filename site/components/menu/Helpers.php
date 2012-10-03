@@ -63,7 +63,7 @@ class Helpers extends \dependencies\BaseComponent
     
     //Get menu.
     $menu = tx('Sql')
-      ->table('cms', 'Menus')
+      ->table('menu', 'Menus')
       ->where('site_id', $options->site_id->otherwise(tx('Site')->id))
       ->is($options->template_key->is_set(), function($table)use($options){
         $table->where('template_key', "'{$options->template_key}'");
@@ -75,7 +75,7 @@ class Helpers extends \dependencies\BaseComponent
       
       tx('Sql')
         
-        ->table('cms', 'MenuItems')
+        ->table('menu', 'MenuItems')
           
           //filter menu.
           ->sk($menu->id->get())
