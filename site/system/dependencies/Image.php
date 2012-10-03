@@ -570,7 +570,7 @@ class Image extends File
     
     header("Accept-Ranges:bytes");
     $this->create_output_headers();
-    header("Content-type: image/".$this->info['type']);
+    header("Content-type: image/".$this->info['type'], true);
     
     $image_function = 'image'.$this->info['type'];
     $image_function($this->image, null, ($this->info['type']=='jpeg' ? $this->jpeg_quality : null), null);

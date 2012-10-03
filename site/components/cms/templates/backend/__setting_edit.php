@@ -1,6 +1,7 @@
 <?php namespace components\cms; if(!defined('TX')) die('No direct access.'); tx('Account')->page_authorisation(2);
 
 echo $data->item->as_form($form_id, array(
+  'id' => 'hidden',
   'site_id' => 'hidden',
   'autoload' => 'hidden'
 ));

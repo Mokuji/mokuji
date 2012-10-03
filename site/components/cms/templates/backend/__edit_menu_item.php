@@ -19,21 +19,27 @@
 
       <fieldset class="menu_item_titles-wrapper">
         <?php
-        
+
         if(tx('Component')->available('language')){
-          tx('Component')->helpers('language')->get_languages(array('in_language_id'=>LANGUAGE))
-            ->each(function($lang)use($data){
+
+          $languages =
+            tx('Component')->helpers('language')->get_languages(array('in_language_id'=>LANGUAGE));
+
+          $languages
+            ->each(function($lang)use($data, $languages){
+              $in_language_text = ($languages->size() <= 1 ? '' : $in_language_text = ' '.__('IN_LANGUAGE_NAME', 1).' '.$lang->title);
             ?>
 
             <div class="inputHolder">
-              <label for="l_title_menu_item_<?php echo $lang->id; ?>"><?php __('Menu-item titel'); ?> <?php __('IN_LANGUAGE_NAME'); ?> <?php echo $lang->title; ?></label>
-              <input class="big" type="text" id="l_title_menu_item_<?php echo $lang->id; ?>" name="info[<?php echo $lang->id; ?>][title]" value="<?php echo $data->item->info[$lang->id]->title; ?>" />
+            <label for="l_title_menu_item_<?php echo $lang->id; ?>"><?php __('Menu-item titel').$in_language_text; ?></label>
+            <input class="big" type="text" id="l_title_menu_item_<?php echo $lang->id; ?>" name="info[<?php echo $lang->id; ?>][title]" value="<?php echo $data->item->info[$lang->id]->title; ?>" />
             </div>
 
             <?php
           });
+
         }
-        
+
         else{
           ?>
           <div class="inputHolder">
