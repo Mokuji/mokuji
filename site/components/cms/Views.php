@@ -87,7 +87,6 @@ class Views extends \dependencies\BaseViews
       'topbar' => $this->section('admin_toolbar'),
       'menus' => $this->view('menus'),
       'app' => $this->section(tx('Data')->get->view->is_set() ? 'config_app' : 'app'),
-      'feedback_form' => tx('Component')->modules('cms')->get_html('feedback_form'),
       'sites' => tx('Sql')->table('cms', 'Sites')->execute()
     );
 

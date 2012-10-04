@@ -9,8 +9,25 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
   
   protected
     $component = 'menu',
-    $updates = array();
-  
+    $updates = array(
+      '1.1' => '1.2'
+    );
+
+  public function update_to_1_2($current_version, $forced)
+  {
+    
+    //If this goes wrong it's because of the column already existing.
+    try{
+      tx('Sql')->query('ALTER TABLE  `#__menu_items` ADD  `image_id` INT NULL');
+    }
+    
+    //Ignore it when we're forcing.
+    catch(\exception\Sql $ex){
+      if($forced !== true) throw $ex;
+    }
+    
+  }
+
   public function install_1_1($dummydata, $forced)
   {
     

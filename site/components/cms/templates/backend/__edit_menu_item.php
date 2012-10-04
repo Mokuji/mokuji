@@ -9,7 +9,9 @@
     <div class="title-bar page-title">
       <h2><span class="title"><?php echo $edit_menu_item->item->info->{LANGUAGE}->title; ?></span> <span style="font-weight:normal;">(menu-item)</span></h2>
       <ul class="title-bar-icons clearfix">
-        <li><a href="#" class="icon menu-item-settings" id="toggle-menu-item-settings" title="<?php __('Toggle menu item settings'); ?>">Toggle menu item settings</a></li>
+        <?php if(tx('Component')->available('media')){ ?>
+          <li><a href="#" class="icon menu-item-settings" id="toggle-menu-item-settings" title="<?php __('Toggle menu item settings'); ?>">Toggle menu item settings</a></li>
+        <?php } ?>
         <li><a href="#" class="icon" id="detach-menu-item" style="display:none;">Detach menu item from page</a></li>
       </ul>
       <div class="clear"></div>
@@ -83,20 +85,48 @@
         <div class="inner">
 
           <h3><?php __('Menu item settings') ?></h3>
-
+          
+          <?php if(tx('Component')->available('media')){ ?>
           <fieldset>
-
+            
             <div class="ctrlHolder">
               <label for="l_header_image_preview"><?php __('Image'); ?></label><br />
               <img id="menu_item_image" src="<?php echo url(URL_BASE.'?section=media/image&resize=0/150&id='.$data->item->image_id); ?>"<?php echo ($data->item->image_id->get() > 0 ? '' : ' style="display:none;"'); ?> />
               <input type="hidden" id="l_menu_item_image_id" name="image_id" value="<?php echo $data->item->image_id; ?>">
             </div>
             
+            <?php if($data->item->image_id->get() > 0){ ?>
+            <div class="ctrlHolder">
+              <input id="delete-menu-item-image" type="button" class="button grey" value="Delete image" />
+              <script type="text/javascript" language="javascript">
+                jQuery(function($){
+                  
+                  $('#delete-menu-item-image').on('click', function(e){
+                    
+                    e.preventDefault();
+                    
+                    var wrapper = $(e.target).closest('fieldset');
+                    var id = wrapper.find('input[name=image_id]');
+                    $.rest('DELETE', '?rest=media/image/'+id.val())
+                      .done(function(){
+                        id.val('');
+                        wrapper.find('#menu_item_image').attr('src', '').hide();
+                        $('#form-menu-item').submit();
+                      });
+                    
+                  });
+                  
+                });
+              </script>
+            </div>
+            <?php } ?>
+            
             <div class="ctrlHolder">
               <?php echo $data->image_uploader; ?>
             </div>
 
           </fieldset>
+          <?php } ?>
 
         </div>
 
