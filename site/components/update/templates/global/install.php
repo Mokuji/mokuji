@@ -11,7 +11,7 @@
     <ol id="install-steps">
       <?php $data->steps->each(function($step){ ?>
         <li class="step" data-step="<?php echo $step->key(); ?>"><?php echo $step->title; ?></li>
-      <? }); ?>
+      <?php }); ?>
     </ol>
   </div>
   

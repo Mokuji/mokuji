@@ -95,11 +95,6 @@ class Modules extends \dependencies\BaseViews
 
   }
 
-  protected function menu_pnelis_process($options)
-  {
-    return $this->helper('get_menu_items', $options);
-  }
-
   protected function menu_image($options)
   {
     return tx('Sql')->table('menu', 'MenuItems')->pk(tx('Data')->get->menu->get('int'))->execute_single();
