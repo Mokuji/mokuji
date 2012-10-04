@@ -287,7 +287,7 @@ class Actions extends \dependencies\BaseComponent
 
       $data
         -> email   ->validate('Email address', array())->back()
-        -> pass    ->validate('Password', array('required', 'not_empty', 'between'=>array(3, 30)));
+        -> pass    ->validate('Password', array('required', 'not_empty', 'between'=>array(3, 64)));
 
       tx('Account')->login($data->email, $data->pass);
 

@@ -259,6 +259,7 @@ abstract class BaseDBUpdates
   public function install($dummydata=false, $forced=false, $update_to_latest=true)
   {
     
+    $that = $this;
     raw($dummydata, $forced, $update_to_latest);
     
     if(!$this->package()->installed_version->is_empty() && $forced !== true)
@@ -268,14 +269,14 @@ abstract class BaseDBUpdates
     $latest = Data();
     
     //Go over each version.
-    $this->get_package_data()->versions->each(function($version)use(&$latest){
+    $this->get_package_data()->versions->each(function($version)use(&$latest, $that){
       
       //If this is a later version.
       $version->timestamp->set(strtotime($version->date->get()));
       if($version->timestamp->get() > $latest->timestamp->get())
       {
         
-        if(method_exists($this, 'install_'.str_replace('.', '_', $version->version->get())))
+        if(method_exists($that, 'install_'.str_replace('.', '_', $version->version->get())))
           $latest = $version;
         
       }

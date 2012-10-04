@@ -106,13 +106,13 @@ class Url extends \dependencies\Data
       {
         
         $prefix = ((substr($segments['path'], 0, 1) === '/') 
-          ? (URL_PATH !== false && (substr($segments['path'], 1, strlen(URL_PATH)) !== URL_PATH || is_dir(PATH_BASE.DS.URL_PATH)) ? '/'.URL_PATH : '') 
+          ? (URL_PATH != '' && (substr($segments['path'], 1, strlen(URL_PATH)) !== URL_PATH || is_dir(PATH_BASE.DS.URL_PATH)) ? '/'.URL_PATH : '') 
           : $old_url->segments->path->get()
         );
         
         $this->segments->path->set($prefix.$segments['path']);
         
-        if(strpos($this->segments->path->get(), '/'.(URL_PATH !== false ? URL_PATH.'/' : '').'admin/') === 0){
+        if(strpos($this->segments->path->get(), '/'.(URL_PATH != '' ? URL_PATH.'/' : '').'admin/') === 0){
           $this->backend->set(true);
         }else{
           $this->backend->set(false);

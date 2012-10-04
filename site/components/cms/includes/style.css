@@ -944,9 +944,11 @@
   overflow-y:auto;
   width:220px;
 }
-
 .admin-nav ul li{
   margin-top:3px;
+}
+#page-main-right .category_list > li{
+  margin-left:0;
 }
 .admin-nav > ul > li,
 .admin-nav div > ul > li{

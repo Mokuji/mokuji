@@ -13,12 +13,16 @@ class EntryPoint extends \dependencies\BaseEntryPoint
       if(!tx('Account')->user->check('login'))
       {
         
-        //die(tx('Component')->sections('account')->get_html('login_form'));
-        
+        //Redirect to custom login page is available.
+        if(url('')->segments->path == '/admin/' && tx('Config')->user()->login_page->not('empty')){
+          header("Location: ".BASE_URL.url(tx('Config')->user()->login_page));
+        }
+
+        //Otherwise: show awesome login screen.
         return $this->template('tx_login', 'tx_login', array(), array(
           'content' => tx('Component')->sections('account')->get_html('login_form')
         ));
-        
+
       }
       
       //Set site_id filter.
@@ -38,8 +42,8 @@ class EntryPoint extends \dependencies\BaseEntryPoint
           load_plugin('jquery_postpone'),
           load_plugin('nestedsortable'),
           load_plugin('jquery_formtoobject'),
-          load_plugin('ckfinder'),
           load_plugin('ckeditor'),
+          load_plugin('elfinder'),
           load_plugin('jquery_tmpl'),
           load_plugin('jsFramework'),
           load_plugin('underscore'),
@@ -103,7 +107,7 @@ class EntryPoint extends \dependencies\BaseEntryPoint
           $redirect->data->pid->is('set')->and_is(function($pid){
             return tx('Sql')
               ->table('cms', 'Pages')
-              ->pk(tx('Data')->get->pid)
+              ->pk($pid)
               ->execute_single()
               ->is_set();
           })
