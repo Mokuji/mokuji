@@ -108,7 +108,7 @@ class Modules extends \dependencies\BaseViews
   
     $menu_item_info =
       tx('Sql')
-      ->table('cms', 'MenuItems')
+      ->table('menu', 'MenuItems')
       ->pk($options->menu_item_id)
       ->execute_single();
 
@@ -119,7 +119,7 @@ class Modules extends \dependencies\BaseViews
 
         tx('Sql')
 
-          ->table('cms', 'MenuItems', $mi)
+          ->table('menu', 'MenuItems', $mi)
 
             //filter menu
             ->sk(tx('Data')->filter('menu')->menu_id->is_set() ? tx('Data')->filter('menu')->menu_id : '1')
