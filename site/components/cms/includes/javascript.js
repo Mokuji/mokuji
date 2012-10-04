@@ -114,7 +114,7 @@
   //The controller for the menu.
   var MenuController = Controller.sub({
     
-    el: '#page-main-left > .content > .inner',
+    el: '#page-main-left > .content',
     namespace: 'menu',
     
     elements: {
@@ -123,7 +123,7 @@
       'btn_refreshMenuItems': '#btn-refresh-menu-items',
       'btn_saveMenuItems': '#btn-save-menu-items',
       'btn_selectMenu': '#btn-select-menu',
-      'el_menuItemContainer': 'ul.menu-items-list',
+      'el_menuItemContainer': '.menu-items-list',
       'el_menuItems': 'ul.menu-items-list > li',
       'el_message': '#user-message'
     },
@@ -192,13 +192,15 @@
     save: function(){
       
       var self = this;
+      self.btn_saveMenuItems.hide();
+      self.el_message.text('Saving...').show();
       
       return request(PUT, 'menu/menu_items', this.data)
       
       .done(function(){
         self.makeSelectable();
         self.btn_selectMenu.hide();
-        self.el_message.show();
+        self.el_message.text('Successful').show();
         $.after(2000).done(function(){
           self.btn_selectMenu.show();
           self.el_message.hide();
@@ -213,6 +215,33 @@
     
   });
   
+  //The state-machine for the main content.
+  var MainManager = Manager.sub({
+    
+    el: '#page-main-right',
+    namespace: 'main'
+    
+  });
+  
+  //The controller for the page-application.
+  var PageAppManager = Manager.sub({
+    
+    el: '#app',
+    namespace: 'main'
+    
+  });
+  
+  var PageController = Controller.sub({});
+  var ItemController = Controller.sub({});
+  
+  //The controller for the settings interface.
+  var SettingsController = Controller.sub({
+    
+    el: '<div>',
+    namespace: 'main'
+    
+  });
+  
   var app;
   root.Cms = new Class(null, {
     
@@ -221,11 +250,137 @@
     },
     
     init: function(o){
+      
       app = this;
       this.options = _(o).defaults(this.options);
+      
       this.Menu = new MenuController;
+      this.Main = new MainManager;
+      
+      this.App = new PageAppManager;
+      this.Settings = new SettingsController;
+      this.Main.add([this.Settings, this.App]);
+      
+      // this.Page = new PageController;
+      // this.Item = new ItemController;
+      // this.App.add([this.Page, this.Item]);
+      
     }
     
   });
   
 })(this, jQuery, _);
+
+$(function(){
+  
+  /* =Select site
+  -------------------------------------------------------------- */
+  $("#btn-select-site").on('change', function(e){
+    
+    $.ajax({
+      url: '?section=cms/menu_item_list&site_id='+$(e.target).val()
+    }).done(function(d){
+      $("#page-main-left .menu-item-list").html(d);
+    });
+    
+  });
+  
+  /* =Select menu
+  -------------------------------------------------------------- */
+  $("#btn-select-menu").on('change', function(e){
+    
+    $.ajax({
+      url: '?section=cms/menu_items&menu_id='+$(e.target).val()
+    }).done(function(d){
+      $("#page-main-left .menu-item-list").html(d);
+    });
+    
+  });
+  
+  /* =New menu item
+  -------------------------------------------------------------- */
+  $("#btn-new-menu-item").on('click', function(e){
+
+    e.preventDefault();
+
+    $.ajax({
+      url: $(this).attr('href')
+    }).done(function(d){
+      $("#page-main-right").html(d);
+    });
+
+  });
+
+  /* =Revert/refresh menu
+  -------------------------------------------------------------- */
+  $("#btn-refresh-menu-items").on('click', function(e){
+
+    e.preventDefault();
+
+    $.ajax({
+      url: $(this).attr('href')
+    }).done(function(d){
+      $("#page-main-left .menu-item-list").html(d);
+    });
+
+  });
+
+  /* =Delete menu item
+  -------------------------------------------------------------- */
+  $(".menu-items-list .icon-delete").on("click", function(){
+
+    if(confirm("Weet u zeker dat u dit menu-item wilt verwijderen?")){
+
+      var _this = $(this);
+
+      $.ajax({
+        url: $(this).attr("href")
+      }).done(function(){
+        $(_this).closest("li").slideUp();
+      });
+
+    }
+
+  });
+
+  //menu items
+  $(function(){
+
+    $('#page-main-left .menu-items-list a').on('click', function(e){
+
+      e.preventDefault();
+
+      $.ajax({
+        url : $(this).attr('href'),
+        data : {
+          section: 'cms/app'
+        }
+      }).done(function(data){
+        $("#page-main-right").html(data);
+      });
+
+    });
+
+  });
+
+  //config menu
+  (function($){
+
+    $('#widget_bar a').click(function(e){
+
+      e.preventDefault();
+
+      $.ajax({
+        url : $(this).attr('href'),
+        data : {
+          section: 'cms/config_app'
+        }
+      }).done(function(data){
+        $("#page-main-right").html(data);
+      });
+
+    });
+
+  })($);
+  
+});

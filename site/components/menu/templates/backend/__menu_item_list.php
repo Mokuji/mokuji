@@ -9,21 +9,21 @@ echo load_plugin('jquery_message');
 
   $(function(){
 
-		$('ul.category_list').nestedSortable({
-			disableNesting: 'no-nest',
-			forcePlaceholderSize: true,
-			handle: 'div',
-			helper:	'clone',
-			listType: 'ul',
-			items: 'li',
-			maxLevels: 3,
-			opacity: .6,
-			placeholder: 'placeholder',
-			revert: 250,
-			tabSize: 25,
-			tolerance: 'pointer',
-			toleranceElement: '> div'
-		})
+    $('ul.category_list').nestedSortable({
+      disableNesting: 'no-nest',
+      forcePlaceholderSize: true,
+      handle: 'div',
+      helper: 'clone',
+      listType: 'ul',
+      items: 'li',
+      maxLevels: 3,
+      opacity: .6,
+      placeholder: 'placeholder',
+      revert: 250,
+      tabSize: 25,
+      tolerance: 'pointer',
+      toleranceElement: '> div'
+    })
     
     .on('sortupdate', function(){
       
@@ -31,7 +31,7 @@ echo load_plugin('jquery_message');
       
     });
 
-		$('.save').click(function(e){
+    $('.save').click(function(e){
       
       var target = this, message='Something went wrong.';
       
@@ -57,7 +57,7 @@ echo load_plugin('jquery_message');
 
     });
 
-	});
+  });
     
 </script>
 
