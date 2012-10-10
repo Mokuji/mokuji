@@ -9,7 +9,7 @@ class OptionSets extends \dependencies\BaseModel
   
     $relations = array(
       'Pages' => array('id' => 'Pages.optset_id'),
-      'Options' => array('id' => 'OptionLink.optset_id')
+      'Options' => array('id' => 'OptionsLink.optset_id')
     );
     
     

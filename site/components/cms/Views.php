@@ -16,8 +16,8 @@ class Views extends \dependencies\BaseViews
 
     $page_info = $this->helper('get_page_info', tx('Data')->get->pid);
     $part=null;
-    $options=array();
-
+    $options = $this->helper('get_page_options', $page_info->id);
+    
     tx('Sql')->table('cms', 'Layouts')
       ->parent_pk(true, (!is_null($part) ? $part : $page_info->layout_id))
       ->execute()

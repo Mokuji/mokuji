@@ -5,6 +5,17 @@
   "dbUpdates": true,
   "versions": [
     {
+      "version": "1.3",
+      "date": "2012-10-08",
+      "description": "Pagina opties werkend gemaakt.",
+      "changes": [
+        {
+          "title": "Pagina opties",
+          "description": "Het concept voor pagina opties was reeds in grote lijnen uitgewerkt maar nooit gebruikt. Voor het Wizard component is dit voor het eerst ingezet en daarvoor zijn de laatste wijzigingen gedaan om deze pagina opties te laten functioneren."
+        }
+      ]
+    },
+    {
       "version": "1.2",
       "date": "2012-10-01",
       "description": "Aanpassing module en view installaties.",

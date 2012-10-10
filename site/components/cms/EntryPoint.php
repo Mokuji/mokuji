@@ -5,7 +5,8 @@ class EntryPoint extends \dependencies\BaseEntryPoint
 
   public function entrance()
   {
-
+    
+    //Backend
     if(tx('Config')->system()->check('backend'))
     {
       
@@ -38,10 +39,10 @@ class EntryPoint extends \dependencies\BaseEntryPoint
         'plugins' =>  array(
           load_plugin('jquery'),
           load_plugin('jquery_ui'),
+          load_plugin('jquery_rest'),
           load_plugin('jquery_comboselect'),
           load_plugin('jquery_postpone'),
           load_plugin('nestedsortable'),
-          load_plugin('jquery_formtoobject'),
           load_plugin('ckeditor'),
           load_plugin('elfinder'),
           load_plugin('jquery_tmpl'),
@@ -59,7 +60,8 @@ class EntryPoint extends \dependencies\BaseEntryPoint
 
 
     }
-
+    
+    //Frontend
     else
     {
 
@@ -129,7 +131,7 @@ class EntryPoint extends \dependencies\BaseEntryPoint
         elseif(tx('Data')->get->pid->is_set()){
 
           $pi = $that->helper('get_page_info', tx('Data')->get->pid);
-
+          
           $output = $that->template($pi->template, $pi->theme, array(
             'plugins' =>  array(
                             load_plugin('jquery'),

@@ -155,17 +155,18 @@ class Sections extends \dependencies\BaseViews
 
   protected function edit_page($options)
   {
-
+    
     $page_info = $this->helper('get_page_info', $options->id->is_set() ? $options->id->get('int') : tx('Data')->filter('cms')->pid->get('int'));
-
+    $page_options = $this->helper('get_page_options', $page_info->id);
+    
     return array(
       'layout_info' => tx('Sql')->table('cms', 'LayoutInfo')->execute(),
       'page' => $page_info,
-      'content' => $page_info === false ? 'Page was removed.' : tx('Component')->views($page_info->component)->get_html($page_info->view_name, array('pid' => $page_info->id)),
+      'content' => $page_info === false ? 'Page was removed.' : tx('Component')->views($page_info->component)->get_html($page_info->view_name, $page_options),
       'themes' => $this->table('Themes')->order('title')->execute(),
       'templates' => $this->table('Templates')->order('title')->execute()
     );
-
+    
   }
   
   protected function edit_site($options)

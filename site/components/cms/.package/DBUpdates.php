@@ -10,8 +10,19 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
   protected
     $component = 'cms',
     $updates = array(
-      '1.1' => '1.2'
+      '1.1' => '1.2',
+      '1.2' => '1.3'
     );
+  
+  public function update_to_1_3($current_version, $forced)
+  {
+    
+    tx('Sql')->query('
+      ALTER TABLE  `#__cms_options`
+        DROP INDEX  `key`
+    ');
+    
+  }
   
   public function update_to_1_2($current_version, $forced)
   {

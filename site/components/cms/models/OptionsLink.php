@@ -1,11 +1,11 @@
 <?php namespace components\cms\models; if(!defined('TX')) die('No direct access.');
 
-class OptionSets extends \dependencies\BaseModel
+class OptionsLink extends \dependencies\BaseModel
 {
   
   protected static
   
-    $table_name = 'cms_option_link',
+    $table_name = 'cms_options_link',
   
     $relations = array(
       'Options' => array('option_id' => 'Options.id'),
