@@ -66,29 +66,29 @@
 
 		        var elf = $('#elfinder').elfinder({
 		            url : 'php/connector.php',
-								commands : [
-									'reload', 'home', 'up', 'back', 'forward', 'getfile', 
-									'download', 'rm', 'duplicate', 'rename', 'mkdir', 'mkfile', 'upload', 'copy', 
-									'cut', 'paste', 'edit', 'search', 'info', 'view',
-									'sort'
-								],
-								uiOptions : {
-									toolbar : [
-										['back', 'forward'],
-										// ['reload'],
-										// ['home', 'up'],
-										['mkdir', 'mkfile', 'upload'],
-										['download', 'getfile'],
-										['info'],
-										// ['quicklook'],
-										['copy', 'cut', 'paste'],
-										['rm'],
-										['duplicate', 'rename', 'edit'],//, 'resize'],
-										// ['extract', 'archive'],
-										['search'],
-										['view']
-									]
-							  },
+								// commands : [
+								// 	'reload', 'home', 'up', 'back', 'forward', 'getfile', 
+								// 	'download', 'rm', 'duplicate', 'rename', 'mkdir', 'mkfile', 'upload', 'copy', 
+								// 	'cut', 'paste', 'edit', 'search', 'info', 'view',
+								// 	'sort'
+								// ],
+								// uiOptions : {
+								// 	toolbar : [
+								// 		['back', 'forward'],
+								// 		['reload'],
+								// 		['home', 'up'],
+								// 		['mkdir', 'mkfile', 'upload'],
+								// 		['download', 'getfile'],
+								// 		['info'],
+								// 		['quicklook'],
+								// 		['copy', 'cut', 'paste'],
+								// 		['rm'],
+								// 		['duplicate', 'rename', 'edit'], 'resize'],
+								// 		['extract', 'archive'],
+								// 		['search'],
+								// 		['view']
+								// 	]
+							 //  },
  		            getFileCallback : function(file) {
 		                window.opener.CKEDITOR.tools.callFunction(funcNum, file);
 		                window.close();
