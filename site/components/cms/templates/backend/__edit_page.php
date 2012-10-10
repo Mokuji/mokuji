@@ -72,7 +72,7 @@
 
               <fieldset class="fieldset-display">
 
-                <legend>Weergave</legend>
+                <legend><?php __('Display'); ?></legend>
 
                 <div class="inputHolder">
                   <label><?php __('Template'); ?></label>
@@ -161,19 +161,19 @@
 
               <fieldset class="fieldset-rights">
 
-                <legend>User rights</legend>
+                <legend><?php __('User rights'); ?></legend>
 
-                Toegang voor:
+                <?php __('Access to'); ?>:
                 <ul>
-                  <li><label><input type="radio" name="access_level" value="0"<?php echo ($edit_page->page->access_level->get('int') <= 0 ? ' checked="checked"' : ''); ?> /> Iedereen</label></li>
-                  <li><label><input type="radio" name="access_level" value="1"<?php echo ($edit_page->page->access_level->get('int') == 1 ? ' checked="checked"' : ''); ?> /> Ingelogde gebruikers</label></li>
-                  <li><label><input type="radio" name="access_level" value="2"<?php echo ($edit_page->page->access_level->get('int') == 2 ? ' checked="checked"' : ''); ?> class="members" /> Groepsleden</label></li>
-                  <li><label><input type="radio" name="access_level" value="3"<?php echo ($edit_page->page->access_level->get('int') == 3 ? ' checked="checked"' : ''); ?> /> Beheerders</label></li>
+                  <li><label><input type="radio" name="access_level" value="0"<?php echo ($edit_page->page->access_level->get('int') <= 0 ? ' checked="checked"' : ''); ?> /> <?php __('Everyone'); ?></label></li>
+                  <li><label><input type="radio" name="access_level" value="1"<?php echo ($edit_page->page->access_level->get('int') == 1 ? ' checked="checked"' : ''); ?> /> <?php __('Logged in users'); ?></label></li>
+                  <li><label><input type="radio" name="access_level" value="2"<?php echo ($edit_page->page->access_level->get('int') == 2 ? ' checked="checked"' : ''); ?> class="members" /> <?php __('Group members'); ?></label></li>
+                  <li><label><input type="radio" name="access_level" value="3"<?php echo ($edit_page->page->access_level->get('int') == 3 ? ' checked="checked"' : ''); ?> /> <?php __('Admins'); ?></label></li>
                 </ul>
 
                 <fieldset class="fieldset-groups">
 
-                  <legend>Groepen met toegang</legend>
+                  <legend><?php __('Groups with access'); ?></legend>
 
                   <ul>
                     <?php
@@ -192,9 +192,9 @@
 
               </fieldset>
 
-              <fieldset class="fieldset-page-info">
+              <fieldset class="fieldset-page-info" style="display:none;">
 
-                <legend>Pagina-informatie</legend>
+                <legend><?php __('Page info'); ?></legend>
 
                 <?php
                 
@@ -259,7 +259,7 @@
     <div id="page_content">
 
       <div class="inner">
-        <h3>Pagina-inhoud</h3>
+        <h3><?php echo __('Page content'); ?></h3>
         <?php echo $edit_page->content; ?>
       </div>
 

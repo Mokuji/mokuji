@@ -110,7 +110,7 @@ class Views extends \dependencies\BaseViews
   
   protected function modules()
   {
-
+    return;
     return array(
       'all' => tx('Sql')
         ->table('cms', 'Modules')

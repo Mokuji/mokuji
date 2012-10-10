@@ -143,7 +143,7 @@ $(function(){
       $(document).mousemove(function(e){
         if(e.pageX > 105 && e.pageX < 600){
           $("body").removeClass("cursor_disabled").addClass("cursor_resizing");
-          $('#page-main-left').css("width", e.pageX+25);
+          $('#page-main-left').css("width", e.pageX+25-1);
           $('#page-main-right').css("padding-left",e.pageX+25);
         }
         else{

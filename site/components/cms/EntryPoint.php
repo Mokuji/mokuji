@@ -14,8 +14,8 @@ class EntryPoint extends \dependencies\BaseEntryPoint
       {
         
         //Redirect to custom login page is available.
-        if(url('')->segments->path == '/admin/' && tx('Config')->user()->login_page->not('empty')){
-          header("Location: ".BASE_URL.url(tx('Config')->user()->login_page));
+        if(url('')->segments->path == '/admin/' && tx('Config')->user()->login_page->not('empty')->get('bool')){
+          header("Location: ".url(URL_BASE.tx('Config')->user()->login_page));
         }
 
         //Otherwise: show awesome login screen.

@@ -2,7 +2,7 @@
 
 <div id="new-page-wrap">
 
-  <h1>Pagina toevoegen</h1>
+  <h1><?php __('Add a page'); ?></h1>
 
   <ul class="pagetypes-list">
     <?php
@@ -17,10 +17,10 @@
     ?>
   </ul>
 
-  <h2>Kies een bestaande pagina</h2><br />
+  <h2><?php __('Select an existing page'); ?></h2><br />
   
   <select name="pages" id="page-link">
-    <option value="">Kies een pagina</option>
+    <option value=""><?php __('Select a page'); ?></option>
   <?php
   $new_page->pages->each(function($page){
     echo

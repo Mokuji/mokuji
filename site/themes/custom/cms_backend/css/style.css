@@ -386,6 +386,15 @@ body.cursor_disabled{
       opacity:0.9;
       background-image:url('../img/icons/configbar/rgo__contact-contact_admin.png');
     }
+    #configbar .calendar-events_admin a{
+      opacity:0.9;
+      background-image:url('../img/icons/configbar/calendar-events_admin.png');
+    }
+    #configbar .cms-instructions a{
+      opacity:0.9;
+      background-image:url('../img/icons/configbar/cms-instructions.png');
+    }
+
     #configbar .booking-bookings a:hover{
       opacity:1;
     }
@@ -834,10 +843,11 @@ body.cursor_disabled{
     background-color:#ffffff;
   }
   #page-main-right li{
-    margin-left:15px;
+    /*margin-left:15px;*/
   }
   #page-main-right ul.pagetypes-list li{
     margin-left:6px;
+    overflow:hidden;
   }
   #page-main-right .paginate_disabled_next,
   #page-main-right .paginate_enabled_next,
