@@ -71,7 +71,7 @@
           
           <div class="ctrlHolder">
             <label for="l_paths_url">Url path</label>
-            <input class="small" type="text" id="l_paths_url" name="paths_url" value="<?php echo URL_PATH; ?>" required />
+            <input class="small" type="text" id="l_paths_url" name="paths_url" value="<?php echo URL_PATH; ?>" />
           </div>
           
         </div>
