@@ -15,26 +15,31 @@
 
 		<!-- elFinder JS (REQUIRED) -->
 		<script type="text/javascript" src="js/elfinder.min.js"></script>
-
+    
 		<!-- elFinder initialization (REQUIRED) -->
 		<script type="text/javascript" charset="utf-8">
-			
-			jQuery(function($){
-			  
-			  var elf = $('#elfinder').elfinder({
-			    url: 'php/connector.php',
-			    height:650,
-			    closeOnGetFile: true,
-			    getFileCallback: function(){
-			      if(window.opener && window.closeOnGetFile) window.close();
-			      if(window.getFileCallback) window.getFileCallback.apply(this, arguments);
-			    }
-			  }).elfinder('instance');
-			  
-			});
-			
+		    // Helper function to get parameters from the query string.
+		    function getUrlParam(paramName) {
+		        var reParam = new RegExp('(?:[\?&]|&amp;)' + paramName + '=([^&]+)', 'i') ;
+		        var match = window.location.search.match(reParam) ;
+		        
+		        return (match && match.length > 1) ? match[1] : '' ;
+		    }
+
+		    $().ready(function() {
+		        var funcNum = getUrlParam('CKEditorFuncNum');
+
+		        var elf = $('#elfinder').elfinder({
+		            url : 'php/connector.php',
+ 		            getFileCallback : function(file) {
+		                window.opener.CKEDITOR.tools.callFunction(funcNum, file);
+		                window.close();
+		            },
+		            resizable: false
+		        }).elfinder('instance');
+		    });
 		</script>
-		
+
 	</head>
 	<body>
 

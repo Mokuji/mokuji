@@ -1,5 +1,17 @@
 <?php if(!defined('TX')) die('No direct access.');
 
+function string_if_empty(){
+  
+  $args = func_get_args();
+  $data = array_shift($args);
+  foreach($args as $arg){
+    if($data->{$arg}->is_empty())
+      $data->{$arg}->set('NULL');
+  }
+  return $data;
+  
+}
+
 function string_if_null(){
   
   $args = func_get_args();

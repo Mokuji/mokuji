@@ -11,5 +11,5 @@ CKEDITOR.editorConfig = function( config )
   //config.basePath: '/plugins/ckeditor/'
 	//config.skin = 'tx';
 	//config.uiColor = '#AADC6E';
-  config.filebrowserBrowseUrl = '../plugins/elfinder/elfinder.html';
+  config.filebrowserBrowseUrl = '../plugins/elfinder/cke-elfinder.html';
 };
