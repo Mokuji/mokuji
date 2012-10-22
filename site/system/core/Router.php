@@ -103,13 +103,13 @@ class Router
     //or load a section
     elseif(tx('Data')->get->section->is_set()){
       $si = $this->parse_section(tx('Data')->get->section);
-      $contents = tx('Component')->sections($si['component'])->get_html($si['controller']);
+      $contents = tx('Component')->sections($si['component'])->get_html($si['controller'], tx('Data')->get->options->get());
     }
     
     //maybe a module?
     elseif(tx('Data')->get->module->is_set()){
       $mi = $this->parse_module(tx('Data')->get->module);
-      $contents = tx('Component')->modules($mi['component'])->get_html($mi['controller']);
+      $contents = tx('Component')->modules($mi['component'])->get_html($mi['controller'], tx('Data')->get->options->get());
     }
     
     //load the template
