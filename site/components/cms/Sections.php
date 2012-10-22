@@ -208,28 +208,35 @@ class Sections extends \dependencies\BaseViews
 
   }
   
-  protected function menu_items($options)
+  //The tool-bar containing the buttons to control menu items with.
+  protected function menu_toolbar($options)
   {
     
-    //Get menu id and set it in session filters.
-    $mid = tx('Data')->filter('cms')->menu_id->is_set() ? tx('Data')->filter('cms')->menu_id : '1';
-    tx('Data')->session->cms->filters->menu_id->set(data_of($mid));
-    
-    //Get site id and set it in sessions filters.
-    $sid = tx('Data')->filter('cms')->site_id->is_set() ? tx('Data')->filter('cms')->site_id : tx('Site')->id;
-    tx('Data')->session->cms->filters->site_id->set(data_of($sid));
+    //Get all configured sites.
+    $sites = tx('Sql')->table('cms', 'Sites')->execute();
     
     //Get menu's.
     $menus = tx('Sql')
       ->table('menu', 'Menus')
-      ->where('site_id', $sid)
+      ->where('site_id', $options['site_id'])
       ->order('title')
-      ->execute()
-      ->is('empty', function($menus){
-        // $menus->{0}->set(array(
-        //   'title'=>__('No menu\'s found')
-        // ));
-      });
+      ->execute();
+    
+    return array(
+      'sites' => $sites,
+      'selected_site' => $options['site_id'],
+      'menus' => $menus,
+      'selected_menu' => $options['menu_id']
+    );
+    
+  }
+  
+  protected function menu_items($options)
+  {
+    
+    //Menu and site id.
+    $mid = $options['menu_id'];
+    $sid = $options['site_id'];
     
     //Get the menu.
     $menu = tx('Sql')
@@ -262,14 +269,10 @@ class Sections extends \dependencies\BaseViews
         ->execute();
     });
 
-    //Get all configured sites.
-    $sites = tx('Sql')->table('cms', 'Sites')->execute();
   
     return array(
       'menu_id' => $mid,
       'site_id' => $sid,
-      'sites' => $sites,
-      'menus' => $menus,
       'menu' => $menu,
       'items' => $menu_items
     );

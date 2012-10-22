@@ -768,7 +768,7 @@
 }
 
 
-#menu-items-toolbar{
+.menu-items-toolbar{
   z-index:1;
   background-color:#fff;
   border-bottom:solid #e0e0e0 1px;
@@ -779,11 +779,11 @@
 }
 
   /* Sub menu's */
-  #menu-items-toolbar menu{
+  .menu-items-toolbar menu{
     float:left;
   }
 
-  #menu-items-toolbar li{
+  .menu-items-toolbar li{
     -webkit-border-radius:3px;
     -moz-border-radius:3px;
     border-radius:3px;
@@ -802,22 +802,22 @@
     background: linear-gradient(top, #ffffff 0%,#f1f1f1 4%,#e2e2e2 100%); /* W3C */
   }
   
-  #menu-items-toolbar li.menu-state{
+  .menu-items-toolbar li.menu-state{
     -webkit-border-radius:none;
     -moz-border-radius:none;
     border-radius:none;
     background:none;
   }
   
-  #menu-items-toolbar li.menu-state #user-message,
-  #menu-items-toolbar li.menu-state #btn-save-menu-items,
-  #menu-items-toolbar li.menu-state .message-state{
+  .menu-items-toolbar li.menu-state #user-message,
+  .menu-items-toolbar li.menu-state #btn-save-menu-items,
+  .menu-items-toolbar li.menu-state .message-state{
   -webkit-border-radius:3px;
     -moz-border-radius:3px;
     border-radius:3px;
     float:left;
     margin-right:10px;
-    margin-bottom:10px;
+    /*margin-bottom:10px;*/
     list-style:none;
     background: rgb(226,239,160);
     background: -moz-linear-gradient(top,  rgba(226,239,160,1) 0%, rgba(194,212,105,1) 3%, rgba(154,195,68,1) 100%);
@@ -829,7 +829,7 @@
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2efa0', endColorstr='#9ac344',GradientType=0 );
   }
 
-    #menu-items-toolbar li a{
+    .menu-items-toolbar li a{
       -webkit-border-radius:3px;
       -moz-border-radius:3px;
       border-radius:3px;
@@ -847,11 +847,11 @@
       text-decoration: none;
       outline:0;
     }
-    #menu-items-toolbar #btn-edit-sites{
+    .menu-items-toolbar #btn-edit-sites{
       background-image:url('img/icons/title_bar/toggle_page_settings.png');
       background-position:4px 5px;
     }
-    #menu-items-toolbar #btn-select-site{
+    .menu-items-toolbar #btn-select-site{
       /*border: 1px solid #bcbcbc;*/
       width: 182px;
       /*background-position: -331px 0 !important;*/
@@ -868,28 +868,28 @@
     #btn-refresh-menu-items.revert{
       background-position: -54px 0 !important;
     }
-    #menu-items-toolbar #dropdown-menu{
+    .menu-items-toolbar #dropdown-menu{
       width:146px;
       color: #ffffff;
       /*text-indent:27px;*/
       margin-right: 0;
     }
-    #menu-items-toolbar #dropdown-menu a{
+    .menu-items-toolbar #dropdown-menu a{
       display:none;
     }
-    #menu-items-toolbar #dropdown-menu.menu-state #btn-select-menu,
-    #menu-items-toolbar #dropdown-menu.save-state #btn-save-menu-items,
-    #menu-items-toolbar #dropdown-menu.message-state #user-message{
+    .menu-items-toolbar #dropdown-menu.menu-state #btn-select-menu,
+    .menu-items-toolbar #dropdown-menu.save-state #btn-save-menu-items,
+    .menu-items-toolbar #dropdown-menu.message-state #user-message{
       display:block;
     }
-    #menu-items-toolbar #dropdown-menu #btn-select-menu{
+    .menu-items-toolbar #dropdown-menu #btn-select-menu{
       border: 1px solid #bcbcbc;
       width: 146px;
       background-position: -366px 0 !important;
       /*text-indent:12px;*/
       height:27px;
     }
-    #menu-items-toolbar #dropdown-menu #user-message{
+    .menu-items-toolbar #dropdown-menu #user-message{
       border: 1px solid #7da42d;
       width: 144px;
       background: url(img/icons/toolbar-assets.png) -81px 0, rgb(226,239,160);
@@ -905,7 +905,7 @@
       text-shadow: 0px 1px 0px #82961d;
       filter: dropshadow(color=#82961d, offx=0, offy=1);
     }
-    #menu-items-toolbar #dropdown-menu #btn-save-menu-items{
+    .menu-items-toolbar #dropdown-menu #btn-save-menu-items{
       border: 1px solid #bcbcbc;
       width: 144px;
       color:#fff;

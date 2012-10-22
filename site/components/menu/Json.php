@@ -21,6 +21,13 @@ class Json extends \dependencies\BaseComponent
     
   }
 
-  
+  public function delete_menu_item($data, $arguments)
+  {
+    
+    $arguments->{0}->validate('Menu Item #ID', array('required', 'number' => 'int'));
+    
+    tx('Sql')->table('menu', 'MenuItems')->pk($arguments[0]->get('int'))->execute()->{0}->hdelete();
+    
+  }
 
 }
