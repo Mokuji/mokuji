@@ -13,12 +13,12 @@ An option to link another menu item.<br />
     <input type="hidden" name="page_id" value="<?php echo tx('Data')->get->pid; ?>" />
 
     <div class="title-bar page-title">
-      <h2><span class="title"></span> <span style="font-weight:normal;">Koppel een menu-item</span></h2>
+      <h2><span class="title"></span> <span style="font-weight:normal;"><?php __($names->component, 'Link a menu item'); ?></span></h2>
       <div class="clear"></div>
     </div>
 
     <div class="body">
-      <?php echo $data->menu_items->as_options('menu_item_id', 'title', 'id', array('id'=>'menu_item_link', 'placeholder_text' => 'Koppel een menu-item aan deze pagina')); ?>
+      <?php echo $data->menu_items->as_options('menu_item_id', 'title', 'id', array('id'=>'menu_item_link', 'placeholder_text' => __($names->component, 'Link a menu item to this page'))); ?>
     </div>
 
   </form>
