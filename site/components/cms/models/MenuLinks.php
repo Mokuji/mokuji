@@ -15,7 +15,7 @@ class MenuLinks extends \dependencies\BaseModel
   {
     
     return tx('Sql')
-      ->table('cms', 'MenuItems')
+      ->table('menu', 'MenuItems')
       ->pk($this->menu_item_id)
       ->execute_single();
     
