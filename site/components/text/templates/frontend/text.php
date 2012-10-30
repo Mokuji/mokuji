@@ -1,6 +1,7 @@
 <?php namespace components\text; if(!defined('TX')) die('No direct access.'); ?>
 
 <?php
+
 $text->items->each(function($item){
   ?>
 
