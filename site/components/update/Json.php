@@ -150,7 +150,7 @@ class Json extends \dependencies\BaseViews
       ->lang_code->validate('Language code', array('required', 'string', 'not_empty'))->back()
       ->lang_shortcode->validate('Short code', array('required', 'string', 'not_empty'))->back()
       ->paths_base->validate('Base path', array('required', 'string', 'not_empty'))->back()
-      ->paths_url->validate('Url path', array('required', 'string'))->back()
+      ->paths_url->validate('Url path', array('string'))->back()
     ;
     
     //Write email config file.

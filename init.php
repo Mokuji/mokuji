@@ -75,7 +75,7 @@ else {
   $site->path_base = $_SERVER['DOCUMENT_ROOT'];
   $site->url_path = str_replace('/install/index.php', '', $_SERVER['PHP_SELF']);
   
-  if($site->url_path[0] === '/')
+  if($site->url_path && $site->url_path[0] === '/')
     $site->url_path = substr($site->url_path, 1);
   
 }

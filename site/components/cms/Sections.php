@@ -68,7 +68,17 @@ class Sections extends \dependencies\BaseViews
   protected function link_menu_item($options)
   {
 
-    return array();
+    return array(
+      'menu_items' => tx('Sql')
+        ->table('menu', 'MenuItems')
+          ->sk(1)
+          ->add_absolute_depth('depth')
+          ->join('MenuItemInfo', $mii)->left()
+        ->workwith($mii)
+          ->select('title', 'title')
+          ->where('language_id', LANGUAGE)
+        ->execute()
+    );
 
   }
 
