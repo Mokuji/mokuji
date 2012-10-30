@@ -274,6 +274,7 @@
     <button id="save-page" class="button black"><?php __('Save'); ?></button>
     <button id="save-page-return" href="<?php echo url(('section='.(tx('Data')->get->pid->is_set() ? 'cms/config_app&view=cms/pages' : 'cms/app')), true); ?>" class="button grey"><?php __('Save and return'); ?></button>
     <button id="cancel-page" href="<?php echo url(('section='.(tx('Data')->get->pid->is_set() ? 'cms/config_app&view=cms/pages' : 'cms/app')), true); ?>" class="button grey"><?php __('Cancel'); ?></button>
+    <!--<?php if(tx('Data')->get->pid->is_set()){ ?><button id="delete-page" href="<?php echo url('action=cms/delete_page&page_id='.tx('Data')->get->pid); ?>" class="button grey"><?php __('Delete'); ?></button><?php } ?>-->
 
   </div>
 

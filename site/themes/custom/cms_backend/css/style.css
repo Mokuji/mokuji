@@ -652,13 +652,17 @@ body.cursor_disabled{
   background: linear-gradient(top, #52575f 0%,#343943 4%,#343943 100%); /* W3C */
   border:1px solid #515151;
 }
-.tabs > ul > li > a:hover{
+.tabs > ul > li > a:not(.active):not(.selected):hover{
   background:#fff;
   text-decoration:none;
   font-weight:normal;
   color:#515151;
   text-shadow:none;
   border:1px solid #bcbcbc;
+}
+.tabs > ul > li > a.active:hover,
+.tabs > ul > li > a.selected:hover{
+  opacity:0.95;
 }
 .tabs .black{
   text-decoration:none;
@@ -795,6 +799,7 @@ body.cursor_disabled{
   }
   .tx-table td .edit,
   .tx-table td .delete{
+    padding: 0 5px;
     min-width:20px;
     text-indent:-9999px;
     display:inline-block;
@@ -880,8 +885,10 @@ body.cursor_disabled{
     background: url(../img/buttons/previous_enabled_hover.png) no-repeat left center !important;
   }
   .tx-table.dataTable{
+/*
     margin-top:10px;
     margin-bottom:10px;
+*/
   }
   .dataTables_length,
   .dataTables_filter{
