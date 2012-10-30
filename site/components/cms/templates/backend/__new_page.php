@@ -2,7 +2,7 @@
 
 <div id="new-page-wrap">
 
-  <h1><?php __('Add a page'); ?></h1>
+  <h1><?php __($names->component, 'Add a page', 'ucfirst'); ?></h1>
 
   <ul class="pagetypes-list">
     <?php
@@ -17,10 +17,10 @@
     ?>
   </ul>
 
-  <h2><?php __('Select an existing page'); ?></h2><br />
+  <h2><?php __($names->component, 'Select an existing page'); ?></h2><br />
   
   <select name="pages" id="page-link">
-    <option value=""><?php __('Select a page'); ?></option>
+    <option value=""><?php __($names->component, 'Select a page'); ?></option>
   <?php
   $new_page->pages->each(function($page){
     echo
@@ -68,7 +68,6 @@ $(function(){
 
       //update menu items in left sidebar
       $.ajax({url: "<?php echo url('section=cms/menu_items'); ?>"}).done(function(d){
-        console.log(d);
         $("#page-main-left .content .inner").html(d);
       });
 

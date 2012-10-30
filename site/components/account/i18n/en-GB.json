@@ -1,0 +1,18 @@
+{
+  
+  "ACCOUNTS_VIEW_TITLE": "User management",
+  "ACCOUNTS_VIEW_DESCRIPTION": "",
+  
+  "PROFILE_VIEW_TITLE": "Profile",
+  "PROFILE_VIEW_DESCRIPTION": "",
+  
+  
+  
+  "EXCEL_SAVE_AS_CSV": "In Excel: 'File', 'Save as...', Chose as type 'CSV (*.csv)'",
+  
+  "IMPORT_EXPLANATION_P1": "Users can be imported using a CSV file. When saving a CSV file a delimiter is chosen. You can specify this delimiter in the designated field. If the delimiter does not match it's not possible to distinguish between columns and the import function will return an error.",
+  "IMPORT_EXPLANATION_P2": "So that you can easily manage imported users later, you can add all users from this import to one or more usergroups.",
+  "IMPORT_EXPLANATION_P3": "With the column names you can specify which data can be found in which columns. We assume that the first line in the CSV file indicates the column names (capitalization does not matter) and user information starts from the second line.",
+  "IMPORT_VERB": "Import"
+  
+}

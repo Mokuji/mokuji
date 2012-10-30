@@ -7,12 +7,12 @@
     <input type="hidden" name="id" value="<?php echo $edit_menu_item->item->id; ?>" />
 
     <div class="title-bar page-title">
-      <h2><span class="title"><?php echo $edit_menu_item->item->info->{LANGUAGE}->title; ?></span> <span style="font-weight:normal;">(menu-item)</span></h2>
+      <h2><span class="title"><?php echo $edit_menu_item->item->info->{LANGUAGE}->title; ?></span> <span style="font-weight:normal;">(<?php __($names->component, 'Menu item', 'l') ?>)</span></h2>
       <ul class="title-bar-icons clearfix">
         <?php if(tx('Component')->available('media')){ ?>
-          <li><a href="#" class="icon menu-item-settings" id="toggle-menu-item-settings" title="<?php __('Toggle menu item settings'); ?>">Toggle menu item settings</a></li>
+          <li><a href="#" class="icon menu-item-settings" id="toggle-menu-item-settings" title="<?php __('Toggle menu item settings'); ?>"><?php __($names->component, 'Toggle menu item settings', 'ucfirst') ?></a></li>
         <?php } ?>
-        <li><a href="#" class="icon" id="detach-menu-item" style="display:none;">Detach menu item from page</a></li>
+        <li><a href="#" class="icon" id="detach-menu-item" style="display:none;"><?php __($names->component, 'Detach menu item from page', 'ucfirst') ?></a></li>
       </ul>
       <div class="clear"></div>
     </div>
@@ -31,9 +31,9 @@
             ->each(function($lang)use($data, $languages){
               $in_language_text = ($languages->size() <= 1 ? '' : $in_language_text = ' '.__('IN_LANGUAGE_NAME', 1).' '.$lang->title);
             ?>
-
+            
             <div class="inputHolder">
-            <label for="l_title_menu_item_<?php echo $lang->id; ?>"><?php __('Menu-item titel').$in_language_text; ?></label>
+            <label for="l_title_menu_item_<?php echo $lang->id; ?>"><?php __($names->component, 'Menu item title').$in_language_text; ?></label>
             <input class="big" type="text" id="l_title_menu_item_<?php echo $lang->id; ?>" name="info[<?php echo $lang->id; ?>][title]" value="<?php echo $data->item->info[$lang->id]->title; ?>" />
             </div>
 
@@ -45,7 +45,7 @@
         else{
           ?>
           <div class="inputHolder">
-            <label for="l_title_menu_item_<?php echo LANGUAGE; ?>"><?php __('Menu-item titel'); ?></label>
+            <label for="l_title_menu_item_<?php echo LANGUAGE; ?>"><?php __($names->component, 'Menu item title'); ?></label>
             <input class="big" type="text" id="l_title_menu_item_<?php echo LANGUAGE; ?>" name="info[<?php echo LANGUAGE; ?>][title]" value="<?php echo $data->item->info[LANGUAGE]->title; ?>" />
           </div>
           <?php
@@ -84,7 +84,7 @@
 
         <div class="inner">
 
-          <h3><?php __('Menu item settings') ?></h3>
+          <h3><?php __($names->component, 'Menu item settings', 'ucfirst') ?></h3>
           
           <?php if(tx('Component')->available('media')){ ?>
           <fieldset>
@@ -97,7 +97,7 @@
             
             <?php if($data->item->image_id->get() > 0){ ?>
             <div class="ctrlHolder">
-              <input id="delete-menu-item-image" type="button" class="button grey" value="Delete image" />
+              <input id="delete-menu-item-image" type="button" class="button grey" value="<?php __($names->component, 'Delete image') ?>" />
               <script type="text/javascript" language="javascript">
                 jQuery(function($){
                   

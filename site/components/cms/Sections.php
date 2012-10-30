@@ -303,9 +303,6 @@ class Sections extends \dependencies\BaseViews
       'items' => tx('Sql')
         ->table('cms', 'ComponentViews')
           ->where('is_config', 1)
-          ->join('Components', $com)
-        ->workwith($com)
-          ->select('name', 'component_name')
         ->execute()
     );
     

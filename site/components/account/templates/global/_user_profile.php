@@ -25,7 +25,7 @@ echo $user_profile->image_uploader;
             <div id="file-drop" class="drag-here"></div>
           </div>
           <div class="buttonHolder">
-            <a id="file-browse" class="file-browse" href="#">Upload uw foto</a>
+            <a id="file-browse" class="file-browse" href="#"><?php __($names->component, 'Upload your picture'); ?></a>
           </div>
         </div>
 
@@ -38,21 +38,21 @@ echo $user_profile->image_uploader;
       </fieldset>
       <fieldset>
         <?php if($user_profile->need_old_password->is_true()){ ?>
-        <label for="l_password_old"><?php __('Old password'); ?>:</label>
-        <input type="password" name="password_old" placeholder="<?php __('Old password'); ?>" />
+        <label for="l_password_old"><?php __($names->component, 'Old password'); ?>:</label>
+        <input type="password" name="password_old" placeholder="<?php __($names->component, 'Old password'); ?>" />
         <?php } ?>
-        <label for="l_password1"><?php __('New password'); ?>:</label>
-        <input type="password" name="password1" placeholder="<?php __('New password'); ?>" />
-        <label for="l_password2"><?php __('Confirm new password'); ?>:</label>
-        <input type="password" name="password2" placeholder="<?php __('Confirm new password'); ?>" />
+        <label for="l_password1"><?php __($names->component, 'New password'); ?>:</label>
+        <input type="password" name="password1" placeholder="<?php __($names->component, 'New password'); ?>" />
+        <label for="l_password2"><?php __($names->component, 'Confirm new password'); ?>:</label>
+        <input type="password" name="password2" placeholder="<?php __($names->component, 'Confirm new password'); ?>" />
       </fieldset>
       <fieldset>
-        <label><?php __('Voornaam'); ?>:</label>
-        <input type="text" name="name" placeholder="Voornaam" value="<?php echo $user_profile->user->name; ?>" />
-        <label><?php __('Tussenvoegsel'); ?>:</label>
-        <input type="text" name="preposition" placeholder="Tussenvoegsel" value="<?php echo $user_profile->user->preposition; ?>" />
-        <label><?php __('Achternaam'); ?>:</label>
-        <input type="text" name="family_name" placeholder="Achternaam" value="<?php echo $user_profile->user->family_name; ?>" />
+        <label><?php __('First name'); ?>:</label>
+        <input type="text" name="name" placeholder="<?php __('First name'); ?>" value="<?php echo $user_profile->user->name; ?>" />
+        <label><?php __('Preposition'); ?>:</label>
+        <input type="text" name="preposition" placeholder="<?php __('Preposition'); ?>" value="<?php echo $user_profile->user->preposition; ?>" />
+        <label><?php __('Last name'); ?>:</label>
+        <input type="text" name="family_name" placeholder="<?php __('Last name'); ?>" value="<?php echo $user_profile->user->family_name; ?>" />
       </fieldset>
       <!--
       <fieldset>
@@ -66,7 +66,7 @@ echo $user_profile->image_uploader;
         <input type="text" name="phone_mobile" value="Telefoon mobiel" />
       </fieldset>
       -->
-      <input type="submit" value="Wijzigingen opslaan" />
+      <input type="submit" value="<?php __('Save'); ?>" />
       <div class="clear"></div>
     </div>
     <div class="clear"></div>

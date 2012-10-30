@@ -11,17 +11,17 @@
           'default'=>$data->site_id)
         ); ?>
       </li>
-      <li><a href="<?php echo url('view=cms/sites&menu=NULL&pid=NULL'); ?>" id="btn-edit-sites"><?php __('Edit sites'); ?></a></li>
+      <li><a href="<?php echo url('view=cms/sites&menu=NULL&pid=NULL'); ?>" id="btn-edit-sites"><?php __($names->component, 'Edit sites'); ?></a></li>
     </ul>
   <?php } ?>
 
   <ul class="_menu toolbar">
-    <li><a href="<?php echo url('section=cms/app&menu=0', true); ?>" id="btn-new-menu-item"><?php __('New menu item'); ?></a></li>
-    <li><a href="<?php echo url('section=cms/menu_items'); ?>" id="btn-refresh-menu-items"><?php __('Refresh menu items'); ?></a></li>
+    <li><a href="<?php echo url('section=cms/app&menu=0', true); ?>" id="btn-new-menu-item" title="<?php __($names->component, 'New menu item'); ?>"></a></li>
+    <li><a href="<?php echo url('section=cms/menu_items'); ?>" id="btn-refresh-menu-items" title="<?php __($names->component, 'Refresh menu items'); ?>"></a></li>
     <li class="menu-state" id="dropdown-menu">
 
-      <a href="#" id="btn-save-menu-items"><?php __('Save menu items'); ?></a>
-      <a href="#" id="user-message"><?php __('Saved successfully'); ?></a>
+      <a href="#" id="btn-save-menu-items"><?php __($names->component, 'Save menu items'); ?></a>
+      <a href="#" id="user-message"><?php __('Saved'); ?></a>
 
       <?php
       //Menu select.
@@ -129,7 +129,7 @@ $data->items
     -------------------------------------------------------------- */
     $(".menu-items-list .icon-delete").on("click", function(){
 
-      if(confirm("Weet u zeker dat u dit menu-item wilt verwijderen?")){
+      if(confirm("<?php __($names->component, 'Are you sure you want to delete this menu item'); ?>?")){
 
         var _this = $(this);
 

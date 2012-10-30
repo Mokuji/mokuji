@@ -1,13 +1,13 @@
 <?php namespace components\cms; if(!defined('TX')) die('No direct access.'); tx('Account')->page_authorisation(2);
 
 echo $data->as_table(array(
-  __('Site title', 1) => 'title',
-  __('Domains', 1) => function($site){ return $site->domains->map(function($domain){ return $domain->domain; })->join(', '); },
-  __('Path base', 1) => 'path_base',
-  __('URL path', 1) => 'url_path',
-  __('actions', 1) => array(
-    function($site){return '<a class="edit" href="'.url('section=cms/edit_site&site_id='.$site->id, true).'">'.__('edit', 1).'</a>';},
-    function($site){return '<a class="delete" href="'.url('action=cms/delete_site&site_id='.$site->id, true).'">'.__('delete', 1).'</a>';}
+  __($names->component, 'Site title', 1) => 'title',
+  __($names->component, 'Domains', 1) => function($site){ return $site->domains->map(function($domain){ return $domain->domain; })->join(', '); },
+  __($names->component, 'Path base', 1) => 'path_base',
+  __($names->component, 'URL path', 1) => 'url_path',
+  __('Actions', 1) => array(
+    function($site){return '<a class="edit" href="'.url('section=cms/edit_site&site_id='.$site->id, true).'">'.__('Edit', 1).'</a>';},
+    function($site){return '<a class="delete" href="'.url('action=cms/delete_site&site_id='.$site->id, true).'">'.__('Delete', 1).'</a>';}
   )
 )); ?>
 

@@ -348,7 +348,7 @@ abstract class BaseDBUpdates
     
     if(!$next){
       tx('Logging')->log('Update', 'Updating DB', 'Dead end in update path for package '.$this->package()->title.' at version '.$this->current_version());
-      return;
+      return false;
     }
     
     $method = 'update_to_'.str_replace('.', '_', $next);
@@ -371,7 +371,8 @@ abstract class BaseDBUpdates
     //Otherwise just report we're skipping it, but once looked for it.
     else{
       tx('Logging')->log('Update', 'Updating DB', 'No method '.$method.' for package '.$this->package()->title.' from version '.$this->current_version());
-      return false;
+      $this->version_bump($next);
+      return true;
     }
     
   }

@@ -8,32 +8,32 @@ $uid = tx('Security')->random_string(20);
   <input type="hidden" name="id" value="<?php echo $edit_user->id ?>" />
   
   <div class="ctrlHolder">
-    <label for="l_email" accesskey="e"><?php __('E-mailadres'); ?></label>
+    <label for="l_email" accesskey="e"><?php __('Email address'); ?></label>
     <input class="big large" type="text" id="l_email" name="email" value="<?php echo $edit_user->email; ?>" required />
   </div>
   
   <div class="ctrlHolder">
-    <label for="l_username" accesskey="g"><?php __('Gebruikersnaam'); ?></label>
+    <label for="l_username" accesskey="g"><?php __('Username'); ?></label>
     <input class="big large" type="text" id="l_username" name="username" value="<?php echo $edit_user->username; ?>" />
   </div>
   
   <div class="ctrlHolder">
-    <label for="l_password" accesskey="p"><?php __('Wachtwoord'); ?></label>
+    <label for="l_password" accesskey="p"><?php __('Password'); ?></label>
     <input class="big large" type="password" id="l_password" name="password" value="" placeholder="wachtwoord verborgen" />
   </div>
   
   <div class="ctrlHolder">
-    <label for="l_name" accesskey="f"><?php __('Voornaam'); ?></label>
+    <label for="l_name" accesskey="f"><?php __('First name'); ?></label>
     <input class="big large" type="text" id="l_name" name="name" value="<?php echo $edit_user->name; ?>" />
   </div>
   
   <div class="ctrlHolder">
-    <label for="l_preposition" accesskey="t"><?php __('Tussenvoegsel'); ?></label>
+    <label for="l_preposition" accesskey="t"><?php __('Preposition'); ?></label>
     <input class="big large" type="text" id="l_preposition" name="preposition" value="<?php echo $edit_user->preposition; ?>" />
   </div>
   
   <div class="ctrlHolder">
-    <label for="l_family_name" accesskey="l"><?php __('Achternaam'); ?></label>
+    <label for="l_family_name" accesskey="l"><?php __('Last name'); ?></label>
     <input class="big large" type="text" id="l_family_name" name="family_name" value="<?php echo $edit_user->family_name; ?>" />
   </div>
   
@@ -49,7 +49,7 @@ $uid = tx('Security')->random_string(20);
       
       ?>
         <div class="ctrlHolder">
-          <label for="l_choose_password" accesskey="a"><input class="big large" type="checkbox" id="l_choose_password" name="choose_password" value="1" /> <?php __('Let user choose password'); ?></label>
+          <label for="l_choose_password" accesskey="a"><input class="big large" type="checkbox" id="l_choose_password" name="choose_password" value="1" /> <?php __($names->component, 'Let user choose password'); ?></label>
         </div>
       <?php
       
@@ -71,7 +71,7 @@ $uid = tx('Security')->random_string(20);
       
       ?>
         <div class="ctrlHolder" hidden>
-          <label for="l_notify_user" accesskey="n"><input class="big large" type="checkbox" id="l_notify_user" name="notify_user" value="1" /> <?php __('Notify user of update'); ?></label>
+          <label for="l_notify_user" accesskey="n"><input class="big large" type="checkbox" id="l_notify_user" name="notify_user" value="1" /> <?php __($names->component, 'Notify user of update'); ?></label>
         </div>
       <?php
       
@@ -81,7 +81,7 @@ $uid = tx('Security')->random_string(20);
   
   <fieldset class="fieldset-user-groups">
     
-    <legend><?php echo __('Member of groups'); ?></legend>
+    <legend><?php echo __($names->component, 'Member of groups'); ?></legend>
     
     <ul>
       <?php
@@ -126,7 +126,7 @@ $(function(){
       pass_field.prop('disabled', true);
       pass_val = pass_field.val();
       pass_field.val('');
-      pass_field.attr('placeholder', 'door gebruiker in te vullen');
+      pass_field.attr('placeholder', "<?php __($names->component, 'User must set this', 'l'); ?>");
       
     }
     
@@ -141,7 +141,7 @@ $(function(){
       
       pass_field.prop('disabled', false);
       pass_field.val(pass_val);
-      pass_field.attr('placeholder', 'wachtwoord verborgen');
+      pass_field.attr('placeholder', "<?php __($names->component, 'Password hidden', 'l'); ?>");
       
     }
     

@@ -5,7 +5,9 @@ class Language
   
   private
     $language_id,
-    $language_code;
+    $language_code,
+    $caching,
+    $translations;
   
   //Getters for read_only properties.
   public function get_language_id(){ return $this->language_id; }
@@ -14,6 +16,10 @@ class Language
   //in the initiator, we set the language to the first language in the database, or one defined by session vars
   public function init()
   {
+    
+    //Default is that we use caching.
+    $this->caching = true;
+    $this->translations = array();
     
     $language = null;
     
@@ -72,11 +78,8 @@ class Language
   public function translate($phrase, $component=null, $lang_id=null, $case = null)
   {
     
-    raw($case, $phrase);
-    $component = Data($component);
+    raw($case, $phrase, $component);
     $lang_id = Data($lang_id);
-    
-    //Component variable is ignored for now. But will be used for component specific translations later on.
     
     //Find the language we're looking for.
     if($lang_id->is_set()){
@@ -85,18 +88,42 @@ class Language
       $language_code = $this->language_code;
     }
     
-    //Load ini file.
-    $lang_file = PATH_SITE.'/languages/'.$language_code.'.ini';
-    if(!is_file($lang_file)){
-      throw new \exception\FileMissing('The file \'%s\' can not be found.', $lang_file);
+    //See if we need to load this from file.
+    if(!$this->caching || !array_key_exists($language_code, $this->translations) || !array_key_exists($component ? $component : DS, $this->translations[$language_code])){
+      
+      //Load json file.
+      $lang_file = ($component ? PATH_COMPONENTS.DS.$component : PATH_SITE).DS.'i18n'.DS.$language_code.'.json';
+      if(!is_file($lang_file)){
+        throw new \exception\FileMissing('The file \'%s\' can not be found.', $lang_file);
+      }
+      
+      //Parse file.
+      $arr = json_decode(file_get_contents($lang_file), true);
+      if(!is_array($arr)) $arr = array();
+      
+      //Create an array for this language in the cache if it doesn't exist yet.
+      if(!array_key_exists($language_code, $this->translations))
+        $this->translations[$language_code] = array();
+      
+      //Cache this per language, then per component.
+      $this->translations[$language_code][$component ? $component : DS] = $arr;
+      
     }
     
-    //Parse ini file.
-    $ini_arr = parse_ini_file($lang_file);
+    //If we can get it from cache.
+    else {
+      $arr = $this->translations[$language_code][$component ? $component : DS];
+    }
     
     //Translate.
-    if(array_key_exists($phrase, $ini_arr)){
-      $phrase = $ini_arr[$phrase];
+    if(array_key_exists($phrase, $arr)){
+      $phrase = $arr[$phrase];
+    }
+    
+    //If the translation is not found in this file, and we specified a component, fall back on the core translation files.
+    else if($component) {
+      tx('Logging')->log('Translate', 'Com '.$component.' fallback', $phrase);
+      return $this->translate($phrase, null, $lang_id, $case);
     }
     
     //Convert case?

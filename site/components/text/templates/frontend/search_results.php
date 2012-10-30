@@ -1,6 +1,6 @@
 <?php namespace components\text; if(!defined('TX')) die('No direct access.'); ?>
 
-<h1 style="display:block;"><?php __('SEARCH_RESULTS_FOR'); ?>: <?php echo $search_results->term; ?></h1>
+<h1 style="display:block;"><?php __($names->component, 'Search results for'); ?>: <?php echo $search_results->term; ?></h1>
 
 <?php
 
@@ -16,7 +16,7 @@ $search_results->results->each(function($row)use($search_results){
 
       '<p>'.
         str_replace($search_results->term->get(), '<span class="highlighted">'.$search_results->term.'</span>', substr(strip_tags($row->text), 0, 200)).' ...'.
-        ' <a href="'.url('pid='.$row->page_id).'" title="Lees meer" class="read-more">Meer &gt;</a>'.
+        ' <a href="'.url('pid='.$row->page_id).'" title="<?php __($names->component, 'Read more'); ?>" class="read-more"><?php __($names->component, 'More'); ?> &gt;</a>'.
       '</p>'.
 
     '</div>';
@@ -25,5 +25,5 @@ $search_results->results->each(function($row)use($search_results){
 
 if($data->results->size() == 0)
 {
-  echo __('PNELIS__NO_SEARCH_RESULTS');
+  __($names->component, 'No search results');
 }

@@ -1,14 +1,14 @@
 <?php namespace components\cms; if(!defined('TX')) die('No direct access.'); tx('Account')->page_authorisation(2);
 
 echo $page_list->as_table(array(
-  __('Page title', 1) => 'title',
-  __('Page type', 1) => function($page){ return $page->component_view->prefered_title; },
-  __('Menu items', 1) => function($page_list){
+  __($names->component, 'Page title', 1) => 'title',
+  __($names->component, 'Page type', 1) => function($page){ return $page->component_view->prefered_title; },
+  __($names->component, 'Menu items', 1) => function($page_list){
     return $page_list->menu_items->map(function($mi){return $mi->title;})->join(htmlspecialchars(' | '));
   },
-  __('actions', 1) => array(
-    function($page_list){return '<a class="edit" href="'.url('pid='.$page_list->id, true).'">'.__('edit', 1).'</a>';},
-    function($page_list){return '<a class="delete" href="'.url('action=cms/delete_page&page_id='.$page_list->id).'">'.__('delete', 1).'</a>';}
+  __('Actions', 1) => array(
+    function($page_list){return '<a class="edit" href="'.url('pid='.$page_list->id, true).'">'.__('Edit', 1).'</a>';},
+    function($page_list){return '<a class="delete" href="'.url('action=cms/delete_page&page_id='.$page_list->id).'">'.__('Delete', 1).'</a>';}
   )
 )); ?>
 

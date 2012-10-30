@@ -12,6 +12,16 @@ class ComponentViews extends \dependencies\BaseModel
       'ComponentViewCustomNames' => array('id' => 'ComponentViewCustomNames.com_view_id')
     );
   
+  public function get_component()
+  {
+    
+    return tx('Sql')
+      ->table('cms', 'Components')
+      ->pk($this->com_id)
+      ->execute_single();
+    
+  }
+  
   public function get_custom_names()
   {
     
@@ -27,14 +37,14 @@ class ComponentViews extends \dependencies\BaseModel
   public function get_prefered_title()
   {
     
-    return $this->custom_names->title->otherwise(___($this->tk_title, 'ucfirst'));
+    return $this->custom_names->title->otherwise(__($this->component->name, $this->tk_title, 'ucfirst', true));
     
   }
   
   public function get_prefered_description()
   {
     
-    return $this->custom_names->description->otherwise($this->tk_description->is_set() ? ___($this->tk_description) : null);
+    return $this->custom_names->description->otherwise($this->tk_description->is_set() ? __($this->component->name, $this->tk_description, true) : null);
     
   }
   

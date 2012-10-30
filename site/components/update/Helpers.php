@@ -13,8 +13,8 @@ class Helpers extends \dependencies\BaseComponent
     $force = $options->force->is_true();
     
     if(!$silent) echo '<div id="update-logs">'.n.
-      '<h1>'.__('Update logs', 1).'</h1>'.n.
-      '<a class="back button grey" href="?view=update/summary">'.__('Back to summary', 1).'</a>'.br.n;
+      '<h1>'.__($this->component, 'Update logs', 1).'</h1>'.n.
+      '<a class="back button grey" href="?view=update/summary">'.__($this->component, 'Back to summary', 1).'</a>'.br.n;
     
     //Look through root dir.
     if(is_dir(PATH_BASE.DS.'.package'))
@@ -68,11 +68,11 @@ class Helpers extends \dependencies\BaseComponent
     
     $packageFile = $folder.DS.'.package'.DS.'package.json';
     
-    if(!$silent) echo br.n.__('Scanning', 1).': <strong class="path package">'.str_replace(PATH_BASE.DS, '../', $folder).'</strong>'.br.n;
+    if(!$silent) echo br.n.__($this->component, 'Scanning', 1).': <strong class="path package">'.str_replace(PATH_BASE.DS, '../', $folder).'</strong>'.br.n;
     
     //Make sure the package file is there.
     if(!is_file($packageFile)){
-      if(!$silent) echo '<em class="error">'.__('Package folder does not contain package.json file', 1).'.</em>'.br.n;
+      if(!$silent) echo '<em class="error">'.__($this->component, 'Package folder does not contain package.json file', 1).'.</em>'.br.n;
       else throw new \exception\NotFound('Package folder does not contain package.json file');
       return;
     }
@@ -88,7 +88,7 @@ class Helpers extends \dependencies\BaseComponent
         break;
       
       default:
-        if(!$silent) echo '<em class="error">'.__('Package type', 1).' '.$package->type->get().' '.__('is not supported', 1).'.</em>'.br.n;
+        if(!$silent) echo '<em class="error">'.__($this->component, 'Package type', 1).' '.$package->type->get().' '.__($this->component, 'Is not supported', 'l', 1).'.</em>'.br.n;
         else throw new \exception\Expected('Package type '.$package->type->get().' is not supported');
       
     }
@@ -184,7 +184,7 @@ class Helpers extends \dependencies\BaseComponent
         }
         
         catch(\exception\Exception $ex){
-          if(!$silent) echo '<em class="error">'.__('Error while updating database', 1).'.'.br.n.$ex->getMessage().'</em>'.br.n;
+          if(!$silent) echo '<em class="error">'.__($this->component, 'Error while updating database', 1).'.'.br.n.$ex->getMessage().'</em>'.br.n;
           else throw new \exception\Expected('Error while updating database. '.$ex->getMessage());
           return;
         }
@@ -199,10 +199,10 @@ class Helpers extends \dependencies\BaseComponent
         ))->save();
       }
       
-      if(!$silent) echo __('New versions loaded', 1).'!'.br.n;
+      if(!$silent) echo __($this->component, 'New versions loaded', 1).'!'.br.n;
       
     }
-    else if(!$silent) echo __('No new updates', 1).'.'.br.n;
+    else if(!$silent) echo __($this->component, 'No new updates', 1).'.'.br.n;
     
   }
   
