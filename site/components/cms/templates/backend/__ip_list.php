@@ -1,11 +1,11 @@
 <?php namespace components\cms; if(!defined('TX')) die('No direct access.'); tx('Account')->page_authorisation(2);
 
 echo $data->as_table(array(
-  __('address', 1) => 'address',
-  __('login_level', 1) => 'login_level',
-  __('actions', 1) => array(
-    function($row){return '<a class="edit" href="'.url('section=cms/ip_edit&address='.$row->address, true).'">'.__('edit', 1).'</a>';},
-    function($row){return '<a class="delete" href="'.url('action=cms/delete_ip&address='.$row->address).'">'.__('delete', 1).'</a>';}
+  __('Address', 1) => 'address',
+  __($names->component, 'Login level', 1) => 'login_level',
+  __('Actions', 1) => array(
+    function($row){return '<a class="edit" href="'.url('section=cms/ip_edit&address='.$row->address, true).'">'.__('Edit', 1).'</a>';},
+    function($row){return '<a class="delete" href="'.url('action=cms/delete_ip&address='.$row->address).'">'.__('Delete', 1).'</a>';}
   )
 ));
 

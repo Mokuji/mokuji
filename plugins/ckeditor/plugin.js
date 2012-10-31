@@ -5,8 +5,8 @@
       selector: '.editor',
       config: {
         skin: 'kama',
-        path_ckfinder: '/plugins/ckfinder/',
-        path_ckfinder_uploads: '/files/explorer/',
+//        path_ckfinder: '/plugins/ckfinder/',
+//        path_ckfinder_uploads: '/files/explorer/',
         toolbar_Full:
         [
           { name: 'document',   items : [ 'Source','-','Preview','Print','-','Templates' ] },
@@ -39,7 +39,8 @@
 
     //initialize the editor
     $(this.options.selector).ckeditor(this.options.config, function(){
-      CKFinder.setupCKEditor(this, options.config.path_ckfinder);
+      if(options.config.path_ckfinder)
+        CKFinder.setupCKEditor(this, options.config.path_ckfinder);
     });
 
     return this;

@@ -10,7 +10,7 @@ class Actions extends \dependencies\BaseComponent
       'edit_page' => 2,
       'logout' => 1
     );
-
+  
   protected function select_menu($data)
   {
 
@@ -275,11 +275,12 @@ class Actions extends \dependencies\BaseComponent
     tx('Url')->redirect(url('section=cms/app&menu='.$item->id, true));
 
   }
-
-
+  
   protected function login($data)
   {
-
+    
+    throw new \exception\Deprecated();
+    
     $data = $data->having('email', 'pass');
 
     tx('Logging in.', function()use($data){
@@ -312,7 +313,9 @@ class Actions extends \dependencies\BaseComponent
 
   protected function logout($data)
   {
-
+    
+    throw new \exception\Deprecated();
+    
     tx('Logging out.', function(){tx('Account')->logout();})->failure(function($info){
       tx('Controller')->message(array(
         'error' => $info->get_user_message()
@@ -324,7 +327,9 @@ class Actions extends \dependencies\BaseComponent
 
   protected function register($data)
   {
-
+    
+    throw new \exception\Deprecated();
+    
     $data = $data->having('email', 'username', 'password');
 
     tx('Registering a new account.', function()use($data){

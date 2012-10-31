@@ -1,0 +1,83 @@
+{
+  
+  "PAGES_VIEW_TITLE": "Pagina's",
+  "PAGES_VIEW_DESCRIPTION": "",
+  
+  "SETTINGS_VIEW_TITLE": "Website instellingen",
+  "SETTINGS_VIEW_DESCRIPTION": "",
+  
+  
+  
+  "Add a page": "Voeg een pagina toe",
+  "Are you sure you want to delete this menu item": "Weet u zeker dat u dit menu-item wilt verwijderen",
+  
+  "Control Panel Home": "Beheerderspaneel homepagina",
+  "Create user": "Gebruiker aanmaken",
+  
+  "Detach menu item from page": "Koppel menu-item los van pagina",
+  "Detach page from menu item": "Koppel pagina los van menu-item",
+  "Delete image": "Verwijder afbeelding",
+  "Domains": "Domeinen",
+  
+  "Edit site": "Bewerk site",
+  "Edit the current webpage": "Bewerk de huidige webpagina",
+  
+  "FEEDBACK_INTRODUCTION": "Wat vindt u van de site? Heeft u opmerkingen of suggesties ter verbetering van de site? Laat het <a href=\"http://tuxion.nl\" target=\"_blank\">ons ontwikkelaarsteam</a> weten. Bij voorbaat dank!",
+  
+  "Go back to the website": "Ga terug naar de website",
+  "Group members": "Groepsleden",
+  "Groups with access": "Groepen met toegang",
+  
+  "IP filters": "IP-filters",
+  
+  "Link a menu item": "Koppel een menu-item",
+  "Link a menu item to this page": "Koppel een menu-item aan deze pagina",
+  "Login level": "Inlog niveau",
+  "Logout": "Uitloggen",
+  
+  "Main settings": "Hoofdinstellingen",
+  "Manage the website": "Beheer de website",
+  "Menu item": "Menu-item",
+  "Menu items": "Menu-items",
+  "Menu item settings": "Menu-item instellingen",
+  "Menu item title": "Menu-item titel",
+  
+  "New menu": "Nieuw menu",
+  "New menu item": "Nieuw menu-item",
+  "New site": "Nieuwe site",
+  "No menu items found": "Geen menu-items gevonden",
+  
+  "Page content": "Pagina inhoud",
+  "PAGE_DISPLAY": "Weergave",
+  "Page info": "Pagina info",
+  "Page settings": "Pagina instellingen",
+  "Page title": "Paginatitel",
+  "Page title (visible in addressbar)": "Pagina titel (zichtbaar in adresbalk)",
+  "Page type": "Paginatype",
+  "Page was deleted": "Pagina was verwijderd",
+  "Path base": "Pad basis",
+  
+  "Refresh menu items": "Ververs menu-items",
+  
+  "Save menu items": "Menu-items opslaan",
+  "Select an existing page": "Selecteer een bestaande pagina",
+  "Select a page": "Selecteer een pagina",
+  "Select a site layout": "Selecteer een site-indeling",
+  "Select a theme": "Selecteer een thema",
+  "Select the homepage": "Selecteer de home-pagina",
+  "Select the login page": "Selecteer de inlog-pagina",
+  "Sites": "Sites",
+  "Site layout": "Site-indeling",
+  "Site title": "Site-titel",
+  "Slogan (visible in header)": "Slagzin (zichtbaar in kop)",
+  
+  "Theme": "Thema",
+  "This page was deleted from the database. Unlink it from the menu item.": "Deze pagina is verwijderd van de database. Koppel het los van het menu-item.",
+  "Toggle menu item settings": "Schakel menu-item instellingen",
+  "Toggle page settings": "Schakel pagina instellingen",
+  
+  "URL path": "URL-pad",
+  
+  "Website settings": "Website instellingen"
+  
+}

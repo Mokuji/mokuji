@@ -9,7 +9,9 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
   
   protected
     $is_core = true,
-    $updates = array();
+    $updates = array(
+      '3.2.0' => '3.3.0'
+    );
   
   public function install_3_2_0($dummydata, $forced)
   {

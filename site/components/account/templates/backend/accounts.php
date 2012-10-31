@@ -1,19 +1,19 @@
 <?php namespace components\account; if(!defined('TX')) die('No direct access.'); tx('Account')->page_authorisation(2); ?>
 
-<h1><?php echo __('Account management'); ?></h1>
+<h1><?php echo __($names->component, 'Account management'); ?></h1>
 
 <div class="tabs" id="tabs-accounts">
 
   <!-- TABS -->
   <ul>
     <li id="tabber-users" class="active"><a href="#tab-users"><?php __('Users'); ?></a></li>
-    <li id="tabber-user"><a href="#tab-user"><?php __('New user'); ?></a></li>
-    <li id="tabber-groups"><a href="#tab-groups"><?php __('Groups'); ?></a></li>
-    <li id="tabber-group"><a href="#tab-group"><?php __('New group'); ?></a></li>
+    <li id="tabber-user"><a href="#tab-user"><?php __($names->component, 'New user'); ?></a></li>
+    <li id="tabber-groups"><a href="#tab-groups"><?php __($names->component, 'Groups'); ?></a></li>
+    <li id="tabber-group"><a href="#tab-group"><?php __($names->component, 'New group'); ?></a></li>
     <?php if(tx('Component')->available('mail')){ ?>
-      <li id="tabber-mail"><a href="#tab-mail"><?php __('Mail'); ?></a></li>
+      <li id="tabber-mail"><a href="#tab-mail"><?php __($names->component, 'Mailing'); ?></a></li>
     <?php } ?>
-    <li id="tabber-import"><a href="#tab-import"><?php echo ucfirst(__('IMPORT_PLURAL', 1)); ?></a></li>
+    <li id="tabber-import"><a href="#tab-import"><?php __($names->component, 'IMPORT_VERB', 'ucfirst'); ?></a></li>
   </ul>
   <!-- /TABS -->
   
@@ -69,11 +69,11 @@
       */ ?>
       
       if(id != "#tab-user" || $("#tab-user").find("input[name=id]").val() == ""){
-        $("#tabber-user").find("a").text("<?php __('New user'); ?>");
+        $("#tabber-user").find("a").text("<?php __($names->component, 'New user'); ?>");
       }
       
       if(id != "#tab-group" || $("#tab-group").find("input[name=id]").val() == ""){
-        $("#tabber-group").find("a").text("<?php __('New group'); ?>");
+        $("#tabber-group").find("a").text("<?php __($names->component, 'New group'); ?>");
       }
       
       //In some cases prevent refresh.

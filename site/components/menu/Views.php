@@ -20,7 +20,7 @@ class Views extends \dependencies\BaseViews
   {
     
     $pid =
-      ($options->pid->get('int') > 0 ? $options->pid : tx('Data')->filter('cms')->pid);
+      ($options->pid->is_set() ? $options->pid->value : tx('Data')->filter('cms')->pid);
     
     $link = tx('Sql')
       ->table('cms', 'MenuLinks')

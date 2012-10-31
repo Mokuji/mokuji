@@ -255,6 +255,15 @@ body.cursor_disabled{
       opacity:0.9;
       background-image:url('../img/icons/configbar/rgo__contact-contact_admin.png');
     }
+    #configbar .calendar-events_admin a{
+      opacity:0.9;
+      background-image:url('../img/icons/configbar/calendar-events_admin.png');
+    }
+    #configbar .cms-instructions a{
+      opacity:0.9;
+      background-image:url('../img/icons/configbar/cms-instructions.png');
+    }
+
     #configbar .booking-bookings a:hover{
       opacity:1;
     }
@@ -512,13 +521,17 @@ body.cursor_disabled{
   background: linear-gradient(top, #52575f 0%,#343943 4%,#343943 100%); /* W3C */
   border:1px solid #515151;
 }
-.tabs > ul > li > a:hover{
+.tabs > ul > li > a:not(.active):not(.selected):hover{
   background:#fff;
   text-decoration:none;
   font-weight:normal;
   color:#515151;
   text-shadow:none;
   border:1px solid #bcbcbc;
+}
+.tabs > ul > li > a.active:hover,
+.tabs > ul > li > a.selected:hover{
+  opacity:0.95;
 }
 .tabs .black{
   text-decoration:none;
@@ -655,6 +668,7 @@ body.cursor_disabled{
   }
   .tx-table td .edit,
   .tx-table td .delete{
+    padding: 0 5px;
     min-width:20px;
     text-indent:-9999px;
     display:inline-block;
@@ -703,8 +717,14 @@ body.cursor_disabled{
     background-color:#ffffff;
   }
   #page-main-right li{
-    margin-left:15px;
+    /*margin-left:15px;*/
   }
+  
+  #page-main-right ul.pagetypes-list li{
+    margin-left:6px;
+    overflow:hidden;
+  }
+
   #page-main-right .paginate_disabled_next,
   #page-main-right .paginate_enabled_next,
   #page-main-right .paginate_enabled_previous,
@@ -736,8 +756,10 @@ body.cursor_disabled{
     background: url(../img/buttons/previous_enabled_hover.png) no-repeat left center !important;
   }
   .tx-table.dataTable{
+/*
     margin-top:10px;
     margin-bottom:10px;
+*/
   }
   .dataTables_length,
   .dataTables_filter{

@@ -170,7 +170,7 @@ class Validator extends Successable
   private function _required()
   {
     
-    if($this->data !== null){
+    if($this->data !== null && $this->data !== ""){
       return true;
     }
     
@@ -243,6 +243,11 @@ class Validator extends Successable
       return true;
     }
     
+    if(!$this->check_rule('required')){
+      $this->data = null;
+      return true;
+    }
+    
     return "The value must be a number.";
   
   }
@@ -291,6 +296,7 @@ class Validator extends Successable
       return true;
     }
     
+    if(!$this->check_rule('required')) return true;
     return "The value must be greater than $number.";
     
   }
@@ -343,12 +349,27 @@ class Validator extends Successable
     
   }
   
+  // in
+  public function _in()
+  {
+    
+    if(!in_array($this->data, func_get_args(), true)){
+      if(!$this->_not_empty() && !$this->check_rule('required')) return true;
+      return "The value must be one of the following values: ".implode(', ', func_get_args()).'.';
+    }
+    
+    return true;
+    
+  }
+  
   // not in
   public function _not_in()
   {
     
-    if(in_array($this->data, func_get_args(), true))
+    if(in_array($this->data, func_get_args(), true)){
+      if(!$this->_not_empty() && !$this->check_rule('required')) return true;
       return "The value must not be one of the following values: ".implode(', ', func_get_args()).'.';
+    }
     
     return true;
     

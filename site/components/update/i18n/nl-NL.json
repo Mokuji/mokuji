@@ -1,0 +1,33 @@
+{
+  
+  "SUMMARY_VIEW_TITLE": "Updatebeheer",
+  "SUMMARY_VIEW_DESCRIPTION": "",
+  
+  
+  
+  "Back to summary": "Terug naar samenvatting",
+  
+  "Check for updates": "Controleer op updates",
+  
+  "Error while updating database": "Fout tijdens updaten van database",
+  
+  "Is not supported": "Wordt niet ondersteund",
+  
+  "More information": "Meer informatie",
+  
+  "New versions loaded": "Nieuwe versies geladen",
+  "No new updates": "Geen nieuwe updates",
+  
+  "Package folder does not contain package.json file": "Pakket map bevat geen package.json bestand",
+  "Package type": "Pakket type",
+  
+  "Recent updates": "Recente updates",
+  
+  "Scanning": "Scannen",
+  
+  "Update logs": "Update logboek",
+  "Update management": "Updatebeheer",
+  
+  "Version": "Versie"
+  
+}

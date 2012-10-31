@@ -11,10 +11,10 @@
 echo $data->as_table(array(
   __('Title', 1) => 'title',
   __('Description', 1) => 'description',
-  __('Member count', 1) => function($row){ return $row->users->size(); },
+  __($names->component, 'Member count', 1) => function($row){ return $row->users->size(); },
   __('Actions', 1) => array(
-    function($row){return '<a class="edit" href="'.url('section=account/edit_user_group&user_group_id='.$row->id).'">'.__('edit', 1).'</a>';},
-    function($row){return '<a class="delete" href="'.url('action=account/delete_user_group&user_group_id='.$row->id).'">'.__('delete', 1).'</a>';}
+    function($row){return '<a class="edit" href="'.url('section=account/edit_user_group&user_group_id='.$row->id).'">'.__('Edit', 1).'</a>';},
+    function($row){return '<a class="delete" href="'.url('action=account/delete_user_group&user_group_id='.$row->id).'">'.__('Delete', 1).'</a>';}
   )
 ));
 
@@ -38,7 +38,7 @@ echo $data->as_table(array(
         $('#tabber-group')
           .find('a')
             .trigger('click')
-            .text("<?php __('Edit group'); ?>");
+            .text("<?php __($names->component, 'Edit group'); ?>");
       });
       
     });

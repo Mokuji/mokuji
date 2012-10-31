@@ -1,6 +1,4 @@
-<?php namespace components\cms; if(!defined('TX')) die('No direct access.');?>
-
-<?php
+<?php namespace components\cms; if(!defined('TX')) die('No direct access.');
 
 $data->items
 
@@ -20,10 +18,10 @@ $data->items
     });
   })
 
-  ->failure(function(){
+  ->failure(function()use($names){
     echo '<p class="menu-items-list">';
-    __('No menu items found.');
-    echo '</p>';
+    __($names->component, 'No menu items found');
+    echo '.</p>';
   });
 
 ?>

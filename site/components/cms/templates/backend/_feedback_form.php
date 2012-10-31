@@ -1,10 +1,10 @@
 <?php namespace components\cms; if(!defined('TX')) die('No direct access.'); ?>
 
 <form id="feedback-form" action="<?php echo url('action=cms/send_feedback/post'); ?>" method="post">
-  <h1>Send feedback</h1>
+  <h1><?php __($names->component, 'Send feedback', 'ucfirst') ?></h1>
   <div><textarea name="feedback" placeholder=""></textarea></div>
-  <a href="#" id="feedback-hide">cancel</a>
-  <input type="submit" id="feedback-btn" value="<?php __('Send feedback'); ?>" required />
+  <a href="#" id="feedback-hide"><?php __($names->component, 'Cancel', 'l') ?></a>
+  <input type="submit" id="feedback-btn" value="<?php __($names->component, 'Send feedback', 'ucfirst'); ?>" required />
 </form>
 
 
@@ -115,7 +115,7 @@ var com_cms_feedback_form = (function(Feedback){
     $(this.options.feedback_form)
       .on('click.feedback', '#feedback-hide', function(e){
         e.preventDefault();
-        Feedback.hide_feedback_form({btn_text:'Send feedback'})
+        Feedback.hide_feedback_form({btn_text:'<?php __($names->component, 'Send feedback', 'ucfirst') ?>'})
       })
       .on('submit.feedback', function(e){
 
@@ -129,7 +129,7 @@ var com_cms_feedback_form = (function(Feedback){
         $(Feedback.options.feedback_form).find('input[type=submit]').val('Pompiedom...');
         
         $(this).ajaxSubmit(function(){
-          Feedback.hide_feedback_form({flash_text:'Thank you!', btn_text:'Send more feedback', clear_form:true});
+          Feedback.hide_feedback_form({flash_text:'Thank you!', btn_text:'<?php __($names->component, 'Send more feedback', 'ucfirst') ?>', clear_form:true});
         });
 
       })
@@ -155,7 +155,7 @@ var com_cms_feedback_form = (function(Feedback){
       .find('textarea').focus().end()
 
       //change submit button text
-      .find('input[type=submit]').val('Send feedback').end();
+      .find('input[type=submit]').val('<?php __($names->component, 'Send feedback', 'ucfirst') ?>').end();
 
   }
   

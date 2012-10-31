@@ -37,7 +37,7 @@
       <?php echo $messages->notification; ?>
     </div>
   
-    <div class="tx-wrapper bg-img bg-1" role="main">
+    <div class="tx-wrapper bg-img bg-<?php echo rand(1,6); ?>" role="main">
 
       <div class="tx-login-wrapper">
   

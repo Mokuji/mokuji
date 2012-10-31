@@ -868,7 +868,7 @@ class Table extends Successable
     $compare = (func_num_args() > 2 ? func_get_arg(1) : '=');
     $value = func_get_arg(func_num_args()-1);
     
-    if(!in_array($compare, array('=', '>', '<', '>=', '<=', '!', '|', '!|'))){
+    if(!in_array($compare, array('=', '>', '<', '>=', '<=', '!', '|', '!|', ''))){
       throw new \exception\InvalidArgument("Invalid comparison type given (%s).", $compare);
       return;
     }

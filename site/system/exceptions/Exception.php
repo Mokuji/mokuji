@@ -11,13 +11,19 @@ class Exception extends \Exception
     
     $args = func_get_args();
     
-    foreach($args as $k => $arg){
-      if(is_array($arg)){
-        $args[$k] = ul($arg);
+    $message = null;
+    if(count($args) > 0)
+    {
+      
+      foreach($args as $k => $arg){
+        if(is_array($arg)){
+          $args[$k] = ul($arg);
+        }
       }
+      
+      $message = call_user_func_array('sprintf', $args);
+      
     }
-    
-    $message = call_user_func_array('sprintf', $args);
     
     parent::__construct($message);
     

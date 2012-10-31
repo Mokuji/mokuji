@@ -8,7 +8,7 @@ class Options extends \dependencies\BaseModel
     $table_name = 'cms_options',
   
     $relations = array(
-      'OptionSets' => array('id' => 'OptionLink.option_id')
+      'OptionSets' => array('id' => 'OptionsLink.option_id')
     );
     
     

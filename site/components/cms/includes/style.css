@@ -169,6 +169,7 @@
   border:solid #D6DCE1 1px;
   padding:15px;
   margin-bottom:15px;
+  position:relative;
 }
 #edit-page-wrap, #edit-menu-item, #edit_page{
   background-color:#fff;

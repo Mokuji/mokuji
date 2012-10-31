@@ -4,14 +4,14 @@ $uid = tx('Security')->random_string(20);
 <form method="post" id="<?php echo $uid; ?>" action="<?php echo url('rest=account/mail'); ?>" class="form compose-mail-form">
   
   <div class="ctrlHolder">
-    <label for="l_recievers_input"><?php __('RECEIVERS_SINGULAR_OR_PLULRAL'); ?></label>
+    <label for="l_recievers_input"><?php __($names->component, 'Reciever(s)'); ?></label>
     <input class="big large no-enter" type="text" id="l_recievers_input" name="recievers_input" tabindex="1" />
     <div id="recievers_list" class="clearfix"></div>
   </div>
   
   <div class="ctrlHolder">
     <label for="l_subject" accesskey="s"><?php __('Subject'); ?></label>
-    <input class="big large no-enter" type="text" id="l_subject" name="subject" value="Een bericht van <?php echo URL_BASE; ?>" tabindex="2" required />
+    <input class="big large no-enter" type="text" id="l_subject" name="subject" value="<?php __($names->component, 'A message from'); ?> <?php echo URL_BASE; ?>" tabindex="2" required />
   </div>
   
   <div class="ctrlHolder">
@@ -20,7 +20,7 @@ $uid = tx('Security')->random_string(20);
   </div>
   
   <div class="buttonHolder">
-    <input class="primaryAction button black" id="b_submit" type="submit" value="<?php __('Verstuur e-mail'); ?>" tabindex="4" />
+    <input class="primaryAction button black" id="b_submit" type="submit" value="<?php __($names->component, 'Send email'); ?>" tabindex="4" />
   </div>
   
 </form>
@@ -34,7 +34,7 @@ $(function(){
     selector:"#<?php echo $uid; ?>-message",
     config: {
       autologin: {
-        defaultText: '<?php __("Klik hier om snel naar de voorpagina te gaan"); ?>',
+        defaultText: '<?php __($names->component, "Click here to go to the frontpage quickly"); ?>',
         successUrl: '<?php echo URL_BASE; ?>',
         failureUrl: '<?php echo url("/admin/", true); ?>'
       },
@@ -52,7 +52,7 @@ $(function(){
   //Make awesomesauce notifications possible.
   $('#<?php echo $uid; ?>').restForm({
     success: function(){
-      $.flash('success', "<?php __('Sent mail successfully'); ?>");
+      $.flash('success', "<?php __($names->component, 'Sent mail successfully'); ?>");
       $('#tabber-users').find('a').trigger('click');
     }
   })

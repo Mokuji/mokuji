@@ -9,8 +9,68 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
   
   protected
     $component = 'menu',
-    $updates = array();
+    $updates = array(
+      '1.1' => '1.2',
+      '1.2' => '1.3'
+    );
   
+  public function update_to_1_3($current_version, $forced)
+  {
+    
+    //Queue translation token update with CMS component.
+    $this->queue(array(
+      'component' => 'cms',
+      'min_version' => '1.2'
+      ), function($version){
+          
+          $component = tx('Sql')
+            ->table('cms', 'Components')
+            ->where('name', "'{$this->component}'")
+            ->execute_single();
+          
+          tx('Sql')
+            ->table('cms', 'ComponentViews')
+            ->where('com_id', $component->id)
+            ->execute()
+            ->each(function($view){
+              
+              //If tk_title starts with 'COMNAME_' remove it.
+              if(strpos($view->tk_title->get('string'), strtoupper($this->component.'_')) === 0){
+                $view->tk_title->set(
+                  substr($view->tk_title->get('string'), (strlen($this->component)+1))
+                );
+              }
+              
+              //If tk_description starts with 'COMNAME_' remove it.
+              if(strpos($view->tk_description->get('string'), strtoupper($this->component.'_')) === 0){
+                $view->tk_description->set(
+                  substr($view->tk_description->get('string'), (strlen($this->component)+1))
+                );
+              }
+              
+              $view->save();
+              
+            });
+          
+        }); //END - Queue CMS 1.2+
+    
+  }
+  
+  public function update_to_1_2($current_version, $forced)
+  {
+    
+    //If this goes wrong it's because of the column already existing.
+    try{
+      tx('Sql')->query('ALTER TABLE  `#__menu_items` ADD  `image_id` INT NULL');
+    }
+    
+    //Ignore it when we're forcing.
+    catch(\exception\Sql $ex){
+      if($forced !== true) throw $ex;
+    }
+    
+  }
+
   public function install_1_1($dummydata, $forced)
   {
     
