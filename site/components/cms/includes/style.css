@@ -868,6 +868,16 @@
     #btn-refresh-menu-items.revert{
       background-position: -54px 0 !important;
     }
+    .menu-items-toolbar .site-title{
+      overflow:hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width:177px;
+      height:27px;
+      line-height:27px;
+      margin:0;
+      padding:0 0 0 5px;
+    }
     .menu-items-toolbar #dropdown-menu{
       width:146px;
       color: #ffffff;
