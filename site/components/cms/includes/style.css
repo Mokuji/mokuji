@@ -354,6 +354,17 @@
   min-height:200px;
 }
 
+#save-buttons{
+  z-index:1;
+  bottom:0px;
+  position:sticky;
+  position: -webkit-sticky;
+  position: -moz-sticky;
+  position: -o-sticky;
+  position: -ms-sticky;
+  position: sticky;
+  background-color:#fff;
+}
 #app .footer{
   padding:15px;
   height:auto;

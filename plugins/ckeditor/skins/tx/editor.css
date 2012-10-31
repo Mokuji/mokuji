@@ -76,7 +76,6 @@ span.cke_skin_tx
   -webkit-border-radius : 5px;
   border-radius         : 5px;
   border                : 1px solid #D3D3D3;
-  padding               : 5px;
 }
 
 .cke_skin_tx span.cke_browser_webkit, .cke_skin_tx span.cke_browser_gecko18
@@ -90,10 +89,21 @@ span.cke_skin_tx
   -webkit-border-radius : 5px;
   -webkit-touch-callout : none;
   border-radius         : 5px;
+  /*
   background-color      : #d3d3d3;
   background-image      : url(images/sprites.png);
   background-repeat     : repeat-x;
   background-position   : 0 -1950px;
+  */
+  background: #E2E2E2;
+  background: -moz-linear-gradient(top, white 0%, #F1F1F1 4%, #E2E2E2 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,white), color-stop(4%,#F1F1F1), color-stop(100%,#E2E2E2));
+  background: -webkit-linear-gradient(top, white 0%,#F1F1F1 4%,#E2E2E2 100%);
+  background: -o-linear-gradient(top, white 0%,#F1F1F1 4%,#E2E2E2 100%);
+  background: -ms-linear-gradient(top, white 0%,#F1F1F1 4%,#E2E2E2 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e2e2e2',GradientType=0 );
+  background: linear-gradient(top, white 0%,#F1F1F1 4%,#E2E2E2 100%);
+  -webkit-background-clip: padding-box;
   display               : block;
   _display              : inline-block;
   padding               : 5px;
@@ -152,7 +162,11 @@ span.cke_skin_tx
 
 .cke_skin_tx .cke_focus
 {
-  outline : auto 5px -webkit-focus-ring-color;
+  /*outline : auto 5px -webkit-focus-ring-color;*/
+/*  border: 1px solid #43A0F0; */
+  -moz-box-shadow: 0px 0px 4px rgba(110,139,160,0.4);
+  -webkit-box-shadow: 0px 0px 4px rgba(110, 139, 160, 0.4);
+  box-shadow: 0px 0px 4px rgba(110, 139, 160, 0.4);
 }
 
 .cke_skin_tx textarea.cke_source
@@ -515,6 +529,7 @@ a:hover.cke_colorauto, a:hover.cke_colormore, a:focus.cke_colorauto, a:focus.cke
 
 .cke_skin_tx .cke_toolgroup
 {
+/*
   -moz-border-radius    : 5px;
   -webkit-border-radius : 5px;
   border-radius         : 5px;
@@ -522,11 +537,21 @@ a:hover.cke_colorauto, a:hover.cke_colormore, a:focus.cke_colorauto, a:focus.cke
   _background-image     : url(images/sprites_ie6.png);
   background-repeat     : repeat-x;
   background-position   : 0 -500px;
+*/
+  background:rgba(255, 255, 255, 0.1);
   float                 : left;
-  margin-right          : 6px;
+/*  margin-right          : 6px; */
   margin-bottom         : 5px;
   padding               : 2px;
   display               : inline;
+}
+.cke_skin_tx .cke_toolgroup:after{
+  content:"";
+  display: inline-block;
+  border-left: solid 1px lightGrey;
+  margin: 3px 2px 0;
+  height: 16px;
+  vertical-align: top;
 }
 
 .cke_skin_tx .cke_rtl .cke_toolgroup
@@ -1698,7 +1723,7 @@ a:hover.cke_colorauto, a:hover.cke_colormore, a:focus.cke_colorauto, a:focus.cke
 
 .cke_skin_tx .cke_button_source .cke_label
 {
-  display : inline;
+  display : none;
 }
 
 .cke_skin_tx .cke_styles_panel
