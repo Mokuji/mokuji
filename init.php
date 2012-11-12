@@ -100,7 +100,7 @@ define('PATH_SYSTEM_CORE', PATH_SYSTEM.DS.'core');
 define('PATH_SYSTEM_DEPENDENCIES', PATH_SYSTEM.DS.'dependencies');
 define('PATH_SYSTEM_EXCEPTIONS', PATH_SYSTEM.DS.'exceptions');
 
-define('URL_BASE', 'http'.($_SERVER['HTTPS'] ? 's' : '').'://'.$_SERVER['HTTP_HOST'].'/'.(URL_PATH ? URL_PATH.'/' : ''));
+define('URL_BASE', 'http://'.$_SERVER['HTTP_HOST'].'/'.(URL_PATH ? URL_PATH.'/' : ''));
 define('URL_SITE', URL_BASE.'site/');
 define('URL_PLUGINS', URL_BASE.'plugins/');
 define('URL_LIBS', URL_BASE.'libraries/');

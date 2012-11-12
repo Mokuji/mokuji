@@ -21,7 +21,7 @@
           <h4><?php echo $change->title; ?></h4>
           <div class="change-description"><?php echo $change->description; ?></div>
           <?php echo $change->url->not('empty', function($url){
-            return '<a href="'.$url.'" target="_blank">'.__($names->component, 'More information', 1).'</a>';
+            return '<a href="'.$url.'" target="_blank">'.__('update', 'More information', 1).'</a>';
           }); ?>
         </div>
         

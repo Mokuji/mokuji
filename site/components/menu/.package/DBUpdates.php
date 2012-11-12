@@ -25,7 +25,7 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
           
           $component = tx('Sql')
             ->table('cms', 'Components')
-            ->where('name', "'{$this->component}'")
+            ->where('name', "'menu'")
             ->execute_single();
           
           tx('Sql')
@@ -35,16 +35,16 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
             ->each(function($view){
               
               //If tk_title starts with 'COMNAME_' remove it.
-              if(strpos($view->tk_title->get('string'), strtoupper($this->component.'_')) === 0){
+              if(strpos($view->tk_title->get('string'), strtoupper('menu_')) === 0){
                 $view->tk_title->set(
-                  substr($view->tk_title->get('string'), (strlen($this->component)+1))
+                  substr($view->tk_title->get('string'), (strlen('menu')+1))
                 );
               }
               
               //If tk_description starts with 'COMNAME_' remove it.
-              if(strpos($view->tk_description->get('string'), strtoupper($this->component.'_')) === 0){
+              if(strpos($view->tk_description->get('string'), strtoupper('menu_')) === 0){
                 $view->tk_description->set(
-                  substr($view->tk_description->get('string'), (strlen($this->component)+1))
+                  substr($view->tk_description->get('string'), (strlen('menu')+1))
                 );
               }
               

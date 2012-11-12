@@ -17,7 +17,9 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
   
   public function update_to_1_4($current_version, $forced)
   {
-    
+   
+    $that = $this;
+
     $component = tx('Sql')
       ->table('cms', 'Components')
       ->where('name', "'{$this->component}'")
@@ -27,19 +29,19 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
       ->table('cms', 'ComponentViews')
       ->where('com_id', $component->id)
       ->execute()
-      ->each(function($view){
+      ->each(function($view)use($that){
         
         //If tk_title starts with 'COMNAME_' remove it.
-        if(strpos($view->tk_title->get('string'), strtoupper($this->component.'_')) === 0){
+        if(strpos($view->tk_title->get('string'), strtoupper('cms_')) === 0){
           $view->tk_title->set(
-            substr($view->tk_title->get('string'), (strlen($this->component)+1))
+            substr($view->tk_title->get('string'), (strlen('cms')+1))
           );
         }
         
         //If tk_description starts with 'COMNAME_' remove it.
-        if(strpos($view->tk_description->get('string'), strtoupper($this->component.'_')) === 0){
+        if(strpos($view->tk_description->get('string'), strtoupper('cms_')) === 0){
           $view->tk_description->set(
-            substr($view->tk_description->get('string'), (strlen($this->component)+1))
+            substr($view->tk_description->get('string'), (strlen('cms')+1))
           );
         }
         
