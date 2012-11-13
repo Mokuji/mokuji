@@ -215,9 +215,6 @@ class Helpers extends \dependencies\BaseComponent
       //For each usergroup.
       ->each(function($userGroup)use($pid, $permissions, $knownPermissions){
         
-        echo('Set permissions of '.$userGroup);
-        trace($knownPermissions->{$userGroup->id}->dump());
-
         //Take it's known permission.
         $knownPermissions->{$userGroup->id}
           

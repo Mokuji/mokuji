@@ -31,7 +31,7 @@ class Actions extends \dependencies\BaseComponent
 
     $action = tx('Adding a new menu item <-> page link.', function()use($data){
 
-      $page = tx('Sql')->table('menu', 'MenuItems')->pk($data->menu_item_id)->execute_single()->is('empty', function()use($data){
+      tx('Sql')->table('menu', 'MenuItems')->pk($data->menu_item_id)->execute_single()->is('empty', function()use($data){
         throw new \exception\EmptyResult('No menu item entry was found with id %s.', $data->menu_item_id);
       })
       ->merge($data->having('page_id'))->save();
@@ -57,7 +57,7 @@ class Actions extends \dependencies\BaseComponent
   
     $action = tx('Detaching a page from a menu item.', function()use($data){
 
-      $test = tx('Sql')->table('menu', 'MenuItems')->pk($data->menu)->where('page_id', $data->pid)->execute_single()->is('empty', function()use($data){
+      tx('Sql')->table('menu', 'MenuItems')->pk($data->menu)->where('page_id', $data->pid)->execute_single()->is('empty', function()use($data){
         throw new \exception\EmptyResult('No menu item entry was found with id %s.', $data->menu);
       })
       ->merge(array('page_id' => 'NULL'))
@@ -79,7 +79,7 @@ class Actions extends \dependencies\BaseComponent
     $page = null;
 
     tx('Adding a new page.', function()use($data){
-
+      
       //save page
       $page = tx('Sql')->model('cms', 'Pages')->set(array(
         'title' => __('New page', 1),
@@ -602,7 +602,7 @@ class Actions extends \dependencies\BaseComponent
         ->merge($data)
         ->save();
       
-      echo $link->id->get();
+      echo $link->page_id->get();
       exit;
       
     })

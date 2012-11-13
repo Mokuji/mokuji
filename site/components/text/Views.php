@@ -5,10 +5,11 @@ class Views extends \dependencies\BaseViews
 
   protected function text($options)
   {
-
-    $pid = tx('Data')->get->pid;
-
+    
+    $pid = $options->pid->is_set() ? $options->pid->value : tx('Data')->get->pid;
+    
     return array(
+      'pid' => $pid,
       'items' =>
         $this->table('Items')
         ->join('ItemInfo', $ii)

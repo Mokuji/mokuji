@@ -5,12 +5,14 @@ class Sections extends \dependencies\BaseViews
 
   protected function app()
   {
-
+    
     return array(
-      'menu' => $this->section('menu_app'),
-      'page' => $this->section('page_app')
+      'menu_id' => tx('Data')->get->menu,
+      'page_id' => tx('Data')->get->pid,
+      'edit_menu_item' => $this->section('edit_menu_item'),
+      'edit_page' => $this->section('edit_page')
     );
-
+    
   }
 
   protected function config_app()
@@ -86,8 +88,6 @@ class Sections extends \dependencies\BaseViews
   {
 
     return array(
-      'item' => tx('Sql')->table('menu', 'MenuItems')->where('id', $data->id)->execute_single(),
-      'menus' => tx('Sql')->table('menu', 'Menus')->where('site_id', tx('Data')->filter('cms')->site_id)->execute(),
       'image_uploader' => 
         tx('Component')->available('media') ?
           tx('Component')->modules('media')->get_html('image_uploader', array(
@@ -166,13 +166,8 @@ class Sections extends \dependencies\BaseViews
   protected function edit_page($options)
   {
     
-    $page_info = $this->helper('get_page_info', $options->id->is_set() ? $options->id->get('int') : tx('Data')->filter('cms')->pid->get('int'));
-    $page_options = $this->helper('get_page_options', $page_info->id);
-    
     return array(
       'layout_info' => tx('Sql')->table('cms', 'LayoutInfo')->execute(),
-      'page' => $page_info,
-      'content' => $page_info === false ? 'Page was removed.' : tx('Component')->views($page_info->component)->get_html($page_info->view_name, $page_options),
       'themes' => $this->table('Themes')->order('title')->execute(),
       'templates' => $this->table('Templates')->order('title')->execute()
     );

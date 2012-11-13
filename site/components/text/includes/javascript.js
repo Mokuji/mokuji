@@ -41,7 +41,7 @@
       app.Items = new Controller('#com-text-backend', {
       
         namespace: 'items',
-                
+        
         elements: {
           'col': '.col',
           'new': '.btn-new-text'

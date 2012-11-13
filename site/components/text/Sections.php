@@ -3,14 +3,6 @@
 class Sections extends \dependencies\BaseViews
 {
 
-  /* ='Method' methods
-  -------------------------------------------------------------- */
-
-  protected function text()
-  {
-    return tx('Sql')->table('codedocu', 'Methods')->join('Classes', $c)->select("$c.name", 'class_name')->execute();  
-  }
-
   /* ---------- Frontend ---------- */
 
   private function get_items($filter)

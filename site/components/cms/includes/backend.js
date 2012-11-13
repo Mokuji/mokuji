@@ -186,6 +186,12 @@
     //Bind events to the sub-elements.
     events: {
       
+      'click on btn_newMenuItem': function(e){
+        e.preventDefault();
+        app.Item.loadItemContents('0');
+        app.Page.clear();
+      },
+      
       'click on btn_saveMenuItems': function(e){
         var self = this;
         e.preventDefault();
@@ -262,10 +268,12 @@
     
     el: '#page-main-left > .content > .menu-items-list',
     namespace: 'menu',
+    menuItemTmpl: '#menu-item-list-item-tmpl',
     
     elements: {
       'el_items': 'li',
-      'btn_delete': '.icon-delete'
+      'btn_delete': '.icon-delete',
+      'item': 'a.menu-item'
     },
     
     events: {
@@ -278,6 +286,12 @@
       'click on btn_delete': function(e){
         e.preventDefault();
         this.deleteItem($(e.target).closest('li').id())
+      },
+      
+      'click on item': function(e){
+        e.preventDefault();
+        app.Item.loadItemContents($(e.target).attr('data-menu-item'));
+        app.Page.loadPageContents($(e.target).attr('data-page'));
       }
       
     },
@@ -295,6 +309,32 @@
     
     //Property: Storage for data.
     data: {},
+    
+    //Method: Inserts or updates a new menu item.
+    updateItem: function(data){
+      
+      data.site_id = app.options.site_id;
+      
+      var element = this.view.find('li[data-id='+data.id+']');
+      
+      //Insert
+      if(element.size() == 0){
+        this.view.prepend($(this.menuItemTmpl).tmpl(data));
+      }
+      
+      //Update
+      else{
+        data.depth = element.attr('class').match(/depth_(\d+)/)[1];
+        var subitems = element.children('ul');
+        data.subitems = subitems.length ? subitems[0].outerHTML : '';
+        element.replaceWith($(this.menuItemTmpl).tmpl(data));
+      }
+      
+      this.configureSortable();
+      this.refreshElements();
+      this.updateData();
+      
+    },
     
     //Method: Updates the data using the HTML. (I know, wrong way around..)
     updateData: function(){
@@ -400,8 +440,461 @@
     
   });
   
-  var PageController = Controller.sub({});
-  var ItemController = Controller.sub({});
+  var LanguageTabController = Controller.sub({
+    
+    namespace: 'content',
+    
+    events:{
+      'click': function(e){
+        e.preventDefault();
+        this.activate();
+      }
+    },
+    
+    init: function(){
+      this.previous();
+      this.data = {
+        id: this.view.attr('data-id'),
+        code: this.view.attr('data-code'),
+        shortcode: this.view.attr('data-shortcode'),
+        title: this.view.attr('data-title')
+      };
+    },
+    
+    activate: function(){
+      this.view.addClass('selected');
+    },
+    
+    deactivate: function(){
+      this.view.removeClass('selected');
+    },
+    
+    getLanguageData: function(){
+      return this.data;
+    }
+    
+  });
+  
+  var LanguageTabManager = Manager.sub({
+    
+    el: '#page-languages',
+    namespace: 'content',
+    currentLanguage: null,
+    
+    elements: {
+      languages: '.language'
+    },
+    
+    init: function(){
+      
+      this.previous();
+      
+      this.data = {
+        id: this.view.attr('data-id'),
+        inLanguageName: this.view.attr('data-iln')
+      };
+      
+      var theTabs = [];
+      this.languages.each(function(){
+        theTabs.push(new LanguageTabController({el: this}));
+      });
+      this.add(theTabs);
+      if(this.state.controllers.length > 0){
+        this.devault = 0;
+        this.activate();
+      }
+      var man = this;
+      this.state.subscribe('change', function(){
+        if(!man.state.active() || man.currentLanguage == man.state.active()) return;
+        man.currentLanguage = man.state.active();
+        man.publish('languageChange', [man.state.active().getLanguageData(), man.data]);
+      });
+      
+    },
+    
+    currentLanguageData: function(){
+      if(!this.currentLanguage)
+          this.currentLanguage = this.state.active();
+      return this.currentLanguage.getLanguageData();
+    }
+    
+  });
+  LanguageTabManager.include(PubSub);
+  
+  var PageTabController = root.PageTabController = Controller.sub({
+    
+    namespace: 'tab-body',
+    
+    init: function(){
+      this.previous();
+      this.view.hide();
+      this.tabView = $('<a class="tab" href="#">');
+      this.tabView.html(this.title);
+    },
+    
+    activate: function(){
+      this.previous();
+      this.tabView.addClass('selected');
+    },
+    
+    deactivate: function(){
+      this.previous();
+      this.tabView.removeClass('selected');
+    }
+    
+  });
+  
+  var PageConfigTabController = PageTabController.sub({
+    
+    el: '<div>',
+    template: '#edit_page_config_tmpl',
+    form: '#page-config',
+    
+    elements: {
+      radio_access_levels: '.fieldset-rights input'
+    },
+    
+    events: {
+      
+      'click on radio_access_levels': function(e){
+        $('.fieldset-rights .fieldset-groups').toggle($(e.target).is('.members'));
+      }
+      
+    },
+    
+    render: function(data){
+      
+      this.view
+        .html($(this.template).tmpl(data))
+        .find(this.form)
+        .restForm();
+      
+    },
+    
+    save: function(){
+      
+      this.view
+        .find(this.form)
+        .trigger('submit');
+      
+    }
+    
+  });
+  
+  var PageTabManager = Manager.sub({
+    
+    el: "#page-tabs",
+    namespace: 'content',
+    container: '#page-tab-body',
+    
+    elements:{
+      tabs: '.tab'
+    },
+    
+    events: {
+      'click on tabs': function(e){
+        e.preventDefault();
+        var i = $(e.target).attr('data-index');
+        this.state.controllers[i].activate();
+      }
+    },
+    
+    init: function(){
+      
+      this.previous();
+      
+      this.configTab = new PageConfigTabController({title:'Config'});
+      
+    },
+    
+    finalizeTabs: function(data){
+      if(!this.hasControllers()){
+        var contentTab = new PageTabController({el:'<div>', title:'Content'});
+        contentTab.view.append($(this.container).contents());
+        $(this.container)
+          .append(contentTab.view)
+          .append(this.configTab.view);
+        this.add([contentTab]);
+      }
+      this.add([this.configTab]);
+      this.configTab.render(data);
+      this.state.controllers[0].activate();
+      this.renderTabs();
+    },
+    
+    hasControllers: function(){
+      return this.state.controllers.length > 0;
+    },
+    
+    renderTabs: function(){
+      
+      //Get all tabs away from here.
+      this.view.find('.tab').remove();
+      
+      //Create new tabs for each controller.
+      var $tab;
+      for(var i = 0; i < this.state.controllers.length; i++){
+        $tab = this.state.controllers[i].tabView
+          .toggleClass('first', i == 0)
+          .removeClass('last')
+          .attr('data-index', i)
+          .appendTo(this.view);
+      }
+      $tab && $tab.addClass('last');
+      
+      this.refreshElements();
+      
+    }
+    
+  });
+  
+  //The page controller for editing page contents and settings.
+  var PageController = Controller.sub({
+    
+    el: '#page_app',
+    namespace: 'content',
+    isEmpty: true,
+    
+    elements: {
+      btn_detach: '.title-bar #detach-page',
+      btn_save_page: '#save-buttons #save-page',
+      select_pageLink: '#new-page-wrap #page-link',
+      pageTypes: '#new-page-wrap .pagetypes-list li a'
+    },
+    
+    events: {
+      
+      'click on btn_detach': function(e){
+        e.preventDefault();
+        this.detach();
+      },
+      
+      'click on btn_save_page': function(e){
+        e.preventDefault();
+        this.save();
+      },
+      
+      'click on pageTypes': function(e)
+      {
+        
+        e.preventDefault();
+        this.isEmpty = false;
+        var self = this;
+        
+        var item_id = app.Item.data.item.id;
+        
+        request(GET,'cms/new_page/'+$(e.target).id()+(item_id ? '/'+item_id : ''))
+          .done(function(data){
+            
+            if(item_id){
+              app.Item.linkPage(data.page.id);
+              app.MenuItems.updateItem(data.item);
+              delete data.item;
+            }
+            
+            self.processPageData(data);
+            
+          });
+        
+      },
+      
+      'change on select_pageLink': function(e){
+        
+        var pid = $(e.target).val();
+        this.loadPageContents(pid);
+        
+        if(app.Item.data.item.id > 0)
+        {
+          
+          request(GET, 'cms/link_page', {
+            menu_id: app.Item.data.item.id,
+            page_id: pid
+          }).done(function(item){
+            app.Item.linkPage(item.page_id);
+            app.MenuItems.updateItem(item);
+          });
+          
+        }
+        
+      }
+      
+    },
+    
+    init: function(){
+      this.previous();
+    },
+    
+    detach: function(){
+      
+      var self = this;
+      
+      request(GET, 'cms/detach_page', {
+        page_id: self.data.page.id,
+        menu_id: app.Item.data.item.id
+      }).done(function(item){
+        self.btn_detach.remove();
+        app.Item.clear();
+        app.MenuItems.updateItem(item);
+      });
+      
+    },
+    
+    clear: function(){
+      
+      this.unsubscribe();
+      this.view.html('');
+      this.Tabs = null;
+      this.Languages = null;
+      this.refreshElements();
+      this.isEmpty = true;
+      
+    },
+    
+    save: function(){
+      
+      if(!this.data.page.id) return;
+      
+      //Save page config first.
+      this.Tabs.configTab.save();
+      
+      //Then page info.
+      //TODO
+      //this.Tabs.infoTab.save();
+      
+      //Let anyone else save in the way they wish.
+      this.publish('save', this.data.page.id);
+      
+    },
+    
+    loadNewPage: function(){
+      
+      var self = this;
+      
+      this.isEmpty = false;
+      this.unsubscribe();
+      
+      return $.ajax('?section=cms/new_page')
+      
+      //Add a done callback.
+      .done(function(data){
+        self.data = {};
+        self.view.html(data);
+        self.Tabs = null;
+        self.Languages = null;
+        self.refreshElements();
+      });
+      
+    },
+    
+    loadPageContents: function(pid){
+      
+      //Reference to this.
+      var self = this;
+      
+      if(!pid) return this.loadNewPage();
+      
+      this.isEmpty = false;
+      this.unsubscribe();
+      
+      return $.ajax('?rest=cms/page_info/'+pid)
+      
+      //Add a done callback.
+      .done(this.processPageData);
+      
+    },
+    
+    processPageData: function(data){
+      var self = app.Page;
+      self.data = data;
+      self.data.menu_id = app.Item.data.item.id;
+      self.view.html($('#edit_page_tmpl').tmpl(data));
+      self.Tabs = new PageTabManager;
+      self.Languages = new LanguageTabManager;
+      self.view.find('#page-tab-body')
+        .html(data.content)
+        .append(self.Tabs.configTab.view);
+      self.Tabs.finalizeTabs(data);
+      self.view.find('#edit_page').addClass('has-tabs');
+      self.refreshElements();
+      self.Tabs.renderTabs();
+    }
+    
+  });
+  PageController.include(PubSub);
+
+  var ItemController = Controller.sub({
+    
+    el: '#menu_app',
+    namespace: 'content',
+    formEl: '#form-menu-item',
+    
+    elements: {
+      btn_save: '.footer #save-menu-item',
+      btn_toggle_settings: '.title-bar #toggle-menu-item-settings',
+      config: '#form-menu-item #menu-item-config'
+    },
+    
+    events: {
+      
+      'click on btn_save': function(e){
+        e.preventDefault();
+        this.save();
+      },
+      
+      'click on btn_toggle_settings': function(e){
+        e.preventDefault();
+        this.config.toggle();
+      }
+      
+    },
+    
+    clear: function(){
+      this.view.html('');
+      this.refreshElements();
+    },
+    
+    linkPage: function(page_id){
+      this.view.find('#edit-menu-item').addClass('has-page');
+    },
+    
+    loadItemContents: function(menu){
+      
+      //Reference to this.
+      var self = this;
+      
+      //Preset data, for the greedy page that wants to know quickly.
+      this.data = {
+        item: {
+          id: menu
+        }
+      };
+      
+      if(menu === false){
+        return this.clear();
+      }
+      
+      return $.ajax('?rest=cms/menu_item_info/'+(menu?menu:'0'))
+      
+      //Add a done callback.
+      .done(function(data){
+        self.data = data;
+        self.view.html($('#edit_menu_tmpl').tmpl($.extend({current_menu: app.options.menu_id}, data)));
+        self.refreshElements();
+        self.view.find(self.formEl).restForm({success: function(item){
+          self.view.find('.title-bar .title').text(item.title);
+          app.MenuItems.updateItem(item);
+          if(app.Page.isEmpty)
+            app.Page.loadNewPage();
+        }});
+      });
+      
+    },
+    
+    save: function(){
+      this.view.find(this.formEl).trigger('submit');
+    }
+    
+  });
   
   //The controller for the settings interface.
   var SettingsController = Controller.sub({
@@ -431,14 +924,14 @@
       this.Settings = new SettingsController;
       // this.Main.add([this.Settings, this.App]);
       
-      // this.Page = new PageController;
-      // this.Item = new ItemController;
+      this.Page = new PageController;
+      this.Item = new ItemController;
       // this.App.add([this.Page, this.Item]);
       
     }
     
   });
-  
+
 })(this, jQuery, _);
 
 $(function(){
@@ -454,9 +947,13 @@ $(function(){
     });
     
   });
+
+/*
+  NO MORE!!!!
+  I CAN'T TAKE IT!!!
+  AAAAAAAAH!
   
-  /* =New menu item
-  -------------------------------------------------------------- */
+  //New menu item
   $("#btn-new-menu-item").on('click', function(e){
 
     e.preventDefault();
@@ -468,14 +965,14 @@ $(function(){
     });
 
   });
-
+  
   //menu items
   $(function(){
 
     $('#page-main-left .menu-items-list a').on('click', function(e){
 
       e.preventDefault();
-
+      
       $.ajax({
         url : $(this).attr('href'),
         data : {
@@ -488,6 +985,7 @@ $(function(){
     });
 
   });
+*/
 
   //config menu
   (function($){
@@ -508,5 +1006,5 @@ $(function(){
     });
 
   })($);
-  
+
 });
