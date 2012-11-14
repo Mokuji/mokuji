@@ -1,0 +1,145 @@
+
+    /* GLOBAL STYLES
+    -------------------------------------------------- */
+    /* Padding below the footer and lighter body text */
+
+    body {
+      padding-bottom: 40px;
+      color: #5a5a5a;
+    }
+
+    .no-padding{
+      padding:0;
+    }
+
+    .alert-global{
+      position:absolute;
+      top: 56px;
+      left: 44px;
+      z-index:100;
+    }
+
+    /* TOPBAR
+    -------------------------------------------------- */
+
+    .navbar .form-search{
+      float:left;
+      margin:5px 0;
+    }
+      #q,
+      .navbar .form-search .btn{
+        opacity:0.2;
+        -webkit-transition: opacity linear 0.1s;
+        -moz-transition: opacity linear 0.1s;
+        -o-transition: opacity linear 0.1s;
+        transition:opacity linear 0.1s;
+      }
+      #q:focus,
+      #q:focus + .btn,
+      .navbar .form-search:hover #q,
+      .navbar .form-search:hover .btn{
+        opacity:1;
+      }
+    .navbar .form-login{
+      float:right;
+      margin:0px;
+    }
+    .navbar .form-login .btn{
+      margin-top:0;
+    }
+
+    #header-container{
+      padding-top:40px;
+    }
+
+
+    #info-container{
+      padding: 15px 0;
+      text-align: center;
+      background-color: whiteSmoke;
+      border-top: 1px solid white;
+      border-bottom: 1px solid #DDD;
+    }
+
+
+    /* TUBLES
+    ------------------------- */
+
+    .page-header .close{
+      float:none;
+    }
+
+    /* TUBLE
+    ------------------------- */
+
+    .meta ul{
+      margin:0;
+      padding:0;
+      list-style:none;
+    }
+
+    .review-block{
+      background-color: whiteSmoke;
+      box-shadow:0 0 3px #ccc;
+      padding:10px 15px;
+      border-radius:4px;
+    }
+
+    /* FOOTER
+    ------------------------- */
+
+    footer{
+      display:none;
+    }
+
+    /* RESPONSIVE CSS
+    -------------------------------------------------- */
+
+    @media (max-width: 979px) {
+
+      #header-container{
+        padding-top:0;
+      }
+
+      #main-container{
+        padding: 0 5px;
+      }
+
+      .container.navbar-wrapper {
+        margin-bottom: 0;
+        width: auto;
+      }
+      .navbar-fixed-top {
+        margin-bottom:0;
+      }
+      .navbar-inner {
+        border-radius: 0;
+      }
+
+      .featurette {
+        height: auto;
+        padding: 0;
+      }
+      .featurette-image.pull-left,
+      .featurette-image.pull-right {
+        display: block;
+        float: none;
+        max-width: 40%;
+        margin: 0 auto 20px;
+      }
+    }
+
+
+    @media (max-width: 767px) {
+
+      body{
+        padding-left:0;
+        padding-right:0;
+      }
+
+      .navbar{
+        margin-left:0;
+        margin-right:0;
+      }
+
+    }
