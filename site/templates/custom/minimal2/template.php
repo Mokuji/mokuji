@@ -81,47 +81,46 @@
   <body>
 
 <div id ="container" class="container-fluid">
-  <div class="span2">
-    <br />
-    <nav>
-      <?php echo tx('Component')->modules('menu')->get_html('menu', array('max_depth' => 1, 'classes' => 'nav nav-list')); ?>
-    </nav>
-  </div><!--/span-->
-  <div class="span2">
-    <br />
-    <nav>
-      <?php echo tx('Component')->modules('menu')->get_html('menu', array('min_depth' => 2, 'from_root' => true, 'parent_depth' => 1, 'classes' => 'nav nav-list')); ?>
-    </nav>
-  </div><!--/span-->
-  <div class="span8">
-    <div class="container">
-      <div class="span8">
+  <div class="row-fluid">
+    <div class="span2 margin-left-none">
+      <h1 id="logo">
+        <img src="http://placehold.it/150x45" alt="Logo" />
+      </h1>
+      <nav id="main-menu">
+        <?php echo tx('Component')->modules('menu')->get_html('menu', array('max_depth' => 1, 'classes' => 'nav nav-list')); ?>
+      </nav>
+    </div><!--/span-->
+    
+    
+    <div class="content-wrapper clearfix margin-left-none span10">
+      <div class="top-header">
+        <form class="form-search pull-right">
+          <input type="text" class="input-medium search-query">
+          <button type="submit" class="btn">Search</button>
+        </form>
+      </div>
+      <div class="span2 margin-left-none">
+        <nav id="submenu">
+          <?php echo tx('Component')->modules('menu')->get_html('menu', array('min_depth' => 2, 'from_root' => true, 'parent_depth' => 1, 'classes' => 'nav nav-list')); ?>
+        </nav>
+      </div><!--/span-->
+
+      <div class="span8 content">
         <?php echo $body->content; ?>
       </div>
-      <div class="span2">
-        <?php
-        if(tx('Data')->get->pid->get('int') > 0){
-          $text_info =
-            tx('Sql')
-            ->table('text', 'Items')
-            ->join('ItemInfo', $ii)
-            ->select("$ii.title", 'titlte')
-            ->select("$ii.description", 'description')
-            ->where('page_id', tx('Data')->get->pid->get('int'))
-            ->execute_single();
-          if($text_info->description->get() != ''){
-            ?>
-            <div class="box" box-type="image-with-text" box-column="1">
-              <?php echo $text_info->description; ?>
-            </div>
-            <?php
-          }
-        }
-        ?>
+      
+      <div class="span2 clearfix sidebar">
+        <ul class="nav nav-list">
+          <li class="nav-header">Related content</li>
+          <li><a href="#">Related item #2</a></li>
+          <li><a href="#">Related item #3</a></li>
+          <li><a href="#">Related item #4</a></li>
+          <li><a href="#">Related item #5</a></li>
+        </ul>
       </div>
-
-    </div>
-  </div><!--/span-->
+    </div><!--/span-->
+  </div>
+  
 </div><!-- /.container-fluid -->
 
 <?php echo $body->admin_toolbar; ?>
