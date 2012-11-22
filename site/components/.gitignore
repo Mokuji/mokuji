@@ -1,3 +1,6 @@
-gallery
-media
-wizard
+*
+!account
+!cms
+!menu
+!text
+!update
