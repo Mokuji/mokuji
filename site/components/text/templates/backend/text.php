@@ -42,14 +42,14 @@
                 <br />
 
                 <div class="ctrlHolder">
-                  <label><?php __('Hoofdtekst').$in_language_text; ?></label>
+                  <label><?php __($names->component, 'Main text').$in_language_text; ?></label>
                   <textarea name="info[<?php echo $lang->id; ?>][text]" id="l_text_<?php echo $lang->id; ?>_${id}" class="text editor">${$item.dataInfo($item.data, <?php echo $lang->id->get('int'); ?>, 'text')}</textarea>
                 </div>
 
                 <br />
 
                 <div class="ctrlHolder">
-                  <label><?php __(tx('Data')->get->menu->get('int') <= 0 ? 'Introductietekst' : 'Zijtekst').$in_language_text; ?></label>
+                  <label><?php __($names->component, tx('Data')->get->menu->get('int') <= 0 ? 'Introduction text' : 'Side text').$in_language_text; ?></label>
                   <textarea name="info[<?php echo $lang->id; ?>][description]" id="l_description_<?php echo $lang->id; ?>_${id}" class="description editor">${$item.dataInfo($item.data, <?php echo $lang->id->get('int'); ?>, 'description')}</textarea>
                 </div>
 
@@ -74,14 +74,14 @@
               <br />
 
               <div class="ctrlHolder">
-                <label><?php __('Hoofdtekst'); ?></label>
+                <label><?php __($names->component, 'Hoofdtekst'); ?></label>
                 <textarea name="info[<?php echo LANGUAGE; ?>][text]" id="l_text_<?php echo LANGUAGE; ?>_${id}" class="text editor">${$item.dataInfo($item.data, <?php echo LANGUAGE; ?>, 'text')}</textarea>
               </div>
 
               <br />
 
               <div class="ctrlHolder">
-                <label><?php __(tx('Data')->get->menu->get('int') <= 0 ? 'Introductietekst' : 'Zijtekst'); ?></label>
+                <label><?php __($names->component, tx('Data')->get->menu->get('int') <= 0 ? 'Introductietekst' : 'Zijtekst'); ?></label>
                 <textarea name="info[<?php echo LANGUAGE; ?>][description]" id="l_description_<?php echo LANGUAGE; ?>_${id}" class="description editor">${$item.dataInfo($item.data, <?php echo LANGUAGE; ?>, 'description')}</textarea>
               </div>
 

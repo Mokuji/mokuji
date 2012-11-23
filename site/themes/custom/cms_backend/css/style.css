@@ -98,7 +98,6 @@ body.cursor_disabled{
   #page-main-left{
     background:#fff;
     border-right:1px solid #bcbcbc;
-    overflow: hidden;
   }
 
 /* =Topbar
@@ -185,6 +184,138 @@ body.cursor_disabled{
 
 #page-main-left .actions-menu{
 }
+#page-main-left .menu-items-list{
+  position:absolute;
+  top:47px;
+  width:100%;
+  bottom:32px;
+  list-style:none;
+  margin:0;
+  padding:0;
+  font-weight:bold;
+  overflow-x:hidden;
+  overflow-y:auto;
+}
+
+#page-main-left .menu-items-list li.depth_1 > ul{
+  border-bottom:1px solid #d6dce1;
+}
+  .multisite #page-main-left .menu-items-list{
+    top:82px;
+  }
+#page-main-left .menu-items-list ul{
+  list-style:none;
+  margin:0;
+  padding:0;
+  font-weight:normal;
+  margin-left:-20px;
+  padding-left:20px;
+}
+#page-main-left .menu-items-list li a{
+  display:block;
+  padding:10px 0;
+  border-bottom:1px solid #d6dce1;
+}
+#page-main-left .menu-items-list li{
+  padding-left:40px;
+  margin-left:-20px;
+}
+#page-main-left .menu-items-list > li a:hover{
+  text-decoration:none;
+  color:#343943 !important;
+}
+#page-main-left .menu-items-list li a{
+  margin-left:-20px;
+  padding-left:20px;
+}
+#page-main-left .menu-items-list li.has-sub > a{
+  background:url('../img/icons/left-menu-arrow-inactive.png') 20px center no-repeat;
+}
+#page-main-left .menu-items-list li.has-sub > a:hover{
+  background:#d2e5f9 url('../img/icons/left-menu-arrow-inactive.png') 20px center no-repeat;
+}
+#page-main-left .menu-items-list li.has-sub.active > a{
+  background:url('../img/icons/left-menu-arrow.png') 20px center no-repeat;
+}
+#page-main-left .menu-items-list li.has-sub.active > a:hover{
+  background:#d2e5f9 url('../img/icons/left-menu-arrow.png') 20px center no-repeat;
+}
+#page-main-left .menu-items-list li:first-child a{
+  border-top:none;
+}
+#page-main-left .menu-items-list li li a{
+  font-size:12px; 
+  text-decoration:none;
+  display:block;
+  color:#5b6b7a;
+  padding:6px 0;
+  border-top:none;
+  border-bottom:none;
+}
+#page-main-left .menu-items-list li li{
+  margin-left:0;
+}
+#page-main-left .menu-items-list li li a{
+  margin-left:-40px;
+  padding-left:15px;
+}
+#page-main-left .menu-items-list li li.has-sub > a{
+  background:url('../img/icons/left-menu-arrow-inactive.png') 40px center no-repeat;
+}
+#page-main-left .menu-items-list li li.has-sub > a:hover{
+  background:#d2e5f9 url('../img/icons/left-menu-arrow-inactive.png') 40px center no-repeat;
+}
+#page-main-left .menu-items-list li li.has-sub.active > a{
+  background:url('../img/icons/left-menu-arrow.png') 20px center no-repeat;
+}
+#page-main-left .menu-items-list li li.has-sub.active > a:hover{
+  background:#d2e5f9 url('../img/icons/left-menu-arrow.png') 20px center no-repeat;
+}
+#page-main-left .menu-items-list li li li a{
+  padding:4px 0;
+  border-top:none;
+  border-bottom:none;
+  margin-left:-10px;
+  padding-left:15px;
+}
+#page-main-left .menu-items-list li li li{
+  margin-left:-25px;
+  padding-left:10px;
+}
+#page-main-left .menu-items-list li li li.hassub > a{
+  background:url('../img/icons/left-menu-arrow-inactive.png')60px center no-repeat;
+}
+#page-main-left .menu-items-list li li li.hassub > a:hover{
+  background:#d2e5f9 url('../img/icons/left-menu-arrow-inactive.png')60px center no-repeat;
+}
+#page-main-left .menu-items-list li li li.has-sub.active > a{
+  background:url('../img/icons/left-menu-arrow.png') 20px center no-repeat;
+}
+#page-main-left .menu-items-list li li li.has-sub.active > a:hover{
+  background:#d2e5f9 url('../img/icons/left-menu-arrow.png') 20px center no-repeat;
+}
+#page-main-left .menu-items-list li a:hover{
+  background:#d2e5f9;
+  color:#54a8f1;
+}
+#page-main-left .menu-items-list li li li li{
+  margin-left:5px;
+}
+#page-main-left .menu-items-list li li li li a{
+  padding-left:15px;
+}
+#page-main-left .menu-items-list li li li li li{
+  margin-left:15px;
+}
+#page-main-left .menu-items-list li li li li li li{
+  margin-left:15px;
+}
+#page-main-left .menu-items-list li li li li li li li{
+  margin-left:15px;
+}
+#page-main-left .menu-items-list li li li li li li li li{
+  margin-left:15px;
+}
 
 #widget_bar{
   border-top:1px solid #d6dce1;
@@ -255,6 +386,15 @@ body.cursor_disabled{
       opacity:0.9;
       background-image:url('../img/icons/configbar/rgo__contact-contact_admin.png');
     }
+    #configbar .calendar-events_admin a{
+      opacity:0.9;
+      background-image:url('../img/icons/configbar/calendar-events_admin.png');
+    }
+    #configbar .cms-instructions a{
+      opacity:0.9;
+      background-image:url('../img/icons/configbar/cms-instructions.png');
+    }
+
     #configbar .booking-bookings a:hover{
       opacity:1;
     }
@@ -290,8 +430,8 @@ body.cursor_disabled{
     #widget_bar .widget-slider{
       cursor: col-resize;
       position:absolute;
-      right:0;
-      top:2px;
+      right:10px;
+      top:0px;
       height:15px;
       width:8px;
       background:url('../img/icons/triple-border.png') no-repeat;
@@ -512,13 +652,17 @@ body.cursor_disabled{
   background: linear-gradient(top, #52575f 0%,#343943 4%,#343943 100%); /* W3C */
   border:1px solid #515151;
 }
-.tabs > ul > li > a:hover{
+.tabs > ul > li > a:not(.active):not(.selected):hover{
   background:#fff;
   text-decoration:none;
   font-weight:normal;
   color:#515151;
   text-shadow:none;
   border:1px solid #bcbcbc;
+}
+.tabs > ul > li > a.active:hover,
+.tabs > ul > li > a.selected:hover{
+  opacity:0.95;
 }
 .tabs .black{
   text-decoration:none;
@@ -655,6 +799,7 @@ body.cursor_disabled{
   }
   .tx-table td .edit,
   .tx-table td .delete{
+    padding: 0 5px;
     min-width:20px;
     text-indent:-9999px;
     display:inline-block;
@@ -703,7 +848,11 @@ body.cursor_disabled{
     background-color:#ffffff;
   }
   #page-main-right li{
-    margin-left:15px;
+    /*margin-left:15px;*/
+  }
+  #page-main-right ul.pagetypes-list li{
+    margin-left:6px;
+    overflow:hidden;
   }
   #page-main-right .paginate_disabled_next,
   #page-main-right .paginate_enabled_next,
@@ -736,8 +885,10 @@ body.cursor_disabled{
     background: url(../img/buttons/previous_enabled_hover.png) no-repeat left center !important;
   }
   .tx-table.dataTable{
+/*
     margin-top:10px;
     margin-bottom:10px;
+*/
   }
   .dataTables_length,
   .dataTables_filter{

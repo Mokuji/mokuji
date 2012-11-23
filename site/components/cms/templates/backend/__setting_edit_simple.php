@@ -9,7 +9,7 @@ $form_id = tx('Security')->random_string(20);
   <div class="ctrlHolder">
     <label><?php __('Homepage'); ?></label>
     <select name="homepage">
-      <option value="">-- <?php __('Select the homepage'); ?> --</option>
+      <option value="">-- <?php __($names->component, 'Select the homepage'); ?> --</option>
       <?php
       $data->pages->each(function($row)use($data){
         echo
@@ -22,7 +22,7 @@ $form_id = tx('Security')->random_string(20);
   <div class="ctrlHolder">
     <label><?php __('Login page'); ?></label>
     <select name="login_page">
-      <option value="">-- <?php __('Select the login page'); ?> --</option>
+      <option value="">-- <?php __($names->component, 'Select the login page'); ?> --</option>
       <?php
       $data->pages->each(function($row)use($data){
         echo

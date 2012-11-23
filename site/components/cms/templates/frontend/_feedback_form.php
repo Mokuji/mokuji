@@ -1,15 +1,15 @@
 <?php namespace components\cms; if(!defined('TX')) die('No direct access.'); ?>
 
 <form id="feedback-form" action="<?php echo url('action=cms/send_feedback/post'); ?>" method="post">
-  <h1>Send feedback</h1>
+  <h1><?php __($names->component, 'Send feedback', 'ucfirst') ?></h1>
   <div id="feedback-info">
     <p>
-      Wat vindt u van de site? Heeft u opmerkingen of suggesties ter verbetering van de site? Laat het <a href="http://tuxion.nl" target="_blank">ons ontwikkelaarsteam</a> weten. Bij voorbaat dank!
+      <?php __($names->component, 'FEEDBACK_INTRODUCTION'); ?>
     </p>
   </div>
   <div><textarea name="feedback" placeholder=""></textarea></div>
-  <div><a href="#" id="feedback-hide">cancel</a></div>
-  <input type="submit" id="feedback-btn" value="<?php __('Send feedback'); ?>" required />
+  <div><a href="#" id="feedback-hide"><?php __($names->component, 'Cancel', 'l') ?></a></div>
+  <input type="submit" id="feedback-btn" value="<?php __($names->component, 'Send feedback', 'ucfirst'); ?>" required />
 </form>
 
 
@@ -90,11 +90,11 @@
 
 // class com_cms_feedback_form extends Feedback
 var com_cms_feedback_form = (function(Feedback){
-
+  
   var //private properties
     defaults = {
       feedback_form: '#feedback-form'
-    } 
+    }
     
   //public properties
   $.extend(Feedback, {
@@ -105,7 +105,7 @@ var com_cms_feedback_form = (function(Feedback){
   
   //public CmsFeedbackForm init(o)
   Feedback.init = function(o){
-
+    
     //create options
     this.options = new Options(o);
     
@@ -125,7 +125,7 @@ var com_cms_feedback_form = (function(Feedback){
     $(this.options.feedback_form)
       .on('click.feedback', '#feedback-hide', function(e){
         e.preventDefault();
-        Feedback.hide_feedback_form({btn_text:'Send feedback'})
+        Feedback.hide_feedback_form({btn_text:'<?php __($names->component, 'Send feedback', 'ucfirst') ?>'})
       })
       .on('submit.feedback', function(e){
 
@@ -139,7 +139,7 @@ var com_cms_feedback_form = (function(Feedback){
         $(Feedback.options.feedback_form).find('input[type=submit]').val('Pompiedom...');
         
         $(this).ajaxSubmit(function(){
-          Feedback.hide_feedback_form({flash_text:'Thank you!', btn_text:'Send more feedback', clear_form:true});
+          Feedback.hide_feedback_form({flash_text:'Thank you!', btn_text:'<?php __($names->component, 'Send more feedback', 'ucfirst') ?>', clear_form:true});
         });
 
       })
@@ -165,7 +165,7 @@ var com_cms_feedback_form = (function(Feedback){
       .find('textarea').focus().end()
 
       //change submit button text
-      .find('input[type=submit]').val('Send feedback').end();
+      .find('input[type=submit]').val('<?php __($names->component, 'Send feedback', 'ucfirst') ?>').end();
 
   }
   
@@ -210,6 +210,6 @@ var com_cms_feedback_form = (function(Feedback){
   
 })({});
 
-com_cms_feedback_form.init();
+com_cms_feedback_form.init({});
 
 </script>

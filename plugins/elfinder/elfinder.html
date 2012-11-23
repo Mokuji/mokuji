@@ -16,88 +16,25 @@
 		<!-- elFinder JS (REQUIRED) -->
 		<script type="text/javascript" src="js/elfinder.min.js"></script>
 
-		<!-- elFinder translation (OPTIONAL) -->
-		<script type="text/javascript" src="js/i18n/elfinder.ru.js"></script>
-
 		<!-- elFinder initialization (REQUIRED) -->
 		<script type="text/javascript" charset="utf-8">
-			// $().ready(function() {
-			// 	var elf = $('#elfinder').elfinder({
-			// 		url : 'php/connector.php',  // connector URL (REQUIRED)
-			// 		// lang: 'ru',             // language (OPTIONAL)
-			// 		commands : [
-			// 			'reload', 'home', 'up', 'back', 'forward', 'getfile', 
-			// 			'download', 'rm', 'duplicate', 'rename', 'mkdir', 'mkfile', 'upload', 'copy', 
-			// 			'cut', 'paste', 'edit', 'search', 'info', 'view',
-			// 			'sort'
-			// 		],
-			// 		uiOptions : {
-			// 			toolbar : [
-			// 				['back', 'forward'],
-			// 				// ['reload'],
-			// 				// ['home', 'up'],
-			// 				['mkdir', 'mkfile', 'upload'],
-			// 				['download', 'getfile'],
-			// 				['info'],
-			// 				// ['quicklook'],
-			// 				['copy', 'cut', 'paste'],
-			// 				['rm'],
-			// 				['duplicate', 'rename', 'edit'],//, 'resize'],
-			// 				// ['extract', 'archive'],
-			// 				['search'],
-			// 				['view']
-			// 			]
-			// 	  }
-			// 	}).elfinder('instance');
-			// });
+			
+			jQuery(function($){
+			  
+			  var elf = $('#elfinder').elfinder({
+			    url: 'php/connector.php',
+			    height:650,
+			    closeOnGetFile: true,
+			    getFileCallback: function(){
+			      if(window.opener && window.closeOnGetFile) window.close();
+			      if(window.getFileCallback) window.getFileCallback.apply(this, arguments);
+			    }
+			  }).elfinder('instance');
+			  
+			});
+			
 		</script>
-
-		<script type="text/javascript" charset="utf-8">
-		    // Helper function to get parameters from the query string.
-		    function getUrlParam(paramName) {
-		        var reParam = new RegExp('(?:[\?&]|&amp;)' + paramName + '=([^&]+)', 'i') ;
-		        var match = window.location.search.match(reParam) ;
-		        
-		        return (match && match.length > 1) ? match[1] : '' ;
-		    }
-
-		    $().ready(function() {
-		        var funcNum = getUrlParam('CKEditorFuncNum');
-
-		        var elf = $('#elfinder').elfinder({
-		            url : 'php/connector.php',
-								commands : [
-									'reload', 'home', 'up', 'back', 'forward', 'getfile', 
-									'download', 'rm', 'duplicate', 'rename', 'mkdir', 'mkfile', 'upload', 'copy', 
-									'cut', 'paste', 'edit', 'search', 'info', 'view',
-									'sort'
-								],
-								uiOptions : {
-									toolbar : [
-										['back', 'forward'],
-										// ['reload'],
-										// ['home', 'up'],
-										['mkdir', 'mkfile', 'upload'],
-										['download', 'getfile'],
-										['info'],
-										// ['quicklook'],
-										['copy', 'cut', 'paste'],
-										['rm'],
-										['duplicate', 'rename', 'edit'],//, 'resize'],
-										// ['extract', 'archive'],
-										['search'],
-										['view']
-									]
-							  },
- 		            getFileCallback : function(file) {
-		                window.opener.CKEDITOR.tools.callFunction(funcNum, file);
-		                window.close();
-		            },
-		            resizable: false
-		        }).elfinder('instance');
-		    });
-		</script>
-
+		
 	</head>
 	<body>
 

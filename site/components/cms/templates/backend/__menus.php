@@ -9,7 +9,7 @@
         echo '<li><a href="#'.$menu->id.'">'.$menu->title.'</a></li>';
       }
       ?>
-      <li class="new_menu"><form><input type="text" value="" placeholder="<?php __('New Menu'); ?>"></form></li>
+      <li class="new_menu"><form><input type="text" value="" placeholder="<?php __($names->component, 'New menu'); ?>"></form></li>
     </ul>
   </dd>
 </dl>

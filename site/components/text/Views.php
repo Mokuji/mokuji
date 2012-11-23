@@ -5,9 +5,9 @@ class Views extends \dependencies\BaseViews
 
   protected function text($options)
   {
-    $pid =
-      ($options->pid->get('int') > 0 ? $options->pid : tx('Data')->filter('cms')->pid);
-  
+
+    $pid = tx('Data')->get->pid;
+
     return array(
       'items' =>
         $this->table('Items')

@@ -8,9 +8,9 @@
 <form class="form table-operations-container">
   <div class="buttonHolder">
     <select class="table-operations">
-      <option class="op-none" value="op-none">-- <?php __('Perform action on selection'); ?> --</option>
-      <option class="op-message" value="op-message"><?php __('Send email message to selection'); ?></option>
-      <option class="op-activate" value="op-activate"><?php __('Send activation email to selection'); ?></option>
+      <option class="op-none" value="op-none">-- <?php __($names->component, 'Perform action on selection'); ?> --</option>
+      <option class="op-message" value="op-message"><?php __($names->component, 'Send email message to selection'); ?></option>
+      <option class="op-activate" value="op-activate"><?php __($names->component, 'Send activation email to selection'); ?></option>
     </select>
   </div>
 </form>
@@ -21,7 +21,7 @@ echo $user_list->as_table(array(
   '<input type="checkbox" class="select-all" />' => function($row){ return '<input type="checkbox" class="select-row" name="user_id[]" value="'.$row->id.'" />'; },
   __('Name', 1) => function($row){ return $row->user_info->full_name; },
   __('Email address', 1) => 'email',
-  __('Groups', 1) => function($row){
+  __($names->component, 'Groups', 1) => function($row){
     
     return $row->groups->map(function($group){
       return $group->title;
@@ -29,13 +29,13 @@ echo $user_list->as_table(array(
     
   },
   __('Administrator', 1) => function($row){ return $row->is_administrator->get('boolean') ? __('ja', 1) : __('nee', 1); },
-  __('Last login', 1) => function($row){
-    return ($row->dt_last_login != '' ? $row->dt_last_login : __('Never logged in', 1));
+  __($names->component, 'Last login', 1) => function($row)use($names){
+    return ($row->dt_last_login != '' ? $row->dt_last_login : __($names->component, 'Never logged in', 1));
   },
   //__('Comments', 1) => function($row){ return $row->user_info->comments; },
   __('Actions', 1) => array(
-    function($row){return '<a class="edit" href="'.url('section=account/edit_user&user_id='.$row->id).'">'.__('edit', 1).'</a>';},
-    function($row){return ($row->status->get('int') > 0 ? '<a class="delete" href="'.url('action=account/delete_user&user_id='.$row->id).'">'.__('delete', 1).'</a>' : '');}
+    function($row){return '<a class="edit" href="'.url('section=account/edit_user&user_id='.$row->id).'">'.__('Edit', 1).'</a>';},
+    function($row){return ($row->status->get('int') > 0 ? '<a class="delete" href="'.url('action=account/delete_user&user_id='.$row->id).'">'.__('Delete', 1).'</a>' : '');}
   )
 ));
 
@@ -151,7 +151,7 @@ echo $user_list->as_table(array(
         $('#tabber-user')
           .find('a')
             .trigger('click')
-            .text("<?php __('Edit user'); ?>");
+            .text("<?php __($names->component, 'Edit user'); ?>");
       });
 
     });

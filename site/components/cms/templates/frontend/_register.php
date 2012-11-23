@@ -1,15 +1,15 @@
 <form action="<?php echo url('action=cms/register/post', true); ?>" method="post">
 
   <div>
-    E-mail <input type="text" name="email">
+    <?php __('Email'); ?> <input type="text" name="email">
   </div>
   <div>
-    Gebruikersnaam <input type="text" name="username">
+    <?php __('Username'); ?> <input type="text" name="username">
   </div>
   <div>
-    Wachtwoord <input type="password" name="password">
+    <?php __('Password'); ?> <input type="password" name="password">
   </div>
 
-  <input type="submit" value="Gebruiker aanmaken">
+  <input type="submit" value="<?php __($names->component, 'Create user'); ?>">
 
 </form>

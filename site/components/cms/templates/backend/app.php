@@ -37,5 +37,3 @@
 
 </div>
 <!-- /PAGE-TOPBAR -->
-
-<?php echo $app->feedback_form; ?>

@@ -822,6 +822,8 @@ abstract class BaseModel extends Data
       
       try{
         $data[$k] = $this->validate_column($k, $v);
+        if($data[$k] === 'NULL')
+          $this->{$k}->un_set();
       }
       
       catch(\exception\Validation $e){

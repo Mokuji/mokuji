@@ -26,7 +26,7 @@
     <?php echo $head->scripts; ?>
 
   </head>
-  <body>
+  <body id="tx-backend">
 
   <!-- PAGE -->
   <div id="page">

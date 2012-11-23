@@ -5,7 +5,7 @@ echo $data->group->as_form($id, array(
   'title' => array('label' => __('Title', 1)),
   'description' => array('label' => __('Description', 1)),
   'members' => array(
-    'label' => __('Group members', 1),
+    'label' => __($names->component, 'Group members', 1),
     'custom_field' => true,
     'type' => 'custom',
     'custom_html' =>

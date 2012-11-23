@@ -135,6 +135,24 @@ class Helpers extends \dependencies\BaseComponent
   
   }
   
+  public function get_page_options($pid)
+  {
+    
+    return tx('Sql')
+      ->table('cms', 'Pages', $P)
+      ->pk($pid)
+      ->join('OptionSets', $OS)
+      ->workwith($OS)
+      ->join('Options', $O)
+      ->execute($O)
+      ->push(array('key'=>'pid', 'value'=>$pid))
+      ->map(function($item){
+        if($item->key->is_set())
+          return array($item->key->get() => $item);
+      });
+    
+  }
+  
   public function get_page_permissions($pid)
   {
     

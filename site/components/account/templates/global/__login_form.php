@@ -8,9 +8,9 @@ if(!$user->check('login')){
 
 ?>
 
-<form method="post" action="<?php echo url('action=cms/login/post'); ?>"  id="login_form">
+<form method="post" action="<?php echo url('action=account/login/post'); ?>"  id="login_form">
 
-  <h1><?php __('Login'); ?></h1>
+  <h1><?php __('LOGIN_VERB'); ?></h1>
 
   <?php echo $messages->error; ?>
 
@@ -27,7 +27,7 @@ if(!$user->check('login')){
     </div>
 
     <div class="ctrlHolder clearfix">
-      <input type="submit" name="login" value="<?php __('Login'); ?>" />
+      <input type="submit" name="login" value="<?php __('LOGIN_VERB'); ?>" />
     </div>
   
   </section>
@@ -41,8 +41,8 @@ document.location = '<?php echo url(URL_BASE.'?'.tx('Config')->user('homepage'),
 </script>
 
 <p>
-  <?php __('Welcome back'); ?>!<br />
-  <a href="<?php echo url(URL_BASE.'?'.tx('Config')->user('homepage'), true); ?>"><?php __('Go to the homepage.'); ?></a>
+  <?php __($names->component, 'Welcome back'); ?>!<br />
+  <a href="<?php echo url(URL_BASE.'?'.tx('Config')->user('homepage'), true); ?>"><?php __($names->component, 'Go to the homepage.'); ?></a>
 </p>
 
 <?php } ?>

@@ -8,7 +8,51 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
   
   protected
     $component = 'update',
-    $updates = array();
+    $updates = array(
+      '1.1' => '1.2'
+    );
+  
+  public function update_to_1_2($current_version, $forced)
+  {
+    
+    //Queue translation token update with CMS component.
+    $this->queue(array(
+      'component' => 'cms',
+      'min_version' => '1.2'
+      ), function($version){
+          
+          $component = tx('Sql')
+            ->table('cms', 'Components')
+            ->where('name', "'{$this->component}'")
+            ->execute_single();
+          
+          tx('Sql')
+            ->table('cms', 'ComponentViews')
+            ->where('com_id', $component->id)
+            ->execute()
+            ->each(function($view){
+              
+              //If tk_title starts with 'COMNAME_' remove it.
+              if(strpos($view->tk_title->get('string'), strtoupper($this->component.'_')) === 0){
+                $view->tk_title->set(
+                  substr($view->tk_title->get('string'), (strlen($this->component)+1))
+                );
+              }
+              
+              //If tk_description starts with 'COMNAME_' remove it.
+              if(strpos($view->tk_description->get('string'), strtoupper($this->component.'_')) === 0){
+                $view->tk_description->set(
+                  substr($view->tk_description->get('string'), (strlen($this->component)+1))
+                );
+              }
+              
+              $view->save();
+              
+            });
+          
+        }); //END - Queue CMS 1.2+
+    
+  }
   
   public function install_1_1($dummydata, $forced)
   {

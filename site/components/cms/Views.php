@@ -16,8 +16,8 @@ class Views extends \dependencies\BaseViews
 
     $page_info = $this->helper('get_page_info', tx('Data')->get->pid);
     $part=null;
-    $options=array();
-
+    $options = $this->helper('get_page_options', $page_info->id);
+    
     tx('Sql')->table('cms', 'Layouts')
       ->parent_pk(true, (!is_null($part) ? $part : $page_info->layout_id))
       ->execute()
@@ -87,7 +87,6 @@ class Views extends \dependencies\BaseViews
       'topbar' => $this->section('admin_toolbar'),
       'menus' => $this->view('menus'),
       'app' => $this->section(tx('Data')->get->view->is_set() ? 'config_app' : 'app'),
-      'feedback_form' => tx('Component')->modules('cms')->get_html('feedback_form'),
       'sites' => tx('Sql')->table('cms', 'Sites')->execute()
     );
 
@@ -111,7 +110,7 @@ class Views extends \dependencies\BaseViews
   
   protected function modules()
   {
-
+    return;
     return array(
       'all' => tx('Sql')
         ->table('cms', 'Modules')

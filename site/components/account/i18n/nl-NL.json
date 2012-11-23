@@ -1,0 +1,66 @@
+{
+  
+  "ACCOUNTS_VIEW_TITLE": "Gebruikersbeheer",
+  "ACCOUNTS_VIEW_DESCRIPTION": "",
+  
+  "PROFILE_VIEW_TITLE": "Profiel",
+  "PROFILE_VIEW_DESCRIPTION": "",
+  
+  
+  
+  "A message from": "Een bericht van",
+  "Account management": "Accountbeheer",
+  
+  "Click here to go to the frontpage quickly": "Klik hier om snel naar de voorpagina te gaan",
+  "Column names": "Kolom namen",
+  "Confirm new password": "Bevestig nieuwe wachtwoord",
+  "CSV delimiter": "CSV scheidingsteken",
+  "CSV file": "CSV bestand",
+  "CSV name": "CSV naam",
+  
+  "Database name": "Database naam",
+  
+  "Edit group": "Groep bewerken",
+  "EXCEL_SAVE_AS_CSV": "In Excel: 'Bestand', 'Opslaan als...', Kies als type 'CSV (*.csv)'",
+  
+  "Go to the homepage": "Ga naar de home-pagina",
+  "Group members": "Groepsleden",
+  "Groups": "Groepen",
+  
+  "Import": "Importeer",
+  "IMPORT_EXPLANATION_P1": "Gebruikers kunnen worden geïmporteerd door middel van een CSV bestand. Bij het opslaan van een CSV bestand wordt een scheidingsteken gekozen. Dit scheidingsteken kunt u opgeven in het daarvoor bedoelde veld. Komt het scheidingsteken niet overeen dan kan geen onderscheid gemaakt worden tussen kolommen en zal de importeerfunctie een foutmelding geven.",
+  "IMPORT_EXPLANATION_P2": "Om op een later moment de geïmporteerde gebruikers makkelijker te beheren kunt u alle gebruikers die bij deze import worden toegevoegd lid laten worden van een of meerdere gebruikersgroepen.",
+  "IMPORT_EXPLANATION_P3": "U kunt met de kolomnamen aangeven in welke kolommen welke data te vinden is. We gaan er van uit dat de eerste regel van het CSV bestand de namen van de kolommen aangeeft (hoofdletter gebruik maakt hierbij niet uit) en vanaf de 2e regel gebruikersinformatie opgeslagen is.",
+  "IMPORT_VERB": "Importeren",
+  
+  "Last login": "Laatst ingelogd",
+  "Let user choose password": "Laat gebruiker wachtwoord kiezen",
+  
+  "Mailing": "Mailing",
+  "Member count": "Leden aantal",
+  "Member of groups": "Lid van groepen",
+  
+  "Never logged in": "Nooit ingelogd",
+  "New group": "Nieuwe groep",
+  "New password": "Nieuwe wachtwoord",
+  "New user": "Nieuwe gebruiker",
+  
+  "Old password": "Oude wachtwoord",
+  
+  "Password hidden": "Wachtwoord verborgen",
+  "Perform action on selection": "Voer actie uit op selectie",
+  
+  "Reciever(s)": "Ontvanger(s)",
+  
+  "Send activation email to selection": "Verstuur activatie-mail aan selectie",
+  "Send email": "Verstuur e-mail",
+  "Send email message to selection": "Verstuur e-mailbericht aan selectie",
+  "Sent mail successfully": "Bericht succesvol verzonden",
+  
+  "Upload your picture": "Upload uw foto",
+  "User must set this": "Door gebruiker in te vullen",
+  
+  "Welcome": "Welkom",
+  "Welcome back": "Welkom terug"
+  
+}
