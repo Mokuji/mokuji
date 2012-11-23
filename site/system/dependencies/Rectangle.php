@@ -53,6 +53,9 @@ class Rectangle
   public function set_width($width, $maintain_aspect_ratio = false)
   {
     
+    //Get raw data.
+    raw($width, $maintain_aspect_ratio);
+    
     //Don't do much.
     if(!$maintain_aspect_ratio){
       $this->width = $width;
@@ -72,6 +75,9 @@ class Rectangle
   //Set the height, optionally while maintaining aspect ratio.
   public function set_height($height, $maintain_aspect_ratio = false)
   {
+    
+    //Get raw data.
+    raw($height, $maintain_aspect_ratio);
     
     //Don't do much.
     if(!$maintain_aspect_ratio){
