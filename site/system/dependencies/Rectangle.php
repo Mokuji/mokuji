@@ -20,6 +20,10 @@ class Rectangle
   public function __construct($width, $height)
   {
     
+    //Extract raw data.
+    raw($width, $height);
+    
+    //Set values.
     $this->width = $width;
     $this->height = $height;
     
