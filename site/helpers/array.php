@@ -123,6 +123,13 @@
   
   }
   
+  function array_try(array $array, $key, $else)
+  {
+    
+    return array_key_exists($key, $array) ? $array[$key] : $else;
+    
+  }
+  
   function array_flatten(array $array)
   {
   
