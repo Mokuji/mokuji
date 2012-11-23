@@ -3,8 +3,6 @@
 class Image extends File
 {
   
-  public static function get_fit()
-  
   private
     $image,
     $use_cache=false,
@@ -365,7 +363,7 @@ class Image extends File
 
       // do we have one in our cache?
       $cache_dir = $this->cache_dir();
-      $cache_file = $cache_dir.DS.'crop-'.$x.'-'.$y.'-'.$width.'-'.$height.'_'.$this->info['name'].'.'.$this->info['extension'];
+      $cache_file = $cache_dir.DS.$this->info['name'].'_crop-'.$x.'-'.$y.'-'.$width.'-'.$height.'.'.$this->info['extension'];
 
       if(is_file($cache_file) && filemtime($this->source) < filemtime($cache_file))
       {
@@ -587,8 +585,8 @@ class Image extends File
     //Create a rectangle to represent the image.
     $R = new Rectangle($this->info['width'], $this->info['height']);
     
-    //Make the rectangle contain the given area.
-    $R->contain($width, $height);
+    //Make the rectangle contain and wrap tight around the given area.
+    $R->contain($width, $height, true);
     
     //Do a resize first.
     $this->resize($R->width(), $R->height());
