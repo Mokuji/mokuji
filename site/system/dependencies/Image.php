@@ -354,37 +354,11 @@ class Image extends File
       return $this;
       
     }
-
-    //Calculate width and left offset
-    if($width != 0 && $x != 0){
-      $x = $x;
-      $width = $width;
-    }elseif($width != 0){
-      $x = 0;
-      $width  = $width;
-    }elseif($x != 0){
-      $x = $x;
-      $width  = $this->info['width'] - $x;
-    }else{
-      $x = 0;
-      $width  = $this->info['width'];
-    }
-
-    //Calculate height and top offset
-    if($height != 0 && $y != 0){
-      $y = $y;
-      $height = $height;
-    }elseif($height != 0){
-      $y = 0;
-      $height  = $height;
-    }elseif($y != 0){
-      $y = $y;
-      $height  = $this->info['height'] - $y;
-    }else{
-      $y = 0;
-      $height  = $this->info['height'];
-    }
-
+    
+    //Calculate width and height.
+    $width = ($width > 0 ? $width : ($this->info['width'] - $x));
+    $height = ($height > 0 ? $height : ($this->info['height'] - $y));
+    
     //Should we look in our cache?
     if($this->use_cache === true)
     {
