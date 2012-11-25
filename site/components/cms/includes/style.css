@@ -43,7 +43,6 @@
 
 ._admin_toolbar li {
   float:left;
-  list-st
   margin:0 10px;
 }
 
@@ -93,6 +92,13 @@
   text-indent:0;
   line-height:31px;
   text-transform:lowercase;
+}
+#topbar_menu.frontend li.logout a{
+  color:#666;
+  opacity:0.75;
+}
+#topbar_menu.frontend li.logout a:hover{
+  opacity:1;
 }
 #topbar_menu li.website a{
   background-image:url('img/icons/topbar/website.png');
