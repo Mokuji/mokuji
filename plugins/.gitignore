@@ -1,2 +1,10 @@
-plupload
-tag_handler
+*
+!ckeditor
+!elfinder
+!idtabs3
+!jquery
+!jquery_template
+!jquery_datatables
+!jquery_rest
+!jquery_ui
+!to_hierarchy
