@@ -68,7 +68,3 @@ $(function(){
 });
 
 </script>
-
-<style type="text/css">
-body{background-color:#fff;}
-</style>

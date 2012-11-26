@@ -55,7 +55,7 @@ class EntryPoint extends \dependencies\BaseEntryPoint
         )
       ),
       array(
-        'content' => $this->view('app')
+        'content' => $this->view('app', tx('Data')->get->view->get())
       ));
 
 

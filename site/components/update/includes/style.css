@@ -38,6 +38,9 @@
   margin:0 15px 15px 0;
   width:250px;
 }
+  #recent-updates .version-wrapper li{
+    margin-left: 15px;
+  } 
   #recent-updates .version-wrapper .date{
     color:#888;
   }

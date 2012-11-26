@@ -83,14 +83,14 @@
       }
       
       switch(id){
-        case '#tab-users': var gowhere = '<?php echo url("?section=account/user_list"); ?>'; break;
-        case '#tab-user': var gowhere = '<?php echo url("?section=account/edit_user"); ?>'; break;
-        case '#tab-groups': var gowhere = '<?php echo url("?section=account/group_list"); ?>'; break;
-        case '#tab-group': var gowhere = '<?php echo url("?section=account/edit_user_group"); ?>'; break;
+        case '#tab-users': var gowhere = '<?php echo url("?section=account/user_list", true); ?>'; break;
+        case '#tab-user': var gowhere = '<?php echo url("?section=account/edit_user", true); ?>'; break;
+        case '#tab-groups': var gowhere = '<?php echo url("?section=account/group_list", true); ?>'; break;
+        case '#tab-group': var gowhere = '<?php echo url("?section=account/edit_user_group", true); ?>'; break;
         <?php if(tx('Component')->available('mail')){ ?>
-          case '#tab-mail': var gowhere = '<?php echo url("?section=account/compose_mail"); ?>'; break;
+          case '#tab-mail': var gowhere = '<?php echo url("?section=account/compose_mail", true); ?>'; break;
         <?php } ?>
-        case '#tab-import': var gowhere = '<?php echo url("?section=account/import_users"); ?>'; break;
+        case '#tab-import': var gowhere = '<?php echo url("?section=account/import_users", true); ?>'; break;
       }
       
       if(gowhere)
@@ -139,9 +139,3 @@
   });
 
 </script>
-
-<style>
-body{
-  background-color:#fff;
-}
-</style>

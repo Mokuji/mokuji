@@ -290,6 +290,7 @@
       
       'click on item': function(e){
         e.preventDefault();
+        app.App.activate();
         app.Item.loadItemContents($(e.target).attr('data-menu-item'));
         app.Page.loadPageContents($(e.target).attr('data-page'));
       }
@@ -424,6 +425,50 @@
     
   });
   
+  //Controller for the config bar in the menu.
+  var ConfigBarController = Controller.sub({
+    
+    el: '#page-main-left #configbar',
+    namespace: 'menu',
+    itemTemplate: '#configbar_item_tmpl',
+    
+    elements: {
+      buttons: 'li a'
+    },
+    
+    events: {
+      
+      'click on buttons': function(e){
+        e.preventDefault();
+        this.loadConfigItem($(e.target).attr('data-view'));
+      }
+      
+    },
+    
+    loadConfigItem: function(view){
+      app.Settings.loadView(view);
+      app.Settings.activate();
+    },
+    
+    init: function(){
+      
+      this.previous();
+      var that = this;
+      
+      request(GET, 'cms/configbar_items').done(function(items){
+        
+        for(var i in items){
+          that.view.append($(that.itemTemplate).tmpl(items[i]));
+        }
+        
+        that.refreshElements();
+        
+      });
+      
+    }
+    
+  });
+  
   //The state-machine for the main content.
   var MainManager = Manager.sub({
     
@@ -433,7 +478,7 @@
   });
   
   //The controller for the page-application.
-  var PageAppManager = Manager.sub({
+  var PageAppController = Controller.sub({
     
     el: '#app',
     namespace: 'main'
@@ -899,8 +944,19 @@
   //The controller for the settings interface.
   var SettingsController = Controller.sub({
     
-    el: '<div>',
-    namespace: 'main'
+    el: '#config_app',
+    namespace: 'main',
+    
+    loadView: function(viewName){
+      
+      var view = this.view.find('.inner');
+      view.empty();
+      request(GET, 'cms/config_app', {view: viewName})
+        .done(function(data){
+          view.html(data.contents);
+        });
+      
+    }
     
   });
   
@@ -918,11 +974,13 @@
       
       this.MenuItems = new MenuItemsController;
       this.MenuToolbar = new MenuToolbarController;
+      this.Configbar = new ConfigBarController;
       this.Main = new MainManager;
       
-      this.App = new PageAppManager;
+      this.App = new PageAppController;
       this.Settings = new SettingsController;
-      // this.Main.add([this.Settings, this.App]);
+      this.Main.add([this.App, this.Settings]);
+      this.App.activate();
       
       this.Page = new PageController;
       this.Item = new ItemController;
@@ -988,7 +1046,7 @@ $(function(){
 */
 
   //config menu
-  (function($){
+  /*(function($){
 
     $('#widget_bar a').click(function(e){
 
@@ -1005,6 +1063,6 @@ $(function(){
 
     });
 
-  })($);
+  })($);*/
 
 });
