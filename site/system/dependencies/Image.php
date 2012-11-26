@@ -2,7 +2,7 @@
 
 class Image extends File
 {
-
+  
   private
     $image,
     $use_cache=false,
@@ -125,32 +125,40 @@ class Image extends File
   //resize the image, caching can be used
   public function resize($width=0, $height=0)
   {
-
+    
+    //Create a log entry.
     if($this->logging)log_msg('Image', 'Resize ['.$width.', '.$height.'].');
+    
+    //Check if we have something to work with.
     if(empty($this->source)){
       throw new \exception\InputMissing('No image selected. ->save() first.');
     }
-
-    $width = data_of($width);
-    $height = data_of($height);
-
-    //calculate new dimensions
-    $ratio = $this->info['height'] / $this->info['width'];
-
+    
+    //Extract raw values.
+    raw($width, $height);
+    
+    //Create a Rectangle to represent the image.
+    $R = new Rectangle($this->info['width'], $this->info['height']);
+    
+    //Strict resize?
     if($width > 0 && $height > 0){
-      $width  = $width;
-      $height = $height;
-    }elseif($width > 0){
-      $width  = $width;
-      $height = ceil($width * $ratio);
-    }elseif($height > 0){
-      $height = $height;
-      $width  = ceil($height / $ratio);
-    }else{
-      if($this->logging)log_msg('Image', 'No resize applied (no parameters).');
-      return $this;
+      $R->set_width($width)->set_height($height)->round();
     }
-
+    
+    //Auto-resize based on width?
+    if($width > 0){
+      $R->set_width($width, true)->round();
+    }
+    
+    //Auto-resize based on height?
+    elseif($height > 0){
+      $R->set_height($height, true)->round();
+    }
+    
+    //Set the width and height as they are now.
+    $width = $R->width();
+    $height = $R->height();
+    
     // did it grow and is that allowed?
     if($this->allow_growth === false && ($width > $this->info['width'] || $height > $this->info['height'])){
       return $this;
@@ -344,44 +352,18 @@ class Image extends File
       return $this;
       
     }
-
-    //Calculate width and left offset
-    if($width != 0 && $x != 0){
-      $x = $x;
-      $width = $width;
-    }elseif($width != 0){
-      $x = 0;
-      $width  = $width;
-    }elseif($x != 0){
-      $x = $x;
-      $width  = $this->info['width'] - $x;
-    }else{
-      $x = 0;
-      $width  = $this->info['width'];
-    }
-
-    //Calculate height and top offset
-    if($height != 0 && $y != 0){
-      $y = $y;
-      $height = $height;
-    }elseif($height != 0){
-      $y = 0;
-      $height  = $height;
-    }elseif($y != 0){
-      $y = $y;
-      $height  = $this->info['height'] - $y;
-    }else{
-      $y = 0;
-      $height  = $this->info['height'];
-    }
-
+    
+    //Calculate width and height.
+    $width = ($width > 0 ? $width : ($this->info['width'] - $x));
+    $height = ($height > 0 ? $height : ($this->info['height'] - $y));
+    
     //Should we look in our cache?
     if($this->use_cache === true)
     {
 
       // do we have one in our cache?
       $cache_dir = $this->cache_dir();
-      $cache_file = $cache_dir.DS.'crop-'.$x.'-'.$y.'-'.$width.'-'.$height.'_'.$this->info['name'].'.'.$this->info['extension'];
+      $cache_file = $cache_dir.DS.$this->info['name'].'_crop-'.$x.'-'.$y.'-'.$width.'-'.$height.'.'.$this->info['extension'];
 
       if(is_file($cache_file) && filemtime($this->source) < filemtime($cache_file))
       {
@@ -584,23 +566,14 @@ class Image extends File
   public function fit($width=0, $height=0)
   {
     
-    raw($width, $height);
+    //Create a rectangle to represent the image.
+    $R = new Rectangle($this->info['width'], $this->info['height']);
     
-    //If not both width and height have been given, this is actually just a resize.
-    if($width == 0 || $height == 0)
-      return $this->resize($width, $height);
-    
-    //Get the smallest ratio for each dimension.
-    $hRatio = $width / $this->info['width'];
-    $vRatio = $height / $this->info['height'];
-    $ratio = min($hRatio, $vRatio);
-    
-    //Get target dimensions.
-    $tWidth = floor($this->info['width'] * $ratio);
-    $tHeight = floor($this->info['height'] * $ratio);
+    //Fit the rectangle in the given dimensions.
+    $R->fit($width, $height);
     
     //Do the resize.
-    return $this->resize($tWidth, $tHeight);
+    return $this->resize($R->width(), $R->height());
     
   }
   
@@ -609,30 +582,21 @@ class Image extends File
   public function fill($width, $height)
   {
     
-    raw($width, $height);
+    //Create a rectangle to represent the image.
+    $R = new Rectangle($this->info['width'], $this->info['height']);
     
-    //If not both width and height have been given, this is actually just a resize.
-    if($width == 0 || $height == 0)
-      return $this->resize($width, $height);
-    
-    //Get the highest ratio for each dimension.
-    $hRatio = $width / $this->info['width'];
-    $vRatio = $height / $this->info['height'];
-    $ratio = max($hRatio, $vRatio);
-    
-    //Get target dimensions.
-    $tWidth = floor($this->info['width'] * $ratio);
-    $tHeight = floor($this->info['height'] * $ratio);
+    //Make the rectangle contain and wrap tight around the given area.
+    $R->contain($width, $height, true);
     
     //Do a resize first.
-    $this->resize($tWidth, $tHeight);
+    $this->resize($R->width(), $R->height());
     
     //Find out if we need to do a crop.
-    if($tWidth > $width || $tHeight > $height){
+    if($R->width() > $width || $R->height() > $height){
       
       //See how much needs to be cropped.
-      $hDiff = $tWidth - $width;
-      $vDiff = $tHeight - $height;
+      $hDiff = $R->width() - $width;
+      $vDiff = $R->height() - $height;
       
       //Based on that, find the coordinates we need to start our crop from.
       $x = floor($hDiff / 2);

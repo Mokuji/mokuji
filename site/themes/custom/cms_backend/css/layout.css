@@ -25,6 +25,9 @@
   }
     #page-main-left .content{
       overflow:hidden;
+      position: absolute;
+      top:0px;
+      bottom:0px;
     }
   #page-main-right{
     padding-left:241px;
