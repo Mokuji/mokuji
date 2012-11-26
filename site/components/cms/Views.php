@@ -74,9 +74,9 @@ class Views extends \dependencies\BaseViews
     return load_module($module->component, $module->name);
   }
 
-  protected function app()
+  protected function app($view)
   {
-
+    
     //Get menu and site id.
     $mid = tx('Sql')->table('menu', 'Menus')->limit(1)->execute()->{0}->id->get('int');
     $sid = tx('Site')->id;
@@ -91,7 +91,7 @@ class Views extends \dependencies\BaseViews
       'menus' => $this->view('menus', array('menu_id' => $mid, 'site_id' => $sid)),
       'menu_id' => $mid,
       'site_id' => $sid,
-      'app' => $this->section(tx('Data')->get->view->is_set() ? 'config_app' : 'app'),
+      'app' => $this->section('app', $view->get()),
       'sites' => tx('Sql')->table('cms', 'Sites')->execute()
     );
 

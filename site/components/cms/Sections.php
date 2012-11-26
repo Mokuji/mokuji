@@ -3,14 +3,15 @@
 class Sections extends \dependencies\BaseViews
 {
 
-  protected function app()
+  protected function app($view)
   {
     
     return array(
       'menu_id' => tx('Data')->get->menu,
       'page_id' => tx('Data')->get->pid,
       'edit_menu_item' => $this->section('edit_menu_item'),
-      'edit_page' => $this->section('edit_page')
+      'edit_page' => $this->section('edit_page'),
+      'view' => $view->get()
     );
     
   }
@@ -307,12 +308,7 @@ class Sections extends \dependencies\BaseViews
   protected function configbar()
   {
     
-    return array(
-      'items' => tx('Sql')
-        ->table('cms', 'ComponentViews')
-          ->where('is_config', 1)
-        ->execute()
-    );
+    return array();
     
   }
 

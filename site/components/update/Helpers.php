@@ -12,9 +12,25 @@ class Helpers extends \dependencies\BaseComponent
     $silent = $options->silent->is_true();
     $force = $options->force->is_true();
     
+    if(!$silent){
+      ?>
+      <script type="text/javascript">
+        jQuery(function($){
+          if(app){
+            $('#update-logs a.back-to-summary').click(function(e){
+              e.preventDefault();
+              app.Settings.loadView('update/summary');
+              app.Settings.activate();
+            });
+          }
+        });
+      </script>
+      <?php
+    }
+    
     if(!$silent) echo '<div id="update-logs">'.n.
       '<h1>'.__($this->component, 'Update logs', 1).'</h1>'.n.
-      '<a class="back button grey" href="?view=update/summary">'.__($this->component, 'Back to summary', 1).'</a>'.br.n;
+      '<a class="back button grey back-to-summary" href="?view=update/summary">'.__($this->component, 'Back to summary', 1).'</a>'.br.n;
     
     //Look through root dir.
     if(is_dir(PATH_BASE.DS.'.package'))

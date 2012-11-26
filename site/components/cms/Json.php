@@ -3,6 +3,43 @@
 class Json extends \dependencies\BaseComponent
 {
   
+  protected function get_config_app($data, $params)
+  {
+    
+    $view_arr = explode('/', $data->view->get());
+
+    switch(count($view_arr)){
+      case 1:
+        $component = $this->component;
+        $view = $view_arr[0];
+        break;
+      case 2:
+        $component = $view_arr[0];
+        $view = $view_arr[1];
+        break;
+    }
+    
+    return array(
+      'contents' => tx('Component')->views($component)->get_html($view)
+    );
+    
+  }
+  
+  protected function get_configbar_items($data, $params)
+  {
+    return tx('Sql')
+      ->table('cms', 'ComponentViews')
+        ->where('is_config', 1)
+      ->execute()
+      
+      //Also get the meta info we need.
+      ->each(function($view){
+        $view->component;
+        $view->prefered_title;
+        $view->prefered_description;
+      });
+  }
+  
   protected function update_page($data, $params)
   {
     
