@@ -273,6 +273,8 @@
     elements: {
       'el_items': 'li',
       'btn_delete': '.icon-delete',
+      'btn_collapse': '.icon-collapse',
+      'btn_expand': '.icon-expand',
       'item': 'a.menu-item'
     },
     
@@ -292,6 +294,14 @@
         e.preventDefault();
         app.Item.loadItemContents($(e.target).attr('data-menu-item'));
         app.Page.loadPageContents($(e.target).attr('data-page'));
+      },
+      
+      'click on btn_collapse': function(e){
+        this.collapse($(e.target).closest('li'));
+      },
+      
+      'click on btn_expand': function(e){
+        this.expand($(e.target).closest('li'));
       }
       
     },
@@ -345,6 +355,8 @@
         expression: (/()([0-9]+)/),
         omitRoot: true
       });
+      
+      return this;
       
     },
     
@@ -420,6 +432,20 @@
         toleranceElement: '> div'
       });
       
+    },
+    
+    //Collapse a menu item and its sub-items.
+    collapse: function(item){
+      $(item).find('.icon-toggle').removeClass('icon-collapse').addClass('icon-expand');
+      $(item).addClass('collapsed');
+      return this;
+    },
+    
+    //Un-collapse.
+    expand: function(item){
+      $(item).find('.icon-toggle').removeClass('icon-expand').addClass('icon-collapse');
+      $(item).removeClass('collapsed');
+      return this;
     }
     
   });

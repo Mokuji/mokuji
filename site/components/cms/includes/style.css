@@ -725,6 +725,30 @@
   position:relative;
 }
 
+#page-main-left .menu-items-list li.collapsed ul{
+  display: none;
+}
+
+#page-main-left .menu-items-list .icon-toggle{
+  display: none;
+  position: absolute;
+  left:20px;
+  top:7px;
+}
+
+#page-main-left .menu-items-list:hover li.has-sub > div > .icon-toggle{
+  display:block;
+  cursor:pointer;
+}
+
+#page-main-left .menu-items-list:hover .icon-collapse{
+  background-color: red;
+}
+
+#page-main-left .menu-items-list:hover .icon-expand{
+  background-color: blue;
+}
+
 #page-main-left .menu-items-list .icon-delete{
   display:none;
   z-index:20;
@@ -753,7 +777,7 @@
   overflow-y:auto;
 }
 
-#page-main-left .menu-items-list li.depth_1 > ul{
+#page-main-left .menu-items-list li[data-depth="1"] > ul{
   border-bottom:1px solid #d6dce1;
 }
 
@@ -839,10 +863,10 @@
   margin-left:-25px;
   padding-left:10px;
 }
-#page-main-left .menu-items-list li li li.hassub > a{
+#page-main-left .menu-items-list li li li.has-sub > a{
   background:url('../img/icons/left-menu-arrow-inactive.png')60px center no-repeat;
 }
-#page-main-left .menu-items-list li li li.hassub > a:hover{
+#page-main-left .menu-items-list li li li.has-sub > a:hover{
   background:#d2e5f9 url('../img/icons/left-menu-arrow-inactive.png')60px center no-repeat;
 }
 #page-main-left .menu-items-list li li li.has-sub.active > a{
