@@ -437,14 +437,14 @@
     
     //Collapse a menu item and its sub-items.
     collapse: function(item){
-      $(item).find('.icon-toggle').removeClass('icon-collapse').addClass('icon-expand');
+      $(item).find('.icon-toggle:eq(0)').removeClass('icon-collapse').addClass('icon-expand');
       $(item).addClass('collapsed');
       return this;
     },
     
     //Un-collapse.
     expand: function(item){
-      $(item).find('.icon-toggle').removeClass('icon-expand').addClass('icon-collapse');
+      $(item).find('.icon-toggle:eq(0)').removeClass('icon-expand').addClass('icon-collapse');
       $(item).removeClass('collapsed');
       return this;
     }
