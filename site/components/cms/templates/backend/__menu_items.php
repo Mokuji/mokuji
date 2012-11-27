@@ -1,12 +1,9 @@
-<?php namespace components\cms; if(!defined('TX')) die('No direct access.');?>
+<?php namespace components\cms; if(!defined('TX')) die('No direct access.'); ?>
 
-<menu type="toolbar" id="menu-items-toolbar">
+<nav id="menu-items-toolbar">
 
-  <?php if($data->sites->size() > 1): ?>
-    
-    <!-- The set of buttons for selecting different sites. Only here when multiple sites are available. -->
-    <menu>
-    
+  <?php if($data->sites->size() > 1){ ?>
+    <ul class="_menu toolbar">
       <li>
         <?php echo $data->sites->as_options('site_id', 'title', 'id', array(
           'id'=>'btn-select-site',
@@ -14,25 +11,17 @@
           'default'=>$data->site_id)
         ); ?>
       </li>
-      <li><a href="<?php echo url('view=cms/sites&menu=NULL&pid=NULL'); ?>" id="btn-edit-sites"><?php __('Edit sites'); ?></a></li>
-      
-    </menu>
-    
-  <?php endif; ?>
-  
-  <!-- The set of buttons used to control the menu items. -->
-  <menu>
-    <li><a href="<?php echo url('section=cms/app&menu=0', true); ?>" id="btn-new-menu-item"><?php __('New menu item'); ?></a></li>
-  </menu>
-    
-  <!-- The set of buttons used to save, refresh or revert the menu items. -->
-  <menu>
-  
-    <li><a href="<?php echo url('section=cms/menu_item_list'); ?>" id="btn-refresh-menu-items"><?php __('Refresh menu items'); ?></a></li>
+      <li><a href="<?php echo url('view=cms/sites&menu=NULL&pid=NULL'); ?>" id="btn-edit-sites"><?php __($names->component, 'Edit sites'); ?></a></li>
+    </ul>
+  <?php } ?>
+
+  <ul class="_menu toolbar">
+    <li><a href="<?php echo url('section=cms/app&menu=0', true); ?>" id="btn-new-menu-item" title="<?php __($names->component, 'New menu item'); ?>"></a></li>
+    <li><a href="<?php echo url('section=cms/menu_items'); ?>" id="btn-refresh-menu-items" title="<?php __($names->component, 'Refresh menu items'); ?>"></a></li>
     <li class="menu-state" id="dropdown-menu">
 
-      <a href="#" id="btn-save-menu-items"><?php __('Save menu items'); ?></a>
-      <a href="#" id="user-message"><?php __('Saved successfully'); ?></a>
+      <a href="#" id="btn-save-menu-items"><?php __($names->component, 'Save menu items'); ?></a>
+      <a href="#" id="user-message"><?php __('Saved'); ?></a>
 
       <?php
       //Menu select.
@@ -49,11 +38,112 @@
       ?>
 
     </li>
-    
-  </menu>
-  
-  <div class="reset"></div>
-    
-</menu>
+  </ul>
+</nav>
 
-<?php echo $data->items; ?>
+<?php
+
+$data->items
+
+  ->not('empty')
+
+  ->success(function($menu_items)use($data){
+    echo $menu_items->as_hlist('_menu menu-items-list nestedsortable', function($item, $key, $delta, &$properties)use($data){
+
+      $properties['class'] = 'depth_'.$item->depth;
+
+      return
+        '<div>'.
+        '  <a href="'.url('menu='.$item->id.'&pid='.$item->page_id.'&site_id='.$data->site_id, true).'">'.$item->title.'</a>'.
+        '  <span href="'.url('action=menu/menu_item_delete&item_id='.$item->id).'" class="small-icon icon-delete"></span>'.
+        '</div>';
+    });
+  })
+
+  ->failure(function(){
+    //__('No menu items found.');
+  });
+
+?>
+
+<script type="text/javascript">
+
+  $(function(){
+    
+    /* =Select site
+    -------------------------------------------------------------- */
+    $("#btn-select-site").on('change', function(e){
+      
+      $.ajax({
+        url: '?section=cms/menu_items&site_id='+$(e.target).val()
+      }).done(function(d){
+        $("#page-main-left .content .inner").html(d);
+        app.init();
+      });
+      
+    });
+    
+    /* =Select menu
+    -------------------------------------------------------------- */
+    $("#btn-select-menu").on('change', function(e){
+      
+      $.ajax({
+        url: '?section=cms/menu_items&menu_id='+$(e.target).val()
+      }).done(function(d){
+        $("#page-main-left .content .inner").html(d);
+        app.init();
+      });
+      
+    });
+    
+    /* =New menu item
+    -------------------------------------------------------------- */
+    $("#btn-new-menu-item").on('click', function(e){
+
+      e.preventDefault();
+
+      $.ajax({
+        url: $(this).attr('href')
+      }).done(function(d){
+        $("#page-main-right").html(d);
+      });
+
+    });
+
+    /* =Revert/refresh menu
+    -------------------------------------------------------------- */
+    $("#btn-refresh-menu-items").on('click', function(e){
+
+      e.preventDefault();
+
+      $.ajax({
+        url: $(this).attr('href')
+      }).done(function(d){
+        $("#page-main-left .content .inner").html(d);
+        app.init();
+      });
+
+    });
+
+    /* =Delete menu item
+    -------------------------------------------------------------- */
+    $(".menu-items-list .icon-delete").on("click", function(){
+
+      if(confirm("<?php __($names->component, 'Are you sure you want to delete this menu item'); ?>?")){
+
+        var _this = $(this);
+
+        $.ajax({
+          url: $(this).attr("href")
+        }).done(function(){
+          $(_this).closest("li").slideUp();
+        });
+
+      }
+
+    });
+
+  });
+
+
+</script>
