@@ -282,6 +282,7 @@
       
       'sortupdate': function(){
         this.updateData();
+        this.checkHasSub();
         app.MenuToolbar.makeSavable();
       },
       
@@ -437,16 +438,38 @@
     
     //Collapse a menu item and its sub-items.
     collapse: function(item){
+      
       $(item).find('.icon-toggle:eq(0)').removeClass('icon-collapse').addClass('icon-expand');
       $(item).addClass('collapsed');
+      
       return this;
+      
     },
     
     //Un-collapse.
     expand: function(item){
+      
       $(item).find('.icon-toggle:eq(0)').removeClass('icon-expand').addClass('icon-collapse');
       $(item).removeClass('collapsed');
+      
       return this;
+      
+    },
+    
+    //Add the has-sub class to items that have sub-menu items.
+    checkHasSub: function(){
+      
+      var self = this;
+      
+      $.after(0).done(function(){
+        self.el_items.filter(':has(ul)').addClass('has-sub');
+        self.el_items.not(':has(>ul:has(li))').find('>ul').remove();
+        self.el_items.filter(':not(:has(>ul))').removeClass('has-sub');
+      });
+      
+      
+      return self;
+      
     }
     
   });
