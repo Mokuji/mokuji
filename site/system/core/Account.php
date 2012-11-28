@@ -21,6 +21,28 @@ class Account
       return $this->logout();
     }
     
+    //Backwards compatibility with old login method.
+    if(tx('Sql')->execute_single("SHOW TABLES LIKE '#__core_user_logins'")->is_empty())
+    {
+      
+      //Get the current user session from the database.
+      tx('Sql')->execute_scalar(
+        "SELECT id FROM `#__core_users` WHERE id = {$this->user->id} AND session = '".tx('Session')->id."'"
+      )
+      
+      //No exist? Shoo!
+      ->is('empty', function(){
+        tx('Account')->logout();
+      });
+      
+      //Progress user activity.
+      tx('Data')->server->REQUEST_TIME->copyto($this->user->activity);
+      
+      //Cut if off here, because the other stuff is for the people who update their databases.
+      return $this;
+      
+    }
+    
     //Get active login sessions from the database.
     $login = tx('Sql')->execute_single("
       SELECT * FROM `#__core_user_logins`
@@ -152,21 +174,42 @@ class Account
     //Regenerate the session ID.
     tx('Session')->regenerate();
     
-    //Compute the expiry date.
-    $dt_expiry = is_null($expiry_date) ? 'NULL' : "'".strtotime($expiry_date)."'";
+    //Backwards compatibility with old database structure.
+    if(tx('Sql')->execute_single("SHOW TABLES LIKE '#__core_user_logins'")->is_empty())
+    {
+      
+      //Update the login session.
+      tx('Sql')->execute_non_query("
+        UPDATE `#__core_users` SET
+          session = '".tx('Session')->id."',
+          ipa = '".tx('Data')->server->REMOTE_ADDR."',
+          dt_last_login = '".date('Y-m-d H:i:s')."'
+        WHERE id = {$user->id}
+      ");
+      
+    }
     
-    //Insert this login session in the database.
-    tx('Sql')->execute_non_query("
-      INSERT INTO `#__core_user_logins` VALUES(
-        NULL,
-        {$user->id},
-        '".tx('Session')->id."',
-        {$dt_expiry},
-        '".tx('Data')->server->REMOTE_ADDR."',
-        '".tx('Data')->server->HTTP_USER_AGENT."',
-        NULL
-      )
-    ");
+    //This stuff is only for the people who update their database structures.
+    else
+    {
+      
+      //Compute the expiry date.
+      $dt_expiry = is_null($expiry_date) ? 'NULL' : "'".strtotime($expiry_date)."'";
+      
+      //Insert this login session in the database.
+      tx('Sql')->execute_non_query("
+        INSERT INTO `#__core_user_logins` VALUES(
+          NULL,
+          {$user->id},
+          '".tx('Session')->id."',
+          {$dt_expiry},
+          '".tx('Data')->server->REMOTE_ADDR."',
+          '".tx('Data')->server->HTTP_USER_AGENT."',
+          NULL
+        )
+      ");
+      
+    }
     
     //Set meta-data.
     $this->user->id = $user->id;
@@ -183,20 +226,31 @@ class Account
   public function logout()
   {
     
-    //Already logged out? Do nothing.
-    if(!$this->user->check('login')){
-      return $this;
+    //Really logged in? Log out from the database.
+    if($this->user->check('login'))
+    {
+      
+      //Log out the old way.
+      if(tx('Sql')->execute_single("SHOW TABLES LIKE '#__core_user_logins'")->is_empty()){
+        tx('Sql')->execute_non_query("UPDATE `#__core_users` SET session = NULL, ipa = NULL WHERE id = {$this->user->id}");
+      }
+      
+      //Log out the new way.
+      else
+      {
+        
+        tx('Sql')->execute_non_query("
+          UPDATE `#__core_user_logins` 
+            SET
+              dt_expiry = '".date('Y-m-d H:i:s')."'
+            WHERE 1
+              AND user_id = {$this->user->id}
+              AND session_id = '".tx('Session')->id."'
+        ");
+        
+      }
+      
     }
-    
-    //Set the expiry date to now.
-    tx('Sql')->execute_non_query("
-      UPDATE `#__core_user_logins` 
-        SET
-          dt_expiry = '".date('Y-m-d H:i:s')."'
-        WHERE 1
-          AND user_id = {$this->user->id}
-          AND session_id = '".tx('Session')->id."'
-    ");
     
     //Regenerate the session ID.
     tx('Session')->regenerate();

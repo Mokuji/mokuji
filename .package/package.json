@@ -12,6 +12,10 @@
         {
           "title": "Meerdere sessies",
           "description": "Het is nu mogelijk op meerdere plekken tegelijk ingelogd te zijn. Dit maakt het ook mogelijk in meerdere browsers in te loggen."
+        },
+        {
+          "title": "Fout gerepareerd",
+          "description": "Gebruikers zouden niet meer onverwacht uitgelogd moeten worden."
         }
       ]
     },
