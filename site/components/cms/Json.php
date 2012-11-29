@@ -182,7 +182,7 @@ class Json extends \dependencies\BaseComponent
         ->save()
         
         ->title->set(function($title){
-          return $title->back()->info->{LANGUAGE}->title->get();
+          return $title->back()->info->{tx('Language')->get_language_id()}->title->get();
         })->back();
       
       $result->merge(array(
@@ -216,7 +216,7 @@ class Json extends \dependencies\BaseComponent
       ->merge(array('page_id' => $data->page_id))
       ->save()
       ->title->set(function($title){
-        return $title->back()->info->{LANGUAGE}->title->get();
+        return $title->back()->info->{tx('Language')->get_language_id()}->title->get();
       })->back();
     
   }

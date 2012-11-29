@@ -130,7 +130,7 @@ class Modules extends \dependencies\BaseViews
           ->workwith($mii)
 
             ->select('title', 'title')
-            ->where('language_id', LANGUAGE)
+            ->where('language_id', tx('Language')->get_language_id())
             
           ->workwith($mi)
           

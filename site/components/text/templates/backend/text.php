@@ -14,7 +14,7 @@
 
       <div class="idTabs">
 
-        <?php echo tx('Component')->available('language') ? tx('Component')->helpers('language')->create_language_tabs(array('in_language_id'=>LANGUAGE)) : ''; ?>
+        <?php echo tx('Component')->available('language') ? tx('Component')->helpers('language')->create_language_tabs(array('in_language_id'=>tx('Language')->get_language_id())) : ''; ?>
         
         <div class="language-tab-content">
 
@@ -23,7 +23,7 @@
           if(tx('Component')->available('language')){
             
             $languages =
-              tx('Component')->helpers('language')->get_languages(array('in_language_id'=>LANGUAGE));
+              tx('Component')->helpers('language')->get_languages(array('in_language_id'=>tx('Language')->get_language_id()));
 
             $languages
               ->each(function($lang)use($data, $languages){
@@ -63,18 +63,18 @@
           else {
             
             ?>
-            <div id="tab-<?php echo LANGUAGE; ?>">
+            <div id="tab-<?php echo tx('Language')->get_language_id(); ?>">
 
               <div class="ctrlHolder">
                 <label><?php __('Title'); ?></label>
-                <input class="big large" type="text" name="info[<?php echo LANGUAGE; ?>][title]" value="${$item.dataInfo($item.data, <?php echo LANGUAGE; ?>, 'title')}" /><?php /* ${$item.dataInfo($item.data, 'title', <?php echo $lang->id; ?>)} | ${$item.dataArrayIndex($item.data)}*/ ?>
+                <input class="big large" type="text" name="info[<?php echo tx('Language')->get_language_id(); ?>][title]" value="${$item.dataInfo($item.data, <?php echo tx('Language')->get_language_id(); ?>, 'title')}" /><?php /* ${$item.dataInfo($item.data, 'title', <?php echo $lang->id; ?>)} | ${$item.dataArrayIndex($item.data)}*/ ?>
               </div>
 
               <br />
 
               <div class="ctrlHolder">
                 <label><?php __($names->component, 'Hoofdtekst'); ?></label>
-                <textarea name="info[<?php echo LANGUAGE; ?>][text]" id="l_text_<?php echo LANGUAGE; ?>_${id}" class="text editor">${$item.dataInfo($item.data, <?php echo LANGUAGE; ?>, 'text')}</textarea>
+                <textarea name="info[<?php echo tx('Language')->get_language_id(); ?>][text]" id="l_text_<?php echo tx('Language')->get_language_id(); ?>_${id}" class="text editor">${$item.dataInfo($item.data, <?php echo tx('Language')->get_language_id(); ?>, 'text')}</textarea>
               </div>
 
 <!--
@@ -82,12 +82,12 @@
 
               <div class="ctrlHolder">
                 <label><?php __($names->component, tx('Data')->get->menu->get('int') <= 0 ? 'Introductietekst' : 'Zijtekst'); ?></label>
-                <textarea name="info[<?php echo LANGUAGE; ?>][description]" id="l_description_<?php echo LANGUAGE; ?>_${id}" class="description editor">${$item.dataInfo($item.data, <?php echo LANGUAGE; ?>, 'description')}</textarea>
+                <textarea name="info[<?php echo tx('Language')->get_language_id(); ?>][description]" id="l_description_<?php echo tx('Language')->get_language_id(); ?>_${id}" class="description editor">${$item.dataInfo($item.data, <?php echo tx('Language')->get_language_id(); ?>, 'description')}</textarea>
               </div>
 -->
 
 
-            </div><!-- /#tab-<?php echo LANGUAGE; ?> -->
+            </div><!-- /#tab-<?php echo tx('Language')->get_language_id(); ?> -->
 
             <?php
             

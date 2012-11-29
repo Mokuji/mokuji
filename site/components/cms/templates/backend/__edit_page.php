@@ -14,7 +14,7 @@
       <div class="clear"></div>
     </div>
     
-    <div id="page-languages" class="language-bar" data-id="<?php echo LANGUAGE; ?>" data-iln="<?php __('IN_LANGUAGE_NAME'); ?>">
+    <div id="page-languages" class="language-bar" data-id="<?php echo tx('Language')->get_language_id(); ?>" data-iln="<?php __('IN_LANGUAGE_NAME'); ?>">
       <a href="#" class="language" data-id="1" data-code="nl_NL" data-shortcode="NL" data-title="Nederlands">Nederlands</a>
       <a href="#" class="language" data-id="2" data-code="en_GB" data-shortcode="EN" data-title="Engels">Engels</a>
       <a href="#" class="language" data-id="3" data-code="de_DE" data-shortcode="DE" data-title="Duits">Duits</a>

@@ -61,7 +61,7 @@ class Json extends \dependencies\BaseComponent
     });
     
     $item->merge(array(
-      'title' => $item->info->{LANGUAGE}->title->get()
+      'title' => $item->info->{tx('Language')->get_language_id()}->title->get()
     ));
     
     return $item;
@@ -136,7 +136,7 @@ class Json extends \dependencies\BaseComponent
     });
     
     $item->merge(array(
-      'title' => $item->info->{LANGUAGE}->title->get()
+      'title' => $item->info->{tx('Language')->get_language_id()}->title->get()
     ));
     
     return $item;

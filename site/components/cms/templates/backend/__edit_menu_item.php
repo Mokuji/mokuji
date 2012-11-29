@@ -8,7 +8,7 @@
       {{if item && item.id > 0}}<input type="hidden" name="id" value="${item.id}" />{{/if}}
       
       <div class="title-bar page-title">
-        <h2><span class="title">{{if item && item.id > 0}}${item.info['<?php echo LANGUAGE; ?>'].title}{{/if}}</span> <span style="font-weight:normal;">(<?php __($names->component, 'Menu item', 'l') ?>)</span></h2>
+        <h2><span class="title">{{if item && item.id > 0}}${item.info['<?php echo tx('Language')->get_language_id(); ?>'].title}{{/if}}</span> <span style="font-weight:normal;">(<?php __($names->component, 'Menu item', 'l') ?>)</span></h2>
         <ul class="title-bar-icons clearfix">
           <?php if(tx('Component')->available('media')){ ?>
             <li><a href="#" class="icon menu-item-settings" id="toggle-menu-item-settings" title="<?php __('Toggle menu item settings'); ?>"><?php __($names->component, 'Toggle menu item settings', 'ucfirst') ?></a></li>
@@ -23,8 +23,8 @@
         <fieldset class="menu_item_titles-wrapper">
         
           <div class="inputHolder">
-            <label for="l_title_menu_item_<?php echo LANGUAGE; ?>"><?php __($names->component, 'Menu item title'); ?></label>
-            <input class="big" type="text" id="l_title_menu_item_<?php echo LANGUAGE; ?>" name="info[<?php echo LANGUAGE; ?>][title]" value="{{if item && item.id > 0}}${item.info['<?php echo LANGUAGE; ?>'].title}{{/if}}" />
+            <label for="l_title_menu_item_<?php echo tx('Language')->get_language_id(); ?>"><?php __($names->component, 'Menu item title'); ?></label>
+            <input class="big" type="text" id="l_title_menu_item_<?php echo tx('Language')->get_language_id(); ?>" name="info[<?php echo tx('Language')->get_language_id(); ?>][title]" value="{{if item && item.id > 0}}${item.info['<?php echo tx('Language')->get_language_id(); ?>'].title}{{/if}}" />
           </div>
           
         </fieldset>
