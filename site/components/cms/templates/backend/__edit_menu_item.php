@@ -7,7 +7,7 @@
     <input type="hidden" name="id" value="<?php echo $edit_menu_item->item->id; ?>" />
 
     <div class="title-bar page-title">
-      <h2><span class="title"><?php echo $edit_menu_item->item->info->{LANGUAGE}->title; ?></span> <span style="font-weight:normal;">(<?php __('cms', 'Menu item', 'l') ?>)</span></h2>
+      <h2><span class="title"><?php echo $edit_menu_item->item->info->{tx('Language')->get_language_code()}->title; ?></span> <span style="font-weight:normal;">(<?php __($names->component, 'Menu item', 'l') ?>)</span></h2>
       <ul class="title-bar-icons clearfix">
         <?php if(tx('Component')->available('media')){ ?>
           <li><a href="#" class="icon menu-item-settings" id="toggle-menu-item-settings" title="<?php __('Toggle menu item settings'); ?>"><?php __('cms', 'Toggle menu item settings', 'ucfirst') ?></a></li>
@@ -25,7 +25,7 @@
         if(tx('Component')->available('language')){
 
           $languages =
-            tx('Component')->helpers('language')->get_languages(array('in_language_id'=>LANGUAGE));
+            tx('Component')->helpers('language')->get_languages(array('in_language_id'=>tx('Language')->get_language_code()));
 
           $languages
             ->each(function($lang)use($data, $languages){
@@ -45,8 +45,8 @@
         else{
           ?>
           <div class="inputHolder">
-            <label for="l_title_menu_item_<?php echo LANGUAGE; ?>"><?php __('cms', 'Menu item title'); ?></label>
-            <input class="big" type="text" id="l_title_menu_item_<?php echo LANGUAGE; ?>" name="info[<?php echo LANGUAGE; ?>][title]" value="<?php echo $data->item->info[LANGUAGE]->title; ?>" />
+            <label for="l_title_menu_item_<?php echo tx('Language')->get_language_code(); ?>"><?php __($names->component, 'Menu item title'); ?></label>
+            <input class="big" type="text" id="l_title_menu_item_<?php echo tx('Language')->get_language_code(); ?>" name="info[<?php echo tx('Language')->get_language_code(); ?>][title]" value="<?php echo $data->item->info[tx('Language')->get_language_code()]->title; ?>" />
           </div>
           <?php
         }

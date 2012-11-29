@@ -2,7 +2,6 @@
 
 class Json extends \dependencies\BaseComponent
 {
-
   
   protected function update_menu_items($data, $arguments)
   {
@@ -20,7 +19,5 @@ class Json extends \dependencies\BaseComponent
     });
     
   }
-
   
-
 }
