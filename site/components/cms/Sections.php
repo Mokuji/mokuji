@@ -76,7 +76,7 @@ class Sections extends \dependencies\BaseViews
           ->join('MenuItemInfo', $mii)->left()
         ->workwith($mii)
           ->select('title', 'title')
-          ->where('language_id', LANGUAGE)
+          ->where('language_id', tx('Language')->get_language_id())
         ->execute()
     );
 
@@ -269,7 +269,7 @@ class Sections extends \dependencies\BaseViews
           ->join('MenuItemInfo', $mii)->left()
         ->workwith($mii)
           ->select('title', 'title')
-          ->where('language_id', LANGUAGE)
+          ->where('language_id', tx('Language')->get_language_id())
         ->execute();
     });
 

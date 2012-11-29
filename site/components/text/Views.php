@@ -17,7 +17,7 @@ class Views extends \dependencies\BaseViews
         ->select("$ii.text", 'text')
         ->where('page_id', "'{$pid}'")
         ->where('trashed', '!', 1)
-        ->where("$ii.language_id", LANGUAGE)
+        ->where("$ii.language_id", tx('Language')->get_language_id())
         ->order('order_nr', 'DESC')
         ->execute()
     );
@@ -34,7 +34,7 @@ class Views extends \dependencies\BaseViews
         ->select("$ii.title", 'title')
         ->select("$ii.description", 'description')
         ->select("$ii.text", 'text')
-        ->where("$ii.language_id", LANGUAGE)
+        ->where("$ii.language_id", tx('Language')->get_language_id())
         ->where(tx('Sql')->conditions()
           ->add('1', array("$ii.title", '|', "'%".addslashes(tx('Data')->post->term)."%'"))
           ->add('2', array("$ii.description", '|', "'%".addslashes(tx('Data')->post->term)."%'"))
