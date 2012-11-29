@@ -273,6 +273,8 @@
     elements: {
       'el_items': 'li',
       'btn_delete': '.icon-delete',
+      'btn_collapse': '.icon-collapse',
+      'btn_expand': '.icon-expand',
       'item': 'a.menu-item'
     },
     
@@ -280,6 +282,7 @@
       
       'sortupdate': function(){
         this.updateData();
+        this.checkHasSub();
         app.MenuToolbar.makeSavable();
       },
       
@@ -293,6 +296,14 @@
         app.App.activate();
         app.Item.loadItemContents($(e.target).attr('data-menu-item'));
         app.Page.loadPageContents($(e.target).attr('data-page'));
+      },
+      
+      'click on btn_collapse': function(e){
+        this.collapse($(e.target).closest('li'));
+      },
+      
+      'click on btn_expand': function(e){
+        this.expand($(e.target).closest('li'));
       }
       
     },
@@ -346,6 +357,8 @@
         expression: (/()([0-9]+)/),
         omitRoot: true
       });
+      
+      return this;
       
     },
     
@@ -420,6 +433,42 @@
         tolerance: 'pointer',
         toleranceElement: '> div'
       });
+      
+    },
+    
+    //Collapse a menu item and its sub-items.
+    collapse: function(item){
+      
+      $(item).find('.icon-toggle:eq(0)').removeClass('icon-collapse').addClass('icon-expand');
+      $(item).addClass('collapsed');
+      
+      return this;
+      
+    },
+    
+    //Un-collapse.
+    expand: function(item){
+      
+      $(item).find('.icon-toggle:eq(0)').removeClass('icon-expand').addClass('icon-collapse');
+      $(item).removeClass('collapsed');
+      
+      return this;
+      
+    },
+    
+    //Add the has-sub class to items that have sub-menu items.
+    checkHasSub: function(){
+      
+      var self = this;
+      
+      $.after(0).done(function(){
+        self.el_items.filter(':has(ul)').addClass('has-sub');
+        self.el_items.not(':has(>ul:has(li))').find('>ul').remove();
+        self.el_items.filter(':not(:has(>ul))').removeClass('has-sub');
+      });
+      
+      
+      return self;
       
     }
     
