@@ -74,6 +74,7 @@ class Sections extends \dependencies\BaseViews
           ->sk(1)
           ->add_absolute_depth('depth')
           ->join('MenuItemInfo', $mii)->left()
+        ->where('page_id', 'NULL')
         ->workwith($mii)
           ->select('title', 'title')
           ->where('language_id', LANGUAGE)

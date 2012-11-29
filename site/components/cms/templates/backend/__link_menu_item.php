@@ -18,7 +18,13 @@ An option to link another menu item.<br />
     </div>
 
     <div class="body">
-      <?php echo $data->menu_items->as_options('menu_item_id', 'title', 'id', array('id'=>'menu_item_link', 'placeholder_text' => __($names->component, 'Link a menu item to this page'))); ?>
+      <?php
+      if($data->menu_items->size() >= 1){
+        echo $data->menu_items->as_options('menu_item_id', 'title', 'id', array('id'=>'menu_item_link', 'placeholder_text' => __($names->component, 'Link a menu item to this page')));
+      }else{
+        echo 'No unlinked menu items available.';
+      }
+      ?>
     </div>
 
   </form>

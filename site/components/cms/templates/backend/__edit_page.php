@@ -5,15 +5,15 @@
 <div id="edit_page">
 
   <div class="title-bar page-title">
-    <h2><?php __($names->component, 'Page was deleted') ?>.</h2>
+    <h2><?php __('cms', 'Page was deleted') ?>.</h2>
     <ul class="title-bar-icons clearfix">
-      <?php if(tx('Data')->get->menu->is_set()){ ?><li><a href="<?php echo url('action=cms/detach_page&menu='.tx('Data')->get->menu.'&pid='.tx('Data')->get->pid); ?>" class="icon detach-page" id="detach-page" title="<?php __($names->component, 'Detach page from menu item'); ?>">Detach</a></li><?php } ?>
+      <?php if(tx('Data')->get->menu->is_set()){ ?><li><a href="<?php echo url('action=cms/detach_page&menu='.tx('Data')->get->menu.'&pid='.tx('Data')->get->pid); ?>" class="icon detach-page" id="detach-page" title="<?php __('cms', 'Detach page from menu item'); ?>">Detach</a></li><?php } ?>
     </ul>
     <div class="clear"></div>
   </div>
 
   <div class="body">
-    <?php __($names->component, 'This page was deleted from the database. Unlink it from the menu item.'); ?>
+    <?php __('cms', 'This page was deleted from the database. Unlink it from the menu item.'); ?>
   </div>
 
 </div>
@@ -25,8 +25,8 @@
   <div class="title-bar page-title">
     <h2><span class="title"><?php echo $edit_page->page->title; ?></span> <span style="font-weight:normal;">(<?php __('Page', 0, 'l'); ?>)</span></h2>
     <ul class="title-bar-icons clearfix">
-      <li><a href="#" class="icon page-settings" id="toggle-page-settings" title="<?php __($names->component, 'Toggle page settings'); ?>">Toggle page settings</a></li>
-      <?php if(tx('Data')->get->menu->is_set()){ ?><li><a href="<?php echo url('action=cms/detach_page&menu='.tx('Data')->get->menu.'&pid='.$edit_page->page->id); ?>" class="icon detach-page" id="detach-page" title="<?php __($names->component, 'Detach page from menu item'); ?>">Detach</a></li><?php } ?>
+      <li><a href="#" class="icon page-settings" id="toggle-page-settings" title="<?php __('cms', 'Toggle page settings'); ?>">Toggle page settings</a></li>
+      <?php if(tx('Data')->get->menu->is_set()){ ?><li><a href="<?php echo url('action=cms/detach_page&menu='.tx('Data')->get->menu.'&pid='.$edit_page->page->id); ?>" class="icon detach-page" id="detach-page" title="<?php __('cms', 'Detach page from menu item'); ?>">Detach</a></li><?php } ?>
     </ul>
     <div class="clear"></div>
   </div>
@@ -40,13 +40,13 @@
       <fieldset class="fieldset-general clearfix">
 
         <div class="inputHolder">
-          <label for="l_title_page"><?php __($names->component, 'Page title'); ?></label>
-          <input id="l_title_page" class="big" type="text" name="title" value="<?php echo $edit_page->page->title ?>" placeholder="<?php __($names->component, 'Page title') ?>" />
+          <!-- <label for="l_title_page"><?php __('cms', 'Page title'); ?></label> -->
+          <input id="l_title_page" class="big" type="text" name="title" value="<?php echo $edit_page->page->title ?>" placeholder="<?php __('cms', 'Page title') ?>" />
         </div>
 
         <?php if($edit_page->layout_info->size() > 0){ ?>
           <div class="inputHolder last">
-            <label for="l_layout"><?php echo __($names->component, 'Layout'); ?></label>
+            <label for="l_layout"><?php echo __('cms', 'Layout'); ?></label>
             <select name="layout_id" id="l_layout">
               <?php
               foreach($edit_page->layout_info as $layout){
@@ -64,7 +64,7 @@
 
         <div class="inner">
 
-          <h3><?php __($names->component, 'Page settings') ?></h3>
+          <h3><?php __('cms', 'Page settings') ?></h3>
 
           <div class="page-item">
 
@@ -72,16 +72,16 @@
 
               <fieldset class="fieldset-display">
 
-                <legend><?php __($names->component, 'PAGE_DISPLAY', 'ucfirst'); ?></legend>
+                <legend><?php __('cms', 'PAGE_DISPLAY', 'ucfirst'); ?></legend>
 
                 <div class="inputHolder">
-                  <label><?php __($names->component, 'Site layout'); ?></label>
-                  <?php echo $edit_page->templates->as_options('template_id', 'title', 'id', array('id' => 'template_id', 'default' => ($edit_page->page->template_id->get('int') > 0 ? $edit_page->page->template_id->get('int') : tx('Config')->user('template_id')->get('int')), 'placeholder_text' => __($names->component, 'Select a site layout', 1))); ?>
+                  <label><?php __('cms', 'Site layout'); ?></label>
+                  <?php echo $edit_page->templates->as_options('template_id', 'title', 'id', array('id' => 'template_id', 'default' => ($edit_page->page->template_id->get('int') > 0 ? $edit_page->page->template_id->get('int') : tx('Config')->user('template_id')->get('int')), 'placeholder_text' => __('cms', 'Select a site layout', 1))); ?>
                 </div>
 
                 <div class="inputHolder">
-                  <label><?php __($names->component, 'Theme'); ?></label>
-                  <?php echo $edit_page->themes->as_options('theme_id', 'title', 'id', array('default' => ($edit_page->page->theme_id->get('int') > 0 ? $edit_page->page->theme_id->get('int') : tx('Config')->user('theme_id')->get('int')), 'placeholder_text' => __($names->component, 'Select a theme', 1))); ?>
+                  <label><?php __('cms', 'Theme'); ?></label>
+                  <?php echo $edit_page->themes->as_options('theme_id', 'title', 'id', array('default' => ($edit_page->page->theme_id->get('int') > 0 ? $edit_page->page->theme_id->get('int') : tx('Config')->user('theme_id')->get('int')), 'placeholder_text' => __('cms', 'Select a theme', 1))); ?>
                 </div>
 
   <?php
@@ -167,13 +167,13 @@
                 <ul>
                   <li><label><input type="radio" name="access_level" value="0"<?php echo ($edit_page->page->access_level->get('int') <= 0 ? ' checked="checked"' : ''); ?> /> <?php __('Everyone'); ?></label></li>
                   <li><label><input type="radio" name="access_level" value="1"<?php echo ($edit_page->page->access_level->get('int') == 1 ? ' checked="checked"' : ''); ?> /> <?php __('Logged in users'); ?></label></li>
-                  <li><label><input type="radio" name="access_level" value="2"<?php echo ($edit_page->page->access_level->get('int') == 2 ? ' checked="checked"' : ''); ?> class="members" /> <?php __($names->component, 'Group members'); ?></label></li>
+                  <li><label><input type="radio" name="access_level" value="2"<?php echo ($edit_page->page->access_level->get('int') == 2 ? ' checked="checked"' : ''); ?> class="members" /> <?php __('cms', 'Group members'); ?></label></li>
                   <li><label><input type="radio" name="access_level" value="3"<?php echo ($edit_page->page->access_level->get('int') == 3 ? ' checked="checked"' : ''); ?> /> <?php __('Admins'); ?></label></li>
                 </ul>
 
                 <fieldset class="fieldset-groups">
 
-                  <legend><?php __($names->component, 'Groups with access'); ?></legend>
+                  <legend><?php __('cms', 'Groups with access'); ?></legend>
 
                   <ul>
                     <?php
@@ -194,7 +194,7 @@
 
               <fieldset class="fieldset-page-info" style="display:none;">
 
-                <legend><?php __($names->component, 'Page info'); ?></legend>
+                <legend><?php __('cms', 'Page info'); ?></legend>
 
                 <?php
                 
@@ -205,12 +205,12 @@
                     ?>
 
                     <div class="inputHolder" hidden>
-                      <label for="l_page_info__title_<?php echo $lang->id; ?>"><?php __($names->component, 'Page title (visible in addressbar)'); ?> <?php __('IN_LANGUAGE_NAME'); ?> <?php echo $lang->title; ?></label>
+                      <label for="l_page_info__title_<?php echo $lang->id; ?>"><?php __('cms', 'Page title (visible in addressbar)'); ?> <?php __('IN_LANGUAGE_NAME'); ?> <?php echo $lang->title; ?></label>
                       <input class="big" type="text" id="l_page_info__title_<?php echo $lang->id; ?>" name="info[<?php echo $lang->id; ?>][title]" value="<?php echo $data->page->info[$lang->id]->title; ?>" />
                     </div>
 
                     <div class="inputHolder"style="height:auto;">
-                      <label style="float:none;width:280px;clear:both;"  for="l_page_info__slogan_<?php echo $lang->id; ?>"><?php __($names->component, 'Slogan (visible in header)'); ?> <?php __('IN_LANGUAGE_NAME'); ?> <?php echo $lang->title; ?></label>
+                      <label style="float:none;width:280px;clear:both;"  for="l_page_info__slogan_<?php echo $lang->id; ?>"><?php __('cms', 'Slogan (visible in header)'); ?> <?php __('IN_LANGUAGE_NAME'); ?> <?php echo $lang->title; ?></label>
                       <input style="float:none;clear:both;" class="big" type="text" id="l_page_info__slogan_<?php echo $lang->id; ?>" name="info[<?php echo $lang->id; ?>][slogan]" value="<?php echo $data->page->info[$lang->id]->slogan; ?>" />
                     </div>
 
@@ -224,12 +224,12 @@
                   
                   ?>
                   <div class="inputHolder" hidden>
-                    <label for="l_page_info__title_<?php echo LANGUAGE; ?>"><?php __($names->component, 'Page title (visible in addressbar)'); ?></label>
+                    <label for="l_page_info__title_<?php echo LANGUAGE; ?>"><?php __('cms', 'Page title (visible in addressbar)'); ?></label>
                     <input class="big" type="text" id="l_page_info__title_<?php echo LANGUAGE; ?>" name="info[<?php echo LANGUAGE; ?>][title]" value="<?php echo $data->page->info[LANGUAGE]->title; ?>" />
                   </div>
 
                   <div class="inputHolder"style="height:auto;">
-                    <label style="float:none;width:280px;clear:both;"  for="l_page_info__slogan_<?php echo LANGUAGE; ?>"><?php __($names->component, 'Slogan (visible in header)'); ?></label>
+                    <label style="float:none;width:280px;clear:both;"  for="l_page_info__slogan_<?php echo LANGUAGE; ?>"><?php __('cms', 'Slogan (visible in header)'); ?></label>
                     <input style="float:none;clear:both;" class="big" type="text" id="l_page_info__slogan_<?php echo LANGUAGE; ?>" name="info[<?php echo LANGUAGE; ?>][slogan]" value="<?php echo $data->page->info[LANGUAGE]->slogan; ?>" />
                   </div>
                   <?php
@@ -259,7 +259,7 @@
     <div id="page_content">
 
       <div class="inner">
-        <h3><?php echo __($names->component, 'Page content'); ?></h3>
+        <h3><?php echo __('cms', 'Page content'); ?></h3>
         <?php echo $edit_page->content; ?>
       </div>
 
