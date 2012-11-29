@@ -71,7 +71,15 @@ class Language
   public function get_languages()
   {
     
-    return tx('Sql')->execute_query('SELECT * FROM `#__core_languages` ORDER BY `id`');
+    return tx('Sql')->execute_query('SELECT * FROM `#__core_languages` ORDER BY `id`')->execute();
+    
+  }
+  
+  public function multilanguage(\Closure $closure)
+  {
+    
+    $this->get_languages->each($closure);
+    return $this;
     
   }
   
@@ -93,13 +101,21 @@ class Language
       
       //Load json file.
       $lang_file = ($component ? PATH_COMPONENTS.DS.$component : PATH_SITE).DS.'i18n'.DS.$language_code.'.json';
-      if(!is_file($lang_file)){
-        throw new \exception\FileMissing('The file \'%s\' can not be found.', $lang_file);
-      }
       
       //Parse file.
-      $arr = json_decode(file_get_contents($lang_file), true);
-      if(!is_array($arr)) $arr = array();
+      try
+      {
+        
+        if(is_file($lang_file)){
+          $arr = json_decode(file_get_contents($lang_file), true);
+        }
+        
+      }
+      catch(\exception $e){ /* best effort */ }
+      
+      //Fallback.
+      if(!isset($arr) || !is_array($arr))
+        $arr = array();
       
       //Create an array for this language in the cache if it doesn't exist yet.
       if(!array_key_exists($language_code, $this->translations))
