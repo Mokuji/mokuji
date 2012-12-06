@@ -84,7 +84,7 @@ class Url
     $scheme = strstr(strtolower(tx('Data')->server->SERVER_PROTOCOL->get()), '/', true) . ($secure ? 's' : '');
 
     //port
-    $port = ((tx('Data')->server->SERVER_PORT->get() == '80') ? '' : (':'.tx('Data')->server->SERVER_PORT->get()));
+    $port = ((tx('Data')->server->SERVER_PORT->get() == ($secure ? '443' : '80')) ? '' : (':'.tx('Data')->server->SERVER_PORT->get()));
 
     preg_match('~(?:(?<!\?)(?P<path>/?(?:((?![^?#]*=)[^?#])*/)+))?(?:(?P<file>(?:[^\?]+)(?:\.[^\?]+)+))?~', array_get(explode('?', $req_uri), 0), $matches);
 
