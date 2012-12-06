@@ -7,11 +7,31 @@ class Language
     $language_id,
     $language_code,
     $caching,
-    $translations;
+    $translations,
+    $translating_started;
   
   //Getters for read_only properties.
   public function get_language_id(){ return $this->language_id; }
   public function get_language_code(){ return $this->language_code; }
+  
+  //Setter for language_id.
+  public function set_language_id($id){
+    
+    $id = Data($id);
+    
+    if($this->translating_started)
+      throw new \exception\Programmer('Can\'t set language, translating has already started');
+    
+    tx('Validating language.', function()use($id){
+      $id->validate('Language', array('number'=>'integer'));
+      $this->language_code = tx('Sql')->execute_scalar('SELECT code FROM #__core_languages WHERE id = '.$id)->get();
+    })
+    
+    ->success(function($info)use($id){
+      $this->language_id = $id->get();
+    });
+    
+  }
   
   //in the initiator, we set the language to the first language in the database, or one defined by session vars
   public function init()
@@ -20,6 +40,7 @@ class Language
     //Default is that we use caching.
     $this->caching = true;
     $this->translations = array();
+    $this->translating_started = false;
     
     $language = null;
     
@@ -60,11 +81,11 @@ class Language
       
     }
     
-    define('LANGUAGE', $lang->get());
-    define('LANGUAGE_CODE', tx('Sql')->execute_scalar('SELECT code FROM #__core_languages WHERE id = '.$lang->get()));
+    //define('LANGUAGE', $lang->get());
+    //define('LANGUAGE_CODE', tx('Sql')->execute_scalar('SELECT code FROM #__core_languages WHERE id = '.$lang->get()));
     
-    $this->language_id = LANGUAGE;
-    $this->language_code = LANGUAGE_CODE;
+    $this->language_id = $lang->get();
+    $this->language_code = tx('Sql')->execute_scalar('SELECT code FROM #__core_languages WHERE id = '.$lang->get())->get();
     
   }
   
@@ -77,6 +98,8 @@ class Language
   
   public function translate($phrase, $component=null, $lang_id=null, $case = null)
   {
+    
+    $this->translating_started = true;
     
     raw($case, $phrase, $component);
     $lang_id = Data($lang_id);

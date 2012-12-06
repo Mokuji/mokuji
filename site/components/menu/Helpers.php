@@ -108,7 +108,7 @@ class Helpers extends \dependencies\BaseComponent
         ->workwith($mii)
         
           ->select('title', 'title')
-          ->where('language_id', LANGUAGE)
+          ->where('language_id', tx('Language')->get_language_id())
         
         ->execute();
     

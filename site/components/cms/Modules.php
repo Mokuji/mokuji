@@ -25,7 +25,7 @@ class Modules extends \dependencies\BaseViews
         ->join('MenuItemInfo', $mii)->inner()
       ->workwith($mii)
         ->select('title', 'title')
-        ->where('language_id', LANGUAGE)
+        ->where('language_id', tx('Language')->get_language_id())
       ->execute()
     );
   

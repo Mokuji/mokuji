@@ -37,7 +37,7 @@ class Views extends \dependencies\BaseViews
           ->order('lft')
           ->join('MenuItemInfo', $MII)
           ->select("$MII.title", 'title')
-          ->where("$MII.language_id", LANGUAGE)
+          ->where("$MII.language_id", tx('Language')->get_language_id())
           ->execute($MI)
       );
     }

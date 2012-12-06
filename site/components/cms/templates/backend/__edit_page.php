@@ -200,7 +200,7 @@
                 
                 if(tx('Component')->available('language')){
                 
-                  tx('Component')->helpers('language')->get_languages(array('in_language_id'=>LANGUAGE))
+                  tx('Component')->helpers('language')->get_languages(array('in_language_id'=>tx('Language')->get_language_code()))
                     ->each(function($lang)use($data){
                     ?>
 
@@ -224,13 +224,13 @@
                   
                   ?>
                   <div class="inputHolder" hidden>
-                    <label for="l_page_info__title_<?php echo LANGUAGE; ?>"><?php __($names->component, 'Page title (visible in addressbar)'); ?></label>
-                    <input class="big" type="text" id="l_page_info__title_<?php echo LANGUAGE; ?>" name="info[<?php echo LANGUAGE; ?>][title]" value="<?php echo $data->page->info[LANGUAGE]->title; ?>" />
+                    <label for="l_page_info__title_<?php echo tx('Language')->get_language_code(); ?>"><?php __($names->component, 'Page title (visible in addressbar)'); ?></label>
+                    <input class="big" type="text" id="l_page_info__title_<?php echo tx('Language')->get_language_code(); ?>" name="info[<?php echo tx('Language')->get_language_code(); ?>][title]" value="<?php echo $data->page->info[tx('Language')->get_language_code()]->title; ?>" />
                   </div>
 
                   <div class="inputHolder"style="height:auto;">
-                    <label style="float:none;width:280px;clear:both;"  for="l_page_info__slogan_<?php echo LANGUAGE; ?>"><?php __($names->component, 'Slogan (visible in header)'); ?></label>
-                    <input style="float:none;clear:both;" class="big" type="text" id="l_page_info__slogan_<?php echo LANGUAGE; ?>" name="info[<?php echo LANGUAGE; ?>][slogan]" value="<?php echo $data->page->info[LANGUAGE]->slogan; ?>" />
+                    <label style="float:none;width:280px;clear:both;"  for="l_page_info__slogan_<?php echo tx('Language')->get_language_code(); ?>"><?php __($names->component, 'Slogan (visible in header)'); ?></label>
+                    <input style="float:none;clear:both;" class="big" type="text" id="l_page_info__slogan_<?php echo tx('Language')->get_language_code(); ?>" name="info[<?php echo tx('Language')->get_language_code(); ?>][slogan]" value="<?php echo $data->page->info[tx('Language')->get_language_code()]->slogan; ?>" />
                   </div>
                   <?php
                   
@@ -251,7 +251,6 @@
 
     </form>
 
-    
   </div><!-- eof:.header -->
 
   <div class="body">
