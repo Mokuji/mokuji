@@ -733,20 +733,21 @@
   display: none;
   position: absolute;
   left:20px;
-  top:7px;
+  height:33px;
 }
 
 #page-main-left .menu-items-list:hover li.has-sub > div > .icon-toggle{
   display:block;
   cursor:pointer;
+  background-position:5px 10px;
 }
 
 #page-main-left .menu-items-list:hover .icon-collapse{
-  background-color: red;
+  background-image:url('img/icons/left-menu-arrow-square.png');
 }
 
 #page-main-left .menu-items-list:hover .icon-expand{
-  background-color: blue;
+  background-image:url('img/icons/left-menu-arrow-collapse-square.png');
 }
 
 #page-main-left .menu-items-list .icon-delete{

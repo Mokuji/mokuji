@@ -1,5 +1,6 @@
 <?php namespace themes; if(!defined('TX')) die('No direct access.'); ?>
 
+    <link rel="shortcut icon" href="<?php echo $theme ?>img/icons/favicon.ico" />
     <link rel="stylesheet" type="text/css" href="<?php echo $theme ?>css/reset.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo $theme ?>css/plugins.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo $theme ?>css/layout.css" />
