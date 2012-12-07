@@ -5,7 +5,8 @@
   $(function(){
     window.app = new Cms({
       menu_id: <?php echo $app->menu_id; ?>,
-      site_id: <?php echo $app->site_id; ?>
+      site_id: <?php echo $app->site_id; ?>,
+      url_base: '<?php echo URL_BASE; ?>'
     });
   });
   </script>

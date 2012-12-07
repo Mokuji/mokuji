@@ -6,6 +6,23 @@ class EntryPoint extends \dependencies\BaseEntryPoint
   public function entrance()
   {
     
+    //When loading PageType templates
+    if(tx('Data')->get->pagetypetemplate->is_set()){
+      
+      $parts = explode('/', tx('Data')->get->pagetypetemplate->get());
+      $com = array_shift($parts);
+      $pagetype = array_shift($parts);
+      $tmpl = implode('/', $parts);
+      
+      $path = PATH_COMPONENTS.DS.$com.DS.'pagetypes'.DS.$pagetype.DS.$tmpl;
+      
+      return load_html($path, array(
+        'component' => $com,
+        'pagetype' => $pagetype
+      ));
+      
+    }
+    
     //Backend
     if(tx('Config')->system()->check('backend'))
     {
@@ -51,7 +68,8 @@ class EntryPoint extends \dependencies\BaseEntryPoint
           load_plugin('idtabs3')
         ),
         'scripts' => array(
-          'cms_backend' => '<script type="text/javascript" src="'.URL_COMPONENTS.'/cms/includes/backend.js"></script>'
+          'cms_backend' => '<script type="text/javascript" src="'.URL_COMPONENTS.'cms/includes/backend.js"></script>',
+          'cms_backend_pagetype' => '<script type="text/javascript" src="'.URL_COMPONENTS.'cms/includes/PageType.js"></script>'
         )
       ),
       array(

@@ -585,12 +585,18 @@
       
       this.data = {
         id: this.view.attr('data-id'),
-        inLanguageName: this.view.attr('data-iln')
+        inLanguageName: this.view.attr('data-iln'),
+        languages: {} //Container to set later.
       };
       
-      var theTabs = [];
+      var theTabs = []
+        , self = this;
+      
       this.languages.each(function(){
-        theTabs.push(new LanguageTabController({el: this}));
+        var ltc = new LanguageTabController({el: this})
+        theTabs.push(ltc);
+        var data = ltc.getLanguageData();
+        self.data.languages[data.id] = data;
       });
       this.add(theTabs);
       if(this.state.controllers.length > 0){
@@ -634,6 +640,15 @@
     deactivate: function(){
       this.previous();
       this.tabView.removeClass('selected');
+    },
+    
+    setMultilanguageSection: function(language){
+      
+      this.view.find('.multilingual-section[data-language-id]').each(function(){
+        $this = $(this);
+        $this.toggle($this.attr('data-language-id') == language);
+      });
+      
     }
     
   });
@@ -897,20 +912,78 @@
       
     },
     
-    processPageData: function(data){
+    processPageData: function(data)
+    {
+      
       var self = app.Page;
+      
+      //Do basic saving of information.
       self.data = data;
       self.data.menu_id = app.Item.data.item.id;
+      
+      //Set the view.
       self.view.html($('#edit_page_tmpl').tmpl(data));
+      
+      //Init page tabs and language tabs.
       self.Tabs = new PageTabManager;
       self.Languages = new LanguageTabManager;
-      self.view.find('#page-tab-body')
-        .html(data.content)
-        .append(self.Tabs.configTab.view);
-      self.Tabs.finalizeTabs(data);
-      self.view.find('#edit_page').addClass('has-tabs');
-      self.refreshElements();
-      self.Tabs.renderTabs();
+      
+      //If we're using the page type setup.
+      if(data.pagetype)
+      {
+        
+        //Load the pagetype.
+        PageType.getPageType(app.options.url_base, data.pagetype)
+        .done(function(definition){
+          
+          //Initialize the controller.
+          try{
+            var controller = new definition.controller(definition, self);
+          }catch(e){ log(e); }
+          
+          //When done, add the config tab.
+          self.view.find('#page-tab-body')
+            .append(self.Tabs.configTab.view);
+          
+          //Finalize.
+          self.finalizePageProcessing.call(self, data);
+          
+        });
+        
+      }
+      
+      //When not using the pagetype setup.
+      else
+      {
+        
+        //Add raw content to template, if available.
+        self.view.find('#page-tab-body')
+          .html(data.content)
+          
+          //As well as the config tab.
+          .append(self.Tabs.configTab.view);
+        
+        //Finalize.
+        self.finalizePageProcessing.call(self, data);
+        
+      }
+      
+    },
+    
+    finalizePageProcessing: function(data){
+      
+      //Let the tabs do final stuff with said content if needed.
+      this.Tabs.finalizeTabs(data);
+      
+      //Specify that tabs are present.
+      this.view.find('#edit_page').addClass('has-tabs');
+      
+      //Update references.
+      this.refreshElements();
+      
+      //Show the tabs.
+      this.Tabs.renderTabs();
+      
     }
     
   });
@@ -1113,5 +1186,37 @@ $(function(){
     });
 
   })($);*/
+
+  //draggable sidebar
+  var i = 0;
+  $('#widget-slider').mousedown(function(e){
+    e.preventDefault();
+    $(document).mousemove(function(e){
+      
+      if(e.pageX > 225 && e.pageX < 985){
+        $("body").removeClass("cursor_disabled").addClass("cursor_resizing");
+        $('#page-main-left').css("width", e.pageX+15);
+        $('#page-main-right').css("padding-left",e.pageX+15);
+        return;
+      }
+      
+      else if(e.pageX <= 225){
+        $('#page-main-left').css("width", 240);
+        $('#page-main-right').css("padding-left", 240);
+      }
+      
+      else{
+        $('#page-main-left').css("width", 1000);
+        $('#page-main-right').css("padding-left", 1000);
+      }
+      
+      $("body").removeClass("cursor_resizing").addClass("cursor_disabled");
+      
+    });
+  });
+  $(document).mouseup(function(e){
+    $("body").removeClass("cursor_resizing").removeClass("cursor_disabled");
+    $(document).unbind('mousemove');
+  });
 
 });

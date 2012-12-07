@@ -6,7 +6,7 @@ class Languages extends \dependencies\BaseModel
   protected static
   
     $table_name = 'core_languages',
-  
+    
     $relations = array(
       'ComponentViewInfo' => array('id' => 'ComponentViewInfo.lang_id'),
       'MenuItemInfo' => array('id' => 'MenuItemInfo.lang_id'),

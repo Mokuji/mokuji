@@ -1,7 +1,7 @@
 <?php namespace components\cms; if(!defined('TX')) die('No direct access.'); tx('Account')->page_authorisation(2); ?>
 
 <script id="edit_page_tmpl" type="text/x-jquery-tmpl">
-    
+  
   <div id="edit_page" class="has-languages">
     
     <div class="title-bar page-title">
@@ -15,9 +15,14 @@
     </div>
     
     <div id="page-languages" class="language-bar" data-id="<?php echo tx('Language')->get_language_id(); ?>" data-iln="<?php __('IN_LANGUAGE_NAME'); ?>">
-      <a href="#" class="language" data-id="1" data-code="nl_NL" data-shortcode="NL" data-title="Nederlands">Nederlands</a>
-      <a href="#" class="language" data-id="2" data-code="en_GB" data-shortcode="EN" data-title="Engels">Engels</a>
-      <a href="#" class="language" data-id="3" data-code="de_DE" data-shortcode="DE" data-title="Duits">Duits</a>
+      <?php $data->languages->each(function($language){
+        //TODO: uses shortcode for title, for a lack of titles in the core tables atm.
+        ?>
+        <a href="#" class="language" data-id="<?php echo $language->id; ?>"
+          data-code="<?php echo $language->code; ?>" data-shortcode="<?php echo $language->shortcode; ?>"
+          data-title="<?php echo $language->shortcode; ?>"><?php echo $language->shortcode; ?></a>
+        <?php
+      }); ?>
     </div>
     
     <div id="page-tabs" class="tab-bar"></div>
