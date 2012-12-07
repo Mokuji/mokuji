@@ -15,14 +15,11 @@
     </div>
     
     <div id="page-languages" class="language-bar" data-id="<?php echo tx('Language')->get_language_id(); ?>" data-iln="<?php __('IN_LANGUAGE_NAME'); ?>">
-      <?php $data->languages->each(function($language){
-        //TODO: uses shortcode for title, for a lack of titles in the core tables atm.
-        ?>
+      <?php $data->languages->each(function($language){ ?>
         <a href="#" class="language" data-id="<?php echo $language->id; ?>"
           data-code="<?php echo $language->code; ?>" data-shortcode="<?php echo $language->shortcode; ?>"
-          data-title="<?php echo $language->shortcode; ?>"><?php echo $language->shortcode; ?></a>
-        <?php
-      }); ?>
+          data-title="<?php __($language->title); ?>"><?php __($language->title); ?></a>
+      <?php }); ?>
     </div>
     
     <div id="page-tabs" class="tab-bar"></div>
