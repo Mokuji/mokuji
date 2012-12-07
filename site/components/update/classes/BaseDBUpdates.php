@@ -511,9 +511,12 @@ abstract class BaseDBUpdates
     if(!$this->package()->id->is_set() && $this->component === 'update'){
       
       //Get the version data from the package.json.
-      $version = $this->get_package_data()->versions->filter(function($packageVersion)use($version){
-        return $packageVersion->version->get('string') === $version;
-      })->{0};
+      foreach($this->get_package_data()->versions as $packageVersion){
+        if($packageVersion->version->get('string') === $version){
+          $version = $packageVersion;
+          break;
+        }
+      }
       
       //Insert it into the database.
       $dbPackage = $this->package()->merge(array(
