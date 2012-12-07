@@ -29,7 +29,7 @@ echo $user_list->as_table(array(
     
   },
   __('Administrator', 1) => function($row){ return $row->is_administrator->get('boolean') ? __('ja', 1) : __('nee', 1); },
-  __($names->component, 'Last login', 1) => function($row){
+  __($names->component, 'Last login', 1) => function($row)use($names){
     return ($row->dt_last_login != '' ? $row->dt_last_login : __($names->component, 'Never logged in', 1));
   },
   //__('Comments', 1) => function($row){ return $row->user_info->comments; },
