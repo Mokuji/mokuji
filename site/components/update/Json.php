@@ -166,9 +166,9 @@ class Json extends \dependencies\BaseViews
       'define("EMAIL_ADDRESS_AUTOMATED_MESSAGES","'.$data->email_automated.'");'
     );
     
-    //Check language code is valid.
-    if(!file_exists(PATH_SITE.DS.'languages'.DS.$data->lang_code->get('string').'.ini')){
-      $ex = new \exception\Validation('No translation files found for '.PATH_SITE.DS.'languages'.DS.$data->lang_code->get('string').'.ini');
+    //Check language code valid is.
+    if(!file_exists(PATH_SITE.DS.'i18n'.DS.$data->lang_code->get('string').'.json')){
+      $ex = new \exception\Validation('No translation files found for '.PATH_SITE.DS.'i18n'.DS.$data->lang_code->get('string').'.json');
       $ex->key('lang_code');
       $ex->errors(array('No translation files found for this language code'));
       throw $ex;
