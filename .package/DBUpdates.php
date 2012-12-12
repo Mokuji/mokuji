@@ -10,8 +10,111 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
   protected
     $is_core = true,
     $updates = array(
-      '3.2.0' => '3.3.0'
+      '3.2.0' => '3.3.0',
+      '3.3.0' => '3.3.1',
+      '3.3.1' => '3.3.2'
     );
+  
+  public function update_to_3_3_2($current_version, $forced)
+  {
+    
+    try{
+      
+      //Add title column.
+      tx('Sql')->query("
+        ALTER TABLE `#__core_languages`
+          ADD `title` VARCHAR( 255 ) NOT NULL
+      ");
+      
+      //Update existing languages for their titles.
+      tx('Sql')->query("UPDATE `#__core_languages` SET `title`='English' WHERE `code` = 'en-GB'");
+      tx('Sql')->query("UPDATE `#__core_languages` SET `title`='French' WHERE `code` = 'fr-FR'");
+      tx('Sql')->query("UPDATE `#__core_languages` SET `title`='Dutch' WHERE `code` = 'nl-NL'");
+      
+    }catch(\exception\Sql $ex){
+      //When it's not forced, this is a problem.
+      //But when forcing, ignore this.
+      if(!$forced) throw $ex;
+    }
+    
+  }
+  
+  public function update_to_3_3_1($current_version, $forced)
+  {
+    
+    if($forced === true){
+      tx('Sql')->query('DROP TABLE IF EXISTS `#__core_user_logins`');
+      tx('Sql')->query('DROP TABLE IF EXISTS `#__core_user_login_shared_sessions`');
+    }
+    
+    //Create the logged-in users table.
+    tx('Sql')->query("
+      CREATE TABLE `#__core_user_logins` (
+        `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+        `user_id` INT(10) UNSIGNED NOT NULL,
+        `session_id` CHAR(32) NOT NULL,
+        `dt_expiry` TIMESTAMP NULL DEFAULT NULL,
+        `IPv4` VARCHAR(15) NOT NULL,
+        `user_agent` VARCHAR(255) NOT NULL,
+        `date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        PRIMARY KEY (`id`),
+        UNIQUE INDEX `session_id` (`session_id`, `user_id`)
+      )
+      COLLATE='latin1_swedish_ci'
+      ENGINE=MyISAM
+    ");
+    
+    //Create the shared sessions table.
+    tx('Sql')->query("
+      CREATE TABLE `#__core_user_login_shared_sessions` (
+        `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+        `login_id` INT(10) UNSIGNED NOT NULL,
+        `IPv4` VARCHAR(15) NOT NULL,
+        `user_agent` VARCHAR(255) NOT NULL,
+        `date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        PRIMARY KEY (`id`)
+      )
+      COLLATE='latin1_swedish_ci'
+      ENGINE=MyISAM
+    ");
+    
+    //Port the current logged-in user?
+    if(tx('Account')->user->login === true)
+    {
+      
+      //Get current login information.
+      $info = tx('Sql')->execute_query('SELECT * FROM `#__core_users` WHERE id = '.tx('Account')->user->id)->{0};
+      
+      //Insert a row for the current logged-in user.
+      tx('Sql')->query('
+        INSERT INTO `#__core_user_logins` VALUES (
+          NULL,
+          '.tx('Account')->user->id.',
+          \''.tx('Data')->server->REMOTE_ADDR.'\',
+          \''.strtotime($info->dt_last_login).'\',
+          \''.tx('Session')->id.'\',
+          \''.tx('Data')->server->HTTP_USER_AGENT.'\',
+          NULL
+        )
+      ');
+      
+    }
+    
+    //Alter the user table.
+    try{
+      tx('Sql')->query('
+        ALTER TABLE `#__core_users`
+          DROP COLUMN `session`,
+          DROP COLUMN `ipa`,
+          DROP COLUMN `dt_last_login`
+      ');
+    }catch(\exception\Sql $ex){
+      //When it's not forced, this is a problem.
+      //But when forcing, ignore this.
+      if(!$forced) throw $ex;
+    }
+    
+  }
   
   public function install_3_2_0($dummydata, $forced)
   {

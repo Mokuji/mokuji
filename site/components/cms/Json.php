@@ -85,9 +85,24 @@ class Json extends \dependencies\BaseComponent
     if($page_info)
     {
       
-      $content = tx('Component')
-        ->views($page_info->component)
-        ->get_html($page_info->view_name, $page_options);
+      //See if there is a pagetype setup for this view.
+      $page_type_folder = PATH_COMPONENTS.DS.$page_info->component.DS.'pagetypes'.DS.$page_info->view_name;
+      if(is_dir($page_type_folder)){
+        
+        $pagetype = $page_info->component.'/'.$page_info->view_name;
+        
+      }
+      
+      //Otherwise, go oldschool mode.
+      else
+      {
+        
+        $content = tx('Component')
+          ->views($page_info->component)
+          ->get_html($page_info->view_name, $page_options);
+        
+      }
+      
       
     }
     
@@ -105,14 +120,20 @@ class Json extends \dependencies\BaseComponent
       $page_info->theme_id->get('int') :
       tx('Config')->user('theme_id')->get('int');
     
-    return array(
+    $info = array(
       'layout_info' => tx('Sql')->table('cms', 'LayoutInfo')->execute(),
       'page' => $page_info,
-      'content' => $content,
       'permissions' => tx('Component')->helpers('cms')->get_page_permissions($page_info->id),
       'default_template' => $default_template,
       'default_theme' => $default_theme
     );
+    
+    if(isset($pagetype))
+      $info['pagetype'] = $pagetype;
+    else
+      $info['content'] = $content;
+    
+    return $info;
     
   }
   

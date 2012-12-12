@@ -85,8 +85,6 @@
                 <textarea name="info[<?php echo tx('Language')->get_language_id(); ?>][description]" id="l_description_<?php echo tx('Language')->get_language_id(); ?>_${id}" class="description editor">${$item.dataInfo($item.data, <?php echo tx('Language')->get_language_id(); ?>, 'description')}</textarea>
               </div>
 -->
-
-
             </div><!-- /#tab-<?php echo tx('Language')->get_language_id(); ?> -->
 
             <?php
