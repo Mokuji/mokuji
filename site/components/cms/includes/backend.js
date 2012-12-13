@@ -541,12 +541,15 @@
     events:{
       'click': function(e){
         e.preventDefault();
-        this.activate();
+        //Clicking should do nothing when not multilingual.
+        if(this.tabManager.isMultilingual())
+          this.activate();
       }
     },
     
-    init: function(){
-      this.previous();
+    init: function(data, tabManager){
+      this.previous(data);
+      this.tabManager = tabManager;
       this.data = {
         id: this.view.attr('data-id'),
         code: this.view.attr('data-code'),
@@ -574,6 +577,7 @@
     el: '#page-languages',
     namespace: 'content',
     currentLanguage: null,
+    multilingual: false,
     
     elements: {
       languages: '.language'
@@ -593,7 +597,7 @@
         , self = this;
       
       this.languages.each(function(){
-        var ltc = new LanguageTabController({el: this})
+        var ltc = new LanguageTabController({el: this}, self);
         theTabs.push(ltc);
         var data = ltc.getLanguageData();
         self.data.languages[data.id] = data;
@@ -610,6 +614,15 @@
         man.publish('languageChange', [man.state.active().getLanguageData(), man.data]);
       });
       
+    },
+    
+    isMultilingual: function(){
+      return this.multilingual;
+    },
+    
+    setMultilingual: function(value){
+      this.multilingual = !!value;
+      this.view.toggleClass('multilingual-content', !!value);
     },
     
     currentLanguageData: function(){
@@ -635,11 +648,16 @@
     activate: function(){
       this.previous();
       this.tabView.addClass('selected');
+      app.Page.setMultilingual(this.isMultilingual());
     },
     
     deactivate: function(){
       this.previous();
       this.tabView.removeClass('selected');
+    },
+    
+    isMultilingual: function(){
+      return this.view.find('.multilingual-section[data-language-id]').size() > 0;
     },
     
     setMultilanguageSection: function(language){
@@ -727,8 +745,8 @@
       }
       this.add([this.configTab]);
       this.configTab.render(data);
-      this.state.controllers[0].activate();
       this.renderTabs();
+      this.state.controllers[0].activate();
     },
     
     hasControllers: function(){
@@ -753,6 +771,10 @@
       
       this.refreshElements();
       
+    },
+    
+    getActiveTab: function(){
+      return this.state.active();
     }
     
   });
@@ -831,6 +853,15 @@
     
     init: function(){
       this.previous();
+    },
+    
+    setMultilingual: function(value)
+    {
+      
+      if(this.Languages){
+        this.Languages.setMultilingual(value);
+      }
+      
     },
     
     detach: function(){

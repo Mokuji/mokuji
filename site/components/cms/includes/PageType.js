@@ -107,7 +107,7 @@
         
         //Merge data with static data.
         var fullData = {
-          data: data['0'],
+          data: data,
           languages: page.Languages.data.languages,
           templates: definition.templates
         };
@@ -137,6 +137,7 @@
         //Call afterRender at the next tick.
         setTimeout(self.proxy(function(){
           this.refreshElements();
+          page.setMultilingual(page.Tabs.getActiveTab().isMultilingual());
           this.afterRender();
         }), 0);
         

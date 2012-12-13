@@ -15,10 +15,10 @@
       ?>
       
       <input type="text" class="title" name="info[${language.id}][title]"
-        placeholder="<?php echo $title_in; ?>${language.title}" value="${data.info[language.id] ? data.info[language.id]['title'] : ''}" />
+        placeholder="<?php echo $title_in; ?>${language.title}" value="${data.info && data.info[language.id] ? data.info[language.id]['title'] : ''}" />
       
       <textarea id="l_text_${language.code}_" name="info[${language.id}][text]" class="text editor">
-        ${data.info[language.id] ? data.info[language.id]['text'] : ''}
+        ${data.info && data.info[language.id] ? data.info[language.id]['text'] : ''}
       </textarea>
       
     </div>

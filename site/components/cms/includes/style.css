@@ -290,8 +290,14 @@
         margin-left:1px;
         margin-right:4px;
         margin-top:3px;
+        cursor:default;
+        text-decoration:none;
       }
-        #edit_page .language-bar .language.selected{
+      #edit_page .language-bar.multilingual-content .language:hover{
+        cursor:pointer;
+        text-decoration:underline;
+      }
+        #edit_page .language-bar.multilingual-content .language.selected{
           margin-left:0px;
           margin-top:2px;
           background:#fff;

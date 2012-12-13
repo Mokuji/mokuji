@@ -16,11 +16,13 @@ class Json extends \dependencies\BaseComponent
       ->is($filter->pid->is('set'), function($q)use($filter){
         $q->where('page_id', $filter->pid->get('int'));
       })
-      ->execute()
-      ->each(function($row){
-        $row->info->set($row->info);
-      });
-
+      ->execute_single()
+      
+      //Make sure info is included.
+      ->info->back()
+      
+    ; //return
+    
   }
   
   protected function update_page_text($data, $params)
