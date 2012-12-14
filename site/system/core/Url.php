@@ -21,7 +21,7 @@ class Url
   // parses a string as URL and returns an array of all "url-like" segments present
   public function parse($url, $flags = 0)
   {
-
+    
     $url = data_of($url);
     $flags = data_of($flags);
 
@@ -29,7 +29,7 @@ class Url
       throw new \exception\InvalidArgument('Expecting $url to be string. %s given.', ucfirst(gettype($url)));
       return false;
     }
-
+    
     $regex =
       "~^(?!&)". //url can not start with '&'
       "(?:(?P<scheme>[^:/?#]+)(?=://))?". //scheme
@@ -67,22 +67,25 @@ class Url
   // build the url and makes sure all segments will be present in segment by taking server vars
   public function init()
   {
-
+    
+    //query string
+    $qs = tx('Data')->server->QUERY_STRING->is_set() ? '?'.tx('Data')->server->QUERY_STRING : '';
+    
     /** request uri
     * special thanks to:
     *  adrian - for helping me notice the formerly missing ';' at the end of the following line.
     */
-    $req_uri = (tx('Data')->server->REQUEST_URI->is_set() ? tx('Data')->server->REQUEST_URI->get() : tx('Data')->server->PHP_SELF->get());
-
+    $req_uri = tx('Data')->server->PHP_SELF;
+    
     //server
     $server = tx('Data')->server->SERVER_NAME->get();
-
+    
     //secure scheme?
     $secure = (tx('Data')->server->HTTPS->is_set() && (tx('Data')->server->HTTPS->get() == 'on'));
-
+    
     //scheme
     $scheme = strstr(strtolower(tx('Data')->server->SERVER_PROTOCOL->get()), '/', true) . ($secure ? 's' : '');
-
+    
     //port
     $port = ((tx('Data')->server->SERVER_PORT->get() == '80') ? '' : (':'.tx('Data')->server->SERVER_PORT->get()));
 
@@ -93,26 +96,26 @@ class Url
 
     //file
     $file = array_key_exists('file', $matches) ? $matches['file'] : '';
-
+    
     //full url
     $url = new \dependencies\Url(array(
-      'input' => "$scheme://$server$port$req_uri",
-      'output' => "$scheme://$server$port$req_uri",
+      'input' => "$scheme://$server$port$req_uri$qs",
+      'output' => "$scheme://$server$port$req_uri$qs",
       'segments' => array(
         'scheme' => $scheme,
         'domain' => "$server$port",
         'path' => $path,
         'file' => $file,
-        'query' => array_get(explode('?', $req_uri), 1)
+        'query' => tx('Data')->server->QUERY_STRING->get()
       ),
       'external' => false,
       'backend' => tx('Config')->system('backend')->not('set', function(){return false;})->get(),
       'data' => tx('Data')->get->as_array()
     ));
-
+    
     $this->url = $url;
     $this->referer_url = (tx('Data')->server->HTTP_REFERER->is_set() ? url(tx('Data')->server->HTTP_REFERER->get(), true) : false);
-
+    
   }
 
   public function redirect($url)
