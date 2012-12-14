@@ -463,7 +463,7 @@ class Actions extends \dependencies\BaseComponent
   {
 
     tx('Setting the language.', function()use($data){
-      $data->lang_id->validate('Language', array('number', 'type'=>'integer'))->moveto(tx('Data')->session->tx->language);
+      $data->lang_id->validate('Language', array('number'=>'integer'))->moveto(tx('Data')->session->tx->language);
     })
 
     ->failure(function($info){

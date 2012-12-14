@@ -14,6 +14,15 @@ class Language
   public function get_language_id(){ return $this->language_id; }
   public function get_language_code(){ return $this->language_code; }
   
+  //Short notation for some getters.
+  public function __get($key)
+  {
+    switch($key){
+      case 'id': return $this->get_language_id();
+      case 'code': return $this->get_language_code();
+    }
+  }
+  
   //Setter for language_id.
   public function set_language_id($id){
     
@@ -92,14 +101,14 @@ class Language
   public function get_languages()
   {
     
-    return tx('Sql')->execute_query('SELECT * FROM `#__core_languages` ORDER BY `id`')->execute();
+    return tx('Sql')->execute_query('SELECT * FROM `#__core_languages` ORDER BY `id`');
     
   }
   
   public function multilanguage(\Closure $closure)
   {
     
-    $this->get_languages->each($closure);
+    $this->get_languages()->each($closure);
     return $this;
     
   }

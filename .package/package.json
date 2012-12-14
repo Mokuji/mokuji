@@ -5,6 +5,12 @@
   "dbUpdates": true,
   "versions": [
     {
+      "version": "3.3.3",
+      "date": "2012-12-14",
+      "description": "Ondersteuning voor mooie URL's en meertalige configuratie items.",
+      "changes": []
+    },
+    {
       "version": "3.3.2",
       "date": "2012-12-07",
       "description": "Meertaligheid is uitgebreid met taal titels. (Dit was in het nieuwe systeem nog niet weer toegevoegd)",

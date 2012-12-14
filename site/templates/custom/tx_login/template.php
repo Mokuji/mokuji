@@ -4,7 +4,7 @@
 
   <head>
   
-    <title>Login<?php echo $head->title; ?> </title>
+    <title>Login<?php echo $head->title; ?></title>
     <base href="<?php echo $head->base->href; ?>" target="<?php echo $head->base->target; ?>" />
 
     <!-- character encoding -->

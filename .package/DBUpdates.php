@@ -12,8 +12,29 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
     $updates = array(
       '3.2.0' => '3.3.0',
       '3.3.0' => '3.3.1',
-      '3.3.1' => '3.3.2'
+      '3.3.1' => '3.3.2',
+      '3.3.2' => '3.3.3'
     );
+  
+  public function update_to_3_3_3($current_version, $forced)
+  {
+    
+    try{
+      
+      //Add language_id column.
+      tx('Sql')->query("
+        ALTER TABLE `#__core_config`
+          ADD `language_id` INT NULL ,
+          ADD INDEX ( `language_id` ) 
+      ");
+      
+    }catch(\exception\Sql $ex){
+      //When it's not forced, this is a problem.
+      //But when forcing, ignore this.
+      if(!$forced) throw $ex;
+    }
+    
+  }
   
   public function update_to_3_3_2($current_version, $forced)
   {

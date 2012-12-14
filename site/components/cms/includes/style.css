@@ -6,6 +6,10 @@
   float:left;
 }
 
+#tx-backend .subtle-hint{
+  color:#999;
+}
+
 /* =Icons
 -------------------------------------------------------------- */
 
@@ -286,7 +290,7 @@
       #edit_page .language-bar .language{
         display:inline-block;
         height:27px;
-        padding:0px 10px 0px 25px;
+        padding:0 10px;
         margin-left:1px;
         margin-right:4px;
         margin-top:3px;
@@ -409,14 +413,14 @@
     font-size:14px;
     margin-bottom:10px;
   }
-  #page-config fieldset,
+  .page-config fieldset,
   #menu-item-config fieldset,
   #page_content fieldset{
     border:solid #eee 1px;
     padding:5px 10px;
     margin:15px 0;
   }
-    #page-config legend,
+    .page-config legend,
     #menu-item-config legend,
     #page_content legend{
       color:#2B3241;
@@ -555,21 +559,40 @@
 /* =Page config
 --------------------------------------*/
 
+#page-config .ctrlHolder,
+#page-findability .ctrlHolder{
+  margin-bottom: 10px;
+}
+  #page-config .ctrlHolder label,
+  #page-findability .ctrlHolder label{
+    display: inline-block;
+    width: 100px;
+  }
+
 #page_config{
   display:none;
 }
+  
+  #page_config .left{
+    width:400px;
+    height:100%;
+    position:relative;
+    min-height:200px;
+  }
 
-#page_config .left{
-  width:400px;
-  height:100%;
-  position:relative;
-  min-height:200px;
-}
+  #page_config .right{
+    width:100;
+    min-height:200px;
+  }
 
-#page_config .right{
-  width:100;
-  min-height:200px;
-}
+/* =Page findability
+--------------------------------------*/
+
+#page-findability{}
+  
+  #page-findability .page_key_example{
+    display: inline-block;
+  }
 
 /* =New page
 -------------------------------------------------------------- */

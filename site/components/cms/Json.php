@@ -46,12 +46,11 @@ class Json extends \dependencies\BaseComponent
     $pid = $params->{0};
     $pid->validate('Page ID', array('required', 'number'=>'integer', 'gt'=>0));
     
-    $data = $data->having('title', 'theme_id', 'template_id', 'layout_id', 'keywords', 'access_level', 'published', 'user_group_permissions')
-      -> title         ->validate('Title', array('required', 'not_empty', 'no_html', 'between'=>array(2, 250)))->back()
+    $data = $data->having('theme_id', 'template_id', 'layout_id', 'notes', 'access_level', 'published', 'user_group_permissions')
       -> theme_id      ->validate('Theme', array('number', 'gt'=>0))->back()
       -> template_id   ->validate('Template', array('number', 'gt'=>0))->back()
       -> layout_id     ->validate('Layout', array('number', 'gt'=>0))->back()
-      -> keywords      ->validate('Keywords', array('string', 'no_html'))->back()
+      -> notes         ->validate('Notes', array('string', 'no_html'))->back()
       -> access_level  ->validate('Access level', array('number', 'between'=>array(0, 2)))->back()
       -> published     ->validate('Published', array('number', 'between'=>array(0, 1)))->back();
     
@@ -73,6 +72,90 @@ class Json extends \dependencies\BaseComponent
     
   }
   
+  protected function update_page_findability($data, $params)
+  {
+    
+    $pid = $params->{0};
+    $pid->validate('Page ID', array('required', 'number'=>'integer', 'gt'=>0));
+    
+    $data = $data->having('info');
+    
+    $page = tx('Sql')
+      ->table('cms', 'Pages')
+      ->pk($pid)
+      ->execute_single()
+      
+      ->is('empty', function(){
+        throw new \exception\EmptyResult('Could not retrieve the page you were trying to edit. This could be because the ID was invalid.');
+      });
+    
+    //Save page info.
+    $data->info->each(function($info)use($data, $page){
+      
+      $language_id = $info->key();
+      
+      $info = $info->having(
+          'title', 'url_key', 'slogan', 'description', 'keywords',
+          'og_title', 'og_description', 'og_keywords',
+          'tw_title', 'tw_description', 'tw_author',
+          'gp_author'
+        )
+        
+        ->title->validate('Title', array('required', 'string', 'not_empty'))->back()
+        ->url_key->validate('URL key', array('string', 'not_empty'))->back()
+        ->slogan->validate('Slogan', array('string', 'not_empty'))->back()
+        ->description->validate('Description', array('string', 'not_empty'))->back()
+        ->keywords->validate('Keywords', array('string', 'not_empty'))->back()
+        
+        ->og_title->validate('OG title', array('string', 'not_empty'))->back()
+        ->og_description->validate('OG description', array('string', 'not_empty'))->back()
+        ->og_keywords->validate('OG keywords', array('string', 'not_empty'))->back()
+        
+        ->tw_title->validate('Twitter title', array('string', 'not_empty'))->back()
+        ->tw_description->validate('Twitter description', array('string', 'not_empty'))->back()
+        ->tw_author->validate('Twitter author', array('string', 'not_empty'))->back()
+        
+        ->gp_author->validate('Google+ author', array('string', 'not_empty'))->back()
+        
+      ;
+      
+      string_if_empty($info,
+        'title', 'url_key', 'slogan', 'description', 'keywords',
+        'og_title', 'og_description', 'og_keywords',
+        'tw_title', 'tw_description', 'tw_author',
+        'gp_author'
+      );
+      
+      tx('Sql')
+        ->table('cms', 'PageInfo')
+        ->where('page_id', $page->id)
+        ->where('language_id', $language_id)
+        ->execute_single()
+        
+        //If it doesn't exist, create a new model first.
+        ->is('empty', function()use($language_id, $page){
+          
+          return tx('Sql')
+            ->model('cms', 'PageInfo')
+            ->set(array(
+              'page_id' => $page->id,
+              'language_id' => $language_id
+            ));
+          
+        })
+        
+        ->merge($info)
+        ->save();
+
+    });
+    
+    //Include the info.
+    $page->info;
+    
+    return $page;
+    
+  }
+  
   protected function get_page_info($options, $params)
   {
     
@@ -82,8 +165,12 @@ class Json extends \dependencies\BaseComponent
     $page_info = $this->helper('get_page_info', $pid);
     $page_options = $this->helper('get_page_options', $page_info->id);
     
+    
     if($page_info)
     {
+      
+      //Include multilanguage info for the page.
+      $page_info->info;
       
       //See if there is a pagetype setup for this view.
       $page_type_folder = PATH_COMPONENTS.DS.$page_info->component.DS.'pagetypes'.DS.$page_info->view_name;
@@ -265,6 +352,46 @@ class Json extends \dependencies\BaseComponent
       ->title->set(function($title){
         return $title->back()->info->{LANGUAGE}->title->get();
       })->back();
+    
+  }
+  
+  protected function update_settings($data, $params)
+  {
+    
+    $data->key->validate('Key', array('required', 'not_empty', 'string'));
+    
+    $data->value_default->not('empty', function()use($data){
+      tx('Config')->user($data->key->get(), $data->value_default->get(), null);
+    });
+    
+    $data->value->each(function($val)use($data){
+      
+      tx('Sql')
+        ->table('cms', 'CmsConfig')
+        ->where('key', "'{$data->key}'")
+        ->where('language_id', "'".$val->key()."'")
+        ->execute_single()
+        
+        ->is('empty', function()use($data, $val){
+          return tx('Sql')
+            ->model('cms', 'CmsConfig')
+            ->set(array(
+              'key' => $data->key,
+              'language_id' => $val->key(),
+              'site_id' => tx('Site')->id,
+              'autoload' => 1
+            ));
+        })
+        
+        ->merge(array(
+          'value' => $val->is_empty() ? 'NULL' : $val
+        ))
+        
+        ->save();
+        
+    });
+    
+    return $this->helper('get_settings', $data->key);
     
   }
   

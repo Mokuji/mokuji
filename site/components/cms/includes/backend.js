@@ -671,6 +671,77 @@
     
   });
   
+  var PageFindabilityTabController = PageTabController.sub({
+    
+    el: '<div>',
+    template: '#edit_page_findability_tmpl',
+    form: '#page-findability',
+    
+    elements: {
+      urlKeys: '.page-key',
+      pageTitle: '.page-title',
+      pageDescription: '.page-description',
+      pageKeywords: '.page-keywords'
+    },
+    
+    events: {
+      
+      'keyup on urlKeys': function(e){
+        
+        var $target = $(e.target)
+          , val = $target.val();
+          
+        if(val.length == 0)
+          val = $target.attr('placeholder');
+        
+        $target.closest('.ctrlHolder').find('.key-section').text(val);
+        
+      },
+      
+      'keyup on pageTitle': function(e){
+        this.updateDefault(e.target, 'title');
+      },
+      
+      'keyup on pageDescription': function(e){
+        this.updateDefault(e.target, 'description');
+      },
+      
+      'keyup on pageKeywords': function(e){
+        this.updateDefault(e.target, 'keywords');
+      }
+      
+    },
+    
+    render: function(data){
+      
+      this.view
+        .html($(this.template).tmpl(data))
+        .find(this.form)
+        .restForm();
+      
+      this.refreshElements();
+      this.pageTitle.trigger('keyup');
+      this.pageDescription.trigger('keyup');
+      this.pageKeywords.trigger('keyup');
+      
+    },
+    
+    save: function(){
+      
+      this.view
+        .find(this.form)
+        .trigger('submit');
+      
+    },
+    
+    updateDefault: function(which, what){
+      var $which = $(which)
+        , $targets = $which.closest('.multilingual-section').find('.defaults-to-'+what);
+      $targets.attr('placeholder', $which.val() ? $which.val() : $which.attr('placeholder'));
+    }
+    
+  });
+  
   var PageConfigTabController = PageTabController.sub({
     
     el: '<div>',
@@ -730,23 +801,51 @@
       
       this.previous();
       
+      this.findabilityTab = new PageFindabilityTabController({title:'Findability'});
       this.configTab = new PageConfigTabController({title:'Config'});
       
     },
     
-    finalizeTabs: function(data){
+    finalizeTabs: function(data)
+    {
+      
+      //Set the language information.
+      data.languages = app.Page.Languages.data.languages;
+      
+      //When we have no tabs from the content.
       if(!this.hasControllers()){
+        
+        //Create one big tab called content. (Basically legacy support).
         var contentTab = new PageTabController({el:'<div>', title:'Content'});
         contentTab.view.append($(this.container).contents());
         $(this.container)
-          .append(contentTab.view)
-          .append(this.configTab.view);
+          .append(contentTab.view);
         this.add([contentTab]);
+        
       }
-      this.add([this.configTab]);
+      
+      //Add the findability and config tabs to every page.
+      $(this.container)
+        .append(this.findabilityTab.view)
+        .append(this.configTab.view);
+      this.add([this.findabilityTab, this.configTab]);
+      this.findabilityTab.render(data);
       this.configTab.render(data);
       this.renderTabs();
+      
+      //Bind language switching on multilingual sections.
+      var self = this;
+      var setLanguage = function(e, language){
+        self.findabilityTab.setMultilanguageSection(language.id);
+      };
+      app.Page.Languages.subscribe('languageChange', setLanguage);
+      
+      //Set it to the current language.
+      setLanguage(null, app.Page.Languages.currentLanguageData());
+      
+      //Activate the first tab.
       this.state.controllers[0].activate();
+      
     },
     
     hasControllers: function(){
@@ -897,9 +996,8 @@
       //Save page config first.
       this.Tabs.configTab.save();
       
-      //Then page info.
-      //TODO
-      //this.Tabs.infoTab.save();
+      //Then the findability.
+      this.Tabs.findabilityTab.save();
       
       //Let anyone else save in the way they wish.
       this.publish('save', this.data.page.id);
@@ -959,6 +1057,9 @@
       self.Tabs = new PageTabManager;
       self.Languages = new LanguageTabManager;
       
+      //See if we're going multi-language mode.
+      self.view.find('#edit_page').toggleClass('has-languages', self.Languages.languages.size() > 1);
+      
       //If we're using the page type setup.
       if(data.pagetype)
       {
@@ -971,10 +1072,6 @@
           try{
             var controller = new definition.controller(definition, self);
           }catch(e){ log(e); }
-          
-          //When done, add the config tab.
-          self.view.find('#page-tab-body')
-            .append(self.Tabs.configTab.view);
           
           //Finalize.
           self.finalizePageProcessing.call(self, data);
@@ -989,10 +1086,7 @@
         
         //Add raw content to template, if available.
         self.view.find('#page-tab-body')
-          .html(data.content)
-          
-          //As well as the config tab.
-          .append(self.Tabs.configTab.view);
+          .html(data.content);
         
         //Finalize.
         self.finalizePageProcessing.call(self, data);

@@ -289,13 +289,14 @@ class Sections extends \dependencies\BaseViews
   
   protected function page_list($options)
   {
-
+    
     return tx('Sql')->table('cms', 'Pages')
       ->join('LayoutInfo', $li)
       ->select("$li.title", 'layout_title')
       ->where('trashed', 0)
       ->order('title')
     ->execute();
+    
   }
   
   protected function site_list($options)
@@ -327,16 +328,16 @@ class Sections extends \dependencies\BaseViews
 
   protected function setting_list()
   {
-
+    
     return $this->helper('get_settings');
-
+    
   }
 
-  protected function setting_edit()
+  protected function setting_edit($data)
   {
-
+    
     return array(
-      'item' => $this->helper('get_settings', tx('Data')->get->setting_id)
+      'item' => $this->helper('get_settings', tx('Data')->get->setting_key)
     );
 
   }

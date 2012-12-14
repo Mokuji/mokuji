@@ -1,4 +1,19 @@
 # ----------------------------------------------------------------------
+# URL keys
+# ----------------------------------------------------------------------
+
+RewriteEngine On
+RewriteRule ^install - [S=5]
+RewriteRule ^admin - [S=4]
+RewriteRule ^files - [S=3]
+RewriteRule ^plugins - [S=2]
+RewriteRule ^site - [S=1]
+
+#Pages format: /<pid>/<pkey>
+RewriteRule ^/?(\d+)/?([a-zA-Z0-9-_]*)(\.html|/)?$ index.php?pid=$1&pkey=$2&%{QUERY_STRING}
+
+
+# ----------------------------------------------------------------------
 # Gzip compression
 # ----------------------------------------------------------------------
 
