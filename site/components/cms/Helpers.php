@@ -124,7 +124,7 @@ class Helpers extends \dependencies\BaseComponent
       ->join('Components', $co)
       ->select("$co.name", 'component')
     ->execute_single();
-
+    
     if($result->is_empty()){
       return false;
     }
@@ -215,9 +215,6 @@ class Helpers extends \dependencies\BaseComponent
       //For each usergroup.
       ->each(function($userGroup)use($pid, $permissions, $knownPermissions){
         
-        echo('Set permissions of '.$userGroup);
-        trace($knownPermissions->{$userGroup->id}->dump());
-
         //Take it's known permission.
         $knownPermissions->{$userGroup->id}
           
@@ -241,27 +238,31 @@ class Helpers extends \dependencies\BaseComponent
   
   /**
    * $options[]
-   * @id: setting ID
+   * @key: setting key
    */
-  public function get_settings()
+  public function get_settings($key='')
   {
-
-    $q =
-      $this
-      ->table('CmsConfig');
-
-    if(is_numeric(tx('Data')->get->setting_id->get()))
-    {
-      $q = $q
-      ->where('id', tx('Data')->get->setting_id)
-      ->execute_single();
-    }
-    else
-    {
-      $q = $q->execute();
-    }
-
-    return $q;
+    
+    $key = Data($key);
+    
+    $config = Data();
+    
+    tx('Sql')
+      ->table('cms', 'CmsConfig')
+      ->is(!$key->is_empty(), function($tbl)use($key){
+        $tbl->where('key', "'$key'");
+      })
+      ->execute()
+      ->each(function($item)use($config){
+        
+        $config->{$item->key->get()}->merge(array(
+          'key' => $item->key,
+          'value_'.($item->language_id->is_set() ? $item->language_id->get() : 'default') => $item->value->get()
+        ));
+          
+      });
+    
+    return ($key->is_empty() ? $config : $config->{$key});
 
   }
 

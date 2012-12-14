@@ -54,3 +54,1294 @@
   };
   
 });
+
+;(function(root, $, _, undefined){
+  
+  //Do an ajax request.
+  var GET=1, POST=2, PUT=4, DELETE=8;
+  function request(){
+    
+    //Predefine variables.
+    var method, model, data;
+    
+    //Handle arguments.
+    switch(arguments.length){
+      
+      //A get request to the given model name.
+      case 1:
+        method = GET;
+        model = arguments[0];
+        data = {};
+        break;
+      
+      //A custom request to the given model name, or a PUT request with the given data.
+      case 2:
+        if(_(arguments[0]).isNumber()){
+          method = arguments[0];
+          model = arguments[1];
+          data = {};
+        }else{
+          method = PUT;
+          model = arguments[0];
+          data = arguments[1];
+        }
+        break;
+      
+      //A custom request to given model name with given data.
+      case 3:
+        method = arguments[0];
+        model = arguments[1];
+        data = arguments[2];
+        break;
+      
+    }
+    
+    //Should data be processed by jQuery?
+    var process = (method == GET);
+    
+    //Stringify our JSON?
+    if(!process) data = JSON.stringify(data);
+    
+    //Convert method to string for use in the jQuery ajax API.
+    method = (method == GET && 'GET')
+          || (method == POST && 'POST')
+          || (method == PUT && 'PUT')
+          || (method == DELETE && 'DELETE')
+          || 'GET';
+    
+    //Build the url
+    var url = 'http://' + window.location.host + window.location.pathname + '?rest=' + model;
+    
+    //Do it, jQuery!
+    return $.ajax({
+      url: url,
+      type: method,
+      data: data,
+      dataType: 'json',
+      contentType: 'application/json',
+      processData: process,
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest'
+      }
+    });
+    
+  }
+  
+  //A template helper function.
+  function tmpl(id){
+    
+    return function(){
+      var tmpl;
+      if(!$.domReady){
+        throw "Can not generate templates before DOM is ready.";
+      }else{
+        tmpl = tmpl || _.template($('#'+id).html());
+        return $(tmpl.apply(this, arguments));
+      }
+    }
+    
+  }
+  
+  //A data-id extractor helper function.
+  $.fn.id = function(setter){
+    
+    if(setter){
+      return $(this).attr('data-id', setter);
+    }
+    
+    return parseInt( $(this).attr('data-id') , 10 );
+    
+  };
+  
+  //Mixin a logging functions into underscore.
+  _.mixin({
+    
+    log: function(object){
+      console.log(object);
+      return object;
+    },
+    
+    dir: function(object){
+      console.dir(object);
+      return object;
+    }
+    
+  });
+  
+  var MenuToolbarController = Controller.sub({
+    
+    //The element and name-space.
+    el: '#page-main-left .menu-items-toolbar',
+    namespace: 'menu',
+    
+    //The sub-elements in the controllers HTML structure.
+    elements: {
+      'btn_newMenuItem': '#btn-new-menu-item',
+      'btn_refreshMenuItems': '#btn-refresh-menu-items',
+      'btn_saveMenuItems': '#btn-save-menu-items',
+      'btn_selectMenu': '#btn-select-menu',
+      'el_message': '#user-message'
+    },
+    
+    //Bind events to the sub-elements.
+    events: {
+      
+      'click on btn_newMenuItem': function(e){
+        e.preventDefault();
+        app.Item.loadItemContents('0');
+        app.Page.clear();
+      },
+      
+      'click on btn_saveMenuItems': function(e){
+        var self = this;
+        e.preventDefault();
+        this.showMessage('Saving...');
+        app.MenuItems.save().done(function(data, status, xhr){
+          self.showComplete();
+        });
+      },
+      
+      'click on btn_refreshMenuItems': function(e){
+        var self = this;
+        e.preventDefault();
+        this.showMessage('Re'+($(e.target).hasClass('revert') ? 'vert' : 'fresh')+'ing...');
+        app.MenuItems.reload().done(function(data, status, xhr){
+          self.makeSelectable();
+        });
+      },
+      
+      'change on btn_selectMenu': function(e){
+        var self = this;
+        e.preventDefault();
+        this.showMessage('Loading...');
+        app.options.menu_id = $(e.target).val();
+        app.MenuItems.reload().done(function(data, status, xhr){
+          self.makeSelectable();
+        });
+      },
+      
+    },
+    
+    //Store timeouts.
+    timeout: false,
+    
+    //Configure the toolbar in such a way that the save button is visible.
+    makeSavable: function(){
+      this.btn_refreshMenuItems.addClass('revert');
+      this.btn_saveMenuItems.show();
+      this.el_message.hide();
+      this.btn_selectMenu.hide();
+      this.timeout && this.timeout.clear();
+    },
+    
+    //Configure the toolbar is such a way that the select menu drop-down is visible.
+    makeSelectable: function(){
+      this.btn_refreshMenuItems.removeClass('revert');
+      this.btn_saveMenuItems.hide();
+      this.el_message.hide();
+      this.btn_selectMenu.show();
+      this.timeout && this.timeout.clear();
+    },
+    
+    //Configure the toolbar to indicate that it's doing something.
+    showMessage: function(msg){
+      this.btn_saveMenuItems.hide();
+      this.btn_selectMenu.hide();
+      this.el_message.text(msg).show();
+    },
+    
+    //Configure the toolbar to indicate that it's done doing something.
+    showComplete: function(func){
+      var self = this;
+      self.btn_saveMenuItems.hide();
+      self.btn_selectMenu.hide();
+      self.el_message.text('Successful.').show();
+      this.timeout = $.after(2000).done(function(){
+        self[func ? func : 'makeSelectable']();
+      });
+    }
+    
+  });
+  
+  //The controller for the menu.
+  var MenuItemsController = Controller.sub({
+    
+    el: '#page-main-left > .content > .menu-items-list',
+    namespace: 'menu',
+    menuItemTmpl: '#menu-item-list-item-tmpl',
+    
+    elements: {
+      'el_items': 'li',
+      'btn_delete': '.icon-delete',
+      'btn_collapse': '.icon-collapse',
+      'btn_expand': '.icon-expand',
+      'item': 'a.menu-item'
+    },
+    
+    events: {
+      
+      'sortupdate': function(){
+        this.updateData();
+        this.checkHasSub();
+        app.MenuToolbar.makeSavable();
+      },
+      
+      'click on btn_delete': function(e){
+        e.preventDefault();
+        this.deleteItem($(e.target).closest('li').id())
+      },
+      
+      'click on item': function(e){
+        e.preventDefault();
+        app.App.activate();
+        app.Item.loadItemContents($(e.target).attr('data-menu-item'));
+        app.Page.loadPageContents($(e.target).attr('data-page'));
+      },
+      
+      'click on btn_collapse': function(e){
+        this.collapse($(e.target).closest('li'));
+      },
+      
+      'click on btn_expand': function(e){
+        this.expand($(e.target).closest('li'));
+      }
+      
+    },
+    
+    //Method: Initiate.
+    init: function(){
+      
+      //Call the parent initiator.
+      this.previous();
+      
+      //Configure the nestedSortable plug-in.
+      this.configureSortable();
+      
+    },
+    
+    //Property: Storage for data.
+    data: {},
+    
+    //Method: Inserts or updates a new menu item.
+    updateItem: function(data){
+      
+      data.site_id = app.options.site_id;
+      
+      var element = this.view.find('li[data-id='+data.id+']');
+      
+      //Insert
+      if(element.size() == 0){
+        this.view.prepend($(this.menuItemTmpl).tmpl(data));
+      }
+      
+      //Update
+      else{
+        data.depth = element.attr('class').match(/depth_(\d+)/)[1];
+        var subitems = element.children('ul');
+        data.subitems = subitems.length ? subitems[0].outerHTML : '';
+        element.replaceWith($(this.menuItemTmpl).tmpl(data));
+      }
+      
+      this.configureSortable();
+      this.refreshElements();
+      this.updateData();
+      
+    },
+    
+    //Method: Updates the data using the HTML. (I know, wrong way around..)
+    updateData: function(){
+      
+      this.data = this.view.nestedSortable('toArray', {
+        startDepthCount: 0,
+        attribute: 'rel',
+        expression: (/()([0-9]+)/),
+        omitRoot: true
+      });
+      
+      return this;
+      
+    },
+    
+    //Method: Save the data to the server.
+    save: function(){
+      
+      return request(PUT, 'menu/menu_items', this.data);
+      
+    },
+    
+    //Method: Delete the item from the list and the server.
+    deleteItem: function(id){
+      
+      var $item = this.el_items.filter('[data-id='+id+']');
+      
+      $item.hide();
+      
+      return (request(DELETE, 'menu/menu_item/'+id)
+        
+        .done(function(){
+          $item.remove();
+        })
+        
+        .fail(function(){
+          console.dir(arguments);
+          $item.show();
+        })
+        
+      );
+      
+    },
+    
+    //Method: Reloads the menu items from the server.
+    reload: function(){
+      
+      //Reference to this.
+      var self = this;
+      
+      //Do the Ajax call and create the Deferred.
+      return $.ajax('?section=cms/menu_items', {
+        data:{options: {menu_id: app.options.menu_id, site_id: app.options.site_id}}
+      })
+      
+      //Add a done callback.
+      .done(function(data){
+        var $view = $(data);
+        self.view.replaceWith($view);
+        self.view = $view;
+        self.configureSortable();
+        self.refreshElements();
+        self.bindEvents();
+        self.updateData();
+      });
+      
+    },
+    
+    //Method: Configure the nestedSortable jQuery plug-in on this view.
+    configureSortable: function(){
+      
+      this.view.nestedSortable({
+        disableNesting: 'no-nest',
+        forcePlaceholderSize: true,
+        handle: 'div',
+        helper: 'clone',
+        listType: 'ul',
+        items: 'li',
+        maxLevels: 6,
+        opacity: .6,
+        placeholder: 'placeholder',
+        revert: 250,
+        tabSize: 25,
+        tolerance: 'pointer',
+        toleranceElement: '> div'
+      });
+      
+    },
+    
+    //Collapse a menu item and its sub-items.
+    collapse: function(item){
+      
+      $(item).find('.icon-toggle:eq(0)').removeClass('icon-collapse').addClass('icon-expand');
+      $(item).addClass('collapsed');
+      
+      return this;
+      
+    },
+    
+    //Un-collapse.
+    expand: function(item){
+      
+      $(item).find('.icon-toggle:eq(0)').removeClass('icon-expand').addClass('icon-collapse');
+      $(item).removeClass('collapsed');
+      
+      return this;
+      
+    },
+    
+    //Add the has-sub class to items that have sub-menu items.
+    checkHasSub: function(){
+      
+      var self = this;
+      
+      $.after(0).done(function(){
+        self.el_items.filter(':has(ul)').addClass('has-sub');
+        self.el_items.not(':has(>ul:has(li))').find('>ul').remove();
+        self.el_items.filter(':not(:has(>ul))').removeClass('has-sub');
+      });
+      
+      
+      return self;
+      
+    }
+    
+  });
+  
+  //Controller for the config bar in the menu.
+  var ConfigBarController = Controller.sub({
+    
+    el: '#page-main-left #configbar',
+    namespace: 'menu',
+    itemTemplate: '#configbar_item_tmpl',
+    
+    elements: {
+      buttons: 'li a'
+    },
+    
+    events: {
+      
+      'click on buttons': function(e){
+        e.preventDefault();
+        this.loadConfigItem($(e.target).attr('data-view'));
+      }
+      
+    },
+    
+    loadConfigItem: function(view){
+      app.Settings.loadView(view);
+      app.Settings.activate();
+    },
+    
+    init: function(){
+      
+      this.previous();
+      var that = this;
+      
+      request(GET, 'cms/configbar_items').done(function(items){
+        
+        for(var i in items){
+          that.view.append($(that.itemTemplate).tmpl(items[i]));
+        }
+        
+        that.refreshElements();
+        
+      });
+      
+    }
+    
+  });
+  
+  //The state-machine for the main content.
+  var MainManager = Manager.sub({
+    
+    el: '#page-main-right',
+    namespace: 'main'
+    
+  });
+  
+  //The controller for the page-application.
+  var PageAppController = Controller.sub({
+    
+    el: '#app',
+    namespace: 'main'
+    
+  });
+  
+  var LanguageTabController = Controller.sub({
+    
+    namespace: 'content',
+    
+    events:{
+      'click': function(e){
+        e.preventDefault();
+        //Clicking should do nothing when not multilingual.
+        if(this.tabManager.isMultilingual())
+          this.activate();
+      }
+    },
+    
+    init: function(data, tabManager){
+      this.previous(data);
+      this.tabManager = tabManager;
+      this.data = {
+        id: this.view.attr('data-id'),
+        code: this.view.attr('data-code'),
+        shortcode: this.view.attr('data-shortcode'),
+        title: this.view.attr('data-title')
+      };
+    },
+    
+    activate: function(){
+      this.view.addClass('selected');
+    },
+    
+    deactivate: function(){
+      this.view.removeClass('selected');
+    },
+    
+    getLanguageData: function(){
+      return this.data;
+    }
+    
+  });
+  
+  var LanguageTabManager = Manager.sub({
+    
+    el: '#page-languages',
+    namespace: 'content',
+    currentLanguage: null,
+    multilingual: false,
+    
+    elements: {
+      languages: '.language'
+    },
+    
+    init: function(){
+      
+      this.previous();
+      
+      this.data = {
+        id: this.view.attr('data-id'),
+        inLanguageName: this.view.attr('data-iln'),
+        languages: {} //Container to set later.
+      };
+      
+      var theTabs = []
+        , self = this;
+      
+      this.languages.each(function(){
+        var ltc = new LanguageTabController({el: this}, self);
+        theTabs.push(ltc);
+        var data = ltc.getLanguageData();
+        self.data.languages[data.id] = data;
+      });
+      this.add(theTabs);
+      if(this.state.controllers.length > 0){
+        this.devault = 0;
+        this.activate();
+      }
+      var man = this;
+      this.state.subscribe('change', function(){
+        if(!man.state.active() || man.currentLanguage == man.state.active()) return;
+        man.currentLanguage = man.state.active();
+        man.publish('languageChange', [man.state.active().getLanguageData(), man.data]);
+      });
+      
+    },
+    
+    isMultilingual: function(){
+      return this.multilingual;
+    },
+    
+    setMultilingual: function(value){
+      this.multilingual = !!value;
+      this.view.toggleClass('multilingual-content', !!value);
+    },
+    
+    currentLanguageData: function(){
+      if(!this.currentLanguage)
+          this.currentLanguage = this.state.active();
+      return this.currentLanguage.getLanguageData();
+    }
+    
+  });
+  LanguageTabManager.include(PubSub);
+  
+  var PageTabController = root.PageTabController = Controller.sub({
+    
+    namespace: 'tab-body',
+    
+    init: function(){
+      this.previous();
+      this.view.hide();
+      this.tabView = $('<a class="tab" href="#">');
+      this.tabView.html(this.title);
+    },
+    
+    activate: function(){
+      this.previous();
+      this.tabView.addClass('selected');
+      app.Page.setMultilingual(this.isMultilingual());
+    },
+    
+    deactivate: function(){
+      this.previous();
+      this.tabView.removeClass('selected');
+    },
+    
+    isMultilingual: function(){
+      return this.view.find('.multilingual-section[data-language-id]').size() > 0;
+    },
+    
+    setMultilanguageSection: function(language){
+      
+      this.view.find('.multilingual-section[data-language-id]').each(function(){
+        $this = $(this);
+        $this.toggle($this.attr('data-language-id') == language);
+      });
+      
+    }
+    
+  });
+  
+  var PageFindabilityTabController = PageTabController.sub({
+    
+    el: '<div>',
+    template: '#edit_page_findability_tmpl',
+    form: '#page-findability',
+    
+    elements: {
+      urlKeys: '.page-key',
+      pageTitle: '.page-title',
+      pageDescription: '.page-description',
+      pageKeywords: '.page-keywords'
+    },
+    
+    events: {
+      
+      'keyup on urlKeys': function(e){
+        
+        var $target = $(e.target)
+          , val = $target.val();
+          
+        if(val.length == 0)
+          val = $target.attr('placeholder');
+        
+        $target.closest('.ctrlHolder').find('.key-section').text(val);
+        
+      },
+      
+      'keyup on pageTitle': function(e){
+        this.updateDefault(e.target, 'title');
+      },
+      
+      'keyup on pageDescription': function(e){
+        this.updateDefault(e.target, 'description');
+      },
+      
+      'keyup on pageKeywords': function(e){
+        this.updateDefault(e.target, 'keywords');
+      }
+      
+    },
+    
+    render: function(data){
+      
+      this.view
+        .html($(this.template).tmpl(data))
+        .find(this.form)
+        .restForm();
+      
+      this.refreshElements();
+      this.pageTitle.trigger('keyup');
+      this.pageDescription.trigger('keyup');
+      this.pageKeywords.trigger('keyup');
+      
+    },
+    
+    save: function(){
+      
+      this.view
+        .find(this.form)
+        .trigger('submit');
+      
+    },
+    
+    updateDefault: function(which, what){
+      var $which = $(which)
+        , $targets = $which.closest('.multilingual-section').find('.defaults-to-'+what);
+      $targets.attr('placeholder', $which.val() ? $which.val() : $which.attr('placeholder'));
+    }
+    
+  });
+  
+  var PageConfigTabController = PageTabController.sub({
+    
+    el: '<div>',
+    template: '#edit_page_config_tmpl',
+    form: '#page-config',
+    
+    elements: {
+      radio_access_levels: '.fieldset-rights input'
+    },
+    
+    events: {
+      
+      'click on radio_access_levels': function(e){
+        $('.fieldset-rights .fieldset-groups').toggle($(e.target).is('.members'));
+      }
+      
+    },
+    
+    render: function(data){
+      
+      this.view
+        .html($(this.template).tmpl(data))
+        .find(this.form)
+        .restForm();
+      
+    },
+    
+    save: function(){
+      
+      this.view
+        .find(this.form)
+        .trigger('submit');
+      
+    }
+    
+  });
+  
+  var PageTabManager = Manager.sub({
+    
+    el: "#page-tabs",
+    namespace: 'content',
+    container: '#page-tab-body',
+    
+    elements:{
+      tabs: '.tab'
+    },
+    
+    events: {
+      'click on tabs': function(e){
+        e.preventDefault();
+        var i = $(e.target).attr('data-index');
+        this.state.controllers[i].activate();
+      }
+    },
+    
+    init: function(){
+      
+      this.previous();
+      
+      this.findabilityTab = new PageFindabilityTabController({title:'Findability'});
+      this.configTab = new PageConfigTabController({title:'Config'});
+      
+    },
+    
+    finalizeTabs: function(data)
+    {
+      
+      //Set the language information.
+      data.languages = app.Page.Languages.data.languages;
+      
+      //When we have no tabs from the content.
+      if(!this.hasControllers()){
+        
+        //Create one big tab called content. (Basically legacy support).
+        var contentTab = new PageTabController({el:'<div>', title:'Content'});
+        contentTab.view.append($(this.container).contents());
+        $(this.container)
+          .append(contentTab.view);
+        this.add([contentTab]);
+        
+      }
+      
+      //Add the findability and config tabs to every page.
+      $(this.container)
+        .append(this.findabilityTab.view)
+        .append(this.configTab.view);
+      this.add([this.findabilityTab, this.configTab]);
+      this.findabilityTab.render(data);
+      this.configTab.render(data);
+      this.renderTabs();
+      
+      //Bind language switching on multilingual sections.
+      var self = this;
+      var setLanguage = function(e, language){
+        self.findabilityTab.setMultilanguageSection(language.id);
+      };
+      app.Page.Languages.subscribe('languageChange', setLanguage);
+      
+      //Set it to the current language.
+      setLanguage(null, app.Page.Languages.currentLanguageData());
+      
+      //Activate the first tab.
+      this.state.controllers[0].activate();
+      
+    },
+    
+    hasControllers: function(){
+      return this.state.controllers.length > 0;
+    },
+    
+    renderTabs: function(){
+      
+      //Get all tabs away from here.
+      this.view.find('.tab').remove();
+      
+      //Create new tabs for each controller.
+      var $tab;
+      for(var i = 0; i < this.state.controllers.length; i++){
+        $tab = this.state.controllers[i].tabView
+          .toggleClass('first', i == 0)
+          .removeClass('last')
+          .attr('data-index', i)
+          .appendTo(this.view);
+      }
+      $tab && $tab.addClass('last');
+      
+      this.refreshElements();
+      
+    },
+    
+    getActiveTab: function(){
+      return this.state.active();
+    }
+    
+  });
+  
+  //The page controller for editing page contents and settings.
+  var PageController = Controller.sub({
+    
+    el: '#page_app',
+    namespace: 'content',
+    isEmpty: true,
+    
+    elements: {
+      btn_detach: '.title-bar #detach-page',
+      btn_save_page: '#save-buttons #save-page',
+      select_pageLink: '#new-page-wrap #page-link',
+      pageTypes: '#new-page-wrap .pagetypes-list li a'
+    },
+    
+    events: {
+      
+      'click on btn_detach': function(e){
+        e.preventDefault();
+        this.detach();
+      },
+      
+      'click on btn_save_page': function(e){
+        e.preventDefault();
+        this.save();
+      },
+      
+      'click on pageTypes': function(e)
+      {
+        
+        e.preventDefault();
+        this.isEmpty = false;
+        var self = this;
+        
+        var item_id = app.Item.data.item.id;
+        
+        request(GET,'cms/new_page/'+$(e.target).id()+(item_id ? '/'+item_id : ''))
+          .done(function(data){
+            
+            if(item_id){
+              app.Item.linkPage(data.page.id);
+              app.MenuItems.updateItem(data.item);
+              delete data.item;
+            }
+            
+            self.processPageData(data);
+            
+          });
+        
+      },
+      
+      'change on select_pageLink': function(e){
+        
+        var pid = $(e.target).val();
+        this.loadPageContents(pid);
+        
+        if(app.Item.data.item.id > 0)
+        {
+          
+          request(GET, 'cms/link_page', {
+            menu_id: app.Item.data.item.id,
+            page_id: pid
+          }).done(function(item){
+            app.Item.linkPage(item.page_id);
+            app.MenuItems.updateItem(item);
+          });
+          
+        }
+        
+      }
+      
+    },
+    
+    init: function(){
+      this.previous();
+    },
+    
+    setMultilingual: function(value)
+    {
+      
+      if(this.Languages){
+        this.Languages.setMultilingual(value);
+      }
+      
+    },
+    
+    detach: function(){
+      
+      var self = this;
+      
+      request(GET, 'cms/detach_page', {
+        page_id: self.data.page.id,
+        menu_id: app.Item.data.item.id
+      }).done(function(item){
+        self.btn_detach.remove();
+        app.Item.clear();
+        app.MenuItems.updateItem(item);
+      });
+      
+    },
+    
+    clear: function(){
+      
+      this.unsubscribe();
+      this.view.html('');
+      this.Tabs = null;
+      this.Languages = null;
+      this.refreshElements();
+      this.isEmpty = true;
+      
+    },
+    
+    save: function(){
+      
+      if(!this.data.page.id) return;
+      
+      //Save page config first.
+      this.Tabs.configTab.save();
+      
+      //Then the findability.
+      this.Tabs.findabilityTab.save();
+      
+      //Let anyone else save in the way they wish.
+      this.publish('save', this.data.page.id);
+      
+    },
+    
+    loadNewPage: function(){
+      
+      var self = this;
+      
+      this.isEmpty = false;
+      this.unsubscribe();
+      
+      return $.ajax('?section=cms/new_page')
+      
+      //Add a done callback.
+      .done(function(data){
+        self.data = {};
+        self.view.html(data);
+        self.Tabs = null;
+        self.Languages = null;
+        self.refreshElements();
+      });
+      
+    },
+    
+    loadPageContents: function(pid){
+      
+      //Reference to this.
+      var self = this;
+      
+      if(!pid) return this.loadNewPage();
+      
+      this.isEmpty = false;
+      this.unsubscribe();
+      
+      return $.ajax('?rest=cms/page_info/'+pid)
+      
+      //Add a done callback.
+      .done(this.processPageData);
+      
+    },
+    
+    processPageData: function(data)
+    {
+      
+      var self = app.Page;
+      
+      //Do basic saving of information.
+      self.data = data;
+      self.data.menu_id = app.Item.data.item.id;
+      
+      //Set the view.
+      self.view.html($('#edit_page_tmpl').tmpl(data));
+      
+      //Init page tabs and language tabs.
+      self.Tabs = new PageTabManager;
+      self.Languages = new LanguageTabManager;
+      
+      //See if we're going multi-language mode.
+      self.view.find('#edit_page').toggleClass('has-languages', self.Languages.languages.size() > 1);
+      
+      //If we're using the page type setup.
+      if(data.pagetype)
+      {
+        
+        //Load the pagetype.
+        PageType.getPageType(app.options.url_base, data.pagetype)
+        .done(function(definition){
+          
+          //Initialize the controller.
+          try{
+            var controller = new definition.controller(definition, self);
+          }catch(e){ log(e); }
+          
+          //Finalize.
+          self.finalizePageProcessing.call(self, data);
+          
+        });
+        
+      }
+      
+      //When not using the pagetype setup.
+      else
+      {
+        
+        //Add raw content to template, if available.
+        self.view.find('#page-tab-body')
+          .html(data.content);
+        
+        //Finalize.
+        self.finalizePageProcessing.call(self, data);
+        
+      }
+      
+    },
+    
+    finalizePageProcessing: function(data){
+      
+      //Let the tabs do final stuff with said content if needed.
+      this.Tabs.finalizeTabs(data);
+      
+      //Specify that tabs are present.
+      this.view.find('#edit_page').addClass('has-tabs');
+      
+      //Update references.
+      this.refreshElements();
+      
+      //Show the tabs.
+      this.Tabs.renderTabs();
+      
+    }
+    
+  });
+  PageController.include(PubSub);
+
+  var ItemController = Controller.sub({
+    
+    el: '#menu_app',
+    namespace: 'content',
+    formEl: '#form-menu-item',
+    
+    elements: {
+      btn_save: '.footer #save-menu-item',
+      btn_toggle_settings: '.title-bar #toggle-menu-item-settings',
+      config: '#form-menu-item #menu-item-config'
+    },
+    
+    events: {
+      
+      'click on btn_save': function(e){
+        e.preventDefault();
+        this.save();
+      },
+      
+      'click on btn_toggle_settings': function(e){
+        e.preventDefault();
+        this.config.toggle();
+      }
+      
+    },
+    
+    clear: function(){
+      this.view.html('');
+      this.refreshElements();
+    },
+    
+    linkPage: function(page_id){
+      this.view.find('#edit-menu-item').addClass('has-page');
+    },
+    
+    loadItemContents: function(menu){
+      
+      //Reference to this.
+      var self = this;
+      
+      //Preset data, for the greedy page that wants to know quickly.
+      this.data = {
+        item: {
+          id: menu
+        }
+      };
+      
+      if(menu === false){
+        return this.clear();
+      }
+      
+      return $.ajax('?rest=cms/menu_item_info/'+(menu?menu:'0'))
+      
+      //Add a done callback.
+      .done(function(data){
+        self.data = data;
+        self.view.html($('#edit_menu_tmpl').tmpl($.extend({current_menu: app.options.menu_id}, data)));
+        self.refreshElements();
+        self.view.find(self.formEl).restForm({success: function(item){
+          self.view.find('.title-bar .title').text(item.title);
+          app.MenuItems.updateItem(item);
+          if(app.Page.isEmpty)
+            app.Page.loadNewPage();
+        }});
+      });
+      
+    },
+    
+    save: function(){
+      this.view.find(this.formEl).trigger('submit');
+    }
+    
+  });
+  
+  //The controller for the settings interface.
+  var SettingsController = Controller.sub({
+    
+    el: '#config_app',
+    namespace: 'main',
+    
+    loadView: function(viewName){
+      
+      var view = this.view.find('.inner');
+      view.empty();
+      request(GET, 'cms/config_app', {view: viewName})
+        .done(function(data){
+          view.html(data.contents);
+        });
+      
+    }
+    
+  });
+  
+  var app;
+  root.Cms = new Class(null, {
+    
+    options: {
+      
+    },
+    
+    init: function(o){
+      
+      app = this;
+      this.options = _(o).defaults(this.options);
+      
+      this.MenuItems = new MenuItemsController;
+      this.MenuToolbar = new MenuToolbarController;
+      this.Configbar = new ConfigBarController;
+      this.Main = new MainManager;
+      
+      this.App = new PageAppController;
+      this.Settings = new SettingsController;
+      this.Main.add([this.App, this.Settings]);
+      this.App.activate();
+      
+      this.Page = new PageController;
+      this.Item = new ItemController;
+      // this.App.add([this.Page, this.Item]);
+      
+    }
+    
+  });
+
+})(this, jQuery, _);
+
+$(function(){
+  
+  /* =Select site
+  -------------------------------------------------------------- */
+  $("#btn-select-site").on('change', function(e){
+    
+    $.ajax({
+      url: '?section=cms/menu_item_list&site_id='+$(e.target).val()
+    }).done(function(d){
+      $("#page-main-left .menu-item-list").html(d);
+    });
+    
+  });
+
+/*
+  NO MORE!!!!
+  I CAN'T TAKE IT!!!
+  AAAAAAAAH!
+  
+  //New menu item
+  $("#btn-new-menu-item").on('click', function(e){
+
+    e.preventDefault();
+
+    $.ajax({
+      url: $(this).attr('href')
+    }).done(function(d){
+      $("#page-main-right").html(d);
+    });
+
+  });
+  
+  //menu items
+  $(function(){
+
+    $('#page-main-left .menu-items-list a').on('click', function(e){
+
+      e.preventDefault();
+      
+      $.ajax({
+        url : $(this).attr('href'),
+        data : {
+          section: 'cms/app'
+        }
+      }).done(function(data){
+        $("#page-main-right").html(data);
+      });
+
+    });
+
+  });
+*/
+
+  //config menu
+  /*(function($){
+
+    $('#widget_bar a').click(function(e){
+
+      e.preventDefault();
+
+      $.ajax({
+        url : $(this).attr('href'),
+        data : {
+          section: 'cms/config_app'
+        }
+      }).done(function(data){
+        $("#page-main-right").html(data);
+      });
+
+    });
+
+  })($);*/
+
+  //draggable sidebar
+  var i = 0;
+  $('#widget-slider').mousedown(function(e){
+    e.preventDefault();
+    $(document).mousemove(function(e){
+      
+      if(e.pageX > 225 && e.pageX < 985){
+        $("body").removeClass("cursor_disabled").addClass("cursor_resizing");
+        $('#page-main-left').css("width", e.pageX+15);
+        $('#page-main-right').css("padding-left",e.pageX+15);
+        return;
+      }
+      
+      else if(e.pageX <= 225){
+        $('#page-main-left').css("width", 240);
+        $('#page-main-right').css("padding-left", 240);
+      }
+      
+      else{
+        $('#page-main-left').css("width", 1000);
+        $('#page-main-right').css("padding-left", 1000);
+      }
+      
+      $("body").removeClass("cursor_resizing").addClass("cursor_disabled");
+      
+    });
+  });
+  $(document).mouseup(function(e){
+    $("body").removeClass("cursor_resizing").removeClass("cursor_disabled");
+    $(document).unbind('mousemove');
+  });
+
+});

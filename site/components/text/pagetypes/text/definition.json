@@ -1,0 +1,13 @@
+{
+  
+  "javascript": [
+    "TextController.js"
+  ],
+  
+  "templates": {
+    "contentTab": "contentTab.tmpl.php"
+  },
+  
+  "controller": "cmsBackend.text.TextController"
+  
+}

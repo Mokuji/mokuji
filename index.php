@@ -36,7 +36,7 @@ tx('Component');
 
 //config
 tx('Config')->system('backend', false);
-tx('Config')->system('component', 'vlisco__entry_switcher');
+tx('Config')->system('component', 'cms');
 
 //start doing stuff
 tx('Router')->start();

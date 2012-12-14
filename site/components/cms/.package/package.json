@@ -5,6 +5,30 @@
   "dbUpdates": true,
   "versions": [
     {
+      "version": "2.0",
+      "date": "2012-12-13",
+      "description": "De beheeromgeving heeft een nieuwe look en een beter systeem.",
+      "changes": [
+        {
+          "title": "Pagina tabs",
+          "description": "Bij het bewerken van een pagina zijn er nu tabs. Deze groeperen verschillende functies op een overzichtelijke manier. Voor speciale pagina types kunnen er ook extra tabs bij komen om geavanceerde functies voor dat paginatype onder te brengen."
+        },
+        {
+          "title": "Meertaligheid",
+          "description": "Naast tabs voor de verschillende pagina functies, zijn er ook tabs toegevoegd om op een gebruikersvriendelijke manier meertaligheid te ondersteunen."
+        },
+        {
+          "title": "Vindbaarheid",
+          "description": "Er is een vindbaarheid tab toegevoegd aan het pagina bewerk scherm. Hier zijn talloze nieuwe opties om pagina's beter vindbaar te maken door zoekmachines en social media."
+        },
+        {
+          "title": "PageType systeem",
+          "description": "In het nieuwe systeem dat de backend aandrijft is een mogelijkheid voor programmeurs toegevoegd om paginatypes op een andere manier te ontwikkelen. Dit heeft vele voordelen ten opzichte van het bestaande systeem.\n<ul><li>Het bewerken van pagina's van dit type laad veel sneller.</li>\n<li>De code voor het bewerken is overzichtelijker en beter onderhoudbaar.</li>\n<li>Meertaligheid en het opslaan van bewerkingen is makkelijker</li>\n<li>Het toevoegen van plug-ins als een bestand-uploader of een tekstverwerker gaat beter en hoeft maar één keer geladen te worden.</li></ul>\nVoor technische documentatie hiervan zie de volgende link.",
+          "url": "https://github.com/Tuxion/tuxion.cms/wiki/Page-type-handling"
+        }
+      ]
+    },
+    {
       "version": "1.4",
       "date": "2012-10-25",
       "description": "Vertaalbestanden aangepast aan nieuw vertaal systeem.",

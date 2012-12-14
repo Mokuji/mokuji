@@ -577,8 +577,9 @@ class Image extends File
     
   }
   
-  //resizes and crops in such a way that the full dimensions provided are filled with as broad a view of the image possible.
-  //note: when cropping, the image is centered.
+  //Resizes and crops in such a way that the full dimensions provided
+  // are filled with as broad a view of the image possible.
+  // Note: when cropping, the image is centered.
   public function fill($width, $height)
   {
     

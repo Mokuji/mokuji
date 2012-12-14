@@ -1,13 +1,20 @@
 <?php namespace components\cms; if(!defined('TX')) die('No direct access.'); tx('Account')->page_authorisation(2);
 
-echo $data->as_table(array(
+$table_def = array(
   __('Name', 1) => 'key',
-  __('Value', 1) => 'value',
-  __('Actions', 1) => array(
-    function($row){return '<a class="edit" href="'.url('section=cms/setting_edit&setting_id='.$row->id, true).'">'.__('Edit', 1).'</a>';},
-    function($row){return '<a class="delete" href="'.url('action=cms/delete_setting&setting_id='.$row->id).'">'.__('Delete', 1).'</a>';}
-  )
-));
+  __('Default value', 1) => 'value_default'
+);
+
+tx('Language')->multilanguage(function($lang)use(&$table_def){
+  $table_def[__($lang->title,1).' '.__('value',1)] = 'value_'.$lang->id;
+});
+
+$table_def[__('Actions', 1)] = array(
+  function($row){return '<a class="edit" href="'.url('section=cms/setting_edit&setting_key='.$row->key, true).'">'.__('Edit', 1).'</a>';},
+  function($row){return '<a class="delete" href="'.url('action=cms/delete_setting&setting_key='.$row->key).'">'.__('Delete', 1).'</a>';}
+);
+
+echo $data->as_table($table_def);
 
 ?>
 

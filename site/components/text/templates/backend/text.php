@@ -4,14 +4,13 @@
 
 <div class="page-item">
 
-  <form class="form-text" data-callback="text" method="post" action="<?php echo url('action=text/save_item/post'); ?>" class="form-inline-elements">
+  <form class="form-text" data-callback="text" method="post" action="<?php echo url('action=text/save_item/post', true); ?>" class="form-inline-elements">
 
     <fieldset id="language-tabs">
 
       <!--<h3>${title}</h3>-->
     
       <input type="hidden" name="id" value="${id}" />
-      <input type="hidden" name="page_id" value="<?php echo tx('Data')->get->pid; ?>" />
 
       <div class="idTabs">
 
@@ -78,13 +77,14 @@
                 <textarea name="info[<?php echo tx('Language')->get_language_id(); ?>][text]" id="l_text_<?php echo tx('Language')->get_language_id(); ?>_${id}" class="text editor">${$item.dataInfo($item.data, <?php echo tx('Language')->get_language_id(); ?>, 'text')}</textarea>
               </div>
 
+<!--
               <br />
 
               <div class="ctrlHolder">
                 <label><?php __($names->component, tx('Data')->get->menu->get('int') <= 0 ? 'Introductietekst' : 'Zijtekst'); ?></label>
                 <textarea name="info[<?php echo tx('Language')->get_language_id(); ?>][description]" id="l_description_<?php echo tx('Language')->get_language_id(); ?>_${id}" class="description editor">${$item.dataInfo($item.data, <?php echo tx('Language')->get_language_id(); ?>, 'description')}</textarea>
               </div>
-
+-->
             </div><!-- /#tab-<?php echo tx('Language')->get_language_id(); ?> -->
 
             <?php
@@ -113,8 +113,18 @@
 
 <script type="text/javascript">
 
-var com_text_backend;
+  app.Page.subscribe('save', function(e, page_id){
+    $("#com-text-backend .form-text").ajaxSubmit({
+      data: {page_id:page_id},
+      done: function(data){
+        console.log(data);
+        $("#com-text-backend .form-text").find("input[name=id]").val(data);
+      }
+    });
+  });
 
+var com_text_backend;
+/*
 var com_cms = function(TxComCms){
   
   if(!TxComCms.submitCallbacks)
@@ -122,17 +132,17 @@ var com_cms = function(TxComCms){
   
   return TxComCms;
   
-}(com_cms || {});
+}(com_cms || {});*/
 
 $(function(){
   
   com_text_backend = new ComTextBackend({
-    pid: <?php echo tx('Data')->get->pid->get('int'); ?>
+    pid: <?php echo $data->pid->get('int'); ?>
   });
-  
+  /*
   com_cms.submitCallbacks['text'] = function(data){
     $("#com-text-backend .form-text").find("input[name=id]").val(data);
-  };
+  };*/
   
 });
 

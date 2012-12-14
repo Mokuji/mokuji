@@ -25,9 +25,17 @@ class Config
     // unset($site_config, $system_config, $GLOBALS['site_config'], $GLOBALS['system_config']);
     
     if(INSTALLING !== true){
-      foreach(tx('Sql')->execute_query('SELECT * FROM #__core_config WHERE autoload = 1 AND site_id = '.tx('Site')->id) AS $row){
+      
+      //Get the default values.
+      foreach(tx('Sql')->execute_query('SELECT * FROM #__core_config WHERE autoload = 1 AND language_id IS NULL AND site_id = '.tx('Site')->id) AS $row){
         $this->user[$row->key] = $row->value;
       }
+      
+      //Get all language specific items to overwrite it with.
+      foreach(tx('Sql')->execute_query('SELECT * FROM #__core_config WHERE autoload = 1 AND value IS NOT NULL AND language_id = '.tx('Language')->id.' AND site_id = '.tx('Site')->id) AS $row){
+        $this->user[$row->key] = $row->value;
+      }
+      
     }
     
     
@@ -61,7 +69,12 @@ class Config
     switch(func_num_args()){
       case 0: return $this->user;
       case 1: return $this->user[func_get_arg(0)];
-      case 3: tx('Sql')->execute_non_query('UPDATE #__cms_config SET value = \''.mysql_real_escape_string(func_get_arg(1)).'\' WHERE key = \''.mysql_real_escape_string(func_get_arg(1)).'\'');
+      case 3: 
+        $val = mysql_real_escape_string(func_get_arg(1));
+        $key = mysql_real_escape_string(func_get_arg(0));
+        $lid = func_get_arg(2) ? mysql_real_escape_string(func_get_arg(2)) : null;
+        $lidWhere = '`language_id` ' . ($lid ? "= '$lid'" : 'IS NULL');
+        tx('Sql')->execute_non_query("UPDATE #__core_config SET `value` = '$val' WHERE `site_id` = '".tx('Site')->id."' AND `key` = '$key' AND $lidWhere");
       case 2: return $this->user[func_get_arg(0)]->set(func_get_arg(1));
     }
     

@@ -74,10 +74,13 @@ class Views extends \dependencies\BaseViews
     return load_module($module->component, $module->name);
   }
 
-
-  protected function app()
+  protected function app($view)
   {
-
+    
+    //Get menu and site id.
+    $mid = tx('Sql')->table('menu', 'Menus')->limit(1)->execute()->{0}->id->get('int');
+    $sid = tx('Site')->id;
+    
     //the app is going to make use of all components, so we are going to load all javascript and css needed
     tx('Sql')->table('cms', 'ComponentViews')->join('Components', $c)->select("$c.name", 'name')->execute()->each(function($c){
       tx('Component')->load($c->name);
@@ -85,8 +88,10 @@ class Views extends \dependencies\BaseViews
 
     return array(
       'topbar' => $this->section('admin_toolbar'),
-      'menus' => $this->view('menus'),
-      'app' => $this->section(tx('Data')->get->view->is_set() ? 'config_app' : 'app'),
+      'menus' => $this->view('menus', array('menu_id' => $mid, 'site_id' => $sid)),
+      'menu_id' => $mid,
+      'site_id' => $sid,
+      'app' => $this->section('app', $view->get()),
       'sites' => tx('Sql')->table('cms', 'Sites')->execute()
     );
 
@@ -125,10 +130,12 @@ class Views extends \dependencies\BaseViews
 
   protected function menus($options)
   {
-
+    
+    //Return the data.
     return array(
       'menus' => $this->section('menus'),
-      'items' => $this->section('menu_items'),
+      'menu_toolbar' => $this->section('menu_toolbar', $options),
+      'menu_items' => $this->section('menu_items', $options),
       'configbar' => $this->section('configbar')
     );
 

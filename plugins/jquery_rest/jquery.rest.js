@@ -2,12 +2,18 @@
   
   $.rest = function(type, path, data){
     
+    type = type.toLowerCase();
+    
     return $.ajax({
       url: path,
       type: type,
-      data: JSON.stringify(data),
+      data: (type == 'get' ? data : JSON.stringify(data)),
       dataType: 'json',
-      processData: false
+      contentType: 'application/json',
+      processData: (type == 'get'),
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest'
+      }
     });
     
   };

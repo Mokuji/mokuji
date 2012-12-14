@@ -6,6 +6,23 @@ class EntryPoint extends \dependencies\BaseEntryPoint
   public function entrance()
   {
     
+    //When loading PageType templates
+    if(tx('Data')->get->pagetypetemplate->is_set()){
+      
+      $parts = explode('/', tx('Data')->get->pagetypetemplate->get());
+      $com = array_shift($parts);
+      $pagetype = array_shift($parts);
+      $tmpl = implode('/', $parts);
+      
+      $path = PATH_COMPONENTS.DS.$com.DS.'pagetypes'.DS.$pagetype.DS.$tmpl;
+      
+      return load_html($path, array(
+        'component' => $com,
+        'pagetype' => $pagetype
+      ));
+      
+    }
+    
     //Backend
     if(tx('Config')->system()->check('backend'))
     {
@@ -51,11 +68,12 @@ class EntryPoint extends \dependencies\BaseEntryPoint
           load_plugin('idtabs3')
         ),
         'scripts' => array(
-          'cms_backend' => '<script type="text/javascript" src="'.URL_COMPONENTS.'/cms/includes/backend.js"></script>'
+          'cms_backend' => '<script type="text/javascript" src="'.URL_COMPONENTS.'cms/includes/backend.js"></script>',
+          'cms_backend_pagetype' => '<script type="text/javascript" src="'.URL_COMPONENTS.'cms/includes/PageType.js"></script>'
         )
       ),
       array(
-        'content' => $this->view('app')
+        'content' => $this->view('app', tx('Data')->get->view->get())
       ));
 
 
@@ -71,9 +89,11 @@ class EntryPoint extends \dependencies\BaseEntryPoint
 
         //validate page id
         tx('Data')->get->pid->not('set', function(){
-          throw new \exception\User('Missing the page ID.');
+          return tx('Config')->user('homepage')->is('empty', function(){
+            throw new \exception\NotFound('No homepage was set.');
+          });
         })->validate('Page ID', array('number'=>'integer', 'gt'=>0));
-
+        
         //check if page id is present in database
         $page = tx('Sql')
           ->table('cms', 'Pages')
@@ -129,16 +149,76 @@ class EntryPoint extends \dependencies\BaseEntryPoint
         
         //or are we going to load an entire page?
         elseif(tx('Data')->get->pid->is_set()){
-
+          
           $pi = $that->helper('get_page_info', tx('Data')->get->pid);
+          $lpi = $pi->info->{tx('Language')->get_language_id()};
+          
+          //See if the URL key is correct.
+          $url_key = $lpi->url_key;
+          $pretty_url = URL_BASE."{$pi->id}/{$url_key}";
+          if($url_key->is_set() && $url_key->get() != tx('Data')->get->pkey->get()){
+            header('Location: '.$pretty_url);
+            return;
+          }
+          
+          
+          /* ------- Set all the headers! ------- */
+          
+          //TODO: improve some of the default site-wide settings
+          //TODO: thumbnail images for twitter/facebook
+          //TODO: author en (publish tijden?) voor facebook
+          
+          $site_name = tx('Config')->user('site_name')->otherwise('My Tuxion CMS Website');
+          $site_twitter = tx('Config')->user('site_twitter');
+          $site_googleplus = tx('Config')->user('site_googleplus');
+          $site_author = tx('Config')->user('site_author');
+          $site_description = tx('Config')->user('site_description')->otherwise('My Tuxion CMS Website');
+          $site_keywords = tx('Config')->user('site_keywords')->otherwise('Tuxion, CMS');
+          $title = $lpi->title->otherwise($pi->title)->get();
+          $title .= ($title ? ' - ' : '') . $site_name;
+          $description = $lpi->description->otherwise($site_description)->get();
+          $keywords = $lpi->keywords->otherwise($site_keywords)->get();
+          
+          tx('Ob')->meta('Page Headers');?>
+            
+            <!-- Standard HTML SEO -->
+            <meta http-equiv="content-language" content="<?php echo tx('Language')->get_language_code(); ?>" />
+            <meta name="description" content="<?php echo $description; ?>" />
+            <meta name="keywords" content="<?php echo $keywords; ?>" />
+            <meta name="author" content="<?php echo $lpi->author->otherwise($site_author); ?>" />
+            
+            <!-- Open Graph (Facebook) -->
+            <meta property="og:url" content="<?php echo $pretty_url; ?>" />
+            <meta property="og:type" content="article" />
+            <meta property="og:article:tag" content="<?php echo $lpi->og_keywords->otherwise($keywords); ?>" />
+            <meta property="og:locale" content="<?php echo tx('Language')->get_language_code(); ?>" />
+            <meta property="og:title" content="<?php echo $lpi->og_title->otherwise($title); ?>" />
+            <meta property="og:description" content="<?php echo $lpi->og_description->otherwise($description); ?>" />
+            <meta property="og:site_name" content="<?php echo $site_name; ?>" />
+            
+            <!-- Twitter Cards -->
+            <meta name="twitter:card" content="summary" />
+            <meta name="twitter:title" content="<?php echo $lpi->tw_title->otherwise($title); ?>" />
+            <meta name="twitter:description" content="<?php echo $lpi->tw_description->otherwise($description); ?>" />
+            <meta name="twitter:url" content="<?php echo $pretty_url; ?>" />
+            <meta name="twitter:site" content="<?php echo $site_twitter; ?>" />
+            <meta name="twitter:creator" content="<?php echo $lpi->tw_author->otherwise($site_twitter); ?>" />
+            
+            <!-- Google+ Authorship -->
+            <link rel="author" href="<?php echo $lpi->gp_author->otherwise($site_googleplus); ?>" />
+            
+          <?php tx('Ob')->end();
+          
+          /* ------- END - headers ------- */
           
           $output = $that->template($pi->template, $pi->theme, array(
+            'title' => $title,
             'plugins' =>  array(
-                            load_plugin('jquery'),
-                            load_plugin('jquery_ui'),
-                            load_plugin('nestedsortable'),
-                            load_plugin('jsFramework')
-                          )
+              load_plugin('jquery'),
+              // load_plugin('jquery_ui'),
+              // load_plugin('nestedsortable'),
+              // load_plugin('jsFramework')
+            ),
           ),
           array(
             'admin_toolbar' => $that->section('admin_toolbar'),

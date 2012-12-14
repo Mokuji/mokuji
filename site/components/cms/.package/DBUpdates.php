@@ -12,8 +12,44 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
     $updates = array(
       '1.1' => '1.2',
       '1.2' => '1.3',
-      '1.3' => '1.4'
+      '1.3' => '1.4',
+      '1.4' => '2.0'
     );
+  
+  public function update_to_2_0($current_version, $forced)
+  {
+    
+    try{
+      
+      tx('Sql')->query('
+        ALTER TABLE `#__cms_page`
+          CHANGE `keywords` `notes` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL 
+      ');
+      
+      tx('Sql')->query('
+        ALTER TABLE `#__cms_page_info`
+          ADD `description` TEXT NULL,
+          ADD `keywords` VARCHAR( 255 ) NULL,
+          ADD `url_key` VARCHAR( 255 ) NULL,
+          ADD `og_title` VARCHAR( 255 ) NULL,
+          ADD `og_description` TEXT NULL,
+          ADD `og_keywords` VARCHAR( 255 ) NULL,
+          ADD `tw_title` VARCHAR( 255 ) NULL,
+          ADD `tw_description` TEXT NULL,
+          ADD `tw_author` VARCHAR( 255 ) NULL,
+          ADD `gp_author` VARCHAR( 255 ) NULL,
+          ADD INDEX ( `page_id` ),
+          ADD INDEX ( `language_id` )
+      ');
+      
+      
+    }catch(\exception\Sql $ex){
+      //When it's not forced, this is a problem.
+      //But when forcing, ignore this.
+      if(!$forced) throw $ex;
+    }
+    
+  }
   
   public function update_to_1_4($current_version, $forced)
   {

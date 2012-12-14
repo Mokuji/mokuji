@@ -10,7 +10,7 @@
     $new_page->page_types->each(function($page_type){
       echo
         '  <li class="page-type-'.$page_type->name.'">'.
-        '    <a href="'.url('action=cms/new_page&view_id='.$page_type->id.(tx('Data')->filter('cms')->menu->is_set() && tx('Data')->filter('cms')->menu->get('int') > 0 ? '&link_to='.tx('Data')->filter('cms')->menu : '')).'" title="'.$page_type->prefered_description.'">'.$page_type->prefered_title.'</a>'.
+        '    <a href="#" data-id="'.$page_type->id.'" title="'.$page_type->prefered_description.'">'.$page_type->prefered_title.'</a>'.
         '  </li>';
     });
     
@@ -34,7 +34,12 @@
 <script type="text/javascript">
 
 $(function(){
-
+  
+  /*
+  
+  BLASPHEMY!
+  INFIDELS!!
+  
   $("#new-page-wrap .pagetypes-list a").on("click", function(e){
 
     e.preventDefault();
@@ -74,6 +79,8 @@ $(function(){
     });
   
   });
+  
+  */
 
 });
 

@@ -4,15 +4,13 @@
 
   <head>
   
-    <title><?php echo $head->title; ?> </title>
+    <title><?php echo $head->title; ?></title>
     <base href="<?php echo $head->base->href; ?>" target="<?php echo $head->base->target; ?>" />
 
     <!-- character encoding -->
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
 
-    <!-- seo -->
-    <meta name="description" content="Tuxion CMS" />
-    <meta name="author" content="Tuxion" />
+    <!-- robots -->
     <meta name="robots" content="noindex, nofollow" />
     <meta name="revisit-after" content="15 days" />
     <?php echo $head->meta; ?>

@@ -833,7 +833,7 @@ body.cursor_disabled{
     background: linear-gradient(to bottom, rgba(232,232,232,1) 0%,rgba(211,211,211,1) 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e8e8e8', endColorstr='#d3d3d3',GradientType=0 ); /* IE6-8 */
   }
-
+  
   table.dataTable tbody tr.even:hover td.sorting_1,
   table.dataTable tbody tr.odd:hover td.sorting_1,
   table.dataTable tbody tr.even:hover,
@@ -850,10 +850,12 @@ body.cursor_disabled{
   #page-main-right li{
     /*margin-left:15px;*/
   }
+  
   #page-main-right ul.pagetypes-list li{
     margin-left:6px;
     overflow:hidden;
   }
+  
   #page-main-right .paginate_disabled_next,
   #page-main-right .paginate_enabled_next,
   #page-main-right .paginate_enabled_previous,

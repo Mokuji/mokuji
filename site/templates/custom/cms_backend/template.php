@@ -17,11 +17,11 @@
     <meta name="revisit-after" content="15 days" />
     <?php echo $head->meta; ?>
     
-    <?php echo $head->plugins; ?>
-
     <?php echo $head->theme; ?>
 
     <?php echo $head->links; ?>
+
+    <?php echo $head->plugins; ?>
     
     <?php echo $head->scripts; ?>
 
