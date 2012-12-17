@@ -356,24 +356,21 @@ abstract class BaseDBUpdates
     //If it exists, call it.
     if(method_exists($this, $method))
     {
-      
-      //Log and perform the update call.
       tx('Logging')->log('Update', 'Updating DB', 'Calling '.$method.' for package '.$this->package()->title.' from version '.$this->current_version());
       call_user_func_array(array($this, $method), array($this->current_version(), $forced));
-      $this->version_bump($next);
-      
-      //Repeat.
-      $this->update($forced, $maybe_install);
-      return true;
-      
     }
     
     //Otherwise just report we're skipping it, but once looked for it.
     else{
       tx('Logging')->log('Update', 'Updating DB', 'No method '.$method.' for package '.$this->package()->title.' from version '.$this->current_version());
-      $this->version_bump($next);
-      return true;
     }
+    
+    //Bump version.
+    $this->version_bump($next);
+    
+    //Repeat.
+    $this->update($forced, $maybe_install);
+    return true;
     
   }
   
