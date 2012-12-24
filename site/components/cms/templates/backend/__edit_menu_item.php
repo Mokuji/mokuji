@@ -32,6 +32,7 @@
         <!-- Select menu -->
         <div class="inputHolder last">
           
+          {{if menus.length > 1}}
           <label for="l_menu"><?php echo __('Menu'); ?></label>
           <select id="l_menu" name="menu_id">
             {{each menus}}
@@ -40,6 +41,7 @@
               {{/if}}
             {{/each}}
           </select>
+          {{/if}}
           
         </div>
         

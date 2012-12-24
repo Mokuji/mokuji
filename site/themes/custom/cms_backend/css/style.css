@@ -321,6 +321,7 @@ body.cursor_disabled{
   border-top:1px solid #d6dce1;
   position:absolute;
   bottom:0;
+  height:17px;
   padding:7px 0;
   width:100%;
   background: #ffffff; /* Old browsers */

@@ -25,7 +25,7 @@ class Helpers extends \dependencies\BaseComponent
     //if $select_from_root is true: select root item to show items from.
     $no_menu_items_found  = false;
 
-    if($options->select_from_root->is_set() && $options->menu_item_id > 0)
+    if($options->select_from_root->is_set() && $options->menu_item_id->get() > 0)
     {
       tx('Sql')->table('menu', 'MenuItems')->pk($options->menu_item_id)->execute_single()->not('empty', function($item)use(&$options){
 
