@@ -64,7 +64,8 @@ abstract class BaseDBUpdates
   
   /* ---------- Static ---------- */
   
-  static function base_dir($type = 'core', $name = null){
+  static function base_dir($type = 'core', $name = null)
+  {
     
     switch($type){
       
@@ -372,6 +373,7 @@ abstract class BaseDBUpdates
     else{
       tx('Logging')->log('Update', 'Updating DB', 'No method '.$method.' for package '.$this->package()->title.' from version '.$this->current_version());
       $this->version_bump($next);
+      $this->update($forced, $maybe_install);
       return true;
     }
     
@@ -379,7 +381,8 @@ abstract class BaseDBUpdates
   
   /* ---------- Protected ---------- */
   
-  protected function get_base_dir(){
+  protected function get_base_dir()
+  {
     
     if($this->is_core === true)
       return self::base_dir('core');
