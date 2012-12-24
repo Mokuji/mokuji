@@ -15,9 +15,7 @@
 <div id="page-main"<?php if($data->sites->size() > 1){ ?> class="multisite"<?php } ?>>
 
   <div id="page-main-left">
-
     <?php echo $app->menus; ?>
-
   </div>
   <!-- /PAGE-MAIN-LEFT -->
 

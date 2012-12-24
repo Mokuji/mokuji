@@ -250,7 +250,7 @@ class Helpers extends \dependencies\BaseComponent
     //Store additional info in the account tables.
     tx('Sql')
       ->model('account', 'UserInfo')
-      ->set($data->having('name', 'preposition', 'family_name', 'comments')->merge($user->having(array('user_id'=>'id'))))
+      ->set($data->having('name', 'preposition', 'family_name', 'comments')->merge($user->having(array('user_id'=>'id')))->merge(array('status'=>1)))
       ->save();
 
     //Return the user model.

@@ -19,12 +19,15 @@ class Helpers extends \dependencies\BaseComponent
    */
   public function get_menu_items($options)
   {
-    
+
+    $options->menu_item_id = ($options->menu_item_id->is('set')->get('bool') ? $options->menu_item_id : tx('Data')->get->menu);
+
     //if $select_from_root is true: select root item to show items from.
     $no_menu_items_found  = false;
-    if($options->select_from_root->is_set() && tx('Data')->get->menu->get('int') > 0)
+
+    if($options->select_from_root->is_set() && $options->menu_item_id->get() > 0)
     {
-      tx('Sql')->table('menu', 'MenuItems')->pk(tx('Data')->get->menu)->execute_single()->not('empty', function($item)use(&$options){
+      tx('Sql')->table('menu', 'MenuItems')->pk($options->menu_item_id)->execute_single()->not('empty', function($item)use(&$options){
 
         tx('Sql')
 
@@ -47,7 +50,7 @@ class Helpers extends \dependencies\BaseComponent
           ->limit(1)
           ->execute_single()
           ->is('empty', function()use(&$options){
-              $options->parent_pk->set(tx('Data')->get->menu);
+              $options->parent_pk->set($options->menu_item_id);
             })->failure(function($root_item)use(&$options){
               $options->parent_pk->set($root_item->id);
             });

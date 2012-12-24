@@ -89,9 +89,13 @@ class EntryPoint extends \dependencies\BaseEntryPoint
 
         //validate page id
         tx('Data')->get->pid->not('set', function(){
-          return tx('Config')->user('homepage')->is('empty', function(){
+
+          tx('Config')->user('homepage')->is('empty', function(){
             throw new \exception\NotFound('No homepage was set.');
+          })->failure(function(){
+            tx('Url')->redirect(tx('Config')->user('homepage'), true);
           });
+
         })->validate('Page ID', array('number'=>'integer', 'gt'=>0));
         
         //check if page id is present in database

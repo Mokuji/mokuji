@@ -64,7 +64,6 @@
     
 </menu>
 
-
 <script id="menu-item-list-item-tmpl" type="text/x-jquery-tmpl">
   <li class="depth_{{if depth}}${depth}{{else}}1{{/if}}" data-id="${id}" rel="${id}">
     <div>

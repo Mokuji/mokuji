@@ -84,24 +84,27 @@
   <div class="row-fluid">
     <div class="span2 margin-left-none">
       <h1 id="logo">
-        <img src="http://placehold.it/150x45" alt="Logo" />
+        <img src="http://web.tuxion.nl/site/themes/custom/tuxion/img/logo-black-blue.png" alt="Tuxion" width="168" height="37" />
       </h1>
       <nav id="main-menu">
         <?php echo tx('Component')->modules('menu')->get_html('menu', array('max_depth' => 1, 'classes' => 'nav nav-list')); ?>
       </nav>
     </div><!--/span-->
-    
-    
+        
     <div class="content-wrapper clearfix margin-left-none span10">
+      <!--
       <div class="top-header">
         <form class="form-search pull-right">
           <input type="text" class="input-medium search-query">
           <button type="submit" class="btn">Search</button>
         </form>
       </div>
+      -->
       <div class="span2 margin-left-none">
         <nav id="submenu">
-          <?php echo tx('Component')->modules('menu')->get_html('menu', array('min_depth' => 2, 'from_root' => true, 'parent_depth' => 1, 'classes' => 'nav nav-list')); ?>
+        <?php if(tx('Data')->get->menu->gt(0)->get('bool')){
+          echo tx('Component')->modules('menu')->get_html('menu', array('select_from_root' => true, 'parent_depth' => 2, 'classes' => 'nav nav-list'));
+        } ?>
         </nav>
       </div><!--/span-->
 
@@ -109,6 +112,7 @@
         <?php echo $body->content; ?>
       </div>
       
+      <!--
       <div class="span2 clearfix sidebar">
         <ul class="nav nav-list">
           <li class="nav-header">Related content</li>
@@ -118,6 +122,8 @@
           <li><a href="#">Related item #5</a></li>
         </ul>
       </div>
+      -->
+
     </div><!--/span-->
   </div>
   

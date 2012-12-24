@@ -118,11 +118,17 @@
       
       e.preventDefault();
       
-      $(this).ajaxSubmit(function(d){
-        $('#tab-users').html(d);
-        $('#tabber-users a').trigger('click');
+      $('#create_resolution').restForm({
+        success: function(data){
+          $('#tab-users').html(data);
+          $('#tabber-users a').trigger('click');
+        },
+        failure: function(xhr, state, message){
+          console.log(arguments);
+          alert('error');
+        }
       });
-      
+
     });
     
     $('#tabs-accounts').on('submit', '#tab-group form', function(e){

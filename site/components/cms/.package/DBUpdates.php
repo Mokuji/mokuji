@@ -22,7 +22,7 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
     try{
       
       tx('Sql')->query('
-        ALTER TABLE `#__cms_page`
+        ALTER TABLE `#__cms_pages`
           CHANGE `keywords` `notes` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL 
       ');
       
