@@ -7,20 +7,25 @@ class Modules extends \dependencies\BaseViews
    * Returns a result set with the menu items you asked for.
    * 
    * @param array $options Array with options.
-   *  @key int $site_id The site ID to load the menu from from.
-   *  @key int $template_key The menu's template_key to select items from.
-   *  @key int $parent_pk The menu item id to select submenu items from.
-   *  @key int $min_depth Minimum depth to show items from.
-   *  @key int $max_depth Number that indicates how far in submenus it should go.
-   *  @key bool $display_select_menu If true: a select menu will be returned.
-   *  @key bool $select_from_root If true: select items from root.
-   *             tx('Data')->get->menu will be used to calculate root.
-   *             $parent_pk, $template_key and $site_id will be overwritten.
+   *  @key int $site_id              - The site ID to load the menu from from.
+   *  @key int $template_key         - The menu's template_key to select items from.
+   *  @key int $parent_pk            - The menu item id to select submenu items from.
+   *  @key int $min_depth            - Minimum depth to show items from.
+   *  @key int $max_depth            - Number that indicates how far in submenus it should go.
+   *  @key bool $display_select_menu - If true: a select menu will be returned.
+   *  @key bool $no_active           - If false: suppresses the "active" class on active menu items.
+   *  @key bool $no_selected         - If false: suppresses the "selected" class on selected menu items.
    */
   protected function menu($options)
   {
 
     $menu_items = $this->helper('get_menu_items', $options);
+    
+    #TEMP: Default options.
+    $options = Data([
+      'show_unlinked' => true,
+      'show_unauthorised' => true
+    ])->merge($options);
     
     //Create menu.
     $menu =
@@ -32,56 +37,64 @@ class Modules extends \dependencies\BaseViews
         //If menu items are found:
         ->success(function($items)use($options){
           
-          //Get the selected item properties.
-          $selected_item = tx('Sql')
+          //Get the selected items.
+          $selected_items = tx('Sql')
             ->table('menu', 'MenuItems')
-            ->pk(tx('Data')->get->menu->get('int'))
-            ->execute_single();
+            ->where('page_id', tx('Data')->get->pid->get('int'))
+            ->execute();
           
           //Show a 'select menu'.
-          if($options->display_select_menu->get('bool') == true)
-          {
-            //as_options($name, $title, $value[, $default[, $tooltip[, $multiple[, $placeholder_text]]]])
-            return $items->as_options('menu', 'title', 'id', array('placeholder_text' => __('Select a season', 1), 'rel' => 'page_id', 'default' => tx('Data')->get->menu));
+          if($options->display_select_menu->get('bool') == true){
+            return $items->as_options('menu', 'title', 'id', array(
+              'placeholder_text' => __('Select a season', 1),
+              'rel' => 'page_id',
+              'default' => tx('Data')->get->menu
+            ));
           }
-
-          //Or show a normal menu.
-          else
-          {
-            return $items->as_hlist('_menu'.($options->classes->is_set() ? ' '.$options->classes->get() : ''), function($item, $key, $delta, &$properties)use(&$active_depth, $selected_item){
-              if(!$item->page_id->is_set() || tx('Component')->helpers('cms')->check_page_authorisation($item->page_id)){
-                
-                $properties['class'] = '';
-                
-                //Add class 'active' if this is the active menu item.
-                if($item->id->get('int') === tx('Data')->get->menu->get('int')){
-                  $properties['class'] .= ' active';
-                  $active_depth = $item->depth->get('int');
-                }
-                
-                //Add class 'selected' if this is an selected item.
-                if($item->lft->get() <= $selected_item->lft->get() &&
-                  $item->rgt->get() >= $selected_item->rgt->get())
-                {
-                  $properties['class'] .= ' selected';
-                }
-                
-                if($delta < 0 && $item->depth->get('int') == $active_depth -1 || $item->depth->get('int') - $active_depth >= 1){
-                  $active_depth = null;
-                }
-                
-                $properties['class'] = trim($properties['class']);
-                
-                return '<a href="'.url('menu='.$item->id.'&pid='.$item->page_id, true).'">'.$item->title.'</a>';
+          
+          //Figure out the class string.
+          $classes = '_menu'.($options->classes->is_set() ? ' '.$options->classes->get() : '');
+          
+          //Show a normal menu.
+          return $items->as_hlist($classes, function($item, $key, $delta, &$properties)use(&$active_depth, $selected_items, $options){
+            
+            //Test if we are allowed to view this item.
+            if(1
+              && ($item->page_id->is_set() || $options->show_unlinked->get('bool') == true)
+              && (tx('Component')->helpers('cms')->check_page_authorisation($item->page_id) || $options->show_unauthorised->get('bool') == true)
+            ){
+              
+              $properties['class'] = '';
+              
+              //Add class 'active' if this is the active menu item.
+              if($options->no_active->get() != true && $item->page_id->get('int') === tx('Data')->get->pid->get('int')){
+                $properties['class'] .= ' active';
+                $active_depth = $item->depth->get('int');
               }
               
-              //Since we do not have permissions for this item, hide it.
-              else{
-                $properties['style'] = 'display:none;';
+              //Add class 'selected' if this is a selected item.
+              if(1
+                && $options->no_selected->get() != true
+                && $selected_items->any(function($v)use($item){ return ($item->lft->get() <= $v->lft->get() && $item->rgt->get() >= $v->rgt->get()); })
+              ){
+                $properties['class'] .= ' selected';
               }
+              
+              if($delta < 0 && $item->depth->get('int') == $active_depth -1 || $item->depth->get('int') - $active_depth >= 1){
+                $active_depth = null;
+              }
+              
+              $properties['class'] = trim($properties['class']);
+              
+              return '<a href="'.url('pid='.$item->page_id, true).'">'.$item->title.'</a>';
+            }
+            
+            //Since we do not have permissions for this item, hide it.
+            else{
+              $properties['style'] = 'display:none;';
+            }
 
-            });
-          }
+          });
 
         })
 
@@ -102,52 +115,56 @@ class Modules extends \dependencies\BaseViews
 
   protected function breadcrumbs($options)
   {
-
-    $options->having('menu_item_id')
-      ->menu_item_id->validate('Menu item id', array('number', 'gt'=>0))->back();
+    
+    throw new \exception\Programmer('Breadcrumbs under construction.');
+    
+    $options
+      ->page_id->validate('Page #ID', array('number', 'gt'=>0))->back()
+      ->menu_id->validate('Menu #ID', array('number', 'gt'=>0))->back();
   
+    //Get all active menu items.
+    $active = tx('Sql')->table('menu', 'MenuItems')
+      ->where('page_id', $options->page_id)
+      ->where('menu_id', $options->menu_id)
+      ->execute();
+    
+    
+    
+    
+    
+    
+    //OLD
+    
     $menu_item_info =
       tx('Sql')
       ->table('menu', 'MenuItems')
       ->pk($options->menu_item_id)
       ->execute_single();
 
-    //get menu items
-    return array(
 
-      'menu_items' =>
+    
+    tx('Sql')
 
-        tx('Sql')
+      ->table('menu', 'MenuItems', $mi)
 
-          ->table('menu', 'MenuItems', $mi)
+        //filter menu
+        ->sk(tx('Data')->filter('menu')->menu_id->is_set() ? tx('Data')->filter('menu')->menu_id : '1')
+      
+        //join menu item info
+        ->join('MenuItemInfo', $mii)->inner()
 
-            //filter menu
-            ->sk(tx('Data')->filter('menu')->menu_id->is_set() ? tx('Data')->filter('menu')->menu_id : '1')
-          
-            //join menu item info
-            ->join('MenuItemInfo', $mii)->inner()
+      ->workwith($mii)
 
-          ->workwith($mii)
+        ->select('title', 'title')
+        ->where('language_id', tx('Language')->get_language_id())
+        
+      ->workwith($mi)
+      
+        ->where('lft', '<=', $menu_item_info->lft)
+        ->where('rgt', '>=', $menu_item_info->rgt)
+        ->order('lft', 'ASC')
 
-            ->select('title', 'title')
-            ->where('language_id', tx('Language')->get_language_id())
-            
-          ->workwith($mi)
-          
-            ->where('lft', '<=', $menu_item_info->lft)
-            ->where('rgt', '>=', $menu_item_info->rgt)
-            ->order('lft', 'ASC')
-
-          ->execute(),
-
-      'page_info' =>
-
-        tx('Sql')
-          ->table('cms', 'Pages', $p)
-          ->pk(tx('Data')->get->pid)
-          ->execute_single()
-
-    );
+      ->execute();
 
   }
 

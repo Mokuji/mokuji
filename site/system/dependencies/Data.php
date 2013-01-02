@@ -1746,6 +1746,46 @@ class Data extends Successable implements \Serializable, \IteratorAggregate, \Ar
     
   }
   
+  // the same as each, except returns false when one fails the truth test
+  public function all($callback)
+  {
+    
+    if(!is_callable($callback)){
+      throw new \exception\InvalidArgument('Expecting $callback to be callable. It is not.');
+      return $this;
+    }
+    
+    foreach($this as $key => $node){
+      $r = $callback($node, $key);
+      if($r === false){
+        return false;
+      }
+    }
+    
+    return true;
+    
+  }
+  
+  // the same as each, except returns false when all fail the truth test
+  public function any($callback)
+  {
+    
+    if(!is_callable($callback)){
+      throw new \exception\InvalidArgument('Expecting $callback to be callable. It is not.');
+      return $this;
+    }
+    
+    foreach($this as $key => $node){
+      $r = $callback($node, $key);
+      if($r === true){
+        return true;
+      }
+    }
+    
+    return false;
+    
+  }
+  
   // call $callback($val, $key, $delta) for each node and subnodes in this Data object
   public function walk($callback)
   {

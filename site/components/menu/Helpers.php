@@ -118,5 +118,5 @@ class Helpers extends \dependencies\BaseComponent
     return $menu_items;
 
   }
-
+  
 }

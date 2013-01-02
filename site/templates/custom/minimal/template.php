@@ -35,6 +35,10 @@
       <?php echo $messages->notification; ?>
     </div>
     
+    <div id="menu">
+       <?php echo tx('Component')->modules('menu')->get_html('menu'); ?>
+    </div>
+    
     <div id="content">
       <?php echo $body->content; ?>
     </div>
