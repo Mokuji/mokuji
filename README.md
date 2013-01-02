@@ -11,7 +11,7 @@
 * [Twitter](http://twitter.com/Tuxion)
 * [Google+](http://tuxion.nl/+)
 
-# Tuxion CMS.
+# Tuxion CMS - Version 1.0 Alpha
 
 ## Description
 
@@ -19,11 +19,11 @@ Tuxion CMS is a framework that comes with several components that form a CMS. Th
 framework is built to make it as easy as we can to extend the CMS. The default components
 are:
 
-* __cms__       : "Page" creation and management. Essentially providing the content of the website.
-* __account__   : Login forms and user management. Allows the CMS component to create profile pages.
-* __menu__      : Menu control. Allows the CMS component to implement menus in a page.
-* __text__      : Creating, storing and editing text. Allows the CMS component to create text pages.
-* __update__    : Installing and updating other components or the framework itself.
+* __cms__     : "Page" creation and management. Essentially providing the content of the website.
+* __account__ : Login forms and user management. Allows the CMS component to create profile pages.
+* __menu__    : Menu control. Allows the CMS component to implement menus in a page.
+* __text__    : Creating, storing and editing text. Allows the CMS component to create text pages.
+* __update__  : Installing and updating other components or the framework itself.
 
 For more specific components, you can take a look at our
 [repository list](https://github.com/Tuxion). All repositories prefixed with `tx.cms-` are
@@ -46,17 +46,23 @@ If you need functionality that does not exist yet, you could create the componen
 ## Documentation
 
 A Dutch manual to to the installation and usage of the Tuxion CMS can be found
-[here](http://handleiding.tuxion.nl/). An English version and API documentation is planned
-to come out in the future.
+[here](http://handleiding.tuxion.nl/). An English version and API documentation are
+planned to come out in the future.
 
-## Versions
+## Change log
+
+### Version 1.0
+
+* The first stable version to be recorded as a version.
+
+## Subsystem Versions
 
 * __framework__ : 3.3.3
-* __account__ : 1.3
-* __cms__ : 2.0
-* __menu__ : 1.3
-* __text__ : 1.2
-* __update__ : 1.2
+* __account__   : 1.3
+* __cms__       : 2.0
+* __menu__      : 1.3
+* __text__      : 1.2
+* __update__    : 1.2
 
 ## Licenses
 

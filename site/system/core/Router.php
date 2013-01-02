@@ -55,12 +55,6 @@ class Router
         );
       });
       
-      //test for UserFunction.
-      if(!($userfunc instanceof \dependencies\UserFunction)){
-        set_status_header(500, "Method {$methodtype}_{$methodname}() must return an instance of UserFunction.");
-        exit;
-      }
-      
       //Decide on the response code.
       if($userfunc->failure())
       {

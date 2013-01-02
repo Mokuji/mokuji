@@ -350,7 +350,7 @@ class Json extends \dependencies\BaseComponent
       ->merge(array('page_id' => 'NULL'))
       ->save()
       ->title->set(function($title){
-        return $title->back()->info->{LANGUAGE}->title->get();
+        return $title->back()->info->{tx('Language')->id}->title->get();
       })->back();
     
   }
