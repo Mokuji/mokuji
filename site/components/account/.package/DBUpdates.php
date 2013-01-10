@@ -16,11 +16,13 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
   public function update_to_1_3($current_version, $forced)
   {
     
+    $comname = $this->component;
+    
     //Queue translation token update with CMS component.
     $this->queue(array(
       'component' => 'cms',
       'min_version' => '1.2'
-      ), function($version){
+      ), function($version)use($comname){
           
           $component = tx('Sql')
             ->table('cms', 'Components')
@@ -31,19 +33,19 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
             ->table('cms', 'ComponentViews')
             ->where('com_id', $component->id)
             ->execute()
-            ->each(function($view){
+            ->each(function($view)use($comname){
               
               //If tk_title starts with 'COMNAME_' remove it.
-              if(strpos($view->tk_title->get('string'), strtoupper($this->component.'_')) === 0){
+              if(strpos($view->tk_title->get('string'), strtoupper($comname.'_')) === 0){
                 $view->tk_title->set(
-                  substr($view->tk_title->get('string'), (strlen($this->component)+1))
+                  substr($view->tk_title->get('string'), (strlen($comname)+1))
                 );
               }
               
               //If tk_description starts with 'COMNAME_' remove it.
-              if(strpos($view->tk_description->get('string'), strtoupper($this->component.'_')) === 0){
+              if(strpos($view->tk_description->get('string'), strtoupper($comname.'_')) === 0){
                 $view->tk_description->set(
-                  substr($view->tk_description->get('string'), (strlen($this->component)+1))
+                  substr($view->tk_description->get('string'), (strlen($comname)+1))
                 );
               }
               
