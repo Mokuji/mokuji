@@ -317,6 +317,12 @@
       //Configure the nestedSortable plug-in.
       this.configureSortable();
       
+      //Set the height of the container.
+      this.autoHeight();
+      
+      //Bind the recalculating of height to the window resize.
+      $(window).on('resize', _(this.proxy(this.autoHeight)).debounce(120));
+      
     },
     
     //Property: Storage for data.
@@ -326,7 +332,7 @@
     updateItem: function(data){
       
       data.site_id = app.options.site_id;
-      
+
       var element = this.view.find('li[data-id='+data.id+']');
       
       //Insert
@@ -336,7 +342,7 @@
       
       //Update
       else{
-        data.depth = element.attr('class').match(/depth_(\d+)/)[1];
+        data.depth = element.attr('data-depth');
         var subitems = element.children('ul');
         data.subitems = subitems.length ? subitems[0].outerHTML : '';
         element.replaceWith($(this.menuItemTmpl).tmpl(data));
@@ -470,6 +476,14 @@
       
       return self;
       
+    },
+    
+    autoHeight: function(){
+      this.view.height(
+        + this.view.closest('.content').height()
+        - this.view.siblings('.menu-items-toolbar').height()
+        - 15 //Margin
+      );
     }
     
   });
@@ -951,11 +965,12 @@
     },
     
     init: function(){
+      
       this.previous();
+      
     },
     
-    setMultilingual: function(value)
-    {
+    setMultilingual: function(value){
       
       if(this.Languages){
         this.Languages.setMultilingual(value);
@@ -970,9 +985,12 @@
       request(GET, 'cms/detach_page', {
         page_id: self.data.page.id,
         menu_id: app.Item.data.item.id
-      }).done(function(item){
-        self.btn_detach.remove();
-        app.Item.clear();
+      })
+      
+      .done(function(item){
+        self.clear();
+        self.loadNewPage();
+        app.Item.loadItemContents(app.Item.data.item.id);
         app.MenuItems.updateItem(item);
       });
       

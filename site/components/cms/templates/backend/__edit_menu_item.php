@@ -41,6 +41,8 @@
               {{/if}}
             {{/each}}
           </select>
+          {{else}}
+          <input type="hidden" name="menu_id" value="${menus[0].id}" />
           {{/if}}
           
         </div>

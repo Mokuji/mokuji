@@ -28,9 +28,7 @@ $data->items
   })
   
   ->failure(function()use($names){
-    echo '<p class="menu-items-list">';
-    __($names->component, 'No menu items found');
-    echo '.</p>';
+    echo '<ul class="menu-items-list"></ul>';
   });
 
 ?>

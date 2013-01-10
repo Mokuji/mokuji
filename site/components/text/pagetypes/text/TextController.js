@@ -3,6 +3,9 @@
   //Create a new page type controller called TextController.
   var TextController = PageType.sub({
     
+    //Is this a new page?
+    fresh: true,
+    
     //Define the tabs to be created.
     tabs: {
       'Content': 'contentTab'
@@ -16,10 +19,29 @@
     //Retrieve input data (from the server probably).
     getData: function(pageId){
       
+      var self = this
+        , D = $.Deferred()
+        , P = D.promise();
+      
       //Retrieve input data from the server based on the page ID
-      return $.rest('GET', '?rest=text/items', {
+      $.rest('GET', '?rest=text/items', {
         pid: pageId
+      })
+      
+      //In case of success, this is no longer fresh.
+      .done(function(d){
+        self.fresh = false;
+        D.resolve(d);
+      })
+      
+      //In case of failure, provide default data.
+      .fail(function(){
+        D.resolve({
+          page_id: pageId
+        });
       });
+      
+      return P;
       
     },
     
@@ -42,10 +64,7 @@
     //Saves the data currently present in the different tabs controlled by this controller.
     save: function(pageId){
       
-      //Trigger submit on the content form.
-      this.contentForm.trigger('submit');
-      
-      //TODO: use a custom way of submitting the settings tab's data to the server.
+      return this.contentForm.trigger('submit');
       
     }
     
