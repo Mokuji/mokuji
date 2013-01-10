@@ -31,11 +31,11 @@ class File
     $f = tx('Url')->parse($source, \core\Url::PATH | \core\Url::FILE);
 
     if(empty($f['path'])){
-      throw new \exception\InputMissing('The requested file should be inside a directory. We couldn\'t find one in URI: \'%s\'.', $source);
+      throw new \exception\Programmer('The requested file should be inside a directory. We couldn\'t find one in URI: \'%s\'.', $source);
     }
     
     elseif(empty($f['file'])){
-      throw new \exception\InputMissing('Could not extract a valid filename from "%s".', $source);
+      throw new \exception\Programmer('Could not extract a valid filename from "%s".', $source);
     }
     
     else{

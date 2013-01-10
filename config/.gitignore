@@ -1,5 +1,6 @@
-database.php
-email.php
-/database-gallery.php
-/database-project.php
-/database-vlisco_marketing.php
+*
+!_database.php
+!_email.php
+!exceptions.php
+!miscelanious.php
+!file_handling_dirs.php

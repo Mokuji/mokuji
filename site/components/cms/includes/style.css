@@ -246,6 +246,7 @@
     border-bottom:solid #bcbcbc 1px;
   }
   .title-bar h2{
+    color:#424242;
     font-size:14px;
     font-weight:bold;
     padding:5px 15px 5px 10px;
@@ -314,7 +315,6 @@
       position:absolute;
       top:38px;
       bottom:0px;
-      
       width:60px;
       background: #e2e2e2;
       display: none;
@@ -610,6 +610,7 @@
   width:380px;
   margin:0 auto;
   list-style:none;
+  text-align: center;
 }
 .pagetypes-list:after{
   content: ".";
@@ -619,7 +620,7 @@
   visibility: hidden;
 }
   .pagetypes-list li{
-    float:left;
+    display:inline-block;
   }
     .pagetypes-list li a{
       background-position:center top;
@@ -769,6 +770,10 @@
   position: absolute;
   left:20px;
   height:33px;
+  opacity:0.75;
+}
+#page-main-left .menu-items-list .icon-toggle:hover{
+  opacity:1;
 }
 
 #page-main-left .menu-items-list:hover li.has-sub > div > .icon-toggle{
@@ -945,8 +950,9 @@
   background-color:#fff;
   border-bottom:solid #e0e0e0 1px;
   overflow:hidden;
-  margin:5px;
-  margin-top:10px;
+  margin:10px 0 0 0;
+  padding:0 5px;
+  min-width: 230px;
   list-style:none;
 }
 

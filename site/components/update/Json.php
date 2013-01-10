@@ -124,7 +124,7 @@ class Json extends \dependencies\BaseViews
     require_once(PATH_COMPONENTS.DS.'update'.DS.'.package'.DS.'DBUpdates'.EXT);
     $updater = new \components\update\DBUpdates();
     $success = $updater->install(false, true, true) && $this->helper('check_updates', array('silent'=>true, 'force'=>true));
-    
+
     return array(
       'success' => $success,
       'message' => 'Database installation finished, you can now proceed to the next step.'

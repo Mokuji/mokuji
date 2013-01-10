@@ -1,7 +1,8 @@
 <?php namespace components\cms; if(!defined('TX')) die('No direct access.'); ?>
 
 <?php if(tx('Account')->check_level(2)): ?>
-  <ul id="topbar_menu">
+  <ul id="topbar_menu" class="frontend">
+    <li class="logout"><a href="<?php echo url('action=account/logout'); ?>"><?php __($names->component, 'Logout', 'ucfirst'); ?></a></li>
     <li class="website active"><a href="<?php echo $admin_toolbar->website_url; ?>"><?php __('Website'); ?></a></li>
     <!--
     <li><a href="<?php echo $admin_toolbar->edit_url; ?>">Edit</a></li>

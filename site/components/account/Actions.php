@@ -289,7 +289,7 @@ class Actions extends \dependencies\BaseComponent
 
       //insert
       else{
-        
+
         //If the user is to choose their own password.
         if($data->choose_password->get('boolean'))
         {
@@ -312,7 +312,7 @@ class Actions extends \dependencies\BaseComponent
             tx('Url')->redirect('section=account/user_list&user_id=NULL');
             
           });
-          
+
         }
         
         else

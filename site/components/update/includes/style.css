@@ -32,21 +32,47 @@
   }
 
 #recent-updates .version-wrapper{
-  float:left;
-  border:1px solid #ccc;
-  padding:4px;
   margin:0 15px 15px 0;
-  width:250px;
+  max-width:650px;
+  box-shadow:0px 0px 1px #d5d4d2;
 }
+  #recent-updates .version-wrapper ul{
+    margin:15px 10px;
+  }
   #recent-updates .version-wrapper li{
     margin-left: 15px;
   } 
-  #recent-updates .version-wrapper .date{
+  #recent-updates .version-wrapper .details-wrapper{
+    float:left;
+    width:100%;
+  }
+    #recent-updates .version-wrapper .details{
+      padding:10px 15px 10px 15px;
+      margin-left:200px;
+      border-left:solid #d5d4d2 1px;
+      background-color:#f6f5ee;
+      min-height:55px;
+    }
+  #recent-updates .version-wrapper .meta{
+    padding:10px 15px;
+    float:left;
+    margin-left:-100%;
+    width:170px;
+  }
+  #recent-updates .version-wrapper .date,
+  #recent-updates .version-wrapper .version{
     color:#888;
+  }
+  #recent-updates .version-wrapper .version{
+    display:inline-block;
+    min-width:70px;
   }
   #recent-updates .version-wrapper .description{
     margin:4px 0;
     font-style:italic;
+  }
+  #recent-updates .version-wrapper .more-external{
+    margin-top:15px;
   }
 
 #recent-updates .change-wrapper{

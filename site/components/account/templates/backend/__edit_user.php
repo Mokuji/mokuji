@@ -44,7 +44,7 @@ $uid = tx('Security')->random_string(20);
   
   <?php
     
-    if($create)
+    if(false && $create)
     {
       
       ?>
