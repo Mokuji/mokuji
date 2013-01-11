@@ -2,8 +2,14 @@
 
 abstract class BaseModel extends Data
 {
-
-  private static $table_data=array();
+  
+  protected static
+    $generatedLabels = array(),
+    $labels = array(),
+    $validate = array();
+  
+  private static
+    $table_data = array();
 
   private
     $deleted=false,
@@ -13,12 +19,15 @@ abstract class BaseModel extends Data
   // Constructor is to be executed after the extended class's constructor.
   public function __construct($database_row=null, &$resultset=false, $key=false)
   {
-
+    
     // set component
     $this->component = array_get(explode('\\', get_class($this)), 1);
 
     //set model
     $this->model = substr(strrchr(get_class($this), '\\'), 1);
+    
+    //Compile label names.
+    $this->refresh_labels();
 
     // be sure table data is retrieved
     self::table_data();
@@ -1135,6 +1144,94 @@ abstract class BaseModel extends Data
   // ORM helper function
   public function table($model_name){
     return tx('Sql')->table($this->component, $model_name);
+  }
+  
+  protected function refresh_labels()
+  {
+    
+    //Start from scratch.
+    $labels = array();
+    
+    //The default is to ucfirst all the validation rule keys.
+    foreach(array_keys(static::$validate) as $key){
+      $labels[$key] = ucfirst($key);
+    }
+    
+    //Override and compliment those labels with the protected static values.
+    //For example to use a custom title or to add a label for something without validation.
+    $labels = array_merge($labels, static::$labels);
+    
+    //Set these labels.
+    static::$generatedLabels = $labels;
+    
+  }
+  
+  //Validates the whole model, based on static validation rules.
+  //Options:
+  //  array $rules - Defines extra rules per field name.
+  //  bool $force_create - Tries to ignore the PK if it has an auto_increment attribute. Otherwise throws programmer exception.
+  public function validate_model($options=array())
+  {
+    
+    //Filter out what we don't need.
+    $data = $this->having(array_keys(static::$generatedLabels));
+    
+    //Allow additional rules to be prepended.
+    $ruleSet = array_merge(
+      (isset($options['rules']) ? $options['rules'] : array()),
+      static::$validate
+    );
+    
+    //See if we need to remove the ID.
+    if(isset($options['force_create']) && $options['force_create'] === true){
+      
+      $table_data = $this->table_data();
+      
+      //If we have one PK that is autoincrement.
+      if($table_data->auto_increment->is_set() &&
+        $table_data->primary_keys->size() == 1 &&
+        $table_data->primary_keys->{0}->get() === $table_data->auto_increment->get())
+      {
+        
+        //Remove the pk data and validation rules that go with it.
+        $data->{$table_data->auto_increment->get()}->un_set();
+        unset($ruleSet[$table_data->auto_increment->get()]);
+        
+      }
+      
+      //This option should not be set otherwise.
+      else{
+        throw new \exception\Programmer('Tried to force_create on model where PK is not auto_increment');
+      }
+      
+    }
+    
+    //Iterate over each rule and collect validation exceptions from it.
+    $validationExceptions = array();
+    foreach($ruleSet as $key => $rules)
+    {
+      
+      try{
+        $data->{$key}->validate(static::$generatedLabels[$key], $rules);
+      }
+      
+      catch(\exception\Validation $ex){
+        $validationExceptions[] = $ex;
+      }
+      
+    }
+    
+    //See if things went wrong.
+    if(count($validationExceptions) > 0){
+      
+      $ex = new \exception\ModelValidation('There were validation errors');
+      $ex->set_validation_errors($validationExceptions);
+      throw $ex;
+      
+    }
+    
+    return $this;
+    
   }
 
 }
