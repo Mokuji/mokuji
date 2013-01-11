@@ -1187,15 +1187,18 @@ abstract class BaseModel extends Data
       
       $table_data = $this->table_data();
       
-      //If we have one PK that is autoincrement.
+      $keys = $table_data->primary_keys->as_array();
+      $first_key = array_shift($keys);
+      
+      //If we have one PK that is auto_increment.
       if($table_data->auto_increment->is_set() &&
         $table_data->primary_keys->size() == 1 &&
-        $table_data->primary_keys->{0}->get() === $table_data->auto_increment->get())
+        $first_key === $table_data->auto_increment->get())
       {
         
         //Remove the pk data and validation rules that go with it.
-        $data->{$table_data->auto_increment->get()}->un_set();
-        unset($ruleSet[$table_data->auto_increment->get()]);
+        $data->{$first_key}->set('NULL');
+        unset($ruleSet[$first_key]);
         
       }
       
@@ -1229,6 +1232,9 @@ abstract class BaseModel extends Data
       throw $ex;
       
     }
+    
+    //Store data.
+    $this->set($data);
     
     return $this;
     
