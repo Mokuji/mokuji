@@ -47,6 +47,7 @@ class Json extends \dependencies\BaseComponent
   }
   
   //Send mail might have been a better name. But that's the current REST convention for you.
+  //                                         ^ Stop your whining.
   protected function create_mail($data, $parameters)
   {
     
@@ -156,5 +157,150 @@ class Json extends \dependencies\BaseComponent
     
   }
   
+  //Create a new user.
+  public function create_user($data, $parameters)
+  {
+    
+    //Calculate user-level.
+    $level = $data->admin->eq('on')->success(function(){return '2';})->otherwise('1');
+    
+    //If the user is to choose their own password.
+    if($data->choose_password->get('boolean'))
+    {
+      
+      //Invite the user.
+      $user = tx('Component')->helpers('account')->call('invite_user', array(
+        'email' => $data->email,
+        'username' => $data->username,
+        'level' => $data->level,
+        'for_title' => url('/', true)->output,
+        'for_link' => '/'
+      ))
+      
+      //Pass the exception on to the REST handler.
+      ->failure(function($info){        
+        throw $info->exception;
+      });
 
+    }
+    
+    //If the user is merely to be added..
+    else
+    {
+
+      //Create the user.
+      $user = tx('Component')->helpers('account')->call('create_user', array(
+        'email' => $data->email,
+        'username' => $data->username,
+        'password' => $data->password,
+        'name' => $data->name,
+        'preposition' => $data->preposition,
+        'family_name' => $data->family_name,
+        'level' => $level,
+        'comments' => $data->comments
+      ))
+      
+      //Pass on any exceptions to the REST hander.
+      ->failure(function($info){
+        throw $info->exception;
+      });
+      
+      //If we need to notify the user.
+      #TEMP: Disabled until improved.
+      if(false && $data->notify_user->get('boolean'))
+      {
+        
+        //Send email.
+        tx('Component')->helpers('mail')->send_fleeting_mail(array(
+          'to' => $data->username.' <'.$user->email.'>',
+          'subject' => __('Account created', 1),
+          'html_message' => tx('Component')->views('account')->get_html('email_user_created', $data->having('email', 'username', 'user_id', 'level'))
+        ))
+        
+        ->failure(function($info){
+          tx('Controller')->message(array(
+            'error' => $info->get_user_message()
+          ));
+        }); 
+        
+      }
+      
+    }
+    
+    //Set the proper groups.
+    $this->helper('set_user_group_memberships', Data(array(
+      'user_group' => $data->user_group,
+      'user_id' => $user->id
+    )));
+    
+  }
+  
+  //Updates an existing user.
+  public function update_user($data, $parameters)
+  {
+    
+    //Check if the password was given and filled in..
+    $data->password->is('set')->and_not('empty')
+    
+    //In case it was given.
+    ->success(function()use(&$data){
+      
+      //Get salt and algorithm.
+      $data->salt = tx('Security')->random_string();
+      $data->hashing_algorithm = tx('Security')->pref_hash_algo();
+      
+      //Hash using above information.
+      $data->password = tx('Security')->hash(
+        $data->salt->get() . $data->password->get(),
+        $data->hashing_algorithm
+      );
+      
+    })
+    
+    //In case of no password, unset it from the data.
+    ->failure(function()use(&$data){
+      $data->password->un_set();
+    });
+    
+    //Get the old user model from the database.
+    $user = tx('Sql')->table('account', 'Accounts')->pk($data->id)->execute_single()
+    
+    //If it's empty, throw an exception.
+    ->is('empty', function(){
+      throw new \exception\User('Could not update because no entry was found in the database with id %s.', $data->id);
+    })
+    
+    //Merge the fields from the given data.
+    ->merge($data->having('email','username', 'password', 'salt', 'hashing_algorithm'))
+    
+    //Calculate user-level.
+    ->push('level', $data->admin->eq('on')->success(function(){return '2';})->otherwise('1'))
+    
+    //Save to database.
+    ->save();
+    
+    //Get the old user information from the database.
+    tx('Sql')->table('account', 'UserInfo')->pk($user->id)->execute_single()
+    
+    //Test if it's empty.
+    ->is('empty')
+    
+    //If it was, en thus does not exist, create a new row.
+    ->success(function($user_info)use($data, $user){
+      tx('Sql')->model('account', 'UserInfo')->set($data->having('name', 'preposition', 'family_name', 'comments')->merge($user->having(array('user_id'=>'id'))))->save();
+    })
+    
+    //If it already exists, merely update the row.
+    ->failure(function($user_info)use($data){
+      $user_info->merge($data->having('name', 'preposition', 'family_name', 'comments'))->save();
+    });
+    
+    //Set the proper groups.
+    $this->helper('set_user_group_memberships', Data(array(
+      'user_group' => $data->user_group,
+      'user_id' => $user->id
+    )));
+    
+  }
+  
 }
