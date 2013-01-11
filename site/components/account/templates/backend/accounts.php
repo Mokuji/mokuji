@@ -114,23 +114,6 @@
       
     });
     
-    $('#tabs-accounts').on('submit', '.edit-user-form', function(e){
-      
-      e.preventDefault();
-      
-      $('#create_resolution').restForm({
-        success: function(data){
-          $('#tab-users').html(data);
-          $('#tabber-users a').trigger('click');
-        },
-        failure: function(xhr, state, message){
-          console.log(arguments);
-          alert('error');
-        }
-      });
-
-    });
-    
     $('#tabs-accounts').on('submit', '#tab-group form', function(e){
       
       e.preventDefault();

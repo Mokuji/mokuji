@@ -19,21 +19,21 @@
 
 echo $user_list->as_table(array(
   '<input type="checkbox" class="select-all" />' => function($row){ return '<input type="checkbox" class="select-row" name="user_id[]" value="'.$row->id.'" />'; },
-  __('Name', 1) => function($row){ return $row->user_info->full_name; },
-  __('Email address', 1) => 'email',
-  __($names->component, 'Groups', 1) => function($row){
+  __('Name', 1)                                  => function($row){ return $row->user_info->full_name->otherwise('-'); },
+  __('Email address', 1)                         => 'email',
+  __($names->component, 'Groups', 1)             => function($row){
     
     return $row->groups->map(function($group){
       return $group->title;
     })->join(', ')->otherwise('-');
     
   },
-  __('Administrator', 1) => function($row){ return $row->is_administrator->get('boolean') ? __('ja', 1) : __('nee', 1); },
-  __($names->component, 'Last login', 1) => function($row)use($names){
-    return ($row->dt_last_login != '' ? $row->dt_last_login : __($names->component, 'Never logged in', 1));
+  __('Administrator', 1)                         => function($row){ return $row->is_administrator->get('boolean') ? __('ja', 1) : __('nee', 1); },
+  __($names->component, 'Last login', 1)         => function($row)use($names){
+    return ($row->last_login != '' ? $row->last_login : __($names->component, 'Never logged in', 1));
   },
   //__('Comments', 1) => function($row){ return $row->user_info->comments; },
-  __('Actions', 1) => array(
+  __('Actions', 1)                               => array(
     function($row){return '<a class="edit" href="'.url('section=account/edit_user&user_id='.$row->id).'">'.__('Edit', 1).'</a>';},
     function($row){return ($row->status->get('int') > 0 ? '<a class="delete" href="'.url('action=account/delete_user&user_id='.$row->id).'">'.__('Delete', 1).'</a>' : '');}
   )
