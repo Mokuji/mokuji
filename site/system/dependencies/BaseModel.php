@@ -2,23 +2,33 @@
 
 abstract class BaseModel extends Data
 {
-
-  private static $table_data=array();
-
+  
+  protected static
+    $generatedLabels = array(),
+    $labels = array(),
+    $validate = array(),
+    $relations_by_column;
+  
+  private static
+    $table_data = array();
+  
   private
     $deleted=false,
     $component,
     $model;
-
+  
   // Constructor is to be executed after the extended class's constructor.
   public function __construct($database_row=null, &$resultset=false, $key=false)
   {
-
+    
     // set component
     $this->component = array_get(explode('\\', get_class($this)), 1);
 
     //set model
     $this->model = substr(strrchr(get_class($this), '\\'), 1);
+    
+    //Compile label names.
+    $this->refresh_labels();
 
     // be sure table data is retrieved
     self::table_data();
@@ -64,7 +74,7 @@ abstract class BaseModel extends Data
   // get metadata from the model extending this basemodel: table_name, aliases, nesting, or relations
   public static function model_data($get)
   {
-
+    
     switch($get)
     {
       
@@ -85,6 +95,56 @@ abstract class BaseModel extends Data
 
     }
 
+  }
+  
+  /**
+   * Gets the relations grouped by column name, rather than target model name.
+   * 
+   * @param string $column Gets the result for one specific column. Defaults to returning all columns.
+   * @return array The relations of this model grouped by column name.
+   *    The format for this is:
+   *      [column_name] => array(   | For every column... (only if $column is not set)
+   *        [0,1,...,n] => array(   | A 0-indexed array of relations.
+   *          [target] => (string), | The target field of the relation.
+   *          [model] => (string)   | The target model of the relation.
+   *        )
+   *      )
+   */
+  public function relations_by_column($column=null)
+  {
+    
+    if(!isset(static::$relations_by_column))
+    {
+      
+      $relations = $this->model_data('relations');
+      $result = array();
+      
+      foreach($relations as $model => $relation)
+      {
+        
+        reset($relation);
+        $column_name = key($relation);
+        $target = current($relation);
+        
+        if(!isset($result[$column_name])){
+          $result[$column_name] = array();
+        }
+        
+        $result[$column_name][] = array(
+          'target' => $target,
+          'model' => $model
+        );
+        
+      }
+      
+      static::$relations_by_column = $result;
+      
+    }
+    
+    if(isset($column))
+      return static::$relations_by_column[$column_name];
+    return static::$relations_by_column;
+    
   }
 
   // Magic set function either sets the attribute directly or calls a custom setter function if it exists.
@@ -145,6 +205,11 @@ abstract class BaseModel extends Data
 
     return $this->having(self::model_data('secondary_keys'));
 
+  }
+  
+  public function component()
+  {
+    return $this->component;
   }
 
   /**
@@ -1136,5 +1201,126 @@ abstract class BaseModel extends Data
   public function table($model_name){
     return tx('Sql')->table($this->component, $model_name);
   }
-
+  
+  protected function refresh_labels()
+  {
+    
+    //Start from scratch.
+    $labels = array();
+    
+    //The default is to ucfirst all the validation rule keys.
+    foreach(array_keys(static::$validate) as $key){
+      $labels[$key] = ucfirst($key);
+    }
+    
+    //Override and compliment those labels with the protected static values.
+    //For example to use a custom title or to add a label for something without validation.
+    $labels = array_merge($labels, static::$labels);
+    
+    //Set these labels.
+    static::$generatedLabels = $labels;
+    
+  }
+  
+  //Gets the field labels, pretty labels by default.
+  //If $originals is true, returns the table column names.
+  public function labels($originals=false)
+  {
+    
+    $this->refresh_labels();
+    return $originals ? array_keys(static::$generatedLabels) : static::$generatedLabels;
+    
+  }
+  
+  /**
+   * Validates the whole model, based on static validation rules.
+   * Options:
+   *    array $rules - Defines extra rules per field name.
+   *    bool $force_create - Tries to ignore the PK if it has an auto_increment attribute. Otherwise throws programmer exception.
+   */
+  public function validate_model($options=array())
+  {
+    
+    //Filter out what we don't need.
+    $data = $this->having(array_keys(static::$generatedLabels));
+    
+    //Allow additional rules to be prepended.
+    $ruleSet = array_merge(
+      (isset($options['rules']) ? $options['rules'] : array()),
+      static::$validate
+    );
+    
+    //See if we need to remove the ID.
+    if(isset($options['force_create']) && $options['force_create'] === true){
+      
+      $table_data = $this->table_data();
+      
+      $keys = $table_data->primary_keys->as_array();
+      $first_key = array_shift($keys);
+      
+      //If we have one PK that is auto_increment.
+      if($table_data->auto_increment->is_set() &&
+        $table_data->primary_keys->size() == 1 &&
+        $first_key === $table_data->auto_increment->get())
+      {
+        
+        //Remove the pk data and validation rules that go with it.
+        $data->{$first_key}->set('NULL');
+        unset($ruleSet[$first_key]);
+        
+      }
+      
+      //This option should not be set otherwise.
+      else{
+        throw new \exception\Programmer('Tried to force_create on model where PK is not auto_increment');
+      }
+      
+    }
+    
+    //Iterate over each rule and collect validation exceptions from it.
+    $validationExceptions = array();
+    foreach($ruleSet as $key => $rules)
+    {
+      
+      try{
+        $data->{$key}->validate(static::$generatedLabels[$key], $rules);
+      }
+      
+      catch(\exception\Validation $ex){
+        $validationExceptions[] = $ex;
+      }
+      
+    }
+    
+    //See if things went wrong.
+    if(count($validationExceptions) > 0){
+      
+      $ex = new \exception\ModelValidation('There were validation errors');
+      $ex->set_validation_errors($validationExceptions);
+      throw $ex;
+      
+    }
+    
+    //Store data.
+    $this->set($data);
+    
+    return $this;
+    
+  }
+  
+  public function render_form(&$id, $action, array $options=array())
+  {
+    
+    $builder = new FormBuilder($this);
+    
+    $id = $builder->id();
+    
+    $options = array_merge($options, array(
+      'action' => $action
+    ));
+    
+    $builder->render($options);
+    
+  }
+  
 }
