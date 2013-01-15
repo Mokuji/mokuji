@@ -224,6 +224,20 @@ class Json extends \dependencies\BaseComponent
     
   }
   
+  //Delete a page.
+  protected function delete_page($options, $params)
+  {
+    
+    $page = tx('Sql')->table('cms', 'Pages')->pk($params[0])->execute_single()->not('set', function(){
+      throw new \exception\EmptyResult('Could not retrieve the page you were trying to delete. This could be because the ID was invalid.');
+    })
+    ->merge(array('trashed' => 1))
+    ->save();
+    
+    #TODO: Implement a way for components to hook into this method, allowing them to delete associated rows.
+    
+  }
+  
   protected function get_menu_item_info($options, $params)
   {
     

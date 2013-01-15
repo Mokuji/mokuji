@@ -55,77 +55,79 @@
   
 });
 
-;(function(root, $, _, undefined){
+//Do an ajax request.
+var GET=1, POST=2, PUT=4, DELETE=8;
+function request(){
   
-  //Do an ajax request.
-  var GET=1, POST=2, PUT=4, DELETE=8;
-  function request(){
+  //Predefine variables.
+  var method, model, data;
+  
+  //Handle arguments.
+  switch(arguments.length){
     
-    //Predefine variables.
-    var method, model, data;
+    //A get request to the given model name.
+    case 1:
+      method = GET;
+      model = arguments[0];
+      data = {};
+      break;
     
-    //Handle arguments.
-    switch(arguments.length){
-      
-      //A get request to the given model name.
-      case 1:
-        method = GET;
-        model = arguments[0];
-        data = {};
-        break;
-      
-      //A custom request to the given model name, or a PUT request with the given data.
-      case 2:
-        if(_(arguments[0]).isNumber()){
-          method = arguments[0];
-          model = arguments[1];
-          data = {};
-        }else{
-          method = PUT;
-          model = arguments[0];
-          data = arguments[1];
-        }
-        break;
-      
-      //A custom request to given model name with given data.
-      case 3:
+    //A custom request to the given model name, or a PUT request with the given data.
+    case 2:
+      if(_(arguments[0]).isNumber()){
         method = arguments[0];
         model = arguments[1];
-        data = arguments[2];
-        break;
-      
-    }
-    
-    //Should data be processed by jQuery?
-    var process = (method == GET);
-    
-    //Stringify our JSON?
-    if(!process) data = JSON.stringify(data);
-    
-    //Convert method to string for use in the jQuery ajax API.
-    method = (method == GET && 'GET')
-          || (method == POST && 'POST')
-          || (method == PUT && 'PUT')
-          || (method == DELETE && 'DELETE')
-          || 'GET';
-    
-    //Build the url
-    var url = 'http://' + window.location.host + window.location.pathname + '?rest=' + model;
-    
-    //Do it, jQuery!
-    return $.ajax({
-      url: url,
-      type: method,
-      data: data,
-      dataType: 'json',
-      contentType: 'application/json',
-      processData: process,
-      headers: {
-        'X-Requested-With': 'XMLHttpRequest'
+        data = {};
+      }else{
+        method = PUT;
+        model = arguments[0];
+        data = arguments[1];
       }
-    });
+      break;
+    
+    //A custom request to given model name with given data.
+    case 3:
+      method = arguments[0];
+      model = arguments[1];
+      data = arguments[2];
+      break;
     
   }
+  
+  //Should data be processed by jQuery?
+  var process = (method == GET);
+  
+  //Stringify our JSON?
+  if(!process) data = JSON.stringify(data);
+  
+  //Convert method to string for use in the jQuery ajax API.
+  method = (method == GET && 'GET')
+        || (method == POST && 'POST')
+        || (method == PUT && 'PUT')
+        || (method == DELETE && 'DELETE')
+        || 'GET';
+  
+  //Build the url
+  var url = 'http://' + window.location.host + window.location.pathname + '?rest=' + model;
+  
+  //Do it, jQuery!
+  return $.ajax({
+    url: url,
+    type: method,
+    data: data,
+    dataType: 'json',
+    contentType: 'application/json',
+    processData: process,
+    headers: {
+      'X-Requested-With': 'XMLHttpRequest'
+    }
+  });
+  
+}
+
+
+
+;(function(root, $, _, undefined){
   
   //A template helper function.
   function tmpl(id){
