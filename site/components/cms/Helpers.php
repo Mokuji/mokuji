@@ -129,6 +129,8 @@ class Helpers extends \dependencies\BaseComponent
       return false;
     }
     
+    $result->title->set($result->preferred_title);
+    
     $page_info[$pid] = $result;
     
     return $result;

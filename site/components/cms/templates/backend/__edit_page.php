@@ -16,9 +16,12 @@
     
     <div id="page-languages" class="language-bar" data-id="<?php echo tx('Language')->get_language_id(); ?>" data-iln="<?php __('IN_LANGUAGE_NAME'); ?>">
       <?php $data->languages->each(function($language){ ?>
-        <a href="#" class="language" data-id="<?php echo $language->id; ?>"
-          data-code="<?php echo $language->code; ?>" data-shortcode="<?php echo $language->shortcode; ?>"
-          data-title="<?php __($language->title); ?>"><?php __($language->title); ?></a>
+        <a href="#" class="language"
+          data-id="<?php echo $language->id; ?>"
+          data-code="<?php echo $language->code; ?>"
+          data-shortcode="<?php echo $language->shortcode; ?>"
+          data-title="<?php __($language->title); ?>"><?php __($language->title); ?></a
+        >
       <?php }); ?>
     </div>
     

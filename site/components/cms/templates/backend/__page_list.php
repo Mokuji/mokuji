@@ -3,8 +3,8 @@
 echo load_plugin('jquery_datatables');
 
 echo $page_list->as_table(array(
-  __($names->component, 'Page title', 1) => 'prefered_title',
-  __($names->component, 'Page type', 1) => function($page){ return $page->component_view->prefered_title; },
+  __($names->component, 'Page title', 1) => 'preferred_title',
+  __($names->component, 'Page type', 1) => function($page){ return $page->component_view->preferred_title; },
   __($names->component, 'Menu items', 1) => function($page_list){
     return $page_list->menu_items->map(function($mi){return $mi->title;})->join(htmlspecialchars(' | '));
   },

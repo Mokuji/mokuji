@@ -21,8 +21,10 @@ class Pages extends \dependencies\BaseModel
       'PageGroupPermissions' => array('id' => 'PageGroupPermissions.page_id')
     );
   
-  protected function get_prefered_title()
+  protected function get_preferred_title()
   {
+    
+    
     
     return tx('Sql')
       ->table('cms', 'PageInfo')

@@ -10,7 +10,7 @@
     $new_page->page_types->each(function($page_type){
       echo
         '  <li class="page-type-'.$page_type->name.'">'.
-        '    <a href="#" data-id="'.$page_type->id.'" title="'.$page_type->prefered_description.'">'.$page_type->prefered_title.'</a>'.
+        '    <a href="#" data-id="'.$page_type->id.'" title="'.$page_type->preferred_description.'">'.$page_type->preferred_title.'</a>'.
         '  </li>';
     });
     
@@ -23,8 +23,7 @@
     <option value=""><?php __($names->component, 'Select a page'); ?></option>
   <?php
   $new_page->pages->each(function($page){
-    echo
-      '<option value="'.$page->id.'">'.$page->title.'</option>';
+    echo '<option value="'.$page->id.'">'.$page->preferred_title.'</option>';
   });
   ?>
   </select>

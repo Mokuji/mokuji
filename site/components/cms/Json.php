@@ -35,8 +35,8 @@ class Json extends \dependencies\BaseComponent
       //Also get the meta info we need.
       ->each(function($view){
         $view->component;
-        $view->prefered_title;
-        $view->prefered_description;
+        $view->preferred_title;
+        $view->preferred_description;
       });
   }
   
