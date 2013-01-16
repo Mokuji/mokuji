@@ -150,13 +150,13 @@ abstract class BaseModel extends Data
   // Magic set function either sets the attribute directly or calls a custom setter function if it exists.
   public function __set($var_name, $value)
   {
-
+    
     if(method_exists($this, 'set_'.$var_name)){
       $this->set(array($var_name=>call_user_func(array($this, 'set_'.$var_name), $value)));
     }else{
       $this->set(array($var_name=>$value));
     }
-
+    
   }
 
   // Magic get function either gets the attribute directly or calls a custom getter function if it exists.
@@ -210,6 +210,11 @@ abstract class BaseModel extends Data
   public function component()
   {
     return $this->component;
+  }
+  
+  public function model()
+  {
+    return $this->model;
   }
 
   /**
@@ -828,7 +833,7 @@ abstract class BaseModel extends Data
         ->un_set('extra')
         
         ->arguments->set(function($arguments){
-          return $arguments->lowercase()->split(',')->trim(' \'');
+          return $arguments->split(',')->trim(' \'');
         })
         
         ->back();
@@ -1311,7 +1316,9 @@ abstract class BaseModel extends Data
   public function render_form(&$id, $action, array $options=array())
   {
     
-    $builder = new FormBuilder($this);
+    $builder = new \dependencies\forms\FormBuilder($this, array(
+      'fields' => isset($options['fields']) ? $options['fields'] : null
+    ));
     
     $id = $builder->id();
     

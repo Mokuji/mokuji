@@ -13,11 +13,13 @@ function __autoload($class)
   {
     
     case 'dependencies':
-      if(!is_file(PATH_SYSTEM_DEPENDENCIES.DS.$class_array[1].EXT)){
+      array_shift($class_array);
+      $sub_path = implode(DS, $class_array);
+      if(!is_file(PATH_SYSTEM_DEPENDENCIES.DS.$sub_path.EXT)){
         throw new \exception\FileMissing('Dependency \'%s\' does not exist', $class);
         return;
       }
-      require_once(PATH_SYSTEM_DEPENDENCIES.DS.$class_array[1].EXT);
+      require_once(PATH_SYSTEM_DEPENDENCIES.DS.$sub_path.EXT);
       break;
     
     case 'exception':

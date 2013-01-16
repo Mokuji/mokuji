@@ -1,6 +1,8 @@
-<?php namespace dependencies; if(!defined('TX')) die('No direct access.');
+<?php namespace dependencies\forms; if(!defined('TX')) die('No direct access.');
 
-class RadioField extends BaseFormField
+use \dependencies\BaseModel;
+
+class HiddenField extends BaseFormField
 {
   
   /**
@@ -14,8 +16,7 @@ class RadioField extends BaseFormField
   public function __construct($column_name, $title, BaseModel $model, array $options=array())
   {
     
-    #TODO: Implement.
-    throw new \exception\Exception('Not implemented yet.');
+    parent::__construct($column_name, $title, $model, $options);
     
   }
   
@@ -27,7 +28,10 @@ class RadioField extends BaseFormField
   public function render(array $options=array())
   {
     
+    parent::render($options);
     
+    $value = $this->insert_value ? $this->value : '';
+    echo '<input type="hidden" name="'.$this->column_name.'" value="'.$value.'" />'.n;
     
   }
   

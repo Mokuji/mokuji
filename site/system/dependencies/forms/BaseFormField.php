@@ -1,7 +1,16 @@
-<?php namespace dependencies; if(!defined('TX')) die('No direct access.');
+<?php namespace dependencies\forms; if(!defined('TX')) die('No direct access.');
 
-class CheckBoxField extends BaseFormField
+use \dependencies\BaseModel;
+
+abstract class BaseFormField
 {
+  
+  protected
+    $model,
+    $value,
+    $title,
+    $column_name,
+    $insert_value;
   
   /**
    * Initiates a new form field.
@@ -14,8 +23,10 @@ class CheckBoxField extends BaseFormField
   public function __construct($column_name, $title, BaseModel $model, array $options=array())
   {
     
-    #TODO: Implement.
-    throw new \exception\Exception('Not implemented yet.');
+    $this->model = $model;
+    $this->value = $model[$column_name];
+    $this->column_name = $column_name;
+    $this->title = $title;
     
   }
   
@@ -27,7 +38,7 @@ class CheckBoxField extends BaseFormField
   public function render(array $options=array())
   {
     
-    
+    $this->insert_value = isset($options['insert_value']) && $options['insert_value'] === false ? false : true;
     
   }
   
