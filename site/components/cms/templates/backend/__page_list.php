@@ -54,7 +54,7 @@ $(function(){
     
     //If unsuccessful, bring the row back.
     .fail(function(){
-      $(that).closest('tr').addClass('deleted');
+      $(that).closest('tr').removeClass('deleted');
     });
     
   });

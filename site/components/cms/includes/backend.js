@@ -190,6 +190,7 @@ function request(){
       
       'click on btn_newMenuItem': function(e){
         e.preventDefault();
+        app.App.activate();
         app.Item.loadItemContents('0');
         app.Page.clear();
       },
@@ -1019,6 +1020,9 @@ function request(){
       //Then the findability.
       this.Tabs.findabilityTab.save();
       
+      //Then the menu item.
+      app.Item.save();
+      
       //Let anyone else save in the way they wish.
       this.publish('save', this.data.page.id);
       
@@ -1161,12 +1165,17 @@ function request(){
     },
     
     clear: function(){
+      
       this.view.html('');
       this.refreshElements();
+      
     },
     
     linkPage: function(page_id){
+      
       this.view.find('#edit-menu-item').addClass('has-page');
+      this.data.page_id = page_id;
+      
     },
     
     loadItemContents: function(menu){
@@ -1181,10 +1190,12 @@ function request(){
         }
       };
       
+      //If no menu ID was given, clear and stop.
       if(menu === false){
         return this.clear();
       }
       
+      //Request menu item info from the server.
       return $.ajax('?rest=cms/menu_item_info/'+(menu?menu:'0'))
       
       //Add a done callback.
@@ -1192,18 +1203,51 @@ function request(){
         self.data = data;
         self.view.html($('#edit_menu_tmpl').tmpl($.extend({current_menu: app.options.menu_id}, data)));
         self.refreshElements();
-        self.view.find(self.formEl).restForm({success: function(item){
-          self.view.find('.title-bar .title').text(item.title);
-          app.MenuItems.updateItem(item);
-          if(app.Page.isEmpty)
-            app.Page.loadNewPage();
-        }});
+        self.view.find(self.formEl).restForm({success: self.proxy(self.afterSave)});
       });
       
     },
     
     save: function(){
+      
       this.view.find(this.formEl).trigger('submit');
+      
+    },
+    
+    afterSave: function(data){
+      
+      //Set the new data.
+      this.data.item = {
+        id      : data.id,
+        menu_id : data.menu_id,
+        site_id : data.site_id,
+        title   : data.title
+      };
+      
+      //Find the form element.
+      this.view.find(this.formEl)
+      
+      //Set its method to PUT.
+      .attr('method', 'PUT')
+      
+      //Append the hidden input with the ID.
+      .append($('<input>', {
+        type: 'hidden',
+        name: 'id',
+        value: this.data.item.id
+      }));
+      
+      //Set the title in the title bar.
+      this.view.find('.title-bar .title').text(data.title);
+      
+      //Update the item in the left menu.
+      app.MenuItems.updateItem(data);
+      
+      //Load the "new page" interface if no page is linked.
+      if(app.Page.isEmpty){
+        app.Page.loadNewPage();
+      }
+      
     }
     
   });
@@ -1272,65 +1316,6 @@ $(function(){
     });
     
   });
-
-/*
-  NO MORE!!!!
-  I CAN'T TAKE IT!!!
-  AAAAAAAAH!
-  
-  //New menu item
-  $("#btn-new-menu-item").on('click', function(e){
-
-    e.preventDefault();
-
-    $.ajax({
-      url: $(this).attr('href')
-    }).done(function(d){
-      $("#page-main-right").html(d);
-    });
-
-  });
-  
-  //menu items
-  $(function(){
-
-    $('#page-main-left .menu-items-list a').on('click', function(e){
-
-      e.preventDefault();
-      
-      $.ajax({
-        url : $(this).attr('href'),
-        data : {
-          section: 'cms/app'
-        }
-      }).done(function(data){
-        $("#page-main-right").html(data);
-      });
-
-    });
-
-  });
-*/
-
-  //config menu
-  /*(function($){
-
-    $('#widget_bar a').click(function(e){
-
-      e.preventDefault();
-
-      $.ajax({
-        url : $(this).attr('href'),
-        data : {
-          section: 'cms/config_app'
-        }
-      }).done(function(data){
-        $("#page-main-right").html(data);
-      });
-
-    });
-
-  })($);*/
 
   //draggable sidebar
   var i = 0;

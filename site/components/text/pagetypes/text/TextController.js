@@ -49,7 +49,7 @@
     afterRender: function(){
       
       //Turn the form on the content tab into a REST form.
-      this.contentForm.restForm();
+      this.contentForm.restForm({success: this.proxy(this.afterSave)});
       
       //TODO: do things like initialize WYSIWYG editor.
       //Create unique id for the text editors.
@@ -66,6 +66,10 @@
       
       return this.contentForm.trigger('submit');
       
+    },
+    
+    afterSave: function(data){
+      this.contentForm.find('[name=id]').val(data.id);
     }
     
   });

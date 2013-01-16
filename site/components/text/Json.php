@@ -49,6 +49,9 @@ class Json extends \dependencies\BaseComponent
     //Set a default order number.
     $data->order_nr = $data->order_nr->otherwise(0);
     
+    //New item?
+    $new = false;
+    
     //Get the item of the given ID.
     $item = tx('Sql')->table('text', 'Items')->pk($data->id->get('int'))->execute_single()
     
@@ -56,10 +59,10 @@ class Json extends \dependencies\BaseComponent
     ->is('empty')
     
     //If it doesn't, create a new row.
-    ->success(function()use($data, $user_id, &$item_id){
+    ->success(function()use($data, $user_id, &$item_id, &$new){
       
       //Create a new row.
-      $row = tx('Sql')->model('text', 'Items')
+      $new = tx('Sql')->model('text', 'Items')
       
       //Merge data.
       ->merge($data->having('page_id', 'order_nr'))
@@ -72,7 +75,7 @@ class Json extends \dependencies\BaseComponent
       ->save();
       
       //Get the ID.
-      $item_id = $row->id->get('int');
+      $item_id = $new->id->get('int');
       
     })
     
@@ -95,8 +98,8 @@ class Json extends \dependencies\BaseComponent
 
     });
     
-    //Return the inserted item ID.
-    return $item_id;
+    //Return the inserted item.
+    return ($new ? $new : $item);
     
   }
   

@@ -242,7 +242,7 @@ class Json extends \dependencies\BaseComponent
   {
     
     $menu = $params->{0};
-    $menu->validate('Menu ID', array('required', 'number'=>'integer'));
+    $menu->validate('Menu Item ID', array('required', 'number'=>'integer'));
     
     $menus = tx('Sql')
       ->table('menu', 'Menus')

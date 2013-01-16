@@ -11,7 +11,7 @@
 * [Twitter](http://twitter.com/Tuxion)
 * [Google+](http://tuxion.nl/+)
 
-# Tuxion CMS - Version 1.0 Alpha
+# Tuxion CMS - Active development version (Alpha)
 
 ## Description
 
@@ -51,9 +51,7 @@ planned to come out in the future.
 
 ## Change log
 
-### Version 1.0
-
-* The first stable version to be recorded as a version.
+The change-log can be found in `CHANGES.md` in this directory.
 
 ## Subsystem Versions
 
