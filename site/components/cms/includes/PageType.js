@@ -107,6 +107,7 @@
         
         //Merge data with static data.
         var fullData = {
+          page_id: page.data.page.id,
           data: data,
           languages: page.Languages.data.languages,
           templates: definition.templates
