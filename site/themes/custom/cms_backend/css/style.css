@@ -201,7 +201,7 @@ body.cursor_disabled{
   border-bottom:1px solid #d6dce1;
 }
   .multisite #page-main-left .menu-items-list{
-    top:82px;
+    /*top:82px;*/
   }
 #page-main-left .menu-items-list ul{
   list-style:none;

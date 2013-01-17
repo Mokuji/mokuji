@@ -25,12 +25,10 @@ class Sections extends \dependencies\BaseViews
           'passed' => PHP_VERSION_ID >= 50308
         ),
         
-        'MySQL 5.0.3+' => array(
+        'MySQL 5.x' => array(
           'component' => 'Tuxion CMS Core',
           'passed' => $mySqlVersion &&
-            $mySqlVersion[0] > 5 ||// 6+
-            ($mySqlVersion[0] == 5 && $mySqlVersion[1] > 0) ||// 5.1+
-            ($mySqlVersion[0] == 5 && $mySqlVersion[1] == 0 && $mySqlVersion[2] >= 3)// 5.0.3+
+            $mySqlVersion[0] >= 5
         )
         
       )
