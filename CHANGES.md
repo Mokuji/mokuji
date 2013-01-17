@@ -1,9 +1,13 @@
-#### Development
+#### Version 1.0.1 Beta 1
 
-* Further improved render_form to an acceptable state:
-  - Implemented remaining field types.
-  - Improved feedback from jQuery.restForm.
-  - Namespaced form builder related things to keep \dependencies clean.
+* Automatically generated forms give much better feedback to the user submitting them.
+* Automatically generated forms are better and support additional field types.
+* Lowered MySQL version requirement down to `5.x` from `5.0.3+`.
+* Updated the text editor to 4.0, making it faster, better, prettier etc.
+* UI improvements:
+  - The text editor has a new skin.
+  - The profile button is back!
+  - New icons.
 * Many bug fixes:
   - Actually check for the required version of MySQL instead of just presence of it at install.
   - The install script can now be run from the get go.
@@ -11,12 +15,7 @@
   - Deleting pages now works.
   - Pages now are properly named, instead of always being called "New Page".
   - Saving menu items, pages and texts should now cause no more trouble.
-* UI improvements:
-  - The text editor has a new skin.
-  - The profile button is back!
-  - New icons.
-* Updated the text editor to 4.0
 
-#### Version 1.0
+#### Version 1.0.0
 
 * The first stable version to be recorded as a version.

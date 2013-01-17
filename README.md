@@ -11,7 +11,7 @@
 * [Twitter](http://twitter.com/Tuxion)
 * [Google+](http://tuxion.nl/+)
 
-# Tuxion CMS - Active development version (Alpha)
+# Tuxion CMS - Version 1.0.1 Beta 1
 
 ## Description
 
@@ -42,6 +42,7 @@ If you need functionality that does not exist yet, you could create the componen
 
 * Modern browser.
 * PHP 5.3.8+
+* MySQL 5.x
 
 ## Documentation
 
