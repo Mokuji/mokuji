@@ -33,6 +33,10 @@
 
     <?php echo $body->content; ?>
     
+    <div id="application-notifications-wrapper">
+      <div id="application-notifications" style="display:none;"></div>
+    </div>
+    
   </div>
   <!-- /PAGE -->
 

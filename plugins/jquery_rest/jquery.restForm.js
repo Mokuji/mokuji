@@ -7,6 +7,8 @@
       error: function(){}
     }, callbacks);
     
+    var hasFeedback = (app && app.Feedback);
+    
     function clearFormMessages(form){
       $(form).find('.validation-error').remove();
       $(form).find('.restform-error-message').remove();
@@ -21,12 +23,18 @@
       
       var data = $(form).formToObject();
       
+      //Tell the world we're loading things.
+      if(hasFeedback) app.Feedback.working('Saving data');
+      
       $.rest($(form).attr('method'), form.action, data)
         
         .done(function(){
           
           //Remove old notifications.
           clearFormMessages(form);
+          
+          //Tell the world it worked!
+          if(hasFeedback) app.Feedback.success('Done');
           
           //Run the success callback.
           callbacks.success.apply(this, arguments);
@@ -37,6 +45,9 @@
           
           //Remove old notifications.
           clearFormMessages(form);
+          
+          //Tell the world it didn't work :(
+          if(hasFeedback) app.Feedback.error(message);
           
           //Add the generic error message.
           var $error = $('<div>', {

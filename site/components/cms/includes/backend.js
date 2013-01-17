@@ -10,7 +10,7 @@
       lastNotification = null;
     });
   };
-
+  
   //Clicking notifications away.
   $('body').on('click', '.notification', function(){
     $(this).fadeOut(function(){
@@ -125,8 +125,6 @@ function request(){
   
 }
 
-
-
 ;(function(root, $, _, undefined){
   
   //A template helper function.
@@ -166,6 +164,129 @@ function request(){
     dir: function(object){
       console.dir(object);
       return object;
+    }
+    
+  });
+  
+  //The overall feedback object.
+  var FeedbackController = Controller.sub({
+    
+    el: '#application-notifications',
+    namespace: 'notifications',
+    speed: 150,
+    notesDelay: 3000,
+    
+    isVisible: false,
+    bufferMessages: false,
+    lastSuccess: null,
+    errors: [],
+    
+    init: function(){
+      this.previous();
+      this.view.hide();
+    },
+    
+    working: function(message){
+      if(!this.bufferMessages)
+        this.transitionTo('working', message, false);
+      return this;
+    },
+    
+    success: function(message)
+    {
+      
+      if(this.bufferMessages){
+        this.lastSuccess = message;
+      }
+      
+      else this.transitionTo('success', message, true);
+      
+      return this;
+      
+    },
+    
+    error: function(message){
+      
+      if(this.bufferMessages){
+        this.errors.push(message);
+      }
+      
+      else this.transitionTo('error', message, true);
+      
+      return this;
+      
+    },
+    
+    startBuffer: function(){
+      this.bufferMessages = true;
+      return this;
+    },
+    
+    stopBuffer: function()
+    {
+      
+      //Stop buffering.
+      this.bufferMessages = false;
+      
+      //If there were errors, display that.
+      if(this.errors.length > 0){
+        this.error(this.errors.join('<br>\n'));
+      }
+      
+      //Otherwise bring the latest happy news!
+      else{
+        this.success(this.lastSuccess);
+      }
+      
+      //Clear the buffer.
+      this.lastSuccess = null;
+      this.errors = [];
+      
+      return this;
+      
+    },
+    
+    transitionTo: function(className, message, fadeOut){
+      
+      console.log(arguments);
+      
+      //First fade the old message out.
+      if(this.isVisible)
+      {
+        
+        this.view.stop(true, true).fadeOut(this.speed, function(){
+          $(this)
+            .text(message)
+            .attr('class', className);
+        });
+        
+      }
+      
+      //The message is already gone.
+      else{
+        
+        this.view
+          .text(message)
+          .attr('class', className);
+        
+      }
+      
+      //Fade in.
+      this.isVisible = true;
+      this.view.fadeIn(this.speed);
+      
+      //If it should, queue a fade out.
+      if(fadeOut){
+        var that = this;
+        this.view
+          .animate({opacity:1}, this.notesDelay)
+          .fadeOut(this.speed, function(){
+            that.isVisible = false;
+          });
+      }
+      
+      return this;
+      
     }
     
   });
@@ -735,17 +856,7 @@ function request(){
       this.view
         .html($(this.template).tmpl(data))
         .find(this.form)
-        .restForm(
-          {
-            success: function(errData){
-            },
-            error: function(xhr){
-              var errorMeta = JSON.parse(xhr.responseText)
-              for(var title in errorMeta){
-                alert('Failed to validate while updating page findability, because \'title\' has an invalid format. '+errorMeta[title]);
-              }
-            }
-        });
+        .restForm();
       
       this.refreshElements();
       this.pageTitle.trigger('keyup');
@@ -1023,12 +1134,16 @@ function request(){
     
     save: function(){
       
-
       if(!this.data.page.id) return;
 
       //Show loading message.
       var that = this, btn_text = $(this.btn_save_page).text();
       $(this.btn_save_page).attr('disabled', 'disabled').text(btn_text+'...');
+      
+      //Start buffering feedback.
+      var $eventListener = $('<div>');
+      app.Feedback.working(btn_text);
+      app.Feedback.startBuffer();
       
       //Save page config first.
       this.Tabs.configTab.save();
@@ -1043,9 +1158,12 @@ function request(){
       this.publish('save', this.data.page.id);
       
       //Give update message.
-      setTimeout(function(){
+      $eventListener.ajaxStop(function(){
         $(that.btn_save_page).removeAttr('disabled', 'disabled').text(btn_text);
-      }, 1000);
+        app.Feedback.success('Saved page');
+        app.Feedback.stopBuffer();
+        $eventListener.unbind('ajaxStop');
+      });
 
     },
     
@@ -1317,6 +1435,8 @@ function request(){
       this.Page = new PageController;
       this.Item = new ItemController;
       // this.App.add([this.Page, this.Item]);
+      
+      this.Feedback = new FeedbackController;
       
     }
     
