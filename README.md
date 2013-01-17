@@ -42,6 +42,7 @@ If you need functionality that does not exist yet, you could create the componen
 
 * Modern browser.
 * PHP 5.3.8+
+* MySQL 5.x
 
 ## Documentation
 
