@@ -1,4 +1,6 @@
-#### Version 1.0.1 Beta 1
+#### Development
+
+#### [Version 1.0.1 Beta 1](https://github.com/Tuxion/tuxion.cms/tree/v1.0.1-beta1)
 
 * Automatically generated forms give much better feedback to the user submitting them.
 * Automatically generated forms are better and support additional field types.
@@ -16,6 +18,6 @@
   - Pages now are properly named, instead of always being called "New Page".
   - Saving menu items, pages and texts should now cause no more trouble.
 
-#### Version 1.0.0
+#### [Version 1.0.0](https://github.com/Tuxion/tuxion.cms/tree/v1.0.0)
 
 * The first stable version to be recorded as a version.
