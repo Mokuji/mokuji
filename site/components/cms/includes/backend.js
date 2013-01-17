@@ -658,8 +658,9 @@ function request(){
     init: function(){
       this.previous();
       this.view.hide();
-      this.tabView = $('<a class="tab" href="#">');
-      this.tabView.html(this.title);
+      this.tabView = $('<a href="#">');
+      this.tabView.addClass("tab icon-warning-sign "+this.title.toLowerCase());
+      this.tabView.html("<span>"+this.title+"</span>");
     },
     
     activate: function(){

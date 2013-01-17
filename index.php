@@ -38,6 +38,8 @@ tx('Component');
 tx('Config')->system('backend', false);
 tx('Config')->system('component', 'cms');
 
+//vlisco__entry_switcher
+
 //start doing stuff
 tx('Router')->start();
 

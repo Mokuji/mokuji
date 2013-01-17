@@ -12,5 +12,7 @@
     <link rel="stylesheet" type="text/css" href="<?php echo $theme ?>css/navigation.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo $theme ?>css/messages.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo $theme ?>css/tabs.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $theme ?>css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $theme ?>css/font-awesome-ie7.min.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo $theme ?>css/print.css" media="print, handheld" />
     <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
