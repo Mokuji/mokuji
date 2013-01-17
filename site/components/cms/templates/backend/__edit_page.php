@@ -31,7 +31,8 @@
     
     <div class="footer" id="save-buttons">
       
-      <button id="save-page" class="button black"><?php __('Save'); ?></button>
+      <button id="save-page" class="button black" data-success="<?php __('Saved page'); ?>"
+        data-working="<?php __('Saving page'); ?>"><?php __('Save'); ?></button>
       
     </div>
     

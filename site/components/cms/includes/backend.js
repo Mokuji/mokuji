@@ -248,8 +248,6 @@ function request(){
     
     transitionTo: function(className, message, fadeOut){
       
-      console.log(arguments);
-      
       //First fade the old message out.
       if(this.isVisible)
       {
@@ -1142,7 +1140,7 @@ function request(){
       
       //Start buffering feedback.
       var $eventListener = $('<div>');
-      app.Feedback.working(btn_text);
+      app.Feedback.working($(that.btn_save_page).attr('data-working'));
       app.Feedback.startBuffer();
       
       //Save page config first.
@@ -1160,7 +1158,7 @@ function request(){
       //Give update message.
       $eventListener.ajaxStop(function(){
         $(that.btn_save_page).removeAttr('disabled', 'disabled').text(btn_text);
-        app.Feedback.success('Saved page');
+        app.Feedback.success($(that.btn_save_page).attr('data-success'));
         app.Feedback.stopBuffer();
         $eventListener.unbind('ajaxStop');
       });
