@@ -16,7 +16,7 @@
     
     var finalData = {}
       , splitName = /\]\[|\[|\]/g
-      , isNumber = /^[0-9]$/;
+      , isNumber = /^[0-9]+$/;
     
     //Gets the proper value of the field.
     var getFieldValue = function(field){

@@ -2,7 +2,7 @@
 
 <script id="configbar_item_tmpl" type="text/x-jquery-tmpl">
   <li class="${component.name}-${name}">
-    <a href="#" data-view="${component.name}/${name}" title="${prefered_description}">${prefered_title}</a>
+    <a href="#" data-view="${component.name}/${name}" title="${preferred_description}">${preferred_title}</a>
   </li>
 </script>
 

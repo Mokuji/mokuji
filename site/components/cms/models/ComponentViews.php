@@ -34,14 +34,14 @@ class ComponentViews extends \dependencies\BaseModel
     
   }
   
-  public function get_prefered_title()
+  public function get_preferred_title()
   {
     
     return $this->custom_names->title->otherwise(__($this->component->name, $this->tk_title, 'ucfirst', true));
     
   }
   
-  public function get_prefered_description()
+  public function get_preferred_description()
   {
     
     return $this->custom_names->description->otherwise($this->tk_description->is_set() ? __($this->component->name, $this->tk_description, true) : null);

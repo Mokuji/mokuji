@@ -3,7 +3,7 @@
   
   /**
   *
-  * Searches for a given value and returns a disasociative array of corresponding keys
+  * Searches for a given value and returns a disassociate array of corresponding keys
   *  array_search_recursive('bye', array('a'=>array('hi'=>'bye', 'nyerk'), 'b'=>array(1, '2'=>'nyerk')))
   *  Returns: array(0=>'a', 1=>'hi')
   *  
