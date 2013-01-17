@@ -175,7 +175,7 @@
       <legend><?php __($names->component, 'PAGE_DISPLAY', 'ucfirst'); ?></legend>
       
       <?php if($data->layout_info->size() > 0){ ?>
-        <div class="inputHolder last">
+        <div class="ctrlHolder">
           <label for="l_layout"><?php echo __($names->component, 'Layout'); ?></label>
           <select name="layout_id" id="l_layout">
             <?php
@@ -192,7 +192,7 @@
         <select id="cf_site_layout" name="template_id">
           <?php
           foreach($data->templates as $template){
-            echo '<option value="'.$template->id.'"{{if default_template && default_template == '.$template->id.'}}checked="checked"{{/if}}>'.$template->title.'</option>';
+            echo '<option value="'.$template->id.'"{{if default_template && default_template == '.$template->id.'}}selected="selected"{{/if}}>'.$template->title.'</option>';
           }
           ?>
         </select>
@@ -203,7 +203,7 @@
         <select id="cf_theme" name="theme_id">
           <?php
           foreach($data->themes as $themes){
-            echo '<option value="'.$themes->id.'"{{if default_theme && default_theme == '.$themes->id.'}}checked="checked"{{/if}}>'.$themes->title.'</option>';
+            echo '<option value="'.$themes->id.'"{{if default_theme && default_theme == '.$themes->id.'}}selected="selected"{{/if}}>'.$themes->title.'</option>';
           }
           ?>
         </select>

@@ -731,7 +731,17 @@
       this.view
         .html($(this.template).tmpl(data))
         .find(this.form)
-        .restForm();
+        .restForm(
+          {
+            success: function(errData){
+            },
+            error: function(xhr){
+              var errorMeta = JSON.parse(xhr.responseText)
+              for(var title in errorMeta){
+                alert('Failed to validate while updating page findability, because \'title\' has an invalid format. '+errorMeta[title]);
+              }
+            }
+        });
       
       this.refreshElements();
       this.pageTitle.trigger('keyup');
@@ -1009,7 +1019,12 @@
     
     save: function(){
       
+
       if(!this.data.page.id) return;
+
+      //Show loading message.
+      var that = this, btn_text = $(this.btn_save_page).text();
+      $(this.btn_save_page).attr('disabled', 'disabled').text(btn_text+'...');
       
       //Save page config first.
       this.Tabs.configTab.save();
@@ -1020,6 +1035,11 @@
       //Let anyone else save in the way they wish.
       this.publish('save', this.data.page.id);
       
+      //Give update message.
+      setTimeout(function(){
+        $(that.btn_save_page).removeAttr('disabled', 'disabled').text(btn_text);
+      }, 1000);
+
     },
     
     loadNewPage: function(){
@@ -1264,7 +1284,7 @@ $(function(){
   $("#btn-select-site").on('change', function(e){
     
     $.ajax({
-      url: '?section=cms/menu_item_list&site_id='+$(e.target).val()
+      url: '?section=cms/menu_items&site_id='+$(e.target).val()
     }).done(function(d){
       $("#page-main-left .menu-item-list").html(d);
     });

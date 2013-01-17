@@ -22,10 +22,10 @@ class Modules extends \dependencies\BaseViews
     $menu_items = $this->helper('get_menu_items', $options);
     
     #TEMP: Default options.
-    $options = Data([
+    $options = Data(array(
       'show_unlinked' => true,
       'show_unauthorised' => true
-    ])->merge($options);
+    ))->merge($options);
     
     //Create menu.
     $menu =

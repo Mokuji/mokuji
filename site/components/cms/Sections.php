@@ -169,7 +169,7 @@ class Sections extends \dependencies\BaseViews
   {
     
     return array(
-      'languages' => tx('Sql')->table('cms', 'Languages')->execute(),
+      'languages' => tx('Component')->helpers('language')->get_languages(array('in_language_id' => tx('Language')->get_language_id())),
       'layout_info' => tx('Sql')->table('cms', 'LayoutInfo')->execute(),
       'themes' => $this->table('Themes')->order('title')->execute(),
       'templates' => $this->table('Templates')->order('title')->execute()

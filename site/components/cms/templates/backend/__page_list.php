@@ -12,7 +12,7 @@ echo $page_list->as_table(array(
   __('Actions', 1) => array(
     function($page_list){return
       '<a class="edit" href="#" data-id="'.$page_list->id.'">'.__('Edit', 1).'</a>'.
-      '<a class="delete" href="'.url('action=cms/delete_page&page_id='.$page_list->id).'">'.__('Delete', 1).'</a>';
+      '<a class="delete" href="'.url('action=cms/delete_page&page_id='.$page_list->id, true).'">'.__('Delete', 1).'</a>';
     }
   )
 )); ?>
