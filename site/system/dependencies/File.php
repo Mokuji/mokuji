@@ -150,4 +150,9 @@ class File
     $this->output($options);
   }
   
+  public function get_filesize()
+  {
+    return $this->info['size'];
+  }
+  
 }

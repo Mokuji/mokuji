@@ -1,4 +1,5 @@
-(function($){
+//Only if jQuery is present.
+if(window.$) (function($){
   
   //hash handling
   (function(){
