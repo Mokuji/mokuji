@@ -101,7 +101,8 @@ class Json extends \dependencies\BaseComponent
           'gp_author'
         )
         
-        ->title->validate('Title', array('required', 'string', 'not_empty'))->back()
+        // ->title->validate('Title', array('required', 'string', 'not_empty'))->back()
+        ->title->validate('Title', array('string'))->back()
         ->url_key->validate('URL key', array('string', 'not_empty'))->back()
         ->slogan->validate('Slogan', array('string', 'not_empty'))->back()
         ->description->validate('Description', array('string', 'not_empty'))->back()
