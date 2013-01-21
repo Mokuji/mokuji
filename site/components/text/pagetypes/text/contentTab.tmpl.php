@@ -20,6 +20,14 @@
       <textarea id="l_text_${language.code}_" name="info[${language.id}][text]" class="text editor">
         ${data.info && data.info[language.id] ? data.info[language.id]['text'] : ''}
       </textarea>
+
+      <p style="margin:10px 0;">
+        Additionele tekst:
+      </p>
+      
+      <textarea id="l_description_${language.code}_" name="info[${language.id}][description]" class="description editor">
+        ${data.info && data.info[language.id] ? data.info[language.id]['description'] : ''}
+      </textarea>
       
     </div>
     

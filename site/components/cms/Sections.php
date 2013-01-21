@@ -98,7 +98,6 @@ class Sections extends \dependencies\BaseViews
 
   }
 
-
   protected function page_app()
   {
 

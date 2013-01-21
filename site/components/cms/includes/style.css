@@ -95,6 +95,7 @@
   line-height: 31px;
   text-indent: 10px;
   background:url('img/icons/topbar/profile.png') 50px 50% no-repeat;
+  cursor:default;
 }
 #topbar_menu li.logout{
   background:none;
@@ -696,10 +697,10 @@
       bottom:2px;
       position:relative;
       display: inline-block;
+      margin-left: 10px;
     }
     #page-findability legend i{
-      margin-left:-20px;
-      font-size:24px;
+      font-size:17px;
       color:#2B3241;
     }
       #page-findability fieldset > fieldset{
@@ -889,37 +890,37 @@
   display: none;
 }
 
-#page-main-left .menu-items-list .icon.toggle{
+#page-main-left .menu-items-list .icon-toggle{
   display: none;
   position: absolute;
   left:20px;
-  height:33px;
+  height:33px !important;
   opacity:0.75;
 }
-#page-main-left .menu-items-list .icon.toggle:hover{
+#page-main-left .menu-items-list .icon-toggle:hover{
   opacity:1;
 }
 
-#page-main-left .menu-items-list:hover li.has-sub > div > .icon.toggle{
-  display:block;
-  cursor:pointer;
-  background-position:5px 10px;
+#page-main-left .menu-items-list:hover li.has-sub > div > .icon-toggle{
+  display:block !important;
+  cursor:pointer !important;
+  background-position:5px 10px !important;
 }
-#page-main-left .menu-items-list:hover li.has-sub > ul > .has-sub .icon.toggle{
-  left:0px;
-  height:24px;
-  background-position:0px 5px;
+#page-main-left .menu-items-list:hover li.has-sub > ul > .has-sub .icon-toggle{
+  left:0px !important;
+  height:24px !important;
+  background-position:0px 5px !important;
 }
 
-#page-main-left .menu-items-list:hover .icon.collapse{
+#page-main-left .menu-items-list:hover .icon-collapse{
   background-image:url('img/icons/left-menu-arrow-square.png');
 }
 
-#page-main-left .menu-items-list:hover .icon.expand{
+#page-main-left .menu-items-list:hover .icon-expand{
   background-image:url('img/icons/left-menu-arrow-collapse-square.png');
 }
 
-#page-main-left .menu-items-list .icon.delete{
+#page-main-left .menu-items-list .icon-delete{
   display:none;
   z-index:20;
   position:absolute;
@@ -927,11 +928,11 @@
   top:7px;
 }
 
-#page-main-left .menu-items-list li li .icon.delete{
+#page-main-left .menu-items-list li li .icon-delete{
   top:0;
 }
 
-#page-main-left .menu-items-list div:hover .icon.delete{
+#page-main-left .menu-items-list div:hover .icon-delete{
   display:block;
   cursor:pointer;
 }

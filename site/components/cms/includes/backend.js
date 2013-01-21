@@ -497,12 +497,12 @@ function request(){
       
     },
     
-    //Method: Delete the item from the list and the server.
+    //Method: Delete the menu item from the list and the server.
     deleteItem: function(id){
       
       var $item = this.el_items.filter('[data-id='+id+']');
       
-      $item.hide();
+      $item.slideUp();
       
       return (request(DELETE, 'menu/menu_item/'+id)
         

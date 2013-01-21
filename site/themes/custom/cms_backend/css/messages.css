@@ -29,7 +29,7 @@
   border:1px solid #AAA;
 }
   #application-notifications.working:before{
-    content:'{_} ';
+    /*content:'{_} ';*/
   }
   #application-notifications.working:after{
     content:'…';
@@ -42,7 +42,7 @@
   border:1px solid #7B7;
 }
   #application-notifications.success:before{
-    content:'V ';
+    /*content:'V ';*/
   }
 
 #application-notifications.error{
@@ -52,5 +52,5 @@
   border:1px solid #D99;
 }
   #application-notifications.error:before{
-    content:'X ';
+    /*content:'X ';*/
   }

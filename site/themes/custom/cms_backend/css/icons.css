@@ -3,10 +3,10 @@
 }
 
 .small-icon{
-  width:20px;
-  height:20px;
-  background-position:center center;
-  background-repeat:no-repeat;
+  width:20px !important;
+  height:20px !important;
+  background-position:center center !important;
+  background-repeat:no-repeat !important;
 }
 
 /* =List icons
@@ -15,10 +15,10 @@
 .icon-edit{
   display:block;
   text-indent:-9999px;
-  background-image:url("../img/icons/list/edit.png");
+  background-image:url("../img/icons/list/edit.png") !important;
 }
 .icon-delete{
   display:block;
   text-indent:-9999px;
-  background-image:url("../img/icons/list/delete.png");
+  background-image:url("../img/icons/list/delete.png") !important;
 }
