@@ -19,9 +19,9 @@ $data->items
       //Return the content for the list item.
       return
         '<div>'.
-        '  <span class="small-icon icon collapse toggle"></span>'.
+        '  <span class="small-icon icon-collapse icon-toggle"></span>'.
         '  <a class="menu-item" href="'.url('menu='.$item->id.'&pid='.$item->page_id.'&site_id='.$data->site_id, true).'" data-menu-item="'.$item->id.'" data-page="'.$item->page_id.'">'.$item->title->otherwise(___('Untitled')).'</a>'.
-        '  <span class="small-icon icon delete"></span>'.
+        '  <span class="small-icon icon-delete"></span>'.
         '</div>';
         
     });

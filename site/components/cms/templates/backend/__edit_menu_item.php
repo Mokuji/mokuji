@@ -11,7 +11,7 @@
         <h2><span class="title">{{if item && item.id > 0}}${item.info['<?php echo tx('Language')->get_language_id(); ?>'].title}{{/if}}</span> <span style="font-weight:normal;">(<?php __($names->component, 'Menu item', 'l') ?>)</span></h2>
         <ul class="title-bar-icons clearfix">
           <?php if(tx('Component')->available('media')){ ?>
-            <li hidden><a href="#" class="icon menu-item-settings" id="toggle-menu-item-settings" title="<?php __('Toggle menu item settings'); ?>"><?php __($names->component, 'Toggle menu item settings', 'ucfirst') ?></a></li>
+            <li><a href="#" class="icon menu-item-settings" id="toggle-menu-item-settings" title="<?php __('Toggle menu item settings'); ?>"><?php __($names->component, 'Toggle menu item settings', 'ucfirst') ?></a></li>
           <?php } ?>
           <li><a href="#" class="icon" id="detach-menu-item" style="display:none;"><?php __($names->component, 'Detach menu item from page', 'ucfirst') ?></a></li>
         </ul>
@@ -54,7 +54,7 @@
 
             <h3><?php __($names->component, 'Menu item settings', 'ucfirst') ?></h3>
             
-            <?php if(tx('Component')->available('media') && false){ ?>
+            <?php if(FALSE && tx('Component')->available('media')){ ?>
             <fieldset>
               
               <div class="ctrlHolder">

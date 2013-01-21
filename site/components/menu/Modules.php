@@ -116,6 +116,7 @@ class Modules extends \dependencies\BaseViews
   protected function breadcrumbs($options)
   {
     
+    return;
     throw new \exception\Programmer('Breadcrumbs under construction.');
     
     $options

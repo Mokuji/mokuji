@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="nl" lang="nl">
   <head>
 
-    <title>tuxion.cms <?php echo $head->title; ?></title>
+    <title>Website-beheer</title>
     <base href="<?php echo $head->base->href; ?>" target="<?php echo $head->base->target; ?>" />
 
     <!-- character encoding -->
