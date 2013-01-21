@@ -22,11 +22,11 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
     $this->queue(array(
       'component' => 'cms',
       'min_version' => '1.2'
-      ), function($version)use($comname){
+      ), function($version)use($comname, $that){
           
           $component = tx('Sql')
             ->table('cms', 'Components')
-            ->where('name', "'{$this->component}'")
+            ->where('name', "'text'")
             ->execute_single();
           
           tx('Sql')
