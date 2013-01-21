@@ -1282,6 +1282,9 @@ function request(){
     formEl: '#form-menu-item',
     
     elements: {
+      menu_item_image: '#form-menu-item #menu_item_image',
+      menu_item_image_id: '#form-menu-item #l_menu_item_image_id',
+      delete_image: '#form-menu-item .delete-menu-item-image',
       btn_save: '.footer #save-menu-item',
       btn_toggle_settings: '.title-bar #toggle-menu-item-settings',
       config: '#form-menu-item #menu-item-config'
@@ -1299,6 +1302,26 @@ function request(){
         this.config.toggle();
       }
       
+    },
+    
+    init: function(){
+      this.previous();
+      var self = this;
+      
+      //Allow image deletion.
+      this.view.on('click', '.delete-menu-item-image', function(e){
+        e.preventDefault();
+        self.refreshElements();
+        $.rest('DELETE', '?rest=menu/menu_item_image/'+self.data.item.id)
+          .done(function(){
+            self.data.item.image_id = '';
+            self.menu_item_image_id.val('');
+            self.menu_item_image.attr('src', '').hide();
+            self.delete_image.hide();
+            self.save();
+          });
+        
+      });
     },
     
     clear: function(){
@@ -1337,10 +1360,31 @@ function request(){
       
       //Add a done callback.
       .done(function(data){
+        
         self.data = data;
         self.view.html($('#edit_menu_tmpl').tmpl($.extend({current_menu: app.options.menu_id}, data)));
         self.refreshElements();
         self.view.find(self.formEl).restForm({success: self.proxy(self.afterSave)});
+        
+        //Reload plupload.
+        self.view.find('#l_menu_item_image_id').txMediaImageUploader({
+          singleFile: true,
+          callbacks: {
+            
+            serverFileIdReport: function(up, ids, file_id){
+              self.data.item.image_id = file_id;
+              self.menu_item_image_id.val(file_id);
+              self.menu_item_image
+                .attr('src', '?section=media/image&resize=0/150&id='+file_id)
+                .show();
+              self.delete_image.show();
+              self.save();
+              
+            }
+            
+          }
+        });
+        
       });
       
     },
@@ -1365,14 +1409,10 @@ function request(){
       this.view.find(this.formEl)
       
       //Set its method to PUT.
-      .attr('method', 'PUT')
+      .attr('method', 'PUT');
       
-      //Append the hidden input with the ID.
-      .append($('<input>', {
-        type: 'hidden',
-        name: 'id',
-        value: this.data.item.id
-      }));
+      //Update the ID.
+      this.view.find('input[name=id]').val(this.data.item.id);
       
       //Set the title in the title bar.
       this.view.find('.title-bar .title').text(data.title);

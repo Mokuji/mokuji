@@ -88,21 +88,11 @@ class Sections extends \dependencies\BaseViews
 
   protected function edit_menu_item($data)
   {
-
+    
     return array(
       'image_uploader' => 
         tx('Component')->available('media') ?
-          tx('Component')->modules('media')->get_html('image_uploader', array(
-            'insert_html' => array(
-              'header' => '',
-              'drop' => 'Sleep de afbeelding.',
-              'upload' => 'Uploaden',
-              'browse' => 'Bladeren'
-            ),
-            'auto_upload' => true,
-            'callbacks' => array(
-              'ServerFileIdReport' => 'plupload_image_file_id'
-            )))
+          tx('Component')->modules('media')->get_html('image_upload_module')
         : null
     );
 
@@ -395,5 +385,5 @@ class Sections extends \dependencies\BaseViews
     return tx('Component')->sections('account')->get_html('login_form');
     
   }
-
+  
 }
