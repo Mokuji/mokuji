@@ -82,7 +82,7 @@ class CheckBoxField extends BaseFormField
       ?>
       <div class="ctrlHolder">
         <label>
-          <input type="checkbox" name="<?php echo $this->column_name; ?>" value="1"<?php if($this->value) echo 'checked="checked"' ?> />
+          <input type="checkbox" name="<?php echo $this->column_name; ?>" value="1"<?php if($this->value->get('bool')) echo 'checked="checked"' ?> />
           <?php __($this->model->component(), $this->title); ?>
         </label>
       </div>

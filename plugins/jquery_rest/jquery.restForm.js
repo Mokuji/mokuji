@@ -7,7 +7,7 @@
       error: function(){}
     }, callbacks);
     
-    var hasFeedback = (app && app.Feedback);
+    var hasFeedback = (window.app && app.Feedback);
     
     function clearFormMessages(form){
       $(form).find('.validation-error').remove();

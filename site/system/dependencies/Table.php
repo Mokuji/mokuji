@@ -82,24 +82,24 @@ class Table extends Successable
   //filter by secondary keys
   public function sk()
   {
-
+    
     $values = array_flatten(func_get_args());
     $working_model = $this->models[$this->working_model]['path'];
     $sk_fields = $working_model::model_data('secondary_keys');
-
+    
     if(count($values) !== count($sk_fields)){
       throw new \exception\InvalidArgument('The number of values given does not match the amount of primary key fields. The primary key fields are: %s. You gave %s values.', implode(', ', $pk_fields), func_num_args());
       return $this;
     }
-
+    
     foreach($sk_fields as $sk){
       $this->applied_sks[$sk] = current($values);
       if(!is_null($sk)) $this->where($sk, current($values));
       next($values);
     }
-
+    
     return $this;
-
+    
   }
 
   // filter by parent primary key based on hierarchy

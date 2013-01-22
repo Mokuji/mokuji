@@ -81,6 +81,9 @@ abstract class BaseModel extends Data
       case 'table_name':
         return tx('Sql')->get_prefix().static::$table_name;
       
+      case 'title_field':
+        return isset(static::$title_field) && is_string(static::$title_field) ? static::$title_field : 'title';
+      
       case 'fields':
         return isset(static::$fields) && is_array(static::$fields) ? static::$fields : array();
 
@@ -1215,7 +1218,7 @@ abstract class BaseModel extends Data
     
     //The default is to ucfirst all the validation rule keys.
     foreach(array_keys(static::$validate) as $key){
-      $labels[$key] = ucfirst($key);
+      $labels[$key] = ucfirst(str_replace('_', ' ', $key));
     }
     
     //Override and compliment those labels with the protected static values.
@@ -1317,7 +1320,8 @@ abstract class BaseModel extends Data
   {
     
     $builder = new \dependencies\forms\FormBuilder($this, array(
-      'fields' => isset($options['fields']) ? $options['fields'] : null
+      'fields' => isset($options['fields']) ? $options['fields'] : null,
+      'relations' => isset($options['relations']) ? $options['relations'] : null,
     ));
     
     $id = $builder->id();

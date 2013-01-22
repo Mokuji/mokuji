@@ -67,7 +67,7 @@ class SelectField extends BaseFormField
     
     parent::render($options);
     
-    $value = $this->insert_value ? $this->value : '';
+    $value = $this->insert_value ? $this->value->get() : '';
     
     ?>
     <div class="ctrlHolder">

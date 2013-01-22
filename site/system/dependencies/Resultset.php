@@ -285,5 +285,24 @@ class Resultset extends Data
     return $this;
     
   }
-
+  
+  public function as_option_set($key='id')
+  {
+    
+    $option_set = array();
+    $model = $this->model;
+    
+    if((new $model) instanceof BaseModel)
+      $title = $model::model_data('title_field');
+    else
+      $title = 'title';
+    
+    foreach($this as $row){
+      $option_set[$row->{$key}->get()] = $row->{$title}->get();
+    }
+    
+    return $option_set;
+    
+  }
+  
 }
