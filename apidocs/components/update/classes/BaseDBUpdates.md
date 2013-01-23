@@ -15,17 +15,17 @@
 ## Class index
 
 **Properties**
-* [`private static mixed $component_package_data`](#property-$component_package_data)
-* [`private static mixed $core_package_data`](#property-$core_package_data)
-* [`private static mixed $queued_operations`](#property-$queued_operations)
-* [`private static mixed $template_package_data`](#property-$template_package_data)
-* [`private static mixed $theme_package_data`](#property-$theme_package_data)
-* [`protected mixed $component`](#property-$component)
-* [`protected mixed $is_core`](#property-$is_core)
-* [`protected mixed $template`](#property-$template)
-* [`protected mixed $theme`](#property-$theme)
-* [`protected mixed $updates`](#property-$updates)
-* [`private mixed $package`](#property-$package)
+* [`private static mixed $component_package_data`](#property-component_package_data)
+* [`private static mixed $core_package_data`](#property-core_package_data)
+* [`private static mixed $queued_operations`](#property-queued_operations)
+* [`private static mixed $template_package_data`](#property-template_package_data)
+* [`private static mixed $theme_package_data`](#property-theme_package_data)
+* [`protected mixed $component`](#property-component)
+* [`protected mixed $is_core`](#property-is_core)
+* [`protected mixed $template`](#property-template)
+* [`protected mixed $theme`](#property-theme)
+* [`protected mixed $updates`](#property-updates)
+* [`private mixed $package`](#property-package)
 
 **Methods**
 * [`public static mixed base_dir($type, $name)`](#method-base_dir)

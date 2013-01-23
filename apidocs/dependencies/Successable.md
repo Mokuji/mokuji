@@ -15,7 +15,7 @@
 ## Class index
 
 **Properties**
-* [`private mixed $success`](#property-$success)
+* [`private mixed $success`](#property-success)
 
 **Methods**
 * [`public mixed _success()`](#method-_success)

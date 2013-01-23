@@ -14,7 +14,7 @@
 ## Class index
 
 **Properties**
-* [`private static mixed $system`](#property-$system)
+* [`private static mixed $system`](#property-system)
 
 **Methods**
 * [`public static mixed get_instance()`](#method-get_instance)

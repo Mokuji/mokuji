@@ -75,6 +75,8 @@ class Generator
         $twig->addFilter('classLink', new Twig_Filter_Function('PHPDocMd\\Generator::classLink'));
         foreach($this->classDefinitions as $className=>$data) {
             
+            $GLOBALS['PHPDocMD_workingClassDepth'] = count(explode('\\', $className))-1;
+            
             //Sort constants.
             usort($data['constants'], function($a, $b){
                 if($a['name'] == $b['name']) return 0;
@@ -109,7 +111,9 @@ class Generator
             file_put_contents($this->outputDir . '/' . $data['fileName'], $output);
 
         }
-
+        
+        $GLOBALS['PHPDocMD_workingClassDepth'] = 0;
+        
         $index = $this->createIndex();
 
         $index = $twig->render(
@@ -188,6 +192,8 @@ class Generator
 
         $classDefinitions = $GLOBALS['PHPDocMD_classDefinitions'];
         $outputDir = $GLOBALS['PHPDocMD_outputDir'];
+        $wcd = $GLOBALS['PHPDocMD_workingClassDepth'];
+        $escapeToRoot = str_repeat('../', $wcd);
 
         $returnedClasses = array();
 
@@ -209,7 +215,7 @@ class Generator
 
             } else {
 
-                $returnedClasses[] = "[" . $myLabel . "](" . ($outputDir[0] == '.' ? substr($outputDir, 1) . '/' : '/') . str_replace('\\', '/', $oneClass) . '.md)';
+                $returnedClasses[] = "[" . $myLabel . "](" . $escapeToRoot . str_replace('\\', '/', $oneClass) . '.md)';
 
             }
 

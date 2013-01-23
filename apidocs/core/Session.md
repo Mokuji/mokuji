@@ -14,8 +14,8 @@
 ## Class index
 
 **Properties**
-* [`public mixed $id`](#property-$id)
-* [`public mixed $keep_flashes`](#property-$keep_flashes)
+* [`public mixed $id`](#property-id)
+* [`public mixed $keep_flashes`](#property-keep_flashes)
 
 **Methods**
 * [`public mixed __destruct()`](#method-__destruct)

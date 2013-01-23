@@ -231,7 +231,7 @@ class Parser
 
             $properties[$propName] = array(
                 'name' => $propName,
-                'key' => 'property-'.$propName,
+                'key' => 'property-'.strtolower(substr($propName, 1)),
                 'type' => $type,
                 'default' => $default,
                 'description' => (string)$xProperty->docblock->description . "\n\n" . (string)$xProperty->docblock->{"long-description"},
@@ -272,7 +272,7 @@ class Parser
 
             $constants[$name] = array(
                 'name' => $name,
-                'key' => 'constant-'.$name,
+                'key' => 'constant-'.strtolower($name),
                 'description' => (string)$xConstant->docblock->description . "\n\n" . (string)$xConstant->docblock->{"long-description"},
                 'signature' => $signature,
                 'value' => $value,

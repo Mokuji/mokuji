@@ -7,7 +7,7 @@
 
 * Class name: Image
 * Namespace: dependencies
-* Parent class: [dependencies\File](/apidocs/dependencies/File.md)
+* Parent class: [dependencies\File](../dependencies/File.md)
 
 
 
@@ -15,14 +15,14 @@
 ## Class index
 
 **Properties**
-* [`private mixed $allow_growth`](#property-$allow_growth)
-* [`private mixed $allow_shrink`](#property-$allow_shrink)
-* [`private mixed $image`](#property-$image)
-* [`private mixed $jpeg_quality`](#property-$jpeg_quality)
-* [`private mixed $logging`](#property-$logging)
-* [`private mixed $original`](#property-$original)
-* [`private mixed $sharpen_after_resize`](#property-$sharpen_after_resize)
-* [`private mixed $use_cache`](#property-$use_cache)
+* [`private mixed $allow_growth`](#property-allow_growth)
+* [`private mixed $allow_shrink`](#property-allow_shrink)
+* [`private mixed $image`](#property-image)
+* [`private mixed $jpeg_quality`](#property-jpeg_quality)
+* [`private mixed $logging`](#property-logging)
+* [`private mixed $original`](#property-original)
+* [`private mixed $sharpen_after_resize`](#property-sharpen_after_resize)
+* [`private mixed $use_cache`](#property-use_cache)
 
 **Methods**
 * [`public mixed __construct($file)`](#method-__construct)
@@ -82,7 +82,7 @@ protected mixed $cache_time = 604800
 
 
 * Visibility: **protected**
-* This property is defined by [dependencies\File](/apidocs/dependencies/File.md)
+* This property is defined by [dependencies\File](../dependencies/File.md)
 
 
 ### Property `$dir`
@@ -96,7 +96,7 @@ protected mixed $dir = ''
 
 
 * Visibility: **protected**
-* This property is defined by [dependencies\File](/apidocs/dependencies/File.md)
+* This property is defined by [dependencies\File](../dependencies/File.md)
 
 
 ### Property `$file`
@@ -110,7 +110,7 @@ protected mixed $file = ''
 
 
 * Visibility: **protected**
-* This property is defined by [dependencies\File](/apidocs/dependencies/File.md)
+* This property is defined by [dependencies\File](../dependencies/File.md)
 
 
 ### Property `$info`
@@ -124,7 +124,7 @@ protected mixed $info = array()
 
 
 * Visibility: **protected**
-* This property is defined by [dependencies\File](/apidocs/dependencies/File.md)
+* This property is defined by [dependencies\File](../dependencies/File.md)
 
 
 ### Property `$source`
@@ -138,7 +138,7 @@ protected mixed $source = ''
 
 
 * Visibility: **protected**
-* This property is defined by [dependencies\File](/apidocs/dependencies/File.md)
+* This property is defined by [dependencies\File](../dependencies/File.md)
 
 
 ### Property `$allow_growth`
@@ -328,7 +328,7 @@ mixed dependencies\File::cache_time($set)
 
 
 * Visibility: **public**
-* This method is defined by [dependencies\File](/apidocs/dependencies/File.md)
+* This method is defined by [dependencies\File](../dependencies/File.md)
 
 #### Arguments
 
@@ -389,7 +389,7 @@ mixed dependencies\File::download($options)
 
 
 * Visibility: **public**
-* This method is defined by [dependencies\File](/apidocs/dependencies/File.md)
+* This method is defined by [dependencies\File](../dependencies/File.md)
 
 #### Arguments
 
@@ -464,7 +464,7 @@ mixed dependencies\File::get_filesize()
 
 
 * Visibility: **public**
-* This method is defined by [dependencies\File](/apidocs/dependencies/File.md)
+* This method is defined by [dependencies\File](../dependencies/File.md)
 
 
 
@@ -639,7 +639,7 @@ mixed dependencies\File::create_output_headers()
 
 
 * Visibility: **protected**
-* This method is defined by [dependencies\File](/apidocs/dependencies/File.md)
+* This method is defined by [dependencies\File](../dependencies/File.md)
 
 
 

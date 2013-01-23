@@ -15,11 +15,11 @@
 ## Class index
 
 **Properties**
-* [`protected mixed $column_name`](#property-$column_name)
-* [`protected mixed $insert_value`](#property-$insert_value)
-* [`protected mixed $model`](#property-$model)
-* [`protected mixed $title`](#property-$title)
-* [`protected mixed $value`](#property-$value)
+* [`protected mixed $column_name`](#property-column_name)
+* [`protected mixed $insert_value`](#property-insert_value)
+* [`protected mixed $model`](#property-model)
+* [`protected mixed $title`](#property-title)
+* [`protected mixed $value`](#property-value)
 
 **Methods**
 * [`public mixed __construct(string $column_name, string $title, \dependencies\BaseModel $model, array $options)`](#method-__construct)
@@ -120,7 +120,7 @@ Initiates a new form field.
 
 * $column_name **string** - The table column name for this field.
 * $title **string** - The preferred and translated title to use for this field.
-* $model **[dependencies\BaseModel](/apidocs/dependencies/BaseModel.md)** - The model that this field is related to.
+* $model **[dependencies\BaseModel](../../dependencies/BaseModel.md)** - The model that this field is related to.
 * $options **array** - An optional set of options to further customize this field.
 
 

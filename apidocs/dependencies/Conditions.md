@@ -14,9 +14,9 @@
 ## Class index
 
 **Properties**
-* [`private mixed $conditions`](#property-$conditions)
-* [`private mixed $invoked`](#property-$invoked)
-* [`private mixed $utilized`](#property-$utilized)
+* [`private mixed $conditions`](#property-conditions)
+* [`private mixed $invoked`](#property-invoked)
+* [`private mixed $utilized`](#property-utilized)
 
 **Methods**
 * [`public mixed __invoke()`](#method-__invoke)

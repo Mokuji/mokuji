@@ -14,11 +14,11 @@
 ## Class index
 
 **Properties**
-* [`private mixed $caching`](#property-$caching)
-* [`private mixed $language_code`](#property-$language_code)
-* [`private mixed $language_id`](#property-$language_id)
-* [`private mixed $translating_started`](#property-$translating_started)
-* [`private mixed $translations`](#property-$translations)
+* [`private mixed $caching`](#property-caching)
+* [`private mixed $language_code`](#property-language_code)
+* [`private mixed $language_id`](#property-language_id)
+* [`private mixed $translating_started`](#property-translating_started)
+* [`private mixed $translations`](#property-translations)
 
 **Methods**
 * [`public mixed __get($key)`](#method-__get)

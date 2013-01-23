@@ -14,14 +14,14 @@
 ## Class index
 
 **Properties**
-* [`public mixed $cookie`](#property-$cookie)
-* [`public mixed $env`](#property-$env)
-* [`public mixed $files`](#property-$files)
-* [`public mixed $get`](#property-$get)
-* [`public mixed $post`](#property-$post)
-* [`public mixed $request`](#property-$request)
-* [`public mixed $server`](#property-$server)
-* [`public mixed $session`](#property-$session)
+* [`public mixed $cookie`](#property-cookie)
+* [`public mixed $env`](#property-env)
+* [`public mixed $files`](#property-files)
+* [`public mixed $get`](#property-get)
+* [`public mixed $post`](#property-post)
+* [`public mixed $request`](#property-request)
+* [`public mixed $server`](#property-server)
+* [`public mixed $session`](#property-session)
 
 **Methods**
 * [`public mixed __destruct()`](#method-__destruct)

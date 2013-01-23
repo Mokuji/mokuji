@@ -14,7 +14,7 @@
 ## Class index
 
 **Properties**
-* [`public mixed $user`](#property-$user)
+* [`public mixed $user`](#property-user)
 
 **Methods**
 * [`public mixed __construct()`](#method-__construct)

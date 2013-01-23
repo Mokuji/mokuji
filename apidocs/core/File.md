@@ -14,8 +14,8 @@
 ## Class index
 
 **Properties**
-* [`private mixed $paths`](#property-$paths)
-* [`private mixed $uploads`](#property-$uploads)
+* [`private mixed $paths`](#property-paths)
+* [`private mixed $uploads`](#property-uploads)
 
 **Methods**
 * [`public mixed add_dir($path)`](#method-add_dir)

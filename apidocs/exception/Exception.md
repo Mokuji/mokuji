@@ -15,8 +15,8 @@
 ## Class index
 
 **Properties**
-* [`protected static mixed $ex_code`](#property-$ex_code)
-* [`protected mixed $prev`](#property-$prev)
+* [`protected static mixed $ex_code`](#property-ex_code)
+* [`protected mixed $prev`](#property-prev)
 
 **Methods**
 * [`public mixed __construct()`](#method-__construct)
@@ -124,6 +124,6 @@ mixed exception\Exception::setPrev(\exception\Exception $previous)
 
 #### Arguments
 
-* $previous **[exception\Exception](/apidocs/exception/Exception.md)**
+* $previous **[exception\Exception](../exception/Exception.md)**
 
 

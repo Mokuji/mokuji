@@ -14,8 +14,8 @@
 ## Class index
 
 **Properties**
-* [`private mixed $connection`](#property-$connection)
-* [`private mixed $prefix`](#property-$prefix)
+* [`private mixed $connection`](#property-connection)
+* [`private mixed $prefix`](#property-prefix)
 
 **Methods**
 * [`public mixed __construct()`](#method-__construct)

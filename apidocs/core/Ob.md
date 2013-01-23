@@ -14,12 +14,12 @@
 ## Class index
 
 **Properties**
-* [`private mixed $buffers`](#property-$buffers)
-* [`private mixed $link`](#property-$link)
-* [`private mixed $meta`](#property-$meta)
-* [`private mixed $retrieved`](#property-$retrieved)
-* [`private mixed $script`](#property-$script)
-* [`private mixed $style`](#property-$style)
+* [`private mixed $buffers`](#property-buffers)
+* [`private mixed $link`](#property-link)
+* [`private mixed $meta`](#property-meta)
+* [`private mixed $retrieved`](#property-retrieved)
+* [`private mixed $script`](#property-script)
+* [`private mixed $style`](#property-style)
 
 **Methods**
 * [`public mixed __construct()`](#method-__construct)

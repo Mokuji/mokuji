@@ -14,9 +14,9 @@
 ## Class index
 
 **Properties**
-* [`private mixed $site`](#property-$site)
-* [`private mixed $system`](#property-$system)
-* [`private mixed $user`](#property-$user)
+* [`private mixed $site`](#property-site)
+* [`private mixed $system`](#property-system)
+* [`private mixed $user`](#property-user)
 
 **Methods**
 * [`public mixed __construct()`](#method-__construct)

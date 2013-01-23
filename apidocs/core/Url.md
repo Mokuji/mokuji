@@ -13,19 +13,19 @@
 
 ## Class index
 **Constants**
-* [`  ALL`](#constant-ALL)
-* [`  ANCHOR`](#constant-ANCHOR)
-* [`  DOMAIN`](#constant-DOMAIN)
-* [`  FILE`](#constant-FILE)
-* [`  PATH`](#constant-PATH)
-* [`  QUERY`](#constant-QUERY)
-* [`  SCHEME`](#constant-SCHEME)
+* [`  ALL`](#constant-all)
+* [`  ANCHOR`](#constant-anchor)
+* [`  DOMAIN`](#constant-domain)
+* [`  FILE`](#constant-file)
+* [`  PATH`](#constant-path)
+* [`  QUERY`](#constant-query)
+* [`  SCHEME`](#constant-scheme)
 
 **Properties**
-* [`public mixed $redirect_url`](#property-$redirect_url)
-* [`public mixed $redirected`](#property-$redirected)
-* [`public mixed $referer_url`](#property-$referer_url)
-* [`public mixed $url`](#property-$url)
+* [`public mixed $redirect_url`](#property-redirect_url)
+* [`public mixed $redirected`](#property-redirected)
+* [`public mixed $referer_url`](#property-referer_url)
+* [`public mixed $url`](#property-url)
 
 **Methods**
 * [`public mixed cancel_redirect()`](#method-cancel_redirect)

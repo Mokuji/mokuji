@@ -14,8 +14,8 @@
 ## Class index
 
 **Properties**
-* [`private mixed $checks`](#property-$checks)
-* [`private mixed $components`](#property-$components)
+* [`private mixed $checks`](#property-checks)
+* [`private mixed $components`](#property-components)
 
 **Methods**
 * [`public mixed __construct()`](#method-__construct)

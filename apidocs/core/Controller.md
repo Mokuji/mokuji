@@ -80,7 +80,7 @@ mixed core\Controller::load_redirect_template(\dependencies\Url $redirect)
 
 #### Arguments
 
-* $redirect **[dependencies\Url](/apidocs/dependencies/Url.md)**
+* $redirect **[dependencies\Url](../dependencies/Url.md)**
 
 
 

@@ -7,7 +7,7 @@
 
 * Class name: Json
 * Namespace: components\update
-* Parent class: [dependencies\BaseViews](/apidocs/dependencies/BaseViews.md)
+* Parent class: [dependencies\BaseViews](../../dependencies/BaseViews.md)
 
 
 
@@ -63,7 +63,7 @@ protected mixed $reserved = array('__construct', 'filter', 'module', 'section', 
 
 * Visibility: **protected**
 * This property is **static**.
-* This property is defined by [dependencies\BaseComponent](/apidocs/dependencies/BaseComponent.md)
+* This property is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 
 ### Property `$component`
@@ -77,7 +77,7 @@ protected mixed $component
 
 
 * Visibility: **protected**
-* This property is defined by [dependencies\BaseComponent](/apidocs/dependencies/BaseComponent.md)
+* This property is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 
 ### Property `$default_permission`
@@ -91,7 +91,7 @@ protected mixed $default_permission
 
 
 * Visibility: **protected**
-* This property is defined by [dependencies\BaseComponent](/apidocs/dependencies/BaseComponent.md)
+* This property is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 
 ### Property `$permissions`
@@ -105,7 +105,7 @@ protected mixed $permissions = array()
 
 
 * Visibility: **protected**
-* This property is defined by [dependencies\BaseComponent](/apidocs/dependencies/BaseComponent.md)
+* This property is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 
 Methods
@@ -123,7 +123,7 @@ mixed dependencies\BaseComponent::__construct()
 
 
 * Visibility: **public**
-* This method is defined by [dependencies\BaseComponent](/apidocs/dependencies/BaseComponent.md)
+* This method is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 
 
@@ -138,7 +138,7 @@ mixed dependencies\BaseComponent::_call($controller, array $args)
 
 
 * Visibility: **public**
-* This method is defined by [dependencies\BaseComponent](/apidocs/dependencies/BaseComponent.md)
+* This method is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 #### Arguments
 
@@ -158,7 +158,7 @@ mixed dependencies\BaseComponent::call($controller, $data)
 
 
 * Visibility: **public**
-* This method is defined by [dependencies\BaseComponent](/apidocs/dependencies/BaseComponent.md)
+* This method is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 #### Arguments
 
@@ -178,7 +178,7 @@ mixed dependencies\BaseComponent::filters()
 
 
 * Visibility: **public**
-* This method is defined by [dependencies\BaseComponent](/apidocs/dependencies/BaseComponent.md)
+* This method is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 
 
@@ -193,7 +193,7 @@ mixed dependencies\BaseViews::get_html($view, $options)
 
 
 * Visibility: **public**
-* This method is defined by [dependencies\BaseViews](/apidocs/dependencies/BaseViews.md)
+* This method is defined by [dependencies\BaseViews](../../dependencies/BaseViews.md)
 
 #### Arguments
 
@@ -213,7 +213,7 @@ mixed dependencies\BaseComponent::helper($controller)
 
 
 * Visibility: **public**
-* This method is defined by [dependencies\BaseComponent](/apidocs/dependencies/BaseComponent.md)
+* This method is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 #### Arguments
 
@@ -232,7 +232,7 @@ mixed dependencies\BaseComponent::model($model_name)
 
 
 * Visibility: **public**
-* This method is defined by [dependencies\BaseComponent](/apidocs/dependencies/BaseComponent.md)
+* This method is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 #### Arguments
 
@@ -251,7 +251,7 @@ mixed dependencies\BaseComponent::module($module_name, $options)
 
 
 * Visibility: **public**
-* This method is defined by [dependencies\BaseComponent](/apidocs/dependencies/BaseComponent.md)
+* This method is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 #### Arguments
 
@@ -271,7 +271,7 @@ mixed dependencies\BaseComponent::section($section, $options)
 
 
 * Visibility: **public**
-* This method is defined by [dependencies\BaseComponent](/apidocs/dependencies/BaseComponent.md)
+* This method is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 #### Arguments
 
@@ -291,7 +291,7 @@ mixed dependencies\BaseComponent::table($model_name, $id)
 
 
 * Visibility: **public**
-* This method is defined by [dependencies\BaseComponent](/apidocs/dependencies/BaseComponent.md)
+* This method is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 #### Arguments
 
@@ -311,7 +311,7 @@ mixed dependencies\BaseComponent::view($module_name, $options)
 
 
 * Visibility: **public**
-* This method is defined by [dependencies\BaseComponent](/apidocs/dependencies/BaseComponent.md)
+* This method is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 #### Arguments
 

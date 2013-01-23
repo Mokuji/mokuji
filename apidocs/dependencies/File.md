@@ -14,11 +14,11 @@
 ## Class index
 
 **Properties**
-* [`protected mixed $cache_time`](#property-$cache_time)
-* [`protected mixed $dir`](#property-$dir)
-* [`protected mixed $file`](#property-$file)
-* [`protected mixed $info`](#property-$info)
-* [`protected mixed $source`](#property-$source)
+* [`protected mixed $cache_time`](#property-cache_time)
+* [`protected mixed $dir`](#property-dir)
+* [`protected mixed $file`](#property-file)
+* [`protected mixed $info`](#property-info)
+* [`protected mixed $source`](#property-source)
 
 **Methods**
 * [`public mixed __construct($file)`](#method-__construct)

@@ -7,7 +7,7 @@
 
 * Class name: Validation
 * Namespace: exception
-* Parent class: [exception\Expected](/apidocs/exception/Expected.md)
+* Parent class: [exception\Expected](../exception/Expected.md)
 
 
 
@@ -15,11 +15,11 @@
 ## Class index
 
 **Properties**
-* [`protected static mixed $ex_code`](#property-$ex_code)
-* [`private mixed $errors`](#property-$errors)
-* [`private mixed $key`](#property-$key)
-* [`private mixed $title`](#property-$title)
-* [`private mixed $value`](#property-$value)
+* [`protected static mixed $ex_code`](#property-ex_code)
+* [`private mixed $errors`](#property-errors)
+* [`private mixed $key`](#property-key)
+* [`private mixed $title`](#property-title)
+* [`private mixed $value`](#property-value)
 
 **Methods**
 * [`public mixed errors(array $set)`](#method-errors)
@@ -70,7 +70,7 @@ protected mixed $prev
 
 
 * Visibility: **protected**
-* This property is defined by [exception\Exception](/apidocs/exception/Exception.md)
+* This property is defined by [exception\Exception](../exception/Exception.md)
 
 
 ### Property `$errors`
@@ -140,7 +140,7 @@ mixed exception\Exception::__construct()
 
 
 * Visibility: **public**
-* This method is defined by [exception\Exception](/apidocs/exception/Exception.md)
+* This method is defined by [exception\Exception](../exception/Exception.md)
 
 
 
@@ -173,7 +173,7 @@ mixed exception\Exception::getExCode()
 
 
 * Visibility: **public**
-* This method is defined by [exception\Exception](/apidocs/exception/Exception.md)
+* This method is defined by [exception\Exception](../exception/Exception.md)
 
 
 
@@ -188,7 +188,7 @@ mixed exception\Exception::getPrev()
 
 
 * Visibility: **public**
-* This method is defined by [exception\Exception](/apidocs/exception/Exception.md)
+* This method is defined by [exception\Exception](../exception/Exception.md)
 
 
 
@@ -221,11 +221,11 @@ mixed exception\Exception::setPrev(\exception\Exception $previous)
 
 
 * Visibility: **public**
-* This method is defined by [exception\Exception](/apidocs/exception/Exception.md)
+* This method is defined by [exception\Exception](../exception/Exception.md)
 
 #### Arguments
 
-* $previous **[exception\Exception](/apidocs/exception/Exception.md)**
+* $previous **[exception\Exception](../exception/Exception.md)**
 
 
 

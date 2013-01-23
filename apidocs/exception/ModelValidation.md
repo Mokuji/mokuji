@@ -7,7 +7,7 @@
 
 * Class name: ModelValidation
 * Namespace: exception
-* Parent class: [exception\Validation](/apidocs/exception/Validation.md)
+* Parent class: [exception\Validation](../exception/Validation.md)
 
 
 
@@ -15,8 +15,8 @@
 ## Class index
 
 **Properties**
-* [`protected static mixed $ex_code`](#property-$ex_code)
-* [`public mixed $errors`](#property-$errors)
+* [`protected static mixed $ex_code`](#property-ex_code)
+* [`public mixed $errors`](#property-errors)
 
 **Methods**
 * [`public mixed add_validation_error(\exception\Validation $error)`](#method-add_validation_error)
@@ -82,7 +82,7 @@ protected mixed $prev
 
 
 * Visibility: **protected**
-* This property is defined by [exception\Exception](/apidocs/exception/Exception.md)
+* This property is defined by [exception\Exception](../exception/Exception.md)
 
 
 Methods
@@ -100,7 +100,7 @@ mixed exception\Exception::__construct()
 
 
 * Visibility: **public**
-* This method is defined by [exception\Exception](/apidocs/exception/Exception.md)
+* This method is defined by [exception\Exception](../exception/Exception.md)
 
 
 
@@ -118,7 +118,7 @@ mixed exception\ModelValidation::add_validation_error(\exception\Validation $err
 
 #### Arguments
 
-* $error **[exception\Validation](/apidocs/exception/Validation.md)**
+* $error **[exception\Validation](../exception/Validation.md)**
 
 
 
@@ -133,7 +133,7 @@ mixed exception\Validation::errors(array $set)
 
 
 * Visibility: **public**
-* This method is defined by [exception\Validation](/apidocs/exception/Validation.md)
+* This method is defined by [exception\Validation](../exception/Validation.md)
 
 #### Arguments
 
@@ -152,7 +152,7 @@ mixed exception\Exception::getExCode()
 
 
 * Visibility: **public**
-* This method is defined by [exception\Exception](/apidocs/exception/Exception.md)
+* This method is defined by [exception\Exception](../exception/Exception.md)
 
 
 
@@ -167,7 +167,7 @@ mixed exception\Exception::getPrev()
 
 
 * Visibility: **public**
-* This method is defined by [exception\Exception](/apidocs/exception/Exception.md)
+* This method is defined by [exception\Exception](../exception/Exception.md)
 
 
 
@@ -182,7 +182,7 @@ mixed exception\Validation::key($set)
 
 
 * Visibility: **public**
-* This method is defined by [exception\Validation](/apidocs/exception/Validation.md)
+* This method is defined by [exception\Validation](../exception/Validation.md)
 
 #### Arguments
 
@@ -201,11 +201,11 @@ mixed exception\Exception::setPrev(\exception\Exception $previous)
 
 
 * Visibility: **public**
-* This method is defined by [exception\Exception](/apidocs/exception/Exception.md)
+* This method is defined by [exception\Exception](../exception/Exception.md)
 
 #### Arguments
 
-* $previous **[exception\Exception](/apidocs/exception/Exception.md)**
+* $previous **[exception\Exception](../exception/Exception.md)**
 
 
 
@@ -238,7 +238,7 @@ mixed exception\Validation::title($set)
 
 
 * Visibility: **public**
-* This method is defined by [exception\Validation](/apidocs/exception/Validation.md)
+* This method is defined by [exception\Validation](../exception/Validation.md)
 
 #### Arguments
 
@@ -257,7 +257,7 @@ mixed exception\Validation::value($set)
 
 
 * Visibility: **public**
-* This method is defined by [exception\Validation](/apidocs/exception/Validation.md)
+* This method is defined by [exception\Validation](../exception/Validation.md)
 
 #### Arguments
 

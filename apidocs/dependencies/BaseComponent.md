@@ -15,10 +15,10 @@
 ## Class index
 
 **Properties**
-* [`protected static mixed $reserved`](#property-$reserved)
-* [`protected mixed $component`](#property-$component)
-* [`protected mixed $default_permission`](#property-$default_permission)
-* [`protected mixed $permissions`](#property-$permissions)
+* [`protected static mixed $reserved`](#property-reserved)
+* [`protected mixed $component`](#property-component)
+* [`protected mixed $default_permission`](#property-default_permission)
+* [`protected mixed $permissions`](#property-permissions)
 
 **Methods**
 * [`public mixed __construct()`](#method-__construct)

@@ -7,7 +7,7 @@
 
 * Class name: Data
 * Namespace: dependencies
-* Parent class: [dependencies\Successable](/apidocs/dependencies/Successable.md)
+* Parent class: [dependencies\Successable](../dependencies/Successable.md)
 * This class implements: Serializable, IteratorAggregate, ArrayAccess
 
 
@@ -15,10 +15,10 @@
 ## Class index
 
 **Properties**
-* [`private mixed $context`](#property-$context)
-* [`private mixed $data`](#property-$data)
-* [`private mixed $i`](#property-$i)
-* [`private mixed $key`](#property-$key)
+* [`private mixed $context`](#property-context)
+* [`private mixed $data`](#property-data)
+* [`private mixed $i`](#property-i)
+* [`private mixed $key`](#property-key)
 
 **Methods**
 * [`public mixed __clone()`](#method-__clone)
@@ -357,7 +357,7 @@ mixed dependencies\Successable::_success()
 
 
 * Visibility: **public**
-* This method is defined by [dependencies\Successable](/apidocs/dependencies/Successable.md)
+* This method is defined by [dependencies\Successable](../dependencies/Successable.md)
 
 
 
@@ -404,7 +404,7 @@ mixed dependencies\Successable::and_is($check, $callback)
 
 
 * Visibility: **public**
-* This method is defined by [dependencies\Successable](/apidocs/dependencies/Successable.md)
+* This method is defined by [dependencies\Successable](../dependencies/Successable.md)
 
 #### Arguments
 
@@ -424,7 +424,7 @@ mixed dependencies\Successable::and_not($check)
 
 
 * Visibility: **public**
-* This method is defined by [dependencies\Successable](/apidocs/dependencies/Successable.md)
+* This method is defined by [dependencies\Successable](../dependencies/Successable.md)
 
 #### Arguments
 
@@ -571,7 +571,7 @@ mixed dependencies\Data::become(\dependencies\Data $data)
 
 #### Arguments
 
-* $data **[dependencies\Data](/apidocs/dependencies/Data.md)**
+* $data **[dependencies\Data](../dependencies/Data.md)**
 
 
 
@@ -756,7 +756,7 @@ mixed dependencies\Successable::failure($callback)
 
 
 * Visibility: **public**
-* This method is defined by [dependencies\Successable](/apidocs/dependencies/Successable.md)
+* This method is defined by [dependencies\Successable](../dependencies/Successable.md)
 
 #### Arguments
 
@@ -1501,7 +1501,7 @@ mixed dependencies\Successable::success($callback)
 
 
 * Visibility: **public**
-* This method is defined by [dependencies\Successable](/apidocs/dependencies/Successable.md)
+* This method is defined by [dependencies\Successable](../dependencies/Successable.md)
 
 #### Arguments
 
@@ -1667,7 +1667,7 @@ mixed dependencies\Successable::_do_check($check)
 
 
 * Visibility: **private**
-* This method is defined by [dependencies\Successable](/apidocs/dependencies/Successable.md)
+* This method is defined by [dependencies\Successable](../dependencies/Successable.md)
 
 #### Arguments
 

@@ -7,7 +7,7 @@
 
 * Class name: Validator
 * Namespace: dependencies
-* Parent class: [dependencies\Successable](/apidocs/dependencies/Successable.md)
+* Parent class: [dependencies\Successable](../dependencies/Successable.md)
 
 
 
@@ -15,9 +15,9 @@
 ## Class index
 
 **Properties**
-* [`private mixed $data`](#property-$data)
-* [`private mixed $errors`](#property-$errors)
-* [`private mixed $rules`](#property-$rules)
+* [`private mixed $data`](#property-data)
+* [`private mixed $errors`](#property-errors)
+* [`private mixed $rules`](#property-rules)
 
 **Methods**
 * [`public mixed __call($rule, $options)`](#method-__call)
@@ -243,7 +243,7 @@ mixed dependencies\Successable::_success()
 
 
 * Visibility: **public**
-* This method is defined by [dependencies\Successable](/apidocs/dependencies/Successable.md)
+* This method is defined by [dependencies\Successable](../dependencies/Successable.md)
 
 
 
@@ -258,7 +258,7 @@ mixed dependencies\Successable::and_is($check, $callback)
 
 
 * Visibility: **public**
-* This method is defined by [dependencies\Successable](/apidocs/dependencies/Successable.md)
+* This method is defined by [dependencies\Successable](../dependencies/Successable.md)
 
 #### Arguments
 
@@ -278,7 +278,7 @@ mixed dependencies\Successable::and_not($check)
 
 
 * Visibility: **public**
-* This method is defined by [dependencies\Successable](/apidocs/dependencies/Successable.md)
+* This method is defined by [dependencies\Successable](../dependencies/Successable.md)
 
 #### Arguments
 
@@ -329,7 +329,7 @@ mixed dependencies\Successable::failure($callback)
 
 
 * Visibility: **public**
-* This method is defined by [dependencies\Successable](/apidocs/dependencies/Successable.md)
+* This method is defined by [dependencies\Successable](../dependencies/Successable.md)
 
 #### Arguments
 
@@ -362,7 +362,7 @@ mixed dependencies\Successable::is($check, $callback)
 
 
 * Visibility: **public**
-* This method is defined by [dependencies\Successable](/apidocs/dependencies/Successable.md)
+* This method is defined by [dependencies\Successable](../dependencies/Successable.md)
 
 #### Arguments
 
@@ -382,7 +382,7 @@ mixed dependencies\Successable::not($check, $callback)
 
 
 * Visibility: **public**
-* This method is defined by [dependencies\Successable](/apidocs/dependencies/Successable.md)
+* This method is defined by [dependencies\Successable](../dependencies/Successable.md)
 
 #### Arguments
 
@@ -402,7 +402,7 @@ mixed dependencies\Successable::success($callback)
 
 
 * Visibility: **public**
-* This method is defined by [dependencies\Successable](/apidocs/dependencies/Successable.md)
+* This method is defined by [dependencies\Successable](../dependencies/Successable.md)
 
 #### Arguments
 
@@ -486,7 +486,7 @@ mixed dependencies\Successable::_do_check($check)
 
 
 * Visibility: **private**
-* This method is defined by [dependencies\Successable](/apidocs/dependencies/Successable.md)
+* This method is defined by [dependencies\Successable](../dependencies/Successable.md)
 
 #### Arguments
 

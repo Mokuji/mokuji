@@ -14,8 +14,8 @@
 ## Class index
 
 **Properties**
-* [`private mixed $actualSite`](#property-$actualSite)
-* [`private mixed $isLoaded`](#property-$isLoaded)
+* [`private mixed $actualSite`](#property-actualsite)
+* [`private mixed $isLoaded`](#property-isloaded)
 
 **Methods**
 * [`public mixed __get($name)`](#method-__get)

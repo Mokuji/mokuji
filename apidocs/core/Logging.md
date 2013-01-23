@@ -14,7 +14,7 @@
 ## Class index
 
 **Properties**
-* [`private mixed $logging_enabled`](#property-$logging_enabled)
+* [`private mixed $logging_enabled`](#property-logging_enabled)
 
 **Methods**
 * [`public mixed __construct()`](#method-__construct)

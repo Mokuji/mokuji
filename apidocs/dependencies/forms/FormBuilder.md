@@ -14,11 +14,11 @@
 ## Class index
 
 **Properties**
-* [`protected mixed $options`](#property-$options)
-* [`private mixed $fields`](#property-$fields)
-* [`private mixed $id`](#property-$id)
-* [`private mixed $model`](#property-$model)
-* [`private mixed $relations`](#property-$relations)
+* [`protected mixed $options`](#property-options)
+* [`private mixed $fields`](#property-fields)
+* [`private mixed $id`](#property-id)
+* [`private mixed $model`](#property-model)
+* [`private mixed $relations`](#property-relations)
 
 **Methods**
 * [`public mixed __construct(\dependencies\BaseModel $model, array $options)`](#method-__construct)
@@ -123,7 +123,7 @@ Creates a new form builder instance.
 
 #### Arguments
 
-* $model **[dependencies\BaseModel](/apidocs/dependencies/BaseModel.md)** - The model that this form builder is building the form for.
+* $model **[dependencies\BaseModel](../../dependencies/BaseModel.md)** - The model that this form builder is building the form for.
 * $options **array** - An array of options to modify the FormBuilder.
 
 

@@ -7,7 +7,7 @@
 
 * Class name: DBUpdates
 * Namespace: components\update
-* Parent class: [components\update\classes\BaseDBUpdates](/apidocs/components/update/classes/BaseDBUpdates.md)
+* Parent class: [components\update\classes\BaseDBUpdates](../../components/update/classes/BaseDBUpdates.md)
 
 
 
@@ -15,8 +15,8 @@
 ## Class index
 
 **Properties**
-* [`protected mixed $component`](#property-$component)
-* [`protected mixed $updates`](#property-$updates)
+* [`protected mixed $component`](#property-component)
+* [`protected mixed $updates`](#property-updates)
 
 **Methods**
 * [`public mixed install_1_1($dummydata, $forced)`](#method-install_1_1)
@@ -80,7 +80,7 @@ protected mixed $is_core
 
 
 * Visibility: **protected**
-* This property is defined by [components\update\classes\BaseDBUpdates](/apidocs/components/update/classes/BaseDBUpdates.md)
+* This property is defined by [components\update\classes\BaseDBUpdates](../../components/update/classes/BaseDBUpdates.md)
 
 
 ### Property `$template`
@@ -94,7 +94,7 @@ protected mixed $template
 
 
 * Visibility: **protected**
-* This property is defined by [components\update\classes\BaseDBUpdates](/apidocs/components/update/classes/BaseDBUpdates.md)
+* This property is defined by [components\update\classes\BaseDBUpdates](../../components/update/classes/BaseDBUpdates.md)
 
 
 ### Property `$theme`
@@ -108,7 +108,7 @@ protected mixed $theme
 
 
 * Visibility: **protected**
-* This property is defined by [components\update\classes\BaseDBUpdates](/apidocs/components/update/classes/BaseDBUpdates.md)
+* This property is defined by [components\update\classes\BaseDBUpdates](../../components/update/classes/BaseDBUpdates.md)
 
 
 ### Property `$updates`
@@ -140,7 +140,7 @@ mixed components\update\classes\BaseDBUpdates::base_dir($type, $name)
 
 * Visibility: **public**
 * This method is **static**.
-* This method is defined by [components\update\classes\BaseDBUpdates](/apidocs/components/update/classes/BaseDBUpdates.md)
+* This method is defined by [components\update\classes\BaseDBUpdates](../../components/update/classes/BaseDBUpdates.md)
 
 #### Arguments
 
@@ -161,7 +161,7 @@ mixed components\update\classes\BaseDBUpdates::clear_global_cache()
 
 * Visibility: **public**
 * This method is **static**.
-* This method is defined by [components\update\classes\BaseDBUpdates](/apidocs/components/update/classes/BaseDBUpdates.md)
+* This method is defined by [components\update\classes\BaseDBUpdates](../../components/update/classes/BaseDBUpdates.md)
 
 
 
@@ -177,7 +177,7 @@ mixed components\update\classes\BaseDBUpdates::init_statics()
 
 * Visibility: **public**
 * This method is **static**.
-* This method is defined by [components\update\classes\BaseDBUpdates](/apidocs/components/update/classes/BaseDBUpdates.md)
+* This method is defined by [components\update\classes\BaseDBUpdates](../../components/update/classes/BaseDBUpdates.md)
 
 
 
@@ -193,7 +193,7 @@ mixed components\update\classes\BaseDBUpdates::package_data($type, $name)
 
 * Visibility: **public**
 * This method is **static**.
-* This method is defined by [components\update\classes\BaseDBUpdates](/apidocs/components/update/classes/BaseDBUpdates.md)
+* This method is defined by [components\update\classes\BaseDBUpdates](../../components/update/classes/BaseDBUpdates.md)
 
 #### Arguments
 
@@ -214,7 +214,7 @@ mixed components\update\classes\BaseDBUpdates::process_queue()
 
 * Visibility: **public**
 * This method is **static**.
-* This method is defined by [components\update\classes\BaseDBUpdates](/apidocs/components/update/classes/BaseDBUpdates.md)
+* This method is defined by [components\update\classes\BaseDBUpdates](../../components/update/classes/BaseDBUpdates.md)
 
 
 
@@ -229,7 +229,7 @@ mixed components\update\classes\BaseDBUpdates::__construct()
 
 
 * Visibility: **public**
-* This method is defined by [components\update\classes\BaseDBUpdates](/apidocs/components/update/classes/BaseDBUpdates.md)
+* This method is defined by [components\update\classes\BaseDBUpdates](../../components/update/classes/BaseDBUpdates.md)
 
 
 
@@ -244,7 +244,7 @@ mixed components\update\classes\BaseDBUpdates::clear_cache()
 
 
 * Visibility: **public**
-* This method is defined by [components\update\classes\BaseDBUpdates](/apidocs/components/update/classes/BaseDBUpdates.md)
+* This method is defined by [components\update\classes\BaseDBUpdates](../../components/update/classes/BaseDBUpdates.md)
 
 
 
@@ -259,7 +259,7 @@ mixed components\update\classes\BaseDBUpdates::current_version()
 
 
 * Visibility: **public**
-* This method is defined by [components\update\classes\BaseDBUpdates](/apidocs/components/update/classes/BaseDBUpdates.md)
+* This method is defined by [components\update\classes\BaseDBUpdates](../../components/update/classes/BaseDBUpdates.md)
 
 
 
@@ -274,7 +274,7 @@ mixed components\update\classes\BaseDBUpdates::install($dummydata, $forced, $upd
 
 
 * Visibility: **public**
-* This method is defined by [components\update\classes\BaseDBUpdates](/apidocs/components/update/classes/BaseDBUpdates.md)
+* This method is defined by [components\update\classes\BaseDBUpdates](../../components/update/classes/BaseDBUpdates.md)
 
 #### Arguments
 
@@ -314,7 +314,7 @@ mixed components\update\classes\BaseDBUpdates::latest_version()
 
 
 * Visibility: **public**
-* This method is defined by [components\update\classes\BaseDBUpdates](/apidocs/components/update/classes/BaseDBUpdates.md)
+* This method is defined by [components\update\classes\BaseDBUpdates](../../components/update/classes/BaseDBUpdates.md)
 
 
 
@@ -329,7 +329,7 @@ mixed components\update\classes\BaseDBUpdates::uninstall($forced)
 
 
 * Visibility: **public**
-* This method is defined by [components\update\classes\BaseDBUpdates](/apidocs/components/update/classes/BaseDBUpdates.md)
+* This method is defined by [components\update\classes\BaseDBUpdates](../../components/update/classes/BaseDBUpdates.md)
 
 #### Arguments
 
@@ -348,7 +348,7 @@ mixed components\update\classes\BaseDBUpdates::update($forced, $maybe_install)
 
 
 * Visibility: **public**
-* This method is defined by [components\update\classes\BaseDBUpdates](/apidocs/components/update/classes/BaseDBUpdates.md)
+* This method is defined by [components\update\classes\BaseDBUpdates](../../components/update/classes/BaseDBUpdates.md)
 
 #### Arguments
 
@@ -387,7 +387,7 @@ mixed components\update\classes\BaseDBUpdates::get_base_dir()
 
 
 * Visibility: **protected**
-* This method is defined by [components\update\classes\BaseDBUpdates](/apidocs/components/update/classes/BaseDBUpdates.md)
+* This method is defined by [components\update\classes\BaseDBUpdates](../../components/update/classes/BaseDBUpdates.md)
 
 
 
@@ -402,7 +402,7 @@ mixed components\update\classes\BaseDBUpdates::get_package_data()
 
 
 * Visibility: **protected**
-* This method is defined by [components\update\classes\BaseDBUpdates](/apidocs/components/update/classes/BaseDBUpdates.md)
+* This method is defined by [components\update\classes\BaseDBUpdates](../../components/update/classes/BaseDBUpdates.md)
 
 
 
@@ -417,7 +417,7 @@ mixed components\update\classes\BaseDBUpdates::next_version($version)
 
 
 * Visibility: **protected**
-* This method is defined by [components\update\classes\BaseDBUpdates](/apidocs/components/update/classes/BaseDBUpdates.md)
+* This method is defined by [components\update\classes\BaseDBUpdates](../../components/update/classes/BaseDBUpdates.md)
 
 #### Arguments
 
@@ -436,7 +436,7 @@ mixed components\update\classes\BaseDBUpdates::package()
 
 
 * Visibility: **protected**
-* This method is defined by [components\update\classes\BaseDBUpdates](/apidocs/components/update/classes/BaseDBUpdates.md)
+* This method is defined by [components\update\classes\BaseDBUpdates](../../components/update/classes/BaseDBUpdates.md)
 
 
 
@@ -451,7 +451,7 @@ mixed components\update\classes\BaseDBUpdates::queue($data, \Closure $operation)
 
 
 * Visibility: **protected**
-* This method is defined by [components\update\classes\BaseDBUpdates](/apidocs/components/update/classes/BaseDBUpdates.md)
+* This method is defined by [components\update\classes\BaseDBUpdates](../../components/update/classes/BaseDBUpdates.md)
 
 #### Arguments
 
@@ -471,7 +471,7 @@ mixed components\update\classes\BaseDBUpdates::version_bump($version)
 
 
 * Visibility: **private**
-* This method is defined by [components\update\classes\BaseDBUpdates](/apidocs/components/update/classes/BaseDBUpdates.md)
+* This method is defined by [components\update\classes\BaseDBUpdates](../../components/update/classes/BaseDBUpdates.md)
 
 #### Arguments
 

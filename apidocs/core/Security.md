@@ -13,18 +13,18 @@
 
 ## Class index
 **Constants**
-* [`  OUTPUT_BASE64`](#constant-OUTPUT_BASE64)
-* [`  OUTPUT_BINARY`](#constant-OUTPUT_BINARY)
-* [`  OUTPUT_DECIMAL`](#constant-OUTPUT_DECIMAL)
-* [`  OUTPUT_HEX`](#constant-OUTPUT_HEX)
-* [`  PASSWORD_STRENGTH_ACCEPTABLE`](#constant-PASSWORD_STRENGTH_ACCEPTABLE)
-* [`  PASSWORD_STRENGTH_STRONG`](#constant-PASSWORD_STRENGTH_STRONG)
-* [`  PASSWORD_STRENGTH_VERY_WEAK`](#constant-PASSWORD_STRENGTH_VERY_WEAK)
-* [`  PASSWORD_STRENGTH_WEAK`](#constant-PASSWORD_STRENGTH_WEAK)
+* [`  OUTPUT_BASE64`](#constant-output_base64)
+* [`  OUTPUT_BINARY`](#constant-output_binary)
+* [`  OUTPUT_DECIMAL`](#constant-output_decimal)
+* [`  OUTPUT_HEX`](#constant-output_hex)
+* [`  PASSWORD_STRENGTH_ACCEPTABLE`](#constant-password_strength_acceptable)
+* [`  PASSWORD_STRENGTH_STRONG`](#constant-password_strength_strong)
+* [`  PASSWORD_STRENGTH_VERY_WEAK`](#constant-password_strength_very_weak)
+* [`  PASSWORD_STRENGTH_WEAK`](#constant-password_strength_weak)
 
 **Properties**
-* [`public static mixed $HASH_DEFAULT`](#property-$HASH_DEFAULT)
-* [`public static mixed $HASH_PREFERENCES`](#property-$HASH_PREFERENCES)
+* [`public static mixed $HASH_DEFAULT`](#property-hash_default)
+* [`public static mixed $HASH_PREFERENCES`](#property-hash_preferences)
 
 **Methods**
 * [`public Boolean get_password_strength(String $password)`](#method-get_password_strength)

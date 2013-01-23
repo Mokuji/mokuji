@@ -7,7 +7,7 @@
 
 * Class name: Table
 * Namespace: dependencies
-* Parent class: [dependencies\Successable](/apidocs/dependencies/Successable.md)
+* Parent class: [dependencies\Successable](../dependencies/Successable.md)
 
 
 
@@ -15,20 +15,20 @@
 ## Class index
 
 **Properties**
-* [`private mixed $applied_sks`](#property-$applied_sks)
-* [`private mixed $component`](#property-$component)
-* [`private mixed $from`](#property-$from)
-* [`private mixed $group`](#property-$group)
-* [`private mixed $having`](#property-$having)
-* [`private mixed $hierarchy`](#property-$hierarchy)
-* [`private mixed $joins`](#property-$joins)
-* [`private mixed $limit`](#property-$limit)
-* [`private mixed $model`](#property-$model)
-* [`private mixed $models`](#property-$models)
-* [`private mixed $order`](#property-$order)
-* [`private mixed $select`](#property-$select)
-* [`private mixed $where`](#property-$where)
-* [`private mixed $working_model`](#property-$working_model)
+* [`private mixed $applied_sks`](#property-applied_sks)
+* [`private mixed $component`](#property-component)
+* [`private mixed $from`](#property-from)
+* [`private mixed $group`](#property-group)
+* [`private mixed $having`](#property-having)
+* [`private mixed $hierarchy`](#property-hierarchy)
+* [`private mixed $joins`](#property-joins)
+* [`private mixed $limit`](#property-limit)
+* [`private mixed $model`](#property-model)
+* [`private mixed $models`](#property-models)
+* [`private mixed $order`](#property-order)
+* [`private mixed $select`](#property-select)
+* [`private mixed $where`](#property-where)
+* [`private mixed $working_model`](#property-working_model)
 
 **Methods**
 * [`public mixed __construct($component, $model, $id, $models)`](#method-__construct)
@@ -346,7 +346,7 @@ mixed dependencies\Successable::_success()
 
 
 * Visibility: **public**
-* This method is defined by [dependencies\Successable](/apidocs/dependencies/Successable.md)
+* This method is defined by [dependencies\Successable](../dependencies/Successable.md)
 
 
 
@@ -430,7 +430,7 @@ mixed dependencies\Successable::and_is($check, $callback)
 
 
 * Visibility: **public**
-* This method is defined by [dependencies\Successable](/apidocs/dependencies/Successable.md)
+* This method is defined by [dependencies\Successable](../dependencies/Successable.md)
 
 #### Arguments
 
@@ -450,7 +450,7 @@ mixed dependencies\Successable::and_not($check)
 
 
 * Visibility: **public**
-* This method is defined by [dependencies\Successable](/apidocs/dependencies/Successable.md)
+* This method is defined by [dependencies\Successable](../dependencies/Successable.md)
 
 #### Arguments
 
@@ -537,7 +537,7 @@ mixed dependencies\Successable::failure($callback)
 
 
 * Visibility: **public**
-* This method is defined by [dependencies\Successable](/apidocs/dependencies/Successable.md)
+* This method is defined by [dependencies\Successable](../dependencies/Successable.md)
 
 #### Arguments
 
@@ -636,7 +636,7 @@ mixed dependencies\Successable::is($check, $callback)
 
 
 * Visibility: **public**
-* This method is defined by [dependencies\Successable](/apidocs/dependencies/Successable.md)
+* This method is defined by [dependencies\Successable](../dependencies/Successable.md)
 
 #### Arguments
 
@@ -726,7 +726,7 @@ mixed dependencies\Successable::not($check, $callback)
 
 
 * Visibility: **public**
-* This method is defined by [dependencies\Successable](/apidocs/dependencies/Successable.md)
+* This method is defined by [dependencies\Successable](../dependencies/Successable.md)
 
 #### Arguments
 
@@ -894,7 +894,7 @@ mixed dependencies\Successable::success($callback)
 
 
 * Visibility: **public**
-* This method is defined by [dependencies\Successable](/apidocs/dependencies/Successable.md)
+* This method is defined by [dependencies\Successable](../dependencies/Successable.md)
 
 #### Arguments
 
@@ -963,7 +963,7 @@ mixed dependencies\Successable::_do_check($check)
 
 
 * Visibility: **private**
-* This method is defined by [dependencies\Successable](/apidocs/dependencies/Successable.md)
+* This method is defined by [dependencies\Successable](../dependencies/Successable.md)
 
 #### Arguments
 
@@ -1031,7 +1031,7 @@ mixed dependencies\Table::conditions_to_comparisons(\dependencies\Conditions $co
 
 #### Arguments
 
-* $conditions **[dependencies\Conditions](/apidocs/dependencies/Conditions.md)**
+* $conditions **[dependencies\Conditions](../dependencies/Conditions.md)**
 
 
 

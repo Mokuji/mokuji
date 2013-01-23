@@ -14,11 +14,11 @@
 
 ## Class index
 **Constants**
-* [`  ForeignKey`](#constant-ForeignKey)
-* [`  LinkTable`](#constant-LinkTable)
-* [`  NestedSets`](#constant-NestedSets)
-* [`  Reference`](#constant-Reference)
-* [`  SelfReference`](#constant-SelfReference)
+* [`  ForeignKey`](#constant-foreignkey)
+* [`  LinkTable`](#constant-linktable)
+* [`  NestedSets`](#constant-nestedsets)
+* [`  Reference`](#constant-reference)
+* [`  SelfReference`](#constant-selfreference)
 
 
 **Methods**
@@ -103,7 +103,7 @@ mixed dependencies\RelationType::detect_type(\dependencies\BaseModel $model, arr
 
 #### Arguments
 
-* $model **[dependencies\BaseModel](/apidocs/dependencies/BaseModel.md)**
+* $model **[dependencies\BaseModel](../dependencies/BaseModel.md)**
 * $relation **array**
 
 

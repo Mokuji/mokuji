@@ -13,15 +13,15 @@
 
 ## Class index
 **Constants**
-* [`  AUTO`](#constant-AUTO)
-* [`  DOWN`](#constant-DOWN)
-* [`  INSIDE`](#constant-INSIDE)
-* [`  OUTSIDE`](#constant-OUTSIDE)
-* [`  UP`](#constant-UP)
+* [`  AUTO`](#constant-auto)
+* [`  DOWN`](#constant-down)
+* [`  INSIDE`](#constant-inside)
+* [`  OUTSIDE`](#constant-outside)
+* [`  UP`](#constant-up)
 
 **Properties**
-* [`private mixed $height`](#property-$height)
-* [`private mixed $width`](#property-$width)
+* [`private mixed $height`](#property-height)
+* [`private mixed $width`](#property-width)
 
 **Methods**
 * [`public mixed __construct($width, $height)`](#method-__construct)

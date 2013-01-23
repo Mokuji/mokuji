@@ -15,7 +15,7 @@
 ## Class index
 
 **Properties**
-* [`protected mixed $context`](#property-$context)
+* [`protected mixed $context`](#property-context)
 
 **Methods**
 * [`public mixed __construct($errno, $errstr, $errfile, $errline, $context)`](#method-__construct)
