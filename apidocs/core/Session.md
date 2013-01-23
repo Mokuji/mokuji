@@ -39,6 +39,7 @@
 
 
 ## Property `$id`
+In class: [core\Session](#top)
 
 ```
 public mixed $id
@@ -52,6 +53,7 @@ public mixed $id
 
 
 ## Property `$keep_flashes`
+In class: [core\Session](#top)
 
 ```
 public mixed $keep_flashes = false
@@ -68,6 +70,7 @@ public mixed $keep_flashes = false
 
 
 ## Method `__destruct`
+In class: [core\Session](#top)
 
 ```
 mixed core\Session::__destruct()
@@ -82,6 +85,7 @@ mixed core\Session::__destruct()
 
 
 ## Method `clear_flashes`
+In class: [core\Session](#top)
 
 ```
 mixed core\Session::clear_flashes()
@@ -96,6 +100,7 @@ mixed core\Session::clear_flashes()
 
 
 ## Method `destroy`
+In class: [core\Session](#top)
 
 ```
 mixed core\Session::destroy()
@@ -110,6 +115,7 @@ mixed core\Session::destroy()
 
 
 ## Method `flash`
+In class: [core\Session](#top)
 
 ```
 mixed core\Session::flash()
@@ -124,6 +130,7 @@ mixed core\Session::flash()
 
 
 ## Method `init`
+In class: [core\Session](#top)
 
 ```
 mixed core\Session::init()
@@ -138,6 +145,7 @@ mixed core\Session::init()
 
 
 ## Method `keep_flashes`
+In class: [core\Session](#top)
 
 ```
 mixed core\Session::keep_flashes($set)
@@ -156,6 +164,7 @@ mixed core\Session::keep_flashes($set)
 
 
 ## Method `regenerate`
+In class: [core\Session](#top)
 
 ```
 mixed core\Session::regenerate()
@@ -170,6 +179,7 @@ mixed core\Session::regenerate()
 
 
 ## Method `unset_flash`
+In class: [core\Session](#top)
 
 ```
 mixed core\Session::unset_flash($name)
@@ -188,6 +198,7 @@ mixed core\Session::unset_flash($name)
 
 
 ## Method `progress_flashes`
+In class: [core\Session](#top)
 
 ```
 mixed core\Session::progress_flashes()

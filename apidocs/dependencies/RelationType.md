@@ -33,6 +33,7 @@
 
 
 ## Constant `ForeignKey`
+In class: [dependencies\RelationType](#top)
 
 ```
 const ForeignKey = 1
@@ -43,6 +44,7 @@ const ForeignKey = 1
 
 
 ## Constant `LinkTable`
+In class: [dependencies\RelationType](#top)
 
 ```
 const LinkTable = 4
@@ -53,6 +55,7 @@ const LinkTable = 4
 
 
 ## Constant `NestedSets`
+In class: [dependencies\RelationType](#top)
 
 ```
 const NestedSets = 5
@@ -63,6 +66,7 @@ const NestedSets = 5
 
 
 ## Constant `Reference`
+In class: [dependencies\RelationType](#top)
 
 ```
 const Reference = 2
@@ -73,6 +77,7 @@ const Reference = 2
 
 
 ## Constant `SelfReference`
+In class: [dependencies\RelationType](#top)
 
 ```
 const SelfReference = 3
@@ -88,6 +93,7 @@ const SelfReference = 3
 
 
 ## Method `detect_type`
+In class: [dependencies\RelationType](#top)
 
 ```
 mixed dependencies\RelationType::detect_type(\dependencies\BaseModel $model, array $relation)

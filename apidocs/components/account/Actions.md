@@ -61,6 +61,7 @@
 
 
 ## Property `$reserved`
+In class: [components\account\Actions](#top)
 
 ```
 protected mixed $reserved = array('__construct', 'filter', 'module', 'section', 'view', 'table', 'get_html', 'call', 'template')
@@ -76,6 +77,7 @@ protected mixed $reserved = array('__construct', 'filter', 'module', 'section', 
 
 
 ## Property `$component`
+In class: [components\account\Actions](#top)
 
 ```
 protected mixed $component
@@ -90,6 +92,7 @@ protected mixed $component
 
 
 ## Property `$default_permission`
+In class: [components\account\Actions](#top)
 
 ```
 protected mixed $default_permission = 2
@@ -103,6 +106,7 @@ protected mixed $default_permission = 2
 
 
 ## Property `$permissions`
+In class: [components\account\Actions](#top)
 
 ```
 protected mixed $permissions = array('login' => 0, 'logout' => 1, 'register' => 0, 'edit_profile' => 1, 'claim_account' => 0, 'save_avatar' => 1)
@@ -119,6 +123,7 @@ protected mixed $permissions = array('login' => 0, 'logout' => 1, 'register' => 
 
 
 ## Method `__construct`
+In class: [components\account\Actions](#top)
 
 ```
 mixed dependencies\BaseComponent::__construct()
@@ -134,6 +139,7 @@ mixed dependencies\BaseComponent::__construct()
 
 
 ## Method `_call`
+In class: [components\account\Actions](#top)
 
 ```
 mixed dependencies\BaseComponent::_call($controller, array $args)
@@ -154,6 +160,7 @@ mixed dependencies\BaseComponent::_call($controller, array $args)
 
 
 ## Method `call`
+In class: [components\account\Actions](#top)
 
 ```
 mixed dependencies\BaseComponent::call($controller, $data)
@@ -174,6 +181,7 @@ mixed dependencies\BaseComponent::call($controller, $data)
 
 
 ## Method `filters`
+In class: [components\account\Actions](#top)
 
 ```
 mixed dependencies\BaseComponent::filters()
@@ -189,6 +197,7 @@ mixed dependencies\BaseComponent::filters()
 
 
 ## Method `helper`
+In class: [components\account\Actions](#top)
 
 ```
 mixed dependencies\BaseComponent::helper($controller)
@@ -208,6 +217,7 @@ mixed dependencies\BaseComponent::helper($controller)
 
 
 ## Method `model`
+In class: [components\account\Actions](#top)
 
 ```
 mixed dependencies\BaseComponent::model($model_name)
@@ -227,6 +237,7 @@ mixed dependencies\BaseComponent::model($model_name)
 
 
 ## Method `module`
+In class: [components\account\Actions](#top)
 
 ```
 mixed dependencies\BaseComponent::module($module_name, $options)
@@ -247,6 +258,7 @@ mixed dependencies\BaseComponent::module($module_name, $options)
 
 
 ## Method `section`
+In class: [components\account\Actions](#top)
 
 ```
 mixed dependencies\BaseComponent::section($section, $options)
@@ -267,6 +279,7 @@ mixed dependencies\BaseComponent::section($section, $options)
 
 
 ## Method `table`
+In class: [components\account\Actions](#top)
 
 ```
 mixed dependencies\BaseComponent::table($model_name, $id)
@@ -287,6 +300,7 @@ mixed dependencies\BaseComponent::table($model_name, $id)
 
 
 ## Method `view`
+In class: [components\account\Actions](#top)
 
 ```
 mixed dependencies\BaseComponent::view($module_name, $options)
@@ -307,6 +321,7 @@ mixed dependencies\BaseComponent::view($module_name, $options)
 
 
 ## Method `cancel_import_users`
+In class: [components\account\Actions](#top)
 
 ```
 mixed components\account\Actions::cancel_import_users()
@@ -321,6 +336,7 @@ mixed components\account\Actions::cancel_import_users()
 
 
 ## Method `claim_account`
+In class: [components\account\Actions](#top)
 
 ```
 mixed components\account\Actions::claim_account($data)
@@ -339,6 +355,7 @@ mixed components\account\Actions::claim_account($data)
 
 
 ## Method `deactivate_user`
+In class: [components\account\Actions](#top)
 
 ```
 mixed components\account\Actions::deactivate_user($data)
@@ -357,6 +374,7 @@ mixed components\account\Actions::deactivate_user($data)
 
 
 ## Method `delete_user`
+In class: [components\account\Actions](#top)
 
 ```
 mixed components\account\Actions::delete_user($data)
@@ -375,6 +393,7 @@ mixed components\account\Actions::delete_user($data)
 
 
 ## Method `delete_user_group`
+In class: [components\account\Actions](#top)
 
 ```
 mixed components\account\Actions::delete_user_group($data)
@@ -393,6 +412,7 @@ mixed components\account\Actions::delete_user_group($data)
 
 
 ## Method `edit_profile`
+In class: [components\account\Actions](#top)
 
 ```
 mixed components\account\Actions::edit_profile($data)
@@ -411,6 +431,7 @@ mixed components\account\Actions::edit_profile($data)
 
 
 ## Method `insert_user_groups`
+In class: [components\account\Actions](#top)
 
 ```
 mixed components\account\Actions::insert_user_groups($data)
@@ -429,6 +450,7 @@ mixed components\account\Actions::insert_user_groups($data)
 
 
 ## Method `login`
+In class: [components\account\Actions](#top)
 
 ```
 mixed components\account\Actions::login($data)
@@ -447,6 +469,7 @@ mixed components\account\Actions::login($data)
 
 
 ## Method `logout`
+In class: [components\account\Actions](#top)
 
 ```
 mixed components\account\Actions::logout($data)
@@ -465,6 +488,7 @@ mixed components\account\Actions::logout($data)
 
 
 ## Method `register`
+In class: [components\account\Actions](#top)
 
 ```
 mixed components\account\Actions::register($data)
@@ -483,6 +507,7 @@ mixed components\account\Actions::register($data)
 
 
 ## Method `reset_password`
+In class: [components\account\Actions](#top)
 
 ```
 mixed components\account\Actions::reset_password($data)
@@ -501,6 +526,7 @@ mixed components\account\Actions::reset_password($data)
 
 
 ## Method `save_avatar`
+In class: [components\account\Actions](#top)
 
 ```
 mixed components\account\Actions::save_avatar($data)
@@ -519,6 +545,7 @@ mixed components\account\Actions::save_avatar($data)
 
 
 ## Method `send_mail`
+In class: [components\account\Actions](#top)
 
 ```
 mixed components\account\Actions::send_mail($data)
@@ -537,6 +564,7 @@ mixed components\account\Actions::send_mail($data)
 
 
 ## Method `set_user_status`
+In class: [components\account\Actions](#top)
 
 ```
 mixed components\account\Actions::set_user_status($data)
@@ -555,6 +583,7 @@ mixed components\account\Actions::set_user_status($data)
 
 
 ## Method `update_user_groups`
+In class: [components\account\Actions](#top)
 
 ```
 mixed components\account\Actions::update_user_groups($data)

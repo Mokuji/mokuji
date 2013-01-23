@@ -35,6 +35,7 @@
 
 
 ## Property `$paths`
+In class: [core\File](#top)
 
 ```
 private mixed $paths = null
@@ -48,6 +49,7 @@ private mixed $paths = null
 
 
 ## Property `$uploads`
+In class: [core\File](#top)
 
 ```
 private mixed $uploads
@@ -64,6 +66,7 @@ private mixed $uploads
 
 
 ## Method `add_dir`
+In class: [core\File](#top)
 
 ```
 mixed core\File::add_dir($path)
@@ -82,6 +85,7 @@ mixed core\File::add_dir($path)
 
 
 ## Method `check_dir`
+In class: [core\File](#top)
 
 ```
 mixed core\File::check_dir($path)
@@ -100,6 +104,7 @@ mixed core\File::check_dir($path)
 
 
 ## Method `file`
+In class: [core\File](#top)
 
 ```
 mixed core\File::file($source)
@@ -118,6 +123,7 @@ mixed core\File::file($source)
 
 
 ## Method `image`
+In class: [core\File](#top)
 
 ```
 mixed core\File::image($source)
@@ -136,6 +142,7 @@ mixed core\File::image($source)
 
 
 ## Method `init`
+In class: [core\File](#top)
 
 ```
 mixed core\File::init()

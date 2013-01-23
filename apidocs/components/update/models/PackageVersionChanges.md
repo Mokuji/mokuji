@@ -151,6 +151,7 @@
 
 
 ## Property `$generatedLabels`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 protected mixed $generatedLabels = array()
@@ -166,6 +167,7 @@ protected mixed $generatedLabels = array()
 
 
 ## Property `$labels`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 protected mixed $labels = array()
@@ -181,6 +183,7 @@ protected mixed $labels = array()
 
 
 ## Property `$relations`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 protected mixed $relations = array('PackageVersions' => array('package_version_id' => 'PackageVersions.id'))
@@ -195,6 +198,7 @@ protected mixed $relations = array('PackageVersions' => array('package_version_i
 
 
 ## Property `$relations_by_column`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 protected mixed $relations_by_column
@@ -210,6 +214,7 @@ protected mixed $relations_by_column
 
 
 ## Property `$table_name`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 protected mixed $table_name = 'update_package_version_changes'
@@ -224,6 +229,7 @@ protected mixed $table_name = 'update_package_version_changes'
 
 
 ## Property `$validate`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 protected mixed $validate = array()
@@ -242,6 +248,7 @@ protected mixed $validate = array()
 
 
 ## Method `model_data`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\BaseModel::model_data($get)
@@ -262,6 +269,7 @@ mixed dependencies\BaseModel::model_data($get)
 
 
 ## Method `table_data`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\BaseModel::table_data($get, $set)
@@ -283,6 +291,7 @@ mixed dependencies\BaseModel::table_data($get, $set)
 
 
 ## Method `create_table_data`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\BaseModel::create_table_data()
@@ -299,6 +308,7 @@ mixed dependencies\BaseModel::create_table_data()
 
 
 ## Method `__clone`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::__clone()
@@ -314,6 +324,7 @@ mixed dependencies\Data::__clone()
 
 
 ## Method `__construct`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::__construct($data, $context, $key)
@@ -335,6 +346,7 @@ mixed dependencies\Data::__construct($data, $context, $key)
 
 
 ## Method `__destruct`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::__destruct()
@@ -350,6 +362,7 @@ mixed dependencies\Data::__destruct()
 
 
 ## Method `__get`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::__get($key)
@@ -369,6 +382,7 @@ mixed dependencies\Data::__get($key)
 
 
 ## Method `__set`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::__set($key, $val)
@@ -389,6 +403,7 @@ mixed dependencies\Data::__set($key, $val)
 
 
 ## Method `__toString`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::__toString()
@@ -404,6 +419,7 @@ mixed dependencies\Data::__toString()
 
 
 ## Method `__unset`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::__unset($key)
@@ -423,6 +439,7 @@ mixed dependencies\Data::__unset($key)
 
 
 ## Method `_attempt_unserialize`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::_attempt_unserialize()
@@ -438,6 +455,7 @@ mixed dependencies\Data::_attempt_unserialize()
 
 
 ## Method `_clear_context`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::_clear_context()
@@ -453,6 +471,7 @@ mixed dependencies\Data::_clear_context()
 
 
 ## Method `_set_context`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::_set_context($context, $key)
@@ -473,6 +492,7 @@ mixed dependencies\Data::_set_context($context, $key)
 
 
 ## Method `_success`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Successable::_success()
@@ -488,6 +508,7 @@ mixed dependencies\Successable::_success()
 
 
 ## Method `add_rules`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::add_rules()
@@ -503,6 +524,7 @@ mixed dependencies\Data::add_rules()
 
 
 ## Method `ai`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\BaseModel::ai($get_key)
@@ -522,6 +544,7 @@ mixed dependencies\BaseModel::ai($get_key)
 
 
 ## Method `all`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::all($callback)
@@ -541,6 +564,7 @@ mixed dependencies\Data::all($callback)
 
 
 ## Method `and_is`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Successable::and_is($check, $callback)
@@ -561,6 +585,7 @@ mixed dependencies\Successable::and_is($check, $callback)
 
 
 ## Method `and_not`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Successable::and_not($check)
@@ -580,6 +605,7 @@ mixed dependencies\Successable::and_not($check)
 
 
 ## Method `any`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::any($callback)
@@ -599,6 +625,7 @@ mixed dependencies\Data::any($callback)
 
 
 ## Method `as_array`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::as_array($serialized)
@@ -618,6 +645,7 @@ mixed dependencies\Data::as_array($serialized)
 
 
 ## Method `as_form`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\BaseModel::as_form($id)
@@ -637,6 +665,7 @@ Create an HTML form for updating this model.
 
 
 ## Method `as_json`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::as_json($flags, $options)
@@ -657,6 +686,7 @@ mixed dependencies\Data::as_json($flags, $options)
 
 
 ## Method `as_list`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::as_list()
@@ -672,6 +702,7 @@ mixed dependencies\Data::as_list()
 
 
 ## Method `as_options`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::as_options()
@@ -687,6 +718,7 @@ mixed dependencies\Data::as_options()
 
 
 ## Method `as_rlist`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::as_rlist()
@@ -702,6 +734,7 @@ mixed dependencies\Data::as_rlist()
 
 
 ## Method `as_table`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::as_table()
@@ -717,6 +750,7 @@ mixed dependencies\Data::as_table()
 
 
 ## Method `back`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::back()
@@ -732,6 +766,7 @@ mixed dependencies\Data::back()
 
 
 ## Method `become`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::become(\dependencies\Data $data)
@@ -751,6 +786,7 @@ mixed dependencies\Data::become(\dependencies\Data $data)
 
 
 ## Method `check`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::check($node_name)
@@ -770,6 +806,7 @@ mixed dependencies\Data::check($node_name)
 
 
 ## Method `clear`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::clear()
@@ -785,6 +822,7 @@ mixed dependencies\Data::clear()
 
 
 ## Method `component`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\BaseModel::component()
@@ -800,6 +838,7 @@ mixed dependencies\BaseModel::component()
 
 
 ## Method `convert`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::convert()
@@ -815,6 +854,7 @@ mixed dependencies\Data::convert()
 
 
 ## Method `copy`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::copy()
@@ -830,6 +870,7 @@ mixed dependencies\Data::copy()
 
 
 ## Method `copyto`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::copyto($to)
@@ -849,6 +890,7 @@ mixed dependencies\Data::copyto($to)
 
 
 ## Method `delete`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\BaseModel::delete()
@@ -864,6 +906,7 @@ mixed dependencies\BaseModel::delete()
 
 
 ## Method `dump`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::dump($format, $l)
@@ -884,6 +927,7 @@ mixed dependencies\Data::dump($format, $l)
 
 
 ## Method `each`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::each($callback)
@@ -903,6 +947,7 @@ mixed dependencies\Data::each($callback)
 
 
 ## Method `enforce_rules`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::enforce_rules($recursive)
@@ -922,6 +967,7 @@ mixed dependencies\Data::enforce_rules($recursive)
 
 
 ## Method `eq`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::eq($value, $callback)
@@ -942,6 +988,7 @@ mixed dependencies\Data::eq($value, $callback)
 
 
 ## Method `extract`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::extract($id)
@@ -961,6 +1008,7 @@ mixed dependencies\Data::extract($id)
 
 
 ## Method `failure`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Successable::failure($callback)
@@ -980,6 +1028,7 @@ mixed dependencies\Successable::failure($callback)
 
 
 ## Method `filter`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::filter($callback)
@@ -999,6 +1048,7 @@ mixed dependencies\Data::filter($callback)
 
 
 ## Method `format`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::format($format)
@@ -1018,6 +1068,7 @@ mixed dependencies\Data::format($format)
 
 
 ## Method `generation`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::generation()
@@ -1033,6 +1084,7 @@ mixed dependencies\Data::generation()
 
 
 ## Method `get`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::get($as)
@@ -1052,6 +1104,7 @@ mixed dependencies\Data::get($as)
 
 
 ## Method `getIterator`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::getIterator()
@@ -1067,6 +1120,7 @@ mixed dependencies\Data::getIterator()
 
 
 ## Method `get_package_version`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed components\update\models\PackageVersionChanges::get_package_version()
@@ -1081,6 +1135,7 @@ mixed components\update\models\PackageVersionChanges::get_package_version()
 
 
 ## Method `gt`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::gt($value, $callback)
@@ -1101,6 +1156,7 @@ mixed dependencies\Data::gt($value, $callback)
 
 
 ## Method `having`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::having()
@@ -1116,6 +1172,7 @@ mixed dependencies\Data::having()
 
 
 ## Method `hdelete`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\BaseModel::hdelete()
@@ -1131,6 +1188,7 @@ mixed dependencies\BaseModel::hdelete()
 
 
 ## Method `hsave`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\BaseModel::hsave($parent_pks, $index)
@@ -1151,6 +1209,7 @@ mixed dependencies\BaseModel::hsave($parent_pks, $index)
 
 
 ## Method `html_escape`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::html_escape($flags)
@@ -1170,6 +1229,7 @@ mixed dependencies\Data::html_escape($flags)
 
 
 ## Method `idx`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::idx($key)
@@ -1189,6 +1249,7 @@ mixed dependencies\Data::idx($key)
 
 
 ## Method `is`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Successable::is($check, $callback)
@@ -1209,6 +1270,7 @@ mixed dependencies\Successable::is($check, $callback)
 
 
 ## Method `is_childnode`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::is_childnode()
@@ -1224,6 +1286,7 @@ mixed dependencies\Data::is_childnode()
 
 
 ## Method `is_empty`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::is_empty()
@@ -1239,6 +1302,7 @@ mixed dependencies\Data::is_empty()
 
 
 ## Method `is_false`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::is_false()
@@ -1254,6 +1318,7 @@ mixed dependencies\Data::is_false()
 
 
 ## Method `is_godnode`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::is_godnode()
@@ -1269,6 +1334,7 @@ mixed dependencies\Data::is_godnode()
 
 
 ## Method `is_leafnode`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::is_leafnode()
@@ -1284,6 +1350,7 @@ mixed dependencies\Data::is_leafnode()
 
 
 ## Method `is_numeric`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::is_numeric()
@@ -1299,6 +1366,7 @@ mixed dependencies\Data::is_numeric()
 
 
 ## Method `is_parent`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::is_parent()
@@ -1314,6 +1382,7 @@ mixed dependencies\Data::is_parent()
 
 
 ## Method `is_set`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::is_set()
@@ -1329,6 +1398,7 @@ mixed dependencies\Data::is_set()
 
 
 ## Method `is_true`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::is_true()
@@ -1344,6 +1414,7 @@ mixed dependencies\Data::is_true()
 
 
 ## Method `join`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::join($separator)
@@ -1363,6 +1434,7 @@ mixed dependencies\Data::join($separator)
 
 
 ## Method `key`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::key()
@@ -1378,6 +1450,7 @@ mixed dependencies\Data::key()
 
 
 ## Method `keyof`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::keyof($node)
@@ -1397,6 +1470,7 @@ mixed dependencies\Data::keyof($node)
 
 
 ## Method `keys`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::keys()
@@ -1412,6 +1486,7 @@ mixed dependencies\Data::keys()
 
 
 ## Method `ksort`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 \dependencies\Data dependencies\Data::ksort()
@@ -1427,6 +1502,7 @@ Sorts the data object by key.
 
 
 ## Method `labels`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\BaseModel::labels($originals)
@@ -1446,6 +1522,7 @@ mixed dependencies\BaseModel::labels($originals)
 
 
 ## Method `lowercase`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::lowercase()
@@ -1461,6 +1538,7 @@ mixed dependencies\Data::lowercase()
 
 
 ## Method `lt`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::lt($value, $callback)
@@ -1481,6 +1559,7 @@ mixed dependencies\Data::lt($value, $callback)
 
 
 ## Method `map`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::map($callback)
@@ -1500,6 +1579,7 @@ mixed dependencies\Data::map($callback)
 
 
 ## Method `md5`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::md5()
@@ -1515,6 +1595,7 @@ mixed dependencies\Data::md5()
 
 
 ## Method `merge`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::merge($val, $deep)
@@ -1535,6 +1616,7 @@ mixed dependencies\Data::merge($val, $deep)
 
 
 ## Method `model`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\BaseModel::model()
@@ -1550,6 +1632,7 @@ mixed dependencies\BaseModel::model()
 
 
 ## Method `moveto`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::moveto($to)
@@ -1569,6 +1652,7 @@ mixed dependencies\Data::moveto($to)
 
 
 ## Method `not`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Successable::not($check, $callback)
@@ -1589,6 +1673,7 @@ mixed dependencies\Successable::not($check, $callback)
 
 
 ## Method `offsetExists`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::offsetExists($key)
@@ -1608,6 +1693,7 @@ mixed dependencies\Data::offsetExists($key)
 
 
 ## Method `offsetGet`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::offsetGet($key)
@@ -1627,6 +1713,7 @@ mixed dependencies\Data::offsetGet($key)
 
 
 ## Method `offsetSet`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::offsetSet($key, $val)
@@ -1647,6 +1734,7 @@ mixed dependencies\Data::offsetSet($key, $val)
 
 
 ## Method `offsetUnset`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::offsetUnset($key)
@@ -1666,6 +1754,7 @@ mixed dependencies\Data::offsetUnset($key)
 
 
 ## Method `otherwise`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::otherwise($default)
@@ -1685,6 +1774,7 @@ mixed dependencies\Data::otherwise($default)
 
 
 ## Method `parse`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::parse($regex, $flags)
@@ -1705,6 +1795,7 @@ mixed dependencies\Data::parse($regex, $flags)
 
 
 ## Method `pks`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\BaseModel::pks($get_keys)
@@ -1724,6 +1815,7 @@ mixed dependencies\BaseModel::pks($get_keys)
 
 
 ## Method `push`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::push()
@@ -1739,6 +1831,7 @@ mixed dependencies\Data::push()
 
 
 ## Method `relations_by_column`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 array dependencies\BaseModel::relations_by_column(string $column)
@@ -1758,6 +1851,7 @@ Gets the relations grouped by column name, rather than target model name.
 
 
 ## Method `render_form`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\BaseModel::render_form($id, $action, array $options)
@@ -1779,6 +1873,7 @@ mixed dependencies\BaseModel::render_form($id, $action, array $options)
 
 
 ## Method `reverse`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::reverse()
@@ -1794,6 +1889,7 @@ mixed dependencies\Data::reverse()
 
 
 ## Method `save`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\BaseModel::save()
@@ -1809,6 +1905,7 @@ mixed dependencies\BaseModel::save()
 
 
 ## Method `serialize`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::serialize()
@@ -1824,6 +1921,7 @@ mixed dependencies\Data::serialize()
 
 
 ## Method `serialized`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::serialized()
@@ -1839,6 +1937,7 @@ mixed dependencies\Data::serialized()
 
 
 ## Method `set`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::set()
@@ -1854,6 +1953,7 @@ mixed dependencies\Data::set()
 
 
 ## Method `size`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::size()
@@ -1869,6 +1969,7 @@ mixed dependencies\Data::size()
 
 
 ## Method `sks`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\BaseModel::sks($get_keys)
@@ -1888,6 +1989,7 @@ mixed dependencies\BaseModel::sks($get_keys)
 
 
 ## Method `slice`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::slice($offset, $length)
@@ -1908,6 +2010,7 @@ mixed dependencies\Data::slice($offset, $length)
 
 
 ## Method `split`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::split($s)
@@ -1927,6 +2030,7 @@ mixed dependencies\Data::split($s)
 
 
 ## Method `success`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Successable::success($callback)
@@ -1946,6 +2050,7 @@ mixed dependencies\Successable::success($callback)
 
 
 ## Method `table`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\BaseModel::table($model_name)
@@ -1965,6 +2070,7 @@ mixed dependencies\BaseModel::table($model_name)
 
 
 ## Method `trim`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::trim($charlist)
@@ -1984,6 +2090,7 @@ mixed dependencies\Data::trim($charlist)
 
 
 ## Method `type`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::type()
@@ -1999,6 +2106,7 @@ mixed dependencies\Data::type()
 
 
 ## Method `un_set`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::un_set()
@@ -2014,6 +2122,7 @@ mixed dependencies\Data::un_set()
 
 
 ## Method `unserialize`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::unserialize($d)
@@ -2033,6 +2142,7 @@ mixed dependencies\Data::unserialize($d)
 
 
 ## Method `unserialized`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::unserialized()
@@ -2048,6 +2158,7 @@ mixed dependencies\Data::unserialized()
 
 
 ## Method `uppercase`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::uppercase()
@@ -2063,6 +2174,7 @@ mixed dependencies\Data::uppercase()
 
 
 ## Method `validate`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::validate($name, array $rules)
@@ -2083,6 +2195,7 @@ mixed dependencies\Data::validate($name, array $rules)
 
 
 ## Method `validate_model`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\BaseModel::validate_model($options)
@@ -2104,6 +2217,7 @@ Validates the whole model, based on static validation rules.
 
 
 ## Method `validation_errors`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::validation_errors($names)
@@ -2123,6 +2237,7 @@ mixed dependencies\Data::validation_errors($names)
 
 
 ## Method `walk`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Data::walk($callback)
@@ -2142,6 +2257,7 @@ mixed dependencies\Data::walk($callback)
 
 
 ## Method `refresh_labels`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\BaseModel::refresh_labels()
@@ -2157,6 +2273,7 @@ mixed dependencies\BaseModel::refresh_labels()
 
 
 ## Method `_do_check`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\Successable::_do_check($check)
@@ -2176,6 +2293,7 @@ mixed dependencies\Successable::_do_check($check)
 
 
 ## Method `get_save_data`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\BaseModel::get_save_data($insert, $data)
@@ -2196,6 +2314,7 @@ mixed dependencies\BaseModel::get_save_data($insert, $data)
 
 
 ## Method `validate_column`
+In class: [components\update\models\PackageVersionChanges](#top)
 
 ```
 mixed dependencies\BaseModel::validate_column($column_name, $value)

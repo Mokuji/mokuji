@@ -88,6 +88,7 @@
 {% for constant in constants %}
 
 ## Constant `{{ constant.name }}`
+In class: [{{ className }}](#top)
 
 ```
 {{ constant.signature|raw }}
@@ -107,6 +108,7 @@
 {% for property in properties %}
 
 ## Property `{{ property.name }}`
+In class: [{{ className }}](#top)
 
 ```
 {{ property.signature|raw }}
@@ -131,6 +133,7 @@
 {% for method in methods %}
 
 ## Method `{{ method.name }}`
+In class: [{{ className }}](#top)
 
 ```
 {{ method.signature|raw }}

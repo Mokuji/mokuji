@@ -31,6 +31,7 @@
 
 
 ## Property `$system`
+In class: [Superclass](#top)
 
 ```
 private mixed $system = array()
@@ -48,6 +49,7 @@ private mixed $system = array()
 
 
 ## Method `get_instance`
+In class: [Superclass](#top)
 
 ```
 mixed Superclass::get_instance()
@@ -63,6 +65,7 @@ mixed Superclass::get_instance()
 
 
 ## Method `load_class`
+In class: [Superclass](#top)
 
 ```
 mixed Superclass::load_class($class, $args)

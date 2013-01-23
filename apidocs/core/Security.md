@@ -44,6 +44,7 @@
 
 
 ## Constant `OUTPUT_BASE64`
+In class: [core\Security](#top)
 
 ```
 const OUTPUT_BASE64 = 2
@@ -54,6 +55,7 @@ const OUTPUT_BASE64 = 2
 
 
 ## Constant `OUTPUT_BINARY`
+In class: [core\Security](#top)
 
 ```
 const OUTPUT_BINARY = 0
@@ -64,6 +66,7 @@ const OUTPUT_BINARY = 0
 
 
 ## Constant `OUTPUT_DECIMAL`
+In class: [core\Security](#top)
 
 ```
 const OUTPUT_DECIMAL = 3
@@ -74,6 +77,7 @@ const OUTPUT_DECIMAL = 3
 
 
 ## Constant `OUTPUT_HEX`
+In class: [core\Security](#top)
 
 ```
 const OUTPUT_HEX = 1
@@ -84,6 +88,7 @@ const OUTPUT_HEX = 1
 
 
 ## Constant `PASSWORD_STRENGTH_ACCEPTABLE`
+In class: [core\Security](#top)
 
 ```
 const PASSWORD_STRENGTH_ACCEPTABLE = 3
@@ -94,6 +99,7 @@ const PASSWORD_STRENGTH_ACCEPTABLE = 3
 
 
 ## Constant `PASSWORD_STRENGTH_STRONG`
+In class: [core\Security](#top)
 
 ```
 const PASSWORD_STRENGTH_STRONG = 4
@@ -104,6 +110,7 @@ const PASSWORD_STRENGTH_STRONG = 4
 
 
 ## Constant `PASSWORD_STRENGTH_VERY_WEAK`
+In class: [core\Security](#top)
 
 ```
 const PASSWORD_STRENGTH_VERY_WEAK = 1
@@ -114,6 +121,7 @@ const PASSWORD_STRENGTH_VERY_WEAK = 1
 
 
 ## Constant `PASSWORD_STRENGTH_WEAK`
+In class: [core\Security](#top)
 
 ```
 const PASSWORD_STRENGTH_WEAK = 2
@@ -127,6 +135,7 @@ const PASSWORD_STRENGTH_WEAK = 2
 
 
 ## Property `$HASH_DEFAULT`
+In class: [core\Security](#top)
 
 ```
 public mixed $HASH_DEFAULT = 'sha256'
@@ -141,6 +150,7 @@ public mixed $HASH_DEFAULT = 'sha256'
 
 
 ## Property `$HASH_PREFERENCES`
+In class: [core\Security](#top)
 
 ```
 public mixed $HASH_PREFERENCES = array('128' => array('ripemd128', 'snefru'), '160' => array('ripemd160', 'sha1'), '224' => array('sha224'), '256' => array('sha256'), '384' => array('sha384'), '512' => array('sha512', 'whirlpool'))
@@ -158,6 +168,7 @@ public mixed $HASH_PREFERENCES = array('128' => array('ripemd128', 'snefru'), '1
 
 
 ## Method `get_password_strength`
+In class: [core\Security](#top)
 
 ```
 Boolean core\Security::get_password_strength(String $password)
@@ -176,6 +187,7 @@ Checks the password supplied is strong enough.
 
 
 ## Method `hash`
+In class: [core\Security](#top)
 
 ```
 mixed core\Security::hash(string $input, string $algorithm, int $output_type)
@@ -196,6 +208,7 @@ Generates a hash using php's hash() function.
 
 
 ## Method `pref_hash_algo`
+In class: [core\Security](#top)
 
 ```
 string core\Security::pref_hash_algo(int $bits, bool $inclusive, $result_bits)
@@ -222,6 +235,7 @@ Gets the prefered hashing algorithm for a certain amount of bits worth of entrop
 
 
 ## Method `random_string`
+In class: [core\Security](#top)
 
 ```
 string core\Security::random_string(int $length, int $output_type, bool $secure)
@@ -242,6 +256,7 @@ Generates a random string.
 
 
 ## Method `_conv_rate`
+In class: [core\Security](#top)
 
 ```
 mixed core\Security::_conv_rate($output_type)
@@ -260,6 +275,7 @@ Get the conversion rate in characters from bytes.
 
 
 ## Method `_convert_bin`
+In class: [core\Security](#top)
 
 ```
 mixed core\Security::_convert_bin($input, $output_type)
@@ -279,6 +295,7 @@ Converts binary strings to other notations.
 
 
 ## Method `_random_bits`
+In class: [core\Security](#top)
 
 ```
 string core\Security::_random_bits(int $bits, bool $secure, int $output_type)

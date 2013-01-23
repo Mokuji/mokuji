@@ -66,6 +66,7 @@
 
 
 ## Property `$reserved`
+In class: [components\cms\Actions](#top)
 
 ```
 protected mixed $reserved = array('__construct', 'filter', 'module', 'section', 'view', 'table', 'get_html', 'call', 'template')
@@ -81,6 +82,7 @@ protected mixed $reserved = array('__construct', 'filter', 'module', 'section', 
 
 
 ## Property `$component`
+In class: [components\cms\Actions](#top)
 
 ```
 protected mixed $component
@@ -95,6 +97,7 @@ protected mixed $component
 
 
 ## Property `$default_permission`
+In class: [components\cms\Actions](#top)
 
 ```
 protected mixed $default_permission
@@ -109,6 +112,7 @@ protected mixed $default_permission
 
 
 ## Property `$permissions`
+In class: [components\cms\Actions](#top)
 
 ```
 protected mixed $permissions = array('select_menu' => 2, 'new_page' => 2, 'edit_page' => 2, 'logout' => 1)
@@ -125,6 +129,7 @@ protected mixed $permissions = array('select_menu' => 2, 'new_page' => 2, 'edit_
 
 
 ## Method `__construct`
+In class: [components\cms\Actions](#top)
 
 ```
 mixed dependencies\BaseComponent::__construct()
@@ -140,6 +145,7 @@ mixed dependencies\BaseComponent::__construct()
 
 
 ## Method `_call`
+In class: [components\cms\Actions](#top)
 
 ```
 mixed dependencies\BaseComponent::_call($controller, array $args)
@@ -160,6 +166,7 @@ mixed dependencies\BaseComponent::_call($controller, array $args)
 
 
 ## Method `call`
+In class: [components\cms\Actions](#top)
 
 ```
 mixed dependencies\BaseComponent::call($controller, $data)
@@ -180,6 +187,7 @@ mixed dependencies\BaseComponent::call($controller, $data)
 
 
 ## Method `filters`
+In class: [components\cms\Actions](#top)
 
 ```
 mixed dependencies\BaseComponent::filters()
@@ -195,6 +203,7 @@ mixed dependencies\BaseComponent::filters()
 
 
 ## Method `helper`
+In class: [components\cms\Actions](#top)
 
 ```
 mixed dependencies\BaseComponent::helper($controller)
@@ -214,6 +223,7 @@ mixed dependencies\BaseComponent::helper($controller)
 
 
 ## Method `model`
+In class: [components\cms\Actions](#top)
 
 ```
 mixed dependencies\BaseComponent::model($model_name)
@@ -233,6 +243,7 @@ mixed dependencies\BaseComponent::model($model_name)
 
 
 ## Method `module`
+In class: [components\cms\Actions](#top)
 
 ```
 mixed dependencies\BaseComponent::module($module_name, $options)
@@ -253,6 +264,7 @@ mixed dependencies\BaseComponent::module($module_name, $options)
 
 
 ## Method `section`
+In class: [components\cms\Actions](#top)
 
 ```
 mixed dependencies\BaseComponent::section($section, $options)
@@ -273,6 +285,7 @@ mixed dependencies\BaseComponent::section($section, $options)
 
 
 ## Method `table`
+In class: [components\cms\Actions](#top)
 
 ```
 mixed dependencies\BaseComponent::table($model_name, $id)
@@ -293,6 +306,7 @@ mixed dependencies\BaseComponent::table($model_name, $id)
 
 
 ## Method `view`
+In class: [components\cms\Actions](#top)
 
 ```
 mixed dependencies\BaseComponent::view($module_name, $options)
@@ -313,6 +327,7 @@ mixed dependencies\BaseComponent::view($module_name, $options)
 
 
 ## Method `delete_page`
+In class: [components\cms\Actions](#top)
 
 ```
 mixed components\cms\Actions::delete_page($data)
@@ -331,6 +346,7 @@ mixed components\cms\Actions::delete_page($data)
 
 
 ## Method `detach_page`
+In class: [components\cms\Actions](#top)
 
 ```
 mixed components\cms\Actions::detach_page($data)
@@ -349,6 +365,7 @@ mixed components\cms\Actions::detach_page($data)
 
 
 ## Method `edit_page`
+In class: [components\cms\Actions](#top)
 
 ```
 mixed components\cms\Actions::edit_page($data)
@@ -367,6 +384,7 @@ mixed components\cms\Actions::edit_page($data)
 
 
 ## Method `insert_sites`
+In class: [components\cms\Actions](#top)
 
 ```
 mixed components\cms\Actions::insert_sites($data)
@@ -385,6 +403,7 @@ mixed components\cms\Actions::insert_sites($data)
 
 
 ## Method `language`
+In class: [components\cms\Actions](#top)
 
 ```
 mixed components\cms\Actions::language($data)
@@ -403,6 +422,7 @@ mixed components\cms\Actions::language($data)
 
 
 ## Method `link_page`
+In class: [components\cms\Actions](#top)
 
 ```
 mixed components\cms\Actions::link_page($data)
@@ -421,6 +441,7 @@ mixed components\cms\Actions::link_page($data)
 
 
 ## Method `login`
+In class: [components\cms\Actions](#top)
 
 ```
 mixed components\cms\Actions::login($data)
@@ -439,6 +460,7 @@ mixed components\cms\Actions::login($data)
 
 
 ## Method `logout`
+In class: [components\cms\Actions](#top)
 
 ```
 mixed components\cms\Actions::logout($data)
@@ -457,6 +479,7 @@ mixed components\cms\Actions::logout($data)
 
 
 ## Method `new_page`
+In class: [components\cms\Actions](#top)
 
 ```
 mixed components\cms\Actions::new_page($data)
@@ -475,6 +498,7 @@ mixed components\cms\Actions::new_page($data)
 
 
 ## Method `pause_redirects`
+In class: [components\cms\Actions](#top)
 
 ```
 mixed components\cms\Actions::pause_redirects($data)
@@ -493,6 +517,7 @@ mixed components\cms\Actions::pause_redirects($data)
 
 
 ## Method `play_redirects`
+In class: [components\cms\Actions](#top)
 
 ```
 mixed components\cms\Actions::play_redirects($data)
@@ -511,6 +536,7 @@ mixed components\cms\Actions::play_redirects($data)
 
 
 ## Method `register`
+In class: [components\cms\Actions](#top)
 
 ```
 mixed components\cms\Actions::register($data)
@@ -529,6 +555,7 @@ mixed components\cms\Actions::register($data)
 
 
 ## Method `save_menu_item`
+In class: [components\cms\Actions](#top)
 
 ```
 mixed components\cms\Actions::save_menu_item($data)
@@ -547,6 +574,7 @@ mixed components\cms\Actions::save_menu_item($data)
 
 
 ## Method `save_menu_link`
+In class: [components\cms\Actions](#top)
 
 ```
 mixed components\cms\Actions::save_menu_link($data)
@@ -565,6 +593,7 @@ mixed components\cms\Actions::save_menu_link($data)
 
 
 ## Method `save_settings_simple`
+In class: [components\cms\Actions](#top)
 
 ```
 mixed components\cms\Actions::save_settings_simple($data)
@@ -583,6 +612,7 @@ mixed components\cms\Actions::save_settings_simple($data)
 
 
 ## Method `select_menu`
+In class: [components\cms\Actions](#top)
 
 ```
 mixed components\cms\Actions::select_menu($data)
@@ -601,6 +631,7 @@ mixed components\cms\Actions::select_menu($data)
 
 
 ## Method `send_feedback`
+In class: [components\cms\Actions](#top)
 
 ```
 mixed components\cms\Actions::send_feedback($data)
@@ -619,6 +650,7 @@ mixed components\cms\Actions::send_feedback($data)
 
 
 ## Method `update_cms_config`
+In class: [components\cms\Actions](#top)
 
 ```
 mixed components\cms\Actions::update_cms_config($data)
@@ -637,6 +669,7 @@ mixed components\cms\Actions::update_cms_config($data)
 
 
 ## Method `update_ip_addresses`
+In class: [components\cms\Actions](#top)
 
 ```
 mixed components\cms\Actions::update_ip_addresses($data)
@@ -655,6 +688,7 @@ mixed components\cms\Actions::update_ip_addresses($data)
 
 
 ## Method `update_sites`
+In class: [components\cms\Actions](#top)
 
 ```
 mixed components\cms\Actions::update_sites($data)

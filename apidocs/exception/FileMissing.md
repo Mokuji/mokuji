@@ -37,6 +37,7 @@
 
 
 ## Property `$ex_code`
+In class: [exception\FileMissing](#top)
 
 ```
 protected mixed $ex_code = EX_FILEMISSING
@@ -51,6 +52,7 @@ protected mixed $ex_code = EX_FILEMISSING
 
 
 ## Property `$prev`
+In class: [exception\FileMissing](#top)
 
 ```
 protected mixed $prev
@@ -68,6 +70,7 @@ protected mixed $prev
 
 
 ## Method `__construct`
+In class: [exception\FileMissing](#top)
 
 ```
 mixed exception\Exception::__construct()
@@ -83,6 +86,7 @@ mixed exception\Exception::__construct()
 
 
 ## Method `getExCode`
+In class: [exception\FileMissing](#top)
 
 ```
 mixed exception\Exception::getExCode()
@@ -98,6 +102,7 @@ mixed exception\Exception::getExCode()
 
 
 ## Method `getPrev`
+In class: [exception\FileMissing](#top)
 
 ```
 mixed exception\Exception::getPrev()
@@ -113,6 +118,7 @@ mixed exception\Exception::getPrev()
 
 
 ## Method `setPrev`
+In class: [exception\FileMissing](#top)
 
 ```
 mixed exception\Exception::setPrev(\exception\Exception $previous)

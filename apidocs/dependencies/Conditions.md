@@ -37,6 +37,7 @@
 
 
 ## Property `$conditions`
+In class: [dependencies\Conditions](#top)
 
 ```
 private mixed $conditions = array()
@@ -50,6 +51,7 @@ private mixed $conditions = array()
 
 
 ## Property `$invoked`
+In class: [dependencies\Conditions](#top)
 
 ```
 private mixed $invoked = array()
@@ -63,6 +65,7 @@ private mixed $invoked = array()
 
 
 ## Property `$utilized`
+In class: [dependencies\Conditions](#top)
 
 ```
 private mixed $utilized = array()
@@ -79,6 +82,7 @@ private mixed $utilized = array()
 
 
 ## Method `__invoke`
+In class: [dependencies\Conditions](#top)
 
 ```
 mixed dependencies\Conditions::__invoke()
@@ -93,6 +97,7 @@ mixed dependencies\Conditions::__invoke()
 
 
 ## Method `_get`
+In class: [dependencies\Conditions](#top)
 
 ```
 mixed dependencies\Conditions::_get()
@@ -107,6 +112,7 @@ mixed dependencies\Conditions::_get()
 
 
 ## Method `add`
+In class: [dependencies\Conditions](#top)
 
 ```
 mixed dependencies\Conditions::add($id, array $args)
@@ -126,6 +132,7 @@ mixed dependencies\Conditions::add($id, array $args)
 
 
 ## Method `combine`
+In class: [dependencies\Conditions](#top)
 
 ```
 mixed dependencies\Conditions::combine($id, array $ids, $connector)
@@ -146,6 +153,7 @@ mixed dependencies\Conditions::combine($id, array $ids, $connector)
 
 
 ## Method `utilize`
+In class: [dependencies\Conditions](#top)
 
 ```
 mixed dependencies\Conditions::utilize()
@@ -160,6 +168,7 @@ mixed dependencies\Conditions::utilize()
 
 
 ## Method `to_array`
+In class: [dependencies\Conditions](#top)
 
 ```
 mixed dependencies\Conditions::to_array($array)

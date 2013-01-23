@@ -32,6 +32,7 @@
 
 
 ## Property `$logging_enabled`
+In class: [core\Logging](#top)
 
 ```
 private mixed $logging_enabled
@@ -48,6 +49,7 @@ private mixed $logging_enabled
 
 
 ## Method `__construct`
+In class: [core\Logging](#top)
 
 ```
 mixed core\Logging::__construct()
@@ -62,6 +64,7 @@ mixed core\Logging::__construct()
 
 
 ## Method `log`
+In class: [core\Logging](#top)
 
 ```
 mixed core\Logging::log()
@@ -76,6 +79,7 @@ mixed core\Logging::log()
 
 
 ## Method `set_logging_enabled`
+In class: [core\Logging](#top)
 
 ```
 mixed core\Logging::set_logging_enabled($value)

@@ -55,6 +55,7 @@
 
 
 ## Property `$reserved`
+In class: [components\cms\Views](#top)
 
 ```
 protected mixed $reserved = array('__construct', 'filter', 'module', 'section', 'view', 'table', 'get_html', 'call', 'template')
@@ -70,6 +71,7 @@ protected mixed $reserved = array('__construct', 'filter', 'module', 'section', 
 
 
 ## Property `$component`
+In class: [components\cms\Views](#top)
 
 ```
 protected mixed $component
@@ -84,6 +86,7 @@ protected mixed $component
 
 
 ## Property `$default_permission`
+In class: [components\cms\Views](#top)
 
 ```
 protected mixed $default_permission
@@ -98,6 +101,7 @@ protected mixed $default_permission
 
 
 ## Property `$permissions`
+In class: [components\cms\Views](#top)
 
 ```
 protected mixed $permissions = array()
@@ -115,6 +119,7 @@ protected mixed $permissions = array()
 
 
 ## Method `__construct`
+In class: [components\cms\Views](#top)
 
 ```
 mixed dependencies\BaseComponent::__construct()
@@ -130,6 +135,7 @@ mixed dependencies\BaseComponent::__construct()
 
 
 ## Method `_call`
+In class: [components\cms\Views](#top)
 
 ```
 mixed dependencies\BaseComponent::_call($controller, array $args)
@@ -150,6 +156,7 @@ mixed dependencies\BaseComponent::_call($controller, array $args)
 
 
 ## Method `call`
+In class: [components\cms\Views](#top)
 
 ```
 mixed dependencies\BaseComponent::call($controller, $data)
@@ -170,6 +177,7 @@ mixed dependencies\BaseComponent::call($controller, $data)
 
 
 ## Method `filters`
+In class: [components\cms\Views](#top)
 
 ```
 mixed dependencies\BaseComponent::filters()
@@ -185,6 +193,7 @@ mixed dependencies\BaseComponent::filters()
 
 
 ## Method `get_html`
+In class: [components\cms\Views](#top)
 
 ```
 mixed dependencies\BaseViews::get_html($view, $options)
@@ -205,6 +214,7 @@ mixed dependencies\BaseViews::get_html($view, $options)
 
 
 ## Method `helper`
+In class: [components\cms\Views](#top)
 
 ```
 mixed dependencies\BaseComponent::helper($controller)
@@ -224,6 +234,7 @@ mixed dependencies\BaseComponent::helper($controller)
 
 
 ## Method `model`
+In class: [components\cms\Views](#top)
 
 ```
 mixed dependencies\BaseComponent::model($model_name)
@@ -243,6 +254,7 @@ mixed dependencies\BaseComponent::model($model_name)
 
 
 ## Method `module`
+In class: [components\cms\Views](#top)
 
 ```
 mixed dependencies\BaseComponent::module($module_name, $options)
@@ -263,6 +275,7 @@ mixed dependencies\BaseComponent::module($module_name, $options)
 
 
 ## Method `section`
+In class: [components\cms\Views](#top)
 
 ```
 mixed dependencies\BaseComponent::section($section, $options)
@@ -283,6 +296,7 @@ mixed dependencies\BaseComponent::section($section, $options)
 
 
 ## Method `table`
+In class: [components\cms\Views](#top)
 
 ```
 mixed dependencies\BaseComponent::table($model_name, $id)
@@ -303,6 +317,7 @@ mixed dependencies\BaseComponent::table($model_name, $id)
 
 
 ## Method `view`
+In class: [components\cms\Views](#top)
 
 ```
 mixed dependencies\BaseComponent::view($module_name, $options)
@@ -323,6 +338,7 @@ mixed dependencies\BaseComponent::view($module_name, $options)
 
 
 ## Method `app`
+In class: [components\cms\Views](#top)
 
 ```
 mixed components\cms\Views::app($view)
@@ -341,6 +357,7 @@ mixed components\cms\Views::app($view)
 
 
 ## Method `instructions`
+In class: [components\cms\Views](#top)
 
 ```
 mixed components\cms\Views::instructions()
@@ -355,6 +372,7 @@ mixed components\cms\Views::instructions()
 
 
 ## Method `menus`
+In class: [components\cms\Views](#top)
 
 ```
 mixed components\cms\Views::menus($options)
@@ -373,6 +391,7 @@ mixed components\cms\Views::menus($options)
 
 
 ## Method `mod`
+In class: [components\cms\Views](#top)
 
 ```
 mixed components\cms\Views::mod()
@@ -387,6 +406,7 @@ mixed components\cms\Views::mod()
 
 
 ## Method `modules`
+In class: [components\cms\Views](#top)
 
 ```
 mixed components\cms\Views::modules()
@@ -401,6 +421,7 @@ mixed components\cms\Views::modules()
 
 
 ## Method `page`
+In class: [components\cms\Views](#top)
 
 ```
 mixed components\cms\Views::page()
@@ -415,6 +436,7 @@ mixed components\cms\Views::page()
 
 
 ## Method `pages`
+In class: [components\cms\Views](#top)
 
 ```
 mixed components\cms\Views::pages()
@@ -429,6 +451,7 @@ mixed components\cms\Views::pages()
 
 
 ## Method `settings`
+In class: [components\cms\Views](#top)
 
 ```
 mixed components\cms\Views::settings()
@@ -443,6 +466,7 @@ mixed components\cms\Views::settings()
 
 
 ## Method `sites`
+In class: [components\cms\Views](#top)
 
 ```
 mixed components\cms\Views::sites()

@@ -44,6 +44,7 @@
 
 
 ## Property `$action`
+In class: [dependencies\UserFunction](#top)
 
 ```
 public mixed $action = 'performing an action'
@@ -57,6 +58,7 @@ public mixed $action = 'performing an action'
 
 
 ## Property `$exception`
+In class: [dependencies\UserFunction](#top)
 
 ```
 public mixed $exception = null
@@ -70,6 +72,7 @@ public mixed $exception = null
 
 
 ## Property `$return_value`
+In class: [dependencies\UserFunction](#top)
 
 ```
 public mixed $return_value = null
@@ -86,6 +89,7 @@ public mixed $return_value = null
 
 
 ## Method `__construct`
+In class: [dependencies\UserFunction](#top)
 
 ```
 mixed dependencies\UserFunction::__construct($action, \Closure $closure)
@@ -105,6 +109,7 @@ mixed dependencies\UserFunction::__construct($action, \Closure $closure)
 
 
 ## Method `_success`
+In class: [dependencies\UserFunction](#top)
 
 ```
 mixed dependencies\Successable::_success()
@@ -120,6 +125,7 @@ mixed dependencies\Successable::_success()
 
 
 ## Method `and_is`
+In class: [dependencies\UserFunction](#top)
 
 ```
 mixed dependencies\Successable::and_is($check, $callback)
@@ -140,6 +146,7 @@ mixed dependencies\Successable::and_is($check, $callback)
 
 
 ## Method `and_not`
+In class: [dependencies\UserFunction](#top)
 
 ```
 mixed dependencies\Successable::and_not($check)
@@ -159,6 +166,7 @@ mixed dependencies\Successable::and_not($check)
 
 
 ## Method `failure`
+In class: [dependencies\UserFunction](#top)
 
 ```
 mixed dependencies\UserFunction::failure($callback)
@@ -177,6 +185,7 @@ mixed dependencies\UserFunction::failure($callback)
 
 
 ## Method `get_user_message`
+In class: [dependencies\UserFunction](#top)
 
 ```
 mixed dependencies\UserFunction::get_user_message($action)
@@ -195,6 +204,7 @@ mixed dependencies\UserFunction::get_user_message($action)
 
 
 ## Method `is`
+In class: [dependencies\UserFunction](#top)
 
 ```
 mixed dependencies\Successable::is($check, $callback)
@@ -215,6 +225,7 @@ mixed dependencies\Successable::is($check, $callback)
 
 
 ## Method `not`
+In class: [dependencies\UserFunction](#top)
 
 ```
 mixed dependencies\Successable::not($check, $callback)
@@ -235,6 +246,7 @@ mixed dependencies\Successable::not($check, $callback)
 
 
 ## Method `success`
+In class: [dependencies\UserFunction](#top)
 
 ```
 mixed dependencies\Successable::success($callback)
@@ -254,6 +266,7 @@ mixed dependencies\Successable::success($callback)
 
 
 ## Method `_do_check`
+In class: [dependencies\UserFunction](#top)
 
 ```
 mixed dependencies\Successable::_do_check($check)

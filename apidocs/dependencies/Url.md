@@ -126,6 +126,7 @@
 
 
 ## Method `__clone`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::__clone()
@@ -141,6 +142,7 @@ mixed dependencies\Data::__clone()
 
 
 ## Method `__construct`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Url::__construct($url, array $options)
@@ -160,6 +162,7 @@ mixed dependencies\Url::__construct($url, array $options)
 
 
 ## Method `__destruct`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::__destruct()
@@ -175,6 +178,7 @@ mixed dependencies\Data::__destruct()
 
 
 ## Method `__get`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::__get($key)
@@ -194,6 +198,7 @@ mixed dependencies\Data::__get($key)
 
 
 ## Method `__set`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::__set($key, $val)
@@ -214,6 +219,7 @@ mixed dependencies\Data::__set($key, $val)
 
 
 ## Method `__toString`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Url::__toString()
@@ -228,6 +234,7 @@ mixed dependencies\Url::__toString()
 
 
 ## Method `__unset`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::__unset($key)
@@ -247,6 +254,7 @@ mixed dependencies\Data::__unset($key)
 
 
 ## Method `_attempt_unserialize`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::_attempt_unserialize()
@@ -262,6 +270,7 @@ mixed dependencies\Data::_attempt_unserialize()
 
 
 ## Method `_clear_context`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::_clear_context()
@@ -277,6 +286,7 @@ mixed dependencies\Data::_clear_context()
 
 
 ## Method `_set_context`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::_set_context($context, $key)
@@ -297,6 +307,7 @@ mixed dependencies\Data::_set_context($context, $key)
 
 
 ## Method `_success`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Successable::_success()
@@ -312,6 +323,7 @@ mixed dependencies\Successable::_success()
 
 
 ## Method `add_rules`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::add_rules()
@@ -327,6 +339,7 @@ mixed dependencies\Data::add_rules()
 
 
 ## Method `all`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::all($callback)
@@ -346,6 +359,7 @@ mixed dependencies\Data::all($callback)
 
 
 ## Method `and_is`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Successable::and_is($check, $callback)
@@ -366,6 +380,7 @@ mixed dependencies\Successable::and_is($check, $callback)
 
 
 ## Method `and_not`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Successable::and_not($check)
@@ -385,6 +400,7 @@ mixed dependencies\Successable::and_not($check)
 
 
 ## Method `any`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::any($callback)
@@ -404,6 +420,7 @@ mixed dependencies\Data::any($callback)
 
 
 ## Method `as_array`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::as_array($serialized)
@@ -423,6 +440,7 @@ mixed dependencies\Data::as_array($serialized)
 
 
 ## Method `as_json`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::as_json($flags, $options)
@@ -443,6 +461,7 @@ mixed dependencies\Data::as_json($flags, $options)
 
 
 ## Method `as_list`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::as_list()
@@ -458,6 +477,7 @@ mixed dependencies\Data::as_list()
 
 
 ## Method `as_options`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::as_options()
@@ -473,6 +493,7 @@ mixed dependencies\Data::as_options()
 
 
 ## Method `as_rlist`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::as_rlist()
@@ -488,6 +509,7 @@ mixed dependencies\Data::as_rlist()
 
 
 ## Method `as_table`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::as_table()
@@ -503,6 +525,7 @@ mixed dependencies\Data::as_table()
 
 
 ## Method `back`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::back()
@@ -518,6 +541,7 @@ mixed dependencies\Data::back()
 
 
 ## Method `become`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::become(\dependencies\Data $data)
@@ -537,6 +561,7 @@ mixed dependencies\Data::become(\dependencies\Data $data)
 
 
 ## Method `check`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::check($node_name)
@@ -556,6 +581,7 @@ mixed dependencies\Data::check($node_name)
 
 
 ## Method `clear`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::clear()
@@ -571,6 +597,7 @@ mixed dependencies\Data::clear()
 
 
 ## Method `compare`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Url::compare(\dependencies\Url $url)
@@ -589,6 +616,7 @@ mixed dependencies\Url::compare(\dependencies\Url $url)
 
 
 ## Method `convert`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::convert()
@@ -604,6 +632,7 @@ mixed dependencies\Data::convert()
 
 
 ## Method `copy`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::copy()
@@ -619,6 +648,7 @@ mixed dependencies\Data::copy()
 
 
 ## Method `copyto`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::copyto($to)
@@ -638,6 +668,7 @@ mixed dependencies\Data::copyto($to)
 
 
 ## Method `dump`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::dump($format, $l)
@@ -658,6 +689,7 @@ mixed dependencies\Data::dump($format, $l)
 
 
 ## Method `each`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::each($callback)
@@ -677,6 +709,7 @@ mixed dependencies\Data::each($callback)
 
 
 ## Method `enforce_rules`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::enforce_rules($recursive)
@@ -696,6 +729,7 @@ mixed dependencies\Data::enforce_rules($recursive)
 
 
 ## Method `eq`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::eq($value, $callback)
@@ -716,6 +750,7 @@ mixed dependencies\Data::eq($value, $callback)
 
 
 ## Method `extract`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::extract($id)
@@ -735,6 +770,7 @@ mixed dependencies\Data::extract($id)
 
 
 ## Method `failure`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Successable::failure($callback)
@@ -754,6 +790,7 @@ mixed dependencies\Successable::failure($callback)
 
 
 ## Method `filter`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::filter($callback)
@@ -773,6 +810,7 @@ mixed dependencies\Data::filter($callback)
 
 
 ## Method `format`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::format($format)
@@ -792,6 +830,7 @@ mixed dependencies\Data::format($format)
 
 
 ## Method `generation`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::generation()
@@ -807,6 +846,7 @@ mixed dependencies\Data::generation()
 
 
 ## Method `get`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::get($as)
@@ -826,6 +866,7 @@ mixed dependencies\Data::get($as)
 
 
 ## Method `getIterator`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::getIterator()
@@ -841,6 +882,7 @@ mixed dependencies\Data::getIterator()
 
 
 ## Method `gt`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::gt($value, $callback)
@@ -861,6 +903,7 @@ mixed dependencies\Data::gt($value, $callback)
 
 
 ## Method `having`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::having()
@@ -876,6 +919,7 @@ mixed dependencies\Data::having()
 
 
 ## Method `html_escape`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::html_escape($flags)
@@ -895,6 +939,7 @@ mixed dependencies\Data::html_escape($flags)
 
 
 ## Method `idx`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::idx($key)
@@ -914,6 +959,7 @@ mixed dependencies\Data::idx($key)
 
 
 ## Method `is`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Successable::is($check, $callback)
@@ -934,6 +980,7 @@ mixed dependencies\Successable::is($check, $callback)
 
 
 ## Method `is_childnode`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::is_childnode()
@@ -949,6 +996,7 @@ mixed dependencies\Data::is_childnode()
 
 
 ## Method `is_empty`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::is_empty()
@@ -964,6 +1012,7 @@ mixed dependencies\Data::is_empty()
 
 
 ## Method `is_false`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::is_false()
@@ -979,6 +1028,7 @@ mixed dependencies\Data::is_false()
 
 
 ## Method `is_godnode`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::is_godnode()
@@ -994,6 +1044,7 @@ mixed dependencies\Data::is_godnode()
 
 
 ## Method `is_leafnode`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::is_leafnode()
@@ -1009,6 +1060,7 @@ mixed dependencies\Data::is_leafnode()
 
 
 ## Method `is_numeric`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::is_numeric()
@@ -1024,6 +1076,7 @@ mixed dependencies\Data::is_numeric()
 
 
 ## Method `is_parent`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::is_parent()
@@ -1039,6 +1092,7 @@ mixed dependencies\Data::is_parent()
 
 
 ## Method `is_set`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::is_set()
@@ -1054,6 +1108,7 @@ mixed dependencies\Data::is_set()
 
 
 ## Method `is_true`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::is_true()
@@ -1069,6 +1124,7 @@ mixed dependencies\Data::is_true()
 
 
 ## Method `join`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::join($separator)
@@ -1088,6 +1144,7 @@ mixed dependencies\Data::join($separator)
 
 
 ## Method `key`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::key()
@@ -1103,6 +1160,7 @@ mixed dependencies\Data::key()
 
 
 ## Method `keyof`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::keyof($node)
@@ -1122,6 +1180,7 @@ mixed dependencies\Data::keyof($node)
 
 
 ## Method `keys`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::keys()
@@ -1137,6 +1196,7 @@ mixed dependencies\Data::keys()
 
 
 ## Method `ksort`
+In class: [dependencies\Url](#top)
 
 ```
 \dependencies\Data dependencies\Data::ksort()
@@ -1152,6 +1212,7 @@ Sorts the data object by key.
 
 
 ## Method `lowercase`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::lowercase()
@@ -1167,6 +1228,7 @@ mixed dependencies\Data::lowercase()
 
 
 ## Method `lt`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::lt($value, $callback)
@@ -1187,6 +1249,7 @@ mixed dependencies\Data::lt($value, $callback)
 
 
 ## Method `map`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::map($callback)
@@ -1206,6 +1269,7 @@ mixed dependencies\Data::map($callback)
 
 
 ## Method `md5`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::md5()
@@ -1221,6 +1285,7 @@ mixed dependencies\Data::md5()
 
 
 ## Method `merge`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::merge($val, $deep)
@@ -1241,6 +1306,7 @@ mixed dependencies\Data::merge($val, $deep)
 
 
 ## Method `moveto`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::moveto($to)
@@ -1260,6 +1326,7 @@ mixed dependencies\Data::moveto($to)
 
 
 ## Method `not`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Successable::not($check, $callback)
@@ -1280,6 +1347,7 @@ mixed dependencies\Successable::not($check, $callback)
 
 
 ## Method `offsetExists`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::offsetExists($key)
@@ -1299,6 +1367,7 @@ mixed dependencies\Data::offsetExists($key)
 
 
 ## Method `offsetGet`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::offsetGet($key)
@@ -1318,6 +1387,7 @@ mixed dependencies\Data::offsetGet($key)
 
 
 ## Method `offsetSet`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::offsetSet($key, $val)
@@ -1338,6 +1408,7 @@ mixed dependencies\Data::offsetSet($key, $val)
 
 
 ## Method `offsetUnset`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::offsetUnset($key)
@@ -1357,6 +1428,7 @@ mixed dependencies\Data::offsetUnset($key)
 
 
 ## Method `otherwise`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::otherwise($default)
@@ -1376,6 +1448,7 @@ mixed dependencies\Data::otherwise($default)
 
 
 ## Method `parse`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::parse($regex, $flags)
@@ -1396,6 +1469,7 @@ mixed dependencies\Data::parse($regex, $flags)
 
 
 ## Method `push`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::push()
@@ -1411,6 +1485,7 @@ mixed dependencies\Data::push()
 
 
 ## Method `rebuild_output`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Url::rebuild_output()
@@ -1425,6 +1500,7 @@ mixed dependencies\Url::rebuild_output()
 
 
 ## Method `reverse`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::reverse()
@@ -1440,6 +1516,7 @@ mixed dependencies\Data::reverse()
 
 
 ## Method `serialize`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::serialize()
@@ -1455,6 +1532,7 @@ mixed dependencies\Data::serialize()
 
 
 ## Method `serialized`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::serialized()
@@ -1470,6 +1548,7 @@ mixed dependencies\Data::serialized()
 
 
 ## Method `set`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::set()
@@ -1485,6 +1564,7 @@ mixed dependencies\Data::set()
 
 
 ## Method `size`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::size()
@@ -1500,6 +1580,7 @@ mixed dependencies\Data::size()
 
 
 ## Method `slice`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::slice($offset, $length)
@@ -1520,6 +1601,7 @@ mixed dependencies\Data::slice($offset, $length)
 
 
 ## Method `split`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::split($s)
@@ -1539,6 +1621,7 @@ mixed dependencies\Data::split($s)
 
 
 ## Method `success`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Successable::success($callback)
@@ -1558,6 +1641,7 @@ mixed dependencies\Successable::success($callback)
 
 
 ## Method `trim`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::trim($charlist)
@@ -1577,6 +1661,7 @@ mixed dependencies\Data::trim($charlist)
 
 
 ## Method `type`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::type()
@@ -1592,6 +1677,7 @@ mixed dependencies\Data::type()
 
 
 ## Method `un_set`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::un_set()
@@ -1607,6 +1693,7 @@ mixed dependencies\Data::un_set()
 
 
 ## Method `unserialize`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::unserialize($d)
@@ -1626,6 +1713,7 @@ mixed dependencies\Data::unserialize($d)
 
 
 ## Method `unserialized`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::unserialized()
@@ -1641,6 +1729,7 @@ mixed dependencies\Data::unserialized()
 
 
 ## Method `uppercase`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::uppercase()
@@ -1656,6 +1745,7 @@ mixed dependencies\Data::uppercase()
 
 
 ## Method `validate`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::validate($name, array $rules)
@@ -1676,6 +1766,7 @@ mixed dependencies\Data::validate($name, array $rules)
 
 
 ## Method `validation_errors`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::validation_errors($names)
@@ -1695,6 +1786,7 @@ mixed dependencies\Data::validation_errors($names)
 
 
 ## Method `walk`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Data::walk($callback)
@@ -1714,6 +1806,7 @@ mixed dependencies\Data::walk($callback)
 
 
 ## Method `_build_url`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Url::_build_url($string, array $options)
@@ -1733,6 +1826,7 @@ mixed dependencies\Url::_build_url($string, array $options)
 
 
 ## Method `_do_check`
+In class: [dependencies\Url](#top)
 
 ```
 mixed dependencies\Successable::_do_check($check)

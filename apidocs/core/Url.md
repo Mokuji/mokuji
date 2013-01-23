@@ -43,6 +43,7 @@
 
 
 ## Constant `ALL`
+In class: [core\Url](#top)
 
 ```
 const ALL = 0
@@ -53,6 +54,7 @@ const ALL = 0
 
 
 ## Constant `ANCHOR`
+In class: [core\Url](#top)
 
 ```
 const ANCHOR = 32
@@ -63,6 +65,7 @@ const ANCHOR = 32
 
 
 ## Constant `DOMAIN`
+In class: [core\Url](#top)
 
 ```
 const DOMAIN = 2
@@ -73,6 +76,7 @@ const DOMAIN = 2
 
 
 ## Constant `FILE`
+In class: [core\Url](#top)
 
 ```
 const FILE = 8
@@ -83,6 +87,7 @@ const FILE = 8
 
 
 ## Constant `PATH`
+In class: [core\Url](#top)
 
 ```
 const PATH = 4
@@ -93,6 +98,7 @@ const PATH = 4
 
 
 ## Constant `QUERY`
+In class: [core\Url](#top)
 
 ```
 const QUERY = 16
@@ -103,6 +109,7 @@ const QUERY = 16
 
 
 ## Constant `SCHEME`
+In class: [core\Url](#top)
 
 ```
 const SCHEME = 1
@@ -116,6 +123,7 @@ const SCHEME = 1
 
 
 ## Property `$redirect_url`
+In class: [core\Url](#top)
 
 ```
 public mixed $redirect_url = null
@@ -129,6 +137,7 @@ public mixed $redirect_url = null
 
 
 ## Property `$redirected`
+In class: [core\Url](#top)
 
 ```
 public mixed $redirected = false
@@ -142,6 +151,7 @@ public mixed $redirected = false
 
 
 ## Property `$referer_url`
+In class: [core\Url](#top)
 
 ```
 public mixed $referer_url = false
@@ -155,6 +165,7 @@ public mixed $referer_url = false
 
 
 ## Property `$url`
+In class: [core\Url](#top)
 
 ```
 public mixed $url
@@ -171,6 +182,7 @@ public mixed $url
 
 
 ## Method `cancel_redirect`
+In class: [core\Url](#top)
 
 ```
 mixed core\Url::cancel_redirect()
@@ -185,6 +197,7 @@ mixed core\Url::cancel_redirect()
 
 
 ## Method `init`
+In class: [core\Url](#top)
 
 ```
 mixed core\Url::init()
@@ -199,6 +212,7 @@ mixed core\Url::init()
 
 
 ## Method `parse`
+In class: [core\Url](#top)
 
 ```
 mixed core\Url::parse($url, $flags)
@@ -218,6 +232,7 @@ mixed core\Url::parse($url, $flags)
 
 
 ## Method `previous`
+In class: [core\Url](#top)
 
 ```
 mixed core\Url::previous($allow_external, $allow_backend_to_frontend)
@@ -237,6 +252,7 @@ mixed core\Url::previous($allow_external, $allow_backend_to_frontend)
 
 
 ## Method `redirect`
+In class: [core\Url](#top)
 
 ```
 mixed core\Url::redirect($url)

@@ -45,6 +45,7 @@
 
 
 ## Property `$cookie`
+In class: [core\Data](#top)
 
 ```
 public mixed $cookie
@@ -58,6 +59,7 @@ public mixed $cookie
 
 
 ## Property `$env`
+In class: [core\Data](#top)
 
 ```
 public mixed $env
@@ -71,6 +73,7 @@ public mixed $env
 
 
 ## Property `$files`
+In class: [core\Data](#top)
 
 ```
 public mixed $files
@@ -84,6 +87,7 @@ public mixed $files
 
 
 ## Property `$get`
+In class: [core\Data](#top)
 
 ```
 public mixed $get
@@ -97,6 +101,7 @@ public mixed $get
 
 
 ## Property `$post`
+In class: [core\Data](#top)
 
 ```
 public mixed $post
@@ -110,6 +115,7 @@ public mixed $post
 
 
 ## Property `$request`
+In class: [core\Data](#top)
 
 ```
 public mixed $request
@@ -123,6 +129,7 @@ public mixed $request
 
 
 ## Property `$server`
+In class: [core\Data](#top)
 
 ```
 public mixed $server
@@ -136,6 +143,7 @@ public mixed $server
 
 
 ## Property `$session`
+In class: [core\Data](#top)
 
 ```
 public mixed $session
@@ -152,6 +160,7 @@ public mixed $session
 
 
 ## Method `__destruct`
+In class: [core\Data](#top)
 
 ```
 mixed core\Data::__destruct()
@@ -166,6 +175,7 @@ mixed core\Data::__destruct()
 
 
 ## Method `__get`
+In class: [core\Data](#top)
 
 ```
 mixed core\Data::__get($name)
@@ -184,6 +194,7 @@ mixed core\Data::__get($name)
 
 
 ## Method `filter`
+In class: [core\Data](#top)
 
 ```
 mixed core\Data::filter($component)
@@ -202,6 +213,7 @@ mixed core\Data::filter($component)
 
 
 ## Method `init`
+In class: [core\Data](#top)
 
 ```
 mixed core\Data::init()
@@ -216,6 +228,7 @@ mixed core\Data::init()
 
 
 ## Method `merge`
+In class: [core\Data](#top)
 
 ```
 mixed core\Data::merge()
@@ -230,6 +243,7 @@ mixed core\Data::merge()
 
 
 ## Method `postdata`
+In class: [core\Data](#top)
 
 ```
 mixed core\Data::postdata()
@@ -244,6 +258,7 @@ mixed core\Data::postdata()
 
 
 ## Method `restore_session`
+In class: [core\Data](#top)
 
 ```
 mixed core\Data::restore_session()
@@ -258,6 +273,7 @@ mixed core\Data::restore_session()
 
 
 ## Method `xss_clean`
+In class: [core\Data](#top)
 
 ```
 mixed core\Data::xss_clean($str)
@@ -276,6 +292,7 @@ mixed core\Data::xss_clean($str)
 
 
 ## Method `undo_magic_quotes`
+In class: [core\Data](#top)
 
 ```
 mixed core\Data::undo_magic_quotes($array, $top_level)

@@ -52,6 +52,7 @@
 
 
 ## Property `$reserved`
+In class: [components\cms\Helpers](#top)
 
 ```
 protected mixed $reserved = array('__construct', 'filter', 'module', 'section', 'view', 'table', 'get_html', 'call', 'template')
@@ -67,6 +68,7 @@ protected mixed $reserved = array('__construct', 'filter', 'module', 'section', 
 
 
 ## Property `$component`
+In class: [components\cms\Helpers](#top)
 
 ```
 protected mixed $component
@@ -81,6 +83,7 @@ protected mixed $component
 
 
 ## Property `$default_permission`
+In class: [components\cms\Helpers](#top)
 
 ```
 protected mixed $default_permission
@@ -95,6 +98,7 @@ protected mixed $default_permission
 
 
 ## Property `$permissions`
+In class: [components\cms\Helpers](#top)
 
 ```
 protected mixed $permissions = array()
@@ -112,6 +116,7 @@ protected mixed $permissions = array()
 
 
 ## Method `__construct`
+In class: [components\cms\Helpers](#top)
 
 ```
 mixed dependencies\BaseComponent::__construct()
@@ -127,6 +132,7 @@ mixed dependencies\BaseComponent::__construct()
 
 
 ## Method `_call`
+In class: [components\cms\Helpers](#top)
 
 ```
 mixed dependencies\BaseComponent::_call($controller, array $args)
@@ -147,6 +153,7 @@ mixed dependencies\BaseComponent::_call($controller, array $args)
 
 
 ## Method `call`
+In class: [components\cms\Helpers](#top)
 
 ```
 mixed dependencies\BaseComponent::call($controller, $data)
@@ -167,6 +174,7 @@ mixed dependencies\BaseComponent::call($controller, $data)
 
 
 ## Method `check_page_authorisation`
+In class: [components\cms\Helpers](#top)
 
 ```
 mixed components\cms\Helpers::check_page_authorisation($pid)
@@ -185,6 +193,7 @@ mixed components\cms\Helpers::check_page_authorisation($pid)
 
 
 ## Method `filters`
+In class: [components\cms\Helpers](#top)
 
 ```
 mixed dependencies\BaseComponent::filters()
@@ -200,6 +209,7 @@ mixed dependencies\BaseComponent::filters()
 
 
 ## Method `get_page_info`
+In class: [components\cms\Helpers](#top)
 
 ```
 mixed components\cms\Helpers::get_page_info($pid)
@@ -218,6 +228,7 @@ mixed components\cms\Helpers::get_page_info($pid)
 
 
 ## Method `get_page_options`
+In class: [components\cms\Helpers](#top)
 
 ```
 mixed components\cms\Helpers::get_page_options($pid)
@@ -236,6 +247,7 @@ mixed components\cms\Helpers::get_page_options($pid)
 
 
 ## Method `get_page_permissions`
+In class: [components\cms\Helpers](#top)
 
 ```
 mixed components\cms\Helpers::get_page_permissions($pid)
@@ -254,6 +266,7 @@ mixed components\cms\Helpers::get_page_permissions($pid)
 
 
 ## Method `get_settings`
+In class: [components\cms\Helpers](#top)
 
 ```
 mixed components\cms\Helpers::get_settings($key)
@@ -272,6 +285,7 @@ $options[]
 
 
 ## Method `helper`
+In class: [components\cms\Helpers](#top)
 
 ```
 mixed dependencies\BaseComponent::helper($controller)
@@ -291,6 +305,7 @@ mixed dependencies\BaseComponent::helper($controller)
 
 
 ## Method `model`
+In class: [components\cms\Helpers](#top)
 
 ```
 mixed dependencies\BaseComponent::model($model_name)
@@ -310,6 +325,7 @@ mixed dependencies\BaseComponent::model($model_name)
 
 
 ## Method `module`
+In class: [components\cms\Helpers](#top)
 
 ```
 mixed dependencies\BaseComponent::module($module_name, $options)
@@ -330,6 +346,7 @@ mixed dependencies\BaseComponent::module($module_name, $options)
 
 
 ## Method `page_authorisation`
+In class: [components\cms\Helpers](#top)
 
 ```
 mixed components\cms\Helpers::page_authorisation($pid)
@@ -348,6 +365,7 @@ mixed components\cms\Helpers::page_authorisation($pid)
 
 
 ## Method `section`
+In class: [components\cms\Helpers](#top)
 
 ```
 mixed dependencies\BaseComponent::section($section, $options)
@@ -368,6 +386,7 @@ mixed dependencies\BaseComponent::section($section, $options)
 
 
 ## Method `set_page_permissions`
+In class: [components\cms\Helpers](#top)
 
 ```
 mixed components\cms\Helpers::set_page_permissions($pid, $permissions)
@@ -387,6 +406,7 @@ mixed components\cms\Helpers::set_page_permissions($pid, $permissions)
 
 
 ## Method `table`
+In class: [components\cms\Helpers](#top)
 
 ```
 mixed dependencies\BaseComponent::table($model_name, $id)
@@ -407,6 +427,7 @@ mixed dependencies\BaseComponent::table($model_name, $id)
 
 
 ## Method `view`
+In class: [components\cms\Helpers](#top)
 
 ```
 mixed dependencies\BaseComponent::view($module_name, $options)

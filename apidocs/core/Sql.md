@@ -46,6 +46,7 @@
 
 
 ## Property `$connection`
+In class: [core\Sql](#top)
 
 ```
 private mixed $connection
@@ -59,6 +60,7 @@ private mixed $connection
 
 
 ## Property `$prefix`
+In class: [core\Sql](#top)
 
 ```
 private mixed $prefix
@@ -75,6 +77,7 @@ private mixed $prefix
 
 
 ## Method `__construct`
+In class: [core\Sql](#top)
 
 ```
 mixed core\Sql::__construct()
@@ -89,6 +92,7 @@ mixed core\Sql::__construct()
 
 
 ## Method `__destruct`
+In class: [core\Sql](#top)
 
 ```
 mixed core\Sql::__destruct()
@@ -103,6 +107,7 @@ mixed core\Sql::__destruct()
 
 
 ## Method `conditions`
+In class: [core\Sql](#top)
 
 ```
 mixed core\Sql::conditions($c)
@@ -121,6 +126,7 @@ mixed core\Sql::conditions($c)
 
 
 ## Method `escape`
+In class: [core\Sql](#top)
 
 ```
 mixed core\Sql::escape($value)
@@ -139,6 +145,7 @@ mixed core\Sql::escape($value)
 
 
 ## Method `execute_non_query`
+In class: [core\Sql](#top)
 
 ```
 mixed core\Sql::execute_non_query($query)
@@ -157,6 +164,7 @@ mixed core\Sql::execute_non_query($query)
 
 
 ## Method `execute_query`
+In class: [core\Sql](#top)
 
 ```
 mixed core\Sql::execute_query($query)
@@ -175,6 +183,7 @@ mixed core\Sql::execute_query($query)
 
 
 ## Method `execute_scalar`
+In class: [core\Sql](#top)
 
 ```
 mixed core\Sql::execute_scalar($query)
@@ -193,6 +202,7 @@ mixed core\Sql::execute_scalar($query)
 
 
 ## Method `execute_single`
+In class: [core\Sql](#top)
 
 ```
 mixed core\Sql::execute_single($query)
@@ -211,6 +221,7 @@ mixed core\Sql::execute_single($query)
 
 
 ## Method `get_insert_id`
+In class: [core\Sql](#top)
 
 ```
 mixed core\Sql::get_insert_id()
@@ -225,6 +236,7 @@ mixed core\Sql::get_insert_id()
 
 
 ## Method `get_prefix`
+In class: [core\Sql](#top)
 
 ```
 mixed core\Sql::get_prefix()
@@ -239,6 +251,7 @@ mixed core\Sql::get_prefix()
 
 
 ## Method `make_query`
+In class: [core\Sql](#top)
 
 ```
 mixed core\Sql::make_query()
@@ -253,6 +266,7 @@ mixed core\Sql::make_query()
 
 
 ## Method `model`
+In class: [core\Sql](#top)
 
 ```
 mixed core\Sql::model($component_name, $model_name)
@@ -272,6 +286,7 @@ mixed core\Sql::model($component_name, $model_name)
 
 
 ## Method `query`
+In class: [core\Sql](#top)
 
 ```
 mixed core\Sql::query($query)
@@ -290,6 +305,7 @@ mixed core\Sql::query($query)
 
 
 ## Method `set_connection_data`
+In class: [core\Sql](#top)
 
 ```
 mixed core\Sql::set_connection_data($host, $user, $pass, $name, $prefix)
@@ -312,6 +328,7 @@ mixed core\Sql::set_connection_data($host, $user, $pass, $name, $prefix)
 
 
 ## Method `sub_table`
+In class: [core\Sql](#top)
 
 ```
 mixed core\Sql::sub_table($component_name, $model_name, array $select)
@@ -332,6 +349,7 @@ mixed core\Sql::sub_table($component_name, $model_name, array $select)
 
 
 ## Method `table`
+In class: [core\Sql](#top)
 
 ```
 mixed core\Sql::table($component_name, $model_name, $id)

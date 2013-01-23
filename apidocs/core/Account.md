@@ -36,6 +36,7 @@
 
 
 ## Property `$user`
+In class: [core\Account](#top)
 
 ```
 public mixed $user
@@ -52,6 +53,7 @@ public mixed $user
 
 
 ## Method `__construct`
+In class: [core\Account](#top)
 
 ```
 mixed core\Account::__construct()
@@ -66,6 +68,7 @@ mixed core\Account::__construct()
 
 
 ## Method `check_level`
+In class: [core\Account](#top)
 
 ```
 mixed core\Account::check_level($level, $exact)
@@ -85,6 +88,7 @@ mixed core\Account::check_level($level, $exact)
 
 
 ## Method `init`
+In class: [core\Account](#top)
 
 ```
 mixed core\Account::init()
@@ -99,6 +103,7 @@ mixed core\Account::init()
 
 
 ## Method `login`
+In class: [core\Account](#top)
 
 ```
 mixed core\Account::login($email, $pass, $expiry_date)
@@ -119,6 +124,7 @@ mixed core\Account::login($email, $pass, $expiry_date)
 
 
 ## Method `logout`
+In class: [core\Account](#top)
 
 ```
 mixed core\Account::logout()
@@ -133,6 +139,7 @@ mixed core\Account::logout()
 
 
 ## Method `page_authorisation`
+In class: [core\Account](#top)
 
 ```
 mixed core\Account::page_authorisation($level, $exact)
@@ -152,6 +159,7 @@ mixed core\Account::page_authorisation($level, $exact)
 
 
 ## Method `register`
+In class: [core\Account](#top)
 
 ```
 mixed core\Account::register($email, $username, $password, $level)

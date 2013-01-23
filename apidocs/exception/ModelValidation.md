@@ -45,6 +45,7 @@
 
 
 ## Property `$ex_code`
+In class: [exception\ModelValidation](#top)
 
 ```
 protected mixed $ex_code = EX_MODEL_VALIDATION
@@ -59,6 +60,7 @@ protected mixed $ex_code = EX_MODEL_VALIDATION
 
 
 ## Property `$errors`
+In class: [exception\ModelValidation](#top)
 
 ```
 public mixed $errors = array()
@@ -72,6 +74,7 @@ public mixed $errors = array()
 
 
 ## Property `$prev`
+In class: [exception\ModelValidation](#top)
 
 ```
 protected mixed $prev
@@ -89,6 +92,7 @@ protected mixed $prev
 
 
 ## Method `__construct`
+In class: [exception\ModelValidation](#top)
 
 ```
 mixed exception\Exception::__construct()
@@ -104,6 +108,7 @@ mixed exception\Exception::__construct()
 
 
 ## Method `add_validation_error`
+In class: [exception\ModelValidation](#top)
 
 ```
 mixed exception\ModelValidation::add_validation_error(\exception\Validation $error)
@@ -122,6 +127,7 @@ mixed exception\ModelValidation::add_validation_error(\exception\Validation $err
 
 
 ## Method `errors`
+In class: [exception\ModelValidation](#top)
 
 ```
 mixed exception\Validation::errors(array $set)
@@ -141,6 +147,7 @@ mixed exception\Validation::errors(array $set)
 
 
 ## Method `getExCode`
+In class: [exception\ModelValidation](#top)
 
 ```
 mixed exception\Exception::getExCode()
@@ -156,6 +163,7 @@ mixed exception\Exception::getExCode()
 
 
 ## Method `getPrev`
+In class: [exception\ModelValidation](#top)
 
 ```
 mixed exception\Exception::getPrev()
@@ -171,6 +179,7 @@ mixed exception\Exception::getPrev()
 
 
 ## Method `key`
+In class: [exception\ModelValidation](#top)
 
 ```
 mixed exception\Validation::key($set)
@@ -190,6 +199,7 @@ mixed exception\Validation::key($set)
 
 
 ## Method `setPrev`
+In class: [exception\ModelValidation](#top)
 
 ```
 mixed exception\Exception::setPrev(\exception\Exception $previous)
@@ -209,6 +219,7 @@ mixed exception\Exception::setPrev(\exception\Exception $previous)
 
 
 ## Method `set_validation_errors`
+In class: [exception\ModelValidation](#top)
 
 ```
 mixed exception\ModelValidation::set_validation_errors($errors)
@@ -227,6 +238,7 @@ mixed exception\ModelValidation::set_validation_errors($errors)
 
 
 ## Method `title`
+In class: [exception\ModelValidation](#top)
 
 ```
 mixed exception\Validation::title($set)
@@ -246,6 +258,7 @@ mixed exception\Validation::title($set)
 
 
 ## Method `value`
+In class: [exception\ModelValidation](#top)
 
 ```
 mixed exception\Validation::value($set)

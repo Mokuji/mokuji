@@ -32,6 +32,7 @@
 
 
 ## Property `$actualSite`
+In class: [core\Site](#top)
 
 ```
 private mixed $actualSite = null
@@ -45,6 +46,7 @@ private mixed $actualSite = null
 
 
 ## Property `$isLoaded`
+In class: [core\Site](#top)
 
 ```
 private mixed $isLoaded = false
@@ -61,6 +63,7 @@ private mixed $isLoaded = false
 
 
 ## Method `__get`
+In class: [core\Site](#top)
 
 ```
 mixed core\Site::__get($name)
@@ -79,6 +82,7 @@ mixed core\Site::__get($name)
 
 
 ## Method `_load`
+In class: [core\Site](#top)
 
 ```
 mixed core\Site::_load($site)

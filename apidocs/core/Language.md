@@ -41,6 +41,7 @@
 
 
 ## Property `$caching`
+In class: [core\Language](#top)
 
 ```
 private mixed $caching
@@ -54,6 +55,7 @@ private mixed $caching
 
 
 ## Property `$language_code`
+In class: [core\Language](#top)
 
 ```
 private mixed $language_code
@@ -67,6 +69,7 @@ private mixed $language_code
 
 
 ## Property `$language_id`
+In class: [core\Language](#top)
 
 ```
 private mixed $language_id
@@ -80,6 +83,7 @@ private mixed $language_id
 
 
 ## Property `$translating_started`
+In class: [core\Language](#top)
 
 ```
 private mixed $translating_started
@@ -93,6 +97,7 @@ private mixed $translating_started
 
 
 ## Property `$translations`
+In class: [core\Language](#top)
 
 ```
 private mixed $translations
@@ -109,6 +114,7 @@ private mixed $translations
 
 
 ## Method `__get`
+In class: [core\Language](#top)
 
 ```
 mixed core\Language::__get($key)
@@ -127,6 +133,7 @@ mixed core\Language::__get($key)
 
 
 ## Method `get_language_code`
+In class: [core\Language](#top)
 
 ```
 mixed core\Language::get_language_code()
@@ -141,6 +148,7 @@ mixed core\Language::get_language_code()
 
 
 ## Method `get_language_id`
+In class: [core\Language](#top)
 
 ```
 mixed core\Language::get_language_id()
@@ -155,6 +163,7 @@ mixed core\Language::get_language_id()
 
 
 ## Method `get_languages`
+In class: [core\Language](#top)
 
 ```
 mixed core\Language::get_languages()
@@ -169,6 +178,7 @@ mixed core\Language::get_languages()
 
 
 ## Method `init`
+In class: [core\Language](#top)
 
 ```
 mixed core\Language::init()
@@ -183,6 +193,7 @@ mixed core\Language::init()
 
 
 ## Method `multilanguage`
+In class: [core\Language](#top)
 
 ```
 mixed core\Language::multilanguage(\Closure $closure)
@@ -201,6 +212,7 @@ mixed core\Language::multilanguage(\Closure $closure)
 
 
 ## Method `set_language_id`
+In class: [core\Language](#top)
 
 ```
 mixed core\Language::set_language_id($id)
@@ -219,6 +231,7 @@ mixed core\Language::set_language_id($id)
 
 
 ## Method `translate`
+In class: [core\Language](#top)
 
 ```
 mixed core\Language::translate($phrase, $component, $lang_id, $case)

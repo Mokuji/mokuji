@@ -30,6 +30,7 @@
 
 
 ## Method `init`
+In class: [core\Editable](#top)
 
 ```
 mixed core\Editable::init()

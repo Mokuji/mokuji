@@ -36,6 +36,7 @@
 
 
 ## Property `$site`
+In class: [core\Config](#top)
 
 ```
 private mixed $site
@@ -49,6 +50,7 @@ private mixed $site
 
 
 ## Property `$system`
+In class: [core\Config](#top)
 
 ```
 private mixed $system
@@ -62,6 +64,7 @@ private mixed $system
 
 
 ## Property `$user`
+In class: [core\Config](#top)
 
 ```
 private mixed $user
@@ -78,6 +81,7 @@ private mixed $user
 
 
 ## Method `__construct`
+In class: [core\Config](#top)
 
 ```
 mixed core\Config::__construct()
@@ -92,6 +96,7 @@ mixed core\Config::__construct()
 
 
 ## Method `init`
+In class: [core\Config](#top)
 
 ```
 mixed core\Config::init()
@@ -106,6 +111,7 @@ mixed core\Config::init()
 
 
 ## Method `site`
+In class: [core\Config](#top)
 
 ```
 mixed core\Config::site()
@@ -120,6 +126,7 @@ mixed core\Config::site()
 
 
 ## Method `system`
+In class: [core\Config](#top)
 
 ```
 mixed core\Config::system()
@@ -134,6 +141,7 @@ mixed core\Config::system()
 
 
 ## Method `user`
+In class: [core\Config](#top)
 
 ```
 mixed core\Config::user()

@@ -69,6 +69,7 @@
 
 
 ## Property `$data`
+In class: [dependencies\Validator](#top)
 
 ```
 private mixed $data = null
@@ -82,6 +83,7 @@ private mixed $data = null
 
 
 ## Property `$errors`
+In class: [dependencies\Validator](#top)
 
 ```
 private mixed $errors = array()
@@ -95,6 +97,7 @@ private mixed $errors = array()
 
 
 ## Property `$rules`
+In class: [dependencies\Validator](#top)
 
 ```
 private mixed $rules = array()
@@ -111,6 +114,7 @@ private mixed $rules = array()
 
 
 ## Method `__call`
+In class: [dependencies\Validator](#top)
 
 ```
 mixed dependencies\Validator::__call($rule, $options)
@@ -130,6 +134,7 @@ mixed dependencies\Validator::__call($rule, $options)
 
 
 ## Method `__construct`
+In class: [dependencies\Validator](#top)
 
 ```
 mixed dependencies\Validator::__construct($data, $rules)
@@ -149,6 +154,7 @@ mixed dependencies\Validator::__construct($data, $rules)
 
 
 ## Method `_datetime`
+In class: [dependencies\Validator](#top)
 
 ```
 mixed dependencies\Validator::_datetime($target_format)
@@ -167,6 +173,7 @@ mixed dependencies\Validator::_datetime($target_format)
 
 
 ## Method `_gte`
+In class: [dependencies\Validator](#top)
 
 ```
 mixed dependencies\Validator::_gte($number)
@@ -185,6 +192,7 @@ mixed dependencies\Validator::_gte($number)
 
 
 ## Method `_in`
+In class: [dependencies\Validator](#top)
 
 ```
 mixed dependencies\Validator::_in()
@@ -199,6 +207,7 @@ mixed dependencies\Validator::_in()
 
 
 ## Method `_lte`
+In class: [dependencies\Validator](#top)
 
 ```
 mixed dependencies\Validator::_lte($number)
@@ -217,6 +226,7 @@ mixed dependencies\Validator::_lte($number)
 
 
 ## Method `_not_in`
+In class: [dependencies\Validator](#top)
 
 ```
 mixed dependencies\Validator::_not_in()
@@ -231,6 +241,7 @@ mixed dependencies\Validator::_not_in()
 
 
 ## Method `_success`
+In class: [dependencies\Validator](#top)
 
 ```
 mixed dependencies\Successable::_success()
@@ -246,6 +257,7 @@ mixed dependencies\Successable::_success()
 
 
 ## Method `and_is`
+In class: [dependencies\Validator](#top)
 
 ```
 mixed dependencies\Successable::and_is($check, $callback)
@@ -266,6 +278,7 @@ mixed dependencies\Successable::and_is($check, $callback)
 
 
 ## Method `and_not`
+In class: [dependencies\Validator](#top)
 
 ```
 mixed dependencies\Successable::and_not($check)
@@ -285,6 +298,7 @@ mixed dependencies\Successable::and_not($check)
 
 
 ## Method `check_rule`
+In class: [dependencies\Validator](#top)
 
 ```
 mixed dependencies\Validator::check_rule($certain_rule)
@@ -303,6 +317,7 @@ mixed dependencies\Validator::check_rule($certain_rule)
 
 
 ## Method `errors`
+In class: [dependencies\Validator](#top)
 
 ```
 mixed dependencies\Validator::errors()
@@ -317,6 +332,7 @@ mixed dependencies\Validator::errors()
 
 
 ## Method `failure`
+In class: [dependencies\Validator](#top)
 
 ```
 mixed dependencies\Successable::failure($callback)
@@ -336,6 +352,7 @@ mixed dependencies\Successable::failure($callback)
 
 
 ## Method `get_data`
+In class: [dependencies\Validator](#top)
 
 ```
 mixed dependencies\Validator::get_data()
@@ -350,6 +367,7 @@ mixed dependencies\Validator::get_data()
 
 
 ## Method `is`
+In class: [dependencies\Validator](#top)
 
 ```
 mixed dependencies\Successable::is($check, $callback)
@@ -370,6 +388,7 @@ mixed dependencies\Successable::is($check, $callback)
 
 
 ## Method `not`
+In class: [dependencies\Validator](#top)
 
 ```
 mixed dependencies\Successable::not($check, $callback)
@@ -390,6 +409,7 @@ mixed dependencies\Successable::not($check, $callback)
 
 
 ## Method `success`
+In class: [dependencies\Validator](#top)
 
 ```
 mixed dependencies\Successable::success($callback)
@@ -409,6 +429,7 @@ mixed dependencies\Successable::success($callback)
 
 
 ## Method `validate`
+In class: [dependencies\Validator](#top)
 
 ```
 mixed dependencies\Validator::validate($rules)
@@ -427,6 +448,7 @@ mixed dependencies\Validator::validate($rules)
 
 
 ## Method `_array`
+In class: [dependencies\Validator](#top)
 
 ```
 mixed dependencies\Validator::_array()
@@ -441,6 +463,7 @@ mixed dependencies\Validator::_array()
 
 
 ## Method `_between`
+In class: [dependencies\Validator](#top)
 
 ```
 mixed dependencies\Validator::_between($min, $max)
@@ -460,6 +483,7 @@ mixed dependencies\Validator::_between($min, $max)
 
 
 ## Method `_boolean`
+In class: [dependencies\Validator](#top)
 
 ```
 mixed dependencies\Validator::_boolean()
@@ -474,6 +498,7 @@ mixed dependencies\Validator::_boolean()
 
 
 ## Method `_do_check`
+In class: [dependencies\Validator](#top)
 
 ```
 mixed dependencies\Successable::_do_check($check)
@@ -493,6 +518,7 @@ mixed dependencies\Successable::_do_check($check)
 
 
 ## Method `_email`
+In class: [dependencies\Validator](#top)
 
 ```
 mixed dependencies\Validator::_email()
@@ -507,6 +533,7 @@ mixed dependencies\Validator::_email()
 
 
 ## Method `_eq`
+In class: [dependencies\Validator](#top)
 
 ```
 mixed dependencies\Validator::_eq($value)
@@ -525,6 +552,7 @@ mixed dependencies\Validator::_eq($value)
 
 
 ## Method `_gt`
+In class: [dependencies\Validator](#top)
 
 ```
 mixed dependencies\Validator::_gt($number)
@@ -543,6 +571,7 @@ mixed dependencies\Validator::_gt($number)
 
 
 ## Method `_javascript_variable_name`
+In class: [dependencies\Validator](#top)
 
 ```
 mixed dependencies\Validator::_javascript_variable_name()
@@ -557,6 +586,7 @@ mixed dependencies\Validator::_javascript_variable_name()
 
 
 ## Method `_length`
+In class: [dependencies\Validator](#top)
 
 ```
 mixed dependencies\Validator::_length($length)
@@ -575,6 +605,7 @@ mixed dependencies\Validator::_length($length)
 
 
 ## Method `_lt`
+In class: [dependencies\Validator](#top)
 
 ```
 mixed dependencies\Validator::_lt($number)
@@ -593,6 +624,7 @@ mixed dependencies\Validator::_lt($number)
 
 
 ## Method `_no_html`
+In class: [dependencies\Validator](#top)
 
 ```
 mixed dependencies\Validator::_no_html()
@@ -607,6 +639,7 @@ mixed dependencies\Validator::_no_html()
 
 
 ## Method `_not_empty`
+In class: [dependencies\Validator](#top)
 
 ```
 mixed dependencies\Validator::_not_empty()
@@ -621,6 +654,7 @@ mixed dependencies\Validator::_not_empty()
 
 
 ## Method `_number`
+In class: [dependencies\Validator](#top)
 
 ```
 mixed dependencies\Validator::_number($type)
@@ -639,6 +673,7 @@ mixed dependencies\Validator::_number($type)
 
 
 ## Method `_password`
+In class: [dependencies\Validator](#top)
 
 ```
 mixed dependencies\Validator::_password()
@@ -653,6 +688,7 @@ mixed dependencies\Validator::_password()
 
 
 ## Method `_required`
+In class: [dependencies\Validator](#top)
 
 ```
 mixed dependencies\Validator::_required()
@@ -667,6 +703,7 @@ mixed dependencies\Validator::_required()
 
 
 ## Method `_string`
+In class: [dependencies\Validator](#top)
 
 ```
 mixed dependencies\Validator::_string()
@@ -681,6 +718,7 @@ mixed dependencies\Validator::_string()
 
 
 ## Method `_url`
+In class: [dependencies\Validator](#top)
 
 ```
 mixed dependencies\Validator::_url()

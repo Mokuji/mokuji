@@ -72,6 +72,7 @@
 
 
 ## Property `$cache_time`
+In class: [dependencies\Image](#top)
 
 ```
 protected mixed $cache_time = 604800
@@ -86,6 +87,7 @@ protected mixed $cache_time = 604800
 
 
 ## Property `$dir`
+In class: [dependencies\Image](#top)
 
 ```
 protected mixed $dir = ''
@@ -100,6 +102,7 @@ protected mixed $dir = ''
 
 
 ## Property `$file`
+In class: [dependencies\Image](#top)
 
 ```
 protected mixed $file = ''
@@ -114,6 +117,7 @@ protected mixed $file = ''
 
 
 ## Property `$info`
+In class: [dependencies\Image](#top)
 
 ```
 protected mixed $info = array()
@@ -128,6 +132,7 @@ protected mixed $info = array()
 
 
 ## Property `$source`
+In class: [dependencies\Image](#top)
 
 ```
 protected mixed $source = ''
@@ -142,6 +147,7 @@ protected mixed $source = ''
 
 
 ## Property `$allow_growth`
+In class: [dependencies\Image](#top)
 
 ```
 private mixed $allow_growth = false
@@ -155,6 +161,7 @@ private mixed $allow_growth = false
 
 
 ## Property `$allow_shrink`
+In class: [dependencies\Image](#top)
 
 ```
 private mixed $allow_shrink = true
@@ -168,6 +175,7 @@ private mixed $allow_shrink = true
 
 
 ## Property `$image`
+In class: [dependencies\Image](#top)
 
 ```
 private mixed $image
@@ -181,6 +189,7 @@ private mixed $image
 
 
 ## Property `$jpeg_quality`
+In class: [dependencies\Image](#top)
 
 ```
 private mixed $jpeg_quality = 100
@@ -194,6 +203,7 @@ private mixed $jpeg_quality = 100
 
 
 ## Property `$logging`
+In class: [dependencies\Image](#top)
 
 ```
 private mixed $logging = false
@@ -207,6 +217,7 @@ private mixed $logging = false
 
 
 ## Property `$original`
+In class: [dependencies\Image](#top)
 
 ```
 private mixed $original = null
@@ -220,6 +231,7 @@ private mixed $original = null
 
 
 ## Property `$sharpen_after_resize`
+In class: [dependencies\Image](#top)
 
 ```
 private mixed $sharpen_after_resize = true
@@ -233,6 +245,7 @@ private mixed $sharpen_after_resize = true
 
 
 ## Property `$use_cache`
+In class: [dependencies\Image](#top)
 
 ```
 private mixed $use_cache = false
@@ -249,6 +262,7 @@ private mixed $use_cache = false
 
 
 ## Method `__construct`
+In class: [dependencies\Image](#top)
 
 ```
 mixed dependencies\Image::__construct($file)
@@ -267,6 +281,7 @@ mixed dependencies\Image::__construct($file)
 
 
 ## Method `__destruct`
+In class: [dependencies\Image](#top)
 
 ```
 mixed dependencies\Image::__destruct()
@@ -281,6 +296,7 @@ mixed dependencies\Image::__destruct()
 
 
 ## Method `allow_growth`
+In class: [dependencies\Image](#top)
 
 ```
 mixed dependencies\Image::allow_growth($set)
@@ -299,6 +315,7 @@ mixed dependencies\Image::allow_growth($set)
 
 
 ## Method `allow_shrink`
+In class: [dependencies\Image](#top)
 
 ```
 mixed dependencies\Image::allow_shrink($set)
@@ -317,6 +334,7 @@ mixed dependencies\Image::allow_shrink($set)
 
 
 ## Method `cache_time`
+In class: [dependencies\Image](#top)
 
 ```
 mixed dependencies\File::cache_time($set)
@@ -336,6 +354,7 @@ mixed dependencies\File::cache_time($set)
 
 
 ## Method `create`
+In class: [dependencies\Image](#top)
 
 ```
 mixed dependencies\Image::create($width, $height, $color, $type)
@@ -357,6 +376,7 @@ mixed dependencies\Image::create($width, $height, $color, $type)
 
 
 ## Method `crop`
+In class: [dependencies\Image](#top)
 
 ```
 mixed dependencies\Image::crop($x, $y, $width, $height)
@@ -378,6 +398,7 @@ mixed dependencies\Image::crop($x, $y, $width, $height)
 
 
 ## Method `download`
+In class: [dependencies\Image](#top)
 
 ```
 mixed dependencies\File::download($options)
@@ -397,6 +418,7 @@ mixed dependencies\File::download($options)
 
 
 ## Method `fill`
+In class: [dependencies\Image](#top)
 
 ```
 mixed dependencies\Image::fill($width, $height)
@@ -416,6 +438,7 @@ mixed dependencies\Image::fill($width, $height)
 
 
 ## Method `fit`
+In class: [dependencies\Image](#top)
 
 ```
 mixed dependencies\Image::fit($width, $height)
@@ -435,6 +458,7 @@ mixed dependencies\Image::fit($width, $height)
 
 
 ## Method `from_file`
+In class: [dependencies\Image](#top)
 
 ```
 mixed dependencies\Image::from_file($source)
@@ -453,6 +477,7 @@ mixed dependencies\Image::from_file($source)
 
 
 ## Method `get_filesize`
+In class: [dependencies\Image](#top)
 
 ```
 mixed dependencies\File::get_filesize()
@@ -468,6 +493,7 @@ mixed dependencies\File::get_filesize()
 
 
 ## Method `get_height`
+In class: [dependencies\Image](#top)
 
 ```
 mixed dependencies\Image::get_height()
@@ -482,6 +508,7 @@ mixed dependencies\Image::get_height()
 
 
 ## Method `get_width`
+In class: [dependencies\Image](#top)
 
 ```
 mixed dependencies\Image::get_width()
@@ -496,6 +523,7 @@ mixed dependencies\Image::get_width()
 
 
 ## Method `jpeg_quality`
+In class: [dependencies\Image](#top)
 
 ```
 mixed dependencies\Image::jpeg_quality($set)
@@ -514,6 +542,7 @@ mixed dependencies\Image::jpeg_quality($set)
 
 
 ## Method `output`
+In class: [dependencies\Image](#top)
 
 ```
 mixed dependencies\Image::output($options)
@@ -532,6 +561,7 @@ mixed dependencies\Image::output($options)
 
 
 ## Method `resize`
+In class: [dependencies\Image](#top)
 
 ```
 mixed dependencies\Image::resize($width, $height)
@@ -551,6 +581,7 @@ mixed dependencies\Image::resize($width, $height)
 
 
 ## Method `save`
+In class: [dependencies\Image](#top)
 
 ```
 mixed dependencies\Image::save($save)
@@ -569,6 +600,7 @@ mixed dependencies\Image::save($save)
 
 
 ## Method `sharpening`
+In class: [dependencies\Image](#top)
 
 ```
 mixed dependencies\Image::sharpening($set)
@@ -587,6 +619,7 @@ mixed dependencies\Image::sharpening($set)
 
 
 ## Method `text`
+In class: [dependencies\Image](#top)
 
 ```
 mixed dependencies\Image::text($text, $color, $font, $x, $y, $line_spacing)
@@ -610,6 +643,7 @@ mixed dependencies\Image::text($text, $color, $font, $x, $y, $line_spacing)
 
 
 ## Method `use_cache`
+In class: [dependencies\Image](#top)
 
 ```
 mixed dependencies\Image::use_cache($set)
@@ -628,6 +662,7 @@ mixed dependencies\Image::use_cache($set)
 
 
 ## Method `create_output_headers`
+In class: [dependencies\Image](#top)
 
 ```
 mixed dependencies\File::create_output_headers()
@@ -643,6 +678,7 @@ mixed dependencies\File::create_output_headers()
 
 
 ## Method `cache_dir`
+In class: [dependencies\Image](#top)
 
 ```
 mixed dependencies\Image::cache_dir($subfolder)
@@ -661,6 +697,7 @@ mixed dependencies\Image::cache_dir($subfolder)
 
 
 ## Method `color`
+In class: [dependencies\Image](#top)
 
 ```
 mixed dependencies\Image::color($color)
@@ -679,6 +716,7 @@ mixed dependencies\Image::color($color)
 
 
 ## Method `info`
+In class: [dependencies\Image](#top)
 
 ```
 mixed dependencies\Image::info($source)
@@ -697,6 +735,7 @@ mixed dependencies\Image::info($source)
 
 
 ## Method `prepare_sourcefile`
+In class: [dependencies\Image](#top)
 
 ```
 mixed dependencies\Image::prepare_sourcefile()
@@ -711,6 +750,7 @@ mixed dependencies\Image::prepare_sourcefile()
 
 
 ## Method `sharpen`
+In class: [dependencies\Image](#top)
 
 ```
 mixed dependencies\Image::sharpen($image, $intOrig, $intFinal)

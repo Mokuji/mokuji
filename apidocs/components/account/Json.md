@@ -49,6 +49,7 @@
 
 
 ## Property `$reserved`
+In class: [components\account\Json](#top)
 
 ```
 protected mixed $reserved = array('__construct', 'filter', 'module', 'section', 'view', 'table', 'get_html', 'call', 'template')
@@ -64,6 +65,7 @@ protected mixed $reserved = array('__construct', 'filter', 'module', 'section', 
 
 
 ## Property `$component`
+In class: [components\account\Json](#top)
 
 ```
 protected mixed $component
@@ -78,6 +80,7 @@ protected mixed $component
 
 
 ## Property `$default_permission`
+In class: [components\account\Json](#top)
 
 ```
 protected mixed $default_permission
@@ -92,6 +95,7 @@ protected mixed $default_permission
 
 
 ## Property `$permissions`
+In class: [components\account\Json](#top)
 
 ```
 protected mixed $permissions = array()
@@ -109,6 +113,7 @@ protected mixed $permissions = array()
 
 
 ## Method `__construct`
+In class: [components\account\Json](#top)
 
 ```
 mixed dependencies\BaseComponent::__construct()
@@ -124,6 +129,7 @@ mixed dependencies\BaseComponent::__construct()
 
 
 ## Method `_call`
+In class: [components\account\Json](#top)
 
 ```
 mixed dependencies\BaseComponent::_call($controller, array $args)
@@ -144,6 +150,7 @@ mixed dependencies\BaseComponent::_call($controller, array $args)
 
 
 ## Method `call`
+In class: [components\account\Json](#top)
 
 ```
 mixed dependencies\BaseComponent::call($controller, $data)
@@ -164,6 +171,7 @@ mixed dependencies\BaseComponent::call($controller, $data)
 
 
 ## Method `create_user`
+In class: [components\account\Json](#top)
 
 ```
 mixed components\account\Json::create_user($data, $parameters)
@@ -183,6 +191,7 @@ mixed components\account\Json::create_user($data, $parameters)
 
 
 ## Method `filters`
+In class: [components\account\Json](#top)
 
 ```
 mixed dependencies\BaseComponent::filters()
@@ -198,6 +207,7 @@ mixed dependencies\BaseComponent::filters()
 
 
 ## Method `helper`
+In class: [components\account\Json](#top)
 
 ```
 mixed dependencies\BaseComponent::helper($controller)
@@ -217,6 +227,7 @@ mixed dependencies\BaseComponent::helper($controller)
 
 
 ## Method `model`
+In class: [components\account\Json](#top)
 
 ```
 mixed dependencies\BaseComponent::model($model_name)
@@ -236,6 +247,7 @@ mixed dependencies\BaseComponent::model($model_name)
 
 
 ## Method `module`
+In class: [components\account\Json](#top)
 
 ```
 mixed dependencies\BaseComponent::module($module_name, $options)
@@ -256,6 +268,7 @@ mixed dependencies\BaseComponent::module($module_name, $options)
 
 
 ## Method `section`
+In class: [components\account\Json](#top)
 
 ```
 mixed dependencies\BaseComponent::section($section, $options)
@@ -276,6 +289,7 @@ mixed dependencies\BaseComponent::section($section, $options)
 
 
 ## Method `table`
+In class: [components\account\Json](#top)
 
 ```
 mixed dependencies\BaseComponent::table($model_name, $id)
@@ -296,6 +310,7 @@ mixed dependencies\BaseComponent::table($model_name, $id)
 
 
 ## Method `update_user`
+In class: [components\account\Json](#top)
 
 ```
 mixed components\account\Json::update_user($data, $parameters)
@@ -315,6 +330,7 @@ mixed components\account\Json::update_user($data, $parameters)
 
 
 ## Method `view`
+In class: [components\account\Json](#top)
 
 ```
 mixed dependencies\BaseComponent::view($module_name, $options)
@@ -335,6 +351,7 @@ mixed dependencies\BaseComponent::view($module_name, $options)
 
 
 ## Method `create_mail`
+In class: [components\account\Json](#top)
 
 ```
 mixed components\account\Json::create_mail($data, $parameters)
@@ -354,6 +371,7 @@ mixed components\account\Json::create_mail($data, $parameters)
 
 
 ## Method `get_mail_autocomplete`
+In class: [components\account\Json](#top)
 
 ```
 mixed components\account\Json::get_mail_autocomplete($data, $parameters)

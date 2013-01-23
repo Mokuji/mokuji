@@ -41,6 +41,7 @@
 
 
 ## Property `$cache_time`
+In class: [dependencies\File](#top)
 
 ```
 protected mixed $cache_time = 604800
@@ -54,6 +55,7 @@ protected mixed $cache_time = 604800
 
 
 ## Property `$dir`
+In class: [dependencies\File](#top)
 
 ```
 protected mixed $dir = ''
@@ -67,6 +69,7 @@ protected mixed $dir = ''
 
 
 ## Property `$file`
+In class: [dependencies\File](#top)
 
 ```
 protected mixed $file = ''
@@ -80,6 +83,7 @@ protected mixed $file = ''
 
 
 ## Property `$info`
+In class: [dependencies\File](#top)
 
 ```
 protected mixed $info = array()
@@ -93,6 +97,7 @@ protected mixed $info = array()
 
 
 ## Property `$source`
+In class: [dependencies\File](#top)
 
 ```
 protected mixed $source = ''
@@ -109,6 +114,7 @@ protected mixed $source = ''
 
 
 ## Method `__construct`
+In class: [dependencies\File](#top)
 
 ```
 mixed dependencies\File::__construct($file)
@@ -127,6 +133,7 @@ mixed dependencies\File::__construct($file)
 
 
 ## Method `cache_time`
+In class: [dependencies\File](#top)
 
 ```
 mixed dependencies\File::cache_time($set)
@@ -145,6 +152,7 @@ mixed dependencies\File::cache_time($set)
 
 
 ## Method `download`
+In class: [dependencies\File](#top)
 
 ```
 mixed dependencies\File::download($options)
@@ -163,6 +171,7 @@ mixed dependencies\File::download($options)
 
 
 ## Method `from_file`
+In class: [dependencies\File](#top)
 
 ```
 mixed dependencies\File::from_file($source)
@@ -181,6 +190,7 @@ mixed dependencies\File::from_file($source)
 
 
 ## Method `get_filesize`
+In class: [dependencies\File](#top)
 
 ```
 mixed dependencies\File::get_filesize()
@@ -195,6 +205,7 @@ mixed dependencies\File::get_filesize()
 
 
 ## Method `output`
+In class: [dependencies\File](#top)
 
 ```
 mixed dependencies\File::output($options)
@@ -213,6 +224,7 @@ mixed dependencies\File::output($options)
 
 
 ## Method `save`
+In class: [dependencies\File](#top)
 
 ```
 mixed dependencies\File::save($save)
@@ -231,6 +243,7 @@ mixed dependencies\File::save($save)
 
 
 ## Method `create_output_headers`
+In class: [dependencies\File](#top)
 
 ```
 mixed dependencies\File::create_output_headers()

@@ -34,6 +34,7 @@
 
 
 ## Method `start`
+In class: [core\Router](#top)
 
 ```
 mixed core\Router::start()
@@ -48,6 +49,7 @@ mixed core\Router::start()
 
 
 ## Method `get_component`
+In class: [core\Router](#top)
 
 ```
 mixed core\Router::get_component()
@@ -62,6 +64,7 @@ mixed core\Router::get_component()
 
 
 ## Method `parse_action`
+In class: [core\Router](#top)
 
 ```
 mixed core\Router::parse_action($action)
@@ -80,6 +83,7 @@ mixed core\Router::parse_action($action)
 
 
 ## Method `parse_module`
+In class: [core\Router](#top)
 
 ```
 mixed core\Router::parse_module($module)
@@ -98,6 +102,7 @@ mixed core\Router::parse_module($module)
 
 
 ## Method `parse_section`
+In class: [core\Router](#top)
 
 ```
 mixed core\Router::parse_section($section)

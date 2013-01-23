@@ -33,6 +33,7 @@
 
 
 ## Property `$context`
+In class: [exception\Error](#top)
 
 ```
 protected mixed $context
@@ -49,6 +50,7 @@ protected mixed $context
 
 
 ## Method `__construct`
+In class: [exception\Error](#top)
 
 ```
 mixed exception\Error::__construct($errno, $errstr, $errfile, $errline, $context)
@@ -71,6 +73,7 @@ mixed exception\Error::__construct($errno, $errstr, $errfile, $errline, $context
 
 
 ## Method `getContext`
+In class: [exception\Error](#top)
 
 ```
 mixed exception\Error::getContext()

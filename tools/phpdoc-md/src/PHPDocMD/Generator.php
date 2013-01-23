@@ -128,8 +128,8 @@ class Generator
                 'escapeToRoot' => $escapeToRoot
             )
         );
-        self::ensureDir($this->outputDir . '/API-Index.md');
-        file_put_contents($this->outputDir . '/API-Index.md', $index);
+        self::ensureDir($this->outputDir . '/API-index.md');
+        file_put_contents($this->outputDir . '/API-index.md', $index);
 
     }
 

@@ -53,6 +53,7 @@
 
 
 ## Property `$reserved`
+In class: [components\account\Helpers](#top)
 
 ```
 protected mixed $reserved = array('__construct', 'filter', 'module', 'section', 'view', 'table', 'get_html', 'call', 'template')
@@ -68,6 +69,7 @@ protected mixed $reserved = array('__construct', 'filter', 'module', 'section', 
 
 
 ## Property `$component`
+In class: [components\account\Helpers](#top)
 
 ```
 protected mixed $component
@@ -82,6 +84,7 @@ protected mixed $component
 
 
 ## Property `$default_permission`
+In class: [components\account\Helpers](#top)
 
 ```
 protected mixed $default_permission
@@ -96,6 +99,7 @@ protected mixed $default_permission
 
 
 ## Property `$permissions`
+In class: [components\account\Helpers](#top)
 
 ```
 protected mixed $permissions = array()
@@ -113,6 +117,7 @@ protected mixed $permissions = array()
 
 
 ## Method `__construct`
+In class: [components\account\Helpers](#top)
 
 ```
 mixed dependencies\BaseComponent::__construct()
@@ -128,6 +133,7 @@ mixed dependencies\BaseComponent::__construct()
 
 
 ## Method `_call`
+In class: [components\account\Helpers](#top)
 
 ```
 mixed dependencies\BaseComponent::_call($controller, array $args)
@@ -148,6 +154,7 @@ mixed dependencies\BaseComponent::_call($controller, array $args)
 
 
 ## Method `call`
+In class: [components\account\Helpers](#top)
 
 ```
 mixed dependencies\BaseComponent::call($controller, $data)
@@ -168,6 +175,7 @@ mixed dependencies\BaseComponent::call($controller, $data)
 
 
 ## Method `create_user`
+In class: [components\account\Helpers](#top)
 
 ```
 \components\account\models\Accounts components\account\Helpers::create_user($data)
@@ -186,6 +194,7 @@ Create a new user.
 
 
 ## Method `filters`
+In class: [components\account\Helpers](#top)
 
 ```
 mixed dependencies\BaseComponent::filters()
@@ -201,6 +210,7 @@ mixed dependencies\BaseComponent::filters()
 
 
 ## Method `get_new_users`
+In class: [components\account\Helpers](#top)
 
 ```
 mixed components\account\Helpers::get_new_users($limit)
@@ -219,6 +229,7 @@ mixed components\account\Helpers::get_new_users($limit)
 
 
 ## Method `helper`
+In class: [components\account\Helpers](#top)
 
 ```
 mixed dependencies\BaseComponent::helper($controller)
@@ -238,6 +249,7 @@ mixed dependencies\BaseComponent::helper($controller)
 
 
 ## Method `import_users`
+In class: [components\account\Helpers](#top)
 
 ```
 mixed components\account\Helpers::import_users($data)
@@ -256,6 +268,7 @@ mixed components\account\Helpers::import_users($data)
 
 
 ## Method `invite_user`
+In class: [components\account\Helpers](#top)
 
 ```
 \dependencies\UserFunction components\account\Helpers::invite_user($data)
@@ -274,6 +287,7 @@ Invite a new user to create an account.
 
 
 ## Method `model`
+In class: [components\account\Helpers](#top)
 
 ```
 mixed dependencies\BaseComponent::model($model_name)
@@ -293,6 +307,7 @@ mixed dependencies\BaseComponent::model($model_name)
 
 
 ## Method `module`
+In class: [components\account\Helpers](#top)
 
 ```
 mixed dependencies\BaseComponent::module($module_name, $options)
@@ -313,6 +328,7 @@ mixed dependencies\BaseComponent::module($module_name, $options)
 
 
 ## Method `reset_password`
+In class: [components\account\Helpers](#top)
 
 ```
 \dependencies\UserFunction components\account\Helpers::reset_password(\components\account\Integer/Array(Integer) $user_id)
@@ -331,6 +347,7 @@ Force a reset of the password of the user.
 
 
 ## Method `section`
+In class: [components\account\Helpers](#top)
 
 ```
 mixed dependencies\BaseComponent::section($section, $options)
@@ -351,6 +368,7 @@ mixed dependencies\BaseComponent::section($section, $options)
 
 
 ## Method `set_group_members`
+In class: [components\account\Helpers](#top)
 
 ```
 mixed components\account\Helpers::set_group_members($group_id, $members)
@@ -370,6 +388,7 @@ mixed components\account\Helpers::set_group_members($group_id, $members)
 
 
 ## Method `set_user_group_memberships`
+In class: [components\account\Helpers](#top)
 
 ```
 mixed components\account\Helpers::set_user_group_memberships($data)
@@ -388,6 +407,7 @@ Sets the user group memberships for an account.
 
 
 ## Method `should_claim`
+In class: [components\account\Helpers](#top)
 
 ```
 Boolean components\account\Helpers::should_claim()
@@ -402,6 +422,7 @@ Whether the logged in user should claim their account or not.
 
 
 ## Method `table`
+In class: [components\account\Helpers](#top)
 
 ```
 mixed dependencies\BaseComponent::table($model_name, $id)
@@ -422,6 +443,7 @@ mixed dependencies\BaseComponent::table($model_name, $id)
 
 
 ## Method `view`
+In class: [components\account\Helpers](#top)
 
 ```
 mixed dependencies\BaseComponent::view($module_name, $options)

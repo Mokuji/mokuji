@@ -38,6 +38,7 @@
 
 
 ## Property `$success`
+In class: [dependencies\Successable](#top)
 
 ```
 private mixed $success = null
@@ -54,6 +55,7 @@ private mixed $success = null
 
 
 ## Method `_success`
+In class: [dependencies\Successable](#top)
 
 ```
 mixed dependencies\Successable::_success()
@@ -68,6 +70,7 @@ mixed dependencies\Successable::_success()
 
 
 ## Method `and_is`
+In class: [dependencies\Successable](#top)
 
 ```
 mixed dependencies\Successable::and_is($check, $callback)
@@ -87,6 +90,7 @@ mixed dependencies\Successable::and_is($check, $callback)
 
 
 ## Method `and_not`
+In class: [dependencies\Successable](#top)
 
 ```
 mixed dependencies\Successable::and_not($check)
@@ -105,6 +109,7 @@ mixed dependencies\Successable::and_not($check)
 
 
 ## Method `failure`
+In class: [dependencies\Successable](#top)
 
 ```
 mixed dependencies\Successable::failure($callback)
@@ -123,6 +128,7 @@ mixed dependencies\Successable::failure($callback)
 
 
 ## Method `is`
+In class: [dependencies\Successable](#top)
 
 ```
 mixed dependencies\Successable::is($check, $callback)
@@ -142,6 +148,7 @@ mixed dependencies\Successable::is($check, $callback)
 
 
 ## Method `not`
+In class: [dependencies\Successable](#top)
 
 ```
 mixed dependencies\Successable::not($check, $callback)
@@ -161,6 +168,7 @@ mixed dependencies\Successable::not($check, $callback)
 
 
 ## Method `success`
+In class: [dependencies\Successable](#top)
 
 ```
 mixed dependencies\Successable::success($callback)
@@ -179,6 +187,7 @@ mixed dependencies\Successable::success($callback)
 
 
 ## Method `_do_check`
+In class: [dependencies\Successable](#top)
 
 ```
 mixed dependencies\Successable::_do_check($check)

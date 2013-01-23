@@ -41,6 +41,7 @@
 
 
 ## Property `$checks`
+In class: [core\Component](#top)
 
 ```
 private mixed $checks = array()
@@ -54,6 +55,7 @@ private mixed $checks = array()
 
 
 ## Property `$components`
+In class: [core\Component](#top)
 
 ```
 private mixed $components
@@ -70,6 +72,7 @@ private mixed $components
 
 
 ## Method `__construct`
+In class: [core\Component](#top)
 
 ```
 mixed core\Component::__construct()
@@ -84,6 +87,7 @@ mixed core\Component::__construct()
 
 
 ## Method `actions`
+In class: [core\Component](#top)
 
 ```
 mixed core\Component::actions($of)
@@ -102,6 +106,7 @@ mixed core\Component::actions($of)
 
 
 ## Method `available`
+In class: [core\Component](#top)
 
 ```
 mixed core\Component::available($component_name)
@@ -120,6 +125,7 @@ mixed core\Component::available($component_name)
 
 
 ## Method `check`
+In class: [core\Component](#top)
 
 ```
 mixed core\Component::check($component_name)
@@ -138,6 +144,7 @@ mixed core\Component::check($component_name)
 
 
 ## Method `enter`
+In class: [core\Component](#top)
 
 ```
 mixed core\Component::enter($component)
@@ -156,6 +163,7 @@ mixed core\Component::enter($component)
 
 
 ## Method `helpers`
+In class: [core\Component](#top)
 
 ```
 mixed core\Component::helpers($of)
@@ -174,6 +182,7 @@ mixed core\Component::helpers($of)
 
 
 ## Method `json`
+In class: [core\Component](#top)
 
 ```
 mixed core\Component::json($of)
@@ -192,6 +201,7 @@ mixed core\Component::json($of)
 
 
 ## Method `load`
+In class: [core\Component](#top)
 
 ```
 mixed core\Component::load($component, $part, $instantiate)
@@ -212,6 +222,7 @@ mixed core\Component::load($component, $part, $instantiate)
 
 
 ## Method `modules`
+In class: [core\Component](#top)
 
 ```
 mixed core\Component::modules($of)
@@ -230,6 +241,7 @@ mixed core\Component::modules($of)
 
 
 ## Method `sections`
+In class: [core\Component](#top)
 
 ```
 mixed core\Component::sections($of)
@@ -248,6 +260,7 @@ mixed core\Component::sections($of)
 
 
 ## Method `views`
+In class: [core\Component](#top)
 
 ```
 mixed core\Component::views($of)

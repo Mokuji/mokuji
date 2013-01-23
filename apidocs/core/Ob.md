@@ -43,6 +43,7 @@
 
 
 ## Property `$buffers`
+In class: [core\Ob](#top)
 
 ```
 private mixed $buffers = array()
@@ -56,6 +57,7 @@ private mixed $buffers = array()
 
 
 ## Property `$link`
+In class: [core\Ob](#top)
 
 ```
 private mixed $link
@@ -69,6 +71,7 @@ private mixed $link
 
 
 ## Property `$meta`
+In class: [core\Ob](#top)
 
 ```
 private mixed $meta
@@ -82,6 +85,7 @@ private mixed $meta
 
 
 ## Property `$retrieved`
+In class: [core\Ob](#top)
 
 ```
 private mixed $retrieved = array()
@@ -95,6 +99,7 @@ private mixed $retrieved = array()
 
 
 ## Property `$script`
+In class: [core\Ob](#top)
 
 ```
 private mixed $script
@@ -108,6 +113,7 @@ private mixed $script
 
 
 ## Property `$style`
+In class: [core\Ob](#top)
 
 ```
 private mixed $style
@@ -124,6 +130,7 @@ private mixed $style
 
 
 ## Method `__construct`
+In class: [core\Ob](#top)
 
 ```
 mixed core\Ob::__construct()
@@ -138,6 +145,7 @@ mixed core\Ob::__construct()
 
 
 ## Method `__destruct`
+In class: [core\Ob](#top)
 
 ```
 mixed core\Ob::__destruct()
@@ -152,6 +160,7 @@ mixed core\Ob::__destruct()
 
 
 ## Method `add`
+In class: [core\Ob](#top)
 
 ```
 mixed core\Ob::add($content, $type, $id)
@@ -172,6 +181,7 @@ mixed core\Ob::add($content, $type, $id)
 
 
 ## Method `end`
+In class: [core\Ob](#top)
 
 ```
 mixed core\Ob::end()
@@ -186,6 +196,7 @@ mixed core\Ob::end()
 
 
 ## Method `get`
+In class: [core\Ob](#top)
 
 ```
 mixed core\Ob::get($type)
@@ -204,6 +215,7 @@ mixed core\Ob::get($type)
 
 
 ## Method `link`
+In class: [core\Ob](#top)
 
 ```
 mixed core\Ob::link()
@@ -218,6 +230,7 @@ mixed core\Ob::link()
 
 
 ## Method `meta`
+In class: [core\Ob](#top)
 
 ```
 mixed core\Ob::meta()
@@ -232,6 +245,7 @@ mixed core\Ob::meta()
 
 
 ## Method `script`
+In class: [core\Ob](#top)
 
 ```
 mixed core\Ob::script()
@@ -246,6 +260,7 @@ mixed core\Ob::script()
 
 
 ## Method `style`
+In class: [core\Ob](#top)
 
 ```
 mixed core\Ob::style()

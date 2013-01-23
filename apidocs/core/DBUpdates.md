@@ -59,6 +59,7 @@
 
 
 ## Property `$component`
+In class: [core\DBUpdates](#top)
 
 ```
 protected mixed $component
@@ -73,6 +74,7 @@ protected mixed $component
 
 
 ## Property `$is_core`
+In class: [core\DBUpdates](#top)
 
 ```
 protected mixed $is_core = true
@@ -86,6 +88,7 @@ protected mixed $is_core = true
 
 
 ## Property `$template`
+In class: [core\DBUpdates](#top)
 
 ```
 protected mixed $template
@@ -100,6 +103,7 @@ protected mixed $template
 
 
 ## Property `$theme`
+In class: [core\DBUpdates](#top)
 
 ```
 protected mixed $theme
@@ -114,6 +118,7 @@ protected mixed $theme
 
 
 ## Property `$updates`
+In class: [core\DBUpdates](#top)
 
 ```
 protected mixed $updates = array('3.2.0' => '3.3.0', '3.3.0' => '3.3.1', '3.3.1' => '3.3.2', '3.3.2' => '3.3.3')
@@ -130,6 +135,7 @@ protected mixed $updates = array('3.2.0' => '3.3.0', '3.3.0' => '3.3.1', '3.3.1'
 
 
 ## Method `base_dir`
+In class: [core\DBUpdates](#top)
 
 ```
 mixed components\update\classes\BaseDBUpdates::base_dir($type, $name)
@@ -151,6 +157,7 @@ mixed components\update\classes\BaseDBUpdates::base_dir($type, $name)
 
 
 ## Method `clear_global_cache`
+In class: [core\DBUpdates](#top)
 
 ```
 mixed components\update\classes\BaseDBUpdates::clear_global_cache()
@@ -167,6 +174,7 @@ mixed components\update\classes\BaseDBUpdates::clear_global_cache()
 
 
 ## Method `init_statics`
+In class: [core\DBUpdates](#top)
 
 ```
 mixed components\update\classes\BaseDBUpdates::init_statics()
@@ -183,6 +191,7 @@ mixed components\update\classes\BaseDBUpdates::init_statics()
 
 
 ## Method `package_data`
+In class: [core\DBUpdates](#top)
 
 ```
 mixed components\update\classes\BaseDBUpdates::package_data($type, $name)
@@ -204,6 +213,7 @@ mixed components\update\classes\BaseDBUpdates::package_data($type, $name)
 
 
 ## Method `process_queue`
+In class: [core\DBUpdates](#top)
 
 ```
 mixed components\update\classes\BaseDBUpdates::process_queue()
@@ -220,6 +230,7 @@ mixed components\update\classes\BaseDBUpdates::process_queue()
 
 
 ## Method `__construct`
+In class: [core\DBUpdates](#top)
 
 ```
 mixed components\update\classes\BaseDBUpdates::__construct()
@@ -235,6 +246,7 @@ mixed components\update\classes\BaseDBUpdates::__construct()
 
 
 ## Method `clear_cache`
+In class: [core\DBUpdates](#top)
 
 ```
 mixed components\update\classes\BaseDBUpdates::clear_cache()
@@ -250,6 +262,7 @@ mixed components\update\classes\BaseDBUpdates::clear_cache()
 
 
 ## Method `current_version`
+In class: [core\DBUpdates](#top)
 
 ```
 mixed components\update\classes\BaseDBUpdates::current_version()
@@ -265,6 +278,7 @@ mixed components\update\classes\BaseDBUpdates::current_version()
 
 
 ## Method `install`
+In class: [core\DBUpdates](#top)
 
 ```
 mixed components\update\classes\BaseDBUpdates::install($dummydata, $forced, $update_to_latest)
@@ -286,6 +300,7 @@ mixed components\update\classes\BaseDBUpdates::install($dummydata, $forced, $upd
 
 
 ## Method `install_3_2_0`
+In class: [core\DBUpdates](#top)
 
 ```
 mixed core\DBUpdates::install_3_2_0($dummydata, $forced)
@@ -305,6 +320,7 @@ mixed core\DBUpdates::install_3_2_0($dummydata, $forced)
 
 
 ## Method `latest_version`
+In class: [core\DBUpdates](#top)
 
 ```
 mixed components\update\classes\BaseDBUpdates::latest_version()
@@ -320,6 +336,7 @@ mixed components\update\classes\BaseDBUpdates::latest_version()
 
 
 ## Method `uninstall`
+In class: [core\DBUpdates](#top)
 
 ```
 mixed components\update\classes\BaseDBUpdates::uninstall($forced)
@@ -339,6 +356,7 @@ mixed components\update\classes\BaseDBUpdates::uninstall($forced)
 
 
 ## Method `update`
+In class: [core\DBUpdates](#top)
 
 ```
 mixed components\update\classes\BaseDBUpdates::update($forced, $maybe_install)
@@ -359,6 +377,7 @@ mixed components\update\classes\BaseDBUpdates::update($forced, $maybe_install)
 
 
 ## Method `update_to_3_3_1`
+In class: [core\DBUpdates](#top)
 
 ```
 mixed core\DBUpdates::update_to_3_3_1($current_version, $forced)
@@ -378,6 +397,7 @@ mixed core\DBUpdates::update_to_3_3_1($current_version, $forced)
 
 
 ## Method `update_to_3_3_2`
+In class: [core\DBUpdates](#top)
 
 ```
 mixed core\DBUpdates::update_to_3_3_2($current_version, $forced)
@@ -397,6 +417,7 @@ mixed core\DBUpdates::update_to_3_3_2($current_version, $forced)
 
 
 ## Method `update_to_3_3_3`
+In class: [core\DBUpdates](#top)
 
 ```
 mixed core\DBUpdates::update_to_3_3_3($current_version, $forced)
@@ -416,6 +437,7 @@ mixed core\DBUpdates::update_to_3_3_3($current_version, $forced)
 
 
 ## Method `get_base_dir`
+In class: [core\DBUpdates](#top)
 
 ```
 mixed components\update\classes\BaseDBUpdates::get_base_dir()
@@ -431,6 +453,7 @@ mixed components\update\classes\BaseDBUpdates::get_base_dir()
 
 
 ## Method `get_package_data`
+In class: [core\DBUpdates](#top)
 
 ```
 mixed components\update\classes\BaseDBUpdates::get_package_data()
@@ -446,6 +469,7 @@ mixed components\update\classes\BaseDBUpdates::get_package_data()
 
 
 ## Method `next_version`
+In class: [core\DBUpdates](#top)
 
 ```
 mixed components\update\classes\BaseDBUpdates::next_version($version)
@@ -465,6 +489,7 @@ mixed components\update\classes\BaseDBUpdates::next_version($version)
 
 
 ## Method `package`
+In class: [core\DBUpdates](#top)
 
 ```
 mixed components\update\classes\BaseDBUpdates::package()
@@ -480,6 +505,7 @@ mixed components\update\classes\BaseDBUpdates::package()
 
 
 ## Method `queue`
+In class: [core\DBUpdates](#top)
 
 ```
 mixed components\update\classes\BaseDBUpdates::queue($data, \Closure $operation)
@@ -500,6 +526,7 @@ mixed components\update\classes\BaseDBUpdates::queue($data, \Closure $operation)
 
 
 ## Method `version_bump`
+In class: [core\DBUpdates](#top)
 
 ```
 mixed components\update\classes\BaseDBUpdates::version_bump($version)

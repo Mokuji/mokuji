@@ -41,6 +41,7 @@
 
 
 ## Property `$options`
+In class: [dependencies\forms\FormBuilder](#top)
 
 ```
 protected mixed $options
@@ -54,6 +55,7 @@ protected mixed $options
 
 
 ## Property `$fields`
+In class: [dependencies\forms\FormBuilder](#top)
 
 ```
 private mixed $fields = array()
@@ -67,6 +69,7 @@ private mixed $fields = array()
 
 
 ## Property `$id`
+In class: [dependencies\forms\FormBuilder](#top)
 
 ```
 private mixed $id
@@ -80,6 +83,7 @@ private mixed $id
 
 
 ## Property `$model`
+In class: [dependencies\forms\FormBuilder](#top)
 
 ```
 private mixed $model
@@ -93,6 +97,7 @@ private mixed $model
 
 
 ## Property `$relations`
+In class: [dependencies\forms\FormBuilder](#top)
 
 ```
 private mixed $relations = array()
@@ -109,6 +114,7 @@ private mixed $relations = array()
 
 
 ## Method `__construct`
+In class: [dependencies\forms\FormBuilder](#top)
 
 ```
 mixed dependencies\forms\FormBuilder::__construct(\dependencies\BaseModel $model, array $options)
@@ -128,6 +134,7 @@ Creates a new form builder instance.
 
 
 ## Method `id`
+In class: [dependencies\forms\FormBuilder](#top)
 
 ```
 string dependencies\forms\FormBuilder::id()
@@ -142,6 +149,7 @@ Returns the unique ID of this form.
 
 
 ## Method `render`
+In class: [dependencies\forms\FormBuilder](#top)
 
 ```
 mixed dependencies\forms\FormBuilder::render(array $options)
@@ -164,6 +172,7 @@ Outputs the form to the output stream.
 
 
 ## Method `detect_optimal_field`
+In class: [dependencies\forms\FormBuilder](#top)
 
 ```
 string dependencies\forms\FormBuilder::detect_optimal_field(string $column_name, \dependencies\forms\Data $field, array $override)
@@ -185,6 +194,7 @@ Defined relations should override this value.</p>
 
 
 ## Method `detect_optimal_relation_field`
+In class: [dependencies\forms\FormBuilder](#top)
 
 ```
 string dependencies\forms\FormBuilder::detect_optimal_relation_field(string $column_name, \dependencies\forms\Data $relation)
@@ -205,6 +215,7 @@ This should be used to override base types.</p>
 
 
 ## Method `find_additional_relation_data`
+In class: [dependencies\forms\FormBuilder](#top)
 
 ```
 mixed dependencies\forms\FormBuilder::find_additional_relation_data(array $relation)
@@ -223,6 +234,7 @@ Depending on all the earlier detected variables gathers all relevant data about 
 
 
 ## Method `generate_fields`
+In class: [dependencies\forms\FormBuilder](#top)
 
 ```
 mixed dependencies\forms\FormBuilder::generate_fields()
@@ -237,6 +249,7 @@ Create instances of each of the fields in the model.
 
 
 ## Method `map_relations`
+In class: [dependencies\forms\FormBuilder](#top)
 
 ```
 mixed dependencies\forms\FormBuilder::map_relations()

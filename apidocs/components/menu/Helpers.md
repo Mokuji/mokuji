@@ -46,6 +46,7 @@
 
 
 ## Property `$reserved`
+In class: [components\menu\Helpers](#top)
 
 ```
 protected mixed $reserved = array('__construct', 'filter', 'module', 'section', 'view', 'table', 'get_html', 'call', 'template')
@@ -61,6 +62,7 @@ protected mixed $reserved = array('__construct', 'filter', 'module', 'section', 
 
 
 ## Property `$component`
+In class: [components\menu\Helpers](#top)
 
 ```
 protected mixed $component
@@ -75,6 +77,7 @@ protected mixed $component
 
 
 ## Property `$default_permission`
+In class: [components\menu\Helpers](#top)
 
 ```
 protected mixed $default_permission
@@ -89,6 +92,7 @@ protected mixed $default_permission
 
 
 ## Property `$permissions`
+In class: [components\menu\Helpers](#top)
 
 ```
 protected mixed $permissions = array()
@@ -106,6 +110,7 @@ protected mixed $permissions = array()
 
 
 ## Method `__construct`
+In class: [components\menu\Helpers](#top)
 
 ```
 mixed dependencies\BaseComponent::__construct()
@@ -121,6 +126,7 @@ mixed dependencies\BaseComponent::__construct()
 
 
 ## Method `_call`
+In class: [components\menu\Helpers](#top)
 
 ```
 mixed dependencies\BaseComponent::_call($controller, array $args)
@@ -141,6 +147,7 @@ mixed dependencies\BaseComponent::_call($controller, array $args)
 
 
 ## Method `call`
+In class: [components\menu\Helpers](#top)
 
 ```
 mixed dependencies\BaseComponent::call($controller, $data)
@@ -161,6 +168,7 @@ mixed dependencies\BaseComponent::call($controller, $data)
 
 
 ## Method `filters`
+In class: [components\menu\Helpers](#top)
 
 ```
 mixed dependencies\BaseComponent::filters()
@@ -176,6 +184,7 @@ mixed dependencies\BaseComponent::filters()
 
 
 ## Method `get_menu_items`
+In class: [components\menu\Helpers](#top)
 
 ```
 mixed components\menu\Helpers::get_menu_items(array $options)
@@ -203,6 +212,7 @@ Returns a result set with the menu items you asked for.
 
 
 ## Method `helper`
+In class: [components\menu\Helpers](#top)
 
 ```
 mixed dependencies\BaseComponent::helper($controller)
@@ -222,6 +232,7 @@ mixed dependencies\BaseComponent::helper($controller)
 
 
 ## Method `model`
+In class: [components\menu\Helpers](#top)
 
 ```
 mixed dependencies\BaseComponent::model($model_name)
@@ -241,6 +252,7 @@ mixed dependencies\BaseComponent::model($model_name)
 
 
 ## Method `module`
+In class: [components\menu\Helpers](#top)
 
 ```
 mixed dependencies\BaseComponent::module($module_name, $options)
@@ -261,6 +273,7 @@ mixed dependencies\BaseComponent::module($module_name, $options)
 
 
 ## Method `section`
+In class: [components\menu\Helpers](#top)
 
 ```
 mixed dependencies\BaseComponent::section($section, $options)
@@ -281,6 +294,7 @@ mixed dependencies\BaseComponent::section($section, $options)
 
 
 ## Method `table`
+In class: [components\menu\Helpers](#top)
 
 ```
 mixed dependencies\BaseComponent::table($model_name, $id)
@@ -301,6 +315,7 @@ mixed dependencies\BaseComponent::table($model_name, $id)
 
 
 ## Method `view`
+In class: [components\menu\Helpers](#top)
 
 ```
 mixed dependencies\BaseComponent::view($module_name, $options)
