@@ -135,7 +135,8 @@ class FormBuilder
         
         $relation = array(
           'field_type' => null,
-          'relation_type' => \dependencies\RelationType::detect_type($this->model, $model_relations[$name])
+          'relation_type' => \dependencies\RelationType::detect_type($this->model, $model_relations[$name]),
+          'filter_options' => array()
         );
         
       }
@@ -151,7 +152,8 @@ class FormBuilder
         
         $relation = array(
           'field_type' => null,
-          'relation_type' => $value
+          'relation_type' => $value,
+          'filter_options' => array()
         );
         
       }
@@ -167,7 +169,8 @@ class FormBuilder
         
         $relation = array(
           'field_type' => isset($value['field_type']) ? $value['field_type'] : null,
-          'relation_type' => isset($value['relation_type']) ? $value['relation_type'] : null
+          'relation_type' => isset($value['relation_type']) ? $value['relation_type'] : null,
+          'filter_options' => isset($value['filter_options']) && is_array($value['filter_options']) ? $value['filter_options'] : array()
         );
         
         //Validate field_type option.
@@ -453,6 +456,14 @@ class FormBuilder
         //Find option set.
         $relation['option_set'] = tx('Sql')
           ->table($this->model->component(), $relation['target_model'])
+          ->is(count($relation['filter_options']) > 0, function($t)use($relation){
+            
+            //Add the filters.
+            foreach($relation['filter_options'] as $key => $value){
+              $t->where($key, $value);
+            }
+            
+          })
           ->execute()
           ->as_option_set($relation['target_field']);
         
