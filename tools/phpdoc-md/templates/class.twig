@@ -36,7 +36,7 @@
 **Constants**
 {% endif %}
 {% for constant in constants %}
-* `{{ constant.visibility }} {{ constant.type }} {{ constant.name }}`
+* [`{{ constant.visibility }} {{ constant.type }} {{ constant.name }}`](#{{ constant.key }})
 {% endfor %}
 
 {% if properties %}
@@ -44,7 +44,7 @@
 {% endif %}
 {% for property in properties %}
 {% if property.definedBy == className %}
-* `{{ property.visibility }}{% if property.static %} static{% endif %} {{ property.type }} {{ property.name }}`
+* [`{{ property.visibility }}{% if property.static %} static{% endif %} {{ property.type }} {{ property.name }}`](#{{ property.key }})
 {% endif %}
 {% endfor %}
 
@@ -53,7 +53,7 @@
 {% endif %}
 {% for method in methods %}
 {% if method.definedBy == className %}
-* `{% if method.abstract %}abstract {% endif %}{{ method.visibility }}{% if method.static %} static{% endif %} {{ method.return }} {{ method.name }}({{ method.argumentStr }})`
+* [`{% if method.abstract %}abstract {% endif %}{{ method.visibility }}{% if method.static %} static{% endif %} {{ method.return }} {{ method.name }}({{ method.argumentStr }})`](#{{ method.key }})
 {% endif %}
 {% endfor %}
 
@@ -87,7 +87,7 @@ Constants
 
 {% for constant in constants %}
 
-### {{ constant.name }}
+### Constant `{{ constant.name }}`
 
 ```
 {{ constant.signature|raw }}
@@ -107,7 +107,7 @@ Properties
 
 {% for property in properties %}
 
-### {{ property.name }}
+### Property `{{ property.name }}`
 
 ```
 {{ property.signature|raw }}
@@ -132,7 +132,7 @@ Methods
 
 {% for method in methods %}
 
-### {{ method.name }}
+### Method `{{ method.name }}`
 
 ```
 {{ method.signature|raw }}

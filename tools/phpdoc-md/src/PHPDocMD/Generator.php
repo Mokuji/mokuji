@@ -70,6 +70,7 @@ class Generator
 
         // Sad, sad global
         $GLOBALS['PHPDocMD_classDefinitions'] = $this->classDefinitions;
+        $GLOBALS['PHPDocMD_outputDir'] = $this->outputDir;
 
         $twig->addFilter('classLink', new Twig_Filter_Function('PHPDocMd\\Generator::classLink'));
         foreach($this->classDefinitions as $className=>$data) {
@@ -104,6 +105,7 @@ class Generator
                 file_get_contents($this->templateDir . '/class.twig'),
                 $data
             );
+            self::ensureDir($this->outputDir . '/' . $data['fileName']);
             file_put_contents($this->outputDir . '/' . $data['fileName'], $output);
 
         }
@@ -117,7 +119,7 @@ class Generator
                 'classDefinitions' => $this->classDefinitions,
             )
         );
-
+        self::ensureDir($this->outputDir . '/API-Index.md');
         file_put_contents($this->outputDir . '/API-Index.md', $index);
 
     }
@@ -185,6 +187,7 @@ class Generator
     static function classLink($className, $label = null) {
 
         $classDefinitions = $GLOBALS['PHPDocMD_classDefinitions'];
+        $outputDir = $GLOBALS['PHPDocMD_outputDir'];
 
         $returnedClasses = array();
 
@@ -206,7 +209,7 @@ class Generator
 
             } else {
 
-                $returnedClasses[] = "[" . $myLabel . "](" . str_replace('\\', '-', $oneClass) . ')';
+                $returnedClasses[] = "[" . $myLabel . "](" . ($outputDir[0] == '.' ? substr($outputDir, 1) . '/' : '/') . str_replace('\\', '/', $oneClass) . '.md)';
 
             }
 
@@ -214,6 +217,14 @@ class Generator
 
        return implode('|', $returnedClasses);
 
+    }
+    
+    /**
+     * Ensures the directories exists for the given path.
+     */
+    private static function ensureDir($filename){
+        $dir = substr($filename, 0, strrpos($filename, '/'));
+        @mkdir($dir, 0777, true);
     }
 
 }

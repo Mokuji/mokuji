@@ -14,11 +14,11 @@
 ## Class index
 
 **Properties**
-* `private static mixed $system`
+* [`private static mixed $system`](#property-$system)
 
 **Methods**
-* `public static mixed get_instance()`
-* `public mixed load_class($class, $args)`
+* [`public static mixed get_instance()`](#method-get_instance)
+* [`public mixed load_class($class, $args)`](#method-load_class)
 
 
 
@@ -30,7 +30,7 @@ Properties
 ----------
 
 
-### $system
+### Property `$system`
 
 ```
 private mixed $system = array()
@@ -48,7 +48,7 @@ Methods
 -------
 
 
-### get_instance
+### Method `get_instance`
 
 ```
 mixed Superclass::get_instance()
@@ -63,7 +63,7 @@ mixed Superclass::get_instance()
 
 
 
-### load_class
+### Method `load_class`
 
 ```
 mixed Superclass::load_class($class, $args)

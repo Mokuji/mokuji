@@ -76,7 +76,7 @@ class Parser
             $className = (string)$class->full_name;
             $className = ltrim($className,'\\');
 
-            $fileName = str_replace('\\','-', $className) . '.md';
+            $fileName = str_replace('\\','/', $className) . '.md';
 
             $implements = array();
 
@@ -179,6 +179,7 @@ class Parser
 
             $methods[$methodName] = array(
                 'name' => $methodName,
+                'key' => 'method-'.$methodName,
                 'description' => (string)$method->docblock->description . "\n\n" . (string)$method->docblock->{"long-description"},
                 'visibility' => (string)$method['visibility'],
                 'abstract'   => ((string)$method['abstract'])=="true",
@@ -230,6 +231,7 @@ class Parser
 
             $properties[$propName] = array(
                 'name' => $propName,
+                'key' => 'property-'.$propName,
                 'type' => $type,
                 'default' => $default,
                 'description' => (string)$xProperty->docblock->description . "\n\n" . (string)$xProperty->docblock->{"long-description"},
@@ -270,6 +272,7 @@ class Parser
 
             $constants[$name] = array(
                 'name' => $name,
+                'key' => 'constant-'.$name,
                 'description' => (string)$xConstant->docblock->description . "\n\n" . (string)$xConstant->docblock->{"long-description"},
                 'signature' => $signature,
                 'value' => $value,
