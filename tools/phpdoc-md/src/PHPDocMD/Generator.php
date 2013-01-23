@@ -168,7 +168,7 @@ class Generator
                 $isNs = $subItems && is_array($subItems) && count($subItems) > 0;
                 $b = $isNs ? '**' : '';
                 $fullName = $fullString?$fullString."\\".$name:$name;
-                $output.= str_repeat(' ', $depth*4) . '* ' . $b . Generator::classLink($fullName, $name) . $b . "\n";
+                $output.= str_repeat(' ', $depth*2) . '* ' . $b . Generator::classLink($fullName, $name) . $b . "\n";
                 $output.= $treeOutput($subItems, $fullName, $depth+1);
 
             }
