@@ -231,7 +231,7 @@ class Helpers extends \dependencies\BaseComponent
           })
           
           //Now set access_level and save.
-          ->access_level->set($permissions->{$userGroup->id->get()}->otherwise(0))->back()
+          ->access_level->set($permissions->{$userGroup->id->get()}->otherwise(0)->get('int'))->back()
           ->save();
         
       });
