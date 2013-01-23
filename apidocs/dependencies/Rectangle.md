@@ -1,4 +1,5 @@
 # dependencies\Rectangle
+[API index](../API-index.md)
 
 
 
@@ -37,11 +38,10 @@
 
 
 
-Constants
-----------
+# Constants
 
 
-### Constant `AUTO`
+## Constant `AUTO`
 
 ```
 const AUTO = 3
@@ -51,7 +51,7 @@ const AUTO = 3
 
 
 
-### Constant `DOWN`
+## Constant `DOWN`
 
 ```
 const DOWN = 2
@@ -61,7 +61,7 @@ const DOWN = 2
 
 
 
-### Constant `INSIDE`
+## Constant `INSIDE`
 
 ```
 const INSIDE = 2
@@ -71,7 +71,7 @@ const INSIDE = 2
 
 
 
-### Constant `OUTSIDE`
+## Constant `OUTSIDE`
 
 ```
 const OUTSIDE = 1
@@ -81,7 +81,7 @@ const OUTSIDE = 1
 
 
 
-### Constant `UP`
+## Constant `UP`
 
 ```
 const UP = 1
@@ -91,11 +91,10 @@ const UP = 1
 
 
 
-Properties
-----------
+# Properties
 
 
-### Property `$height`
+## Property `$height`
 
 ```
 private mixed $height = -1
@@ -108,7 +107,7 @@ private mixed $height = -1
 * Visibility: **private**
 
 
-### Property `$width`
+## Property `$width`
 
 ```
 private mixed $width = -1
@@ -121,11 +120,10 @@ private mixed $width = -1
 * Visibility: **private**
 
 
-Methods
--------
+# Methods
 
 
-### Method `__construct`
+## Method `__construct`
 
 ```
 mixed dependencies\Rectangle::__construct($width, $height)
@@ -144,7 +142,7 @@ mixed dependencies\Rectangle::__construct($width, $height)
 
 
 
-### Method `contain`
+## Method `contain`
 
 ```
 mixed dependencies\Rectangle::contain($width, $height, $shrink)
@@ -164,7 +162,7 @@ mixed dependencies\Rectangle::contain($width, $height, $shrink)
 
 
 
-### Method `fit`
+## Method `fit`
 
 ```
 mixed dependencies\Rectangle::fit($width, $height, $grow)
@@ -184,7 +182,7 @@ mixed dependencies\Rectangle::fit($width, $height, $grow)
 
 
 
-### Method `height`
+## Method `height`
 
 ```
 mixed dependencies\Rectangle::height()
@@ -198,7 +196,7 @@ mixed dependencies\Rectangle::height()
 
 
 
-### Method `round`
+## Method `round`
 
 ```
 mixed dependencies\Rectangle::round($type)
@@ -216,7 +214,7 @@ mixed dependencies\Rectangle::round($type)
 
 
 
-### Method `set_height`
+## Method `set_height`
 
 ```
 mixed dependencies\Rectangle::set_height($height, $maintain_aspect_ratio)
@@ -235,7 +233,7 @@ mixed dependencies\Rectangle::set_height($height, $maintain_aspect_ratio)
 
 
 
-### Method `set_width`
+## Method `set_width`
 
 ```
 mixed dependencies\Rectangle::set_width($width, $maintain_aspect_ratio)
@@ -254,7 +252,7 @@ mixed dependencies\Rectangle::set_width($width, $maintain_aspect_ratio)
 
 
 
-### Method `width`
+## Method `width`
 
 ```
 mixed dependencies\Rectangle::width()

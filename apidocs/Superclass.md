@@ -1,4 +1,5 @@
 # Superclass
+[API index](API-index.md)
 
 
 
@@ -26,11 +27,10 @@
 
 
 
-Properties
-----------
+# Properties
 
 
-### Property `$system`
+## Property `$system`
 
 ```
 private mixed $system = array()
@@ -44,11 +44,10 @@ private mixed $system = array()
 * This property is **static**.
 
 
-Methods
--------
+# Methods
 
 
-### Method `get_instance`
+## Method `get_instance`
 
 ```
 mixed Superclass::get_instance()
@@ -63,7 +62,7 @@ mixed Superclass::get_instance()
 
 
 
-### Method `load_class`
+## Method `load_class`
 
 ```
 mixed Superclass::load_class($class, $args)

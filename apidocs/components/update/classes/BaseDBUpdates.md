@@ -1,4 +1,5 @@
 # components\update\classes\BaseDBUpdates
+[API index](../../../API-index.md)
 
 
 
@@ -53,11 +54,10 @@
 
 
 
-Properties
-----------
+# Properties
 
 
-### Property `$component_package_data`
+## Property `$component_package_data`
 
 ```
 private mixed $component_package_data
@@ -71,7 +71,7 @@ private mixed $component_package_data
 * This property is **static**.
 
 
-### Property `$core_package_data`
+## Property `$core_package_data`
 
 ```
 private mixed $core_package_data
@@ -85,7 +85,7 @@ private mixed $core_package_data
 * This property is **static**.
 
 
-### Property `$queued_operations`
+## Property `$queued_operations`
 
 ```
 private mixed $queued_operations
@@ -99,7 +99,7 @@ private mixed $queued_operations
 * This property is **static**.
 
 
-### Property `$template_package_data`
+## Property `$template_package_data`
 
 ```
 private mixed $template_package_data
@@ -113,7 +113,7 @@ private mixed $template_package_data
 * This property is **static**.
 
 
-### Property `$theme_package_data`
+## Property `$theme_package_data`
 
 ```
 private mixed $theme_package_data
@@ -127,7 +127,7 @@ private mixed $theme_package_data
 * This property is **static**.
 
 
-### Property `$component`
+## Property `$component`
 
 ```
 protected mixed $component
@@ -140,7 +140,7 @@ protected mixed $component
 * Visibility: **protected**
 
 
-### Property `$is_core`
+## Property `$is_core`
 
 ```
 protected mixed $is_core
@@ -153,7 +153,7 @@ protected mixed $is_core
 * Visibility: **protected**
 
 
-### Property `$template`
+## Property `$template`
 
 ```
 protected mixed $template
@@ -166,7 +166,7 @@ protected mixed $template
 * Visibility: **protected**
 
 
-### Property `$theme`
+## Property `$theme`
 
 ```
 protected mixed $theme
@@ -179,7 +179,7 @@ protected mixed $theme
 * Visibility: **protected**
 
 
-### Property `$updates`
+## Property `$updates`
 
 ```
 protected mixed $updates
@@ -192,7 +192,7 @@ protected mixed $updates
 * Visibility: **protected**
 
 
-### Property `$package`
+## Property `$package`
 
 ```
 private mixed $package
@@ -205,11 +205,10 @@ private mixed $package
 * Visibility: **private**
 
 
-Methods
--------
+# Methods
 
 
-### Method `base_dir`
+## Method `base_dir`
 
 ```
 mixed components\update\classes\BaseDBUpdates::base_dir($type, $name)
@@ -229,7 +228,7 @@ mixed components\update\classes\BaseDBUpdates::base_dir($type, $name)
 
 
 
-### Method `clear_global_cache`
+## Method `clear_global_cache`
 
 ```
 mixed components\update\classes\BaseDBUpdates::clear_global_cache()
@@ -244,7 +243,7 @@ mixed components\update\classes\BaseDBUpdates::clear_global_cache()
 
 
 
-### Method `init_statics`
+## Method `init_statics`
 
 ```
 mixed components\update\classes\BaseDBUpdates::init_statics()
@@ -259,7 +258,7 @@ mixed components\update\classes\BaseDBUpdates::init_statics()
 
 
 
-### Method `package_data`
+## Method `package_data`
 
 ```
 mixed components\update\classes\BaseDBUpdates::package_data($type, $name)
@@ -279,7 +278,7 @@ mixed components\update\classes\BaseDBUpdates::package_data($type, $name)
 
 
 
-### Method `process_queue`
+## Method `process_queue`
 
 ```
 mixed components\update\classes\BaseDBUpdates::process_queue()
@@ -294,7 +293,7 @@ mixed components\update\classes\BaseDBUpdates::process_queue()
 
 
 
-### Method `__construct`
+## Method `__construct`
 
 ```
 mixed components\update\classes\BaseDBUpdates::__construct()
@@ -308,7 +307,7 @@ mixed components\update\classes\BaseDBUpdates::__construct()
 
 
 
-### Method `clear_cache`
+## Method `clear_cache`
 
 ```
 mixed components\update\classes\BaseDBUpdates::clear_cache()
@@ -322,7 +321,7 @@ mixed components\update\classes\BaseDBUpdates::clear_cache()
 
 
 
-### Method `current_version`
+## Method `current_version`
 
 ```
 mixed components\update\classes\BaseDBUpdates::current_version()
@@ -336,7 +335,7 @@ mixed components\update\classes\BaseDBUpdates::current_version()
 
 
 
-### Method `install`
+## Method `install`
 
 ```
 mixed components\update\classes\BaseDBUpdates::install($dummydata, $forced, $update_to_latest)
@@ -356,7 +355,7 @@ mixed components\update\classes\BaseDBUpdates::install($dummydata, $forced, $upd
 
 
 
-### Method `latest_version`
+## Method `latest_version`
 
 ```
 mixed components\update\classes\BaseDBUpdates::latest_version()
@@ -370,7 +369,7 @@ mixed components\update\classes\BaseDBUpdates::latest_version()
 
 
 
-### Method `uninstall`
+## Method `uninstall`
 
 ```
 mixed components\update\classes\BaseDBUpdates::uninstall($forced)
@@ -388,7 +387,7 @@ mixed components\update\classes\BaseDBUpdates::uninstall($forced)
 
 
 
-### Method `update`
+## Method `update`
 
 ```
 mixed components\update\classes\BaseDBUpdates::update($forced, $maybe_install)
@@ -407,7 +406,7 @@ mixed components\update\classes\BaseDBUpdates::update($forced, $maybe_install)
 
 
 
-### Method `get_base_dir`
+## Method `get_base_dir`
 
 ```
 mixed components\update\classes\BaseDBUpdates::get_base_dir()
@@ -421,7 +420,7 @@ mixed components\update\classes\BaseDBUpdates::get_base_dir()
 
 
 
-### Method `get_package_data`
+## Method `get_package_data`
 
 ```
 mixed components\update\classes\BaseDBUpdates::get_package_data()
@@ -435,7 +434,7 @@ mixed components\update\classes\BaseDBUpdates::get_package_data()
 
 
 
-### Method `next_version`
+## Method `next_version`
 
 ```
 mixed components\update\classes\BaseDBUpdates::next_version($version)
@@ -453,7 +452,7 @@ mixed components\update\classes\BaseDBUpdates::next_version($version)
 
 
 
-### Method `package`
+## Method `package`
 
 ```
 mixed components\update\classes\BaseDBUpdates::package()
@@ -467,7 +466,7 @@ mixed components\update\classes\BaseDBUpdates::package()
 
 
 
-### Method `queue`
+## Method `queue`
 
 ```
 mixed components\update\classes\BaseDBUpdates::queue($data, \Closure $operation)
@@ -486,7 +485,7 @@ mixed components\update\classes\BaseDBUpdates::queue($data, \Closure $operation)
 
 
 
-### Method `version_bump`
+## Method `version_bump`
 
 ```
 mixed components\update\classes\BaseDBUpdates::version_bump($version)

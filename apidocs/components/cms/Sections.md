@@ -1,4 +1,5 @@
 # components\cms\Sections
+[API index](../../API-index.md)
 
 
 
@@ -14,7 +15,6 @@
 
 ## Class index
 
-**Properties**
 
 **Methods**
 * [`protected mixed admin_toolbar()`](#method-admin_toolbar)
@@ -48,31 +48,30 @@
 ## Inheritance index
 
 **Properties**
-* `protected static mixed $reserved`
-* `protected mixed $component`
-* `protected mixed $default_permission`
-* `protected mixed $permissions`
+* [`protected static mixed $reserved`](#property-reserved)
+* [`protected mixed $component`](#property-component)
+* [`protected mixed $default_permission`](#property-default_permission)
+* [`protected mixed $permissions`](#property-permissions)
 
 **Methods**
-* `public mixed __construct()`
-* `public mixed _call($controller, array $args)`
-* `public mixed call($controller, $data)`
-* `public mixed filters()`
-* `public mixed get_html($view, $options)`
-* `public mixed helper($controller)`
-* `public mixed model($model_name)`
-* `public mixed module($module_name, $options)`
-* `public mixed section($section, $options)`
-* `public mixed table($model_name, $id)`
-* `public mixed view($module_name, $options)`
+* [`public mixed __construct()`](#method-__construct)
+* [`public mixed _call($controller, array $args)`](#method-_call)
+* [`public mixed call($controller, $data)`](#method-call)
+* [`public mixed filters()`](#method-filters)
+* [`public mixed get_html($view, $options)`](#method-get_html)
+* [`public mixed helper($controller)`](#method-helper)
+* [`public mixed model($model_name)`](#method-model)
+* [`public mixed module($module_name, $options)`](#method-module)
+* [`public mixed section($section, $options)`](#method-section)
+* [`public mixed table($model_name, $id)`](#method-table)
+* [`public mixed view($module_name, $options)`](#method-view)
 
 
 
-Properties
-----------
+# Properties
 
 
-### Property `$reserved`
+## Property `$reserved`
 
 ```
 protected mixed $reserved = array('__construct', 'filter', 'module', 'section', 'view', 'table', 'get_html', 'call', 'template')
@@ -87,7 +86,7 @@ protected mixed $reserved = array('__construct', 'filter', 'module', 'section', 
 * This property is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 
-### Property `$component`
+## Property `$component`
 
 ```
 protected mixed $component
@@ -101,7 +100,7 @@ protected mixed $component
 * This property is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 
-### Property `$default_permission`
+## Property `$default_permission`
 
 ```
 protected mixed $default_permission
@@ -115,7 +114,7 @@ protected mixed $default_permission
 * This property is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 
-### Property `$permissions`
+## Property `$permissions`
 
 ```
 protected mixed $permissions = array()
@@ -129,11 +128,10 @@ protected mixed $permissions = array()
 * This property is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 
-Methods
--------
+# Methods
 
 
-### Method `__construct`
+## Method `__construct`
 
 ```
 mixed dependencies\BaseComponent::__construct()
@@ -148,7 +146,7 @@ mixed dependencies\BaseComponent::__construct()
 
 
 
-### Method `_call`
+## Method `_call`
 
 ```
 mixed dependencies\BaseComponent::_call($controller, array $args)
@@ -168,7 +166,7 @@ mixed dependencies\BaseComponent::_call($controller, array $args)
 
 
 
-### Method `call`
+## Method `call`
 
 ```
 mixed dependencies\BaseComponent::call($controller, $data)
@@ -188,7 +186,7 @@ mixed dependencies\BaseComponent::call($controller, $data)
 
 
 
-### Method `filters`
+## Method `filters`
 
 ```
 mixed dependencies\BaseComponent::filters()
@@ -203,7 +201,7 @@ mixed dependencies\BaseComponent::filters()
 
 
 
-### Method `get_html`
+## Method `get_html`
 
 ```
 mixed dependencies\BaseViews::get_html($view, $options)
@@ -223,7 +221,7 @@ mixed dependencies\BaseViews::get_html($view, $options)
 
 
 
-### Method `helper`
+## Method `helper`
 
 ```
 mixed dependencies\BaseComponent::helper($controller)
@@ -242,7 +240,7 @@ mixed dependencies\BaseComponent::helper($controller)
 
 
 
-### Method `model`
+## Method `model`
 
 ```
 mixed dependencies\BaseComponent::model($model_name)
@@ -261,7 +259,7 @@ mixed dependencies\BaseComponent::model($model_name)
 
 
 
-### Method `module`
+## Method `module`
 
 ```
 mixed dependencies\BaseComponent::module($module_name, $options)
@@ -281,7 +279,7 @@ mixed dependencies\BaseComponent::module($module_name, $options)
 
 
 
-### Method `section`
+## Method `section`
 
 ```
 mixed dependencies\BaseComponent::section($section, $options)
@@ -301,7 +299,7 @@ mixed dependencies\BaseComponent::section($section, $options)
 
 
 
-### Method `table`
+## Method `table`
 
 ```
 mixed dependencies\BaseComponent::table($model_name, $id)
@@ -321,7 +319,7 @@ mixed dependencies\BaseComponent::table($model_name, $id)
 
 
 
-### Method `view`
+## Method `view`
 
 ```
 mixed dependencies\BaseComponent::view($module_name, $options)
@@ -341,7 +339,7 @@ mixed dependencies\BaseComponent::view($module_name, $options)
 
 
 
-### Method `admin_toolbar`
+## Method `admin_toolbar`
 
 ```
 mixed components\cms\Sections::admin_toolbar()
@@ -355,7 +353,7 @@ mixed components\cms\Sections::admin_toolbar()
 
 
 
-### Method `app`
+## Method `app`
 
 ```
 mixed components\cms\Sections::app($view)
@@ -373,7 +371,7 @@ mixed components\cms\Sections::app($view)
 
 
 
-### Method `config_app`
+## Method `config_app`
 
 ```
 mixed components\cms\Sections::config_app()
@@ -387,7 +385,7 @@ mixed components\cms\Sections::config_app()
 
 
 
-### Method `configbar`
+## Method `configbar`
 
 ```
 mixed components\cms\Sections::configbar()
@@ -401,7 +399,7 @@ mixed components\cms\Sections::configbar()
 
 
 
-### Method `context_menus`
+## Method `context_menus`
 
 ```
 mixed components\cms\Sections::context_menus()
@@ -415,7 +413,7 @@ mixed components\cms\Sections::context_menus()
 
 
 
-### Method `edit_menu_item`
+## Method `edit_menu_item`
 
 ```
 mixed components\cms\Sections::edit_menu_item($data)
@@ -433,7 +431,7 @@ mixed components\cms\Sections::edit_menu_item($data)
 
 
 
-### Method `edit_page`
+## Method `edit_page`
 
 ```
 mixed components\cms\Sections::edit_page($options)
@@ -451,7 +449,7 @@ mixed components\cms\Sections::edit_page($options)
 
 
 
-### Method `edit_site`
+## Method `edit_site`
 
 ```
 mixed components\cms\Sections::edit_site($options)
@@ -469,7 +467,7 @@ mixed components\cms\Sections::edit_site($options)
 
 
 
-### Method `ip_edit`
+## Method `ip_edit`
 
 ```
 mixed components\cms\Sections::ip_edit()
@@ -483,7 +481,7 @@ mixed components\cms\Sections::ip_edit()
 
 
 
-### Method `ip_list`
+## Method `ip_list`
 
 ```
 mixed components\cms\Sections::ip_list()
@@ -497,7 +495,7 @@ mixed components\cms\Sections::ip_list()
 
 
 
-### Method `link_menu_item`
+## Method `link_menu_item`
 
 ```
 mixed components\cms\Sections::link_menu_item($options)
@@ -515,7 +513,7 @@ mixed components\cms\Sections::link_menu_item($options)
 
 
 
-### Method `login_form`
+## Method `login_form`
 
 ```
 mixed components\cms\Sections::login_form()
@@ -529,7 +527,7 @@ mixed components\cms\Sections::login_form()
 
 
 
-### Method `menu_app`
+## Method `menu_app`
 
 ```
 mixed components\cms\Sections::menu_app()
@@ -543,7 +541,7 @@ mixed components\cms\Sections::menu_app()
 
 
 
-### Method `menu_items`
+## Method `menu_items`
 
 ```
 mixed components\cms\Sections::menu_items($options)
@@ -561,7 +559,7 @@ mixed components\cms\Sections::menu_items($options)
 
 
 
-### Method `menu_toolbar`
+## Method `menu_toolbar`
 
 ```
 mixed components\cms\Sections::menu_toolbar($options)
@@ -579,7 +577,7 @@ mixed components\cms\Sections::menu_toolbar($options)
 
 
 
-### Method `menus`
+## Method `menus`
 
 ```
 mixed components\cms\Sections::menus($options)
@@ -597,7 +595,7 @@ mixed components\cms\Sections::menus($options)
 
 
 
-### Method `module_app`
+## Method `module_app`
 
 ```
 mixed components\cms\Sections::module_app()
@@ -611,7 +609,7 @@ mixed components\cms\Sections::module_app()
 
 
 
-### Method `new_page`
+## Method `new_page`
 
 ```
 mixed components\cms\Sections::new_page($options)
@@ -629,7 +627,7 @@ mixed components\cms\Sections::new_page($options)
 
 
 
-### Method `page_app`
+## Method `page_app`
 
 ```
 mixed components\cms\Sections::page_app()
@@ -643,7 +641,7 @@ mixed components\cms\Sections::page_app()
 
 
 
-### Method `page_list`
+## Method `page_list`
 
 ```
 mixed components\cms\Sections::page_list($options)
@@ -661,7 +659,7 @@ mixed components\cms\Sections::page_list($options)
 
 
 
-### Method `setting_edit`
+## Method `setting_edit`
 
 ```
 mixed components\cms\Sections::setting_edit($data)
@@ -679,7 +677,7 @@ mixed components\cms\Sections::setting_edit($data)
 
 
 
-### Method `setting_edit_simple`
+## Method `setting_edit_simple`
 
 ```
 mixed components\cms\Sections::setting_edit_simple()
@@ -693,7 +691,7 @@ mixed components\cms\Sections::setting_edit_simple()
 
 
 
-### Method `setting_list`
+## Method `setting_list`
 
 ```
 mixed components\cms\Sections::setting_list()
@@ -707,7 +705,7 @@ mixed components\cms\Sections::setting_list()
 
 
 
-### Method `site_list`
+## Method `site_list`
 
 ```
 mixed components\cms\Sections::site_list($options)
@@ -725,7 +723,7 @@ mixed components\cms\Sections::site_list($options)
 
 
 
-### Method `template_list`
+## Method `template_list`
 
 ```
 mixed components\cms\Sections::template_list()
@@ -739,7 +737,7 @@ mixed components\cms\Sections::template_list()
 
 
 
-### Method `theme_list`
+## Method `theme_list`
 
 ```
 mixed components\cms\Sections::theme_list()

@@ -1,4 +1,5 @@
 # core\File
+[API index](../API-index.md)
 
 
 
@@ -30,11 +31,10 @@
 
 
 
-Properties
-----------
+# Properties
 
 
-### Property `$paths`
+## Property `$paths`
 
 ```
 private mixed $paths = null
@@ -47,7 +47,7 @@ private mixed $paths = null
 * Visibility: **private**
 
 
-### Property `$uploads`
+## Property `$uploads`
 
 ```
 private mixed $uploads
@@ -60,11 +60,10 @@ private mixed $uploads
 * Visibility: **private**
 
 
-Methods
--------
+# Methods
 
 
-### Method `add_dir`
+## Method `add_dir`
 
 ```
 mixed core\File::add_dir($path)
@@ -82,7 +81,7 @@ mixed core\File::add_dir($path)
 
 
 
-### Method `check_dir`
+## Method `check_dir`
 
 ```
 mixed core\File::check_dir($path)
@@ -100,7 +99,7 @@ mixed core\File::check_dir($path)
 
 
 
-### Method `file`
+## Method `file`
 
 ```
 mixed core\File::file($source)
@@ -118,7 +117,7 @@ mixed core\File::file($source)
 
 
 
-### Method `image`
+## Method `image`
 
 ```
 mixed core\File::image($source)
@@ -136,7 +135,7 @@ mixed core\File::image($source)
 
 
 
-### Method `init`
+## Method `init`
 
 ```
 mixed core\File::init()

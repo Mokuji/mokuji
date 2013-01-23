@@ -1,4 +1,5 @@
 # core\Config
+[API index](../API-index.md)
 
 
 
@@ -31,11 +32,10 @@
 
 
 
-Properties
-----------
+# Properties
 
 
-### Property `$site`
+## Property `$site`
 
 ```
 private mixed $site
@@ -48,7 +48,7 @@ private mixed $site
 * Visibility: **private**
 
 
-### Property `$system`
+## Property `$system`
 
 ```
 private mixed $system
@@ -61,7 +61,7 @@ private mixed $system
 * Visibility: **private**
 
 
-### Property `$user`
+## Property `$user`
 
 ```
 private mixed $user
@@ -74,11 +74,10 @@ private mixed $user
 * Visibility: **private**
 
 
-Methods
--------
+# Methods
 
 
-### Method `__construct`
+## Method `__construct`
 
 ```
 mixed core\Config::__construct()
@@ -92,7 +91,7 @@ mixed core\Config::__construct()
 
 
 
-### Method `init`
+## Method `init`
 
 ```
 mixed core\Config::init()
@@ -106,7 +105,7 @@ mixed core\Config::init()
 
 
 
-### Method `site`
+## Method `site`
 
 ```
 mixed core\Config::site()
@@ -120,7 +119,7 @@ mixed core\Config::site()
 
 
 
-### Method `system`
+## Method `system`
 
 ```
 mixed core\Config::system()
@@ -134,7 +133,7 @@ mixed core\Config::system()
 
 
 
-### Method `user`
+## Method `user`
 
 ```
 mixed core\Config::user()

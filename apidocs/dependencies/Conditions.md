@@ -1,4 +1,5 @@
 # dependencies\Conditions
+[API index](../API-index.md)
 
 
 
@@ -32,11 +33,10 @@
 
 
 
-Properties
-----------
+# Properties
 
 
-### Property `$conditions`
+## Property `$conditions`
 
 ```
 private mixed $conditions = array()
@@ -49,7 +49,7 @@ private mixed $conditions = array()
 * Visibility: **private**
 
 
-### Property `$invoked`
+## Property `$invoked`
 
 ```
 private mixed $invoked = array()
@@ -62,7 +62,7 @@ private mixed $invoked = array()
 * Visibility: **private**
 
 
-### Property `$utilized`
+## Property `$utilized`
 
 ```
 private mixed $utilized = array()
@@ -75,11 +75,10 @@ private mixed $utilized = array()
 * Visibility: **private**
 
 
-Methods
--------
+# Methods
 
 
-### Method `__invoke`
+## Method `__invoke`
 
 ```
 mixed dependencies\Conditions::__invoke()
@@ -93,7 +92,7 @@ mixed dependencies\Conditions::__invoke()
 
 
 
-### Method `_get`
+## Method `_get`
 
 ```
 mixed dependencies\Conditions::_get()
@@ -107,7 +106,7 @@ mixed dependencies\Conditions::_get()
 
 
 
-### Method `add`
+## Method `add`
 
 ```
 mixed dependencies\Conditions::add($id, array $args)
@@ -126,7 +125,7 @@ mixed dependencies\Conditions::add($id, array $args)
 
 
 
-### Method `combine`
+## Method `combine`
 
 ```
 mixed dependencies\Conditions::combine($id, array $ids, $connector)
@@ -146,7 +145,7 @@ mixed dependencies\Conditions::combine($id, array $ids, $connector)
 
 
 
-### Method `utilize`
+## Method `utilize`
 
 ```
 mixed dependencies\Conditions::utilize()
@@ -160,7 +159,7 @@ mixed dependencies\Conditions::utilize()
 
 
 
-### Method `to_array`
+## Method `to_array`
 
 ```
 mixed dependencies\Conditions::to_array($array)

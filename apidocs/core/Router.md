@@ -1,4 +1,5 @@
 # core\Router
+[API index](../API-index.md)
 
 
 
@@ -29,11 +30,10 @@
 
 
 
-Methods
--------
+# Methods
 
 
-### Method `start`
+## Method `start`
 
 ```
 mixed core\Router::start()
@@ -47,7 +47,7 @@ mixed core\Router::start()
 
 
 
-### Method `get_component`
+## Method `get_component`
 
 ```
 mixed core\Router::get_component()
@@ -61,7 +61,7 @@ mixed core\Router::get_component()
 
 
 
-### Method `parse_action`
+## Method `parse_action`
 
 ```
 mixed core\Router::parse_action($action)
@@ -79,7 +79,7 @@ mixed core\Router::parse_action($action)
 
 
 
-### Method `parse_module`
+## Method `parse_module`
 
 ```
 mixed core\Router::parse_module($module)
@@ -97,7 +97,7 @@ mixed core\Router::parse_module($module)
 
 
 
-### Method `parse_section`
+## Method `parse_section`
 
 ```
 mixed core\Router::parse_section($section)

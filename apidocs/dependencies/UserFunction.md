@@ -1,4 +1,5 @@
 # dependencies\UserFunction
+[API index](../API-index.md)
 
 
 
@@ -27,24 +28,22 @@
 
 ## Inheritance index
 
-**Properties**
 
 **Methods**
-* `public mixed _success()`
-* `public mixed and_is($check, $callback)`
-* `public mixed and_not($check)`
-* `public mixed is($check, $callback)`
-* `public mixed not($check, $callback)`
-* `public mixed success($callback)`
-* `private mixed _do_check($check)`
+* [`public mixed _success()`](#method-_success)
+* [`public mixed and_is($check, $callback)`](#method-and_is)
+* [`public mixed and_not($check)`](#method-and_not)
+* [`public mixed is($check, $callback)`](#method-is)
+* [`public mixed not($check, $callback)`](#method-not)
+* [`public mixed success($callback)`](#method-success)
+* [`private mixed _do_check($check)`](#method-_do_check)
 
 
 
-Properties
-----------
+# Properties
 
 
-### Property `$action`
+## Property `$action`
 
 ```
 public mixed $action = 'performing an action'
@@ -57,7 +56,7 @@ public mixed $action = 'performing an action'
 * Visibility: **public**
 
 
-### Property `$exception`
+## Property `$exception`
 
 ```
 public mixed $exception = null
@@ -70,7 +69,7 @@ public mixed $exception = null
 * Visibility: **public**
 
 
-### Property `$return_value`
+## Property `$return_value`
 
 ```
 public mixed $return_value = null
@@ -83,11 +82,10 @@ public mixed $return_value = null
 * Visibility: **public**
 
 
-Methods
--------
+# Methods
 
 
-### Method `__construct`
+## Method `__construct`
 
 ```
 mixed dependencies\UserFunction::__construct($action, \Closure $closure)
@@ -106,7 +104,7 @@ mixed dependencies\UserFunction::__construct($action, \Closure $closure)
 
 
 
-### Method `_success`
+## Method `_success`
 
 ```
 mixed dependencies\Successable::_success()
@@ -121,7 +119,7 @@ mixed dependencies\Successable::_success()
 
 
 
-### Method `and_is`
+## Method `and_is`
 
 ```
 mixed dependencies\Successable::and_is($check, $callback)
@@ -141,7 +139,7 @@ mixed dependencies\Successable::and_is($check, $callback)
 
 
 
-### Method `and_not`
+## Method `and_not`
 
 ```
 mixed dependencies\Successable::and_not($check)
@@ -160,7 +158,7 @@ mixed dependencies\Successable::and_not($check)
 
 
 
-### Method `failure`
+## Method `failure`
 
 ```
 mixed dependencies\UserFunction::failure($callback)
@@ -178,7 +176,7 @@ mixed dependencies\UserFunction::failure($callback)
 
 
 
-### Method `get_user_message`
+## Method `get_user_message`
 
 ```
 mixed dependencies\UserFunction::get_user_message($action)
@@ -196,7 +194,7 @@ mixed dependencies\UserFunction::get_user_message($action)
 
 
 
-### Method `is`
+## Method `is`
 
 ```
 mixed dependencies\Successable::is($check, $callback)
@@ -216,7 +214,7 @@ mixed dependencies\Successable::is($check, $callback)
 
 
 
-### Method `not`
+## Method `not`
 
 ```
 mixed dependencies\Successable::not($check, $callback)
@@ -236,7 +234,7 @@ mixed dependencies\Successable::not($check, $callback)
 
 
 
-### Method `success`
+## Method `success`
 
 ```
 mixed dependencies\Successable::success($callback)
@@ -255,7 +253,7 @@ mixed dependencies\Successable::success($callback)
 
 
 
-### Method `_do_check`
+## Method `_do_check`
 
 ```
 mixed dependencies\Successable::_do_check($check)

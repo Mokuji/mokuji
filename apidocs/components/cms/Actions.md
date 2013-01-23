@@ -1,4 +1,5 @@
 # components\cms\Actions
+[API index](../../API-index.md)
 
 
 
@@ -43,29 +44,28 @@
 ## Inheritance index
 
 **Properties**
-* `protected static mixed $reserved`
-* `protected mixed $component`
-* `protected mixed $default_permission`
+* [`protected static mixed $reserved`](#property-reserved)
+* [`protected mixed $component`](#property-component)
+* [`protected mixed $default_permission`](#property-default_permission)
 
 **Methods**
-* `public mixed __construct()`
-* `public mixed _call($controller, array $args)`
-* `public mixed call($controller, $data)`
-* `public mixed filters()`
-* `public mixed helper($controller)`
-* `public mixed model($model_name)`
-* `public mixed module($module_name, $options)`
-* `public mixed section($section, $options)`
-* `public mixed table($model_name, $id)`
-* `public mixed view($module_name, $options)`
+* [`public mixed __construct()`](#method-__construct)
+* [`public mixed _call($controller, array $args)`](#method-_call)
+* [`public mixed call($controller, $data)`](#method-call)
+* [`public mixed filters()`](#method-filters)
+* [`public mixed helper($controller)`](#method-helper)
+* [`public mixed model($model_name)`](#method-model)
+* [`public mixed module($module_name, $options)`](#method-module)
+* [`public mixed section($section, $options)`](#method-section)
+* [`public mixed table($model_name, $id)`](#method-table)
+* [`public mixed view($module_name, $options)`](#method-view)
 
 
 
-Properties
-----------
+# Properties
 
 
-### Property `$reserved`
+## Property `$reserved`
 
 ```
 protected mixed $reserved = array('__construct', 'filter', 'module', 'section', 'view', 'table', 'get_html', 'call', 'template')
@@ -80,7 +80,7 @@ protected mixed $reserved = array('__construct', 'filter', 'module', 'section', 
 * This property is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 
-### Property `$component`
+## Property `$component`
 
 ```
 protected mixed $component
@@ -94,7 +94,7 @@ protected mixed $component
 * This property is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 
-### Property `$default_permission`
+## Property `$default_permission`
 
 ```
 protected mixed $default_permission
@@ -108,7 +108,7 @@ protected mixed $default_permission
 * This property is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 
-### Property `$permissions`
+## Property `$permissions`
 
 ```
 protected mixed $permissions = array('select_menu' => 2, 'new_page' => 2, 'edit_page' => 2, 'logout' => 1)
@@ -121,11 +121,10 @@ protected mixed $permissions = array('select_menu' => 2, 'new_page' => 2, 'edit_
 * Visibility: **protected**
 
 
-Methods
--------
+# Methods
 
 
-### Method `__construct`
+## Method `__construct`
 
 ```
 mixed dependencies\BaseComponent::__construct()
@@ -140,7 +139,7 @@ mixed dependencies\BaseComponent::__construct()
 
 
 
-### Method `_call`
+## Method `_call`
 
 ```
 mixed dependencies\BaseComponent::_call($controller, array $args)
@@ -160,7 +159,7 @@ mixed dependencies\BaseComponent::_call($controller, array $args)
 
 
 
-### Method `call`
+## Method `call`
 
 ```
 mixed dependencies\BaseComponent::call($controller, $data)
@@ -180,7 +179,7 @@ mixed dependencies\BaseComponent::call($controller, $data)
 
 
 
-### Method `filters`
+## Method `filters`
 
 ```
 mixed dependencies\BaseComponent::filters()
@@ -195,7 +194,7 @@ mixed dependencies\BaseComponent::filters()
 
 
 
-### Method `helper`
+## Method `helper`
 
 ```
 mixed dependencies\BaseComponent::helper($controller)
@@ -214,7 +213,7 @@ mixed dependencies\BaseComponent::helper($controller)
 
 
 
-### Method `model`
+## Method `model`
 
 ```
 mixed dependencies\BaseComponent::model($model_name)
@@ -233,7 +232,7 @@ mixed dependencies\BaseComponent::model($model_name)
 
 
 
-### Method `module`
+## Method `module`
 
 ```
 mixed dependencies\BaseComponent::module($module_name, $options)
@@ -253,7 +252,7 @@ mixed dependencies\BaseComponent::module($module_name, $options)
 
 
 
-### Method `section`
+## Method `section`
 
 ```
 mixed dependencies\BaseComponent::section($section, $options)
@@ -273,7 +272,7 @@ mixed dependencies\BaseComponent::section($section, $options)
 
 
 
-### Method `table`
+## Method `table`
 
 ```
 mixed dependencies\BaseComponent::table($model_name, $id)
@@ -293,7 +292,7 @@ mixed dependencies\BaseComponent::table($model_name, $id)
 
 
 
-### Method `view`
+## Method `view`
 
 ```
 mixed dependencies\BaseComponent::view($module_name, $options)
@@ -313,7 +312,7 @@ mixed dependencies\BaseComponent::view($module_name, $options)
 
 
 
-### Method `delete_page`
+## Method `delete_page`
 
 ```
 mixed components\cms\Actions::delete_page($data)
@@ -331,7 +330,7 @@ mixed components\cms\Actions::delete_page($data)
 
 
 
-### Method `detach_page`
+## Method `detach_page`
 
 ```
 mixed components\cms\Actions::detach_page($data)
@@ -349,7 +348,7 @@ mixed components\cms\Actions::detach_page($data)
 
 
 
-### Method `edit_page`
+## Method `edit_page`
 
 ```
 mixed components\cms\Actions::edit_page($data)
@@ -367,7 +366,7 @@ mixed components\cms\Actions::edit_page($data)
 
 
 
-### Method `insert_sites`
+## Method `insert_sites`
 
 ```
 mixed components\cms\Actions::insert_sites($data)
@@ -385,7 +384,7 @@ mixed components\cms\Actions::insert_sites($data)
 
 
 
-### Method `language`
+## Method `language`
 
 ```
 mixed components\cms\Actions::language($data)
@@ -403,7 +402,7 @@ mixed components\cms\Actions::language($data)
 
 
 
-### Method `link_page`
+## Method `link_page`
 
 ```
 mixed components\cms\Actions::link_page($data)
@@ -421,7 +420,7 @@ mixed components\cms\Actions::link_page($data)
 
 
 
-### Method `login`
+## Method `login`
 
 ```
 mixed components\cms\Actions::login($data)
@@ -439,7 +438,7 @@ mixed components\cms\Actions::login($data)
 
 
 
-### Method `logout`
+## Method `logout`
 
 ```
 mixed components\cms\Actions::logout($data)
@@ -457,7 +456,7 @@ mixed components\cms\Actions::logout($data)
 
 
 
-### Method `new_page`
+## Method `new_page`
 
 ```
 mixed components\cms\Actions::new_page($data)
@@ -475,7 +474,7 @@ mixed components\cms\Actions::new_page($data)
 
 
 
-### Method `pause_redirects`
+## Method `pause_redirects`
 
 ```
 mixed components\cms\Actions::pause_redirects($data)
@@ -493,7 +492,7 @@ mixed components\cms\Actions::pause_redirects($data)
 
 
 
-### Method `play_redirects`
+## Method `play_redirects`
 
 ```
 mixed components\cms\Actions::play_redirects($data)
@@ -511,7 +510,7 @@ mixed components\cms\Actions::play_redirects($data)
 
 
 
-### Method `register`
+## Method `register`
 
 ```
 mixed components\cms\Actions::register($data)
@@ -529,7 +528,7 @@ mixed components\cms\Actions::register($data)
 
 
 
-### Method `save_menu_item`
+## Method `save_menu_item`
 
 ```
 mixed components\cms\Actions::save_menu_item($data)
@@ -547,7 +546,7 @@ mixed components\cms\Actions::save_menu_item($data)
 
 
 
-### Method `save_menu_link`
+## Method `save_menu_link`
 
 ```
 mixed components\cms\Actions::save_menu_link($data)
@@ -565,7 +564,7 @@ mixed components\cms\Actions::save_menu_link($data)
 
 
 
-### Method `save_settings_simple`
+## Method `save_settings_simple`
 
 ```
 mixed components\cms\Actions::save_settings_simple($data)
@@ -583,7 +582,7 @@ mixed components\cms\Actions::save_settings_simple($data)
 
 
 
-### Method `select_menu`
+## Method `select_menu`
 
 ```
 mixed components\cms\Actions::select_menu($data)
@@ -601,7 +600,7 @@ mixed components\cms\Actions::select_menu($data)
 
 
 
-### Method `send_feedback`
+## Method `send_feedback`
 
 ```
 mixed components\cms\Actions::send_feedback($data)
@@ -619,7 +618,7 @@ mixed components\cms\Actions::send_feedback($data)
 
 
 
-### Method `update_cms_config`
+## Method `update_cms_config`
 
 ```
 mixed components\cms\Actions::update_cms_config($data)
@@ -637,7 +636,7 @@ mixed components\cms\Actions::update_cms_config($data)
 
 
 
-### Method `update_ip_addresses`
+## Method `update_ip_addresses`
 
 ```
 mixed components\cms\Actions::update_ip_addresses($data)
@@ -655,7 +654,7 @@ mixed components\cms\Actions::update_ip_addresses($data)
 
 
 
-### Method `update_sites`
+## Method `update_sites`
 
 ```
 mixed components\cms\Actions::update_sites($data)

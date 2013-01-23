@@ -1,4 +1,5 @@
 # core\Site
+[API index](../API-index.md)
 
 
 
@@ -27,11 +28,10 @@
 
 
 
-Properties
-----------
+# Properties
 
 
-### Property `$actualSite`
+## Property `$actualSite`
 
 ```
 private mixed $actualSite = null
@@ -44,7 +44,7 @@ private mixed $actualSite = null
 * Visibility: **private**
 
 
-### Property `$isLoaded`
+## Property `$isLoaded`
 
 ```
 private mixed $isLoaded = false
@@ -57,11 +57,10 @@ private mixed $isLoaded = false
 * Visibility: **private**
 
 
-Methods
--------
+# Methods
 
 
-### Method `__get`
+## Method `__get`
 
 ```
 mixed core\Site::__get($name)
@@ -79,7 +78,7 @@ mixed core\Site::__get($name)
 
 
 
-### Method `_load`
+## Method `_load`
 
 ```
 mixed core\Site::_load($site)

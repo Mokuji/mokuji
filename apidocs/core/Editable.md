@@ -1,4 +1,5 @@
 # core\Editable
+[API index](../API-index.md)
 
 
 
@@ -25,11 +26,10 @@
 
 
 
-Methods
--------
+# Methods
 
 
-### Method `init`
+## Method `init`
 
 ```
 mixed core\Editable::init()

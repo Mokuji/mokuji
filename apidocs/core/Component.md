@@ -1,4 +1,5 @@
 # core\Component
+[API index](../API-index.md)
 
 
 
@@ -36,11 +37,10 @@
 
 
 
-Properties
-----------
+# Properties
 
 
-### Property `$checks`
+## Property `$checks`
 
 ```
 private mixed $checks = array()
@@ -53,7 +53,7 @@ private mixed $checks = array()
 * Visibility: **private**
 
 
-### Property `$components`
+## Property `$components`
 
 ```
 private mixed $components
@@ -66,11 +66,10 @@ private mixed $components
 * Visibility: **private**
 
 
-Methods
--------
+# Methods
 
 
-### Method `__construct`
+## Method `__construct`
 
 ```
 mixed core\Component::__construct()
@@ -84,7 +83,7 @@ mixed core\Component::__construct()
 
 
 
-### Method `actions`
+## Method `actions`
 
 ```
 mixed core\Component::actions($of)
@@ -102,7 +101,7 @@ mixed core\Component::actions($of)
 
 
 
-### Method `available`
+## Method `available`
 
 ```
 mixed core\Component::available($component_name)
@@ -120,7 +119,7 @@ mixed core\Component::available($component_name)
 
 
 
-### Method `check`
+## Method `check`
 
 ```
 mixed core\Component::check($component_name)
@@ -138,7 +137,7 @@ mixed core\Component::check($component_name)
 
 
 
-### Method `enter`
+## Method `enter`
 
 ```
 mixed core\Component::enter($component)
@@ -156,7 +155,7 @@ mixed core\Component::enter($component)
 
 
 
-### Method `helpers`
+## Method `helpers`
 
 ```
 mixed core\Component::helpers($of)
@@ -174,7 +173,7 @@ mixed core\Component::helpers($of)
 
 
 
-### Method `json`
+## Method `json`
 
 ```
 mixed core\Component::json($of)
@@ -192,7 +191,7 @@ mixed core\Component::json($of)
 
 
 
-### Method `load`
+## Method `load`
 
 ```
 mixed core\Component::load($component, $part, $instantiate)
@@ -212,7 +211,7 @@ mixed core\Component::load($component, $part, $instantiate)
 
 
 
-### Method `modules`
+## Method `modules`
 
 ```
 mixed core\Component::modules($of)
@@ -230,7 +229,7 @@ mixed core\Component::modules($of)
 
 
 
-### Method `sections`
+## Method `sections`
 
 ```
 mixed core\Component::sections($of)
@@ -248,7 +247,7 @@ mixed core\Component::sections($of)
 
 
 
-### Method `views`
+## Method `views`
 
 ```
 mixed core\Component::views($of)

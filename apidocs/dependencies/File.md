@@ -1,4 +1,5 @@
 # dependencies\File
+[API index](../API-index.md)
 
 
 
@@ -36,11 +37,10 @@
 
 
 
-Properties
-----------
+# Properties
 
 
-### Property `$cache_time`
+## Property `$cache_time`
 
 ```
 protected mixed $cache_time = 604800
@@ -53,7 +53,7 @@ protected mixed $cache_time = 604800
 * Visibility: **protected**
 
 
-### Property `$dir`
+## Property `$dir`
 
 ```
 protected mixed $dir = ''
@@ -66,7 +66,7 @@ protected mixed $dir = ''
 * Visibility: **protected**
 
 
-### Property `$file`
+## Property `$file`
 
 ```
 protected mixed $file = ''
@@ -79,7 +79,7 @@ protected mixed $file = ''
 * Visibility: **protected**
 
 
-### Property `$info`
+## Property `$info`
 
 ```
 protected mixed $info = array()
@@ -92,7 +92,7 @@ protected mixed $info = array()
 * Visibility: **protected**
 
 
-### Property `$source`
+## Property `$source`
 
 ```
 protected mixed $source = ''
@@ -105,11 +105,10 @@ protected mixed $source = ''
 * Visibility: **protected**
 
 
-Methods
--------
+# Methods
 
 
-### Method `__construct`
+## Method `__construct`
 
 ```
 mixed dependencies\File::__construct($file)
@@ -127,7 +126,7 @@ mixed dependencies\File::__construct($file)
 
 
 
-### Method `cache_time`
+## Method `cache_time`
 
 ```
 mixed dependencies\File::cache_time($set)
@@ -145,7 +144,7 @@ mixed dependencies\File::cache_time($set)
 
 
 
-### Method `download`
+## Method `download`
 
 ```
 mixed dependencies\File::download($options)
@@ -163,7 +162,7 @@ mixed dependencies\File::download($options)
 
 
 
-### Method `from_file`
+## Method `from_file`
 
 ```
 mixed dependencies\File::from_file($source)
@@ -181,7 +180,7 @@ mixed dependencies\File::from_file($source)
 
 
 
-### Method `get_filesize`
+## Method `get_filesize`
 
 ```
 mixed dependencies\File::get_filesize()
@@ -195,7 +194,7 @@ mixed dependencies\File::get_filesize()
 
 
 
-### Method `output`
+## Method `output`
 
 ```
 mixed dependencies\File::output($options)
@@ -213,7 +212,7 @@ mixed dependencies\File::output($options)
 
 
 
-### Method `save`
+## Method `save`
 
 ```
 mixed dependencies\File::save($save)
@@ -231,7 +230,7 @@ mixed dependencies\File::save($save)
 
 
 
-### Method `create_output_headers`
+## Method `create_output_headers`
 
 ```
 mixed dependencies\File::create_output_headers()

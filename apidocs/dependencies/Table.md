@@ -1,4 +1,5 @@
 # dependencies\Table
+[API index](../API-index.md)
 
 
 
@@ -78,25 +79,23 @@
 
 ## Inheritance index
 
-**Properties**
 
 **Methods**
-* `public mixed _success()`
-* `public mixed and_is($check, $callback)`
-* `public mixed and_not($check)`
-* `public mixed failure($callback)`
-* `public mixed is($check, $callback)`
-* `public mixed not($check, $callback)`
-* `public mixed success($callback)`
-* `private mixed _do_check($check)`
+* [`public mixed _success()`](#method-_success)
+* [`public mixed and_is($check, $callback)`](#method-and_is)
+* [`public mixed and_not($check)`](#method-and_not)
+* [`public mixed failure($callback)`](#method-failure)
+* [`public mixed is($check, $callback)`](#method-is)
+* [`public mixed not($check, $callback)`](#method-not)
+* [`public mixed success($callback)`](#method-success)
+* [`private mixed _do_check($check)`](#method-_do_check)
 
 
 
-Properties
-----------
+# Properties
 
 
-### Property `$applied_sks`
+## Property `$applied_sks`
 
 ```
 private mixed $applied_sks = array()
@@ -109,7 +108,7 @@ private mixed $applied_sks = array()
 * Visibility: **private**
 
 
-### Property `$component`
+## Property `$component`
 
 ```
 private mixed $component = false
@@ -122,7 +121,7 @@ private mixed $component = false
 * Visibility: **private**
 
 
-### Property `$from`
+## Property `$from`
 
 ```
 private mixed $from = array()
@@ -135,7 +134,7 @@ private mixed $from = array()
 * Visibility: **private**
 
 
-### Property `$group`
+## Property `$group`
 
 ```
 private mixed $group = array()
@@ -148,7 +147,7 @@ private mixed $group = array()
 * Visibility: **private**
 
 
-### Property `$having`
+## Property `$having`
 
 ```
 private mixed $having = ''
@@ -161,7 +160,7 @@ private mixed $having = ''
 * Visibility: **private**
 
 
-### Property `$hierarchy`
+## Property `$hierarchy`
 
 ```
 private mixed $hierarchy = array()
@@ -174,7 +173,7 @@ private mixed $hierarchy = array()
 * Visibility: **private**
 
 
-### Property `$joins`
+## Property `$joins`
 
 ```
 private mixed $joins = array()
@@ -187,7 +186,7 @@ private mixed $joins = array()
 * Visibility: **private**
 
 
-### Property `$limit`
+## Property `$limit`
 
 ```
 private mixed $limit
@@ -200,7 +199,7 @@ private mixed $limit
 * Visibility: **private**
 
 
-### Property `$model`
+## Property `$model`
 
 ```
 private mixed $model = false
@@ -213,7 +212,7 @@ private mixed $model = false
 * Visibility: **private**
 
 
-### Property `$models`
+## Property `$models`
 
 ```
 private mixed $models = array()
@@ -226,7 +225,7 @@ private mixed $models = array()
 * Visibility: **private**
 
 
-### Property `$order`
+## Property `$order`
 
 ```
 private mixed $order = array()
@@ -239,7 +238,7 @@ private mixed $order = array()
 * Visibility: **private**
 
 
-### Property `$select`
+## Property `$select`
 
 ```
 private mixed $select = array()
@@ -252,7 +251,7 @@ private mixed $select = array()
 * Visibility: **private**
 
 
-### Property `$where`
+## Property `$where`
 
 ```
 private mixed $where = ''
@@ -265,7 +264,7 @@ private mixed $where = ''
 * Visibility: **private**
 
 
-### Property `$working_model`
+## Property `$working_model`
 
 ```
 private mixed $working_model
@@ -278,11 +277,10 @@ private mixed $working_model
 * Visibility: **private**
 
 
-Methods
--------
+# Methods
 
 
-### Method `__construct`
+## Method `__construct`
 
 ```
 mixed dependencies\Table::__construct($component, $model, $id, $models)
@@ -303,7 +301,7 @@ mixed dependencies\Table::__construct($component, $model, $id, $models)
 
 
 
-### Method `__invoke`
+## Method `__invoke`
 
 ```
 mixed dependencies\Table::__invoke($id)
@@ -321,7 +319,7 @@ mixed dependencies\Table::__invoke($id)
 
 
 
-### Method `_get_model_subquery`
+## Method `_get_model_subquery`
 
 ```
 mixed dependencies\Table::_get_model_subquery()
@@ -335,7 +333,7 @@ mixed dependencies\Table::_get_model_subquery()
 
 
 
-### Method `_success`
+## Method `_success`
 
 ```
 mixed dependencies\Successable::_success()
@@ -350,7 +348,7 @@ mixed dependencies\Successable::_success()
 
 
 
-### Method `add`
+## Method `add`
 
 ```
 mixed dependencies\Table::add($model, $id)
@@ -369,7 +367,7 @@ mixed dependencies\Table::add($model, $id)
 
 
 
-### Method `add_absolute_depth`
+## Method `add_absolute_depth`
 
 ```
 mixed dependencies\Table::add_absolute_depth($as)
@@ -387,7 +385,7 @@ mixed dependencies\Table::add_absolute_depth($as)
 
 
 
-### Method `add_hierarchy`
+## Method `add_hierarchy`
 
 ```
 mixed dependencies\Table::add_hierarchy()
@@ -401,7 +399,7 @@ mixed dependencies\Table::add_hierarchy()
 
 
 
-### Method `add_relative_depth`
+## Method `add_relative_depth`
 
 ```
 mixed dependencies\Table::add_relative_depth($as)
@@ -419,7 +417,7 @@ mixed dependencies\Table::add_relative_depth($as)
 
 
 
-### Method `and_is`
+## Method `and_is`
 
 ```
 mixed dependencies\Successable::and_is($check, $callback)
@@ -439,7 +437,7 @@ mixed dependencies\Successable::and_is($check, $callback)
 
 
 
-### Method `and_not`
+## Method `and_not`
 
 ```
 mixed dependencies\Successable::and_not($check)
@@ -458,7 +456,7 @@ mixed dependencies\Successable::and_not($check)
 
 
 
-### Method `count`
+## Method `count`
 
 ```
 mixed dependencies\Table::count()
@@ -472,7 +470,7 @@ mixed dependencies\Table::count()
 
 
 
-### Method `delete`
+## Method `delete`
 
 ```
 mixed dependencies\Table::delete($model_name)
@@ -490,7 +488,7 @@ mixed dependencies\Table::delete($model_name)
 
 
 
-### Method `execute`
+## Method `execute`
 
 ```
 mixed dependencies\Table::execute($as)
@@ -508,7 +506,7 @@ mixed dependencies\Table::execute($as)
 
 
 
-### Method `execute_single`
+## Method `execute_single`
 
 ```
 mixed dependencies\Table::execute_single($as)
@@ -526,7 +524,7 @@ mixed dependencies\Table::execute_single($as)
 
 
 
-### Method `failure`
+## Method `failure`
 
 ```
 mixed dependencies\Successable::failure($callback)
@@ -545,7 +543,7 @@ mixed dependencies\Successable::failure($callback)
 
 
 
-### Method `filter`
+## Method `filter`
 
 ```
 mixed dependencies\Table::filter()
@@ -559,7 +557,7 @@ mixed dependencies\Table::filter()
 
 
 
-### Method `from`
+## Method `from`
 
 ```
 mixed dependencies\Table::from($model, $id)
@@ -578,7 +576,7 @@ mixed dependencies\Table::from($model, $id)
 
 
 
-### Method `group`
+## Method `group`
 
 ```
 mixed dependencies\Table::group($column, $direction)
@@ -597,7 +595,7 @@ mixed dependencies\Table::group($column, $direction)
 
 
 
-### Method `having`
+## Method `having`
 
 ```
 mixed dependencies\Table::having()
@@ -611,7 +609,7 @@ mixed dependencies\Table::having()
 
 
 
-### Method `inner`
+## Method `inner`
 
 ```
 mixed dependencies\Table::inner()
@@ -625,7 +623,7 @@ mixed dependencies\Table::inner()
 
 
 
-### Method `is`
+## Method `is`
 
 ```
 mixed dependencies\Successable::is($check, $callback)
@@ -645,7 +643,7 @@ mixed dependencies\Successable::is($check, $callback)
 
 
 
-### Method `join`
+## Method `join`
 
 ```
 mixed dependencies\Table::join($model_name, $id)
@@ -664,7 +662,7 @@ mixed dependencies\Table::join($model_name, $id)
 
 
 
-### Method `left`
+## Method `left`
 
 ```
 mixed dependencies\Table::left()
@@ -678,7 +676,7 @@ mixed dependencies\Table::left()
 
 
 
-### Method `limit`
+## Method `limit`
 
 ```
 mixed dependencies\Table::limit($rowcount, $offset)
@@ -697,7 +695,7 @@ mixed dependencies\Table::limit($rowcount, $offset)
 
 
 
-### Method `max_depth`
+## Method `max_depth`
 
 ```
 mixed dependencies\Table::max_depth($gt)
@@ -715,7 +713,7 @@ mixed dependencies\Table::max_depth($gt)
 
 
 
-### Method `not`
+## Method `not`
 
 ```
 mixed dependencies\Successable::not($check, $callback)
@@ -735,7 +733,7 @@ mixed dependencies\Successable::not($check, $callback)
 
 
 
-### Method `order`
+## Method `order`
 
 ```
 mixed dependencies\Table::order($column, $direction)
@@ -754,7 +752,7 @@ mixed dependencies\Table::order($column, $direction)
 
 
 
-### Method `parent_pk`
+## Method `parent_pk`
 
 ```
 mixed dependencies\Table::parent_pk()
@@ -768,7 +766,7 @@ mixed dependencies\Table::parent_pk()
 
 
 
-### Method `pk`
+## Method `pk`
 
 ```
 mixed dependencies\Table::pk()
@@ -782,7 +780,7 @@ mixed dependencies\Table::pk()
 
 
 
-### Method `query`
+## Method `query`
 
 ```
 mixed dependencies\Table::query($all)
@@ -800,7 +798,7 @@ mixed dependencies\Table::query($all)
 
 
 
-### Method `right`
+## Method `right`
 
 ```
 mixed dependencies\Table::right()
@@ -814,7 +812,7 @@ mixed dependencies\Table::right()
 
 
 
-### Method `select`
+## Method `select`
 
 ```
 mixed dependencies\Table::select($content, $as)
@@ -833,7 +831,7 @@ mixed dependencies\Table::select($content, $as)
 
 
 
-### Method `set_jointype`
+## Method `set_jointype`
 
 ```
 mixed dependencies\Table::set_jointype($type)
@@ -851,7 +849,7 @@ mixed dependencies\Table::set_jointype($type)
 
 
 
-### Method `sk`
+## Method `sk`
 
 ```
 mixed dependencies\Table::sk()
@@ -865,7 +863,7 @@ mixed dependencies\Table::sk()
 
 
 
-### Method `subquery`
+## Method `subquery`
 
 ```
 mixed dependencies\Table::subquery($q)
@@ -883,7 +881,7 @@ mixed dependencies\Table::subquery($q)
 
 
 
-### Method `success`
+## Method `success`
 
 ```
 mixed dependencies\Successable::success($callback)
@@ -902,7 +900,7 @@ mixed dependencies\Successable::success($callback)
 
 
 
-### Method `where`
+## Method `where`
 
 ```
 mixed dependencies\Table::where()
@@ -916,7 +914,7 @@ mixed dependencies\Table::where()
 
 
 
-### Method `workwith`
+## Method `workwith`
 
 ```
 mixed dependencies\Table::workwith($id)
@@ -934,7 +932,7 @@ mixed dependencies\Table::workwith($id)
 
 
 
-### Method `write`
+## Method `write`
 
 ```
 mixed dependencies\Table::write($as)
@@ -952,7 +950,7 @@ mixed dependencies\Table::write($as)
 
 
 
-### Method `_do_check`
+## Method `_do_check`
 
 ```
 mixed dependencies\Successable::_do_check($check)
@@ -971,7 +969,7 @@ mixed dependencies\Successable::_do_check($check)
 
 
 
-### Method `_get_subquery`
+## Method `_get_subquery`
 
 ```
 mixed dependencies\Table::_get_subquery()
@@ -985,7 +983,7 @@ mixed dependencies\Table::_get_subquery()
 
 
 
-### Method `arguments_to_comparisons`
+## Method `arguments_to_comparisons`
 
 ```
 mixed dependencies\Table::arguments_to_comparisons()
@@ -999,7 +997,7 @@ mixed dependencies\Table::arguments_to_comparisons()
 
 
 
-### Method `compose_condition`
+## Method `compose_condition`
 
 ```
 mixed dependencies\Table::compose_condition(array $condition)
@@ -1017,7 +1015,7 @@ mixed dependencies\Table::compose_condition(array $condition)
 
 
 
-### Method `conditions_to_comparisons`
+## Method `conditions_to_comparisons`
 
 ```
 mixed dependencies\Table::conditions_to_comparisons(\dependencies\Conditions $conditions)
@@ -1035,7 +1033,7 @@ mixed dependencies\Table::conditions_to_comparisons(\dependencies\Conditions $co
 
 
 
-### Method `get_column_info`
+## Method `get_column_info`
 
 ```
 mixed dependencies\Table::get_column_info($input)
@@ -1053,7 +1051,7 @@ mixed dependencies\Table::get_column_info($input)
 
 
 
-### Method `get_model_info`
+## Method `get_model_info`
 
 ```
 mixed dependencies\Table::get_model_info($input)
@@ -1071,7 +1069,7 @@ mixed dependencies\Table::get_model_info($input)
 
 
 
-### Method `grourder`
+## Method `grourder`
 
 ```
 mixed dependencies\Table::grourder($c, $d)
@@ -1090,7 +1088,7 @@ mixed dependencies\Table::grourder($c, $d)
 
 
 
-### Method `prepare`
+## Method `prepare`
 
 ```
 mixed dependencies\Table::prepare($input)
@@ -1108,7 +1106,7 @@ mixed dependencies\Table::prepare($input)
 
 
 
-### Method `prepare_column`
+## Method `prepare_column`
 
 ```
 mixed dependencies\Table::prepare_column($column)
@@ -1126,7 +1124,7 @@ mixed dependencies\Table::prepare_column($column)
 
 
 
-### Method `prepare_text`
+## Method `prepare_text`
 
 ```
 mixed dependencies\Table::prepare_text($text)
@@ -1144,7 +1142,7 @@ mixed dependencies\Table::prepare_text($text)
 
 
 
-### Method `whaving`
+## Method `whaving`
 
 ```
 mixed dependencies\Table::whaving()

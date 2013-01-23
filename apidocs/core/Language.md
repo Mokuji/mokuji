@@ -1,4 +1,5 @@
 # core\Language
+[API index](../API-index.md)
 
 
 
@@ -36,11 +37,10 @@
 
 
 
-Properties
-----------
+# Properties
 
 
-### Property `$caching`
+## Property `$caching`
 
 ```
 private mixed $caching
@@ -53,7 +53,7 @@ private mixed $caching
 * Visibility: **private**
 
 
-### Property `$language_code`
+## Property `$language_code`
 
 ```
 private mixed $language_code
@@ -66,7 +66,7 @@ private mixed $language_code
 * Visibility: **private**
 
 
-### Property `$language_id`
+## Property `$language_id`
 
 ```
 private mixed $language_id
@@ -79,7 +79,7 @@ private mixed $language_id
 * Visibility: **private**
 
 
-### Property `$translating_started`
+## Property `$translating_started`
 
 ```
 private mixed $translating_started
@@ -92,7 +92,7 @@ private mixed $translating_started
 * Visibility: **private**
 
 
-### Property `$translations`
+## Property `$translations`
 
 ```
 private mixed $translations
@@ -105,11 +105,10 @@ private mixed $translations
 * Visibility: **private**
 
 
-Methods
--------
+# Methods
 
 
-### Method `__get`
+## Method `__get`
 
 ```
 mixed core\Language::__get($key)
@@ -127,7 +126,7 @@ mixed core\Language::__get($key)
 
 
 
-### Method `get_language_code`
+## Method `get_language_code`
 
 ```
 mixed core\Language::get_language_code()
@@ -141,7 +140,7 @@ mixed core\Language::get_language_code()
 
 
 
-### Method `get_language_id`
+## Method `get_language_id`
 
 ```
 mixed core\Language::get_language_id()
@@ -155,7 +154,7 @@ mixed core\Language::get_language_id()
 
 
 
-### Method `get_languages`
+## Method `get_languages`
 
 ```
 mixed core\Language::get_languages()
@@ -169,7 +168,7 @@ mixed core\Language::get_languages()
 
 
 
-### Method `init`
+## Method `init`
 
 ```
 mixed core\Language::init()
@@ -183,7 +182,7 @@ mixed core\Language::init()
 
 
 
-### Method `multilanguage`
+## Method `multilanguage`
 
 ```
 mixed core\Language::multilanguage(\Closure $closure)
@@ -201,7 +200,7 @@ mixed core\Language::multilanguage(\Closure $closure)
 
 
 
-### Method `set_language_id`
+## Method `set_language_id`
 
 ```
 mixed core\Language::set_language_id($id)
@@ -219,7 +218,7 @@ mixed core\Language::set_language_id($id)
 
 
 
-### Method `translate`
+## Method `translate`
 
 ```
 mixed core\Language::translate($phrase, $component, $lang_id, $case)

@@ -1,4 +1,5 @@
 # dependencies\BaseComponent
+[API index](../API-index.md)
 
 
 
@@ -38,11 +39,10 @@
 
 
 
-Properties
-----------
+# Properties
 
 
-### Property `$reserved`
+## Property `$reserved`
 
 ```
 protected mixed $reserved = array('__construct', 'filter', 'module', 'section', 'view', 'table', 'get_html', 'call', 'template')
@@ -56,7 +56,7 @@ protected mixed $reserved = array('__construct', 'filter', 'module', 'section', 
 * This property is **static**.
 
 
-### Property `$component`
+## Property `$component`
 
 ```
 protected mixed $component
@@ -69,7 +69,7 @@ protected mixed $component
 * Visibility: **protected**
 
 
-### Property `$default_permission`
+## Property `$default_permission`
 
 ```
 protected mixed $default_permission
@@ -82,7 +82,7 @@ protected mixed $default_permission
 * Visibility: **protected**
 
 
-### Property `$permissions`
+## Property `$permissions`
 
 ```
 protected mixed $permissions = array()
@@ -95,11 +95,10 @@ protected mixed $permissions = array()
 * Visibility: **protected**
 
 
-Methods
--------
+# Methods
 
 
-### Method `__construct`
+## Method `__construct`
 
 ```
 mixed dependencies\BaseComponent::__construct()
@@ -113,7 +112,7 @@ mixed dependencies\BaseComponent::__construct()
 
 
 
-### Method `_call`
+## Method `_call`
 
 ```
 mixed dependencies\BaseComponent::_call($controller, array $args)
@@ -132,7 +131,7 @@ mixed dependencies\BaseComponent::_call($controller, array $args)
 
 
 
-### Method `call`
+## Method `call`
 
 ```
 mixed dependencies\BaseComponent::call($controller, $data)
@@ -151,7 +150,7 @@ mixed dependencies\BaseComponent::call($controller, $data)
 
 
 
-### Method `filters`
+## Method `filters`
 
 ```
 mixed dependencies\BaseComponent::filters()
@@ -165,7 +164,7 @@ mixed dependencies\BaseComponent::filters()
 
 
 
-### Method `helper`
+## Method `helper`
 
 ```
 mixed dependencies\BaseComponent::helper($controller)
@@ -183,7 +182,7 @@ mixed dependencies\BaseComponent::helper($controller)
 
 
 
-### Method `model`
+## Method `model`
 
 ```
 mixed dependencies\BaseComponent::model($model_name)
@@ -201,7 +200,7 @@ mixed dependencies\BaseComponent::model($model_name)
 
 
 
-### Method `module`
+## Method `module`
 
 ```
 mixed dependencies\BaseComponent::module($module_name, $options)
@@ -220,7 +219,7 @@ mixed dependencies\BaseComponent::module($module_name, $options)
 
 
 
-### Method `section`
+## Method `section`
 
 ```
 mixed dependencies\BaseComponent::section($section, $options)
@@ -239,7 +238,7 @@ mixed dependencies\BaseComponent::section($section, $options)
 
 
 
-### Method `table`
+## Method `table`
 
 ```
 mixed dependencies\BaseComponent::table($model_name, $id)
@@ -258,7 +257,7 @@ mixed dependencies\BaseComponent::table($model_name, $id)
 
 
 
-### Method `view`
+## Method `view`
 
 ```
 mixed dependencies\BaseComponent::view($module_name, $options)

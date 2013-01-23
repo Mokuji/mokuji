@@ -1,4 +1,5 @@
 # exception\ModelValidation
+[API index](../API-index.md)
 
 
 
@@ -26,25 +27,24 @@
 ## Inheritance index
 
 **Properties**
-* `protected mixed $prev`
+* [`protected mixed $prev`](#property-prev)
 
 **Methods**
-* `public mixed __construct()`
-* `public mixed errors(array $set)`
-* `public mixed getExCode()`
-* `public mixed getPrev()`
-* `public mixed key($set)`
-* `public mixed setPrev(\exception\Exception $previous)`
-* `public mixed title($set)`
-* `public mixed value($set)`
+* [`public mixed __construct()`](#method-__construct)
+* [`public mixed errors(array $set)`](#method-errors)
+* [`public mixed getExCode()`](#method-getExCode)
+* [`public mixed getPrev()`](#method-getPrev)
+* [`public mixed key($set)`](#method-key)
+* [`public mixed setPrev(\exception\Exception $previous)`](#method-setPrev)
+* [`public mixed title($set)`](#method-title)
+* [`public mixed value($set)`](#method-value)
 
 
 
-Properties
-----------
+# Properties
 
 
-### Property `$ex_code`
+## Property `$ex_code`
 
 ```
 protected mixed $ex_code = EX_MODEL_VALIDATION
@@ -58,7 +58,7 @@ protected mixed $ex_code = EX_MODEL_VALIDATION
 * This property is **static**.
 
 
-### Property `$errors`
+## Property `$errors`
 
 ```
 public mixed $errors = array()
@@ -71,7 +71,7 @@ public mixed $errors = array()
 * Visibility: **public**
 
 
-### Property `$prev`
+## Property `$prev`
 
 ```
 protected mixed $prev
@@ -85,11 +85,10 @@ protected mixed $prev
 * This property is defined by [exception\Exception](../exception/Exception.md)
 
 
-Methods
--------
+# Methods
 
 
-### Method `__construct`
+## Method `__construct`
 
 ```
 mixed exception\Exception::__construct()
@@ -104,7 +103,7 @@ mixed exception\Exception::__construct()
 
 
 
-### Method `add_validation_error`
+## Method `add_validation_error`
 
 ```
 mixed exception\ModelValidation::add_validation_error(\exception\Validation $error)
@@ -122,7 +121,7 @@ mixed exception\ModelValidation::add_validation_error(\exception\Validation $err
 
 
 
-### Method `errors`
+## Method `errors`
 
 ```
 mixed exception\Validation::errors(array $set)
@@ -141,7 +140,7 @@ mixed exception\Validation::errors(array $set)
 
 
 
-### Method `getExCode`
+## Method `getExCode`
 
 ```
 mixed exception\Exception::getExCode()
@@ -156,7 +155,7 @@ mixed exception\Exception::getExCode()
 
 
 
-### Method `getPrev`
+## Method `getPrev`
 
 ```
 mixed exception\Exception::getPrev()
@@ -171,7 +170,7 @@ mixed exception\Exception::getPrev()
 
 
 
-### Method `key`
+## Method `key`
 
 ```
 mixed exception\Validation::key($set)
@@ -190,7 +189,7 @@ mixed exception\Validation::key($set)
 
 
 
-### Method `setPrev`
+## Method `setPrev`
 
 ```
 mixed exception\Exception::setPrev(\exception\Exception $previous)
@@ -209,7 +208,7 @@ mixed exception\Exception::setPrev(\exception\Exception $previous)
 
 
 
-### Method `set_validation_errors`
+## Method `set_validation_errors`
 
 ```
 mixed exception\ModelValidation::set_validation_errors($errors)
@@ -227,7 +226,7 @@ mixed exception\ModelValidation::set_validation_errors($errors)
 
 
 
-### Method `title`
+## Method `title`
 
 ```
 mixed exception\Validation::title($set)
@@ -246,7 +245,7 @@ mixed exception\Validation::title($set)
 
 
 
-### Method `value`
+## Method `value`
 
 ```
 mixed exception\Validation::value($set)

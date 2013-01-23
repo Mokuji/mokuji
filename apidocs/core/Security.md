@@ -1,4 +1,5 @@
 # core\Security
+[API index](../API-index.md)
 
 
 
@@ -39,11 +40,10 @@
 
 
 
-Constants
-----------
+# Constants
 
 
-### Constant `OUTPUT_BASE64`
+## Constant `OUTPUT_BASE64`
 
 ```
 const OUTPUT_BASE64 = 2
@@ -53,7 +53,7 @@ const OUTPUT_BASE64 = 2
 
 
 
-### Constant `OUTPUT_BINARY`
+## Constant `OUTPUT_BINARY`
 
 ```
 const OUTPUT_BINARY = 0
@@ -63,7 +63,7 @@ const OUTPUT_BINARY = 0
 
 
 
-### Constant `OUTPUT_DECIMAL`
+## Constant `OUTPUT_DECIMAL`
 
 ```
 const OUTPUT_DECIMAL = 3
@@ -73,7 +73,7 @@ const OUTPUT_DECIMAL = 3
 
 
 
-### Constant `OUTPUT_HEX`
+## Constant `OUTPUT_HEX`
 
 ```
 const OUTPUT_HEX = 1
@@ -83,7 +83,7 @@ const OUTPUT_HEX = 1
 
 
 
-### Constant `PASSWORD_STRENGTH_ACCEPTABLE`
+## Constant `PASSWORD_STRENGTH_ACCEPTABLE`
 
 ```
 const PASSWORD_STRENGTH_ACCEPTABLE = 3
@@ -93,7 +93,7 @@ const PASSWORD_STRENGTH_ACCEPTABLE = 3
 
 
 
-### Constant `PASSWORD_STRENGTH_STRONG`
+## Constant `PASSWORD_STRENGTH_STRONG`
 
 ```
 const PASSWORD_STRENGTH_STRONG = 4
@@ -103,7 +103,7 @@ const PASSWORD_STRENGTH_STRONG = 4
 
 
 
-### Constant `PASSWORD_STRENGTH_VERY_WEAK`
+## Constant `PASSWORD_STRENGTH_VERY_WEAK`
 
 ```
 const PASSWORD_STRENGTH_VERY_WEAK = 1
@@ -113,7 +113,7 @@ const PASSWORD_STRENGTH_VERY_WEAK = 1
 
 
 
-### Constant `PASSWORD_STRENGTH_WEAK`
+## Constant `PASSWORD_STRENGTH_WEAK`
 
 ```
 const PASSWORD_STRENGTH_WEAK = 2
@@ -123,11 +123,10 @@ const PASSWORD_STRENGTH_WEAK = 2
 
 
 
-Properties
-----------
+# Properties
 
 
-### Property `$HASH_DEFAULT`
+## Property `$HASH_DEFAULT`
 
 ```
 public mixed $HASH_DEFAULT = 'sha256'
@@ -141,7 +140,7 @@ public mixed $HASH_DEFAULT = 'sha256'
 * This property is **static**.
 
 
-### Property `$HASH_PREFERENCES`
+## Property `$HASH_PREFERENCES`
 
 ```
 public mixed $HASH_PREFERENCES = array('128' => array('ripemd128', 'snefru'), '160' => array('ripemd160', 'sha1'), '224' => array('sha224'), '256' => array('sha256'), '384' => array('sha384'), '512' => array('sha512', 'whirlpool'))
@@ -155,11 +154,10 @@ public mixed $HASH_PREFERENCES = array('128' => array('ripemd128', 'snefru'), '1
 * This property is **static**.
 
 
-Methods
--------
+# Methods
 
 
-### Method `get_password_strength`
+## Method `get_password_strength`
 
 ```
 Boolean core\Security::get_password_strength(String $password)
@@ -177,7 +175,7 @@ Checks the password supplied is strong enough.
 
 
 
-### Method `hash`
+## Method `hash`
 
 ```
 mixed core\Security::hash(string $input, string $algorithm, int $output_type)
@@ -197,7 +195,7 @@ Generates a hash using php's hash() function.
 
 
 
-### Method `pref_hash_algo`
+## Method `pref_hash_algo`
 
 ```
 string core\Security::pref_hash_algo(int $bits, bool $inclusive, $result_bits)
@@ -223,7 +221,7 @@ Gets the prefered hashing algorithm for a certain amount of bits worth of entrop
 
 
 
-### Method `random_string`
+## Method `random_string`
 
 ```
 string core\Security::random_string(int $length, int $output_type, bool $secure)
@@ -243,7 +241,7 @@ Generates a random string.
 
 
 
-### Method `_conv_rate`
+## Method `_conv_rate`
 
 ```
 mixed core\Security::_conv_rate($output_type)
@@ -261,7 +259,7 @@ Get the conversion rate in characters from bytes.
 
 
 
-### Method `_convert_bin`
+## Method `_convert_bin`
 
 ```
 mixed core\Security::_convert_bin($input, $output_type)
@@ -280,7 +278,7 @@ Converts binary strings to other notations.
 
 
 
-### Method `_random_bits`
+## Method `_random_bits`
 
 ```
 string core\Security::_random_bits(int $bits, bool $secure, int $output_type)

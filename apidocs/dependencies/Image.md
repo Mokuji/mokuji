@@ -1,4 +1,5 @@
 # dependencies\Image
+[API index](../API-index.md)
 
 
 
@@ -53,25 +54,24 @@
 ## Inheritance index
 
 **Properties**
-* `protected mixed $cache_time`
-* `protected mixed $dir`
-* `protected mixed $file`
-* `protected mixed $info`
-* `protected mixed $source`
+* [`protected mixed $cache_time`](#property-cache_time)
+* [`protected mixed $dir`](#property-dir)
+* [`protected mixed $file`](#property-file)
+* [`protected mixed $info`](#property-info)
+* [`protected mixed $source`](#property-source)
 
 **Methods**
-* `public mixed cache_time($set)`
-* `public mixed download($options)`
-* `public mixed get_filesize()`
-* `protected mixed create_output_headers()`
+* [`public mixed cache_time($set)`](#method-cache_time)
+* [`public mixed download($options)`](#method-download)
+* [`public mixed get_filesize()`](#method-get_filesize)
+* [`protected mixed create_output_headers()`](#method-create_output_headers)
 
 
 
-Properties
-----------
+# Properties
 
 
-### Property `$cache_time`
+## Property `$cache_time`
 
 ```
 protected mixed $cache_time = 604800
@@ -85,7 +85,7 @@ protected mixed $cache_time = 604800
 * This property is defined by [dependencies\File](../dependencies/File.md)
 
 
-### Property `$dir`
+## Property `$dir`
 
 ```
 protected mixed $dir = ''
@@ -99,7 +99,7 @@ protected mixed $dir = ''
 * This property is defined by [dependencies\File](../dependencies/File.md)
 
 
-### Property `$file`
+## Property `$file`
 
 ```
 protected mixed $file = ''
@@ -113,7 +113,7 @@ protected mixed $file = ''
 * This property is defined by [dependencies\File](../dependencies/File.md)
 
 
-### Property `$info`
+## Property `$info`
 
 ```
 protected mixed $info = array()
@@ -127,7 +127,7 @@ protected mixed $info = array()
 * This property is defined by [dependencies\File](../dependencies/File.md)
 
 
-### Property `$source`
+## Property `$source`
 
 ```
 protected mixed $source = ''
@@ -141,7 +141,7 @@ protected mixed $source = ''
 * This property is defined by [dependencies\File](../dependencies/File.md)
 
 
-### Property `$allow_growth`
+## Property `$allow_growth`
 
 ```
 private mixed $allow_growth = false
@@ -154,7 +154,7 @@ private mixed $allow_growth = false
 * Visibility: **private**
 
 
-### Property `$allow_shrink`
+## Property `$allow_shrink`
 
 ```
 private mixed $allow_shrink = true
@@ -167,7 +167,7 @@ private mixed $allow_shrink = true
 * Visibility: **private**
 
 
-### Property `$image`
+## Property `$image`
 
 ```
 private mixed $image
@@ -180,7 +180,7 @@ private mixed $image
 * Visibility: **private**
 
 
-### Property `$jpeg_quality`
+## Property `$jpeg_quality`
 
 ```
 private mixed $jpeg_quality = 100
@@ -193,7 +193,7 @@ private mixed $jpeg_quality = 100
 * Visibility: **private**
 
 
-### Property `$logging`
+## Property `$logging`
 
 ```
 private mixed $logging = false
@@ -206,7 +206,7 @@ private mixed $logging = false
 * Visibility: **private**
 
 
-### Property `$original`
+## Property `$original`
 
 ```
 private mixed $original = null
@@ -219,7 +219,7 @@ private mixed $original = null
 * Visibility: **private**
 
 
-### Property `$sharpen_after_resize`
+## Property `$sharpen_after_resize`
 
 ```
 private mixed $sharpen_after_resize = true
@@ -232,7 +232,7 @@ private mixed $sharpen_after_resize = true
 * Visibility: **private**
 
 
-### Property `$use_cache`
+## Property `$use_cache`
 
 ```
 private mixed $use_cache = false
@@ -245,11 +245,10 @@ private mixed $use_cache = false
 * Visibility: **private**
 
 
-Methods
--------
+# Methods
 
 
-### Method `__construct`
+## Method `__construct`
 
 ```
 mixed dependencies\Image::__construct($file)
@@ -267,7 +266,7 @@ mixed dependencies\Image::__construct($file)
 
 
 
-### Method `__destruct`
+## Method `__destruct`
 
 ```
 mixed dependencies\Image::__destruct()
@@ -281,7 +280,7 @@ mixed dependencies\Image::__destruct()
 
 
 
-### Method `allow_growth`
+## Method `allow_growth`
 
 ```
 mixed dependencies\Image::allow_growth($set)
@@ -299,7 +298,7 @@ mixed dependencies\Image::allow_growth($set)
 
 
 
-### Method `allow_shrink`
+## Method `allow_shrink`
 
 ```
 mixed dependencies\Image::allow_shrink($set)
@@ -317,7 +316,7 @@ mixed dependencies\Image::allow_shrink($set)
 
 
 
-### Method `cache_time`
+## Method `cache_time`
 
 ```
 mixed dependencies\File::cache_time($set)
@@ -336,7 +335,7 @@ mixed dependencies\File::cache_time($set)
 
 
 
-### Method `create`
+## Method `create`
 
 ```
 mixed dependencies\Image::create($width, $height, $color, $type)
@@ -357,7 +356,7 @@ mixed dependencies\Image::create($width, $height, $color, $type)
 
 
 
-### Method `crop`
+## Method `crop`
 
 ```
 mixed dependencies\Image::crop($x, $y, $width, $height)
@@ -378,7 +377,7 @@ mixed dependencies\Image::crop($x, $y, $width, $height)
 
 
 
-### Method `download`
+## Method `download`
 
 ```
 mixed dependencies\File::download($options)
@@ -397,7 +396,7 @@ mixed dependencies\File::download($options)
 
 
 
-### Method `fill`
+## Method `fill`
 
 ```
 mixed dependencies\Image::fill($width, $height)
@@ -416,7 +415,7 @@ mixed dependencies\Image::fill($width, $height)
 
 
 
-### Method `fit`
+## Method `fit`
 
 ```
 mixed dependencies\Image::fit($width, $height)
@@ -435,7 +434,7 @@ mixed dependencies\Image::fit($width, $height)
 
 
 
-### Method `from_file`
+## Method `from_file`
 
 ```
 mixed dependencies\Image::from_file($source)
@@ -453,7 +452,7 @@ mixed dependencies\Image::from_file($source)
 
 
 
-### Method `get_filesize`
+## Method `get_filesize`
 
 ```
 mixed dependencies\File::get_filesize()
@@ -468,7 +467,7 @@ mixed dependencies\File::get_filesize()
 
 
 
-### Method `get_height`
+## Method `get_height`
 
 ```
 mixed dependencies\Image::get_height()
@@ -482,7 +481,7 @@ mixed dependencies\Image::get_height()
 
 
 
-### Method `get_width`
+## Method `get_width`
 
 ```
 mixed dependencies\Image::get_width()
@@ -496,7 +495,7 @@ mixed dependencies\Image::get_width()
 
 
 
-### Method `jpeg_quality`
+## Method `jpeg_quality`
 
 ```
 mixed dependencies\Image::jpeg_quality($set)
@@ -514,7 +513,7 @@ mixed dependencies\Image::jpeg_quality($set)
 
 
 
-### Method `output`
+## Method `output`
 
 ```
 mixed dependencies\Image::output($options)
@@ -532,7 +531,7 @@ mixed dependencies\Image::output($options)
 
 
 
-### Method `resize`
+## Method `resize`
 
 ```
 mixed dependencies\Image::resize($width, $height)
@@ -551,7 +550,7 @@ mixed dependencies\Image::resize($width, $height)
 
 
 
-### Method `save`
+## Method `save`
 
 ```
 mixed dependencies\Image::save($save)
@@ -569,7 +568,7 @@ mixed dependencies\Image::save($save)
 
 
 
-### Method `sharpening`
+## Method `sharpening`
 
 ```
 mixed dependencies\Image::sharpening($set)
@@ -587,7 +586,7 @@ mixed dependencies\Image::sharpening($set)
 
 
 
-### Method `text`
+## Method `text`
 
 ```
 mixed dependencies\Image::text($text, $color, $font, $x, $y, $line_spacing)
@@ -610,7 +609,7 @@ mixed dependencies\Image::text($text, $color, $font, $x, $y, $line_spacing)
 
 
 
-### Method `use_cache`
+## Method `use_cache`
 
 ```
 mixed dependencies\Image::use_cache($set)
@@ -628,7 +627,7 @@ mixed dependencies\Image::use_cache($set)
 
 
 
-### Method `create_output_headers`
+## Method `create_output_headers`
 
 ```
 mixed dependencies\File::create_output_headers()
@@ -643,7 +642,7 @@ mixed dependencies\File::create_output_headers()
 
 
 
-### Method `cache_dir`
+## Method `cache_dir`
 
 ```
 mixed dependencies\Image::cache_dir($subfolder)
@@ -661,7 +660,7 @@ mixed dependencies\Image::cache_dir($subfolder)
 
 
 
-### Method `color`
+## Method `color`
 
 ```
 mixed dependencies\Image::color($color)
@@ -679,7 +678,7 @@ mixed dependencies\Image::color($color)
 
 
 
-### Method `info`
+## Method `info`
 
 ```
 mixed dependencies\Image::info($source)
@@ -697,7 +696,7 @@ mixed dependencies\Image::info($source)
 
 
 
-### Method `prepare_sourcefile`
+## Method `prepare_sourcefile`
 
 ```
 mixed dependencies\Image::prepare_sourcefile()
@@ -711,7 +710,7 @@ mixed dependencies\Image::prepare_sourcefile()
 
 
 
-### Method `sharpen`
+## Method `sharpen`
 
 ```
 mixed dependencies\Image::sharpen($image, $intOrig, $intFinal)

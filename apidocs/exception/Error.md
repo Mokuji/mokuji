@@ -1,4 +1,5 @@
 # exception\Error
+[API index](../API-index.md)
 
 
 
@@ -24,17 +25,14 @@
 
 ## Inheritance index
 
-**Properties**
-
-**Methods**
 
 
 
-Properties
-----------
+
+# Properties
 
 
-### Property `$context`
+## Property `$context`
 
 ```
 protected mixed $context
@@ -47,11 +45,10 @@ protected mixed $context
 * Visibility: **protected**
 
 
-Methods
--------
+# Methods
 
 
-### Method `__construct`
+## Method `__construct`
 
 ```
 mixed exception\Error::__construct($errno, $errstr, $errfile, $errline, $context)
@@ -73,7 +70,7 @@ mixed exception\Error::__construct($errno, $errstr, $errfile, $errline, $context
 
 
 
-### Method `getContext`
+## Method `getContext`
 
 ```
 mixed exception\Error::getContext()

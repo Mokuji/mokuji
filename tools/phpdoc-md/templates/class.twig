@@ -1,4 +1,5 @@
 # {{ className }}
+[API index]({{ escapeToRoot }}API-index.md)
 
 {{ description }}
 
@@ -39,7 +40,7 @@
 * [`{{ constant.visibility }} {{ constant.type }} {{ constant.name }}`](#{{ constant.key }})
 {% endfor %}
 
-{% if properties %}
+{% if hasOwnProperties %}
 **Properties**
 {% endif %}
 {% for property in properties %}
@@ -48,7 +49,7 @@
 {% endif %}
 {% endfor %}
 
-{% if methods %}
+{% if hasOwnMethods %}
 **Methods**
 {% endif %}
 {% for method in methods %}
@@ -62,32 +63,31 @@
 ## Inheritance index
 {% endif %}
 
-{% if extends[0] and properties %}
+{% if extends[0] and hasInheritedProperties %}
 **Properties**
 {% endif %}
 {% for property in properties %}
 {% if property.definedBy != className %}
-* `{{ property.visibility }}{% if property.static %} static{% endif %} {{ property.type }} {{ property.name }}`
+* [`{{ property.visibility }}{% if property.static %} static{% endif %} {{ property.type }} {{ property.name }}`](#{{ property.key }})
 {% endif %}
 {% endfor %}
 
-{% if extends[0] and methods %}
+{% if extends[0] and hasInheritedMethods %}
 **Methods**
 {% endif %}
 {% for method in methods %}
 {% if method.definedBy != className %}
-* `{% if method.abstract %}abstract {% endif %}{{ method.visibility }}{% if method.static %} static{% endif %} {{ method.return }} {{ method.name }}({{ method.argumentStr }})`
+* [`{% if method.abstract %}abstract {% endif %}{{ method.visibility }}{% if method.static %} static{% endif %} {{ method.return }} {{ method.name }}({{ method.argumentStr }})`](#{{ method.key }})
 {% endif %}
 {% endfor %}
 
 {% if constants %}
-Constants
-----------
+# Constants
 {% endif %}
 
 {% for constant in constants %}
 
-### Constant `{{ constant.name }}`
+## Constant `{{ constant.name }}`
 
 ```
 {{ constant.signature|raw }}
@@ -101,13 +101,12 @@ Constants
 {% endfor %}
 
 {% if properties %}
-Properties
-----------
+# Properties
 {% endif %}
 
 {% for property in properties %}
 
-### Property `{{ property.name }}`
+## Property `{{ property.name }}`
 
 ```
 {{ property.signature|raw }}
@@ -126,13 +125,12 @@ Properties
 {% endfor %}
 
 {% if methods %}
-Methods
--------
+# Methods
 {% endif %}
 
 {% for method in methods %}
 
-### Method `{{ method.name }}`
+## Method `{{ method.name }}`
 
 ```
 {{ method.signature|raw }}

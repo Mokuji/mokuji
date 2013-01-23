@@ -1,4 +1,5 @@
 # components\menu\Modules
+[API index](../../API-index.md)
 
 
 
@@ -14,7 +15,6 @@
 
 ## Class index
 
-**Properties**
 
 **Methods**
 * [`protected mixed breadcrumbs($options)`](#method-breadcrumbs)
@@ -26,31 +26,30 @@
 ## Inheritance index
 
 **Properties**
-* `protected static mixed $reserved`
-* `protected mixed $component`
-* `protected mixed $default_permission`
-* `protected mixed $permissions`
+* [`protected static mixed $reserved`](#property-reserved)
+* [`protected mixed $component`](#property-component)
+* [`protected mixed $default_permission`](#property-default_permission)
+* [`protected mixed $permissions`](#property-permissions)
 
 **Methods**
-* `public mixed __construct()`
-* `public mixed _call($controller, array $args)`
-* `public mixed call($controller, $data)`
-* `public mixed filters()`
-* `public mixed get_html($view, $options)`
-* `public mixed helper($controller)`
-* `public mixed model($model_name)`
-* `public mixed module($module_name, $options)`
-* `public mixed section($section, $options)`
-* `public mixed table($model_name, $id)`
-* `public mixed view($module_name, $options)`
+* [`public mixed __construct()`](#method-__construct)
+* [`public mixed _call($controller, array $args)`](#method-_call)
+* [`public mixed call($controller, $data)`](#method-call)
+* [`public mixed filters()`](#method-filters)
+* [`public mixed get_html($view, $options)`](#method-get_html)
+* [`public mixed helper($controller)`](#method-helper)
+* [`public mixed model($model_name)`](#method-model)
+* [`public mixed module($module_name, $options)`](#method-module)
+* [`public mixed section($section, $options)`](#method-section)
+* [`public mixed table($model_name, $id)`](#method-table)
+* [`public mixed view($module_name, $options)`](#method-view)
 
 
 
-Properties
-----------
+# Properties
 
 
-### Property `$reserved`
+## Property `$reserved`
 
 ```
 protected mixed $reserved = array('__construct', 'filter', 'module', 'section', 'view', 'table', 'get_html', 'call', 'template')
@@ -65,7 +64,7 @@ protected mixed $reserved = array('__construct', 'filter', 'module', 'section', 
 * This property is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 
-### Property `$component`
+## Property `$component`
 
 ```
 protected mixed $component
@@ -79,7 +78,7 @@ protected mixed $component
 * This property is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 
-### Property `$default_permission`
+## Property `$default_permission`
 
 ```
 protected mixed $default_permission
@@ -93,7 +92,7 @@ protected mixed $default_permission
 * This property is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 
-### Property `$permissions`
+## Property `$permissions`
 
 ```
 protected mixed $permissions = array()
@@ -107,11 +106,10 @@ protected mixed $permissions = array()
 * This property is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 
-Methods
--------
+# Methods
 
 
-### Method `__construct`
+## Method `__construct`
 
 ```
 mixed dependencies\BaseComponent::__construct()
@@ -126,7 +124,7 @@ mixed dependencies\BaseComponent::__construct()
 
 
 
-### Method `_call`
+## Method `_call`
 
 ```
 mixed dependencies\BaseComponent::_call($controller, array $args)
@@ -146,7 +144,7 @@ mixed dependencies\BaseComponent::_call($controller, array $args)
 
 
 
-### Method `call`
+## Method `call`
 
 ```
 mixed dependencies\BaseComponent::call($controller, $data)
@@ -166,7 +164,7 @@ mixed dependencies\BaseComponent::call($controller, $data)
 
 
 
-### Method `filters`
+## Method `filters`
 
 ```
 mixed dependencies\BaseComponent::filters()
@@ -181,7 +179,7 @@ mixed dependencies\BaseComponent::filters()
 
 
 
-### Method `get_html`
+## Method `get_html`
 
 ```
 mixed dependencies\BaseViews::get_html($view, $options)
@@ -201,7 +199,7 @@ mixed dependencies\BaseViews::get_html($view, $options)
 
 
 
-### Method `helper`
+## Method `helper`
 
 ```
 mixed dependencies\BaseComponent::helper($controller)
@@ -220,7 +218,7 @@ mixed dependencies\BaseComponent::helper($controller)
 
 
 
-### Method `model`
+## Method `model`
 
 ```
 mixed dependencies\BaseComponent::model($model_name)
@@ -239,7 +237,7 @@ mixed dependencies\BaseComponent::model($model_name)
 
 
 
-### Method `module`
+## Method `module`
 
 ```
 mixed dependencies\BaseComponent::module($module_name, $options)
@@ -259,7 +257,7 @@ mixed dependencies\BaseComponent::module($module_name, $options)
 
 
 
-### Method `section`
+## Method `section`
 
 ```
 mixed dependencies\BaseComponent::section($section, $options)
@@ -279,7 +277,7 @@ mixed dependencies\BaseComponent::section($section, $options)
 
 
 
-### Method `table`
+## Method `table`
 
 ```
 mixed dependencies\BaseComponent::table($model_name, $id)
@@ -299,7 +297,7 @@ mixed dependencies\BaseComponent::table($model_name, $id)
 
 
 
-### Method `view`
+## Method `view`
 
 ```
 mixed dependencies\BaseComponent::view($module_name, $options)
@@ -319,7 +317,7 @@ mixed dependencies\BaseComponent::view($module_name, $options)
 
 
 
-### Method `breadcrumbs`
+## Method `breadcrumbs`
 
 ```
 mixed components\menu\Modules::breadcrumbs($options)
@@ -337,7 +335,7 @@ mixed components\menu\Modules::breadcrumbs($options)
 
 
 
-### Method `menu`
+## Method `menu`
 
 ```
 mixed components\menu\Modules::menu(array $options)
@@ -363,7 +361,7 @@ Returns a result set with the menu items you asked for.
 
 
 
-### Method `menu_image`
+## Method `menu_image`
 
 ```
 mixed components\menu\Modules::menu_image($options)
@@ -381,7 +379,7 @@ mixed components\menu\Modules::menu_image($options)
 
 
 
-### Method `sitemap`
+## Method `sitemap`
 
 ```
 mixed components\menu\Modules::sitemap($options)

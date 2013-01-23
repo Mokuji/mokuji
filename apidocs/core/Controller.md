@@ -1,4 +1,5 @@
 # core\Controller
+[API index](../API-index.md)
 
 
 
@@ -30,11 +31,10 @@
 
 
 
-Methods
--------
+# Methods
 
 
-### Method `get_messages`
+## Method `get_messages`
 
 ```
 mixed core\Controller::get_messages()
@@ -48,7 +48,7 @@ mixed core\Controller::get_messages()
 
 
 
-### Method `load_error_template`
+## Method `load_error_template`
 
 ```
 mixed core\Controller::load_error_template(\Exception $e)
@@ -66,7 +66,7 @@ mixed core\Controller::load_error_template(\Exception $e)
 
 
 
-### Method `load_redirect_template`
+## Method `load_redirect_template`
 
 ```
 mixed core\Controller::load_redirect_template(\dependencies\Url $redirect)
@@ -84,7 +84,7 @@ mixed core\Controller::load_redirect_template(\dependencies\Url $redirect)
 
 
 
-### Method `load_template`
+## Method `load_template`
 
 ```
 mixed core\Controller::load_template($template, $theme, $body, $head)
@@ -105,7 +105,7 @@ mixed core\Controller::load_template($template, $theme, $body, $head)
 
 
 
-### Method `message`
+## Method `message`
 
 ```
 mixed core\Controller::message($message)
@@ -123,7 +123,7 @@ mixed core\Controller::message($message)
 
 
 
-### Method `render_page`
+## Method `render_page`
 
 ```
 mixed core\Controller::render_page($contents)

@@ -1,4 +1,5 @@
 # dependencies\RelationType
+[API index](../API-index.md)
 
 
 
@@ -28,11 +29,10 @@
 
 
 
-Constants
-----------
+# Constants
 
 
-### Constant `ForeignKey`
+## Constant `ForeignKey`
 
 ```
 const ForeignKey = 1
@@ -42,7 +42,7 @@ const ForeignKey = 1
 
 
 
-### Constant `LinkTable`
+## Constant `LinkTable`
 
 ```
 const LinkTable = 4
@@ -52,7 +52,7 @@ const LinkTable = 4
 
 
 
-### Constant `NestedSets`
+## Constant `NestedSets`
 
 ```
 const NestedSets = 5
@@ -62,7 +62,7 @@ const NestedSets = 5
 
 
 
-### Constant `Reference`
+## Constant `Reference`
 
 ```
 const Reference = 2
@@ -72,7 +72,7 @@ const Reference = 2
 
 
 
-### Constant `SelfReference`
+## Constant `SelfReference`
 
 ```
 const SelfReference = 3
@@ -84,11 +84,10 @@ const SelfReference = 3
 
 
 
-Methods
--------
+# Methods
 
 
-### Method `detect_type`
+## Method `detect_type`
 
 ```
 mixed dependencies\RelationType::detect_type(\dependencies\BaseModel $model, array $relation)

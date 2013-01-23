@@ -1,4 +1,5 @@
 # exception\Validation
+[API index](../API-index.md)
 
 
 
@@ -31,21 +32,20 @@
 ## Inheritance index
 
 **Properties**
-* `protected mixed $prev`
+* [`protected mixed $prev`](#property-prev)
 
 **Methods**
-* `public mixed __construct()`
-* `public mixed getExCode()`
-* `public mixed getPrev()`
-* `public mixed setPrev(\exception\Exception $previous)`
+* [`public mixed __construct()`](#method-__construct)
+* [`public mixed getExCode()`](#method-getExCode)
+* [`public mixed getPrev()`](#method-getPrev)
+* [`public mixed setPrev(\exception\Exception $previous)`](#method-setPrev)
 
 
 
-Properties
-----------
+# Properties
 
 
-### Property `$ex_code`
+## Property `$ex_code`
 
 ```
 protected mixed $ex_code = EX_VALIDATION
@@ -59,7 +59,7 @@ protected mixed $ex_code = EX_VALIDATION
 * This property is **static**.
 
 
-### Property `$prev`
+## Property `$prev`
 
 ```
 protected mixed $prev
@@ -73,7 +73,7 @@ protected mixed $prev
 * This property is defined by [exception\Exception](../exception/Exception.md)
 
 
-### Property `$errors`
+## Property `$errors`
 
 ```
 private mixed $errors = array()
@@ -86,7 +86,7 @@ private mixed $errors = array()
 * Visibility: **private**
 
 
-### Property `$key`
+## Property `$key`
 
 ```
 private mixed $key
@@ -99,7 +99,7 @@ private mixed $key
 * Visibility: **private**
 
 
-### Property `$title`
+## Property `$title`
 
 ```
 private mixed $title
@@ -112,7 +112,7 @@ private mixed $title
 * Visibility: **private**
 
 
-### Property `$value`
+## Property `$value`
 
 ```
 private mixed $value
@@ -125,11 +125,10 @@ private mixed $value
 * Visibility: **private**
 
 
-Methods
--------
+# Methods
 
 
-### Method `__construct`
+## Method `__construct`
 
 ```
 mixed exception\Exception::__construct()
@@ -144,7 +143,7 @@ mixed exception\Exception::__construct()
 
 
 
-### Method `errors`
+## Method `errors`
 
 ```
 mixed exception\Validation::errors(array $set)
@@ -162,7 +161,7 @@ mixed exception\Validation::errors(array $set)
 
 
 
-### Method `getExCode`
+## Method `getExCode`
 
 ```
 mixed exception\Exception::getExCode()
@@ -177,7 +176,7 @@ mixed exception\Exception::getExCode()
 
 
 
-### Method `getPrev`
+## Method `getPrev`
 
 ```
 mixed exception\Exception::getPrev()
@@ -192,7 +191,7 @@ mixed exception\Exception::getPrev()
 
 
 
-### Method `key`
+## Method `key`
 
 ```
 mixed exception\Validation::key($set)
@@ -210,7 +209,7 @@ mixed exception\Validation::key($set)
 
 
 
-### Method `setPrev`
+## Method `setPrev`
 
 ```
 mixed exception\Exception::setPrev(\exception\Exception $previous)
@@ -229,7 +228,7 @@ mixed exception\Exception::setPrev(\exception\Exception $previous)
 
 
 
-### Method `title`
+## Method `title`
 
 ```
 mixed exception\Validation::title($set)
@@ -247,7 +246,7 @@ mixed exception\Validation::title($set)
 
 
 
-### Method `value`
+## Method `value`
 
 ```
 mixed exception\Validation::value($set)

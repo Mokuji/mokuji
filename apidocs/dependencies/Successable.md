@@ -1,4 +1,5 @@
 # dependencies\Successable
+[API index](../API-index.md)
 
 
 
@@ -33,11 +34,10 @@
 
 
 
-Properties
-----------
+# Properties
 
 
-### Property `$success`
+## Property `$success`
 
 ```
 private mixed $success = null
@@ -50,11 +50,10 @@ private mixed $success = null
 * Visibility: **private**
 
 
-Methods
--------
+# Methods
 
 
-### Method `_success`
+## Method `_success`
 
 ```
 mixed dependencies\Successable::_success()
@@ -68,7 +67,7 @@ mixed dependencies\Successable::_success()
 
 
 
-### Method `and_is`
+## Method `and_is`
 
 ```
 mixed dependencies\Successable::and_is($check, $callback)
@@ -87,7 +86,7 @@ mixed dependencies\Successable::and_is($check, $callback)
 
 
 
-### Method `and_not`
+## Method `and_not`
 
 ```
 mixed dependencies\Successable::and_not($check)
@@ -105,7 +104,7 @@ mixed dependencies\Successable::and_not($check)
 
 
 
-### Method `failure`
+## Method `failure`
 
 ```
 mixed dependencies\Successable::failure($callback)
@@ -123,7 +122,7 @@ mixed dependencies\Successable::failure($callback)
 
 
 
-### Method `is`
+## Method `is`
 
 ```
 mixed dependencies\Successable::is($check, $callback)
@@ -142,7 +141,7 @@ mixed dependencies\Successable::is($check, $callback)
 
 
 
-### Method `not`
+## Method `not`
 
 ```
 mixed dependencies\Successable::not($check, $callback)
@@ -161,7 +160,7 @@ mixed dependencies\Successable::not($check, $callback)
 
 
 
-### Method `success`
+## Method `success`
 
 ```
 mixed dependencies\Successable::success($callback)
@@ -179,7 +178,7 @@ mixed dependencies\Successable::success($callback)
 
 
 
-### Method `_do_check`
+## Method `_do_check`
 
 ```
 mixed dependencies\Successable::_do_check($check)

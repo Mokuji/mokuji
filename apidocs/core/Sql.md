@@ -1,4 +1,5 @@
 # core\Sql
+[API index](../API-index.md)
 
 
 
@@ -41,11 +42,10 @@
 
 
 
-Properties
-----------
+# Properties
 
 
-### Property `$connection`
+## Property `$connection`
 
 ```
 private mixed $connection
@@ -58,7 +58,7 @@ private mixed $connection
 * Visibility: **private**
 
 
-### Property `$prefix`
+## Property `$prefix`
 
 ```
 private mixed $prefix
@@ -71,11 +71,10 @@ private mixed $prefix
 * Visibility: **private**
 
 
-Methods
--------
+# Methods
 
 
-### Method `__construct`
+## Method `__construct`
 
 ```
 mixed core\Sql::__construct()
@@ -89,7 +88,7 @@ mixed core\Sql::__construct()
 
 
 
-### Method `__destruct`
+## Method `__destruct`
 
 ```
 mixed core\Sql::__destruct()
@@ -103,7 +102,7 @@ mixed core\Sql::__destruct()
 
 
 
-### Method `conditions`
+## Method `conditions`
 
 ```
 mixed core\Sql::conditions($c)
@@ -121,7 +120,7 @@ mixed core\Sql::conditions($c)
 
 
 
-### Method `escape`
+## Method `escape`
 
 ```
 mixed core\Sql::escape($value)
@@ -139,7 +138,7 @@ mixed core\Sql::escape($value)
 
 
 
-### Method `execute_non_query`
+## Method `execute_non_query`
 
 ```
 mixed core\Sql::execute_non_query($query)
@@ -157,7 +156,7 @@ mixed core\Sql::execute_non_query($query)
 
 
 
-### Method `execute_query`
+## Method `execute_query`
 
 ```
 mixed core\Sql::execute_query($query)
@@ -175,7 +174,7 @@ mixed core\Sql::execute_query($query)
 
 
 
-### Method `execute_scalar`
+## Method `execute_scalar`
 
 ```
 mixed core\Sql::execute_scalar($query)
@@ -193,7 +192,7 @@ mixed core\Sql::execute_scalar($query)
 
 
 
-### Method `execute_single`
+## Method `execute_single`
 
 ```
 mixed core\Sql::execute_single($query)
@@ -211,7 +210,7 @@ mixed core\Sql::execute_single($query)
 
 
 
-### Method `get_insert_id`
+## Method `get_insert_id`
 
 ```
 mixed core\Sql::get_insert_id()
@@ -225,7 +224,7 @@ mixed core\Sql::get_insert_id()
 
 
 
-### Method `get_prefix`
+## Method `get_prefix`
 
 ```
 mixed core\Sql::get_prefix()
@@ -239,7 +238,7 @@ mixed core\Sql::get_prefix()
 
 
 
-### Method `make_query`
+## Method `make_query`
 
 ```
 mixed core\Sql::make_query()
@@ -253,7 +252,7 @@ mixed core\Sql::make_query()
 
 
 
-### Method `model`
+## Method `model`
 
 ```
 mixed core\Sql::model($component_name, $model_name)
@@ -272,7 +271,7 @@ mixed core\Sql::model($component_name, $model_name)
 
 
 
-### Method `query`
+## Method `query`
 
 ```
 mixed core\Sql::query($query)
@@ -290,7 +289,7 @@ mixed core\Sql::query($query)
 
 
 
-### Method `set_connection_data`
+## Method `set_connection_data`
 
 ```
 mixed core\Sql::set_connection_data($host, $user, $pass, $name, $prefix)
@@ -312,7 +311,7 @@ mixed core\Sql::set_connection_data($host, $user, $pass, $name, $prefix)
 
 
 
-### Method `sub_table`
+## Method `sub_table`
 
 ```
 mixed core\Sql::sub_table($component_name, $model_name, array $select)
@@ -332,7 +331,7 @@ mixed core\Sql::sub_table($component_name, $model_name, array $select)
 
 
 
-### Method `table`
+## Method `table`
 
 ```
 mixed core\Sql::table($component_name, $model_name, $id)

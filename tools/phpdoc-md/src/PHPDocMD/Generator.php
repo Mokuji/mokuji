@@ -75,7 +75,9 @@ class Generator
         $twig->addFilter('classLink', new Twig_Filter_Function('PHPDocMd\\Generator::classLink'));
         foreach($this->classDefinitions as $className=>$data) {
             
-            $GLOBALS['PHPDocMD_workingClassDepth'] = count(explode('\\', $className))-1;
+            $wcd = count(explode('\\', $className))-1;
+            $GLOBALS['PHPDocMD_workingClassDepth'] = $wcd;
+            $data['escapeToRoot'] = str_repeat('../', $wcd);
             
             //Sort constants.
             usort($data['constants'], function($a, $b){
@@ -112,7 +114,9 @@ class Generator
 
         }
         
-        $GLOBALS['PHPDocMD_workingClassDepth'] = 0;
+        $wcd = 0;
+        $GLOBALS['PHPDocMD_workingClassDepth'] = $wcd;
+        $escapeToRoot = str_repeat('../', $wcd);
         
         $index = $this->createIndex();
 
@@ -121,6 +125,7 @@ class Generator
             array(
                 'index' => $index,
                 'classDefinitions' => $this->classDefinitions,
+                'escapeToRoot' => $escapeToRoot
             )
         );
         self::ensureDir($this->outputDir . '/API-Index.md');

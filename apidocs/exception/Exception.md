@@ -1,4 +1,5 @@
 # exception\Exception
+[API index](../API-index.md)
 
 
 
@@ -27,17 +28,14 @@
 
 ## Inheritance index
 
-**Properties**
-
-**Methods**
 
 
 
-Properties
-----------
+
+# Properties
 
 
-### Property `$ex_code`
+## Property `$ex_code`
 
 ```
 protected mixed $ex_code = EX_EXCEPTION
@@ -51,7 +49,7 @@ protected mixed $ex_code = EX_EXCEPTION
 * This property is **static**.
 
 
-### Property `$prev`
+## Property `$prev`
 
 ```
 protected mixed $prev
@@ -64,11 +62,10 @@ protected mixed $prev
 * Visibility: **protected**
 
 
-Methods
--------
+# Methods
 
 
-### Method `__construct`
+## Method `__construct`
 
 ```
 mixed exception\Exception::__construct()
@@ -82,7 +79,7 @@ mixed exception\Exception::__construct()
 
 
 
-### Method `getExCode`
+## Method `getExCode`
 
 ```
 mixed exception\Exception::getExCode()
@@ -96,7 +93,7 @@ mixed exception\Exception::getExCode()
 
 
 
-### Method `getPrev`
+## Method `getPrev`
 
 ```
 mixed exception\Exception::getPrev()
@@ -110,7 +107,7 @@ mixed exception\Exception::getPrev()
 
 
 
-### Method `setPrev`
+## Method `setPrev`
 
 ```
 mixed exception\Exception::setPrev(\exception\Exception $previous)

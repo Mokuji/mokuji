@@ -1,4 +1,5 @@
 # core\Logging
+[API index](../API-index.md)
 
 
 
@@ -27,11 +28,10 @@
 
 
 
-Properties
-----------
+# Properties
 
 
-### Property `$logging_enabled`
+## Property `$logging_enabled`
 
 ```
 private mixed $logging_enabled
@@ -44,11 +44,10 @@ private mixed $logging_enabled
 * Visibility: **private**
 
 
-Methods
--------
+# Methods
 
 
-### Method `__construct`
+## Method `__construct`
 
 ```
 mixed core\Logging::__construct()
@@ -62,7 +61,7 @@ mixed core\Logging::__construct()
 
 
 
-### Method `log`
+## Method `log`
 
 ```
 mixed core\Logging::log()
@@ -76,7 +75,7 @@ mixed core\Logging::log()
 
 
 
-### Method `set_logging_enabled`
+## Method `set_logging_enabled`
 
 ```
 mixed core\Logging::set_logging_enabled($value)

@@ -1,4 +1,5 @@
 # core\Url
+[API index](../API-index.md)
 
 
 
@@ -38,11 +39,10 @@
 
 
 
-Constants
-----------
+# Constants
 
 
-### Constant `ALL`
+## Constant `ALL`
 
 ```
 const ALL = 0
@@ -52,7 +52,7 @@ const ALL = 0
 
 
 
-### Constant `ANCHOR`
+## Constant `ANCHOR`
 
 ```
 const ANCHOR = 32
@@ -62,7 +62,7 @@ const ANCHOR = 32
 
 
 
-### Constant `DOMAIN`
+## Constant `DOMAIN`
 
 ```
 const DOMAIN = 2
@@ -72,7 +72,7 @@ const DOMAIN = 2
 
 
 
-### Constant `FILE`
+## Constant `FILE`
 
 ```
 const FILE = 8
@@ -82,7 +82,7 @@ const FILE = 8
 
 
 
-### Constant `PATH`
+## Constant `PATH`
 
 ```
 const PATH = 4
@@ -92,7 +92,7 @@ const PATH = 4
 
 
 
-### Constant `QUERY`
+## Constant `QUERY`
 
 ```
 const QUERY = 16
@@ -102,7 +102,7 @@ const QUERY = 16
 
 
 
-### Constant `SCHEME`
+## Constant `SCHEME`
 
 ```
 const SCHEME = 1
@@ -112,11 +112,10 @@ const SCHEME = 1
 
 
 
-Properties
-----------
+# Properties
 
 
-### Property `$redirect_url`
+## Property `$redirect_url`
 
 ```
 public mixed $redirect_url = null
@@ -129,7 +128,7 @@ public mixed $redirect_url = null
 * Visibility: **public**
 
 
-### Property `$redirected`
+## Property `$redirected`
 
 ```
 public mixed $redirected = false
@@ -142,7 +141,7 @@ public mixed $redirected = false
 * Visibility: **public**
 
 
-### Property `$referer_url`
+## Property `$referer_url`
 
 ```
 public mixed $referer_url = false
@@ -155,7 +154,7 @@ public mixed $referer_url = false
 * Visibility: **public**
 
 
-### Property `$url`
+## Property `$url`
 
 ```
 public mixed $url
@@ -168,11 +167,10 @@ public mixed $url
 * Visibility: **public**
 
 
-Methods
--------
+# Methods
 
 
-### Method `cancel_redirect`
+## Method `cancel_redirect`
 
 ```
 mixed core\Url::cancel_redirect()
@@ -186,7 +184,7 @@ mixed core\Url::cancel_redirect()
 
 
 
-### Method `init`
+## Method `init`
 
 ```
 mixed core\Url::init()
@@ -200,7 +198,7 @@ mixed core\Url::init()
 
 
 
-### Method `parse`
+## Method `parse`
 
 ```
 mixed core\Url::parse($url, $flags)
@@ -219,7 +217,7 @@ mixed core\Url::parse($url, $flags)
 
 
 
-### Method `previous`
+## Method `previous`
 
 ```
 mixed core\Url::previous($allow_external, $allow_backend_to_frontend)
@@ -238,7 +236,7 @@ mixed core\Url::previous($allow_external, $allow_backend_to_frontend)
 
 
 
-### Method `redirect`
+## Method `redirect`
 
 ```
 mixed core\Url::redirect($url)

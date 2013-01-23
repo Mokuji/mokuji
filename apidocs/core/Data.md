@@ -1,4 +1,5 @@
 # core\Data
+[API index](../API-index.md)
 
 
 
@@ -40,11 +41,10 @@
 
 
 
-Properties
-----------
+# Properties
 
 
-### Property `$cookie`
+## Property `$cookie`
 
 ```
 public mixed $cookie
@@ -57,7 +57,7 @@ public mixed $cookie
 * Visibility: **public**
 
 
-### Property `$env`
+## Property `$env`
 
 ```
 public mixed $env
@@ -70,7 +70,7 @@ public mixed $env
 * Visibility: **public**
 
 
-### Property `$files`
+## Property `$files`
 
 ```
 public mixed $files
@@ -83,7 +83,7 @@ public mixed $files
 * Visibility: **public**
 
 
-### Property `$get`
+## Property `$get`
 
 ```
 public mixed $get
@@ -96,7 +96,7 @@ public mixed $get
 * Visibility: **public**
 
 
-### Property `$post`
+## Property `$post`
 
 ```
 public mixed $post
@@ -109,7 +109,7 @@ public mixed $post
 * Visibility: **public**
 
 
-### Property `$request`
+## Property `$request`
 
 ```
 public mixed $request
@@ -122,7 +122,7 @@ public mixed $request
 * Visibility: **public**
 
 
-### Property `$server`
+## Property `$server`
 
 ```
 public mixed $server
@@ -135,7 +135,7 @@ public mixed $server
 * Visibility: **public**
 
 
-### Property `$session`
+## Property `$session`
 
 ```
 public mixed $session
@@ -148,11 +148,10 @@ public mixed $session
 * Visibility: **public**
 
 
-Methods
--------
+# Methods
 
 
-### Method `__destruct`
+## Method `__destruct`
 
 ```
 mixed core\Data::__destruct()
@@ -166,7 +165,7 @@ mixed core\Data::__destruct()
 
 
 
-### Method `__get`
+## Method `__get`
 
 ```
 mixed core\Data::__get($name)
@@ -184,7 +183,7 @@ mixed core\Data::__get($name)
 
 
 
-### Method `filter`
+## Method `filter`
 
 ```
 mixed core\Data::filter($component)
@@ -202,7 +201,7 @@ mixed core\Data::filter($component)
 
 
 
-### Method `init`
+## Method `init`
 
 ```
 mixed core\Data::init()
@@ -216,7 +215,7 @@ mixed core\Data::init()
 
 
 
-### Method `merge`
+## Method `merge`
 
 ```
 mixed core\Data::merge()
@@ -230,7 +229,7 @@ mixed core\Data::merge()
 
 
 
-### Method `postdata`
+## Method `postdata`
 
 ```
 mixed core\Data::postdata()
@@ -244,7 +243,7 @@ mixed core\Data::postdata()
 
 
 
-### Method `restore_session`
+## Method `restore_session`
 
 ```
 mixed core\Data::restore_session()
@@ -258,7 +257,7 @@ mixed core\Data::restore_session()
 
 
 
-### Method `xss_clean`
+## Method `xss_clean`
 
 ```
 mixed core\Data::xss_clean($str)
@@ -276,7 +275,7 @@ mixed core\Data::xss_clean($str)
 
 
 
-### Method `undo_magic_quotes`
+## Method `undo_magic_quotes`
 
 ```
 mixed core\Data::undo_magic_quotes($array, $top_level)

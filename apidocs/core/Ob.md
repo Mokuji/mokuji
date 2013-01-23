@@ -1,4 +1,5 @@
 # core\Ob
+[API index](../API-index.md)
 
 
 
@@ -38,11 +39,10 @@
 
 
 
-Properties
-----------
+# Properties
 
 
-### Property `$buffers`
+## Property `$buffers`
 
 ```
 private mixed $buffers = array()
@@ -55,7 +55,7 @@ private mixed $buffers = array()
 * Visibility: **private**
 
 
-### Property `$link`
+## Property `$link`
 
 ```
 private mixed $link
@@ -68,7 +68,7 @@ private mixed $link
 * Visibility: **private**
 
 
-### Property `$meta`
+## Property `$meta`
 
 ```
 private mixed $meta
@@ -81,7 +81,7 @@ private mixed $meta
 * Visibility: **private**
 
 
-### Property `$retrieved`
+## Property `$retrieved`
 
 ```
 private mixed $retrieved = array()
@@ -94,7 +94,7 @@ private mixed $retrieved = array()
 * Visibility: **private**
 
 
-### Property `$script`
+## Property `$script`
 
 ```
 private mixed $script
@@ -107,7 +107,7 @@ private mixed $script
 * Visibility: **private**
 
 
-### Property `$style`
+## Property `$style`
 
 ```
 private mixed $style
@@ -120,11 +120,10 @@ private mixed $style
 * Visibility: **private**
 
 
-Methods
--------
+# Methods
 
 
-### Method `__construct`
+## Method `__construct`
 
 ```
 mixed core\Ob::__construct()
@@ -138,7 +137,7 @@ mixed core\Ob::__construct()
 
 
 
-### Method `__destruct`
+## Method `__destruct`
 
 ```
 mixed core\Ob::__destruct()
@@ -152,7 +151,7 @@ mixed core\Ob::__destruct()
 
 
 
-### Method `add`
+## Method `add`
 
 ```
 mixed core\Ob::add($content, $type, $id)
@@ -172,7 +171,7 @@ mixed core\Ob::add($content, $type, $id)
 
 
 
-### Method `end`
+## Method `end`
 
 ```
 mixed core\Ob::end()
@@ -186,7 +185,7 @@ mixed core\Ob::end()
 
 
 
-### Method `get`
+## Method `get`
 
 ```
 mixed core\Ob::get($type)
@@ -204,7 +203,7 @@ mixed core\Ob::get($type)
 
 
 
-### Method `link`
+## Method `link`
 
 ```
 mixed core\Ob::link()
@@ -218,7 +217,7 @@ mixed core\Ob::link()
 
 
 
-### Method `meta`
+## Method `meta`
 
 ```
 mixed core\Ob::meta()
@@ -232,7 +231,7 @@ mixed core\Ob::meta()
 
 
 
-### Method `script`
+## Method `script`
 
 ```
 mixed core\Ob::script()
@@ -246,7 +245,7 @@ mixed core\Ob::script()
 
 
 
-### Method `style`
+## Method `style`
 
 ```
 mixed core\Ob::style()

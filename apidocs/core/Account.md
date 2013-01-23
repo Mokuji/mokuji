@@ -1,4 +1,5 @@
 # core\Account
+[API index](../API-index.md)
 
 
 
@@ -31,11 +32,10 @@
 
 
 
-Properties
-----------
+# Properties
 
 
-### Property `$user`
+## Property `$user`
 
 ```
 public mixed $user
@@ -48,11 +48,10 @@ public mixed $user
 * Visibility: **public**
 
 
-Methods
--------
+# Methods
 
 
-### Method `__construct`
+## Method `__construct`
 
 ```
 mixed core\Account::__construct()
@@ -66,7 +65,7 @@ mixed core\Account::__construct()
 
 
 
-### Method `check_level`
+## Method `check_level`
 
 ```
 mixed core\Account::check_level($level, $exact)
@@ -85,7 +84,7 @@ mixed core\Account::check_level($level, $exact)
 
 
 
-### Method `init`
+## Method `init`
 
 ```
 mixed core\Account::init()
@@ -99,7 +98,7 @@ mixed core\Account::init()
 
 
 
-### Method `login`
+## Method `login`
 
 ```
 mixed core\Account::login($email, $pass, $expiry_date)
@@ -119,7 +118,7 @@ mixed core\Account::login($email, $pass, $expiry_date)
 
 
 
-### Method `logout`
+## Method `logout`
 
 ```
 mixed core\Account::logout()
@@ -133,7 +132,7 @@ mixed core\Account::logout()
 
 
 
-### Method `page_authorisation`
+## Method `page_authorisation`
 
 ```
 mixed core\Account::page_authorisation($level, $exact)
@@ -152,7 +151,7 @@ mixed core\Account::page_authorisation($level, $exact)
 
 
 
-### Method `register`
+## Method `register`
 
 ```
 mixed core\Account::register($email, $username, $password, $level)

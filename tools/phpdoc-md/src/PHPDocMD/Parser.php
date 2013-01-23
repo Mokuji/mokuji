@@ -295,7 +295,9 @@ class Parser
     {
 
         $class = $this->classDefinitions[$className];
-
+        
+        $this->classDefinitions[$className]['hasOwnMethods'] = count($this->classDefinitions[$className]['methods']) > 0;
+        
         $newMethods = array();
 
         foreach(array_merge($class['extends'], $class['implements']) as $extends) {
@@ -315,7 +317,8 @@ class Parser
             $newMethods = array_merge($newMethods, $this->expandMethods($extends));
 
         }
-
+        
+        $this->classDefinitions[$className]['hasInheritedMethods'] = count($newMethods) > 0;
         $this->classDefinitions[$className]['methods']+=$newMethods;
         return $newMethods;
 
@@ -331,7 +334,9 @@ class Parser
     {
 
         $class = $this->classDefinitions[$className];
-
+        
+        $this->classDefinitions[$className]['hasOwnProperties'] = count($this->classDefinitions[$className]['properties']) > 0;
+        
         $newProperties = array();
         foreach(array_merge($class['implements'], $class['extends']) as $extends) {
 
@@ -353,7 +358,8 @@ class Parser
             $newProperties = array_merge($newProperties, $this->expandProperties($extends));
 
         }
-
+        
+        $this->classDefinitions[$className]['hasInheritedProperties'] = count($newProperties) > 0;
         $this->classDefinitions[$className]['properties']+=$newProperties;
         return $newProperties;
 

@@ -1,4 +1,5 @@
 # exception\Deprecated
+[API index](../API-index.md)
 
 
 
@@ -17,27 +18,25 @@
 **Properties**
 * [`protected static mixed $ex_code`](#property-ex_code)
 
-**Methods**
 
 
 ## Inheritance index
 
 **Properties**
-* `protected mixed $prev`
+* [`protected mixed $prev`](#property-prev)
 
 **Methods**
-* `public mixed __construct()`
-* `public mixed getExCode()`
-* `public mixed getPrev()`
-* `public mixed setPrev(\exception\Exception $previous)`
+* [`public mixed __construct()`](#method-__construct)
+* [`public mixed getExCode()`](#method-getExCode)
+* [`public mixed getPrev()`](#method-getPrev)
+* [`public mixed setPrev(\exception\Exception $previous)`](#method-setPrev)
 
 
 
-Properties
-----------
+# Properties
 
 
-### Property `$ex_code`
+## Property `$ex_code`
 
 ```
 protected mixed $ex_code = EX_DEPRECATED
@@ -51,7 +50,7 @@ protected mixed $ex_code = EX_DEPRECATED
 * This property is **static**.
 
 
-### Property `$prev`
+## Property `$prev`
 
 ```
 protected mixed $prev
@@ -65,11 +64,10 @@ protected mixed $prev
 * This property is defined by [exception\Exception](../exception/Exception.md)
 
 
-Methods
--------
+# Methods
 
 
-### Method `__construct`
+## Method `__construct`
 
 ```
 mixed exception\Exception::__construct()
@@ -84,7 +82,7 @@ mixed exception\Exception::__construct()
 
 
 
-### Method `getExCode`
+## Method `getExCode`
 
 ```
 mixed exception\Exception::getExCode()
@@ -99,7 +97,7 @@ mixed exception\Exception::getExCode()
 
 
 
-### Method `getPrev`
+## Method `getPrev`
 
 ```
 mixed exception\Exception::getPrev()
@@ -114,7 +112,7 @@ mixed exception\Exception::getPrev()
 
 
 
-### Method `setPrev`
+## Method `setPrev`
 
 ```
 mixed exception\Exception::setPrev(\exception\Exception $previous)
