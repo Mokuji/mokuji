@@ -408,9 +408,10 @@ class FormBuilder
           if($size == 0 && $field->null_allowed->get('bool') !== true)
           {
             
+            $tmp = $model->labels();
             throw new \exception\Expected(
               'Relation defined for \'%s\' but there are no options available and the field is not optional',
-              $model->labels()[$column_name]
+              $tmp[$column_name]
             );
             
           }
