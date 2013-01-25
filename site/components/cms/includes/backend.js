@@ -1366,24 +1366,34 @@ function request(){
         self.refreshElements();
         self.view.find(self.formEl).restForm({success: self.proxy(self.afterSave)});
         
-        //Reload plupload.
-        self.view.find('#l_menu_item_image_id').txMediaImageUploader({
-          singleFile: true,
-          callbacks: {
-            
-            serverFileIdReport: function(up, ids, file_id){
-              self.data.item.image_id = file_id;
-              self.menu_item_image_id.val(file_id);
-              self.menu_item_image
-                .attr('src', '?section=media/image&resize=0/150&id='+file_id)
-                .show();
-              self.delete_image.show();
-              self.save();
+        //Reload plupload, if present.
+        if($.fn.txMediaImageUploader)
+        {
+          
+          self.view.find('.image_upload_holder').txMediaImageUploader({
+            singleFile: true,
+            callbacks: {
+              
+              serverFileIdReport: function(up, ids, file_id){
+                self.data.item.image_id = file_id;
+                self.menu_item_image_id.val(file_id);
+                self.menu_item_image
+                  .attr('src', '?section=media/image&resize=0/150&id='+file_id)
+                  .show();
+                self.delete_image.show();
+                self.save();
+                
+              }
               
             }
-            
-          }
-        });
+          });
+          
+        }
+        
+        //If not there, hide the div that holds the uploader normally.
+        else{
+          self.view.find('.image_upload_holder').hide();
+        }
         
       });
       

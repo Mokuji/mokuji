@@ -66,7 +66,7 @@
                   <input type="button" class="button grey delete-menu-item-image" value="<?php __($names->component, 'Delete image') ?>" {{if !item || !item.image_id}}style="display:none;"{{/if}} />
                 </div>
                 
-                <div class="ctrlHolder">
+                <div class="ctrlHolder image_upload_holder">
                   <input type="hidden" id="l_menu_item_image_id" name="image_id" value="${item.image_id}" />
                 </div>
 
