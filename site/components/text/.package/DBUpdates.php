@@ -22,7 +22,7 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
     $this->queue(array(
       'component' => 'cms',
       'min_version' => '1.2'
-      ), function($version)use($comname, $that){
+      ), function($version)use($comname){
           
           $component = tx('Sql')
             ->table('cms', 'Components')

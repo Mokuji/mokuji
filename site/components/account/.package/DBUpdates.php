@@ -26,7 +26,7 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
           
           $component = tx('Sql')
             ->table('cms', 'Components')
-            ->where('name', "'{$this->component}'")
+            ->where('name', "'account'")
             ->execute_single();
           
           tx('Sql')

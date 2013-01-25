@@ -15,8 +15,8 @@
         <h3>Site information</h3>
         
         <div class="ctrlHolder">
-          <label for="l_site_title" accesskey="v">Internal site title</label>
-          <input class="small" type="text" id="l_site_title" name="site_title" value="main_site" required />
+          <label for="l_site_title" accesskey="v">Site title</label>
+          <input class="small" type="text" id="l_site_title" name="site_title" value="My website" required />
         </div>
         
         <div class="ctrlHolder">
