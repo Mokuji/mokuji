@@ -886,7 +886,7 @@ function request(){
     form: '#page-config',
     
     elements: {
-      radio_access_levels: '.fieldset-rights input'
+      radio_access_levels: '.fieldset-rights input[name=access_level]'
     },
     
     events: {

@@ -385,4 +385,9 @@ class Sections extends \dependencies\BaseViews
     
   }
   
+  protected function context_menus()
+  {
+    return array();
+  }
+
 }

@@ -3,7 +3,7 @@
   
   <div id="edit-menu-item" class="{{if item && item.page_id}}has-page{{/if}}">
     
-    <form id="form-menu-item" method="{{if item && item.id > 0}}put{{else}}post{{/if}}" action="<?php echo url('rest=menu/menu_item'); ?>" class="form-inline-elements">
+    <form id="form-menu-item" method="{{if item && item.id > 0}}put{{else}}post{{/if}}" action="<?php echo url('rest=menu/menu_item', 1); ?>" class="form-inline-elements">
       
       <input type="hidden" name="id" value="${item.id}" />
       

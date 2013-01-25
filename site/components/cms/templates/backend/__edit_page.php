@@ -241,7 +241,7 @@
       
     </fieldset>
     
-    <fieldset class="fieldset-rights">
+    <fieldset class="fieldset-general">
       
       <legend><?php __('Page notes'); ?></legend>
       
