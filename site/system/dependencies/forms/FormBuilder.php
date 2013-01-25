@@ -120,6 +120,9 @@ class FormBuilder
     $model = $this->model;
     $model_relations = ($model::model_data('relations'));
     
+    //Tmp. TODO: get relation name.
+    $relation_name = 'to-be-defined';
+
     //Iterate over the input.
     foreach($input as $key=>$value)
     {
