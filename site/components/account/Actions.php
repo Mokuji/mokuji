@@ -476,7 +476,7 @@ class Actions extends \dependencies\BaseComponent
   
   protected function update_user_groups($data)
   {
-    
+
     tx('Updating user group.', function()use($data){
       
       //Store members, because validator will otherwise remove it.
@@ -506,7 +506,7 @@ class Actions extends \dependencies\BaseComponent
       //Set group members.
       tx('Component')->helpers('account')
         ->set_group_members($group->id, $members);
-      
+
       return $group;
       
     })

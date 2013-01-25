@@ -59,11 +59,11 @@
                 
                 <div class="ctrlHolder">
                   <label for="menu_item_image"><?php __('Image'); ?></label><br />
-                  <img id="menu_item_image" {{if item && item.image_id}}src="<?php echo url(URL_BASE.'?section=media/image&resize=0/150&id=NULL'); ?>&id=${item.image_id}"{{else}}style="display:none;"{{/if}} />
+                  <img id="menu_item_image" {{if item && item.image_id > 0}}src="<?php echo url(URL_BASE.'?section=media/image&resize=0/150&id=NULL'); ?>&id=${item.image_id}"{{else}}style="display:none;"{{/if}} />
                 </div>
                 
                 <div class="ctrlHolder">
-                  <input type="button" class="button grey delete-menu-item-image" value="<?php __($names->component, 'Delete image') ?>" {{if !item || !item.image_id}}style="display:none;"{{/if}} />
+                  <input type="button" class="button grey delete-menu-item-image" value="<?php __($names->component, 'Delete image') ?>" {{if !item || item.image_id <= 0}}style="display:none;"{{/if}} />
                 </div>
                 
                 <div class="ctrlHolder image_upload_holder">

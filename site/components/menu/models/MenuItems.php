@@ -38,4 +38,13 @@ class MenuItems extends \dependencies\BaseModel
     
   }
 
+  public function get_image()
+  {
+
+    return tx('Sql')->table('media', 'Images')
+      ->pk($this->image_id)
+      ->execute_single();
+
+  }
+
 }

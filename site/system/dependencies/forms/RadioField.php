@@ -68,15 +68,13 @@ class RadioField extends BaseFormField
     
     ?>
     <div class="ctrlHolder">
-      <fieldset>
-        <legend name="<?php echo $this->column_name; ?>"><?php __($this->model->component(), $this->title); ?></legend>
-        <?php foreach($this->option_set as $key=>$title): ?>
-          <label>
-            <input type="radio" name="<?php echo $this->column_name; ?>" value="<?php echo $key; ?>"<?php if($value == $key) echo 'checked="checked"' ?> />
-            <?php __($this->model->component(), $title); ?>
-          </label>
-        <?php endforeach; ?>
-      </fieldset>
+      <p><?php __($this->model->component(), $this->title); ?></p>
+      <?php foreach($this->option_set as $key=>$title): ?>
+        <label>
+          <input type="radio" name="<?php echo $this->column_name; ?>" value="<?php echo $key; ?>"<?php if($value == $key) echo 'checked="checked"' ?> />
+          <?php __($this->model->component(), $title); ?>
+        </label>
+      <?php endforeach; ?>
     </div>
     <?php
     
