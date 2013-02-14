@@ -73,13 +73,15 @@ class Router
         
         set_status_header($code, $userfunc->get_user_message());
         
+        $AND = __('And', true, 'l');
+        
         //Return field specific errors in JSON for Validation exceptions.
         if($userfunc->exception->getExCode() === EX_VALIDATION){
           $errors = $userfunc->exception->errors();
           for($i = 0, $total = count($errors), $sep = '', $msg = ''; $i < $total; $i++){
             $msg .= $sep.strtolower(substr($errors[$i], 0, 1)).substr($errors[$i], 1);
             $sep = ', ';
-            if($i == $total-2) $sep = ' and ';
+            if($i == $total-2) $sep = " $AND ";
           }
           echo '{"'.$userfunc->exception->key().'":"'.ucfirst($msg).'."}';
         }
@@ -97,7 +99,7 @@ class Router
             for($i = 0; $i < $total; $i++){
               $msg .= $sep.strtolower(substr($errors[$i], 0, 1)).substr($errors[$i], 1);
               $sep = ', ';
-              if($i == $total-2) $sep = ' and ';
+              if($i == $total-2) $sep = " $AND ";
             }
             $msg .= '.';
             $errorData->{$error->key()}->set(ucfirst($msg));
