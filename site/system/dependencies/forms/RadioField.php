@@ -5,6 +5,9 @@ use \dependencies\BaseModel;
 class RadioField extends BaseFormField
 {
   
+  protected
+    $option_set;
+  
   /**
    * Initiates a new form field.
    *

@@ -120,9 +120,6 @@ class FormBuilder
     $model = $this->model;
     $model_relations = ($model::model_data('relations'));
     
-    //Tmp. TODO: get relation name.
-    $relation_name = 'to-be-defined';
-
     //Iterate over the input.
     foreach($input as $key=>$value)
     {
@@ -134,7 +131,7 @@ class FormBuilder
         
         //Check if this relation is defined.
         if(!isset($model_relations[$name]))
-          throw new \exception\Programmer('No relation defined in model \'%s.%s\' with name \'%s\'.', $model->component(), $model->model(), $relation_name);
+          throw new \exception\Programmer('No relation defined in model \'%s.%s\' with name \'%s\'.', $model->component(), $model->model(), $name);
         
         $relation = array(
           'field_type' => null,
@@ -151,7 +148,7 @@ class FormBuilder
         
         //Check if this relation is defined.
         if(!isset($model_relations[$name]))
-          throw new \exception\Programmer('No relation defined in model \'%s.%s\' with name \'%s\'.', $model->component(), $model->model(), $relation_name);
+          throw new \exception\Programmer('No relation defined in model \'%s.%s\' with name \'%s\'.', $model->component(), $model->model(), $name);
         
         $relation = array(
           'field_type' => null,
@@ -168,7 +165,7 @@ class FormBuilder
         
         //Check if this relation is defined.
         if(!isset($model_relations[$name]))
-          throw new \exception\Programmer('No relation defined in model \'%s.%s\' with name \'%s\'.', $model->component(), $model->model(), $relation_name);
+          throw new \exception\Programmer('No relation defined in model \'%s.%s\' with name \'%s\'.', $model->component(), $model->model(), $name);
         
         $relation = array(
           'field_type' => isset($value['field_type']) ? $value['field_type'] : null,
@@ -191,10 +188,15 @@ class FormBuilder
       $target = current($model_relations[$name]);
       $target_field = substr($target, strrpos($target, '.')+1);
       $target_model = substr($target, 0, strrpos($target, '.'));
+      $target_model_parts = explode('.', $target_model);
+      $target_model_instance = count($target_model_parts) == 1 ?
+        tx('Sql')->model($this->model->component(), $target_model_parts[0]):
+        tx('Sql')->model(strtolower($target_model_parts[0]), $target_model_parts[1]);
       $relation = array_merge($relation, array(
         'local_field' => $local_field,
         'target_field' => $target_field,
-        'target_model' => $target_model
+        'target_model' => $target_model,
+        'target_model_instance' => $target_model_instance
       ));
       
       //Detect relation type.
@@ -205,9 +207,21 @@ class FormBuilder
       //Detect additional relation data.
       $this->find_additional_relation_data($relation);
       
-      //Detect field type.
-      if(is_null($relation['field_type'])){
-        $relation['field_type'] = $this->detect_optimal_relation_field($local_field, $relation);
+      //Detect field type since it's not defined yet.
+      if(is_null($relation['field_type']))
+      {
+        
+        //If the model defines a preference for the field type, use that.
+        $preferences = $target_model_instance->relation_preferences();
+        if(isset($preferences[$relation['relation_type']])){
+          $relation['field_type'] = $preferences[$relation['relation_type']];
+        }
+        
+        //Otherwise, let our detection algorithm find the best default we have.
+        else{
+          $relation['field_type'] = $this->detect_optimal_relation_field($local_field, $relation);
+        }
+        
       }
       
       //Insert our findings.
@@ -459,7 +473,7 @@ class FormBuilder
         
         //Find option set.
         $relation['option_set'] = tx('Sql')
-          ->table($this->model->component(), $relation['target_model'])
+          ->table($relation['target_model_instance']->component(), $relation['target_model_instance']->model())
           ->is(count($relation['filter_options']) > 0, function($t)use($relation){
             
             //Add the filters.

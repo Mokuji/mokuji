@@ -7,6 +7,7 @@ abstract class BaseModel extends Data
     $generatedLabels = array(),
     $labels = array(),
     $validate = array(),
+    $relation_preferences = array(),
     $relations_by_column;
   
   private static
@@ -1238,6 +1239,11 @@ abstract class BaseModel extends Data
     $this->refresh_labels();
     return $originals ? array_keys(static::$generatedLabels) : static::$generatedLabels;
     
+  }
+  
+  public function relation_preferences()
+  {
+    return static::$relation_preferences;
   }
   
   /**
