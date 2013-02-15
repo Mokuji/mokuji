@@ -290,6 +290,8 @@ class FormBuilder
       }
       
       #TODO: Maybe copy some options from the constructor to the field.
+      $override['form_id'] = $this->id();
+      
       //Create the field.
       $fields[] = new $field_class(
         $column_name,

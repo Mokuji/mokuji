@@ -10,7 +10,8 @@ abstract class BaseFormField
     $value,
     $title,
     $column_name,
-    $insert_value;
+    $insert_value,
+    $form_id;
   
   /**
    * Initiates a new form field.
@@ -27,6 +28,7 @@ abstract class BaseFormField
     $this->value = $model[$column_name];
     $this->column_name = $column_name;
     $this->title = $title;
+    $this->form_id = $options['form_id'];
     
   }
   
