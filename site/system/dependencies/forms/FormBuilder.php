@@ -417,7 +417,7 @@ class FormBuilder
         case RelationType::ForeignKey:
           
           //Get the option set size.
-          $size = count($relation['option_set']);
+          $size = isset($relation['option_set']) && is_array($relation['option_set']) ? count($relation['option_set']) : 0;
           
           //By default this is a radio field.
           $type = $ns.'RadioField';
