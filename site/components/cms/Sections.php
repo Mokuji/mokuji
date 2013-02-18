@@ -88,26 +88,15 @@ class Sections extends \dependencies\BaseViews
 
   protected function edit_menu_item($data)
   {
-
+    
     return array(
       'image_uploader' => 
         tx('Component')->available('media') ?
-          tx('Component')->modules('media')->get_html('image_uploader', array(
-            'insert_html' => array(
-              'header' => '',
-              'drop' => 'Sleep de afbeelding.',
-              'upload' => 'Uploaden',
-              'browse' => 'Bladeren'
-            ),
-            'auto_upload' => true,
-            'callbacks' => array(
-              'ServerFileIdReport' => 'plupload_image_file_id'
-            )))
+          tx('Component')->modules('media')->get_html('image_upload_module')
         : null
     );
 
   }
-
 
   protected function page_app()
   {
@@ -169,7 +158,7 @@ class Sections extends \dependencies\BaseViews
   {
     
     return array(
-      'languages' => tx('Component')->helpers('language')->get_languages(array('in_language_id' => tx('Language')->get_language_id())),
+      'languages' => tx('Language')->get_languages(),
       'layout_info' => tx('Sql')->table('cms', 'LayoutInfo')->execute(),
       'themes' => $this->table('Themes')->order('title')->execute(),
       'templates' => $this->table('Templates')->order('title')->execute()
@@ -394,6 +383,11 @@ class Sections extends \dependencies\BaseViews
     
     return tx('Component')->sections('account')->get_html('login_form');
     
+  }
+  
+  protected function context_menus()
+  {
+    return array();
   }
 
 }

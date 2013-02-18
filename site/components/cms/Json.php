@@ -46,12 +46,12 @@ class Json extends \dependencies\BaseComponent
     $pid = $params->{0};
     $pid->validate('Page ID', array('required', 'number'=>'integer', 'gt'=>0));
     
-    $data = $data->having('theme_id', 'template_id', 'layout_id', 'notes', 'access_level', 'published', 'user_group_permissions')
+    $data = $data->having('theme_id', 'template_id', 'layout_id', 'notes', 'access_level', 'published', 'user_group_permission')
       -> theme_id      ->validate('Theme', array('number', 'gt'=>0))->back()
       -> template_id   ->validate('Template', array('number', 'gt'=>0))->back()
       -> layout_id     ->validate('Layout', array('number', 'gt'=>0))->back()
       -> notes         ->validate('Notes', array('string', 'no_html'))->back()
-      -> access_level  ->validate('Access level', array('number', 'between'=>array(0, 2)))->back()
+      -> access_level  ->validate('Access level', array('number', 'between'=>array(0, 3)))->back()
       -> published     ->validate('Published', array('number', 'between'=>array(0, 1)))->back();
     
     $page = tx('Sql')
@@ -101,7 +101,8 @@ class Json extends \dependencies\BaseComponent
           'gp_author'
         )
         
-        ->title->validate('Title', array('required', 'string', 'not_empty'))->back()
+        // ->title->validate('Title', array('required', 'string', 'not_empty'))->back()
+        ->title->validate('Title', array('string'))->back()
         ->url_key->validate('URL key', array('string', 'not_empty'))->back()
         ->slogan->validate('Slogan', array('string', 'not_empty'))->back()
         ->description->validate('Description', array('string', 'not_empty'))->back()

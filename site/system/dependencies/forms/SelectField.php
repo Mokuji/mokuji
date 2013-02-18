@@ -67,12 +67,13 @@ class SelectField extends BaseFormField
     
     parent::render($options);
     
-    $value = $this->insert_value ? $this->value : '';
+    $value = $this->insert_value ? $this->value->get() : '';
     
     ?>
     <div class="ctrlHolder">
       <label><?php __($this->model->component(), $this->title); ?></label>
       <select name="<?php echo $this->column_name; ?>">
+        <option value=""></option>
         <?php foreach($this->option_set as $key=>$title): ?>
           <option value="<?php echo $key; ?>" <?php if($value == $key) echo 'selected="selected"' ?>>
             <?php __($this->model->component(), $title); ?>

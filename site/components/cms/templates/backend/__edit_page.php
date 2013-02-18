@@ -2,15 +2,15 @@
 
 <script id="edit_page_tmpl" type="text/x-jquery-tmpl">
   
+  {{if menu_id}}
+    <div class="detach-page-wrapper">
+      <a href="?action=cms/detach_page&menu=${menu_id}&pid=${page.id}" class="icon detach-page" id="detach-page" title="<?php __($names->component, 'Detach page from menu item'); ?>">Detach</a>
+    </div>
+  {{/if}}
   <div id="edit_page">
     
     <div class="title-bar page-title">
       <h2><span class="title">${page.title}</span> <span style="font-weight:normal;">(<?php __('Page', 0, 'l'); ?>)</span></h2>
-      <ul class="title-bar-icons clearfix">
-        {{if menu_id}}
-          <li><a href="?action=cms/detach_page&menu=${menu_id}&pid=${page.id}" class="icon detach-page" id="detach-page" title="<?php __($names->component, 'Detach page from menu item'); ?>">Detach</a></li>
-        {{/if}}
-      </ul>
       <div class="clear"></div>
     </div>
     
@@ -31,7 +31,8 @@
     
     <div class="footer" id="save-buttons">
       
-      <button id="save-page" class="button black"><?php __('Save'); ?></button>
+      <button id="save-page" class="button black" data-success="<?php __('Saved page'); ?>"
+        data-working="<?php __('Saving page'); ?>"><?php __('Save'); ?></button>
       
     </div>
     
@@ -48,7 +49,7 @@
         
         <fieldset class="fieldset-general clearfix">
           
-          <legend><?php __($names->component, 'Page captions'); ?></legend>
+          <legend><i class="icon-tag"></i><span><?php __($names->component, 'Page captions'); ?></span></legend>
           
           <div class="ctrlHolder">
             <label for="l_title_page_${language.code}"><?php __($names->component, 'Title'); ?></label>
@@ -58,15 +59,15 @@
           
           <div class="ctrlHolder">
             <div>
+              <label for="l_page_key_${language.code}"><?php __($names->component, 'URL-key'); ?></label>
+              <input id="l_page_key_${language.code}" class="big page-key" type="text" name="info[${language.id}][url_key]"
+                placeholder="<?php __($names->component, 'URL-key') ?>" value="${page.info && page.info[language.id] && page.info[language.id].url_key}" />
+            </div>
+            <div>
               <label for="l_page_key_example_${language.code}" class="subtle-hint"><?php __($names->component, 'Example'); ?></label>
               <div id="l_page_key_example_${language.code}" class="subtle-hint page_key_example">
                 <?php echo URL_BASE; ?>${page.id}/<span class="key-section">${page.info && page.info[language.id] && page.info[language.id].url_key ? page.info[language.id].url_key : "<?php __($names->component, 'URL-key') ?>"}</span>
               </div>
-            </div>
-            <div>
-              <label for="l_page_key_${language.code}"><?php __($names->component, 'URL-key'); ?></label>
-              <input id="l_page_key_${language.code}" class="big page-key" type="text" name="info[${language.id}][url_key]"
-                placeholder="<?php __($names->component, 'URL-key') ?>" value="${page.info && page.info[language.id] && page.info[language.id].url_key}" />
             </div>
           </div>
           
@@ -80,7 +81,7 @@
         
         <fieldset class="fieldset-general clearfix">
           
-          <legend><?php __($names->component, 'Search engine optimization'); ?></legend>
+          <legend><i class="icon-search"></i><span><?php __($names->component, 'Search engine optimization'); ?></span></legend>
           
           <div class="ctrlHolder">
             <label for="l_keywords_page_${language.code}"><?php __($names->component, 'Page keywords'); ?></label>
@@ -98,12 +99,12 @@
         
         <fieldset class="fieldset-general clearfix">
           
-          <legend><?php __($names->component, 'Social media'); ?></legend>
+          <legend><i class="icon-comment"></i><span><?php __($names->component, 'Social media'); ?></span></legend>
           <p class="subtle-hint"><?php __($names->component, 'SOCIAL_MEDIAL_OVERRIDE_VALUES_EXPLANATION') ?></p>
           
           <fieldset class="fieldset-general clearfix">
             
-            <legend><?php __($names->component, 'Open Graph (Facebook)'); ?></legend>
+            <legend><i class="icon-facebook-sign"></i><span><?php __($names->component, 'Open Graph (Facebook)'); ?></span></legend>
             
             <div class="ctrlHolder">
               <label for="l_title_og_${language.code}"><?php __($names->component, 'OG title'); ?></label>
@@ -127,7 +128,7 @@
           
           <fieldset class="fieldset-general clearfix">
             
-            <legend><?php __($names->component, 'Twitter cards'); ?></legend>
+            <legend><i class="icon-twitter-sign"></i><span><?php __($names->component, 'Twitter cards'); ?></span></legend>
             
             <div class="ctrlHolder">
               <label for="l_title_tw_${language.code}"><?php __($names->component, 'Twitter title'); ?></label>
@@ -151,7 +152,7 @@
           
           <fieldset class="fieldset-general clearfix">
             
-            <legend><?php __($names->component, 'Google+'); ?></legend>
+            <legend><i class="icon-google-plus-sign"></i><span><?php __($names->component, 'Google+'); ?></span></legend>
             
             <div class="ctrlHolder">
               <label for="l_author_gp_${language.code}"><?php __($names->component, 'Google+ author'); ?></label>
@@ -240,7 +241,7 @@
       
     </fieldset>
     
-    <fieldset class="fieldset-rights">
+    <fieldset class="fieldset-general">
       
       <legend><?php __('Page notes'); ?></legend>
       

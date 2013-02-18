@@ -1,4 +1,5 @@
-$(function(){
+//Only if jQuery is present.
+if(window.$) $(function(){
 
   // Add pdf icons to pdf links.
   $("a[href$='.pdf']").addClass("pdf");

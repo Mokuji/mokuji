@@ -1,0 +1,56 @@
+#application-notifications-wrapper{
+  position:fixed;
+  top:40px;
+  left:0;
+  right:0;
+  z-index:3;
+  text-align:center;
+}
+
+#application-notifications{
+  display:inline-block;
+  margin:auto;
+  padding:8px 25px;
+  border-radius:4px;
+  font-weight:bold;
+  text-align:left;
+  
+  /* Default colours */
+  color:#fff;
+  text-shadow:1px 1px 1px rgba(0,0,0,0.5);
+  background:rgba(100,100,100,0.95);
+  border:1px solid rgb(80,80,80);
+  box-shadow:0px 0px 10px rgba(0,0,0,0.4);
+}
+
+#application-notifications.working{
+  text-shadow:1px 1px 1px rgba(0,0,0,0.8);
+  background:rgba(210,210,210,0.95);
+  border:1px solid #AAA;
+}
+  #application-notifications.working:before{
+    /*content:'{_} ';*/
+  }
+  #application-notifications.working:after{
+    content:'…';
+  }
+
+#application-notifications.success{
+  color:#060;
+  text-shadow:none;
+  background:rgba(240,255,240,0.95);
+  border:1px solid #7B7;
+}
+  #application-notifications.success:before{
+    /*content:'V ';*/
+  }
+
+#application-notifications.error{
+  color:#800;
+  text-shadow:none;
+  background:rgba(255,230,230,0.95);
+  border:1px solid #D99;
+}
+  #application-notifications.error:before{
+    /*content:'X ';*/
+  }

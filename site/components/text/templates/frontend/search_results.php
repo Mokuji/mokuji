@@ -3,24 +3,23 @@
 <h1 style="display:block;"><?php __($names->component, 'Search results for'); ?>: <?php echo $search_results->term; ?></h1>
 
 <?php
+$search_results->results->each(function($row)use($search_results, $names){
+  ?>
 
-$search_results->results->each(function($row)use($search_results){
+    <div class="search-result">
 
-  echo
+      <h2>
+        <a href="<?php echo url('pid='.$row->page_id); ?>"><?php echo $row->title; ?></a>
+      </h2>
 
-    '<div class="search-result">'.
+      <p>
+        <?php echo str_replace($search_results->term->get(), '<span class="highlighted">'.$search_results->term.'</span>', substr(strip_tags($row->text), 0, 200)); ?> ...
+        <a href="<?php echo url('pid='.$row->page_id); ?>" title="<?php __($names->component, 'Read more'); ?>" class="read-more"><?php __($names->component, 'More'); ?> &raquo;</a>
+      </p>
 
-      '<h2>'.
-        '<a href="'.url('pid='.$row->page_id).'">'.$row->title.'</a>'.
-      '</h2>'.  
+    </div>
 
-      '<p>'.
-        str_replace($search_results->term->get(), '<span class="highlighted">'.$search_results->term.'</span>', substr(strip_tags($row->text), 0, 200)).' ...'.
-        ' <a href="'.url('pid='.$row->page_id).'" title="<?php __($names->component, 'Read more'); ?>" class="read-more"><?php __($names->component, 'More'); ?> &gt;</a>'.
-      '</p>'.
-
-    '</div>';
-
+  <?php
 });
 
 if($data->results->size() == 0)

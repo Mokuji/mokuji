@@ -3,15 +3,15 @@
   
   <div id="edit-menu-item" class="{{if item && item.page_id}}has-page{{/if}}">
     
-    <form id="form-menu-item" method="{{if item && item.id > 0}}put{{else}}post{{/if}}" action="<?php echo url('rest=menu/menu_item'); ?>" class="form-inline-elements">
+    <form id="form-menu-item" method="{{if item && item.id > 0}}put{{else}}post{{/if}}" action="<?php echo url('rest=menu/menu_item', 1); ?>" class="form-inline-elements">
       
-      {{if item && item.id > 0}}<input type="hidden" name="id" value="${item.id}" />{{/if}}
+      <input type="hidden" name="id" value="${item.id}" />
       
       <div class="title-bar page-title">
         <h2><span class="title">{{if item && item.id > 0}}${item.info['<?php echo tx('Language')->get_language_id(); ?>'].title}{{/if}}</span> <span style="font-weight:normal;">(<?php __($names->component, 'Menu item', 'l') ?>)</span></h2>
         <ul class="title-bar-icons clearfix">
           <?php if(tx('Component')->available('media')){ ?>
-            <li hidden><a href="#" class="icon menu-item-settings" id="toggle-menu-item-settings" title="<?php __('Toggle menu item settings'); ?>"><?php __($names->component, 'Toggle menu item settings', 'ucfirst') ?></a></li>
+            <li><a href="#" class="icon menu-item-settings" id="toggle-menu-item-settings" title="<?php __('Toggle menu item settings'); ?>"><?php __($names->component, 'Toggle menu item settings', 'ucfirst') ?></a></li>
           <?php } ?>
           <li><a href="#" class="icon" id="detach-menu-item" style="display:none;"><?php __($names->component, 'Detach menu item from page', 'ucfirst') ?></a></li>
         </ul>
@@ -51,49 +51,26 @@
         <div id="menu-item-config">
 
           <div class="inner">
-
+            
             <h3><?php __($names->component, 'Menu item settings', 'ucfirst') ?></h3>
             
-            <?php if(tx('Component')->available('media') && false){ ?>
-            <fieldset>
-              
-              <div class="ctrlHolder">
-                <label for="l_header_image_preview"><?php __('Image'); ?></label><br />
-                <img id="menu_item_image" {{if item && item.image_id}}src="<?php echo url(URL_BASE.'?section=media/image&resize=0/150&id=NULL'); ?>&id=${item.image_id}"{{else}}style="display:none;"{{/if}} />
-                <input type="hidden" id="l_menu_item_image_id" name="image_id" value="item.image_id">
-              </div>
-              
-              <?php if($data->item->image_id->get() > 0){ ?>
-              <div class="ctrlHolder">
-                <input id="delete-menu-item-image" type="button" class="button grey" value="<?php __($names->component, 'Delete image') ?>" />
-                <script type="text/javascript" language="javascript">
-                  jQuery(function($){
-                    
-                    $('#delete-menu-item-image').on('click', function(e){
-                      
-                      e.preventDefault();
-                      
-                      var wrapper = $(e.target).closest('fieldset');
-                      var id = wrapper.find('input[name=image_id]');
-                      $.rest('DELETE', '?rest=media/image/'+id.val())
-                        .done(function(){
-                          id.val('');
-                          wrapper.find('#menu_item_image').attr('src', '').hide();
-                          $('#form-menu-item').submit();
-                        });
-                      
-                    });
-                    
-                  });
-                </script>
-              </div>
-              <?php } ?>
-              
-              <div class="ctrlHolder">
-                <?php echo $data->image_uploader; ?>
-              </div>
+            <?php if(tx('Component')->available('media')){ ?>
+              <fieldset>
+                
+                <div class="ctrlHolder">
+                  <label for="menu_item_image"><?php __('Image'); ?></label><br />
+                  <img id="menu_item_image" {{if item && item.image_id > 0}}src="<?php echo url(URL_BASE.'?section=media/image&resize=0/150&id=NULL'); ?>&id=${item.image_id}"{{else}}style="display:none;"{{/if}} />
+                </div>
+                
+                <div class="ctrlHolder">
+                  <input type="button" class="button grey delete-menu-item-image" value="<?php __($names->component, 'Delete image') ?>" {{if !item || item.image_id <= 0}}style="display:none;"{{/if}} />
+                </div>
+                
+                <div class="ctrlHolder image_upload_holder">
+                  <input type="hidden" id="l_menu_item_image_id" name="image_id" value="${item.image_id}" />
+                </div>
 
-            </fieldset>
+              </fieldset>
             <?php } ?>
 
           </div>
@@ -116,28 +93,3 @@
   </div>
   
 </script>
-
-<?php if($data->image_uploader->is_set()){ ?>
-  
-  <script type="text/javascript">
-  
-  jQuery(function($){
-    
-    //On uploaded file.
-    window.plupload_image_file_id = function(up, ids, file_id){
-      
-      var form = $('#edit-menu-item');
-      
-      form.find('#menu_item_image')
-        .attr('src', '<?php echo url(URL_BASE."?section=media/image&resize=0/150&id=", true); ?>'+file_id).show();
-      
-      form.find('#l_menu_item_image_id')
-        .val(file_id);
-      
-    };
-    
-  });
-  
-  </script>
-  
-<?php } ?>

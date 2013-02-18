@@ -37,6 +37,7 @@
 }
 .icon.detach-page{
   background-image:url('img/icons/title_bar/detach.png');
+  background-repeat:no-repeat;
 }
 
 ._admin_toolbar{
@@ -94,6 +95,7 @@
   line-height: 31px;
   text-indent: 10px;
   background:url('img/icons/topbar/profile.png') 50px 50% no-repeat;
+  cursor:default;
 }
 #topbar_menu li.logout{
   background:none;
@@ -182,6 +184,7 @@
 }
 #menu_app, #page_app{
   margin:10px 10px 0 10px;
+  position:relative;
 }
 /* item on page, in backend */
 #page_app .page-item{
@@ -202,11 +205,12 @@
   #edit-menu-item.has-page:after{
     content:".";
     text-indent:-9999px;
+    z-index:10;
     display:block;
     position:relative;
-    top:14px;
-    width:26px;
-    height:14px;
+    top:18px;
+    width:36px;
+    height:18px;
     margin:0 auto;
     background:transparent url("img/icons/arrow-to-bottom.png") center center no-repeat;
   }
@@ -283,6 +287,41 @@
     border-bottom-width:2px;
     border-color:#fff #d5e0e8 #b2bfc9 #d5e0e8;
   }
+    .detach-page-wrapper{
+      width:36px;
+      height:40px;
+      left:50%;
+      margin-left:-18px;
+      text-indent:-9999px;
+      position:absolute;
+      z-index:11;
+      top:-34px;
+      display:block;
+      opacity:0.3;
+      -moz-transition: opacity 200ms ease;
+      -webkit-transition: opacity 200ms ease;
+      -o-transition: opacity 200ms ease;
+      transition: opacity 200ms ease;
+    }
+    .detach-page{
+      width:36px;
+      height:40px;
+      background-position:center top;
+    }
+    .detach-page-wrapper:hover{
+      opacity:1;
+    }
+    .detach-page-wrapper + #edit_page{
+      top:0px;
+      -moz-transition: top 200ms ease;
+      -webkit-transition: top 200ms ease;
+      -o-transition: top 200ms ease;
+      transition: top 200ms ease;
+    }
+    .detach-page-wrapper:hover + #edit_page{
+      position:relative;
+      top:20px;
+    }
     #edit_page .language-bar{
       display: none;
       height:30px;
@@ -324,7 +363,7 @@
       position:absolute;
       top:38px;
       bottom:0px;
-      width:60px;
+      width:50px;
       background: #e2e2e2;
       display: none;
     }
@@ -340,25 +379,48 @@
         display:block;
         text-align:center;
         padding:10px;
-        height:40px;
-        line-height:40px;
+        height:30px;
+        line-height:32px;
         overflow:hidden;
+        font-size:21px;
+        color:#888;
+        text-shadow:1px 1px #fff;
       }
+        #edit_page .tab-bar .tab span{
+          text-indent:-9999px;
+          display:inline-block;
+        }
+        #edit_page .tab-bar .tab:hover{   
+          text-decoration:none;
+        }
+        #edit_page .tab-bar .tab.modified{
+          color:#343943;
+        }
         #edit_page .tab-bar .tab.selected{
           margin-left:2px;
           margin-bottom:0px;
           background: #fff;
           border-left:1px solid #d5d5d5;
-          border-bottom:1px solid #bfbfbf;
+          border-bottom:1px solid #bfbfbf;p
           border-bottom-left-radius:5px;
           border-top-left-radius:5px;
+          color:#343943;
         }
           #edit_page .tab-bar .tab.selected.first{
             border-top-left-radius:0;
           }
-            #edit_page.has-languages .tab-bar .tab.selected.first{
-              border-top-left-radius:5px;
-            }
+          #edit_page.has-languages .tab-bar .tab.selected.first{
+            border-top-left-radius:5px;
+          }
+          #edit_page .tab-bar .tab.content:before{
+            content:"\f040" !important;
+          }
+          #edit_page .tab-bar .tab.findability:before{
+            content:"\f02c" !important;
+          }
+          #edit_page .tab-bar .tab.config:before{
+            content:"\f013" !important;
+          }
     #edit_page .tab-body{
       padding:10px;
     }
@@ -435,6 +497,9 @@
       color:#2B3241;
       padding:2px 5px;
       margin-left:5px;
+    }
+    .page-config legend i{
+      font-size:14px;
     }
     fieldset ul{
       list-style:none;
@@ -603,7 +668,57 @@
   #page-findability .page_key_example{
     display: inline-block;
   }
-
+  #page-findability fieldset{
+    padding: 0;
+    border:none;
+    border-bottom:1px solid #e2e2e2;
+    padding-bottom:10px;
+    margin-bottom:20px;
+  }
+    #page-findability fieldset > .subtle-hint{
+      margin-left:33px;
+    }
+    #page-findability fieldset .ctrlHolder{
+      margin-left:30px;
+    }
+      #page-findability fieldset .ctrlHolder label{
+        display:block;
+      }
+      #page-findability fieldset > fieldset .ctrlHolder{
+        margin-left:16px;
+      }
+  #page-findability legend{
+    padding:0;
+    margin:0 0 10px 20px;
+    font-size:16px;
+    font-weight:bold;
+  }
+    #page-findability legend span{
+      bottom:2px;
+      position:relative;
+      display: inline-block;
+      margin-left: 10px;
+    }
+    #page-findability legend i{
+      font-size:17px;
+      color:#2B3241;
+    }
+      #page-findability fieldset > fieldset{
+        margin-left:32px;
+        
+      }
+        #page-findability fieldset > fieldset legend{
+          padding:0;
+          margin:0 0 10px 0;
+          font-size:12px;
+        }
+        #page-findability fieldset > fieldset legend span{
+          bottom:2px;
+        }
+        #page-findability fieldset > fieldset legend i{
+          margin-left:0px;
+          font-size:18px;
+        }
 /* =New page
 -------------------------------------------------------------- */
 
@@ -779,7 +894,7 @@
   display: none;
   position: absolute;
   left:20px;
-  height:33px;
+  height:33px !important;
   opacity:0.75;
 }
 #page-main-left .menu-items-list .icon-toggle:hover{
@@ -787,14 +902,14 @@
 }
 
 #page-main-left .menu-items-list:hover li.has-sub > div > .icon-toggle{
-  display:block;
-  cursor:pointer;
-  background-position:5px 10px;
+  display:block !important;
+  cursor:pointer !important;
+  background-position:5px 10px !important;
 }
 #page-main-left .menu-items-list:hover li.has-sub > ul > .has-sub .icon-toggle{
-  left:0px;
-  height:24px;
-  background-position:0px 5px;
+  left:0px !important;
+  height:24px !important;
+  background-position:0px 5px !important;
 }
 
 #page-main-left .menu-items-list:hover .icon-collapse{

@@ -13,7 +13,7 @@ class EntryPoint extends \dependencies\BaseEntryPoint
         'plugins' =>  array(
           load_plugin('jquery'),
           load_plugin('jquery_ui'),
-          load_plugin('jquery_formtoobject')
+          load_plugin('jquery_rest')
         ),
         'links' => array(
           'cms_style' => '<link rel="stylesheet" type="text/css" href="'.URL_COMPONENTS.'cms/includes/style.css" />',

@@ -1,5 +1,10 @@
 #### Development
 
+* UI improvements:
+  - Implemented a feedback overlay for the CMS backend.
+* Bug fixes:
+  - Several plug-ins had missing files.
+
 #### [Version 1.0.1 Beta 1](https://github.com/Tuxion/tuxion.cms/tree/v1.0.1-beta1)
 
 * Automatically generated forms give much better feedback to the user submitting them.

@@ -32,6 +32,8 @@ class Json extends \dependencies\BaseComponent
       ->image_id->validate('Image ID', array('number'=>'integer', 'gt'=>0))->back()
     ;
     
+    string_if_null($data, 'image_id');
+    
     $data->info->each(function($info, $key){
       
       $info->become(
@@ -77,6 +79,8 @@ class Json extends \dependencies\BaseComponent
       ->page_id->validate('Page ID', array('number'=>'integer', 'gt'=>0))->back()
       ->image_id->validate('Image ID', array('number'=>'integer', 'gt'=>0))->back()
     ;
+    
+    string_if_null($data, 'image_id');
     
     $data->info->each(function($info, $key){
       
@@ -156,6 +160,30 @@ class Json extends \dependencies\BaseComponent
         $info->delete();
       })->back()
       ->hdelete();
+    
+  }
+  
+  protected function delete_menu_item_image($data, $params)
+  {
+    
+    tx('Sql')
+      ->table('menu', 'MenuItems')
+      ->pk($params[0]->get('int'))
+      ->execute_single()
+      
+      //If this item is found.
+      ->not('empty', function($item){
+        
+        //Delete the actual image.
+        $item->image_id->not('empty', function($img_id){
+          tx('Component')->helpers('media')->delete_image($img_id);
+        });
+        
+        //Remove it from the item.
+        $item->image_id->un_set();
+        $item->save();
+        
+      });
     
   }
   

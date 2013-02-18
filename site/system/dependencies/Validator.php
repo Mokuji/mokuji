@@ -48,7 +48,7 @@ class Validator extends Successable
         $return = call_user_func_array(array($this, "_$rule"), $options);
         $valid = !$valid ?$valid : ((is_null($this->check_rule('required')) && is_null($this->data)) || $return===true);
         if($return !== true){
-          $this->errors[] = trim($return, '.!? ');
+          $this->errors[] = __(trim($return, '.!? '), true);
         }
       }
       
@@ -411,7 +411,7 @@ class Validator extends Successable
       
     }
     
-    return 'Value must be a boolean.';
+    return 'The value must be a boolean.';
     
   }
   
@@ -423,7 +423,7 @@ class Validator extends Successable
     if(is_array($data))
       return true;
     
-    return 'Value must be an array.';
+    return 'The value must be an array.';
     
   }
   
@@ -433,7 +433,7 @@ class Validator extends Successable
     try{
       tx('Url')->parse($this->data);
     } catch (\exception\Unexpected $ue) {
-      return 'Value must be a url.';
+      return 'The value must be a url.';
     }
     
     return true;

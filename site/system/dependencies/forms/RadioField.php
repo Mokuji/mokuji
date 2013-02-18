@@ -5,6 +5,9 @@ use \dependencies\BaseModel;
 class RadioField extends BaseFormField
 {
   
+  protected
+    $option_set;
+  
   /**
    * Initiates a new form field.
    *
@@ -64,19 +67,17 @@ class RadioField extends BaseFormField
     
     parent::render($options);
     
-    $value = $this->insert_value ? $this->value : '';
+    $value = $this->insert_value ? $this->value->get() : '';
     
     ?>
     <div class="ctrlHolder">
-      <fieldset>
-        <legend name="<?php echo $this->column_name; ?>"><?php __($this->model->component(), $this->title); ?></legend>
-        <?php foreach($this->option_set as $key=>$title): ?>
-          <label>
-            <input type="radio" name="<?php echo $this->column_name; ?>" value="<?php echo $key; ?>"<?php if($value == $key) echo 'checked="checked"' ?> />
-            <?php __($this->model->component(), $title); ?>
-          </label>
-        <?php endforeach; ?>
-      </fieldset>
+      <p><?php __($this->model->component(), $this->title); ?></p>
+      <?php foreach($this->option_set as $key=>$title): ?>
+        <label>
+          <input type="radio" name="<?php echo $this->column_name; ?>" value="<?php echo $key; ?>"<?php if($value == $key) echo 'checked="checked"' ?> />
+          <?php __($this->model->component(), $title); ?>
+        </label>
+      <?php endforeach; ?>
     </div>
     <?php
     

@@ -139,15 +139,20 @@ class File
     
   }
   
-  public function download($options=null)
+  public function download($options = null)
   {
     $options = Data($options);
-    
+
     header('Content-Disposition: attachment; filename="'.(is_string($options->as->get()) ? $options->as : $this->file).'";');
     header('Content-Transfer-Encoding: binary');
     
     $options->un_set('as');
     $this->output($options);
+  }
+  
+  public function get_filesize()
+  {
+    return $this->info['size'];
   }
   
 }

@@ -110,12 +110,17 @@ class Modules extends \dependencies\BaseViews
 
   protected function menu_image($options)
   {
-    return tx('Sql')->table('menu', 'MenuItems')->pk(tx('Data')->get->menu->get('int'))->execute_single();
+    return
+      tx('Sql')
+      ->table('menu', 'MenuItems')
+      ->where('page_id', tx('Data')->get->pid->get('int'))
+      ->execute_single();
   }
 
   protected function breadcrumbs($options)
   {
     
+    return;
     throw new \exception\Programmer('Breadcrumbs under construction.');
     
     $options

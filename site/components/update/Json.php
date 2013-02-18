@@ -35,7 +35,7 @@ class Json extends \dependencies\BaseViews
       ->name->validate('Database name', array('required', 'string', 'not_empty'))->back()
       ->prefix->validate('Table prefix', array('required', 'string', 'not_empty'))->back()
     ;
-    
+
     //Attempt to connect.
     $connection = @mysql_connect($data->host->get(), $data->username->get(), $data->password->get());
     

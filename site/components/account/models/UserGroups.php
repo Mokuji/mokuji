@@ -9,6 +9,10 @@ class UserGroups extends \dependencies\BaseModel
     
     $relations = array(
       'AccountsToUserGroups' => array('id' => 'AccountsToUserGroups.user_group_id')
+    ),
+
+    $validate = array(
+      'id' => array('required', 'number'=>'int', 'gt'=>0)
     );
   
   public static function validate_data($data)
