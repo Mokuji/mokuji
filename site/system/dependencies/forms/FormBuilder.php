@@ -205,7 +205,7 @@ class FormBuilder
       }
       
       //Detect additional relation data.
-      $this->find_additional_relation_data($relation);
+      $relation = $this->find_additional_relation_data($relation);
       
       //Detect field type since it's not defined yet.
       if(is_null($relation['field_type']))
@@ -417,7 +417,8 @@ class FormBuilder
         case RelationType::ForeignKey:
           
           //Get the option set size.
-          $size = isset($relation['option_set']) && is_array($relation['option_set']) ? count($relation['option_set']) : 0;
+          $size = isset($relation['option_set']) && is_array($relation['option_set']) ?
+            count($relation['option_set']) : 0;
           
           //By default this is a radio field.
           $type = $ns.'RadioField';
@@ -464,9 +465,9 @@ class FormBuilder
    * Depending on all the earlier detected variables gathers all relevant data about the relation.
    * For example when applicable gathers an option_set.
    *
-   * @param array &$relation The relation to find additional data for.
+   * @param array $relation The relation to find additional data for.
    */
-  protected function find_additional_relation_data(array &$relation)
+  protected function find_additional_relation_data(array $relation)
   {
     
     switch($relation['relation_type']){
@@ -490,6 +491,8 @@ class FormBuilder
         break;
       
     }
+    
+    return $relation;
     
   }
   
