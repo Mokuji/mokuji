@@ -70,7 +70,7 @@ class RadioField extends BaseFormField
     $value = $this->insert_value ? $this->value->get() : '';
     
     ?>
-    <div class="ctrlHolder">
+    <div class="ctrlHolder for_<?php echo $this->column_name; ?>">
       <p><?php __($this->model->component(), $this->title); ?></p>
       <?php foreach($this->option_set as $key=>$title): ?>
         <label>
