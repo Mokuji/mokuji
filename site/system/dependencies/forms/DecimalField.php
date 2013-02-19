@@ -20,7 +20,7 @@ class DecimalField extends BaseFormField
     $value = $this->insert_value ? $this->value : '';
     
     ?>
-    <div class="ctrlHolder">
+    <div class="ctrlHolder for_<?php echo $this->column_name; ?>">
       <label><?php __($this->model->component(), $this->title); ?></label>
       <input type="text" name="<?php echo $this->column_name; ?>" value="<?php echo $value; ?>" />
     </div>

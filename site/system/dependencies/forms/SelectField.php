@@ -70,7 +70,7 @@ class SelectField extends BaseFormField
     $value = $this->insert_value ? $this->value->get() : '';
     
     ?>
-    <div class="ctrlHolder">
+    <div class="ctrlHolder for_<?php echo $this->column_name; ?>">
       <label><?php __($this->model->component(), $this->title); ?></label>
       <select name="<?php echo $this->column_name; ?>">
         <option value=""></option>

@@ -80,7 +80,7 @@ class CheckBoxField extends BaseFormField
       $value = $this->insert_value ? $this->value : false;
       
       ?>
-      <div class="ctrlHolder">
+      <div class="ctrlHolder for_<?php echo $this->column_name; ?>">
         <label>
           <input type="checkbox" name="<?php echo $this->column_name; ?>" value="1"<?php if($this->value->get('bool')) echo 'checked="checked"' ?> />
           <?php __($this->model->component(), $this->title); ?>
@@ -97,7 +97,7 @@ class CheckBoxField extends BaseFormField
       $values = $this->insert_value && is_string($this->value) ? explode(',', $this->value) : array();
       
       ?>
-      <div class="ctrlHolder">
+      <div class="ctrlHolder for_<?php echo $this->column_name; ?>">
         <p><?php __($this->model->component(), $this->title); ?></legend>
         <?php foreach($this->option_set as $key=>$title): ?>
           <label>

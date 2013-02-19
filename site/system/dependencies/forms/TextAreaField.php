@@ -18,7 +18,7 @@ class TextAreaField extends BaseFormField
     $value = $this->insert_value ? $this->value : '';
     
     ?>
-    <div class="ctrlHolder">
+    <div class="ctrlHolder for_<?php echo $this->column_name; ?>">
       <label><?php __($this->model->component(), $this->title); ?></label>
       <textarea name="<?php echo $this->column_name; ?>"><?php echo $value; ?></textarea>
     </div>
