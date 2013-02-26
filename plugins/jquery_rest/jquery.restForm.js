@@ -72,7 +72,7 @@
                 .eq(0); //Only one please.
               
               //Focus the first element.
-              if(!focusedBefore){
+              if(!focusedBefore && !$errorEl.is('[type=hidden]')){
                 $errorEl.focus();
                 focusedBefore = true;
               }
