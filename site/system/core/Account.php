@@ -109,6 +109,14 @@ class Account
     tx('Data')->server->REQUEST_TIME->copyto($this->user->activity);
     
   }
+  
+  //Returns true if the user is logged in. Short for $this->user->check('login').
+  public function is_login()
+  {
+    
+    return $this->user->check('login');
+    
+  }
 
   public function login($email, $pass, $expiry_date = null)
   {
