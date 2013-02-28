@@ -102,15 +102,32 @@ class Component
     //if the component part was not yet set, now would be the time to include it
     if(!$this->components->{$component}->{$part}->is_set() || $this->components->{$component}->{$part}->is_true() && $instantiate === true)
     {
-      require_once(PATH_COMPONENTS.DS.$component.DS.str_replace('\\', DS, $part).EXT);
+      
+      //Create the file and class name.
+      $class = "\\components\\$component\\$part";
+      $file = PATH_COMPONENTS.DS.$component.DS.str_replace('\\', DS, $part).EXT;
+      
+      //Require the file that should contain the class.
+      require_once($file);
+      
+      //Check if the file actually contains this class.
+      if(!class_exists($class, false)){
+        throw new \exception\NotFound('The file "%s" does not appear to contain the expected "%s"-class.', $file, $class);
+      }
+      
+      //Instantiate the class right away?
       if($instantiate){
-        $class = "\\components\\$component\\$part";
         $this->components->{$component}->{$part}->set(new $class);
-      }else{
+      }
+      
+      //Only set a boolean to indicate that the file has been loaded.
+      else{
         $this->components->{$component}->{$part}->set(true);
       }
+      
     }
     
+    //Return the instance (or boolean).
     return $this->components->{$component}->{$part}->get();
     
   }
