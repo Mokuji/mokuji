@@ -314,7 +314,7 @@ class Actions extends \dependencies\BaseComponent
   protected function logout($data)
   {
     
-    throw new \exception\Deprecated();
+    throw new \exception\Deprecated('Please use account/logout');
     
     tx('Logging out.', function(){tx('Account')->logout();})->failure(function($info){
       tx('Controller')->message(array(

@@ -2,7 +2,66 @@
 
 class Json extends \dependencies\BaseComponent
 {
-
+  
+  protected function update_password($data, $parameters)
+  {
+    
+    //See if a password should have been given.
+    if(!tx('Component')->helpers('account')->should_claim())
+      throw new \exception\Validation('You have already claimed this account.');
+    
+    //Validate.
+    $data = $data->having('password', 'password_check')
+      ->password->validate('Password', array('required', 'string', 'not_empty', 'password'))->back()
+      ->password_check->validate('Confirm password', array('required', 'string', 'not_empty'))->back()
+    ;
+    
+    //If passwords are not equal, throw exception.
+    $data->password->eq($data->password_check)->failure(function(){
+      throw new \exception\Validation('Passwords are not the same.');
+    });
+    
+    //Get salt and algorithm.
+    $data->salt = tx('Security')->random_string();
+    $data->hashing_algorithm = tx('Security')->pref_hash_algo();
+    
+    //Hash using above information.
+    $data->password = tx('Security')->hash(
+      $data->salt->get() . $data->password->get(),
+      $data->hashing_algorithm
+    );
+    
+    //Get the old user model from the database.
+    $user = tx('Sql')->table('account', 'Accounts')->pk(tx('Account')->user->id)->execute_single()
+    
+    //If it's empty, throw an exception.
+    ->is('empty', function(){
+      throw new \exception\User('Could not update because no entry was found in the database with id %s.', $data->id);
+    })
+    
+    //Merge the fields from the given data.
+    ->merge($data->having('password', 'salt', 'hashing_algorithm'))
+    
+    //Save to database.
+    ->save();
+    
+    //See if we should claim the user.
+    $user_info = $user->user_info;
+    $user_info
+      ->check_status('claimable', function($user_info){
+        
+        //Set status and unset claim key.
+        $user_info
+          ->set_status('claimed')
+          ->claim_key->set('NULL')->back()
+          ->save();
+        
+      });
+    
+    return $user->having('id', 'email', 'username', 'level');
+    
+  }
+  
   protected function get_mail_autocomplete($data, $parameters)
   {
     

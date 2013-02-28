@@ -57,8 +57,8 @@ class Helpers extends \dependencies\BaseComponent
           //Create various links.
           $links = Data(array(
             'for_link' => url('/', true)->output,
-            'claim_link' => url('/?action=account/claim_account/get&id='.$user->id.'&claim_key='.$claim_key)->output,
-            'unsubscribe_link' => url('/?action=account/unsubscribe/get&email='.urlencode($user->email->get('string')))->output
+            'claim_link' => url('/?action=account/claim_account/get&id='.$user->id.'&claim_key='.$claim_key, true)->output,
+            'unsubscribe_link' => url('/?action=account/unsubscribe/get&email='.urlencode($user->email->get('string')), true)->output
           ));
           
           //Send the invitation email.
@@ -158,12 +158,12 @@ class Helpers extends \dependencies\BaseComponent
       
       //Create various links.
       $data->for_link = url($data->for_link->get('string'), true)->output;
-      $data->claim_link = url('/?action=account/claim_account/get&id='.$user->id.'&claim_key='.$data->claim_key)->output;
-      $data->unsubscribe_link = url('/?action=account/unsubscribe/get&email='.urlencode($user->email->get('string')))->output;
+      $data->claim_link = url('/?action=account/claim_account/get&id='.$user->id.'&claim_key='.$data->claim_key, true)->output;
+      $data->unsubscribe_link = url('/?action=account/unsubscribe/get&email='.urlencode($user->email->get('string')), true)->output;
       
       //Send the invitation email.
       if(tx('Component')->available('mail')){
-      
+        
         tx('Component')->helpers('mail')->send_fleeting_mail(array(
           'to' => array('name'=>$data->username->otherwise(''), 'email'=>$user->email),
           'subject' => __('Invitation for', 1).': '.$data->for_title,

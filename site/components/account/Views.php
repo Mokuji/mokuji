@@ -2,7 +2,7 @@
 
 class Views extends \dependencies\BaseViews
 {
-
+  
   protected function accounts()
   {
     
@@ -36,6 +36,14 @@ class Views extends \dependencies\BaseViews
   
     return array();
     
+  }
+  
+  protected function claim_account()
+  {
+    return array(
+      'email' => tx('Account')->user->email,
+      'username' => tx('Account')->user->username
+    );
   }
   
   protected function email_user_invited($options)

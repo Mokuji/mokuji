@@ -84,9 +84,32 @@ class EntryPoint extends \dependencies\BaseEntryPoint
     {
 
       $that = $this;
+      
+      //If we need to claim our account, do that now before anything else.
+      if(tx('Component')->helpers('account')->call('should_claim')){
+        
+        $template_id = tx('Config')->user('template_id')->otherwise(1)->get('int');
+        $template = tx('Sql')->table('cms', 'Templates')->pk($template_id)->execute_single();
+        
+        $theme_id = tx('Config')->user('theme_id')->otherwise(1)->get('int');
+        $theme = tx('Sql')->table('cms', 'Themes')->pk($theme_id)->execute_single();
+        
+        return $that->template($template->name, $theme->name, array(
+          'title' => __('cms', 'Claim your account', true),
+          'plugins' =>  array(
+            load_plugin('jquery'),
+            load_plugin('jquery_rest'),
+            load_plugin('jquery_postpone')
+          ),
+        ),
+        array(
+          'content' => tx('Component')->views('account')->get_html('claim_account')
+        )); //$that->template();
+        
+      }
 
-      tx('Validating get variables', function(){
-
+      tx('Validating get variables', function()use($that){
+        
         //validate page id
         tx('Data')->get->pid->not('set', function(){
 
@@ -218,7 +241,7 @@ class EntryPoint extends \dependencies\BaseEntryPoint
           $output = $that->template($pi->template, $pi->theme, array(
             'title' => $title,
             'plugins' =>  array(
-              load_plugin('jquery'),
+              load_plugin('jquery')
               // load_plugin('jquery_ui'),
               // load_plugin('nestedsortable'),
               // load_plugin('jsFramework')
