@@ -11,7 +11,8 @@ class Actions extends \dependencies\BaseComponent
       'register' => 0,
       'edit_profile' => 1,
       'claim_account' => 0,
-      'save_avatar' => 1
+      'save_avatar' => 1,
+      'set_password' => 1
     );
   
   protected function login($data)
@@ -352,7 +353,7 @@ class Actions extends \dependencies\BaseComponent
       $data = $data->having('id', 'claim_key')
         ->id->validate('User ID', array('required', 'number', 'gt'=>0))->back()
         ->claim_key->validate('Claim key', array('required', 'string'))->back();
-        
+      
       $user = tx('Sql')
         ->table('account', 'UserInfo')
         ->where('user_id', $data->id)
@@ -361,16 +362,16 @@ class Actions extends \dependencies\BaseComponent
       $error = false;
       
       //Check user is found.
-      $user->is('empty', function(){
+      $user->is('empty', function()use(&$error){
         $error = true;
       });
       
       //Check if user is claimable.
       if(!$error){
         
-        $user->check_status('not_claimable', function($user){
+        $user->check_status('not_claimable', function($user)use(&$error){
           $error = true;
-        }); 
+        });
         
       }
       
@@ -378,7 +379,7 @@ class Actions extends \dependencies\BaseComponent
       if(!$error){
         
         $user->claim_key->eq($data->claim_key)
-        ->failure(function(){
+        ->failure(function()use(&$error){
           $error = true;
         }); 
         
@@ -386,25 +387,36 @@ class Actions extends \dependencies\BaseComponent
       
       //Use identical error messages and send them from the same line of code.
       //To make finding claimable accounts impossible through this action.
-      if($error)
+      if($error !== false)
         throw new \exception\User('Claim is invalid.');
       
       //Don't claim the user in the database here.
       //Use tx('Component')->helpers('account')->should_claim() to check if the account should be claimed.
       //Then do the actual claiming when editing the user profile.
       
-      //Save the current IP address and current session as the last login.
-      $account = $user->account
-        ->ipa->set(tx('Data')->server->REMOTE_ADDR)->back()
-        ->session->set(tx('Session')->id)->back()
+      //Get the account data.
+      $account = $user->account;
+      
+      //Insert this login session in the database.
+      $user_login = tx('Sql')->model('account', 'UserLogins')
+        ->set(array(
+          'user_id' => $account->id,
+          'session_id' => tx('Session')->id,
+          'dt_expiry' => date('Y-m-d H:i:s', time() + (2 * 3600)), //2 hours to set your password.
+          'IPv4' => tx('Data')->server->REMOTE_ADDR,
+          'user_agent' => tx('Data')->server->HTTP_USER_AGENT,
+          'date' => time()
+        ))
         ->save();
+      
+      tx('Logging')->log('LEDATE', $user_login->dt_expiry, date('Y-m-d H:i:s', time() + (2 * 3600)));
       
       //Set user in session.
       tx('Data')->session->user->set(array(
         'id' => $account->id->get('int'),
         'email' => $account->email->get('string'),
+        'username' => $account->username->get('string'),
         'level' => $account->level->get('int'),
-        'ipa' => $account->ipa->get('string'),
         'login' => true
       ));
       tx('Account')->user->set(tx('Data')->session->user);

@@ -12,10 +12,10 @@ class Account
 
   public function init()
   {
-
+    
     //append user object for easy access
     $this->user =& tx('Data')->session->user;
-
+    
     //User is not logged in? Nothing else left but to make sure.
     if(!$this->user->check('login')){
       return $this->logout();
@@ -54,6 +54,12 @@ class Account
     
     //No login data found? Away with you!
     if($login->is_empty()){
+      tx('Logging')->log('Core', 'Account check', 'Logged out, because there is no login session.');
+      $lastlogin = tx('Sql')->table('account', 'UserLogins')
+        ->where('user_id', $this->user->id)
+        ->order('date', 'DESC')->limit(1)
+        ->execute_single();
+      tx('Logging')->log('Core', 'Account check', 'Last login dump: '.$lastlogin->dump());
       return $this->logout();
     }
     
@@ -95,13 +101,14 @@ class Account
     {
       
       //Get the initial lifetime.
-      $lifetime = $login->dt_expiry->get('int') - $login->date->get('int');
+      $lifetime = strtotime($login->dt_expiry->get('string')) - strtotime($login->date->get('string'));
       
       //Create the new expiry date.
       $dt_expiry = date('Y-m-d H:i:s', time() + $lifetime);
       
       //Update it in the database.
-      tx('Sql')->query("UPDATE `#__core_user_logins` SET dt_expiry = $dt_expiry WHERE id = {$login->id}");
+      tx('Sql')->query("UPDATE `#__core_user_logins` SET dt_expiry = '$dt_expiry' WHERE id = {$login->id}");
+      tx('Logging')->log('Account', 'Update expiry time', 'From '.$login->dt_expiry.' to '.$dt_expiry.' lifetime was '.$lifetime);
       
     }
     
@@ -127,7 +134,9 @@ class Account
     }
     
     //Extract raw data.
-    raw($email, $pass);
+    raw($email, $pass, $expiry_date);
+    
+    tx('Logging')->log('Core', 'Login attempt', 'Starting for email/username "'.$email.'"');
     
     //Get the client IP address.
     $ipa = tx('Data')->server->REMOTE_ADDR->get();
@@ -142,11 +151,13 @@ class Account
     
     //Check if login is allowed.
     $ipinfo->login_level->eq(0, function(){
+      tx('Logging')->log('Core', 'Login attempt', 'FAILED: IP address '.$ipa.' is blacklisted.');
       throw new \exception\Validation('IP address blacklisted.');
     });
     
     //Get the user record based on the given email address or user name.
     $user = tx('Sql')->execute_single("SELECT * FROM #__core_users WHERE email = '$email' OR username = '$email'")->is('empty', function(){
+      tx('Logging')->log('Core', 'Login attempt', 'FAILED: User account not found.');
       throw new \exception\EmptyResult('User account not found.');
     });
     
@@ -163,8 +174,10 @@ class Account
         $hspass = tx('Security')->hash($spass, $user->hashing_algorithm);
 
         //Compare hashes.
-        if($user->password->get() !== $hspass)
+        if($user->password->get() !== $hspass){
+          tx('Logging')->log('Core', 'Login attempt', 'FAILED: Invalid password.');
           throw new \exception\Validation('Invalid password.');
+        }
         
       })
       
@@ -172,12 +185,15 @@ class Account
       ->failure(function()use($user, $pass){
         
         if(md5($pass) !== $user->password->get()){
+          tx('Logging')->log('Core', 'Login attempt', 'FAILED: Invalid password.');
           throw new \exception\Validation('Invalid password.');
         }
         
       })
       
     ;//END - password checking.
+    
+    tx('Logging')->log('Core', 'Login attempt', 'SUCCESS: Logged in as user ID '.$user->id);
     
     //Regenerate the session ID.
     tx('Session')->regenerate();
@@ -216,6 +232,8 @@ class Account
           NULL
         )
       ");
+      
+      tx('Logging')->log('Core', 'Login attempt', 'Setting expiry date to '.$dt_expiry.' for session ID '.tx('Session')->id);
       
     }
     
@@ -264,7 +282,7 @@ class Account
     tx('Session')->regenerate();
     
     //Unset meta-data.
-    $this->user->un_set('id', 'email', 'activity');
+    $this->user->un_set('id', 'email', 'activity', 'username');
     $this->user->login = false;
     $this->user->level = 0;
     
