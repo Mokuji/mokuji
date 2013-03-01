@@ -193,7 +193,7 @@ class EntryPoint extends \dependencies\BaseEntryPoint
             
             <!-- Open Graph (Facebook) -->
             <meta property="og:url" content="<?php echo $pretty_url; ?>" />
-            <meta property="og:type" content="article" />
+            <meta property="og:type" content="website" />
             <meta property="og:article:tag" content="<?php echo $lpi->og_keywords->otherwise($keywords); ?>" />
             <meta property="og:locale" content="<?php echo tx('Language')->get_language_code(); ?>" />
             <meta property="og:title" content="<?php echo $lpi->og_title->otherwise($title); ?>" />

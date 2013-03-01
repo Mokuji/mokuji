@@ -60,14 +60,16 @@ class Helpers extends \dependencies\BaseComponent
             'claim_link' => url('/?action=account/claim_account/get&id='.$user->id.'&claim_key='.$claim_key)->output,
             'unsubscribe_link' => url('/?action=account/unsubscribe/get&email='.urlencode($user->email->get('string')))->output
           ));
+
+          $username = $user->user_info->username->otherwise($user->user_info->email);
           
           //Send the invitation email.
           if(tx('Component')->available('mail')){
-          
+
             tx('Component')->helpers('mail')->send_fleeting_mail(array(
               'to' => array('name'=>$user->user_info->username->otherwise(''), 'email'=>$user->email),
               'subject' => __('Information about your account', 1),
-              'html_message' => tx('Component')->views('account')->get_html('email_user_password_reset', $links->having('for_link', 'claim_link', 'unsubscribe_link'))
+              'html_message' => tx('Component')->views('account')->get_html('email_user_password_reset', $links->having('for_link', 'claim_link', 'unsubscribe_link')->merge(array('username' => $username)))
             ))
             
             ->failure(function($info){
@@ -81,7 +83,7 @@ class Helpers extends \dependencies\BaseComponent
             mail(
               $user->email,
               __('Invitation for', 1).': '.$data->for_title,
-              tx('Component')->views('account')->get_html('email_user_invited', $data->having('for_link', 'for_title', 'claim_link', 'unsubscribe_link'))
+              tx('Component')->views('account')->get_html('email_user_invited', $data->having('for_link', 'for_title', 'claim_link', 'unsubscribe_link')->merge(array('username' => $username)))
             );
             
           }
@@ -208,7 +210,7 @@ class Helpers extends \dependencies\BaseComponent
     //Validate input.
     $data = $data->having('email', 'username', 'password', 'level', 'name', 'preposition', 'family_name', 'comments')
       ->email->validate('Email address', array('required', 'email'))->back()
-      ->password->validate('Password', array('required', 'string', 'password'))->back()
+      ->password->validate('Password', array('string', 'password'))->back()
       ->username->validate('Username', array('string', 'between' => array(0, 30), 'no_html'))->back()
       ->level->validate('User level', array('required', 'number', 'between' => array(1, 2)))->back()
       ->name->validate('Name', array('string', 'between' => array(0, 30), 'no_html'))->back()
