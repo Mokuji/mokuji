@@ -8,7 +8,8 @@
 
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
     <meta name="revisit-after" content="15 days" />
-
+    
+    <title><?php echo $head->title; ?></title>
     <?php echo $head->meta; ?>
     
     <?php echo $head->links; ?>
