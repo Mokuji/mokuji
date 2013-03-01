@@ -24,9 +24,26 @@ class Views extends \dependencies\BaseViews
   protected function profile()
   {
     
+    $is_logged_in = tx('Account')->user->check('login');
+    if($is_logged_in){
+      
+      $user = tx('Sql')->table('account', 'Accounts')
+        ->pk(tx('Account')->user->id)
+        ->execute_single();
+      
+    }
+    
+    $has_media = tx('Component')->available('media');
+    if($is_logged_in && $has_media){
+      #TODO: Load image uploader plugin.
+      #TODO: Load profile image.
+    }
+    
     return array(
-      'login_form' => $this->section('login_form'),
-      'profile' => $this->section('profile')
+      'has_media' => $has_media,
+      'is_logged_in' => $is_logged_in,
+      'login_form' => !$is_logged_in ? $this->section('login_form') : '',
+      'profile' => $is_logged_in && !$user->is_empty() ? $this->module('user_profile') : ''
     );
     
   }

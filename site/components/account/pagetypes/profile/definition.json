@@ -1,0 +1,13 @@
+{
+  
+  "javascript": [
+    "ProfileController.js"
+  ],
+  
+  "templates": {
+    "contentTab": "contentTab.tmpl.php"
+  },
+  
+  "controller": "cmsBackend.account.ProfileController"
+  
+}

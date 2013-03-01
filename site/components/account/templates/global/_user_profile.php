@@ -11,23 +11,26 @@ echo $user_profile->image_uploader;
   
     <div class="left">
       <fieldset>
-
-        <div class="avatar_holder">
-          <input type="hidden" id="avatar_image_id" name="avatar_image_id" value="<?php $user_profile->user->avatar_image_id->get('int'); ?>" />
-          <?php if($user_profile->user->avatar_image_id->get('int') > 0){ ?>
-          <img src="<?php echo url('section=media/image&id='.$user_profile->user->avatar_image_id->get('int').'&resize=0/97', true); ?>" />
-          <?php } ?>
-        </div>
-
-        <div id="file-container" class="fileupload-container">
-          <div id="file-drop" class="file-drop">
-            <div id="file-filelist" class="file-filelist"></div>
-            <div id="file-drop" class="drag-here"></div>
+        
+        <?php if($data->has_media->is_true()): ?>
+          <div class="avatar_holder">
+            <input type="hidden" id="avatar_image_id" name="avatar_image_id" value="<?php $user_profile->user->avatar_image_id->get('int'); ?>" />
+            <?php if($user_profile->user->avatar_image_id->get('int') > 0){ ?>
+            <img src="<?php echo url('section=media/image&id='.$user_profile->user->avatar_image_id->get('int').'&resize=0/97', true); ?>" />
+            <?php } ?>
           </div>
-          <div class="buttonHolder">
-            <a id="file-browse" class="file-browse" href="#"><?php __($names->component, 'Upload your picture'); ?></a>
+
+          <div id="file-container" class="fileupload-container">
+            <div id="file-drop" class="file-drop">
+              <div id="file-filelist" class="file-filelist"></div>
+              <div id="file-drop" class="drag-here"></div>
+            </div>
+            <div class="buttonHolder">
+              <a id="file-browse" class="file-browse" href="#"><?php __($names->component, 'Upload your picture'); ?></a>
+            </div>
           </div>
-        </div>
+        
+        <?php endif; ?>
 
       </fieldset>
     </div>
