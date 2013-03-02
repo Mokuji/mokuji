@@ -96,6 +96,9 @@ mixed dependencies\Conditions::__invoke()
 
 
 
+
+
+
 ## Method `_get`
 In class: [dependencies\Conditions](#top)
 
@@ -108,6 +111,9 @@ mixed dependencies\Conditions::_get()
 
 
 * Visibility: **public**
+
+
+
 
 
 
@@ -128,6 +134,9 @@ mixed dependencies\Conditions::add($id, array $args)
 
 * $id **mixed**
 * $args **array**
+
+
+
 
 
 
@@ -152,6 +161,9 @@ mixed dependencies\Conditions::combine($id, array $ids, $connector)
 
 
 
+
+
+
 ## Method `utilize`
 In class: [dependencies\Conditions](#top)
 
@@ -164,6 +176,9 @@ mixed dependencies\Conditions::utilize()
 
 
 * Visibility: **public**
+
+
+
 
 
 
@@ -183,5 +198,8 @@ mixed dependencies\Conditions::to_array($array)
 #### Arguments
 
 * $array **mixed**
+
+
+
 
 

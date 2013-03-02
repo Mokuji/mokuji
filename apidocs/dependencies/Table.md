@@ -316,6 +316,9 @@ mixed dependencies\Table::__construct($component, $model, $id, $models)
 
 
 
+
+
+
 ## Method `__invoke`
 In class: [dependencies\Table](#top)
 
@@ -335,6 +338,9 @@ mixed dependencies\Table::__invoke($id)
 
 
 
+
+
+
 ## Method `_get_model_subquery`
 In class: [dependencies\Table](#top)
 
@@ -347,6 +353,9 @@ mixed dependencies\Table::_get_model_subquery()
 
 
 * Visibility: **public**
+
+
+
 
 
 
@@ -363,6 +372,9 @@ mixed dependencies\Successable::_success()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Successable](../dependencies/Successable.md)
+
+
+
 
 
 
@@ -386,6 +398,9 @@ mixed dependencies\Table::add($model, $id)
 
 
 
+
+
+
 ## Method `add_absolute_depth`
 In class: [dependencies\Table](#top)
 
@@ -405,6 +420,9 @@ mixed dependencies\Table::add_absolute_depth($as)
 
 
 
+
+
+
 ## Method `add_hierarchy`
 In class: [dependencies\Table](#top)
 
@@ -417,6 +435,9 @@ mixed dependencies\Table::add_hierarchy()
 
 
 * Visibility: **public**
+
+
+
 
 
 
@@ -436,6 +457,9 @@ mixed dependencies\Table::add_relative_depth($as)
 #### Arguments
 
 * $as **mixed**
+
+
+
 
 
 
@@ -460,6 +484,9 @@ mixed dependencies\Successable::and_is($check, $callback)
 
 
 
+
+
+
 ## Method `and_not`
 In class: [dependencies\Table](#top)
 
@@ -480,6 +507,9 @@ mixed dependencies\Successable::and_not($check)
 
 
 
+
+
+
 ## Method `count`
 In class: [dependencies\Table](#top)
 
@@ -492,6 +522,9 @@ mixed dependencies\Table::count()
 
 
 * Visibility: **public**
+
+
+
 
 
 
@@ -514,6 +547,9 @@ mixed dependencies\Table::delete($model_name)
 
 
 
+
+
+
 ## Method `execute`
 In class: [dependencies\Table](#top)
 
@@ -533,6 +569,9 @@ mixed dependencies\Table::execute($as)
 
 
 
+
+
+
 ## Method `execute_single`
 In class: [dependencies\Table](#top)
 
@@ -549,6 +588,9 @@ mixed dependencies\Table::execute_single($as)
 #### Arguments
 
 * $as **mixed**
+
+
+
 
 
 
@@ -572,6 +614,9 @@ mixed dependencies\Successable::failure($callback)
 
 
 
+
+
+
 ## Method `filter`
 In class: [dependencies\Table](#top)
 
@@ -584,6 +629,9 @@ mixed dependencies\Table::filter()
 
 
 * Visibility: **public**
+
+
+
 
 
 
@@ -607,6 +655,9 @@ mixed dependencies\Table::from($model, $id)
 
 
 
+
+
+
 ## Method `group`
 In class: [dependencies\Table](#top)
 
@@ -627,6 +678,9 @@ mixed dependencies\Table::group($column, $direction)
 
 
 
+
+
+
 ## Method `having`
 In class: [dependencies\Table](#top)
 
@@ -642,6 +696,9 @@ mixed dependencies\Table::having()
 
 
 
+
+
+
 ## Method `inner`
 In class: [dependencies\Table](#top)
 
@@ -654,6 +711,9 @@ mixed dependencies\Table::inner()
 
 
 * Visibility: **public**
+
+
+
 
 
 
@@ -678,6 +738,9 @@ mixed dependencies\Successable::is($check, $callback)
 
 
 
+
+
+
 ## Method `join`
 In class: [dependencies\Table](#top)
 
@@ -698,6 +761,9 @@ mixed dependencies\Table::join($model_name, $id)
 
 
 
+
+
+
 ## Method `left`
 In class: [dependencies\Table](#top)
 
@@ -710,6 +776,9 @@ mixed dependencies\Table::left()
 
 
 * Visibility: **public**
+
+
+
 
 
 
@@ -733,6 +802,9 @@ mixed dependencies\Table::limit($rowcount, $offset)
 
 
 
+
+
+
 ## Method `max_depth`
 In class: [dependencies\Table](#top)
 
@@ -749,6 +821,9 @@ mixed dependencies\Table::max_depth($gt)
 #### Arguments
 
 * $gt **mixed**
+
+
+
 
 
 
@@ -773,6 +848,9 @@ mixed dependencies\Successable::not($check, $callback)
 
 
 
+
+
+
 ## Method `order`
 In class: [dependencies\Table](#top)
 
@@ -793,6 +871,9 @@ mixed dependencies\Table::order($column, $direction)
 
 
 
+
+
+
 ## Method `parent_pk`
 In class: [dependencies\Table](#top)
 
@@ -808,6 +889,9 @@ mixed dependencies\Table::parent_pk()
 
 
 
+
+
+
 ## Method `pk`
 In class: [dependencies\Table](#top)
 
@@ -820,6 +904,9 @@ mixed dependencies\Table::pk()
 
 
 * Visibility: **public**
+
+
+
 
 
 
@@ -842,6 +929,9 @@ mixed dependencies\Table::query($all)
 
 
 
+
+
+
 ## Method `right`
 In class: [dependencies\Table](#top)
 
@@ -854,6 +944,9 @@ mixed dependencies\Table::right()
 
 
 * Visibility: **public**
+
+
+
 
 
 
@@ -877,6 +970,9 @@ mixed dependencies\Table::select($content, $as)
 
 
 
+
+
+
 ## Method `set_jointype`
 In class: [dependencies\Table](#top)
 
@@ -896,6 +992,9 @@ mixed dependencies\Table::set_jointype($type)
 
 
 
+
+
+
 ## Method `sk`
 In class: [dependencies\Table](#top)
 
@@ -908,6 +1007,9 @@ mixed dependencies\Table::sk()
 
 
 * Visibility: **public**
+
+
+
 
 
 
@@ -927,6 +1029,9 @@ mixed dependencies\Table::subquery($q)
 #### Arguments
 
 * $q **mixed**
+
+
+
 
 
 
@@ -950,6 +1055,9 @@ mixed dependencies\Successable::success($callback)
 
 
 
+
+
+
 ## Method `where`
 In class: [dependencies\Table](#top)
 
@@ -962,6 +1070,9 @@ mixed dependencies\Table::where()
 
 
 * Visibility: **public**
+
+
+
 
 
 
@@ -984,6 +1095,9 @@ mixed dependencies\Table::workwith($id)
 
 
 
+
+
+
 ## Method `write`
 In class: [dependencies\Table](#top)
 
@@ -1000,6 +1114,9 @@ mixed dependencies\Table::write($as)
 #### Arguments
 
 * $as **mixed**
+
+
+
 
 
 
@@ -1023,6 +1140,9 @@ mixed dependencies\Successable::_do_check($check)
 
 
 
+
+
+
 ## Method `_get_subquery`
 In class: [dependencies\Table](#top)
 
@@ -1038,6 +1158,9 @@ mixed dependencies\Table::_get_subquery()
 
 
 
+
+
+
 ## Method `arguments_to_comparisons`
 In class: [dependencies\Table](#top)
 
@@ -1050,6 +1173,9 @@ mixed dependencies\Table::arguments_to_comparisons()
 
 
 * Visibility: **private**
+
+
+
 
 
 
@@ -1072,6 +1198,9 @@ mixed dependencies\Table::compose_condition(array $condition)
 
 
 
+
+
+
 ## Method `conditions_to_comparisons`
 In class: [dependencies\Table](#top)
 
@@ -1088,6 +1217,9 @@ mixed dependencies\Table::conditions_to_comparisons(\dependencies\Conditions $co
 #### Arguments
 
 * $conditions **[dependencies\Conditions](../dependencies/Conditions.md)**
+
+
+
 
 
 
@@ -1110,6 +1242,9 @@ mixed dependencies\Table::get_column_info($input)
 
 
 
+
+
+
 ## Method `get_model_info`
 In class: [dependencies\Table](#top)
 
@@ -1126,6 +1261,9 @@ mixed dependencies\Table::get_model_info($input)
 #### Arguments
 
 * $input **mixed**
+
+
+
 
 
 
@@ -1149,6 +1287,9 @@ mixed dependencies\Table::grourder($c, $d)
 
 
 
+
+
+
 ## Method `prepare`
 In class: [dependencies\Table](#top)
 
@@ -1165,6 +1306,9 @@ mixed dependencies\Table::prepare($input)
 #### Arguments
 
 * $input **mixed**
+
+
+
 
 
 
@@ -1187,6 +1331,9 @@ mixed dependencies\Table::prepare_column($column)
 
 
 
+
+
+
 ## Method `prepare_text`
 In class: [dependencies\Table](#top)
 
@@ -1206,6 +1353,9 @@ mixed dependencies\Table::prepare_text($text)
 
 
 
+
+
+
 ## Method `whaving`
 In class: [dependencies\Table](#top)
 
@@ -1218,5 +1368,8 @@ mixed dependencies\Table::whaving()
 
 
 * Visibility: **private**
+
+
+
 
 

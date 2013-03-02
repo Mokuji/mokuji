@@ -127,6 +127,9 @@ mixed dependencies\BaseComponent::__construct()
 
 
 
+
+
+
 ## Method `_call`
 In class: [components\update\Helpers](#top)
 
@@ -145,6 +148,9 @@ mixed dependencies\BaseComponent::_call($controller, array $args)
 
 * $controller **mixed**
 * $args **array**
+
+
+
 
 
 
@@ -169,6 +175,9 @@ mixed dependencies\BaseComponent::call($controller, $data)
 
 
 
+
+
+
 ## Method `filters`
 In class: [components\update\Helpers](#top)
 
@@ -182,6 +191,9 @@ mixed dependencies\BaseComponent::filters()
 
 * Visibility: **public**
 * This method is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
+
+
+
 
 
 
@@ -205,6 +217,9 @@ mixed dependencies\BaseComponent::helper($controller)
 
 
 
+
+
+
 ## Method `model`
 In class: [components\update\Helpers](#top)
 
@@ -222,6 +237,9 @@ mixed dependencies\BaseComponent::model($model_name)
 #### Arguments
 
 * $model_name **mixed**
+
+
+
 
 
 
@@ -246,6 +264,9 @@ mixed dependencies\BaseComponent::module($module_name, $options)
 
 
 
+
+
+
 ## Method `section`
 In class: [components\update\Helpers](#top)
 
@@ -264,6 +285,9 @@ mixed dependencies\BaseComponent::section($section, $options)
 
 * $section **mixed**
 * $options **mixed**
+
+
+
 
 
 
@@ -288,6 +312,9 @@ mixed dependencies\BaseComponent::table($model_name, $id)
 
 
 
+
+
+
 ## Method `view`
 In class: [components\update\Helpers](#top)
 
@@ -309,6 +336,9 @@ mixed dependencies\BaseComponent::view($module_name, $options)
 
 
 
+
+
+
 ## Method `check_updates`
 In class: [components\update\Helpers](#top)
 
@@ -325,6 +355,9 @@ mixed components\update\Helpers::check_updates($options)
 #### Arguments
 
 * $options **mixed**
+
+
+
 
 
 
@@ -350,6 +383,9 @@ mixed components\update\Helpers::check_folder($folder, $namespace, $silent, $for
 
 
 
+
+
+
 ## Method `sync_manual_package`
 In class: [components\update\Helpers](#top)
 
@@ -370,5 +406,8 @@ mixed components\update\Helpers::sync_manual_package($package, $folder, $namespa
 * $namespace **mixed**
 * $silent **mixed**
 * $force **mixed**
+
+
+
 
 

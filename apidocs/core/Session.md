@@ -84,6 +84,9 @@ mixed core\Session::__destruct()
 
 
 
+
+
+
 ## Method `clear_flashes`
 In class: [core\Session](#top)
 
@@ -96,6 +99,9 @@ mixed core\Session::clear_flashes()
 
 
 * Visibility: **public**
+
+
+
 
 
 
@@ -114,6 +120,9 @@ mixed core\Session::destroy()
 
 
 
+
+
+
 ## Method `flash`
 In class: [core\Session](#top)
 
@@ -129,6 +138,9 @@ mixed core\Session::flash()
 
 
 
+
+
+
 ## Method `init`
 In class: [core\Session](#top)
 
@@ -141,6 +153,9 @@ mixed core\Session::init()
 
 
 * Visibility: **public**
+
+
+
 
 
 
@@ -163,6 +178,9 @@ mixed core\Session::keep_flashes($set)
 
 
 
+
+
+
 ## Method `regenerate`
 In class: [core\Session](#top)
 
@@ -175,6 +193,9 @@ mixed core\Session::regenerate()
 
 
 * Visibility: **public**
+
+
+
 
 
 
@@ -197,6 +218,9 @@ mixed core\Session::unset_flash($name)
 
 
 
+
+
+
 ## Method `progress_flashes`
 In class: [core\Session](#top)
 
@@ -209,5 +233,8 @@ mixed core\Session::progress_flashes()
 
 
 * Visibility: **private**
+
+
+
 
 

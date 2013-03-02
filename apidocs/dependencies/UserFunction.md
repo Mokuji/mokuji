@@ -108,6 +108,9 @@ mixed dependencies\UserFunction::__construct($action, \Closure $closure)
 
 
 
+
+
+
 ## Method `_success`
 In class: [dependencies\UserFunction](#top)
 
@@ -121,6 +124,9 @@ mixed dependencies\Successable::_success()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Successable](../dependencies/Successable.md)
+
+
+
 
 
 
@@ -145,6 +151,9 @@ mixed dependencies\Successable::and_is($check, $callback)
 
 
 
+
+
+
 ## Method `and_not`
 In class: [dependencies\UserFunction](#top)
 
@@ -162,6 +171,9 @@ mixed dependencies\Successable::and_not($check)
 #### Arguments
 
 * $check **mixed**
+
+
+
 
 
 
@@ -184,6 +196,9 @@ mixed dependencies\UserFunction::failure($callback)
 
 
 
+
+
+
 ## Method `get_user_message`
 In class: [dependencies\UserFunction](#top)
 
@@ -200,6 +215,9 @@ mixed dependencies\UserFunction::get_user_message($action)
 #### Arguments
 
 * $action **mixed**
+
+
+
 
 
 
@@ -224,6 +242,9 @@ mixed dependencies\Successable::is($check, $callback)
 
 
 
+
+
+
 ## Method `not`
 In class: [dependencies\UserFunction](#top)
 
@@ -242,6 +263,9 @@ mixed dependencies\Successable::not($check, $callback)
 
 * $check **mixed**
 * $callback **mixed**
+
+
+
 
 
 
@@ -265,6 +289,9 @@ mixed dependencies\Successable::success($callback)
 
 
 
+
+
+
 ## Method `_do_check`
 In class: [dependencies\UserFunction](#top)
 
@@ -282,5 +309,8 @@ mixed dependencies\Successable::_do_check($check)
 #### Arguments
 
 * $check **mixed**
+
+
+
 
 

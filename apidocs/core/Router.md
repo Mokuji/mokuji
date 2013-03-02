@@ -48,6 +48,9 @@ mixed core\Router::start()
 
 
 
+
+
+
 ## Method `get_component`
 In class: [core\Router](#top)
 
@@ -60,6 +63,9 @@ mixed core\Router::get_component()
 
 
 * Visibility: **private**
+
+
+
 
 
 
@@ -82,6 +88,9 @@ mixed core\Router::parse_action($action)
 
 
 
+
+
+
 ## Method `parse_module`
 In class: [core\Router](#top)
 
@@ -101,6 +110,9 @@ mixed core\Router::parse_module($module)
 
 
 
+
+
+
 ## Method `parse_section`
 In class: [core\Router](#top)
 
@@ -117,5 +129,8 @@ mixed core\Router::parse_section($section)
 #### Arguments
 
 * $section **mixed**
+
+
+
 
 

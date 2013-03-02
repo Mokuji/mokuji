@@ -49,6 +49,9 @@ mixed core\Controller::get_messages()
 
 
 
+
+
+
 ## Method `load_error_template`
 In class: [core\Controller](#top)
 
@@ -68,6 +71,9 @@ mixed core\Controller::load_error_template(\Exception $e)
 
 
 
+
+
+
 ## Method `load_redirect_template`
 In class: [core\Controller](#top)
 
@@ -84,6 +90,9 @@ mixed core\Controller::load_redirect_template(\dependencies\Url $redirect)
 #### Arguments
 
 * $redirect **[dependencies\Url](../dependencies/Url.md)**
+
+
+
 
 
 
@@ -109,6 +118,9 @@ mixed core\Controller::load_template($template, $theme, $body, $head)
 
 
 
+
+
+
 ## Method `message`
 In class: [core\Controller](#top)
 
@@ -128,6 +140,9 @@ mixed core\Controller::message($message)
 
 
 
+
+
+
 ## Method `render_page`
 In class: [core\Controller](#top)
 
@@ -144,5 +159,8 @@ mixed core\Controller::render_page($contents)
 #### Arguments
 
 * $contents **mixed**
+
+
+
 
 

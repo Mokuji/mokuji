@@ -157,6 +157,9 @@ mixed components\update\classes\BaseDBUpdates::base_dir($type, $name)
 
 
 
+
+
+
 ## Method `clear_global_cache`
 In class: [components\cms\DBUpdates](#top)
 
@@ -174,6 +177,9 @@ mixed components\update\classes\BaseDBUpdates::clear_global_cache()
 
 
 
+
+
+
 ## Method `init_statics`
 In class: [components\cms\DBUpdates](#top)
 
@@ -188,6 +194,9 @@ mixed components\update\classes\BaseDBUpdates::init_statics()
 * Visibility: **public**
 * This method is **static**.
 * This method is defined by [components\update\classes\BaseDBUpdates](../../components/update/classes/BaseDBUpdates.md)
+
+
+
 
 
 
@@ -213,6 +222,9 @@ mixed components\update\classes\BaseDBUpdates::package_data($type, $name)
 
 
 
+
+
+
 ## Method `process_queue`
 In class: [components\cms\DBUpdates](#top)
 
@@ -227,6 +239,9 @@ mixed components\update\classes\BaseDBUpdates::process_queue()
 * Visibility: **public**
 * This method is **static**.
 * This method is defined by [components\update\classes\BaseDBUpdates](../../components/update/classes/BaseDBUpdates.md)
+
+
+
 
 
 
@@ -246,6 +261,9 @@ mixed components\update\classes\BaseDBUpdates::__construct()
 
 
 
+
+
+
 ## Method `clear_cache`
 In class: [components\cms\DBUpdates](#top)
 
@@ -262,6 +280,9 @@ mixed components\update\classes\BaseDBUpdates::clear_cache()
 
 
 
+
+
+
 ## Method `current_version`
 In class: [components\cms\DBUpdates](#top)
 
@@ -275,6 +296,9 @@ mixed components\update\classes\BaseDBUpdates::current_version()
 
 * Visibility: **public**
 * This method is defined by [components\update\classes\BaseDBUpdates](../../components/update/classes/BaseDBUpdates.md)
+
+
+
 
 
 
@@ -300,6 +324,9 @@ mixed components\update\classes\BaseDBUpdates::install($dummydata, $forced, $upd
 
 
 
+
+
+
 ## Method `install_1_2`
 In class: [components\cms\DBUpdates](#top)
 
@@ -320,6 +347,9 @@ mixed components\cms\DBUpdates::install_1_2($dummydata, $forced)
 
 
 
+
+
+
 ## Method `latest_version`
 In class: [components\cms\DBUpdates](#top)
 
@@ -333,6 +363,9 @@ mixed components\update\classes\BaseDBUpdates::latest_version()
 
 * Visibility: **public**
 * This method is defined by [components\update\classes\BaseDBUpdates](../../components/update/classes/BaseDBUpdates.md)
+
+
+
 
 
 
@@ -353,6 +386,9 @@ mixed components\update\classes\BaseDBUpdates::uninstall($forced)
 #### Arguments
 
 * $forced **mixed**
+
+
+
 
 
 
@@ -377,6 +413,9 @@ mixed components\update\classes\BaseDBUpdates::update($forced, $maybe_install)
 
 
 
+
+
+
 ## Method `update_to_1_2`
 In class: [components\cms\DBUpdates](#top)
 
@@ -394,6 +433,9 @@ mixed components\cms\DBUpdates::update_to_1_2($current_version, $forced)
 
 * $current_version **mixed**
 * $forced **mixed**
+
+
+
 
 
 
@@ -417,6 +459,9 @@ mixed components\cms\DBUpdates::update_to_1_3($current_version, $forced)
 
 
 
+
+
+
 ## Method `update_to_1_4`
 In class: [components\cms\DBUpdates](#top)
 
@@ -434,6 +479,9 @@ mixed components\cms\DBUpdates::update_to_1_4($current_version, $forced)
 
 * $current_version **mixed**
 * $forced **mixed**
+
+
+
 
 
 
@@ -457,6 +505,9 @@ mixed components\cms\DBUpdates::update_to_2_0($current_version, $forced)
 
 
 
+
+
+
 ## Method `get_base_dir`
 In class: [components\cms\DBUpdates](#top)
 
@@ -473,6 +524,9 @@ mixed components\update\classes\BaseDBUpdates::get_base_dir()
 
 
 
+
+
+
 ## Method `get_package_data`
 In class: [components\cms\DBUpdates](#top)
 
@@ -486,6 +540,9 @@ mixed components\update\classes\BaseDBUpdates::get_package_data()
 
 * Visibility: **protected**
 * This method is defined by [components\update\classes\BaseDBUpdates](../../components/update/classes/BaseDBUpdates.md)
+
+
+
 
 
 
@@ -509,6 +566,9 @@ mixed components\update\classes\BaseDBUpdates::next_version($version)
 
 
 
+
+
+
 ## Method `package`
 In class: [components\cms\DBUpdates](#top)
 
@@ -522,6 +582,9 @@ mixed components\update\classes\BaseDBUpdates::package()
 
 * Visibility: **protected**
 * This method is defined by [components\update\classes\BaseDBUpdates](../../components/update/classes/BaseDBUpdates.md)
+
+
+
 
 
 
@@ -546,6 +609,9 @@ mixed components\update\classes\BaseDBUpdates::queue($data, \Closure $operation)
 
 
 
+
+
+
 ## Method `version_bump`
 In class: [components\cms\DBUpdates](#top)
 
@@ -563,5 +629,8 @@ mixed components\update\classes\BaseDBUpdates::version_bump($version)
 #### Arguments
 
 * $version **mixed**
+
+
+
 
 

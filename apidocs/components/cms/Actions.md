@@ -144,6 +144,9 @@ mixed dependencies\BaseComponent::__construct()
 
 
 
+
+
+
 ## Method `_call`
 In class: [components\cms\Actions](#top)
 
@@ -162,6 +165,9 @@ mixed dependencies\BaseComponent::_call($controller, array $args)
 
 * $controller **mixed**
 * $args **array**
+
+
+
 
 
 
@@ -186,6 +192,9 @@ mixed dependencies\BaseComponent::call($controller, $data)
 
 
 
+
+
+
 ## Method `filters`
 In class: [components\cms\Actions](#top)
 
@@ -199,6 +208,9 @@ mixed dependencies\BaseComponent::filters()
 
 * Visibility: **public**
 * This method is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
+
+
+
 
 
 
@@ -222,6 +234,9 @@ mixed dependencies\BaseComponent::helper($controller)
 
 
 
+
+
+
 ## Method `model`
 In class: [components\cms\Actions](#top)
 
@@ -239,6 +254,9 @@ mixed dependencies\BaseComponent::model($model_name)
 #### Arguments
 
 * $model_name **mixed**
+
+
+
 
 
 
@@ -263,6 +281,9 @@ mixed dependencies\BaseComponent::module($module_name, $options)
 
 
 
+
+
+
 ## Method `section`
 In class: [components\cms\Actions](#top)
 
@@ -281,6 +302,9 @@ mixed dependencies\BaseComponent::section($section, $options)
 
 * $section **mixed**
 * $options **mixed**
+
+
+
 
 
 
@@ -305,6 +329,9 @@ mixed dependencies\BaseComponent::table($model_name, $id)
 
 
 
+
+
+
 ## Method `view`
 In class: [components\cms\Actions](#top)
 
@@ -323,6 +350,9 @@ mixed dependencies\BaseComponent::view($module_name, $options)
 
 * $module_name **mixed**
 * $options **mixed**
+
+
+
 
 
 
@@ -345,6 +375,9 @@ mixed components\cms\Actions::delete_page($data)
 
 
 
+
+
+
 ## Method `detach_page`
 In class: [components\cms\Actions](#top)
 
@@ -361,6 +394,9 @@ mixed components\cms\Actions::detach_page($data)
 #### Arguments
 
 * $data **mixed**
+
+
+
 
 
 
@@ -383,6 +419,9 @@ mixed components\cms\Actions::edit_page($data)
 
 
 
+
+
+
 ## Method `insert_sites`
 In class: [components\cms\Actions](#top)
 
@@ -399,6 +438,9 @@ mixed components\cms\Actions::insert_sites($data)
 #### Arguments
 
 * $data **mixed**
+
+
+
 
 
 
@@ -421,6 +463,9 @@ mixed components\cms\Actions::language($data)
 
 
 
+
+
+
 ## Method `link_page`
 In class: [components\cms\Actions](#top)
 
@@ -437,6 +482,9 @@ mixed components\cms\Actions::link_page($data)
 #### Arguments
 
 * $data **mixed**
+
+
+
 
 
 
@@ -459,6 +507,9 @@ mixed components\cms\Actions::login($data)
 
 
 
+
+
+
 ## Method `logout`
 In class: [components\cms\Actions](#top)
 
@@ -475,6 +526,9 @@ mixed components\cms\Actions::logout($data)
 #### Arguments
 
 * $data **mixed**
+
+
+
 
 
 
@@ -497,6 +551,9 @@ mixed components\cms\Actions::new_page($data)
 
 
 
+
+
+
 ## Method `pause_redirects`
 In class: [components\cms\Actions](#top)
 
@@ -513,6 +570,9 @@ mixed components\cms\Actions::pause_redirects($data)
 #### Arguments
 
 * $data **mixed**
+
+
+
 
 
 
@@ -535,6 +595,9 @@ mixed components\cms\Actions::play_redirects($data)
 
 
 
+
+
+
 ## Method `register`
 In class: [components\cms\Actions](#top)
 
@@ -551,6 +614,9 @@ mixed components\cms\Actions::register($data)
 #### Arguments
 
 * $data **mixed**
+
+
+
 
 
 
@@ -573,6 +639,9 @@ mixed components\cms\Actions::save_menu_item($data)
 
 
 
+
+
+
 ## Method `save_menu_link`
 In class: [components\cms\Actions](#top)
 
@@ -589,6 +658,9 @@ mixed components\cms\Actions::save_menu_link($data)
 #### Arguments
 
 * $data **mixed**
+
+
+
 
 
 
@@ -611,6 +683,9 @@ mixed components\cms\Actions::save_settings_simple($data)
 
 
 
+
+
+
 ## Method `select_menu`
 In class: [components\cms\Actions](#top)
 
@@ -627,6 +702,9 @@ mixed components\cms\Actions::select_menu($data)
 #### Arguments
 
 * $data **mixed**
+
+
+
 
 
 
@@ -649,6 +727,9 @@ mixed components\cms\Actions::send_feedback($data)
 
 
 
+
+
+
 ## Method `update_cms_config`
 In class: [components\cms\Actions](#top)
 
@@ -665,6 +746,9 @@ mixed components\cms\Actions::update_cms_config($data)
 #### Arguments
 
 * $data **mixed**
+
+
+
 
 
 
@@ -687,6 +771,9 @@ mixed components\cms\Actions::update_ip_addresses($data)
 
 
 
+
+
+
 ## Method `update_sites`
 In class: [components\cms\Actions](#top)
 
@@ -703,5 +790,8 @@ mixed components\cms\Actions::update_sites($data)
 #### Arguments
 
 * $data **mixed**
+
+
+
 
 

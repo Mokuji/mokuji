@@ -81,6 +81,9 @@ mixed core\Site::__get($name)
 
 
 
+
+
+
 ## Method `_load`
 In class: [core\Site](#top)
 
@@ -97,5 +100,8 @@ mixed core\Site::_load($site)
 #### Arguments
 
 * $site **mixed**
+
+
+
 
 

@@ -99,7 +99,7 @@ class Parser
                 'shortClass' => (string)$class->name,
                 'namespace' => (string)$class['namespace'],
                 'description' => (string)$class->docblock->description,
-                'longDescription' => (string)$class->docblock->{"long-description"},
+                'longDescription' => $this->stripp((string)$class->docblock->{"long-description"}),
                 'implements' => $implements,
                 'extends' => $extends,
                 'isClass' => $class->getName()==='class',
@@ -139,9 +139,12 @@ class Parser
 
             $return = $method->xpath('docblock/tag[@name="return"]');
             if (count($return)) {
+                $returnDescription = $return[0]['description'] . "\n\n" . $return[0]['long-description'];
+                if($returnDescription == "\n\n") $returnDescription = null;
                 $return = (string)$return[0]['type'];
             } else {
                 $return = 'mixed';
+                $returnDescription = null;
             }
 
             $arguments = array();
@@ -170,6 +173,21 @@ class Parser
                 $arguments[] = $nArgument;
 
             }
+            
+            $throws = array();
+
+            foreach($method->xpath('docblock/tag[@name="throws"]') as $tag) {
+
+                $nthrow = array();
+                if ((string)$tag['type']) {
+                    $nthrow['type'] = (string)$tag['type'];
+                }
+                if ((string)$tag['description']) {
+                    $nthrow['description'] = (string)$tag['description'];
+                }
+                $throws[] = $nthrow;
+
+            }
 
             $argumentStr = implode(', ', array_map(function($argument) {
                 return ($argument['type']?$argument['type'] . ' ':'') . $argument['name'];
@@ -180,7 +198,7 @@ class Parser
             $methods[$methodName] = array(
                 'name' => $methodName,
                 'key' => 'method-'.$methodName,
-                'description' => (string)$method->docblock->description . "\n\n" . (string)$method->docblock->{"long-description"},
+                'description' => (string)$method->docblock->description . "\n\n" . $this->stripp((string)$method->docblock->{"long-description"}),
                 'visibility' => (string)$method['visibility'],
                 'abstract'   => ((string)$method['abstract'])=="true",
                 'static'   => ((string)$method['static'])=="true",
@@ -189,7 +207,9 @@ class Parser
                 'arguments' => $arguments,
                 'argumentStr' => $argumentStr,
                 'definedBy' => $className,
-                'return' => $return
+                'throws' => $throws,
+                'return' => $return,
+                'returnDescription' => $returnDescription
             );
 
         }
@@ -234,7 +254,7 @@ class Parser
                 'key' => 'property-'.strtolower(substr($propName, 1)),
                 'type' => $type,
                 'default' => $default,
-                'description' => (string)$xProperty->docblock->description . "\n\n" . (string)$xProperty->docblock->{"long-description"},
+                'description' => (string)$xProperty->docblock->description . "\n\n" . $this->stripp((string)$xProperty->docblock->{"long-description"}),
                 'visibility' => $visibility,
                 'static'   => ((string)$xProperty['static'])=="true",
                 'signature' => $signature,
@@ -273,7 +293,7 @@ class Parser
             $constants[$name] = array(
                 'name' => $name,
                 'key' => 'constant-'.strtolower($name),
-                'description' => (string)$xConstant->docblock->description . "\n\n" . (string)$xConstant->docblock->{"long-description"},
+                'description' => (string)$xConstant->docblock->description . "\n\n" . $this->stripp((string)$xConstant->docblock->{"long-description"}),
                 'signature' => $signature,
                 'value' => $value,
                 'deprecated' => count($class->xpath('docblock/tag[@name="deprecated"]'))>0,
@@ -364,4 +384,20 @@ class Parser
         return $newProperties;
 
     }
+    
+    private function stripp($input){
+        
+        if(!is_string($input))
+            return $input;
+        
+        if(strpos($input, '<p>') === 0)
+            $input = substr($input, strlen('<p>'));
+        
+        if(strrpos($input, '</p>') === strlen($input)-strlen('</p>'))
+            $input = substr($input, 0, strlen($input)-strlen('</p>')-1);
+        
+        return $input;
+        
+    }
+    
 }

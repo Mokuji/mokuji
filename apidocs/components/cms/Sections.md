@@ -151,6 +151,9 @@ mixed dependencies\BaseComponent::__construct()
 
 
 
+
+
+
 ## Method `_call`
 In class: [components\cms\Sections](#top)
 
@@ -169,6 +172,9 @@ mixed dependencies\BaseComponent::_call($controller, array $args)
 
 * $controller **mixed**
 * $args **array**
+
+
+
 
 
 
@@ -193,6 +199,9 @@ mixed dependencies\BaseComponent::call($controller, $data)
 
 
 
+
+
+
 ## Method `filters`
 In class: [components\cms\Sections](#top)
 
@@ -206,6 +215,9 @@ mixed dependencies\BaseComponent::filters()
 
 * Visibility: **public**
 * This method is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
+
+
+
 
 
 
@@ -230,6 +242,9 @@ mixed dependencies\BaseViews::get_html($view, $options)
 
 
 
+
+
+
 ## Method `helper`
 In class: [components\cms\Sections](#top)
 
@@ -250,6 +265,9 @@ mixed dependencies\BaseComponent::helper($controller)
 
 
 
+
+
+
 ## Method `model`
 In class: [components\cms\Sections](#top)
 
@@ -267,6 +285,9 @@ mixed dependencies\BaseComponent::model($model_name)
 #### Arguments
 
 * $model_name **mixed**
+
+
+
 
 
 
@@ -291,6 +312,9 @@ mixed dependencies\BaseComponent::module($module_name, $options)
 
 
 
+
+
+
 ## Method `section`
 In class: [components\cms\Sections](#top)
 
@@ -309,6 +333,9 @@ mixed dependencies\BaseComponent::section($section, $options)
 
 * $section **mixed**
 * $options **mixed**
+
+
+
 
 
 
@@ -333,6 +360,9 @@ mixed dependencies\BaseComponent::table($model_name, $id)
 
 
 
+
+
+
 ## Method `view`
 In class: [components\cms\Sections](#top)
 
@@ -354,6 +384,9 @@ mixed dependencies\BaseComponent::view($module_name, $options)
 
 
 
+
+
+
 ## Method `admin_toolbar`
 In class: [components\cms\Sections](#top)
 
@@ -366,6 +399,9 @@ mixed components\cms\Sections::admin_toolbar()
 
 
 * Visibility: **protected**
+
+
+
 
 
 
@@ -388,6 +424,9 @@ mixed components\cms\Sections::app($view)
 
 
 
+
+
+
 ## Method `config_app`
 In class: [components\cms\Sections](#top)
 
@@ -400,6 +439,9 @@ mixed components\cms\Sections::config_app()
 
 
 * Visibility: **protected**
+
+
+
 
 
 
@@ -418,6 +460,9 @@ mixed components\cms\Sections::configbar()
 
 
 
+
+
+
 ## Method `context_menus`
 In class: [components\cms\Sections](#top)
 
@@ -430,6 +475,9 @@ mixed components\cms\Sections::context_menus()
 
 
 * Visibility: **protected**
+
+
+
 
 
 
@@ -452,6 +500,9 @@ mixed components\cms\Sections::edit_menu_item($data)
 
 
 
+
+
+
 ## Method `edit_page`
 In class: [components\cms\Sections](#top)
 
@@ -468,6 +519,9 @@ mixed components\cms\Sections::edit_page($options)
 #### Arguments
 
 * $options **mixed**
+
+
+
 
 
 
@@ -490,6 +544,9 @@ mixed components\cms\Sections::edit_site($options)
 
 
 
+
+
+
 ## Method `ip_edit`
 In class: [components\cms\Sections](#top)
 
@@ -505,6 +562,9 @@ mixed components\cms\Sections::ip_edit()
 
 
 
+
+
+
 ## Method `ip_list`
 In class: [components\cms\Sections](#top)
 
@@ -517,6 +577,9 @@ mixed components\cms\Sections::ip_list()
 
 
 * Visibility: **protected**
+
+
+
 
 
 
@@ -539,6 +602,9 @@ mixed components\cms\Sections::link_menu_item($options)
 
 
 
+
+
+
 ## Method `login_form`
 In class: [components\cms\Sections](#top)
 
@@ -554,6 +620,9 @@ mixed components\cms\Sections::login_form()
 
 
 
+
+
+
 ## Method `menu_app`
 In class: [components\cms\Sections](#top)
 
@@ -566,6 +635,9 @@ mixed components\cms\Sections::menu_app()
 
 
 * Visibility: **protected**
+
+
+
 
 
 
@@ -588,6 +660,9 @@ mixed components\cms\Sections::menu_items($options)
 
 
 
+
+
+
 ## Method `menu_toolbar`
 In class: [components\cms\Sections](#top)
 
@@ -604,6 +679,9 @@ mixed components\cms\Sections::menu_toolbar($options)
 #### Arguments
 
 * $options **mixed**
+
+
+
 
 
 
@@ -626,6 +704,9 @@ mixed components\cms\Sections::menus($options)
 
 
 
+
+
+
 ## Method `module_app`
 In class: [components\cms\Sections](#top)
 
@@ -638,6 +719,9 @@ mixed components\cms\Sections::module_app()
 
 
 * Visibility: **protected**
+
+
+
 
 
 
@@ -660,6 +744,9 @@ mixed components\cms\Sections::new_page($options)
 
 
 
+
+
+
 ## Method `page_app`
 In class: [components\cms\Sections](#top)
 
@@ -672,6 +759,9 @@ mixed components\cms\Sections::page_app()
 
 
 * Visibility: **protected**
+
+
+
 
 
 
@@ -694,6 +784,9 @@ mixed components\cms\Sections::page_list($options)
 
 
 
+
+
+
 ## Method `setting_edit`
 In class: [components\cms\Sections](#top)
 
@@ -713,6 +806,9 @@ mixed components\cms\Sections::setting_edit($data)
 
 
 
+
+
+
 ## Method `setting_edit_simple`
 In class: [components\cms\Sections](#top)
 
@@ -728,6 +824,9 @@ mixed components\cms\Sections::setting_edit_simple()
 
 
 
+
+
+
 ## Method `setting_list`
 In class: [components\cms\Sections](#top)
 
@@ -740,6 +839,9 @@ mixed components\cms\Sections::setting_list()
 
 
 * Visibility: **protected**
+
+
+
 
 
 
@@ -762,6 +864,9 @@ mixed components\cms\Sections::site_list($options)
 
 
 
+
+
+
 ## Method `template_list`
 In class: [components\cms\Sections](#top)
 
@@ -777,6 +882,9 @@ mixed components\cms\Sections::template_list()
 
 
 
+
+
+
 ## Method `theme_list`
 In class: [components\cms\Sections](#top)
 
@@ -789,5 +897,8 @@ mixed components\cms\Sections::theme_list()
 
 
 * Visibility: **protected**
+
+
+
 
 

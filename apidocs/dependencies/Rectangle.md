@@ -14,11 +14,11 @@
 
 ## Class index
 **Constants**
-* [`  AUTO`](#constant-auto)
-* [`  DOWN`](#constant-down)
-* [`  INSIDE`](#constant-inside)
-* [`  OUTSIDE`](#constant-outside)
-* [`  UP`](#constant-up)
+* [`AUTO`](#constant-auto)
+* [`DOWN`](#constant-down)
+* [`INSIDE`](#constant-inside)
+* [`OUTSIDE`](#constant-outside)
+* [`UP`](#constant-up)
 
 **Properties**
 * [`private mixed $height`](#property-height)
@@ -150,6 +150,9 @@ mixed dependencies\Rectangle::__construct($width, $height)
 
 
 
+
+
+
 ## Method `contain`
 In class: [dependencies\Rectangle](#top)
 
@@ -168,6 +171,9 @@ mixed dependencies\Rectangle::contain($width, $height, $shrink)
 * $width **mixed**
 * $height **mixed**
 * $shrink **mixed**
+
+
+
 
 
 
@@ -192,6 +198,9 @@ mixed dependencies\Rectangle::fit($width, $height, $grow)
 
 
 
+
+
+
 ## Method `height`
 In class: [dependencies\Rectangle](#top)
 
@@ -204,6 +213,9 @@ mixed dependencies\Rectangle::height()
 
 
 * Visibility: **public**
+
+
+
 
 
 
@@ -223,6 +235,9 @@ mixed dependencies\Rectangle::round($type)
 #### Arguments
 
 * $type **mixed**
+
+
+
 
 
 
@@ -246,6 +261,9 @@ mixed dependencies\Rectangle::set_height($height, $maintain_aspect_ratio)
 
 
 
+
+
+
 ## Method `set_width`
 In class: [dependencies\Rectangle](#top)
 
@@ -266,6 +284,9 @@ mixed dependencies\Rectangle::set_width($width, $maintain_aspect_ratio)
 
 
 
+
+
+
 ## Method `width`
 In class: [dependencies\Rectangle](#top)
 
@@ -278,5 +299,8 @@ mixed dependencies\Rectangle::width()
 
 
 * Visibility: **public**
+
+
+
 
 

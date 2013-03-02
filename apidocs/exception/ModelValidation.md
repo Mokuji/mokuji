@@ -107,6 +107,9 @@ mixed exception\Exception::__construct()
 
 
 
+
+
+
 ## Method `add_validation_error`
 In class: [exception\ModelValidation](#top)
 
@@ -123,6 +126,9 @@ mixed exception\ModelValidation::add_validation_error(\exception\Validation $err
 #### Arguments
 
 * $error **[exception\Validation](../exception/Validation.md)**
+
+
+
 
 
 
@@ -146,6 +152,9 @@ mixed exception\Validation::errors(array $set)
 
 
 
+
+
+
 ## Method `getExCode`
 In class: [exception\ModelValidation](#top)
 
@@ -162,6 +171,9 @@ mixed exception\Exception::getExCode()
 
 
 
+
+
+
 ## Method `getPrev`
 In class: [exception\ModelValidation](#top)
 
@@ -175,6 +187,9 @@ mixed exception\Exception::getPrev()
 
 * Visibility: **public**
 * This method is defined by [exception\Exception](../exception/Exception.md)
+
+
+
 
 
 
@@ -198,6 +213,9 @@ mixed exception\Validation::key($set)
 
 
 
+
+
+
 ## Method `setPrev`
 In class: [exception\ModelValidation](#top)
 
@@ -218,6 +236,9 @@ mixed exception\Exception::setPrev(\exception\Exception $previous)
 
 
 
+
+
+
 ## Method `set_validation_errors`
 In class: [exception\ModelValidation](#top)
 
@@ -234,6 +255,9 @@ mixed exception\ModelValidation::set_validation_errors($errors)
 #### Arguments
 
 * $errors **mixed**
+
+
+
 
 
 
@@ -257,6 +281,9 @@ mixed exception\Validation::title($set)
 
 
 
+
+
+
 ## Method `value`
 In class: [exception\ModelValidation](#top)
 
@@ -274,5 +301,8 @@ mixed exception\Validation::value($set)
 #### Arguments
 
 * $set **mixed**
+
+
+
 
 

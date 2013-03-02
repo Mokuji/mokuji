@@ -131,6 +131,9 @@ mixed dependencies\BaseComponent::__construct()
 
 
 
+
+
+
 ## Method `_call`
 In class: [components\cms\Helpers](#top)
 
@@ -149,6 +152,9 @@ mixed dependencies\BaseComponent::_call($controller, array $args)
 
 * $controller **mixed**
 * $args **array**
+
+
+
 
 
 
@@ -173,6 +179,9 @@ mixed dependencies\BaseComponent::call($controller, $data)
 
 
 
+
+
+
 ## Method `check_page_authorisation`
 In class: [components\cms\Helpers](#top)
 
@@ -192,6 +201,9 @@ mixed components\cms\Helpers::check_page_authorisation($pid)
 
 
 
+
+
+
 ## Method `filters`
 In class: [components\cms\Helpers](#top)
 
@@ -205,6 +217,9 @@ mixed dependencies\BaseComponent::filters()
 
 * Visibility: **public**
 * This method is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
+
+
+
 
 
 
@@ -227,6 +242,9 @@ mixed components\cms\Helpers::get_page_info($pid)
 
 
 
+
+
+
 ## Method `get_page_options`
 In class: [components\cms\Helpers](#top)
 
@@ -243,6 +261,9 @@ mixed components\cms\Helpers::get_page_options($pid)
 #### Arguments
 
 * $pid **mixed**
+
+
+
 
 
 
@@ -265,6 +286,9 @@ mixed components\cms\Helpers::get_page_permissions($pid)
 
 
 
+
+
+
 ## Method `get_settings`
 In class: [components\cms\Helpers](#top)
 
@@ -281,6 +305,9 @@ $options[]
 #### Arguments
 
 * $key **mixed**
+
+
+
 
 
 
@@ -304,6 +331,9 @@ mixed dependencies\BaseComponent::helper($controller)
 
 
 
+
+
+
 ## Method `model`
 In class: [components\cms\Helpers](#top)
 
@@ -321,6 +351,9 @@ mixed dependencies\BaseComponent::model($model_name)
 #### Arguments
 
 * $model_name **mixed**
+
+
+
 
 
 
@@ -345,6 +378,9 @@ mixed dependencies\BaseComponent::module($module_name, $options)
 
 
 
+
+
+
 ## Method `page_authorisation`
 In class: [components\cms\Helpers](#top)
 
@@ -361,6 +397,9 @@ mixed components\cms\Helpers::page_authorisation($pid)
 #### Arguments
 
 * $pid **mixed**
+
+
+
 
 
 
@@ -385,6 +424,9 @@ mixed dependencies\BaseComponent::section($section, $options)
 
 
 
+
+
+
 ## Method `set_page_permissions`
 In class: [components\cms\Helpers](#top)
 
@@ -402,6 +444,9 @@ mixed components\cms\Helpers::set_page_permissions($pid, $permissions)
 
 * $pid **mixed**
 * $permissions **mixed**
+
+
+
 
 
 
@@ -426,6 +471,9 @@ mixed dependencies\BaseComponent::table($model_name, $id)
 
 
 
+
+
+
 ## Method `view`
 In class: [components\cms\Helpers](#top)
 
@@ -444,5 +492,8 @@ mixed dependencies\BaseComponent::view($module_name, $options)
 
 * $module_name **mixed**
 * $options **mixed**
+
+
+
 
 

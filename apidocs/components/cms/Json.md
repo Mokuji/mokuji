@@ -135,6 +135,9 @@ mixed dependencies\BaseComponent::__construct()
 
 
 
+
+
+
 ## Method `_call`
 In class: [components\cms\Json](#top)
 
@@ -153,6 +156,9 @@ mixed dependencies\BaseComponent::_call($controller, array $args)
 
 * $controller **mixed**
 * $args **array**
+
+
+
 
 
 
@@ -177,6 +183,9 @@ mixed dependencies\BaseComponent::call($controller, $data)
 
 
 
+
+
+
 ## Method `filters`
 In class: [components\cms\Json](#top)
 
@@ -190,6 +199,9 @@ mixed dependencies\BaseComponent::filters()
 
 * Visibility: **public**
 * This method is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
+
+
+
 
 
 
@@ -213,6 +225,9 @@ mixed dependencies\BaseComponent::helper($controller)
 
 
 
+
+
+
 ## Method `model`
 In class: [components\cms\Json](#top)
 
@@ -230,6 +245,9 @@ mixed dependencies\BaseComponent::model($model_name)
 #### Arguments
 
 * $model_name **mixed**
+
+
+
 
 
 
@@ -254,6 +272,9 @@ mixed dependencies\BaseComponent::module($module_name, $options)
 
 
 
+
+
+
 ## Method `section`
 In class: [components\cms\Json](#top)
 
@@ -272,6 +293,9 @@ mixed dependencies\BaseComponent::section($section, $options)
 
 * $section **mixed**
 * $options **mixed**
+
+
+
 
 
 
@@ -296,6 +320,9 @@ mixed dependencies\BaseComponent::table($model_name, $id)
 
 
 
+
+
+
 ## Method `view`
 In class: [components\cms\Json](#top)
 
@@ -314,6 +341,9 @@ mixed dependencies\BaseComponent::view($module_name, $options)
 
 * $module_name **mixed**
 * $options **mixed**
+
+
+
 
 
 
@@ -337,6 +367,9 @@ mixed components\cms\Json::delete_page($options, $params)
 
 
 
+
+
+
 ## Method `get_config_app`
 In class: [components\cms\Json](#top)
 
@@ -354,6 +387,9 @@ mixed components\cms\Json::get_config_app($data, $params)
 
 * $data **mixed**
 * $params **mixed**
+
+
+
 
 
 
@@ -377,6 +413,9 @@ mixed components\cms\Json::get_configbar_items($data, $params)
 
 
 
+
+
+
 ## Method `get_detach_page`
 In class: [components\cms\Json](#top)
 
@@ -394,6 +433,9 @@ mixed components\cms\Json::get_detach_page($data, $params)
 
 * $data **mixed**
 * $params **mixed**
+
+
+
 
 
 
@@ -417,6 +459,9 @@ mixed components\cms\Json::get_link_page($data, $params)
 
 
 
+
+
+
 ## Method `get_menu_item_info`
 In class: [components\cms\Json](#top)
 
@@ -434,6 +479,9 @@ mixed components\cms\Json::get_menu_item_info($options, $params)
 
 * $options **mixed**
 * $params **mixed**
+
+
+
 
 
 
@@ -457,6 +505,9 @@ mixed components\cms\Json::get_new_page($data, $params)
 
 
 
+
+
+
 ## Method `get_page_info`
 In class: [components\cms\Json](#top)
 
@@ -474,6 +525,9 @@ mixed components\cms\Json::get_page_info($options, $params)
 
 * $options **mixed**
 * $params **mixed**
+
+
+
 
 
 
@@ -497,6 +551,9 @@ mixed components\cms\Json::update_page($data, $params)
 
 
 
+
+
+
 ## Method `update_page_findability`
 In class: [components\cms\Json](#top)
 
@@ -517,6 +574,9 @@ mixed components\cms\Json::update_page_findability($data, $params)
 
 
 
+
+
+
 ## Method `update_settings`
 In class: [components\cms\Json](#top)
 
@@ -534,5 +594,8 @@ mixed components\cms\Json::update_settings($data, $params)
 
 * $data **mixed**
 * $params **mixed**
+
+
+
 
 

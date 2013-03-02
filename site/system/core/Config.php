@@ -1,13 +1,29 @@
 <?php namespace core; if(!defined('TX')) die('No direct access.');
 
+/**
+ * Provides core features to manage and access configuration variables.
+ */
 class Config
 {
-
-  private
-    $site,
-    $system,
-    $user;
   
+  /**
+   * Holds site related configuration variables.
+   */
+  private $site;
+  
+  /**
+   * Holds system related configuration variables.
+   */
+  private $system;
+  
+  /**
+   * Holds user configured configuration variables.
+   */
+  private $user;
+  
+  /**
+   * Initializes the class.
+   */
   public function __construct()
   {
     
@@ -17,6 +33,9 @@ class Config
     
   }
   
+  /**
+   * When we're not in the installation environment, loads user configuration from the database.
+   */
   public function init()
   {
     
@@ -74,6 +93,14 @@ class Config
     
   }
   
+  /**
+   * Gets or sets site related configuration variables.
+   *
+   * Usage:
+   *   0 params returns Data of all configuration variables.
+   *   1 param: String $key The key for the variable to get.
+   *   2 params: String $key The key of the variable to set. mixed $val The value to set.
+   */
   public function site()
   {
     
@@ -85,6 +112,14 @@ class Config
     
   }
   
+  /**
+   * Gets or sets system related configuration variables.
+   *
+   * Usage:
+   *   0 params returns Data of all configuration variables.
+   *   1 param: String $key The key for the variable to get.
+   *   2 params: String $key The key of the variable to set. mixed $val The value to set.
+   */
   public function system()
   {
     
@@ -96,6 +131,15 @@ class Config
     
   }
   
+  /**
+   * Gets or sets user configured configuration variables.
+   *
+   * Usage:
+   *   0 params returns Data of all configuration variables.
+   *   1 param: String $key The key for the variable to get.
+   *   2 params: String $key The key of the variable to set. mixed $val The value to set.
+   *   3 params: String $key The key of the variable to set. mixed $val The value to set. int $lang The optional language ID for which to store the value in the database.
+   */
   public function user()
   {
     

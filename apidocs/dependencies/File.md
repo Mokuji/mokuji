@@ -132,6 +132,9 @@ mixed dependencies\File::__construct($file)
 
 
 
+
+
+
 ## Method `cache_time`
 In class: [dependencies\File](#top)
 
@@ -148,6 +151,9 @@ mixed dependencies\File::cache_time($set)
 #### Arguments
 
 * $set **mixed**
+
+
+
 
 
 
@@ -170,6 +176,9 @@ mixed dependencies\File::download($options)
 
 
 
+
+
+
 ## Method `from_file`
 In class: [dependencies\File](#top)
 
@@ -189,6 +198,9 @@ mixed dependencies\File::from_file($source)
 
 
 
+
+
+
 ## Method `get_filesize`
 In class: [dependencies\File](#top)
 
@@ -201,6 +213,9 @@ mixed dependencies\File::get_filesize()
 
 
 * Visibility: **public**
+
+
+
 
 
 
@@ -223,6 +238,9 @@ mixed dependencies\File::output($options)
 
 
 
+
+
+
 ## Method `save`
 In class: [dependencies\File](#top)
 
@@ -242,6 +260,9 @@ mixed dependencies\File::save($save)
 
 
 
+
+
+
 ## Method `create_output_headers`
 In class: [dependencies\File](#top)
 
@@ -254,5 +275,8 @@ mixed dependencies\File::create_output_headers()
 
 
 * Visibility: **protected**
+
+
+
 
 

@@ -15,11 +15,11 @@
 
 ## Class index
 **Constants**
-* [`  ForeignKey`](#constant-foreignkey)
-* [`  LinkTable`](#constant-linktable)
-* [`  NestedSets`](#constant-nestedsets)
-* [`  Reference`](#constant-reference)
-* [`  SelfReference`](#constant-selfreference)
+* [`ForeignKey`](#constant-foreignkey)
+* [`LinkTable`](#constant-linktable)
+* [`NestedSets`](#constant-nestedsets)
+* [`Reference`](#constant-reference)
+* [`SelfReference`](#constant-selfreference)
 
 
 **Methods**
@@ -110,5 +110,8 @@ mixed dependencies\RelationType::detect_type(\dependencies\BaseModel $model, arr
 
 * $model **[dependencies\BaseModel](../dependencies/BaseModel.md)**
 * $relation **array**
+
+
+
 
 

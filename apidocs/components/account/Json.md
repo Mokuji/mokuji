@@ -21,6 +21,7 @@
 * [`public mixed update_user($data, $parameters)`](#method-update_user)
 * [`protected mixed create_mail($data, $parameters)`](#method-create_mail)
 * [`protected mixed get_mail_autocomplete($data, $parameters)`](#method-get_mail_autocomplete)
+* [`protected mixed update_password($data, $parameters)`](#method-update_password)
 
 
 ## Inheritance index
@@ -128,6 +129,9 @@ mixed dependencies\BaseComponent::__construct()
 
 
 
+
+
+
 ## Method `_call`
 In class: [components\account\Json](#top)
 
@@ -146,6 +150,9 @@ mixed dependencies\BaseComponent::_call($controller, array $args)
 
 * $controller **mixed**
 * $args **array**
+
+
+
 
 
 
@@ -170,6 +177,9 @@ mixed dependencies\BaseComponent::call($controller, $data)
 
 
 
+
+
+
 ## Method `create_user`
 In class: [components\account\Json](#top)
 
@@ -190,6 +200,9 @@ mixed components\account\Json::create_user($data, $parameters)
 
 
 
+
+
+
 ## Method `filters`
 In class: [components\account\Json](#top)
 
@@ -203,6 +216,9 @@ mixed dependencies\BaseComponent::filters()
 
 * Visibility: **public**
 * This method is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
+
+
+
 
 
 
@@ -226,6 +242,9 @@ mixed dependencies\BaseComponent::helper($controller)
 
 
 
+
+
+
 ## Method `model`
 In class: [components\account\Json](#top)
 
@@ -243,6 +262,9 @@ mixed dependencies\BaseComponent::model($model_name)
 #### Arguments
 
 * $model_name **mixed**
+
+
+
 
 
 
@@ -267,6 +289,9 @@ mixed dependencies\BaseComponent::module($module_name, $options)
 
 
 
+
+
+
 ## Method `section`
 In class: [components\account\Json](#top)
 
@@ -285,6 +310,9 @@ mixed dependencies\BaseComponent::section($section, $options)
 
 * $section **mixed**
 * $options **mixed**
+
+
+
 
 
 
@@ -309,6 +337,9 @@ mixed dependencies\BaseComponent::table($model_name, $id)
 
 
 
+
+
+
 ## Method `update_user`
 In class: [components\account\Json](#top)
 
@@ -326,6 +357,9 @@ mixed components\account\Json::update_user($data, $parameters)
 
 * $data **mixed**
 * $parameters **mixed**
+
+
+
 
 
 
@@ -350,6 +384,9 @@ mixed dependencies\BaseComponent::view($module_name, $options)
 
 
 
+
+
+
 ## Method `create_mail`
 In class: [components\account\Json](#top)
 
@@ -370,6 +407,9 @@ mixed components\account\Json::create_mail($data, $parameters)
 
 
 
+
+
+
 ## Method `get_mail_autocomplete`
 In class: [components\account\Json](#top)
 
@@ -387,5 +427,31 @@ mixed components\account\Json::get_mail_autocomplete($data, $parameters)
 
 * $data **mixed**
 * $parameters **mixed**
+
+
+
+
+
+
+## Method `update_password`
+In class: [components\account\Json](#top)
+
+```
+mixed components\account\Json::update_password($data, $parameters)
+```
+
+
+
+
+
+* Visibility: **protected**
+
+#### Arguments
+
+* $data **mixed**
+* $parameters **mixed**
+
+
+
 
 

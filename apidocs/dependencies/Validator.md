@@ -133,6 +133,9 @@ mixed dependencies\Validator::__call($rule, $options)
 
 
 
+
+
+
 ## Method `__construct`
 In class: [dependencies\Validator](#top)
 
@@ -150,6 +153,9 @@ mixed dependencies\Validator::__construct($data, $rules)
 
 * $data **mixed**
 * $rules **mixed**
+
+
+
 
 
 
@@ -172,6 +178,9 @@ mixed dependencies\Validator::_datetime($target_format)
 
 
 
+
+
+
 ## Method `_gte`
 In class: [dependencies\Validator](#top)
 
@@ -191,6 +200,9 @@ mixed dependencies\Validator::_gte($number)
 
 
 
+
+
+
 ## Method `_in`
 In class: [dependencies\Validator](#top)
 
@@ -203,6 +215,9 @@ mixed dependencies\Validator::_in()
 
 
 * Visibility: **public**
+
+
+
 
 
 
@@ -225,6 +240,9 @@ mixed dependencies\Validator::_lte($number)
 
 
 
+
+
+
 ## Method `_not_in`
 In class: [dependencies\Validator](#top)
 
@@ -237,6 +255,9 @@ mixed dependencies\Validator::_not_in()
 
 
 * Visibility: **public**
+
+
+
 
 
 
@@ -253,6 +274,9 @@ mixed dependencies\Successable::_success()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Successable](../dependencies/Successable.md)
+
+
+
 
 
 
@@ -277,6 +301,9 @@ mixed dependencies\Successable::and_is($check, $callback)
 
 
 
+
+
+
 ## Method `and_not`
 In class: [dependencies\Validator](#top)
 
@@ -294,6 +321,9 @@ mixed dependencies\Successable::and_not($check)
 #### Arguments
 
 * $check **mixed**
+
+
+
 
 
 
@@ -316,6 +346,9 @@ mixed dependencies\Validator::check_rule($certain_rule)
 
 
 
+
+
+
 ## Method `errors`
 In class: [dependencies\Validator](#top)
 
@@ -328,6 +361,9 @@ mixed dependencies\Validator::errors()
 
 
 * Visibility: **public**
+
+
+
 
 
 
@@ -351,6 +387,9 @@ mixed dependencies\Successable::failure($callback)
 
 
 
+
+
+
 ## Method `get_data`
 In class: [dependencies\Validator](#top)
 
@@ -363,6 +402,9 @@ mixed dependencies\Validator::get_data()
 
 
 * Visibility: **public**
+
+
+
 
 
 
@@ -387,6 +429,9 @@ mixed dependencies\Successable::is($check, $callback)
 
 
 
+
+
+
 ## Method `not`
 In class: [dependencies\Validator](#top)
 
@@ -405,6 +450,9 @@ mixed dependencies\Successable::not($check, $callback)
 
 * $check **mixed**
 * $callback **mixed**
+
+
+
 
 
 
@@ -428,6 +476,9 @@ mixed dependencies\Successable::success($callback)
 
 
 
+
+
+
 ## Method `validate`
 In class: [dependencies\Validator](#top)
 
@@ -447,6 +498,9 @@ mixed dependencies\Validator::validate($rules)
 
 
 
+
+
+
 ## Method `_array`
 In class: [dependencies\Validator](#top)
 
@@ -459,6 +513,9 @@ mixed dependencies\Validator::_array()
 
 
 * Visibility: **private**
+
+
+
 
 
 
@@ -482,6 +539,9 @@ mixed dependencies\Validator::_between($min, $max)
 
 
 
+
+
+
 ## Method `_boolean`
 In class: [dependencies\Validator](#top)
 
@@ -494,6 +554,9 @@ mixed dependencies\Validator::_boolean()
 
 
 * Visibility: **private**
+
+
+
 
 
 
@@ -517,6 +580,9 @@ mixed dependencies\Successable::_do_check($check)
 
 
 
+
+
+
 ## Method `_email`
 In class: [dependencies\Validator](#top)
 
@@ -529,6 +595,9 @@ mixed dependencies\Validator::_email()
 
 
 * Visibility: **private**
+
+
+
 
 
 
@@ -551,6 +620,9 @@ mixed dependencies\Validator::_eq($value)
 
 
 
+
+
+
 ## Method `_gt`
 In class: [dependencies\Validator](#top)
 
@@ -570,6 +642,9 @@ mixed dependencies\Validator::_gt($number)
 
 
 
+
+
+
 ## Method `_javascript_variable_name`
 In class: [dependencies\Validator](#top)
 
@@ -582,6 +657,9 @@ mixed dependencies\Validator::_javascript_variable_name()
 
 
 * Visibility: **private**
+
+
+
 
 
 
@@ -604,6 +682,9 @@ mixed dependencies\Validator::_length($length)
 
 
 
+
+
+
 ## Method `_lt`
 In class: [dependencies\Validator](#top)
 
@@ -623,6 +704,9 @@ mixed dependencies\Validator::_lt($number)
 
 
 
+
+
+
 ## Method `_no_html`
 In class: [dependencies\Validator](#top)
 
@@ -638,6 +722,9 @@ mixed dependencies\Validator::_no_html()
 
 
 
+
+
+
 ## Method `_not_empty`
 In class: [dependencies\Validator](#top)
 
@@ -650,6 +737,9 @@ mixed dependencies\Validator::_not_empty()
 
 
 * Visibility: **private**
+
+
+
 
 
 
@@ -672,6 +762,9 @@ mixed dependencies\Validator::_number($type)
 
 
 
+
+
+
 ## Method `_password`
 In class: [dependencies\Validator](#top)
 
@@ -684,6 +777,9 @@ mixed dependencies\Validator::_password()
 
 
 * Visibility: **private**
+
+
+
 
 
 
@@ -702,6 +798,9 @@ mixed dependencies\Validator::_required()
 
 
 
+
+
+
 ## Method `_string`
 In class: [dependencies\Validator](#top)
 
@@ -717,6 +816,9 @@ mixed dependencies\Validator::_string()
 
 
 
+
+
+
 ## Method `_url`
 In class: [dependencies\Validator](#top)
 
@@ -729,5 +831,8 @@ mixed dependencies\Validator::_url()
 
 
 * Visibility: **private**
+
+
+
 
 

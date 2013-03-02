@@ -109,7 +109,7 @@ protected mixed $default_permission = 2
 In class: [components\account\Actions](#top)
 
 ```
-protected mixed $permissions = array('login' => 0, 'logout' => 1, 'register' => 0, 'edit_profile' => 1, 'claim_account' => 0, 'save_avatar' => 1)
+protected mixed $permissions = array('login' => 0, 'logout' => 1, 'register' => 0, 'edit_profile' => 1, 'claim_account' => 0, 'save_avatar' => 1, 'set_password' => 1)
 ```
 
 
@@ -138,6 +138,9 @@ mixed dependencies\BaseComponent::__construct()
 
 
 
+
+
+
 ## Method `_call`
 In class: [components\account\Actions](#top)
 
@@ -156,6 +159,9 @@ mixed dependencies\BaseComponent::_call($controller, array $args)
 
 * $controller **mixed**
 * $args **array**
+
+
+
 
 
 
@@ -180,6 +186,9 @@ mixed dependencies\BaseComponent::call($controller, $data)
 
 
 
+
+
+
 ## Method `filters`
 In class: [components\account\Actions](#top)
 
@@ -193,6 +202,9 @@ mixed dependencies\BaseComponent::filters()
 
 * Visibility: **public**
 * This method is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
+
+
+
 
 
 
@@ -216,6 +228,9 @@ mixed dependencies\BaseComponent::helper($controller)
 
 
 
+
+
+
 ## Method `model`
 In class: [components\account\Actions](#top)
 
@@ -233,6 +248,9 @@ mixed dependencies\BaseComponent::model($model_name)
 #### Arguments
 
 * $model_name **mixed**
+
+
+
 
 
 
@@ -257,6 +275,9 @@ mixed dependencies\BaseComponent::module($module_name, $options)
 
 
 
+
+
+
 ## Method `section`
 In class: [components\account\Actions](#top)
 
@@ -275,6 +296,9 @@ mixed dependencies\BaseComponent::section($section, $options)
 
 * $section **mixed**
 * $options **mixed**
+
+
+
 
 
 
@@ -299,6 +323,9 @@ mixed dependencies\BaseComponent::table($model_name, $id)
 
 
 
+
+
+
 ## Method `view`
 In class: [components\account\Actions](#top)
 
@@ -320,6 +347,9 @@ mixed dependencies\BaseComponent::view($module_name, $options)
 
 
 
+
+
+
 ## Method `cancel_import_users`
 In class: [components\account\Actions](#top)
 
@@ -332,6 +362,9 @@ mixed components\account\Actions::cancel_import_users()
 
 
 * Visibility: **protected**
+
+
+
 
 
 
@@ -354,6 +387,9 @@ mixed components\account\Actions::claim_account($data)
 
 
 
+
+
+
 ## Method `deactivate_user`
 In class: [components\account\Actions](#top)
 
@@ -370,6 +406,9 @@ mixed components\account\Actions::deactivate_user($data)
 #### Arguments
 
 * $data **mixed**
+
+
+
 
 
 
@@ -392,6 +431,9 @@ mixed components\account\Actions::delete_user($data)
 
 
 
+
+
+
 ## Method `delete_user_group`
 In class: [components\account\Actions](#top)
 
@@ -408,6 +450,9 @@ mixed components\account\Actions::delete_user_group($data)
 #### Arguments
 
 * $data **mixed**
+
+
+
 
 
 
@@ -430,6 +475,9 @@ mixed components\account\Actions::edit_profile($data)
 
 
 
+
+
+
 ## Method `insert_user_groups`
 In class: [components\account\Actions](#top)
 
@@ -446,6 +494,9 @@ mixed components\account\Actions::insert_user_groups($data)
 #### Arguments
 
 * $data **mixed**
+
+
+
 
 
 
@@ -468,6 +519,9 @@ mixed components\account\Actions::login($data)
 
 
 
+
+
+
 ## Method `logout`
 In class: [components\account\Actions](#top)
 
@@ -484,6 +538,9 @@ mixed components\account\Actions::logout($data)
 #### Arguments
 
 * $data **mixed**
+
+
+
 
 
 
@@ -506,6 +563,9 @@ mixed components\account\Actions::register($data)
 
 
 
+
+
+
 ## Method `reset_password`
 In class: [components\account\Actions](#top)
 
@@ -522,6 +582,9 @@ mixed components\account\Actions::reset_password($data)
 #### Arguments
 
 * $data **mixed**
+
+
+
 
 
 
@@ -544,6 +607,9 @@ mixed components\account\Actions::save_avatar($data)
 
 
 
+
+
+
 ## Method `send_mail`
 In class: [components\account\Actions](#top)
 
@@ -560,6 +626,9 @@ mixed components\account\Actions::send_mail($data)
 #### Arguments
 
 * $data **mixed**
+
+
+
 
 
 
@@ -582,6 +651,9 @@ mixed components\account\Actions::set_user_status($data)
 
 
 
+
+
+
 ## Method `update_user_groups`
 In class: [components\account\Actions](#top)
 
@@ -598,5 +670,8 @@ mixed components\account\Actions::update_user_groups($data)
 #### Arguments
 
 * $data **mixed**
+
+
+
 
 
