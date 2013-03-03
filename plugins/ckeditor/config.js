@@ -8,7 +8,8 @@ CKEDITOR.editorConfig = function( config )
   //Define changes to default configuration here
   config.language = 'nl';
   // config.plugins += ',autologin,docprops'
-  config.plugins += ',autologin,mediaembed'
+  // config.plugins += ',autologin,mediaembed'
+  config.plugins += ',autologin'
   //config.basePath: '/plugins/ckeditor/'
   //config.skin = 'tx';
   //config.uiColor = '#AADC6E';
