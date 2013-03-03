@@ -8,7 +8,8 @@ class Actions extends \dependencies\BaseComponent
       'select_menu' => 2,
       'new_page' => 2,
       'edit_page' => 2,
-      'logout' => 1
+      'logout' => 1,
+      'editable' => 2
     );
   
   protected function select_menu($data)
@@ -618,6 +619,18 @@ class Actions extends \dependencies\BaseComponent
       ));
       
     });
+
+  }
+
+  public function editable($data)
+  {
+    if(tx('Data')->session->tx->editable->get() == true){
+      tx('Data')->session->tx->editable->set(false);
+    }else{
+      tx('Data')->session->tx->editable->set(true);
+    }
+
+    tx('Url')->redirect(url(''));
 
   }
 

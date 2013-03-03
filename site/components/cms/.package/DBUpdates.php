@@ -91,8 +91,8 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
   {
     
     tx('Sql')->query('
-      ALTER TABLE  `#__cms_options`
-        DROP INDEX  `key`
+      ALTER TABLE `#__cms_options`
+        DROP INDEX `key`
     ');
     
   }

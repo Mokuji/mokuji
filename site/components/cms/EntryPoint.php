@@ -94,13 +94,16 @@ class EntryPoint extends \dependencies\BaseEntryPoint
         $theme_id = tx('Config')->user('theme_id')->otherwise(1)->get('int');
         $theme = tx('Sql')->table('cms', 'Themes')->pk($theme_id)->execute_single();
         
+        //Define plugins to be loaded.
+        $plugins = array(
+          load_plugin('jquery'),
+          load_plugin('jquery_rest'),
+          load_plugin('jquery_postpone')
+        );
+
         return $that->template($template->name, $theme->name, array(
           'title' => __('cms', 'Claim your account', true),
-          'plugins' =>  array(
-            load_plugin('jquery'),
-            load_plugin('jquery_rest'),
-            load_plugin('jquery_postpone')
-          ),
+          'plugins' => $plugins,
         ),
         array(
           'content' => tx('Component')->views('account')->get_html('claim_account')
@@ -238,14 +241,23 @@ class EntryPoint extends \dependencies\BaseEntryPoint
           
           /* ------- END - headers ------- */
           
+          //Define plugins to be loaded.
+          $plugins = array(
+            load_plugin('jquery')
+          );
+
+          //If EDITABLE: load ckeditor & elfinder.
+          if(EDITABLE){
+            $plugins = array_merge($plugins, array(
+              load_plugin('ckeditor'),
+              load_plugin('elfinder'),
+              load_plugin('jquery_postpone')
+            ));
+          }
+
           $output = $that->template($pi->template, $pi->theme, array(
             'title' => $title,
-            'plugins' =>  array(
-              load_plugin('jquery')
-              // load_plugin('jquery_ui'),
-              // load_plugin('nestedsortable'),
-              // load_plugin('jsFramework')
-            ),
+            'plugins' => $plugins
           ),
           array(
             'admin_toolbar' => $that->section('admin_toolbar'),
