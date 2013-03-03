@@ -280,6 +280,9 @@ mixed dependencies\Image::__construct($file)
 
 
 
+
+
+
 ## Method `__destruct`
 In class: [dependencies\Image](#top)
 
@@ -292,6 +295,9 @@ mixed dependencies\Image::__destruct()
 
 
 * Visibility: **public**
+
+
+
 
 
 
@@ -314,6 +320,9 @@ mixed dependencies\Image::allow_growth($set)
 
 
 
+
+
+
 ## Method `allow_shrink`
 In class: [dependencies\Image](#top)
 
@@ -330,6 +339,9 @@ mixed dependencies\Image::allow_shrink($set)
 #### Arguments
 
 * $set **mixed**
+
+
+
 
 
 
@@ -350,6 +362,9 @@ mixed dependencies\File::cache_time($set)
 #### Arguments
 
 * $set **mixed**
+
+
+
 
 
 
@@ -375,6 +390,9 @@ mixed dependencies\Image::create($width, $height, $color, $type)
 
 
 
+
+
+
 ## Method `crop`
 In class: [dependencies\Image](#top)
 
@@ -394,6 +412,9 @@ mixed dependencies\Image::crop($x, $y, $width, $height)
 * $y **mixed**
 * $width **mixed**
 * $height **mixed**
+
+
+
 
 
 
@@ -417,6 +438,9 @@ mixed dependencies\File::download($options)
 
 
 
+
+
+
 ## Method `fill`
 In class: [dependencies\Image](#top)
 
@@ -434,6 +458,9 @@ mixed dependencies\Image::fill($width, $height)
 
 * $width **mixed**
 * $height **mixed**
+
+
+
 
 
 
@@ -457,6 +484,9 @@ mixed dependencies\Image::fit($width, $height)
 
 
 
+
+
+
 ## Method `from_file`
 In class: [dependencies\Image](#top)
 
@@ -476,6 +506,9 @@ mixed dependencies\Image::from_file($source)
 
 
 
+
+
+
 ## Method `get_filesize`
 In class: [dependencies\Image](#top)
 
@@ -489,6 +522,9 @@ mixed dependencies\File::get_filesize()
 
 * Visibility: **public**
 * This method is defined by [dependencies\File](../dependencies/File.md)
+
+
+
 
 
 
@@ -507,6 +543,9 @@ mixed dependencies\Image::get_height()
 
 
 
+
+
+
 ## Method `get_width`
 In class: [dependencies\Image](#top)
 
@@ -519,6 +558,9 @@ mixed dependencies\Image::get_width()
 
 
 * Visibility: **public**
+
+
+
 
 
 
@@ -541,6 +583,9 @@ mixed dependencies\Image::jpeg_quality($set)
 
 
 
+
+
+
 ## Method `output`
 In class: [dependencies\Image](#top)
 
@@ -557,6 +602,9 @@ mixed dependencies\Image::output($options)
 #### Arguments
 
 * $options **mixed**
+
+
+
 
 
 
@@ -580,6 +628,9 @@ mixed dependencies\Image::resize($width, $height)
 
 
 
+
+
+
 ## Method `save`
 In class: [dependencies\Image](#top)
 
@@ -599,6 +650,9 @@ mixed dependencies\Image::save($save)
 
 
 
+
+
+
 ## Method `sharpening`
 In class: [dependencies\Image](#top)
 
@@ -615,6 +669,9 @@ mixed dependencies\Image::sharpening($set)
 #### Arguments
 
 * $set **mixed**
+
+
+
 
 
 
@@ -642,6 +699,9 @@ mixed dependencies\Image::text($text, $color, $font, $x, $y, $line_spacing)
 
 
 
+
+
+
 ## Method `use_cache`
 In class: [dependencies\Image](#top)
 
@@ -661,6 +721,9 @@ mixed dependencies\Image::use_cache($set)
 
 
 
+
+
+
 ## Method `create_output_headers`
 In class: [dependencies\Image](#top)
 
@@ -674,6 +737,9 @@ mixed dependencies\File::create_output_headers()
 
 * Visibility: **protected**
 * This method is defined by [dependencies\File](../dependencies/File.md)
+
+
+
 
 
 
@@ -696,6 +762,9 @@ mixed dependencies\Image::cache_dir($subfolder)
 
 
 
+
+
+
 ## Method `color`
 In class: [dependencies\Image](#top)
 
@@ -712,6 +781,9 @@ mixed dependencies\Image::color($color)
 #### Arguments
 
 * $color **mixed**
+
+
+
 
 
 
@@ -734,6 +806,9 @@ mixed dependencies\Image::info($source)
 
 
 
+
+
+
 ## Method `prepare_sourcefile`
 In class: [dependencies\Image](#top)
 
@@ -746,6 +821,9 @@ mixed dependencies\Image::prepare_sourcefile()
 
 
 * Visibility: **private**
+
+
+
 
 
 
@@ -767,5 +845,8 @@ mixed dependencies\Image::sharpen($image, $intOrig, $intFinal)
 * $image **mixed**
 * $intOrig **mixed**
 * $intFinal **mixed**
+
+
+
 
 

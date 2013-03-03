@@ -132,6 +132,9 @@ mixed dependencies\BaseComponent::__construct()
 
 
 
+
+
+
 ## Method `_call`
 In class: [components\account\Helpers](#top)
 
@@ -150,6 +153,9 @@ mixed dependencies\BaseComponent::_call($controller, array $args)
 
 * $controller **mixed**
 * $args **array**
+
+
+
 
 
 
@@ -174,6 +180,9 @@ mixed dependencies\BaseComponent::call($controller, $data)
 
 
 
+
+
+
 ## Method `create_user`
 In class: [components\account\Helpers](#top)
 
@@ -190,6 +199,15 @@ Create a new user.
 #### Arguments
 
 * $data **mixed**
+
+
+#### Return value
+
+**[components\account\models\Accounts](../../components/account/models/Accounts.md)** - The account of the newly created user.
+
+
+
+
 
 
 
@@ -209,6 +227,9 @@ mixed dependencies\BaseComponent::filters()
 
 
 
+
+
+
 ## Method `get_new_users`
 In class: [components\account\Helpers](#top)
 
@@ -225,6 +246,9 @@ mixed components\account\Helpers::get_new_users($limit)
 #### Arguments
 
 * $limit **mixed**
+
+
+
 
 
 
@@ -248,6 +272,9 @@ mixed dependencies\BaseComponent::helper($controller)
 
 
 
+
+
+
 ## Method `import_users`
 In class: [components\account\Helpers](#top)
 
@@ -264,6 +291,9 @@ mixed components\account\Helpers::import_users($data)
 #### Arguments
 
 * $data **mixed**
+
+
+
 
 
 
@@ -285,6 +315,15 @@ Invite a new user to create an account.
 * $data **mixed**
 
 
+#### Return value
+
+**[dependencies\UserFunction](../../dependencies/UserFunction.md)** - The user function in which the invitation is sent.
+
+
+
+
+
+
 
 ## Method `model`
 In class: [components\account\Helpers](#top)
@@ -303,6 +342,9 @@ mixed dependencies\BaseComponent::model($model_name)
 #### Arguments
 
 * $model_name **mixed**
+
+
+
 
 
 
@@ -327,6 +369,9 @@ mixed dependencies\BaseComponent::module($module_name, $options)
 
 
 
+
+
+
 ## Method `reset_password`
 In class: [components\account\Helpers](#top)
 
@@ -343,6 +388,15 @@ Force a reset of the password of the user.
 #### Arguments
 
 * $user_id **components\account\Integer/Array(Integer)** - The user id&#039;s to reset the password for.
+
+
+#### Return value
+
+**[dependencies\UserFunction](../../dependencies/UserFunction.md)** - The user function in which the password is reset.
+
+
+
+
 
 
 
@@ -367,6 +421,9 @@ mixed dependencies\BaseComponent::section($section, $options)
 
 
 
+
+
+
 ## Method `set_group_members`
 In class: [components\account\Helpers](#top)
 
@@ -384,6 +441,9 @@ mixed components\account\Helpers::set_group_members($group_id, $members)
 
 * $group_id **mixed**
 * $members **mixed**
+
+
+
 
 
 
@@ -406,6 +466,9 @@ Sets the user group memberships for an account.
 
 
 
+
+
+
 ## Method `should_claim`
 In class: [components\account\Helpers](#top)
 
@@ -418,6 +481,15 @@ Whether the logged in user should claim their account or not.
 
 
 * Visibility: **public**
+
+
+#### Return value
+
+**Boolean** - Whether the logged in user should claim their account or not.
+
+
+
+
 
 
 
@@ -442,6 +514,9 @@ mixed dependencies\BaseComponent::table($model_name, $id)
 
 
 
+
+
+
 ## Method `view`
 In class: [components\account\Helpers](#top)
 
@@ -460,5 +535,8 @@ mixed dependencies\BaseComponent::view($module_name, $options)
 
 * $module_name **mixed**
 * $options **mixed**
+
+
+
 
 

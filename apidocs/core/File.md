@@ -84,6 +84,9 @@ mixed core\File::add_dir($path)
 
 
 
+
+
+
 ## Method `check_dir`
 In class: [core\File](#top)
 
@@ -100,6 +103,9 @@ mixed core\File::check_dir($path)
 #### Arguments
 
 * $path **mixed**
+
+
+
 
 
 
@@ -122,6 +128,9 @@ mixed core\File::file($source)
 
 
 
+
+
+
 ## Method `image`
 In class: [core\File](#top)
 
@@ -141,6 +150,9 @@ mixed core\File::image($source)
 
 
 
+
+
+
 ## Method `init`
 In class: [core\File](#top)
 
@@ -153,5 +165,8 @@ mixed core\File::init()
 
 
 * Visibility: **public**
+
+
+
 
 

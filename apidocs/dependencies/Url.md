@@ -141,6 +141,9 @@ mixed dependencies\Data::__clone()
 
 
 
+
+
+
 ## Method `__construct`
 In class: [dependencies\Url](#top)
 
@@ -161,6 +164,9 @@ mixed dependencies\Url::__construct($url, array $options)
 
 
 
+
+
+
 ## Method `__destruct`
 In class: [dependencies\Url](#top)
 
@@ -174,6 +180,9 @@ mixed dependencies\Data::__destruct()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../dependencies/Data.md)
+
+
+
 
 
 
@@ -194,6 +203,9 @@ mixed dependencies\Data::__get($key)
 #### Arguments
 
 * $key **mixed**
+
+
+
 
 
 
@@ -218,6 +230,9 @@ mixed dependencies\Data::__set($key, $val)
 
 
 
+
+
+
 ## Method `__toString`
 In class: [dependencies\Url](#top)
 
@@ -230,6 +245,9 @@ mixed dependencies\Url::__toString()
 
 
 * Visibility: **public**
+
+
+
 
 
 
@@ -253,6 +271,9 @@ mixed dependencies\Data::__unset($key)
 
 
 
+
+
+
 ## Method `_attempt_unserialize`
 In class: [dependencies\Url](#top)
 
@@ -269,6 +290,9 @@ mixed dependencies\Data::_attempt_unserialize()
 
 
 
+
+
+
 ## Method `_clear_context`
 In class: [dependencies\Url](#top)
 
@@ -282,6 +306,9 @@ mixed dependencies\Data::_clear_context()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../dependencies/Data.md)
+
+
+
 
 
 
@@ -306,6 +333,9 @@ mixed dependencies\Data::_set_context($context, $key)
 
 
 
+
+
+
 ## Method `_success`
 In class: [dependencies\Url](#top)
 
@@ -322,6 +352,9 @@ mixed dependencies\Successable::_success()
 
 
 
+
+
+
 ## Method `add_rules`
 In class: [dependencies\Url](#top)
 
@@ -335,6 +368,9 @@ mixed dependencies\Data::add_rules()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../dependencies/Data.md)
+
+
+
 
 
 
@@ -355,6 +391,9 @@ mixed dependencies\Data::all($callback)
 #### Arguments
 
 * $callback **mixed**
+
+
+
 
 
 
@@ -379,6 +418,9 @@ mixed dependencies\Successable::and_is($check, $callback)
 
 
 
+
+
+
 ## Method `and_not`
 In class: [dependencies\Url](#top)
 
@@ -396,6 +438,9 @@ mixed dependencies\Successable::and_not($check)
 #### Arguments
 
 * $check **mixed**
+
+
+
 
 
 
@@ -419,6 +464,9 @@ mixed dependencies\Data::any($callback)
 
 
 
+
+
+
 ## Method `as_array`
 In class: [dependencies\Url](#top)
 
@@ -436,6 +484,9 @@ mixed dependencies\Data::as_array($serialized)
 #### Arguments
 
 * $serialized **mixed**
+
+
+
 
 
 
@@ -460,6 +511,9 @@ mixed dependencies\Data::as_json($flags, $options)
 
 
 
+
+
+
 ## Method `as_list`
 In class: [dependencies\Url](#top)
 
@@ -473,6 +527,9 @@ mixed dependencies\Data::as_list()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../dependencies/Data.md)
+
+
+
 
 
 
@@ -492,6 +549,9 @@ mixed dependencies\Data::as_options()
 
 
 
+
+
+
 ## Method `as_rlist`
 In class: [dependencies\Url](#top)
 
@@ -505,6 +565,9 @@ mixed dependencies\Data::as_rlist()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../dependencies/Data.md)
+
+
+
 
 
 
@@ -524,6 +587,9 @@ mixed dependencies\Data::as_table()
 
 
 
+
+
+
 ## Method `back`
 In class: [dependencies\Url](#top)
 
@@ -537,6 +603,9 @@ mixed dependencies\Data::back()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../dependencies/Data.md)
+
+
+
 
 
 
@@ -560,6 +629,9 @@ mixed dependencies\Data::become(\dependencies\Data $data)
 
 
 
+
+
+
 ## Method `check`
 In class: [dependencies\Url](#top)
 
@@ -580,6 +652,9 @@ mixed dependencies\Data::check($node_name)
 
 
 
+
+
+
 ## Method `clear`
 In class: [dependencies\Url](#top)
 
@@ -593,6 +668,9 @@ mixed dependencies\Data::clear()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../dependencies/Data.md)
+
+
+
 
 
 
@@ -615,6 +693,9 @@ mixed dependencies\Url::compare(\dependencies\Url $url)
 
 
 
+
+
+
 ## Method `convert`
 In class: [dependencies\Url](#top)
 
@@ -631,6 +712,9 @@ mixed dependencies\Data::convert()
 
 
 
+
+
+
 ## Method `copy`
 In class: [dependencies\Url](#top)
 
@@ -644,6 +728,9 @@ mixed dependencies\Data::copy()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../dependencies/Data.md)
+
+
+
 
 
 
@@ -664,6 +751,9 @@ mixed dependencies\Data::copyto($to)
 #### Arguments
 
 * $to **mixed**
+
+
+
 
 
 
@@ -688,6 +778,9 @@ mixed dependencies\Data::dump($format, $l)
 
 
 
+
+
+
 ## Method `each`
 In class: [dependencies\Url](#top)
 
@@ -708,6 +801,9 @@ mixed dependencies\Data::each($callback)
 
 
 
+
+
+
 ## Method `enforce_rules`
 In class: [dependencies\Url](#top)
 
@@ -725,6 +821,9 @@ mixed dependencies\Data::enforce_rules($recursive)
 #### Arguments
 
 * $recursive **mixed**
+
+
+
 
 
 
@@ -749,6 +848,9 @@ mixed dependencies\Data::eq($value, $callback)
 
 
 
+
+
+
 ## Method `extract`
 In class: [dependencies\Url](#top)
 
@@ -766,6 +868,9 @@ mixed dependencies\Data::extract($id)
 #### Arguments
 
 * $id **mixed**
+
+
+
 
 
 
@@ -789,6 +894,9 @@ mixed dependencies\Successable::failure($callback)
 
 
 
+
+
+
 ## Method `filter`
 In class: [dependencies\Url](#top)
 
@@ -806,6 +914,9 @@ mixed dependencies\Data::filter($callback)
 #### Arguments
 
 * $callback **mixed**
+
+
+
 
 
 
@@ -829,6 +940,9 @@ mixed dependencies\Data::format($format)
 
 
 
+
+
+
 ## Method `generation`
 In class: [dependencies\Url](#top)
 
@@ -842,6 +956,9 @@ mixed dependencies\Data::generation()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../dependencies/Data.md)
+
+
+
 
 
 
@@ -865,6 +982,9 @@ mixed dependencies\Data::get($as)
 
 
 
+
+
+
 ## Method `getIterator`
 In class: [dependencies\Url](#top)
 
@@ -878,6 +998,9 @@ mixed dependencies\Data::getIterator()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../dependencies/Data.md)
+
+
+
 
 
 
@@ -902,6 +1025,9 @@ mixed dependencies\Data::gt($value, $callback)
 
 
 
+
+
+
 ## Method `having`
 In class: [dependencies\Url](#top)
 
@@ -915,6 +1041,9 @@ mixed dependencies\Data::having()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../dependencies/Data.md)
+
+
+
 
 
 
@@ -938,6 +1067,9 @@ mixed dependencies\Data::html_escape($flags)
 
 
 
+
+
+
 ## Method `idx`
 In class: [dependencies\Url](#top)
 
@@ -955,6 +1087,9 @@ mixed dependencies\Data::idx($key)
 #### Arguments
 
 * $key **mixed**
+
+
+
 
 
 
@@ -979,6 +1114,9 @@ mixed dependencies\Successable::is($check, $callback)
 
 
 
+
+
+
 ## Method `is_childnode`
 In class: [dependencies\Url](#top)
 
@@ -992,6 +1130,9 @@ mixed dependencies\Data::is_childnode()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../dependencies/Data.md)
+
+
+
 
 
 
@@ -1011,6 +1152,9 @@ mixed dependencies\Data::is_empty()
 
 
 
+
+
+
 ## Method `is_false`
 In class: [dependencies\Url](#top)
 
@@ -1024,6 +1168,9 @@ mixed dependencies\Data::is_false()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../dependencies/Data.md)
+
+
+
 
 
 
@@ -1043,6 +1190,9 @@ mixed dependencies\Data::is_godnode()
 
 
 
+
+
+
 ## Method `is_leafnode`
 In class: [dependencies\Url](#top)
 
@@ -1056,6 +1206,9 @@ mixed dependencies\Data::is_leafnode()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../dependencies/Data.md)
+
+
+
 
 
 
@@ -1075,6 +1228,9 @@ mixed dependencies\Data::is_numeric()
 
 
 
+
+
+
 ## Method `is_parent`
 In class: [dependencies\Url](#top)
 
@@ -1088,6 +1244,9 @@ mixed dependencies\Data::is_parent()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../dependencies/Data.md)
+
+
+
 
 
 
@@ -1107,6 +1266,9 @@ mixed dependencies\Data::is_set()
 
 
 
+
+
+
 ## Method `is_true`
 In class: [dependencies\Url](#top)
 
@@ -1120,6 +1282,9 @@ mixed dependencies\Data::is_true()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../dependencies/Data.md)
+
+
+
 
 
 
@@ -1143,6 +1308,9 @@ mixed dependencies\Data::join($separator)
 
 
 
+
+
+
 ## Method `key`
 In class: [dependencies\Url](#top)
 
@@ -1156,6 +1324,9 @@ mixed dependencies\Data::key()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../dependencies/Data.md)
+
+
+
 
 
 
@@ -1179,6 +1350,9 @@ mixed dependencies\Data::keyof($node)
 
 
 
+
+
+
 ## Method `keys`
 In class: [dependencies\Url](#top)
 
@@ -1192,6 +1366,9 @@ mixed dependencies\Data::keys()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../dependencies/Data.md)
+
+
+
 
 
 
@@ -1210,6 +1387,15 @@ Sorts the data object by key.
 * This method is defined by [dependencies\Data](../dependencies/Data.md)
 
 
+#### Return value
+
+**[dependencies\Data](../dependencies/Data.md)** - Returns $this
+
+
+
+
+
+
 
 ## Method `lowercase`
 In class: [dependencies\Url](#top)
@@ -1224,6 +1410,9 @@ mixed dependencies\Data::lowercase()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../dependencies/Data.md)
+
+
+
 
 
 
@@ -1248,6 +1437,9 @@ mixed dependencies\Data::lt($value, $callback)
 
 
 
+
+
+
 ## Method `map`
 In class: [dependencies\Url](#top)
 
@@ -1268,6 +1460,9 @@ mixed dependencies\Data::map($callback)
 
 
 
+
+
+
 ## Method `md5`
 In class: [dependencies\Url](#top)
 
@@ -1281,6 +1476,9 @@ mixed dependencies\Data::md5()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../dependencies/Data.md)
+
+
+
 
 
 
@@ -1305,6 +1503,9 @@ mixed dependencies\Data::merge($val, $deep)
 
 
 
+
+
+
 ## Method `moveto`
 In class: [dependencies\Url](#top)
 
@@ -1322,6 +1523,9 @@ mixed dependencies\Data::moveto($to)
 #### Arguments
 
 * $to **mixed**
+
+
+
 
 
 
@@ -1346,6 +1550,9 @@ mixed dependencies\Successable::not($check, $callback)
 
 
 
+
+
+
 ## Method `offsetExists`
 In class: [dependencies\Url](#top)
 
@@ -1366,6 +1573,9 @@ mixed dependencies\Data::offsetExists($key)
 
 
 
+
+
+
 ## Method `offsetGet`
 In class: [dependencies\Url](#top)
 
@@ -1383,6 +1593,9 @@ mixed dependencies\Data::offsetGet($key)
 #### Arguments
 
 * $key **mixed**
+
+
+
 
 
 
@@ -1407,6 +1620,9 @@ mixed dependencies\Data::offsetSet($key, $val)
 
 
 
+
+
+
 ## Method `offsetUnset`
 In class: [dependencies\Url](#top)
 
@@ -1427,6 +1643,9 @@ mixed dependencies\Data::offsetUnset($key)
 
 
 
+
+
+
 ## Method `otherwise`
 In class: [dependencies\Url](#top)
 
@@ -1444,6 +1663,9 @@ mixed dependencies\Data::otherwise($default)
 #### Arguments
 
 * $default **mixed**
+
+
+
 
 
 
@@ -1468,6 +1690,9 @@ mixed dependencies\Data::parse($regex, $flags)
 
 
 
+
+
+
 ## Method `push`
 In class: [dependencies\Url](#top)
 
@@ -1484,6 +1709,9 @@ mixed dependencies\Data::push()
 
 
 
+
+
+
 ## Method `rebuild_output`
 In class: [dependencies\Url](#top)
 
@@ -1496,6 +1724,9 @@ mixed dependencies\Url::rebuild_output()
 
 
 * Visibility: **public**
+
+
+
 
 
 
@@ -1515,6 +1746,9 @@ mixed dependencies\Data::reverse()
 
 
 
+
+
+
 ## Method `serialize`
 In class: [dependencies\Url](#top)
 
@@ -1528,6 +1762,9 @@ mixed dependencies\Data::serialize()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../dependencies/Data.md)
+
+
+
 
 
 
@@ -1547,6 +1784,9 @@ mixed dependencies\Data::serialized()
 
 
 
+
+
+
 ## Method `set`
 In class: [dependencies\Url](#top)
 
@@ -1563,6 +1803,9 @@ mixed dependencies\Data::set()
 
 
 
+
+
+
 ## Method `size`
 In class: [dependencies\Url](#top)
 
@@ -1576,6 +1819,9 @@ mixed dependencies\Data::size()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../dependencies/Data.md)
+
+
+
 
 
 
@@ -1600,6 +1846,9 @@ mixed dependencies\Data::slice($offset, $length)
 
 
 
+
+
+
 ## Method `split`
 In class: [dependencies\Url](#top)
 
@@ -1617,6 +1866,9 @@ mixed dependencies\Data::split($s)
 #### Arguments
 
 * $s **mixed**
+
+
+
 
 
 
@@ -1640,6 +1892,9 @@ mixed dependencies\Successable::success($callback)
 
 
 
+
+
+
 ## Method `trim`
 In class: [dependencies\Url](#top)
 
@@ -1660,6 +1915,9 @@ mixed dependencies\Data::trim($charlist)
 
 
 
+
+
+
 ## Method `type`
 In class: [dependencies\Url](#top)
 
@@ -1676,6 +1934,9 @@ mixed dependencies\Data::type()
 
 
 
+
+
+
 ## Method `un_set`
 In class: [dependencies\Url](#top)
 
@@ -1689,6 +1950,9 @@ mixed dependencies\Data::un_set()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../dependencies/Data.md)
+
+
+
 
 
 
@@ -1712,6 +1976,9 @@ mixed dependencies\Data::unserialize($d)
 
 
 
+
+
+
 ## Method `unserialized`
 In class: [dependencies\Url](#top)
 
@@ -1728,6 +1995,9 @@ mixed dependencies\Data::unserialized()
 
 
 
+
+
+
 ## Method `uppercase`
 In class: [dependencies\Url](#top)
 
@@ -1741,6 +2011,9 @@ mixed dependencies\Data::uppercase()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../dependencies/Data.md)
+
+
+
 
 
 
@@ -1765,6 +2038,9 @@ mixed dependencies\Data::validate($name, array $rules)
 
 
 
+
+
+
 ## Method `validation_errors`
 In class: [dependencies\Url](#top)
 
@@ -1782,6 +2058,9 @@ mixed dependencies\Data::validation_errors($names)
 #### Arguments
 
 * $names **mixed**
+
+
+
 
 
 
@@ -1805,6 +2084,9 @@ mixed dependencies\Data::walk($callback)
 
 
 
+
+
+
 ## Method `_build_url`
 In class: [dependencies\Url](#top)
 
@@ -1825,6 +2107,9 @@ mixed dependencies\Url::_build_url($string, array $options)
 
 
 
+
+
+
 ## Method `_do_check`
 In class: [dependencies\Url](#top)
 
@@ -1842,5 +2127,8 @@ mixed dependencies\Successable::_do_check($check)
 #### Arguments
 
 * $check **mixed**
+
+
+
 
 

@@ -1,7 +1,7 @@
 # core\Component
 [API index](../API-index.md)
 
-
+Provides core features to manage and access components.
 
 
 
@@ -20,16 +20,16 @@
 
 **Methods**
 * [`public mixed __construct()`](#method-__construct)
-* [`public mixed actions($of)`](#method-actions)
-* [`public mixed available($component_name)`](#method-available)
-* [`public mixed check($component_name)`](#method-check)
-* [`public mixed enter($component)`](#method-enter)
-* [`public mixed helpers($of)`](#method-helpers)
-* [`public mixed json($of)`](#method-json)
-* [`public mixed load($component, $part, $instantiate)`](#method-load)
-* [`public mixed modules($of)`](#method-modules)
-* [`public mixed sections($of)`](#method-sections)
-* [`public mixed views($of)`](#method-views)
+* [`public \dependencies\BaseComponent actions(String $of)`](#method-actions)
+* [`public boolean available(String $component_name)`](#method-available)
+* [`public boolean check(String $component_name)`](#method-check)
+* [`public mixed enter(String $component)`](#method-enter)
+* [`public \dependencies\BaseComponent helpers(String $of)`](#method-helpers)
+* [`public \dependencies\BaseComponent json(String $of)`](#method-json)
+* [`public mixed load(String $component, String $part, boolean $instantiate)`](#method-load)
+* [`public \dependencies\BaseViews modules(String $of)`](#method-modules)
+* [`public \dependencies\BaseViews sections(String $of)`](#method-sections)
+* [`public \dependencies\BaseViews views(String $of)`](#method-views)
 
 
 
@@ -47,7 +47,7 @@ In class: [core\Component](#top)
 private mixed $checks = array()
 ```
 
-
+Caches whether components are available and valid.
 
 
 
@@ -61,7 +61,7 @@ In class: [core\Component](#top)
 private mixed $components
 ```
 
-
+Keeps track of a components information that has been loaded.
 
 
 
@@ -78,11 +78,14 @@ In class: [core\Component](#top)
 mixed core\Component::__construct()
 ```
 
-
+Initializes the class.
 
 
 
 * Visibility: **public**
+
+
+
 
 
 
@@ -90,10 +93,10 @@ mixed core\Component::__construct()
 In class: [core\Component](#top)
 
 ```
-mixed core\Component::actions($of)
+\dependencies\BaseComponent core\Component::actions(String $of)
 ```
 
-
+Returns an instance of the "Actions" class for the given component.
 
 
 
@@ -101,7 +104,10 @@ mixed core\Component::actions($of)
 
 #### Arguments
 
-* $of **mixed**
+* $of **String** - The component name.
+
+
+
 
 
 
@@ -109,10 +115,10 @@ mixed core\Component::actions($of)
 In class: [core\Component](#top)
 
 ```
-mixed core\Component::available($component_name)
+boolean core\Component::available(String $component_name)
 ```
 
-
+Checks whether a component is available and has a valid structure.
 
 
 
@@ -120,7 +126,10 @@ mixed core\Component::available($component_name)
 
 #### Arguments
 
-* $component_name **mixed**
+* $component_name **String** - The name of the component.
+
+
+
 
 
 
@@ -128,10 +137,10 @@ mixed core\Component::available($component_name)
 In class: [core\Component](#top)
 
 ```
-mixed core\Component::check($component_name)
+boolean core\Component::check(String $component_name)
 ```
 
-
+Validates a component's folder structure.
 
 
 
@@ -139,7 +148,19 @@ mixed core\Component::check($component_name)
 
 #### Arguments
 
-* $component_name **mixed**
+* $component_name **String** - The name of the component.
+
+
+
+#### Throws exceptions
+
+* **[exception\InvalidArgument](../exception/InvalidArgument.md)** - If the component name is empty.
+* **[exception\InvalidArgument](../exception/InvalidArgument.md)** - If the component name contains invalid characters.
+* **[exception\FileMissing](../exception/FileMissing.md)** - If the component does not exist.
+* **[exception\FileMissing](../exception/FileMissing.md)** - If the component does not have Actions, Modules, Views or Sections.
+* **[exception\FileMissing](../exception/FileMissing.md)** - If the component does not have includes, models or templates.
+* **[exception\FileMissing](../exception/FileMissing.md)** - If the component does not have frontend, backend or global templates.
+
 
 
 
@@ -147,10 +168,10 @@ mixed core\Component::check($component_name)
 In class: [core\Component](#top)
 
 ```
-mixed core\Component::enter($component)
+mixed core\Component::enter(String $component)
 ```
 
-
+Calls the entrance function of the components "EntryPoint" class
 
 
 
@@ -158,7 +179,10 @@ mixed core\Component::enter($component)
 
 #### Arguments
 
-* $component **mixed**
+* $component **String** - The component name.
+
+
+
 
 
 
@@ -166,10 +190,10 @@ mixed core\Component::enter($component)
 In class: [core\Component](#top)
 
 ```
-mixed core\Component::helpers($of)
+\dependencies\BaseComponent core\Component::helpers(String $of)
 ```
 
-
+Returns an instance of the "Helpers" class for the given component.
 
 
 
@@ -177,7 +201,10 @@ mixed core\Component::helpers($of)
 
 #### Arguments
 
-* $of **mixed**
+* $of **String** - The component name.
+
+
+
 
 
 
@@ -185,10 +212,10 @@ mixed core\Component::helpers($of)
 In class: [core\Component](#top)
 
 ```
-mixed core\Component::json($of)
+\dependencies\BaseComponent core\Component::json(String $of)
 ```
 
-
+Returns an instance of the "Json" class for the given component.
 
 
 
@@ -196,7 +223,10 @@ mixed core\Component::json($of)
 
 #### Arguments
 
-* $of **mixed**
+* $of **String** - The component name.
+
+
+
 
 
 
@@ -204,10 +234,10 @@ mixed core\Component::json($of)
 In class: [core\Component](#top)
 
 ```
-mixed core\Component::load($component, $part, $instantiate)
+mixed core\Component::load(String $component, String $part, boolean $instantiate)
 ```
 
-
+Allows loading components and their parts.
 
 
 
@@ -215,9 +245,22 @@ mixed core\Component::load($component, $part, $instantiate)
 
 #### Arguments
 
-* $component **mixed**
-* $part **mixed**
-* $instantiate **mixed**
+* $component **String** - The component name.
+* $part **String** - The optional name of the part to load.
+* $instantiate **boolean** - Whether or not to instantiate the requested part.
+
+
+#### Return value
+
+**mixed** - Returns null if `$part` is null, a boolean if `$instantiate` is false or the instantiated part if `$instantiate` is true.
+
+
+
+
+#### Throws exceptions
+
+* **[exception\NotFound](../exception/NotFound.md)** - If the loaded file does not contain the expected part.
+
 
 
 
@@ -225,10 +268,10 @@ mixed core\Component::load($component, $part, $instantiate)
 In class: [core\Component](#top)
 
 ```
-mixed core\Component::modules($of)
+\dependencies\BaseViews core\Component::modules(String $of)
 ```
 
-
+Returns an instance of the "Modules" class for the given component.
 
 
 
@@ -236,7 +279,10 @@ mixed core\Component::modules($of)
 
 #### Arguments
 
-* $of **mixed**
+* $of **String** - The component name.
+
+
+
 
 
 
@@ -244,10 +290,10 @@ mixed core\Component::modules($of)
 In class: [core\Component](#top)
 
 ```
-mixed core\Component::sections($of)
+\dependencies\BaseViews core\Component::sections(String $of)
 ```
 
-
+Returns an instance of the "Sections" class for the given component.
 
 
 
@@ -255,7 +301,10 @@ mixed core\Component::sections($of)
 
 #### Arguments
 
-* $of **mixed**
+* $of **String** - The component name.
+
+
+
 
 
 
@@ -263,10 +312,10 @@ mixed core\Component::sections($of)
 In class: [core\Component](#top)
 
 ```
-mixed core\Component::views($of)
+\dependencies\BaseViews core\Component::views(String $of)
 ```
 
-
+Returns an instance of the "Views" class for the given component.
 
 
 
@@ -274,6 +323,9 @@ mixed core\Component::views($of)
 
 #### Arguments
 
-* $of **mixed**
+* $of **String** - The component name.
+
+
+
 
 

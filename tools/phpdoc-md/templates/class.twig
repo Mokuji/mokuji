@@ -3,7 +3,7 @@
 
 {{ description }}
 
-{{ longDescription|raw }}
+{{ longDescription }}
 
 {% if isClass %}
 
@@ -37,7 +37,7 @@
 **Constants**
 {% endif %}
 {% for constant in constants %}
-* [`{{ constant.visibility }} {{ constant.type }} {{ constant.name }}`](#{{ constant.key }})
+* [`{{ constant.name }}`](#{{ constant.key }})
 {% endfor %}
 
 {% if hasOwnProperties %}
@@ -160,5 +160,23 @@ In class: [{{ className }}](#top)
 {% endfor %}
 
 {% endif %}
+
+{% if method.returnDescription %}
+#### Return value
+
+**{{ method.return|classLink }}** - {{ method.returnDescription }}
+
+{% endif %}
+
+{% if method.throws %}
+#### Throws exceptions
+
+{% for throw in method.throws %}
+* **{{ throw.type|classLink }}**{% if throw.description %} - {{ throw.description }}{% endif %}
+
+{% endfor %}
+
+{% endif %}
+
 
 {% endfor %}

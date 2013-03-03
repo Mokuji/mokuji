@@ -133,6 +133,9 @@ Creates a new form builder instance.
 
 
 
+
+
+
 ## Method `id`
 In class: [dependencies\forms\FormBuilder](#top)
 
@@ -145,6 +148,15 @@ Returns the unique ID of this form.
 
 
 * Visibility: **public**
+
+
+#### Return value
+
+**string** - The unique ID of this form.
+
+
+
+
 
 
 
@@ -171,6 +183,9 @@ Outputs the form to the output stream.
 
 
 
+
+
+
 ## Method `detect_optimal_field`
 In class: [dependencies\forms\FormBuilder](#top)
 
@@ -180,8 +195,8 @@ string dependencies\forms\FormBuilder::detect_optimal_field(string $column_name,
 
 Based on the given field data, tries to detect the class name of the optimal field type.
 
-<p>Note that this is for detecting the base type field and does not take relations into account.
-Defined relations should override this value.</p>
+Note that this is for detecting the base type field and does not take relations into account.
+Defined relations should override this value
 
 * Visibility: **protected**
 
@@ -190,6 +205,15 @@ Defined relations should override this value.</p>
 * $column_name **string** - The name of the database column to search the optimal field for.
 * $field **dependencies\forms\Data** - The field meta information.
 * $override **array** - Overrides for this field that may apply.
+
+
+#### Return value
+
+**string** - The full (namespaced) class name of the field type that is optimal to use.
+
+
+
+
 
 
 
@@ -202,8 +226,8 @@ string dependencies\forms\FormBuilder::detect_optimal_relation_field(string $col
 
 Based on the given field data, tries to detect the class name of the optimal field type.
 
-<p>Note that this is for detecting the relation field and does not take base types into account.
-This should be used to override base types.</p>
+Note that this is for detecting the relation field and does not take base types into account.
+This should be used to override base types
 
 * Visibility: **protected**
 
@@ -211,6 +235,15 @@ This should be used to override base types.</p>
 
 * $column_name **string** - The name of the database column to search the optimal field for.
 * $relation **dependencies\forms\Data** - &amp;$relation The normalized relation information.
+
+
+#### Return value
+
+**string** - The full (namespaced) class name of the field type that is optimal to use.
+
+
+
+
 
 
 
@@ -223,13 +256,16 @@ mixed dependencies\forms\FormBuilder::find_additional_relation_data(array $relat
 
 Depending on all the earlier detected variables gathers all relevant data about the relation.
 
-<p>For example when applicable gathers an option_set.</p>
+For example when applicable gathers an option_set
 
 * Visibility: **protected**
 
 #### Arguments
 
-* $relation **array** - &amp;$relation The relation to find additional data for.
+* $relation **array** - The relation to find additional data for.
+
+
+
 
 
 
@@ -248,6 +284,9 @@ Create instances of each of the fields in the model.
 
 
 
+
+
+
 ## Method `map_relations`
 In class: [dependencies\forms\FormBuilder](#top)
 
@@ -260,5 +299,8 @@ Takes all provided relations from the options, then maps and normalizes them.
 
 
 * Visibility: **protected**
+
+
+
 
 

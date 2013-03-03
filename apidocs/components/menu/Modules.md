@@ -129,6 +129,9 @@ mixed dependencies\BaseComponent::__construct()
 
 
 
+
+
+
 ## Method `_call`
 In class: [components\menu\Modules](#top)
 
@@ -147,6 +150,9 @@ mixed dependencies\BaseComponent::_call($controller, array $args)
 
 * $controller **mixed**
 * $args **array**
+
+
+
 
 
 
@@ -171,6 +177,9 @@ mixed dependencies\BaseComponent::call($controller, $data)
 
 
 
+
+
+
 ## Method `filters`
 In class: [components\menu\Modules](#top)
 
@@ -184,6 +193,9 @@ mixed dependencies\BaseComponent::filters()
 
 * Visibility: **public**
 * This method is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
+
+
+
 
 
 
@@ -208,6 +220,9 @@ mixed dependencies\BaseViews::get_html($view, $options)
 
 
 
+
+
+
 ## Method `helper`
 In class: [components\menu\Modules](#top)
 
@@ -228,6 +243,9 @@ mixed dependencies\BaseComponent::helper($controller)
 
 
 
+
+
+
 ## Method `model`
 In class: [components\menu\Modules](#top)
 
@@ -245,6 +263,9 @@ mixed dependencies\BaseComponent::model($model_name)
 #### Arguments
 
 * $model_name **mixed**
+
+
+
 
 
 
@@ -269,6 +290,9 @@ mixed dependencies\BaseComponent::module($module_name, $options)
 
 
 
+
+
+
 ## Method `section`
 In class: [components\menu\Modules](#top)
 
@@ -287,6 +311,9 @@ mixed dependencies\BaseComponent::section($section, $options)
 
 * $section **mixed**
 * $options **mixed**
+
+
+
 
 
 
@@ -311,6 +338,9 @@ mixed dependencies\BaseComponent::table($model_name, $id)
 
 
 
+
+
+
 ## Method `view`
 In class: [components\menu\Modules](#top)
 
@@ -332,6 +362,9 @@ mixed dependencies\BaseComponent::view($module_name, $options)
 
 
 
+
+
+
 ## Method `breadcrumbs`
 In class: [components\menu\Modules](#top)
 
@@ -348,6 +381,9 @@ mixed components\menu\Modules::breadcrumbs($options)
 #### Arguments
 
 * $options **mixed**
+
+
+
 
 
 
@@ -378,6 +414,9 @@ Returns a result set with the menu items you asked for.
 
 
 
+
+
+
 ## Method `menu_image`
 In class: [components\menu\Modules](#top)
 
@@ -397,6 +436,9 @@ mixed components\menu\Modules::menu_image($options)
 
 
 
+
+
+
 ## Method `sitemap`
 In class: [components\menu\Modules](#top)
 
@@ -413,5 +455,8 @@ mixed components\menu\Modules::sitemap($options)
 #### Arguments
 
 * $options **mixed**
+
+
+
 
 

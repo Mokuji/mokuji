@@ -15,6 +15,8 @@
 
 ## Class index
 
+**Properties**
+* [`protected mixed $option_set`](#property-option_set)
 
 **Methods**
 * [`public mixed __construct(string $column_name, string $title, \dependencies\BaseModel $model, array $options)`](#method-__construct)
@@ -25,6 +27,7 @@
 
 **Properties**
 * [`protected mixed $column_name`](#property-column_name)
+* [`protected mixed $form_id`](#property-form_id)
 * [`protected mixed $insert_value`](#property-insert_value)
 * [`protected mixed $model`](#property-model)
 * [`protected mixed $title`](#property-title)
@@ -42,6 +45,21 @@ In class: [dependencies\forms\RadioField](#top)
 
 ```
 protected mixed $column_name
+```
+
+
+
+
+
+* Visibility: **protected**
+* This property is defined by [dependencies\forms\BaseFormField](../../dependencies/forms/BaseFormField.md)
+
+
+## Property `$form_id`
+In class: [dependencies\forms\RadioField](#top)
+
+```
+protected mixed $form_id
 ```
 
 
@@ -80,6 +98,20 @@ protected mixed $model
 
 * Visibility: **protected**
 * This property is defined by [dependencies\forms\BaseFormField](../../dependencies/forms/BaseFormField.md)
+
+
+## Property `$option_set`
+In class: [dependencies\forms\RadioField](#top)
+
+```
+protected mixed $option_set
+```
+
+
+
+
+
+* Visibility: **protected**
 
 
 ## Property `$title`
@@ -137,6 +169,9 @@ Initiates a new form field.
 
 
 
+
+
+
 ## Method `render`
 In class: [dependencies\forms\RadioField](#top)
 
@@ -153,5 +188,8 @@ Outputs this field to the output stream.
 #### Arguments
 
 * $options **array** - An optional set of options to further customize the rendering of this field.
+
+
+
 
 

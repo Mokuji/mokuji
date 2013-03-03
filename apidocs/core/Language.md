@@ -132,6 +132,9 @@ mixed core\Language::__get($key)
 
 
 
+
+
+
 ## Method `get_language_code`
 In class: [core\Language](#top)
 
@@ -144,6 +147,9 @@ mixed core\Language::get_language_code()
 
 
 * Visibility: **public**
+
+
+
 
 
 
@@ -162,6 +168,9 @@ mixed core\Language::get_language_id()
 
 
 
+
+
+
 ## Method `get_languages`
 In class: [core\Language](#top)
 
@@ -177,6 +186,9 @@ mixed core\Language::get_languages()
 
 
 
+
+
+
 ## Method `init`
 In class: [core\Language](#top)
 
@@ -189,6 +201,9 @@ mixed core\Language::init()
 
 
 * Visibility: **public**
+
+
+
 
 
 
@@ -211,6 +226,9 @@ mixed core\Language::multilanguage(\Closure $closure)
 
 
 
+
+
+
 ## Method `set_language_id`
 In class: [core\Language](#top)
 
@@ -227,6 +245,9 @@ mixed core\Language::set_language_id($id)
 #### Arguments
 
 * $id **mixed**
+
+
+
 
 
 
@@ -249,5 +270,8 @@ mixed core\Language::translate($phrase, $component, $lang_id, $case)
 * $component **mixed**
 * $lang_id **mixed**
 * $case **mixed**
+
+
+
 
 

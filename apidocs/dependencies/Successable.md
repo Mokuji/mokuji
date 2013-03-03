@@ -69,6 +69,9 @@ mixed dependencies\Successable::_success()
 
 
 
+
+
+
 ## Method `and_is`
 In class: [dependencies\Successable](#top)
 
@@ -86,6 +89,9 @@ mixed dependencies\Successable::and_is($check, $callback)
 
 * $check **mixed**
 * $callback **mixed**
+
+
+
 
 
 
@@ -108,6 +114,9 @@ mixed dependencies\Successable::and_not($check)
 
 
 
+
+
+
 ## Method `failure`
 In class: [dependencies\Successable](#top)
 
@@ -124,6 +133,9 @@ mixed dependencies\Successable::failure($callback)
 #### Arguments
 
 * $callback **mixed**
+
+
+
 
 
 
@@ -147,6 +159,9 @@ mixed dependencies\Successable::is($check, $callback)
 
 
 
+
+
+
 ## Method `not`
 In class: [dependencies\Successable](#top)
 
@@ -164,6 +179,9 @@ mixed dependencies\Successable::not($check, $callback)
 
 * $check **mixed**
 * $callback **mixed**
+
+
+
 
 
 
@@ -186,6 +204,9 @@ mixed dependencies\Successable::success($callback)
 
 
 
+
+
+
 ## Method `_do_check`
 In class: [dependencies\Successable](#top)
 
@@ -202,5 +223,8 @@ mixed dependencies\Successable::_do_check($check)
 #### Arguments
 
 * $check **mixed**
+
+
+
 
 

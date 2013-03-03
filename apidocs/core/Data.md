@@ -174,6 +174,9 @@ mixed core\Data::__destruct()
 
 
 
+
+
+
 ## Method `__get`
 In class: [core\Data](#top)
 
@@ -190,6 +193,9 @@ mixed core\Data::__get($name)
 #### Arguments
 
 * $name **mixed**
+
+
+
 
 
 
@@ -212,6 +218,9 @@ mixed core\Data::filter($component)
 
 
 
+
+
+
 ## Method `init`
 In class: [core\Data](#top)
 
@@ -224,6 +233,9 @@ mixed core\Data::init()
 
 
 * Visibility: **public**
+
+
+
 
 
 
@@ -242,6 +254,9 @@ mixed core\Data::merge()
 
 
 
+
+
+
 ## Method `postdata`
 In class: [core\Data](#top)
 
@@ -257,6 +272,9 @@ mixed core\Data::postdata()
 
 
 
+
+
+
 ## Method `restore_session`
 In class: [core\Data](#top)
 
@@ -269,6 +287,9 @@ mixed core\Data::restore_session()
 
 
 * Visibility: **public**
+
+
+
 
 
 
@@ -291,6 +312,9 @@ mixed core\Data::xss_clean($str)
 
 
 
+
+
+
 ## Method `undo_magic_quotes`
 In class: [core\Data](#top)
 
@@ -308,5 +332,8 @@ mixed core\Data::undo_magic_quotes($array, $top_level)
 
 * $array **mixed**
 * $top_level **mixed**
+
+
+
 
 

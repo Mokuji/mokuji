@@ -150,6 +150,9 @@ mixed exception\Exception::__construct()
 
 
 
+
+
+
 ## Method `errors`
 In class: [exception\Validation](#top)
 
@@ -169,6 +172,9 @@ mixed exception\Validation::errors(array $set)
 
 
 
+
+
+
 ## Method `getExCode`
 In class: [exception\Validation](#top)
 
@@ -182,6 +188,9 @@ mixed exception\Exception::getExCode()
 
 * Visibility: **public**
 * This method is defined by [exception\Exception](../exception/Exception.md)
+
+
+
 
 
 
@@ -201,6 +210,9 @@ mixed exception\Exception::getPrev()
 
 
 
+
+
+
 ## Method `key`
 In class: [exception\Validation](#top)
 
@@ -217,6 +229,9 @@ mixed exception\Validation::key($set)
 #### Arguments
 
 * $set **mixed**
+
+
+
 
 
 
@@ -240,6 +255,9 @@ mixed exception\Exception::setPrev(\exception\Exception $previous)
 
 
 
+
+
+
 ## Method `title`
 In class: [exception\Validation](#top)
 
@@ -259,6 +277,9 @@ mixed exception\Validation::title($set)
 
 
 
+
+
+
 ## Method `value`
 In class: [exception\Validation](#top)
 
@@ -275,5 +296,8 @@ mixed exception\Validation::value($set)
 #### Arguments
 
 * $set **mixed**
+
+
+
 
 

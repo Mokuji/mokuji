@@ -72,6 +72,9 @@ mixed exception\Error::__construct($errno, $errstr, $errfile, $errline, $context
 
 
 
+
+
+
 ## Method `getContext`
 In class: [exception\Error](#top)
 
@@ -84,5 +87,8 @@ mixed exception\Error::getContext()
 
 
 * Visibility: **public**
+
+
+
 
 

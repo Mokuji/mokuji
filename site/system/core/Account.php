@@ -1,15 +1,24 @@
 <?php namespace core; if(!defined('TX')) die('No direct access.');
 
+/**
+ * Handles the basic account operations and manages the users session.
+ */
 class Account
 {
 
-  public
-    $user;
+  /**
+   * The basic user information for the current session.
+   */
+  public $user;
 
-  public function __construct()
-  {
-  }
-
+  /**
+   * Initializes the class.
+   * 
+   * Checks if the user is logged in.
+   * Updates session expiry.
+   * Logs out the user if session expired.
+   * @return void
+   */
   public function init()
   {
     
@@ -39,7 +48,7 @@ class Account
       tx('Data')->server->REQUEST_TIME->copyto($this->user->activity);
       
       //Cut if off here, because the other stuff is for the people who update their databases.
-      return $this;
+      return;
       
     }
     
@@ -117,14 +126,26 @@ class Account
     
   }
   
-  //Returns true if the user is logged in. Short for $this->user->check('login').
+  /**
+   * Returns true if the user is logged in. Short for $this->user->check('login').
+   * @return boolean
+   */
   public function is_login()
   {
     
     return $this->user->check('login');
     
   }
-
+  
+  /**
+   * Performs a login attempt for the current session.
+   * @param String $email The email or username of the user to log in with.
+   * @param String $pass The plaintext password to log in with.
+   * @return \core\Account Returns $this for chaining.
+   * @throws \exception\Validation If the IP address of the remote connection is blacklisted.
+   * @throws \exception\EmptyResult If the user account is not found.
+   * @throws \exception\Validation If the password is invalid.
+   */
   public function login($email, $pass, $expiry_date = null)
   {
     
@@ -248,7 +269,11 @@ class Account
     return $this;
     
   }
-
+  
+  /**
+   * Logs out the current user.
+   * @return \core\Account Returns $this for chaining.
+   */
   public function logout()
   {
     
@@ -290,7 +315,15 @@ class Account
     return $this;
     
   }
-
+  
+  /**
+   * Registers a new user account.
+   * @param String $email The email address to set.
+   * @param String $username The optional username to set.
+   * @param String $password The password to set.
+   * @param int $level The user level to set. (1 = Normal user, 2 = Administrator)
+   * @return boolean Whether registering the user was successful.
+   */
   public function register($email, $username = NULL, $password, $level=1)
   {
     
@@ -337,7 +370,17 @@ class Account
     return true;
     
   }
-
+  
+  /**
+   * Checks whether the currently logged in user has a certain user level.
+   *
+   * When not checking the exact level,
+   * it checks whether the user level is greater than or equal to the provided level.
+   * 
+   * @param int $level The level the user should be checked against.
+   * @param boolean $exact Whether the `$level` parameter should be exactly matched.
+   * @return boolean Whether or not the user meets the level requirements.
+   */
   public function check_level($level, $exact=false)
   {
     
@@ -345,6 +388,14 @@ class Account
     
   }
   
+  /**
+   * Checks whether the currently logged in user has permission to view this page.
+   * Similar to check_level except it redirects the user if the user is not authorized.
+   * @param int $level The level the user should be checked against.
+   * @param boolean $exact Whether the `$level` parameter should be exactly matched.
+   * @return void
+   * @throws \exception\User If the redirect target requires the user to be logged in as well.
+   */
   public function page_authorisation($level, $exact=false)
   {
 

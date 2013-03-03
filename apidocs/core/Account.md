@@ -1,7 +1,7 @@
 # core\Account
 [API index](../API-index.md)
 
-
+Handles the basic account operations and manages the users session.
 
 
 
@@ -18,13 +18,13 @@
 * [`public mixed $user`](#property-user)
 
 **Methods**
-* [`public mixed __construct()`](#method-__construct)
-* [`public mixed check_level($level, $exact)`](#method-check_level)
-* [`public mixed init()`](#method-init)
-* [`public mixed login($email, $pass, $expiry_date)`](#method-login)
-* [`public mixed logout()`](#method-logout)
-* [`public mixed page_authorisation($level, $exact)`](#method-page_authorisation)
-* [`public mixed register($email, $username, $password, $level)`](#method-register)
+* [`public boolean check_level(int $level, boolean $exact)`](#method-check_level)
+* [`public void init()`](#method-init)
+* [`public boolean is_login()`](#method-is_login)
+* [`public \core\Account login(String $email, String $pass, $expiry_date)`](#method-login)
+* [`public \core\Account logout()`](#method-logout)
+* [`public void page_authorisation(int $level, boolean $exact)`](#method-page_authorisation)
+* [`public boolean register(String $email, String $username, String $password, int $level)`](#method-register)
 
 
 
@@ -42,7 +42,7 @@ In class: [core\Account](#top)
 public mixed $user
 ```
 
-
+The basic user information for the current session.
 
 
 
@@ -52,38 +52,33 @@ public mixed $user
 # Methods
 
 
-## Method `__construct`
-In class: [core\Account](#top)
-
-```
-mixed core\Account::__construct()
-```
-
-
-
-
-
-* Visibility: **public**
-
-
-
 ## Method `check_level`
 In class: [core\Account](#top)
 
 ```
-mixed core\Account::check_level($level, $exact)
+boolean core\Account::check_level(int $level, boolean $exact)
 ```
 
+Checks whether the currently logged in user has a certain user level.
 
-
-
+When not checking the exact level,
+it checks whether the user level is greater than or equal to the provided level
 
 * Visibility: **public**
 
 #### Arguments
 
-* $level **mixed**
-* $exact **mixed**
+* $level **int** - The level the user should be checked against.
+* $exact **boolean** - Whether the `$level` parameter should be exactly matched.
+
+
+#### Return value
+
+**boolean** - Whether or not the user meets the level requirements.
+
+
+
+
 
 
 
@@ -91,14 +86,37 @@ mixed core\Account::check_level($level, $exact)
 In class: [core\Account](#top)
 
 ```
-mixed core\Account::init()
+void core\Account::init()
 ```
 
+Initializes the class.
 
-
-
+Checks if the user is logged in.
+Updates session expiry.
+Logs out the user if session expired
 
 * Visibility: **public**
+
+
+
+
+
+
+## Method `is_login`
+In class: [core\Account](#top)
+
+```
+boolean core\Account::is_login()
+```
+
+Returns true if the user is logged in.
+
+Short for $this->user->check('login')
+
+* Visibility: **public**
+
+
+
 
 
 
@@ -106,10 +124,10 @@ mixed core\Account::init()
 In class: [core\Account](#top)
 
 ```
-mixed core\Account::login($email, $pass, $expiry_date)
+\core\Account core\Account::login(String $email, String $pass, $expiry_date)
 ```
 
-
+Performs a login attempt for the current session.
 
 
 
@@ -117,9 +135,24 @@ mixed core\Account::login($email, $pass, $expiry_date)
 
 #### Arguments
 
-* $email **mixed**
-* $pass **mixed**
+* $email **String** - The email or username of the user to log in with.
+* $pass **String** - The plaintext password to log in with.
 * $expiry_date **mixed**
+
+
+#### Return value
+
+**[core\Account](../core/Account.md)** - Returns $this for chaining.
+
+
+
+
+#### Throws exceptions
+
+* **[exception\Validation](../exception/Validation.md)** - If the IP address of the remote connection is blacklisted.
+* **[exception\EmptyResult](../exception/EmptyResult.md)** - If the user account is not found.
+* **[exception\Validation](../exception/Validation.md)** - If the password is invalid.
+
 
 
 
@@ -127,14 +160,23 @@ mixed core\Account::login($email, $pass, $expiry_date)
 In class: [core\Account](#top)
 
 ```
-mixed core\Account::logout()
+\core\Account core\Account::logout()
 ```
 
-
+Logs out the current user.
 
 
 
 * Visibility: **public**
+
+
+#### Return value
+
+**[core\Account](../core/Account.md)** - Returns $this for chaining.
+
+
+
+
 
 
 
@@ -142,19 +184,26 @@ mixed core\Account::logout()
 In class: [core\Account](#top)
 
 ```
-mixed core\Account::page_authorisation($level, $exact)
+void core\Account::page_authorisation(int $level, boolean $exact)
 ```
 
+Checks whether the currently logged in user has permission to view this page.
 
-
-
+Similar to check_level except it redirects the user if the user is not authorized
 
 * Visibility: **public**
 
 #### Arguments
 
-* $level **mixed**
-* $exact **mixed**
+* $level **int** - The level the user should be checked against.
+* $exact **boolean** - Whether the `$level` parameter should be exactly matched.
+
+
+
+#### Throws exceptions
+
+* **[exception\User](../exception/User.md)** - If the redirect target requires the user to be logged in as well.
+
 
 
 
@@ -162,10 +211,10 @@ mixed core\Account::page_authorisation($level, $exact)
 In class: [core\Account](#top)
 
 ```
-mixed core\Account::register($email, $username, $password, $level)
+boolean core\Account::register(String $email, String $username, String $password, int $level)
 ```
 
-
+Registers a new user account.
 
 
 
@@ -173,9 +222,18 @@ mixed core\Account::register($email, $username, $password, $level)
 
 #### Arguments
 
-* $email **mixed**
-* $username **mixed**
-* $password **mixed**
-* $level **mixed**
+* $email **String** - The email address to set.
+* $username **String** - The optional username to set.
+* $password **String** - The password to set.
+* $level **int** - The user level to set. (1 = Normal user, 2 = Administrator)
+
+
+#### Return value
+
+**boolean** - Whether registering the user was successful.
+
+
+
+
 
 

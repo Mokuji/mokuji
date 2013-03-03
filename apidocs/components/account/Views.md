@@ -18,6 +18,7 @@
 
 **Methods**
 * [`protected mixed accounts()`](#method-accounts)
+* [`protected mixed claim_account()`](#method-claim_account)
 * [`protected mixed email_user_created()`](#method-email_user_created)
 * [`protected mixed email_user_invited($options)`](#method-email_user_invited)
 * [`protected mixed email_user_password_reset($options)`](#method-email_user_password_reset)
@@ -131,6 +132,9 @@ mixed dependencies\BaseComponent::__construct()
 
 
 
+
+
+
 ## Method `_call`
 In class: [components\account\Views](#top)
 
@@ -149,6 +153,9 @@ mixed dependencies\BaseComponent::_call($controller, array $args)
 
 * $controller **mixed**
 * $args **array**
+
+
+
 
 
 
@@ -173,6 +180,9 @@ mixed dependencies\BaseComponent::call($controller, $data)
 
 
 
+
+
+
 ## Method `filters`
 In class: [components\account\Views](#top)
 
@@ -186,6 +196,9 @@ mixed dependencies\BaseComponent::filters()
 
 * Visibility: **public**
 * This method is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
+
+
+
 
 
 
@@ -210,6 +223,9 @@ mixed dependencies\BaseViews::get_html($view, $options)
 
 
 
+
+
+
 ## Method `helper`
 In class: [components\account\Views](#top)
 
@@ -230,6 +246,9 @@ mixed dependencies\BaseComponent::helper($controller)
 
 
 
+
+
+
 ## Method `model`
 In class: [components\account\Views](#top)
 
@@ -247,6 +266,9 @@ mixed dependencies\BaseComponent::model($model_name)
 #### Arguments
 
 * $model_name **mixed**
+
+
+
 
 
 
@@ -271,6 +293,9 @@ mixed dependencies\BaseComponent::module($module_name, $options)
 
 
 
+
+
+
 ## Method `section`
 In class: [components\account\Views](#top)
 
@@ -289,6 +314,9 @@ mixed dependencies\BaseComponent::section($section, $options)
 
 * $section **mixed**
 * $options **mixed**
+
+
+
 
 
 
@@ -313,6 +341,9 @@ mixed dependencies\BaseComponent::table($model_name, $id)
 
 
 
+
+
+
 ## Method `view`
 In class: [components\account\Views](#top)
 
@@ -334,6 +365,9 @@ mixed dependencies\BaseComponent::view($module_name, $options)
 
 
 
+
+
+
 ## Method `accounts`
 In class: [components\account\Views](#top)
 
@@ -349,6 +383,27 @@ mixed components\account\Views::accounts()
 
 
 
+
+
+
+## Method `claim_account`
+In class: [components\account\Views](#top)
+
+```
+mixed components\account\Views::claim_account()
+```
+
+
+
+
+
+* Visibility: **protected**
+
+
+
+
+
+
 ## Method `email_user_created`
 In class: [components\account\Views](#top)
 
@@ -361,6 +416,9 @@ mixed components\account\Views::email_user_created()
 
 
 * Visibility: **protected**
+
+
+
 
 
 
@@ -383,6 +441,9 @@ mixed components\account\Views::email_user_invited($options)
 
 
 
+
+
+
 ## Method `email_user_password_reset`
 In class: [components\account\Views](#top)
 
@@ -402,6 +463,9 @@ mixed components\account\Views::email_user_password_reset($options)
 
 
 
+
+
+
 ## Method `profile`
 In class: [components\account\Views](#top)
 
@@ -417,6 +481,9 @@ mixed components\account\Views::profile()
 
 
 
+
+
+
 ## Method `user`
 In class: [components\account\Views](#top)
 
@@ -429,5 +496,8 @@ mixed components\account\Views::user()
 
 
 * Visibility: **protected**
+
+
+
 
 

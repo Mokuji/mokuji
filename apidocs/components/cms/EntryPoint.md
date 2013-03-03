@@ -126,6 +126,9 @@ mixed dependencies\BaseComponent::__construct()
 
 
 
+
+
+
 ## Method `_call`
 In class: [components\cms\EntryPoint](#top)
 
@@ -144,6 +147,9 @@ mixed dependencies\BaseComponent::_call($controller, array $args)
 
 * $controller **mixed**
 * $args **array**
+
+
+
 
 
 
@@ -168,6 +174,9 @@ mixed dependencies\BaseComponent::call($controller, $data)
 
 
 
+
+
+
 ## Method `entrance`
 In class: [components\cms\EntryPoint](#top)
 
@@ -180,6 +189,9 @@ mixed components\cms\EntryPoint::entrance()
 
 
 * Visibility: **public**
+
+
+
 
 
 
@@ -196,6 +208,9 @@ mixed dependencies\BaseComponent::filters()
 
 * Visibility: **public**
 * This method is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
+
+
+
 
 
 
@@ -219,6 +234,9 @@ mixed dependencies\BaseComponent::helper($controller)
 
 
 
+
+
+
 ## Method `model`
 In class: [components\cms\EntryPoint](#top)
 
@@ -236,6 +254,9 @@ mixed dependencies\BaseComponent::model($model_name)
 #### Arguments
 
 * $model_name **mixed**
+
+
+
 
 
 
@@ -260,6 +281,9 @@ mixed dependencies\BaseComponent::module($module_name, $options)
 
 
 
+
+
+
 ## Method `section`
 In class: [components\cms\EntryPoint](#top)
 
@@ -278,6 +302,9 @@ mixed dependencies\BaseComponent::section($section, $options)
 
 * $section **mixed**
 * $options **mixed**
+
+
+
 
 
 
@@ -302,6 +329,9 @@ mixed dependencies\BaseComponent::table($model_name, $id)
 
 
 
+
+
+
 ## Method `template`
 In class: [components\cms\EntryPoint](#top)
 
@@ -315,6 +345,9 @@ mixed dependencies\BaseEntryPoint::template()
 
 * Visibility: **public**
 * This method is defined by [dependencies\BaseEntryPoint](../../dependencies/BaseEntryPoint.md)
+
+
+
 
 
 
@@ -336,5 +369,8 @@ mixed dependencies\BaseComponent::view($module_name, $options)
 
 * $module_name **mixed**
 * $options **mixed**
+
+
+
 
 

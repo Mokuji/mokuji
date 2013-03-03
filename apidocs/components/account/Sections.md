@@ -134,6 +134,9 @@ mixed dependencies\BaseComponent::__construct()
 
 
 
+
+
+
 ## Method `_call`
 In class: [components\account\Sections](#top)
 
@@ -152,6 +155,9 @@ mixed dependencies\BaseComponent::_call($controller, array $args)
 
 * $controller **mixed**
 * $args **array**
+
+
+
 
 
 
@@ -176,6 +182,9 @@ mixed dependencies\BaseComponent::call($controller, $data)
 
 
 
+
+
+
 ## Method `filters`
 In class: [components\account\Sections](#top)
 
@@ -189,6 +198,9 @@ mixed dependencies\BaseComponent::filters()
 
 * Visibility: **public**
 * This method is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
+
+
+
 
 
 
@@ -213,6 +225,9 @@ mixed dependencies\BaseViews::get_html($view, $options)
 
 
 
+
+
+
 ## Method `helper`
 In class: [components\account\Sections](#top)
 
@@ -233,6 +248,9 @@ mixed dependencies\BaseComponent::helper($controller)
 
 
 
+
+
+
 ## Method `model`
 In class: [components\account\Sections](#top)
 
@@ -250,6 +268,9 @@ mixed dependencies\BaseComponent::model($model_name)
 #### Arguments
 
 * $model_name **mixed**
+
+
+
 
 
 
@@ -274,6 +295,9 @@ mixed dependencies\BaseComponent::module($module_name, $options)
 
 
 
+
+
+
 ## Method `section`
 In class: [components\account\Sections](#top)
 
@@ -292,6 +316,9 @@ mixed dependencies\BaseComponent::section($section, $options)
 
 * $section **mixed**
 * $options **mixed**
+
+
+
 
 
 
@@ -316,6 +343,9 @@ mixed dependencies\BaseComponent::table($model_name, $id)
 
 
 
+
+
+
 ## Method `view`
 In class: [components\account\Sections](#top)
 
@@ -337,6 +367,9 @@ mixed dependencies\BaseComponent::view($module_name, $options)
 
 
 
+
+
+
 ## Method `compose_mail`
 In class: [components\account\Sections](#top)
 
@@ -352,6 +385,9 @@ mixed components\account\Sections::compose_mail()
 
 
 
+
+
+
 ## Method `edit_user`
 In class: [components\account\Sections](#top)
 
@@ -364,6 +400,9 @@ mixed components\account\Sections::edit_user()
 
 
 * Visibility: **protected**
+
+
+
 
 
 
@@ -386,6 +425,9 @@ mixed components\account\Sections::edit_user_group($options)
 
 
 
+
+
+
 ## Method `execute_import_users`
 In class: [components\account\Sections](#top)
 
@@ -398,6 +440,9 @@ mixed components\account\Sections::execute_import_users()
 
 
 * Visibility: **protected**
+
+
+
 
 
 
@@ -416,6 +461,9 @@ mixed components\account\Sections::group_list()
 
 
 
+
+
+
 ## Method `import_users`
 In class: [components\account\Sections](#top)
 
@@ -428,6 +476,9 @@ mixed components\account\Sections::import_users()
 
 
 * Visibility: **protected**
+
+
+
 
 
 
@@ -446,6 +497,9 @@ mixed components\account\Sections::login_form()
 
 
 
+
+
+
 ## Method `profile`
 In class: [components\account\Sections](#top)
 
@@ -461,6 +515,9 @@ mixed components\account\Sections::profile()
 
 
 
+
+
+
 ## Method `user_list`
 In class: [components\account\Sections](#top)
 
@@ -473,5 +530,8 @@ mixed components\account\Sections::user_list()
 
 
 * Visibility: **protected**
+
+
+
 
 

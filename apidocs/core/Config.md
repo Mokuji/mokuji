@@ -1,7 +1,7 @@
 # core\Config
 [API index](../API-index.md)
 
-
+Provides core features to manage and access configuration variables.
 
 
 
@@ -42,7 +42,7 @@ In class: [core\Config](#top)
 private mixed $site
 ```
 
-
+Holds site related configuration variables.
 
 
 
@@ -56,7 +56,7 @@ In class: [core\Config](#top)
 private mixed $system
 ```
 
-
+Holds system related configuration variables.
 
 
 
@@ -70,7 +70,7 @@ In class: [core\Config](#top)
 private mixed $user
 ```
 
-
+Holds user configured configuration variables.
 
 
 
@@ -87,11 +87,14 @@ In class: [core\Config](#top)
 mixed core\Config::__construct()
 ```
 
-
+Initializes the class.
 
 
 
 * Visibility: **public**
+
+
+
 
 
 
@@ -102,11 +105,14 @@ In class: [core\Config](#top)
 mixed core\Config::init()
 ```
 
-
+When we're not in the installation environment, loads user configuration from the database.
 
 
 
 * Visibility: **public**
+
+
+
 
 
 
@@ -117,11 +123,17 @@ In class: [core\Config](#top)
 mixed core\Config::site()
 ```
 
+Gets or sets site related configuration variables.
 
-
-
+Usage:
+  0 params returns Data of all configuration variables.
+  1 param: String $key The key for the variable to get.
+  2 params: String $key The key of the variable to set. mixed $val The value to set
 
 * Visibility: **public**
+
+
+
 
 
 
@@ -132,11 +144,17 @@ In class: [core\Config](#top)
 mixed core\Config::system()
 ```
 
+Gets or sets system related configuration variables.
 
-
-
+Usage:
+  0 params returns Data of all configuration variables.
+  1 param: String $key The key for the variable to get.
+  2 params: String $key The key of the variable to set. mixed $val The value to set
 
 * Visibility: **public**
+
+
+
 
 
 
@@ -147,10 +165,17 @@ In class: [core\Config](#top)
 mixed core\Config::user()
 ```
 
+Gets or sets user configured configuration variables.
 
-
-
+Usage:
+  0 params returns Data of all configuration variables.
+  1 param: String $key The key for the variable to get.
+  2 params: String $key The key of the variable to set. mixed $val The value to set.
+  3 params: String $key The key of the variable to set. mixed $val The value to set. int $lang The optional language ID for which to store the value in the database
 
 * Visibility: **public**
+
+
+
 
 

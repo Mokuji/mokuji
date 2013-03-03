@@ -82,6 +82,9 @@ mixed exception\Exception::__construct()
 
 
 
+
+
+
 ## Method `getExCode`
 In class: [exception\Exception](#top)
 
@@ -97,6 +100,9 @@ mixed exception\Exception::getExCode()
 
 
 
+
+
+
 ## Method `getPrev`
 In class: [exception\Exception](#top)
 
@@ -109,6 +115,9 @@ mixed exception\Exception::getPrev()
 
 
 * Visibility: **public**
+
+
+
 
 
 
@@ -128,5 +137,8 @@ mixed exception\Exception::setPrev(\exception\Exception $previous)
 #### Arguments
 
 * $previous **[exception\Exception](../exception/Exception.md)**
+
+
+
 
 

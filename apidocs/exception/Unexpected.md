@@ -86,6 +86,9 @@ mixed exception\Exception::__construct()
 
 
 
+
+
+
 ## Method `getExCode`
 In class: [exception\Unexpected](#top)
 
@@ -102,6 +105,9 @@ mixed exception\Exception::getExCode()
 
 
 
+
+
+
 ## Method `getPrev`
 In class: [exception\Unexpected](#top)
 
@@ -115,6 +121,9 @@ mixed exception\Exception::getPrev()
 
 * Visibility: **public**
 * This method is defined by [exception\Exception](../exception/Exception.md)
+
+
+
 
 
 
@@ -135,5 +144,8 @@ mixed exception\Exception::setPrev(\exception\Exception $previous)
 #### Arguments
 
 * $previous **[exception\Exception](../exception/Exception.md)**
+
+
+
 
 

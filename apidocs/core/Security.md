@@ -14,21 +14,21 @@
 
 ## Class index
 **Constants**
-* [`  OUTPUT_BASE64`](#constant-output_base64)
-* [`  OUTPUT_BINARY`](#constant-output_binary)
-* [`  OUTPUT_DECIMAL`](#constant-output_decimal)
-* [`  OUTPUT_HEX`](#constant-output_hex)
-* [`  PASSWORD_STRENGTH_ACCEPTABLE`](#constant-password_strength_acceptable)
-* [`  PASSWORD_STRENGTH_STRONG`](#constant-password_strength_strong)
-* [`  PASSWORD_STRENGTH_VERY_WEAK`](#constant-password_strength_very_weak)
-* [`  PASSWORD_STRENGTH_WEAK`](#constant-password_strength_weak)
+* [`OUTPUT_BASE64`](#constant-output_base64)
+* [`OUTPUT_BINARY`](#constant-output_binary)
+* [`OUTPUT_DECIMAL`](#constant-output_decimal)
+* [`OUTPUT_HEX`](#constant-output_hex)
+* [`PASSWORD_STRENGTH_ACCEPTABLE`](#constant-password_strength_acceptable)
+* [`PASSWORD_STRENGTH_STRONG`](#constant-password_strength_strong)
+* [`PASSWORD_STRENGTH_VERY_WEAK`](#constant-password_strength_very_weak)
+* [`PASSWORD_STRENGTH_WEAK`](#constant-password_strength_weak)
 
 **Properties**
 * [`public static mixed $HASH_DEFAULT`](#property-hash_default)
 * [`public static mixed $HASH_PREFERENCES`](#property-hash_preferences)
 
 **Methods**
-* [`public Boolean get_password_strength(String $password)`](#method-get_password_strength)
+* [`public int get_password_strength(String $password)`](#method-get_password_strength)
 * [`public mixed hash(string $input, string $algorithm, int $output_type)`](#method-hash)
 * [`public string pref_hash_algo(int $bits, bool $inclusive, $result_bits)`](#method-pref_hash_algo)
 * [`public string random_string(int $length, int $output_type, bool $secure)`](#method-random_string)
@@ -171,7 +171,7 @@ public mixed $HASH_PREFERENCES = array('128' => array('ripemd128', 'snefru'), '1
 In class: [core\Security](#top)
 
 ```
-Boolean core\Security::get_password_strength(String $password)
+int core\Security::get_password_strength(String $password)
 ```
 
 Checks the password supplied is strong enough.
@@ -183,6 +183,15 @@ Checks the password supplied is strong enough.
 #### Arguments
 
 * $password **String** - The password to get the strength of.
+
+
+#### Return value
+
+**int** - Returns an integer indicating the password strength. See the constants of this class.
+
+
+
+
 
 
 
@@ -207,6 +216,9 @@ Generates a hash using php's hash() function.
 
 
 
+
+
+
 ## Method `pref_hash_algo`
 In class: [core\Security](#top)
 
@@ -216,13 +228,13 @@ string core\Security::pref_hash_algo(int $bits, bool $inclusive, $result_bits)
 
 Gets the prefered hashing algorithm for a certain amount of bits worth of entropy.
 
-<p>When setting inclusive = false that means:
+When setting inclusive = false that means:
  The prefered algorithm that is used to it's optimum with the given entropy.
  For instance: given 230 bits of entropy the best 224 bits algorithm is picked.</p>
 
 <p>When setting inclusive = true that means:
  The prefered algorithm that is able to contain the full entropy available.
- For instance: given 230 bits of entropy the best 256 bits algorithm is picked.</p>
+ For instance: given 230 bits of entropy the best 256 bits algorithm is picked
 
 * Visibility: **public**
 
@@ -231,6 +243,15 @@ Gets the prefered hashing algorithm for a certain amount of bits worth of entrop
 * $bits **int** - Amount of bits of entropy.
 * $inclusive **bool** - Whether or not to use the full entropy.
 * $result_bits **mixed**
+
+
+#### Return value
+
+**string** - Hashing algorithm.
+
+
+
+
 
 
 
@@ -254,6 +275,15 @@ Generates a random string.
 * $secure **bool** - Use a cryptographically secure method of getting these random bits.
 
 
+#### Return value
+
+**string** - A (pseudo) random string.
+
+
+
+
+
+
 
 ## Method `_conv_rate`
 In class: [core\Security](#top)
@@ -271,6 +301,9 @@ Get the conversion rate in characters from bytes.
 #### Arguments
 
 * $output_type **mixed**
+
+
+
 
 
 
@@ -294,6 +327,9 @@ Converts binary strings to other notations.
 
 
 
+
+
+
 ## Method `_random_bits`
 In class: [core\Security](#top)
 
@@ -312,5 +348,14 @@ Generate pseudo random bits using the best available method.
 * $bits **int** - Amount of random bits to generate.
 * $secure **bool** - Use a cryptographically secure method of getting these random bits.
 * $output_type **int** - The output type for the generated bits.
+
+
+#### Return value
+
+**string** - A (pseudo) random string.
+
+
+
+
 
 

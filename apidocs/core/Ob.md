@@ -144,6 +144,9 @@ mixed core\Ob::__construct()
 
 
 
+
+
+
 ## Method `__destruct`
 In class: [core\Ob](#top)
 
@@ -156,6 +159,9 @@ mixed core\Ob::__destruct()
 
 
 * Visibility: **public**
+
+
+
 
 
 
@@ -180,6 +186,9 @@ mixed core\Ob::add($content, $type, $id)
 
 
 
+
+
+
 ## Method `end`
 In class: [core\Ob](#top)
 
@@ -192,6 +201,9 @@ mixed core\Ob::end()
 
 
 * Visibility: **public**
+
+
+
 
 
 
@@ -214,6 +226,9 @@ mixed core\Ob::get($type)
 
 
 
+
+
+
 ## Method `link`
 In class: [core\Ob](#top)
 
@@ -226,6 +241,9 @@ mixed core\Ob::link()
 
 
 * Visibility: **public**
+
+
+
 
 
 
@@ -244,6 +262,9 @@ mixed core\Ob::meta()
 
 
 
+
+
+
 ## Method `script`
 In class: [core\Ob](#top)
 
@@ -259,6 +280,9 @@ mixed core\Ob::script()
 
 
 
+
+
+
 ## Method `style`
 In class: [core\Ob](#top)
 
@@ -271,5 +295,8 @@ mixed core\Ob::style()
 
 
 * Visibility: **public**
+
+
+
 
 

@@ -128,6 +128,9 @@ mixed dependencies\BaseComponent::__construct()
 
 
 
+
+
+
 ## Method `_call`
 In class: [components\text\Modules](#top)
 
@@ -146,6 +149,9 @@ mixed dependencies\BaseComponent::_call($controller, array $args)
 
 * $controller **mixed**
 * $args **array**
+
+
+
 
 
 
@@ -170,6 +176,9 @@ mixed dependencies\BaseComponent::call($controller, $data)
 
 
 
+
+
+
 ## Method `filters`
 In class: [components\text\Modules](#top)
 
@@ -183,6 +192,9 @@ mixed dependencies\BaseComponent::filters()
 
 * Visibility: **public**
 * This method is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
+
+
+
 
 
 
@@ -207,6 +219,9 @@ mixed dependencies\BaseViews::get_html($view, $options)
 
 
 
+
+
+
 ## Method `helper`
 In class: [components\text\Modules](#top)
 
@@ -227,6 +242,9 @@ mixed dependencies\BaseComponent::helper($controller)
 
 
 
+
+
+
 ## Method `model`
 In class: [components\text\Modules](#top)
 
@@ -244,6 +262,9 @@ mixed dependencies\BaseComponent::model($model_name)
 #### Arguments
 
 * $model_name **mixed**
+
+
+
 
 
 
@@ -268,6 +289,9 @@ mixed dependencies\BaseComponent::module($module_name, $options)
 
 
 
+
+
+
 ## Method `section`
 In class: [components\text\Modules](#top)
 
@@ -286,6 +310,9 @@ mixed dependencies\BaseComponent::section($section, $options)
 
 * $section **mixed**
 * $options **mixed**
+
+
+
 
 
 
@@ -310,6 +337,9 @@ mixed dependencies\BaseComponent::table($model_name, $id)
 
 
 
+
+
+
 ## Method `view`
 In class: [components\text\Modules](#top)
 
@@ -328,6 +358,9 @@ mixed dependencies\BaseComponent::view($module_name, $options)
 
 * $module_name **mixed**
 * $options **mixed**
+
+
+
 
 
 
@@ -350,6 +383,9 @@ mixed components\text\Modules::latest_news($options)
 
 
 
+
+
+
 ## Method `search_bar`
 In class: [components\text\Modules](#top)
 
@@ -362,6 +398,9 @@ mixed components\text\Modules::search_bar()
 
 
 * Visibility: **protected**
+
+
+
 
 
 
@@ -381,5 +420,8 @@ mixed components\text\Modules::text($options)
 #### Arguments
 
 * $options **mixed**
+
+
+
 
 

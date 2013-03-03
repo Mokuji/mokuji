@@ -1,12 +1,22 @@
 <?php if(!defined('TX')) die('No direct access.');
 
-//Superclass
+/**
+ * The Superclass that allows for the tx() notation of loading core classes. Your main gateway of expression in the Tuxion CMS.
+ */
 class Superclass
 {
 	
+  /**
+   * The private array that holds the core class singletons and an instance of itself.
+   */
   private static $system=array();
 	
-	//singleton selfload
+  /**
+   * Retrieves the superclass singleton instance.
+   * Note: uses lazy initiation.
+   * @return \Superclass
+   * @throws \exception\Unexpected
+   */
 	public static function & get_instance()
 	{
 		if(!array_key_exists('superobject', self::$system)){
@@ -17,10 +27,16 @@ class Superclass
 		return self::$system['superobject'];
 	}
 	
+  /**
+   * Loads the core class with the given name.
+   * @param String $class The name of the core class to load. (Case sensitive)
+   * @param Array $args An optional array of arguments to supply to the `init` function if this is the first time it loads.
+   * @return Object The singleton object of the requested class.
+   * @throws \exception\FileMissing If the core class could not be found.
+   */
 	public function load_class($class, $args=array())
 	{
 		
-    
     if(empty($class)){
       throw new \exception\InvalidArgument('Class name was empty');
     }

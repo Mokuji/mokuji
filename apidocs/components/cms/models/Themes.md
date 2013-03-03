@@ -26,6 +26,7 @@
 **Properties**
 * [`protected static mixed $generatedLabels`](#property-generatedlabels)
 * [`protected static mixed $labels`](#property-labels)
+* [`protected static mixed $relation_preferences`](#property-relation_preferences)
 * [`protected static mixed $relations_by_column`](#property-relations_by_column)
 * [`protected static mixed $validate`](#property-validate)
 
@@ -115,6 +116,7 @@
 * [`public mixed parse($regex, $flags)`](#method-parse)
 * [`public mixed pks($get_keys)`](#method-pks)
 * [`public mixed push()`](#method-push)
+* [`public mixed relation_preferences()`](#method-relation_preferences)
 * [`public array relations_by_column(string $column)`](#method-relations_by_column)
 * [`public mixed render_form($id, $action, array $options)`](#method-render_form)
 * [`public mixed reverse()`](#method-reverse)
@@ -169,6 +171,22 @@ In class: [components\cms\models\Themes](#top)
 
 ```
 protected mixed $labels = array()
+```
+
+
+
+
+
+* Visibility: **protected**
+* This property is **static**.
+* This property is defined by [dependencies\BaseModel](../../../dependencies/BaseModel.md)
+
+
+## Property `$relation_preferences`
+In class: [components\cms\models\Themes](#top)
+
+```
+protected mixed $relation_preferences = array()
 ```
 
 
@@ -266,6 +284,9 @@ mixed dependencies\BaseModel::model_data($get)
 
 
 
+
+
+
 ## Method `table_data`
 In class: [components\cms\models\Themes](#top)
 
@@ -288,6 +309,9 @@ mixed dependencies\BaseModel::table_data($get, $set)
 
 
 
+
+
+
 ## Method `create_table_data`
 In class: [components\cms\models\Themes](#top)
 
@@ -305,6 +329,9 @@ mixed dependencies\BaseModel::create_table_data()
 
 
 
+
+
+
 ## Method `__clone`
 In class: [components\cms\models\Themes](#top)
 
@@ -318,6 +345,9 @@ mixed dependencies\Data::__clone()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../../../dependencies/Data.md)
+
+
+
 
 
 
@@ -343,6 +373,9 @@ mixed dependencies\Data::__construct($data, $context, $key)
 
 
 
+
+
+
 ## Method `__destruct`
 In class: [components\cms\models\Themes](#top)
 
@@ -356,6 +389,9 @@ mixed dependencies\Data::__destruct()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../../../dependencies/Data.md)
+
+
+
 
 
 
@@ -376,6 +412,9 @@ mixed dependencies\Data::__get($key)
 #### Arguments
 
 * $key **mixed**
+
+
+
 
 
 
@@ -400,6 +439,9 @@ mixed dependencies\Data::__set($key, $val)
 
 
 
+
+
+
 ## Method `__toString`
 In class: [components\cms\models\Themes](#top)
 
@@ -413,6 +455,9 @@ mixed dependencies\Data::__toString()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../../../dependencies/Data.md)
+
+
+
 
 
 
@@ -436,6 +481,9 @@ mixed dependencies\Data::__unset($key)
 
 
 
+
+
+
 ## Method `_attempt_unserialize`
 In class: [components\cms\models\Themes](#top)
 
@@ -452,6 +500,9 @@ mixed dependencies\Data::_attempt_unserialize()
 
 
 
+
+
+
 ## Method `_clear_context`
 In class: [components\cms\models\Themes](#top)
 
@@ -465,6 +516,9 @@ mixed dependencies\Data::_clear_context()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../../../dependencies/Data.md)
+
+
+
 
 
 
@@ -489,6 +543,9 @@ mixed dependencies\Data::_set_context($context, $key)
 
 
 
+
+
+
 ## Method `_success`
 In class: [components\cms\models\Themes](#top)
 
@@ -505,6 +562,9 @@ mixed dependencies\Successable::_success()
 
 
 
+
+
+
 ## Method `add_rules`
 In class: [components\cms\models\Themes](#top)
 
@@ -518,6 +578,9 @@ mixed dependencies\Data::add_rules()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../../../dependencies/Data.md)
+
+
+
 
 
 
@@ -541,6 +604,9 @@ mixed dependencies\BaseModel::ai($get_key)
 
 
 
+
+
+
 ## Method `all`
 In class: [components\cms\models\Themes](#top)
 
@@ -558,6 +624,9 @@ mixed dependencies\Data::all($callback)
 #### Arguments
 
 * $callback **mixed**
+
+
+
 
 
 
@@ -582,6 +651,9 @@ mixed dependencies\Successable::and_is($check, $callback)
 
 
 
+
+
+
 ## Method `and_not`
 In class: [components\cms\models\Themes](#top)
 
@@ -599,6 +671,9 @@ mixed dependencies\Successable::and_not($check)
 #### Arguments
 
 * $check **mixed**
+
+
+
 
 
 
@@ -622,6 +697,9 @@ mixed dependencies\Data::any($callback)
 
 
 
+
+
+
 ## Method `as_array`
 In class: [components\cms\models\Themes](#top)
 
@@ -642,6 +720,9 @@ mixed dependencies\Data::as_array($serialized)
 
 
 
+
+
+
 ## Method `as_form`
 In class: [components\cms\models\Themes](#top)
 
@@ -651,7 +732,7 @@ mixed dependencies\BaseModel::as_form($id)
 
 Create an HTML form for updating this model.
 
-<p>as_form(&amp;$id[, $action][, $columns])</p>
+as_form(&amp;$id[, $action][, $columns]
 
 * Visibility: **public**
 * This method is defined by [dependencies\BaseModel](../../../dependencies/BaseModel.md)
@@ -659,6 +740,9 @@ Create an HTML form for updating this model.
 #### Arguments
 
 * $id **mixed**
+
+
+
 
 
 
@@ -683,6 +767,9 @@ mixed dependencies\Data::as_json($flags, $options)
 
 
 
+
+
+
 ## Method `as_list`
 In class: [components\cms\models\Themes](#top)
 
@@ -696,6 +783,9 @@ mixed dependencies\Data::as_list()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../../../dependencies/Data.md)
+
+
+
 
 
 
@@ -715,6 +805,9 @@ mixed dependencies\Data::as_options()
 
 
 
+
+
+
 ## Method `as_rlist`
 In class: [components\cms\models\Themes](#top)
 
@@ -728,6 +821,9 @@ mixed dependencies\Data::as_rlist()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../../../dependencies/Data.md)
+
+
+
 
 
 
@@ -747,6 +843,9 @@ mixed dependencies\Data::as_table()
 
 
 
+
+
+
 ## Method `back`
 In class: [components\cms\models\Themes](#top)
 
@@ -760,6 +859,9 @@ mixed dependencies\Data::back()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../../../dependencies/Data.md)
+
+
+
 
 
 
@@ -783,6 +885,9 @@ mixed dependencies\Data::become(\dependencies\Data $data)
 
 
 
+
+
+
 ## Method `check`
 In class: [components\cms\models\Themes](#top)
 
@@ -803,6 +908,9 @@ mixed dependencies\Data::check($node_name)
 
 
 
+
+
+
 ## Method `clear`
 In class: [components\cms\models\Themes](#top)
 
@@ -816,6 +924,9 @@ mixed dependencies\Data::clear()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../../../dependencies/Data.md)
+
+
+
 
 
 
@@ -835,6 +946,9 @@ mixed dependencies\BaseModel::component()
 
 
 
+
+
+
 ## Method `convert`
 In class: [components\cms\models\Themes](#top)
 
@@ -851,6 +965,9 @@ mixed dependencies\Data::convert()
 
 
 
+
+
+
 ## Method `copy`
 In class: [components\cms\models\Themes](#top)
 
@@ -864,6 +981,9 @@ mixed dependencies\Data::copy()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../../../dependencies/Data.md)
+
+
+
 
 
 
@@ -887,6 +1007,9 @@ mixed dependencies\Data::copyto($to)
 
 
 
+
+
+
 ## Method `delete`
 In class: [components\cms\models\Themes](#top)
 
@@ -900,6 +1023,9 @@ mixed dependencies\BaseModel::delete()
 
 * Visibility: **public**
 * This method is defined by [dependencies\BaseModel](../../../dependencies/BaseModel.md)
+
+
+
 
 
 
@@ -924,6 +1050,9 @@ mixed dependencies\Data::dump($format, $l)
 
 
 
+
+
+
 ## Method `each`
 In class: [components\cms\models\Themes](#top)
 
@@ -944,6 +1073,9 @@ mixed dependencies\Data::each($callback)
 
 
 
+
+
+
 ## Method `enforce_rules`
 In class: [components\cms\models\Themes](#top)
 
@@ -961,6 +1093,9 @@ mixed dependencies\Data::enforce_rules($recursive)
 #### Arguments
 
 * $recursive **mixed**
+
+
+
 
 
 
@@ -985,6 +1120,9 @@ mixed dependencies\Data::eq($value, $callback)
 
 
 
+
+
+
 ## Method `extract`
 In class: [components\cms\models\Themes](#top)
 
@@ -1002,6 +1140,9 @@ mixed dependencies\Data::extract($id)
 #### Arguments
 
 * $id **mixed**
+
+
+
 
 
 
@@ -1025,6 +1166,9 @@ mixed dependencies\Successable::failure($callback)
 
 
 
+
+
+
 ## Method `filter`
 In class: [components\cms\models\Themes](#top)
 
@@ -1042,6 +1186,9 @@ mixed dependencies\Data::filter($callback)
 #### Arguments
 
 * $callback **mixed**
+
+
+
 
 
 
@@ -1065,6 +1212,9 @@ mixed dependencies\Data::format($format)
 
 
 
+
+
+
 ## Method `generation`
 In class: [components\cms\models\Themes](#top)
 
@@ -1078,6 +1228,9 @@ mixed dependencies\Data::generation()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../../../dependencies/Data.md)
+
+
+
 
 
 
@@ -1101,6 +1254,9 @@ mixed dependencies\Data::get($as)
 
 
 
+
+
+
 ## Method `getIterator`
 In class: [components\cms\models\Themes](#top)
 
@@ -1114,6 +1270,9 @@ mixed dependencies\Data::getIterator()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../../../dependencies/Data.md)
+
+
+
 
 
 
@@ -1138,6 +1297,9 @@ mixed dependencies\Data::gt($value, $callback)
 
 
 
+
+
+
 ## Method `having`
 In class: [components\cms\models\Themes](#top)
 
@@ -1154,6 +1316,9 @@ mixed dependencies\Data::having()
 
 
 
+
+
+
 ## Method `hdelete`
 In class: [components\cms\models\Themes](#top)
 
@@ -1167,6 +1332,9 @@ mixed dependencies\BaseModel::hdelete()
 
 * Visibility: **public**
 * This method is defined by [dependencies\BaseModel](../../../dependencies/BaseModel.md)
+
+
+
 
 
 
@@ -1191,6 +1359,9 @@ mixed dependencies\BaseModel::hsave($parent_pks, $index)
 
 
 
+
+
+
 ## Method `html_escape`
 In class: [components\cms\models\Themes](#top)
 
@@ -1211,6 +1382,9 @@ mixed dependencies\Data::html_escape($flags)
 
 
 
+
+
+
 ## Method `idx`
 In class: [components\cms\models\Themes](#top)
 
@@ -1228,6 +1402,9 @@ mixed dependencies\Data::idx($key)
 #### Arguments
 
 * $key **mixed**
+
+
+
 
 
 
@@ -1252,6 +1429,9 @@ mixed dependencies\Successable::is($check, $callback)
 
 
 
+
+
+
 ## Method `is_childnode`
 In class: [components\cms\models\Themes](#top)
 
@@ -1265,6 +1445,9 @@ mixed dependencies\Data::is_childnode()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../../../dependencies/Data.md)
+
+
+
 
 
 
@@ -1284,6 +1467,9 @@ mixed dependencies\Data::is_empty()
 
 
 
+
+
+
 ## Method `is_false`
 In class: [components\cms\models\Themes](#top)
 
@@ -1297,6 +1483,9 @@ mixed dependencies\Data::is_false()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../../../dependencies/Data.md)
+
+
+
 
 
 
@@ -1316,6 +1505,9 @@ mixed dependencies\Data::is_godnode()
 
 
 
+
+
+
 ## Method `is_leafnode`
 In class: [components\cms\models\Themes](#top)
 
@@ -1329,6 +1521,9 @@ mixed dependencies\Data::is_leafnode()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../../../dependencies/Data.md)
+
+
+
 
 
 
@@ -1348,6 +1543,9 @@ mixed dependencies\Data::is_numeric()
 
 
 
+
+
+
 ## Method `is_parent`
 In class: [components\cms\models\Themes](#top)
 
@@ -1361,6 +1559,9 @@ mixed dependencies\Data::is_parent()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../../../dependencies/Data.md)
+
+
+
 
 
 
@@ -1380,6 +1581,9 @@ mixed dependencies\Data::is_set()
 
 
 
+
+
+
 ## Method `is_true`
 In class: [components\cms\models\Themes](#top)
 
@@ -1393,6 +1597,9 @@ mixed dependencies\Data::is_true()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../../../dependencies/Data.md)
+
+
+
 
 
 
@@ -1416,6 +1623,9 @@ mixed dependencies\Data::join($separator)
 
 
 
+
+
+
 ## Method `key`
 In class: [components\cms\models\Themes](#top)
 
@@ -1429,6 +1639,9 @@ mixed dependencies\Data::key()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../../../dependencies/Data.md)
+
+
+
 
 
 
@@ -1452,6 +1665,9 @@ mixed dependencies\Data::keyof($node)
 
 
 
+
+
+
 ## Method `keys`
 In class: [components\cms\models\Themes](#top)
 
@@ -1468,6 +1684,9 @@ mixed dependencies\Data::keys()
 
 
 
+
+
+
 ## Method `ksort`
 In class: [components\cms\models\Themes](#top)
 
@@ -1481,6 +1700,15 @@ Sorts the data object by key.
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../../../dependencies/Data.md)
+
+
+#### Return value
+
+**[dependencies\Data](../../../dependencies/Data.md)** - Returns $this
+
+
+
+
 
 
 
@@ -1504,6 +1732,9 @@ mixed dependencies\BaseModel::labels($originals)
 
 
 
+
+
+
 ## Method `lowercase`
 In class: [components\cms\models\Themes](#top)
 
@@ -1517,6 +1748,9 @@ mixed dependencies\Data::lowercase()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../../../dependencies/Data.md)
+
+
+
 
 
 
@@ -1541,6 +1775,9 @@ mixed dependencies\Data::lt($value, $callback)
 
 
 
+
+
+
 ## Method `map`
 In class: [components\cms\models\Themes](#top)
 
@@ -1561,6 +1798,9 @@ mixed dependencies\Data::map($callback)
 
 
 
+
+
+
 ## Method `md5`
 In class: [components\cms\models\Themes](#top)
 
@@ -1574,6 +1814,9 @@ mixed dependencies\Data::md5()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../../../dependencies/Data.md)
+
+
+
 
 
 
@@ -1598,6 +1841,9 @@ mixed dependencies\Data::merge($val, $deep)
 
 
 
+
+
+
 ## Method `model`
 In class: [components\cms\models\Themes](#top)
 
@@ -1611,6 +1857,9 @@ mixed dependencies\BaseModel::model()
 
 * Visibility: **public**
 * This method is defined by [dependencies\BaseModel](../../../dependencies/BaseModel.md)
+
+
+
 
 
 
@@ -1631,6 +1880,9 @@ mixed dependencies\Data::moveto($to)
 #### Arguments
 
 * $to **mixed**
+
+
+
 
 
 
@@ -1655,6 +1907,9 @@ mixed dependencies\Successable::not($check, $callback)
 
 
 
+
+
+
 ## Method `offsetExists`
 In class: [components\cms\models\Themes](#top)
 
@@ -1675,6 +1930,9 @@ mixed dependencies\Data::offsetExists($key)
 
 
 
+
+
+
 ## Method `offsetGet`
 In class: [components\cms\models\Themes](#top)
 
@@ -1692,6 +1950,9 @@ mixed dependencies\Data::offsetGet($key)
 #### Arguments
 
 * $key **mixed**
+
+
+
 
 
 
@@ -1716,6 +1977,9 @@ mixed dependencies\Data::offsetSet($key, $val)
 
 
 
+
+
+
 ## Method `offsetUnset`
 In class: [components\cms\models\Themes](#top)
 
@@ -1736,6 +2000,9 @@ mixed dependencies\Data::offsetUnset($key)
 
 
 
+
+
+
 ## Method `otherwise`
 In class: [components\cms\models\Themes](#top)
 
@@ -1753,6 +2020,9 @@ mixed dependencies\Data::otherwise($default)
 #### Arguments
 
 * $default **mixed**
+
+
+
 
 
 
@@ -1777,6 +2047,9 @@ mixed dependencies\Data::parse($regex, $flags)
 
 
 
+
+
+
 ## Method `pks`
 In class: [components\cms\models\Themes](#top)
 
@@ -1797,6 +2070,9 @@ mixed dependencies\BaseModel::pks($get_keys)
 
 
 
+
+
+
 ## Method `push`
 In class: [components\cms\models\Themes](#top)
 
@@ -1810,6 +2086,28 @@ mixed dependencies\Data::push()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../../../dependencies/Data.md)
+
+
+
+
+
+
+## Method `relation_preferences`
+In class: [components\cms\models\Themes](#top)
+
+```
+mixed dependencies\BaseModel::relation_preferences()
+```
+
+
+
+
+
+* Visibility: **public**
+* This method is defined by [dependencies\BaseModel](../../../dependencies/BaseModel.md)
+
+
+
 
 
 
@@ -1830,6 +2128,22 @@ Gets the relations grouped by column name, rather than target model name.
 #### Arguments
 
 * $column **string** - Gets the result for one specific column. Defaults to returning all columns.
+
+
+#### Return value
+
+**array** - The relations of this model grouped by column name.
+   The format for this is:
+     [column_name] =&gt; array(   | For every column... (only if $column is not set)
+       [0,1,...,n] =&gt; array(   | A 0-indexed array of relations.
+         [target] =&gt; (string), | The target field of the relation.
+         [model] =&gt; (string)   | The target model of the relation.
+       )
+     )
+
+
+
+
 
 
 
@@ -1855,6 +2169,9 @@ mixed dependencies\BaseModel::render_form($id, $action, array $options)
 
 
 
+
+
+
 ## Method `reverse`
 In class: [components\cms\models\Themes](#top)
 
@@ -1868,6 +2185,9 @@ mixed dependencies\Data::reverse()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../../../dependencies/Data.md)
+
+
+
 
 
 
@@ -1887,6 +2207,9 @@ mixed dependencies\BaseModel::save()
 
 
 
+
+
+
 ## Method `serialize`
 In class: [components\cms\models\Themes](#top)
 
@@ -1900,6 +2223,9 @@ mixed dependencies\Data::serialize()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../../../dependencies/Data.md)
+
+
+
 
 
 
@@ -1919,6 +2245,9 @@ mixed dependencies\Data::serialized()
 
 
 
+
+
+
 ## Method `set`
 In class: [components\cms\models\Themes](#top)
 
@@ -1935,6 +2264,9 @@ mixed dependencies\Data::set()
 
 
 
+
+
+
 ## Method `size`
 In class: [components\cms\models\Themes](#top)
 
@@ -1948,6 +2280,9 @@ mixed dependencies\Data::size()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../../../dependencies/Data.md)
+
+
+
 
 
 
@@ -1968,6 +2303,9 @@ mixed dependencies\BaseModel::sks($get_keys)
 #### Arguments
 
 * $get_keys **mixed**
+
+
+
 
 
 
@@ -1992,6 +2330,9 @@ mixed dependencies\Data::slice($offset, $length)
 
 
 
+
+
+
 ## Method `split`
 In class: [components\cms\models\Themes](#top)
 
@@ -2009,6 +2350,9 @@ mixed dependencies\Data::split($s)
 #### Arguments
 
 * $s **mixed**
+
+
+
 
 
 
@@ -2032,6 +2376,9 @@ mixed dependencies\Successable::success($callback)
 
 
 
+
+
+
 ## Method `table`
 In class: [components\cms\models\Themes](#top)
 
@@ -2049,6 +2396,9 @@ mixed dependencies\BaseModel::table($model_name)
 #### Arguments
 
 * $model_name **mixed**
+
+
+
 
 
 
@@ -2072,6 +2422,9 @@ mixed dependencies\Data::trim($charlist)
 
 
 
+
+
+
 ## Method `type`
 In class: [components\cms\models\Themes](#top)
 
@@ -2088,6 +2441,9 @@ mixed dependencies\Data::type()
 
 
 
+
+
+
 ## Method `un_set`
 In class: [components\cms\models\Themes](#top)
 
@@ -2101,6 +2457,9 @@ mixed dependencies\Data::un_set()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../../../dependencies/Data.md)
+
+
+
 
 
 
@@ -2124,6 +2483,9 @@ mixed dependencies\Data::unserialize($d)
 
 
 
+
+
+
 ## Method `unserialized`
 In class: [components\cms\models\Themes](#top)
 
@@ -2140,6 +2502,9 @@ mixed dependencies\Data::unserialized()
 
 
 
+
+
+
 ## Method `uppercase`
 In class: [components\cms\models\Themes](#top)
 
@@ -2153,6 +2518,9 @@ mixed dependencies\Data::uppercase()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../../../dependencies/Data.md)
+
+
+
 
 
 
@@ -2177,6 +2545,9 @@ mixed dependencies\Data::validate($name, array $rules)
 
 
 
+
+
+
 ## Method `validate_model`
 In class: [components\cms\models\Themes](#top)
 
@@ -2186,9 +2557,9 @@ mixed dependencies\BaseModel::validate_model($options)
 
 Validates the whole model, based on static validation rules.
 
-<p>Options:
+Options:
    array $rules - Defines extra rules per field name.
-   bool $force_create - Tries to ignore the PK if it has an auto_increment attribute. Otherwise throws programmer exception.</p>
+   bool $force_create - Tries to ignore the PK if it has an auto_increment attribute. Otherwise throws programmer exception
 
 * Visibility: **public**
 * This method is defined by [dependencies\BaseModel](../../../dependencies/BaseModel.md)
@@ -2196,6 +2567,9 @@ Validates the whole model, based on static validation rules.
 #### Arguments
 
 * $options **mixed**
+
+
+
 
 
 
@@ -2219,6 +2593,9 @@ mixed dependencies\Data::validation_errors($names)
 
 
 
+
+
+
 ## Method `walk`
 In class: [components\cms\models\Themes](#top)
 
@@ -2239,6 +2616,9 @@ mixed dependencies\Data::walk($callback)
 
 
 
+
+
+
 ## Method `refresh_labels`
 In class: [components\cms\models\Themes](#top)
 
@@ -2252,6 +2632,9 @@ mixed dependencies\BaseModel::refresh_labels()
 
 * Visibility: **protected**
 * This method is defined by [dependencies\BaseModel](../../../dependencies/BaseModel.md)
+
+
+
 
 
 
@@ -2272,6 +2655,9 @@ mixed dependencies\Successable::_do_check($check)
 #### Arguments
 
 * $check **mixed**
+
+
+
 
 
 
@@ -2296,6 +2682,9 @@ mixed dependencies\BaseModel::get_save_data($insert, $data)
 
 
 
+
+
+
 ## Method `validate_column`
 In class: [components\cms\models\Themes](#top)
 
@@ -2314,5 +2703,8 @@ mixed dependencies\BaseModel::validate_column($column_name, $value)
 
 * $column_name **mixed**
 * $value **mixed**
+
+
+
 
 

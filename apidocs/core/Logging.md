@@ -63,6 +63,9 @@ mixed core\Logging::__construct()
 
 
 
+
+
+
 ## Method `log`
 In class: [core\Logging](#top)
 
@@ -75,6 +78,9 @@ mixed core\Logging::log()
 
 
 * Visibility: **public**
+
+
+
 
 
 
@@ -94,5 +100,8 @@ mixed core\Logging::set_logging_enabled($value)
 #### Arguments
 
 * $value **mixed**
+
+
+
 
 

@@ -2,7 +2,7 @@
 
 class Validator extends Successable
 {
-
+  
   private
     $data=null,
     $rules=array(),
@@ -431,7 +431,38 @@ class Validator extends Successable
   {
   
     try{
-      tx('Url')->parse($this->data);
+      
+      $url = $this->data;
+      
+      if(strpos($this->data, '://') === false)
+        $url = 'http://'.$url;
+      
+      $segments = tx('Url')->parse($url);
+      
+      //Must contain a domain at the very least.
+      if(!array_key_exists('domain', $segments))
+        return 'The value must be a url.';
+      
+      //See if it's an IP.
+      $is_ip = !!filter_var($segments['domain'], FILTER_VALIDATE_IP);
+      
+      //If it's not an IP, check the domain.
+      if(!$is_ip){
+        
+        //It also can't be localhost, so must have a dot.
+        if(strpos($segments['domain'], '.') === false)
+          return 'The value must be a url.';
+        
+        //The domain must have a valid top level domain.
+        $domainparts = explode('.', $segments['domain']);
+        $tld = end($domainparts);
+        if(!in_array($tld, \core\Url::$TOP_LEVEL_DOMAINS))
+          return 'The value must be a url.';
+        
+      }
+      
+      $this->data = url($url)->output;
+      
     } catch (\exception\Unexpected $ue) {
       return 'The value must be a url.';
     }

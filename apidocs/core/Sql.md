@@ -91,6 +91,9 @@ mixed core\Sql::__construct()
 
 
 
+
+
+
 ## Method `__destruct`
 In class: [core\Sql](#top)
 
@@ -103,6 +106,9 @@ mixed core\Sql::__destruct()
 
 
 * Visibility: **public**
+
+
+
 
 
 
@@ -125,6 +131,9 @@ mixed core\Sql::conditions($c)
 
 
 
+
+
+
 ## Method `escape`
 In class: [core\Sql](#top)
 
@@ -141,6 +150,9 @@ mixed core\Sql::escape($value)
 #### Arguments
 
 * $value **mixed**
+
+
+
 
 
 
@@ -163,6 +175,9 @@ mixed core\Sql::execute_non_query($query)
 
 
 
+
+
+
 ## Method `execute_query`
 In class: [core\Sql](#top)
 
@@ -179,6 +194,9 @@ mixed core\Sql::execute_query($query)
 #### Arguments
 
 * $query **mixed**
+
+
+
 
 
 
@@ -201,6 +219,9 @@ mixed core\Sql::execute_scalar($query)
 
 
 
+
+
+
 ## Method `execute_single`
 In class: [core\Sql](#top)
 
@@ -220,6 +241,9 @@ mixed core\Sql::execute_single($query)
 
 
 
+
+
+
 ## Method `get_insert_id`
 In class: [core\Sql](#top)
 
@@ -232,6 +256,9 @@ mixed core\Sql::get_insert_id()
 
 
 * Visibility: **public**
+
+
+
 
 
 
@@ -250,6 +277,9 @@ mixed core\Sql::get_prefix()
 
 
 
+
+
+
 ## Method `make_query`
 In class: [core\Sql](#top)
 
@@ -262,6 +292,9 @@ mixed core\Sql::make_query()
 
 
 * Visibility: **public**
+
+
+
 
 
 
@@ -285,6 +318,9 @@ mixed core\Sql::model($component_name, $model_name)
 
 
 
+
+
+
 ## Method `query`
 In class: [core\Sql](#top)
 
@@ -301,6 +337,9 @@ mixed core\Sql::query($query)
 #### Arguments
 
 * $query **mixed**
+
+
+
 
 
 
@@ -327,6 +366,9 @@ mixed core\Sql::set_connection_data($host, $user, $pass, $name, $prefix)
 
 
 
+
+
+
 ## Method `sub_table`
 In class: [core\Sql](#top)
 
@@ -348,6 +390,9 @@ mixed core\Sql::sub_table($component_name, $model_name, array $select)
 
 
 
+
+
+
 ## Method `table`
 In class: [core\Sql](#top)
 
@@ -366,5 +411,8 @@ mixed core\Sql::table($component_name, $model_name, $id)
 * $component_name **mixed**
 * $model_name **mixed**
 * $id **mixed**
+
+
+
 
 

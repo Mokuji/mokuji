@@ -287,7 +287,9 @@ class Json extends \dependencies\BaseComponent
       ->model('cms', 'Pages')
       ->set(array(
         'title' => __($this->component, 'New page', 1),
-        'view_id' => $view_id
+        'view_id' => $view_id,
+        'template_id' => tx('Config')->user('template_id')->otherwise(1),
+        'theme_id' => tx('Config')->user('theme_id')->otherwise(1)
       ))
       ->save();
     
