@@ -23,8 +23,8 @@ class Modules extends \dependencies\BaseViews
     
     #TEMP: Default options.
     $options = Data(array(
-      'show_unlinked' => true,
-      'show_unauthorised' => true
+      'show_unlinked' => false,
+      'show_unauthorised' => false
     ))->merge($options);
     
     //Create menu.

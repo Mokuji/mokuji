@@ -79,6 +79,10 @@
   margin:8px;
 }
 
+#update-logs span.new-version-loaded{
+  color:#10B910;
+}
 #update-logs em.error{
   color:#f00;
 }
+

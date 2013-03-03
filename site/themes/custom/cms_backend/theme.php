@@ -15,4 +15,5 @@
     <link rel="stylesheet" type="text/css" href="<?php echo URL_THEMES; ?>custom/cms_backend/css/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo URL_THEMES; ?>custom/cms_backend/css/font-awesome-ie7.min.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo URL_THEMES; ?>custom/cms_backend/css/print.css" media="print, handheld" />
+    <!--[if lte IE 9]><link rel="stylesheet" type="text/css" href="<?php echo URL_THEMES; ?>custom/cms_backend/css/ie.css" /><![endif]-->
     <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->

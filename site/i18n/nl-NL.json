@@ -64,24 +64,35 @@
   "Subject": "Onderwerp",
   "Summary": "Samenvatting",
   
+  "The value can not be empty.": "De waarde kan niet leeg zijn.",
   "The value can not be empty": "De waarde kan niet leeg zijn",
-  "The value may not contain html": "De waarde mag geen html bevatten",
-  "The value must be an array": "De waarde moet een array zijn",
-  "The value must be a boolean": "De waarde moet een boolean zijn",
-  "The value must be a javascript variable name": "De waarde moet een javascript variabele naam zijn",
-  "The value must be a number": "De waarde moet een nummer zijn",
-  "The value must be a valid date-time value": "De waarde moet een geldige datum/tijd waarde zijn",
-  "The value must be a valid email address": "De waarde moet een geldig e-mail adres zijn",
-  "The value must be a url": "De waarde moet een url zijn",
-  "The value must be textual": "De waarde moet textueel zijn",
-  "This is a required field": "Dit is een verplicht veld",
+  "The value may not contain html.": "De waarde mag geen html bevatten.",
+  "The value must be an array.": "De waarde moet een array zijn.",
+  "The value must be a boolean.": "De waarde moet een boolean zijn.",
+  "The value must be a javascript variable name.": "De waarde moet een javascript variabele naam zijn.",
+  "The value must be a number.": "De waarde moet een nummer zijn.",
+  "The value must be a valid date-time value.": "De waarde moet een geldige datum/tijd waarde zijn.",
+  "The value must be a valid email address.": "De waarde moet een geldig e-mail adres zijn.",
+  "The value must be a url.": "De waarde moet een url zijn.",
+  "The value must be textual.": "De waarde moet textueel zijn.",
+  "This is a required field.": "Dit is een verplicht veld.",
   "Title": "Titel",
-  
+
+  "The value must be a strong password please mix at least 3 of the following: uppercase letters, lowercase letters, numbers and special characters.": "De waarde moet een sterk wachtwoord zijn. Mix alsjeblieft tenminste 3 van de volgende zaken: hoofdletters, 'kleine' letters, cijfers en speciale tekens.",
+
   "Username": "Gebruikersnaam",
   "Users": "Gebruikers",
   "User rights": "Gebruikersrechten",
   
-  "Value": "Waarde"
-  
-  
+  "Value": "Waarde",
+
+  "PLEASE_CLAIM_ACCOUNT_P1": "",
+  "Confirm password": "Bevestig wachtwoord",
+
+  "Claim your account": "Activeer je account",
+  "CLAIMING_ACCOUNT_SUCCEEDED": "Je account is nu geactiveerd.",
+
+  "E-mail address": "E-mailadres",
+  "New password": "Nieuw wachtwoord"
+
 }

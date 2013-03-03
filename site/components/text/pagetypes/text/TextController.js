@@ -51,14 +51,20 @@
       //Turn the form on the content tab into a REST form.
       this.contentForm.restForm({success: this.proxy(this.afterSave)});
       
-      //TODO: do things like initialize WYSIWYG editor.
       //Create unique id for the text editors.
       this.contentForm.find('textarea.editor').each(function(){
         var that = $(this);
         that.attr('id', that.attr('id')+Math.floor((Math.random()*100000)+1));
         tx_editor.init({selector:'#'+that.attr('id')});
       });
-      
+
+      //Hide description field by default, init click event handler.
+      this.contentForm
+        .find('.toggle-wrapper.description .trigger').on('click', function(e){
+          e.preventDefault();
+          $(this).closest('.toggle-wrapper').toggleClass('open');
+        });
+
     },
     
     //Saves the data currently present in the different tabs controlled by this controller.

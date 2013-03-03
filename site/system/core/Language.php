@@ -27,18 +27,23 @@ class Language
   public function set_language_id($id){
     
     $id = Data($id);
-    
+
+    $that = $this;
+
     if($this->translating_started)
       throw new \exception\Programmer('Can\'t set language, translating has already started');
     
-    tx('Validating language.', function()use($id){
+    tx('Validating language.', function()use($id, &$language_code){
       $id->validate('Language', array('number'=>'integer'));
-      $this->language_code = tx('Sql')->execute_scalar('SELECT code FROM #__core_languages WHERE id = '.$id)->get();
+      $language_code = tx('Sql')->execute_scalar('SELECT code FROM #__core_languages WHERE id = '.$id)->get();
     })
     
-    ->success(function($info)use($id){
-      $this->language_id = $id->get();
+    ->success(function($info)use($id, &$language_id){
+      $language_id = $id->get();
     });
+
+    $this->language_code = $language_code;
+    $this->language_id = $language_id;
     
   }
   

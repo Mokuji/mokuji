@@ -90,7 +90,7 @@ class Sql
   
   public function query($query)
   {
-    
+
     $query = str_replace('#__', $this->prefix, $query);
     $result = mysql_query($query, $this->connection);
     

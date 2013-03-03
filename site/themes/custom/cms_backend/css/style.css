@@ -39,6 +39,45 @@
   -webkit-border-radius:4px;
 }
 
+/* =Tools
+--------------------------------------
+
+Example:
+
+[toggle description]
+  [a:trigger]
+    txt
+    l1
+    l2(hidden)
+  [/a]
+  [hidden-wrapper/]
+[/]
+
+*/
+
+.hidden{
+  display:none; 
+}
+  
+.toggle-wrapper .toggle.hidden{
+  display:none;
+}
+
+  .toggle-wrapper.open .trigger .toggle{
+    display:none;
+  }
+  .toggle-wrapper.open .trigger .toggle.hidden{
+    display:inline;
+  }
+
+.toggle-wrapper.open .hidden.description{
+  display:block;
+}
+
+
+/* =
+--------------------------------------*/
+
 html, body{
   height:100%;
 }
@@ -92,7 +131,7 @@ body.cursor_resizing{
 body.cursor_disabled{
   cursor: not-allowed;
 }
-  
+
 /* =Content
 --------------------------------------*/
   #page-main-left{

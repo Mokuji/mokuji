@@ -12,6 +12,10 @@ function __autoload($class)
   switch($class_array[0])
   {
     
+    //Some servers freak out if you start with \\ in the namespace.
+    case '':
+      return __autoload(substr($class, 1));
+    
     case 'dependencies':
       array_shift($class_array);
       $sub_path = implode(DS, $class_array);

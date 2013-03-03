@@ -1,5 +1,7 @@
 <?php namespace components\update; if(!defined('TX')) die('No direct access.');
 
+ini_set('memory_limit', '-1');
+
 class Helpers extends \dependencies\BaseComponent
 {
   
@@ -215,7 +217,7 @@ class Helpers extends \dependencies\BaseComponent
         ))->save();
       }
       
-      if(!$silent) echo __($this->component, 'New versions loaded', 1).'!'.br.n;
+      if(!$silent) echo '<span class="new-version-loaded">'. ___($this->component, 'New versions loaded', 1) .'!</span>'.br.n;
       
     }
     else if(!$silent) echo __($this->component, 'No new updates', 1).'.'.br.n;

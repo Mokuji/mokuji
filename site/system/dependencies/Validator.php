@@ -174,7 +174,7 @@ class Validator extends Successable
       return true;
     }
     
-    return "This is a required field.";
+    return __('This is a required field.', 1);
     
   }
   
@@ -197,7 +197,7 @@ class Validator extends Successable
   {
     
     if(!filter_var($this->data, FILTER_VALIDATE_EMAIL)){
-      return "The value must be a valid email address.";
+      return __('The value must be a valid email address.', 1);
     }
 
     //Removed DNS check because it's too slow.
@@ -442,11 +442,16 @@ class Validator extends Successable
   
   private function _password()
   {
+
+    //Check if password is not empty.
+    if(empty($this->data)){
+      return true;
+    }
     
     //Validate a password is strong enough.
     if(tx('Security')->get_password_strength($this->data) < SECURITY_PASSWORD_STRENGTH)
-      return 'The value must be a strong password please mix at least '.SECURITY_PASSWORD_STRENGTH.
-        ' of the following: uppercase letters, lowercase letters, numbers and special characters.';
+      return __('The value must be a strong password please mix at least '.SECURITY_PASSWORD_STRENGTH.
+        ' of the following: uppercase letters, lowercase letters, numbers and special characters.', 1);
     
     return true;
     

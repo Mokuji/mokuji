@@ -1,6 +1,6 @@
 {
-  "title": "Minimal thema",
-  "description": "Geeft de meest uitgekleede versie van een pagina.",
+  "title": "CMS backend theme",
+  "description": "The backend theme",
   "type": "manual",
   "dbUpdates": true,
   "versions": [

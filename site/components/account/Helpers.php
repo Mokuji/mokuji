@@ -61,14 +61,14 @@ class Helpers extends \dependencies\BaseComponent
             'unsubscribe_link' => url('/?action=account/unsubscribe/get&email='.urlencode($user->email->get('string')), true)->output
           ));
 
-          $username = $user->user_info->username->otherwise($user->user_info->email);
+          $username = $user->username->otherwise($user->user_info->email);
           
           //Send the invitation email.
           if(tx('Component')->available('mail')){
 
             tx('Component')->helpers('mail')->send_fleeting_mail(array(
               'to' => array('name'=>$user->user_info->username->otherwise(''), 'email'=>$user->email),
-              'subject' => __('Information about your account', 1),
+              'subject' => __('Klaar voor de start... AF!', 1),
               'html_message' => tx('Component')->views('account')->get_html('email_user_password_reset', $links->having('for_link', 'claim_link', 'unsubscribe_link')->merge(array('username' => $username)))
             ))
             

@@ -20,6 +20,11 @@ class Json extends \dependencies\BaseViews
     
   }
   
+  protected function get_db_test()
+  {
+    
+  }
+
   /* ---------- Install calls ---------- */
   protected function create_db_test($data, $params)
   {
@@ -31,7 +36,7 @@ class Json extends \dependencies\BaseViews
     $data = $data->having('host', 'name', 'username', 'password', 'prefix', 'return_connection')
       ->host->validate('Database host', array('required', 'string', 'not_empty'))->back()
       ->username->validate('Username', array('required', 'string', 'not_empty'))->back()
-      ->password->validate('Password', array('required', 'string', 'not_empty'))->back()
+      // ->password->validate('Password', array('required', 'string', 'not_empty'))->back()
       ->name->validate('Database name', array('required', 'string', 'not_empty'))->back()
       ->prefix->validate('Table prefix', array('required', 'string', 'not_empty'))->back()
     ;
