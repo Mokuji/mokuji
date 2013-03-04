@@ -6,6 +6,19 @@ class Json extends \dependencies\BaseComponent
   //TODO: get_menu
   //TODO: full menu item spectrum (get/create/update/delete).
   
+  protected function get_link($data, $params)
+  {
+    
+    //Validate input.
+    $params->{0}->validate('Page ID', array('required', 'number'=>'int', 'gt'=>0));
+    
+    //Get the item.
+    return tx('Sql')->table('cms', 'MenuLinks')
+      ->pk($params->{0})
+      ->execute_single();
+    
+  }
+  
   protected function update_menu_items($data, $arguments)
   {
     

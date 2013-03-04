@@ -68,7 +68,7 @@
     },
     
     //Saves the data currently present in the different tabs controlled by this controller.
-    save: function(pageId){
+    save: function(e, pageId){
       
       return this.contentForm.trigger('submit');
       

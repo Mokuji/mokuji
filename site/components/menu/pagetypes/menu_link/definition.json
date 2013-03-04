@@ -1,0 +1,13 @@
+{
+  
+  "javascript": [
+    "MenulinkController.js"
+  ],
+  
+  "templates":{
+    "contentTab": "contentTab.tmpl.php"
+  },
+  
+  "controller": "cmsBackend.menu.MenulinkController"
+  
+}

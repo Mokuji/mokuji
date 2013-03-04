@@ -65,7 +65,7 @@
 </menu>
 
 <script id="menu-item-list-item-tmpl" type="text/x-jquery-tmpl">
-  <li class="depth_{{if depth}}${depth}{{else}}1{{/if}}" data-id="${id}" rel="${id}">
+  <li data-depth="{{if depth}}${depth}{{else}}1{{/if}}" data-id="${id}" rel="${id}">
     <div>
       <a class="menu-item" data-page="{{if page_id}}${page_id}{{/if}}" data-menu-item="${id}" href="?menu=${id}&pid={{if page_id}}${page_id}{{/if}}&site_id=${site_id}">${title}</a>
       <span class="small-icon icon-delete"></span>

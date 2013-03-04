@@ -438,6 +438,7 @@ function request(){
       
       //Configure the nestedSortable plug-in.
       this.configureSortable();
+      this.updateData();
       
       //Set the height of the container.
       this.autoHeight();
@@ -594,7 +595,6 @@ function request(){
         self.el_items.not(':has(>ul:has(li))').find('>ul').remove();
         self.el_items.filter(':not(:has(>ul))').removeClass('has-sub');
       });
-      
       
       return self;
       
