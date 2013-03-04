@@ -28,32 +28,13 @@
       
     },
     
-    // //When rendering of the tab templates has been done, do some final things.
-    // afterRender: function(){
-      
-    //   //Turn the form on the content tab into a REST form.
-    //   this.contentForm.restForm({success: this.proxy(this.afterSave)});
-      
-    //   //TODO: do things like initialize WYSIWYG editor.
-    //   //Create unique id for the text editors.
-    //   this.contentForm.find('textarea.editor').each(function(){
-    //     var that = $(this);
-    //     that.attr('id', that.attr('id')+Math.floor((Math.random()*100000)+1));
-    //     tx_editor.init({selector:'#'+that.attr('id')});
-    //   });
-      
-    // },
+    //When rendering of the tab templates has been done, do some final things.
+    afterRender: function(){},
     
     //Saves the data currently present in the different tabs controlled by this controller.
-    save: function(pageId){
-      
-      // return this.contentForm.trigger('submit');
-      
-    },
+    save: function(pageId){},
     
-    // afterSave: function(data){
-    //   this.contentForm.find('[name=id]').val(data.id);
-    // }
+    afterSave: function(data){}
     
   });
   

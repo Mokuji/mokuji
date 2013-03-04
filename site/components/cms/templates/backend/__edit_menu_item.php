@@ -21,14 +21,16 @@
       <div class="body clearfix">
         
         <fieldset class="menu_item_titles-wrapper">
-        
-          <div class="inputHolder">
-            <label for="l_title_menu_item_<?php echo tx('Language')->get_language_id(); ?>"><?php __($names->component, 'Menu item title'); ?></label>
-            <input class="big" type="text" id="l_title_menu_item_<?php echo tx('Language')->get_language_id(); ?>" name="info[<?php echo tx('Language')->get_language_id(); ?>][title]" value="{{if item && item.id > 0}}${item.info['<?php echo tx('Language')->get_language_id(); ?>'].title}{{/if}}" />
-          </div>
+          
+          <?php tx('Language')->multilanguage(function($language)use($names){ ?>
+            <div class="inputHolder">
+              <label for="l_title_menu_item_<?php echo $language->id; ?>"><?php echo __($names->component, 'Menu item title',true).' '.__('IN_LANGUAGE_NAME',true).' '.__($language->title,true);  ?></label>
+              <input class="big" type="text" id="l_title_menu_item_<?php echo $language->id; ?>" name="info[<?php echo $language->id; ?>][title]" value="{{if item && item.id > 0 && item.info['<?php echo $language->id; ?>']}}${item.info['<?php echo $language->id; ?>'].title}{{/if}}" />
+            </div>
+          <? }); ?>
           
         </fieldset>
-
+        
         <!-- Select menu -->
         <div class="inputHolder last">
           

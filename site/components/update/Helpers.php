@@ -217,7 +217,7 @@ class Helpers extends \dependencies\BaseComponent
         ))->save();
       }
       
-      if(!$silent) echo '<span class="new-version-loaded">'. ___($this->component, 'New versions loaded', 1) .'!</span>'.br.n;
+      if(!$silent) echo '<span class="new-version-loaded">'. __($this->component, 'New versions loaded', 1) .'!</span>'.br.n;
       
     }
     else if(!$silent) echo __($this->component, 'No new updates', 1).'.'.br.n;
