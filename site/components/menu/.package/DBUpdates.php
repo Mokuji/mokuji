@@ -11,8 +11,36 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
     $component = 'menu',
     $updates = array(
       '1.1' => '1.2',
-      '1.2' => '1.3'
+      '1.2' => '1.3',
+      '1.3' => '1.4'
     );
+  
+  public function update_to_1_4($current_version, $forced)
+  {
+    
+    //Queue translation token update with CMS component.
+    $this->queue(array(
+      'component' => 'cms',
+      'min_version' => '1.2'
+      ), function($version){
+          
+          $component = tx('Sql')
+            ->table('cms', 'Components')
+            ->where('name', "'menu'")
+            ->execute_single();
+          
+          //Sitemap has been broken for some time now.
+          //Remove it please.
+          tx('Sql')
+            ->table('cms', 'ComponentViews')
+            ->where('com_id', $component->id)
+            ->where('name', "'sitemap'")
+            ->execute_single()
+            ->delete();
+          
+        }); //END - Queue CMS 1.2+
+    
+  }
   
   public function update_to_1_3($current_version, $forced)
   {
