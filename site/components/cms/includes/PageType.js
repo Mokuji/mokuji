@@ -9,14 +9,13 @@
     var pageTypeFolder = baseUrl + 'site/components/' + component + '/pagetypes/' + pageType + '/';
     
     //First get the json descriptor file.
-    $.ajax({
+    var getDefinition = $.ajax({
       url: pageTypeFolder + 'definition.json',
-      dataType: 'json',
-      error: function(){ deferred.reject('Unable to load definition file.'); }
-    })
+      dataType: 'json'
+    });
     
-    //When definition is in.
-    .done(function(definition){
+    //Define how to handle it.
+    var processDefinition = function(definition){
       
       //Get each javascript file to load, as well as each template file.
       //Don't do the callback before this is finished.
@@ -24,6 +23,7 @@
       var resources = [];
       
       //All JavaScript resources.
+      if(definition.javascript)
       for(var i = 0; i < definition.javascript.length; i++)
         resources.push($.getScript(pageTypeFolder + definition.javascript[i]));
       
@@ -46,6 +46,9 @@
       //When all that is done.
       $.when.apply(null, resources).then(function(){
         
+        if(!definition.controller)
+          definition.controller = 'cmsBackend.cms.SimplePageType';
+          
         //Resolve the namespaced controller.
         var target = window
           , namespaceParts = definition.controller.split('.');
@@ -71,7 +74,13 @@
         
       });
       
-    });
+    };
+    
+    //Now resolve the call, using a default in case of an error.
+    getDefinition.done(processDefinition)
+      .error(function(){processDefinition(
+        {templates:{contentTab: "contentTab.tmpl.php"}}
+      );});
     
   }
   
@@ -198,5 +207,35 @@
   });
   
   exports.PageType = PageType;
-
+  
+  
+  var SimplePageType = PageType.sub({
+    
+    //Define the tabs to be created.
+    tabs: {'Content': 'contentTab'},
+    
+    //Define the elements for jsFramework to keep track of.
+    elements: {},
+    
+    //Retrieve input data stub.
+    getData: function(pageId){
+      var D = $.Deferred();
+      D.resolve({page_id: pageId});
+      return D.promise();
+    },
+    
+    //After render stub.
+    afterRender: function(){},
+    
+    //Save stub.
+    save: function(pageId){},
+    
+    //After save stub.
+    afterSave: function(data){}
+    
+  });
+  
+  //Export the namespaced class.
+  SimplePageType.exportTo(exports, 'cmsBackend.cms.SimplePageType');
+  
 })(jQuery, window);
