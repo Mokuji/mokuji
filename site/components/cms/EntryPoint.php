@@ -52,6 +52,9 @@ class EntryPoint extends \dependencies\BaseEntryPoint
           tx('Data')->session->cms->filters->site_id = tx('Site')->id;
         });
       
+      if(tx('Component')->available('helpchat'))
+        tx('Component')->sections('helpchat')->call('widget');
+      
       return $this->template('cms_backend', 'cms_backend', array(
         'plugins' =>  array(
           load_plugin('jquery'),
