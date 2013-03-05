@@ -46,6 +46,11 @@
         <h3>Default language</h3>
         
         <div class="ctrlHolder">
+          <label for="l_lang_title" accesskey="v">Language title (in English)</label>
+          <input class="small" type="text" id="l_lang_title" name="lang_title" value="English" required />
+        </div>
+        
+        <div class="ctrlHolder">
           <label for="l_lang_code" accesskey="v">Language code</label>
           <input class="small" type="text" id="l_lang_code" name="lang_code" value="en-GB" required />
         </div>

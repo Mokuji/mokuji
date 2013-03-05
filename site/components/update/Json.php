@@ -152,6 +152,7 @@ class Json extends \dependencies\BaseViews
       ->email_webmaster->validate('Webmaster email', array('required', 'email'))->back()
       ->email_automated_name->validate('Automated messages name', array('required', 'string', 'not_empty'))->back()
       ->email_automated->validate('Automated messages email', array('required', 'email'))->back()
+      ->lang_title->validate('Language title', array('required', 'string', 'not_empty'))->back()
       ->lang_code->validate('Language code', array('required', 'string', 'not_empty'))->back()
       ->lang_shortcode->validate('Short code', array('required', 'string', 'not_empty'))->back()
       ->paths_base->validate('Base path', array('required', 'string', 'not_empty'))->back()
@@ -186,7 +187,7 @@ class Json extends \dependencies\BaseViews
     tx('Sql')->set_connection_data(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PREFIX);
     
     //Store this info.
-    tx('Sql')->query("INSERT INTO `#__core_languages` (`code`, `shortcode`) VALUES ('{$data->lang_code}', '{$data->lang_shortcode}')");
+    tx('Sql')->query("INSERT INTO `#__core_languages` (`code`, `shortcode`, `title`) VALUES ('{$data->lang_code}', '{$data->lang_shortcode}', '{$data->lang_title}')");
     tx('Sql')->query("INSERT INTO `#__core_sites` (`title`, `path_base`, `url_path`) VALUES ('{$data->site_title}', '{$data->paths_base}', '{$data->paths_url}')");
     $site_id = tx('Sql')->get_insert_id();
     tx('Sql')->query("INSERT INTO `#__core_site_domains` (`site_id`, `domain`) VALUES ({$site_id}, '*')");
