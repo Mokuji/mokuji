@@ -11,7 +11,7 @@
 * [Twitter](http://twitter.com/Tuxion)
 * [Google+](http://tuxion.nl/+)
 
-# Tuxion CMS - Active development version (Alpha)
+# Tuxion CMS - Version 1.1.0 Beta 1
 
 ## Description
 
