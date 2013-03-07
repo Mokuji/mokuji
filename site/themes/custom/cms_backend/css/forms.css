@@ -236,10 +236,13 @@
     border-radius:2px;
     -moz-border-radius:2px;
     -webkit-border-radius:2px;
-    font-size:12px;
+    box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    font-size:14px;
     font-family:arial, sans-serif;
     background:#fff;
-    padding:5px 5px;
+    padding:10px 10px;
   }
   input:focus,
   textarea:focus,
@@ -283,7 +286,7 @@
   button,
   .button{
     cursor:pointer;
-    padding:4px 5px;
+    padding:6px 7px;
     min-width:90px;
   }
   .button,

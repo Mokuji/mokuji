@@ -663,62 +663,217 @@
 /* =Page findability
 --------------------------------------*/
 
-#page-findability{}
-  
+#page-findability{
+  margin:10px 20px 10px 10px;
+  box-sizing:border-box;
+  -moz-box-sizing:border-box;
+  -webkit-box-sizing:border-box;
+}
   #page-findability .page_key_example{
     display: inline-block;
   }
-  #page-findability fieldset{
-    padding: 0;
-    border:none;
-    border-bottom:1px solid #e2e2e2;
-    padding-bottom:10px;
-    margin-bottom:20px;
+  #page-findability input,
+  #page-findability textarea{
+    width:100%;
   }
-    #page-findability fieldset > .subtle-hint{
-      margin-left:33px;
-    }
+  #page-findability fieldset{
+    padding:0;
+    box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    border:none;
+  }
+  #page-findability .page-captions,
+  #page-findability .seo{
+    padding:0;
+    margin-right:2%;
+    box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    border:none;
+    width:49%;
+    float:left;
+    min-width:270px;
+  }
+  
+  #page-findability .seo legend{
+    margin-left:30px;
+  }
+  #page-findability .seo{
+    padding-left:1%;
+    margin-right:0%;
+  }
+  #page-findability .seo .grey-border{
+    border-left:1px solid #bcbcbc;
+    padding-left:30px;
+  }
+    #page-findability fieldset .subtle-hint{
+      margin:3px 0;
+      display:inline-block;  
+    } 
     #page-findability fieldset .ctrlHolder{
-      margin-left:30px;
+      margin-left:0;
     }
       #page-findability fieldset .ctrlHolder label{
         display:block;
       }
-      #page-findability fieldset > fieldset .ctrlHolder{
-        margin-left:16px;
-      }
   #page-findability legend{
     padding:0;
-    margin:0 0 10px 20px;
-    font-size:16px;
+    margin:0 0 20px 0;
+    font-size:18px;
     font-weight:bold;
+    display:block;
+    width:100%;
   }
-    #page-findability legend span{
-      bottom:2px;
+    #page-findability .social-media .fieldset-general{
+      margin-bottom:30px;
+    }
+    #page-findability fieldset > fieldset legend{
+      padding:0;
+      margin:0 0 10px 0;
+      font-size:12px;
+    }
+    #page-findability fieldset.social-media > legend{
+      border-bottom:1px solid #e2e2e2;
+      padding-bottom:10px;
+      margin-bottom:10px;
+    }
+    #page-findability .page-findability-content legend{
+      background:#bcbcbc;
+      width:100%;
+      border:1px solid #EEE;
+      margin:-1px 0 20px -1px;
       position:relative;
-      display: inline-block;
-      margin-left: 10px;
-    }
-    #page-findability legend i{
-      font-size:17px;
-      color:#2B3241;
-    }
-      #page-findability fieldset > fieldset{
-        margin-left:32px;
-        
+      overflow:hidden;
+      font-weight:normal;
+    }     
+      #page-findability .facebook .page-findability-content legend{
+        border:1px solid #223969;
+        background:#3c5998;
       }
-        #page-findability fieldset > fieldset legend{
-          padding:0;
-          margin:0 0 10px 0;
-          font-size:12px;
+      #page-findability .twitter .page-findability-content legend{
+        border:1px solid #00aced;
+        background:#43c9f1;
+      }
+        #page-findability .twitter .page-findability-content legend i{
+          color:#00aced;
         }
-        #page-findability fieldset > fieldset legend span{
-          bottom:2px;
+      #page-findability .google-plus .page-findability-content legend{
+        border:1px solid #c73d34;
+        background:#df463d;
+      }
+        #page-findability .google-plus .page-findability-content legend i{
+          font-size:90px;
         }
-        #page-findability fieldset > fieldset legend i{
-          margin-left:0px;
-          font-size:18px;
+      #page-findability .page-findability-content legend span{
+        color:#fff;
+        font-size:16px;
+        width:50%;
+        line-height:22px;
+        margin:20px 30px;
+        display:inline-block;
+      }
+        #page-findability .page-findability-content legend strong{
+          font-size:24px;
         }
+      #page-findability .page-findability-content legend i{
+        font-size:100px;
+        position:absolute;
+        right:0;
+        top:3px;
+        color:#fff;
+      }
+    #page-findability fieldset .page-findability-content,
+    #page-findability fieldset .page-findability-preview{
+      padding:0;
+      margin-right:2%;
+      box-sizing:border-box;
+      -moz-box-sizing:border-box;
+      -webkit-box-sizing:border-box;
+      border:none;
+      width:49%;
+      float:left;
+      min-width:270px;
+    }
+    #page-findability fieldset .page-findability-content{
+      border:1px solid #bcbcbc;
+      padding-bottom:20px; 
+    }
+      #page-findability fieldset .page-findability-content .ctrlHolder{
+        padding:0 30px;
+      }
+    #page-findability fieldset .page-findability-preview{
+      padding-left:1%;
+      margin-right:0;
+    }
+      #page-findability fieldset .page-findability-preview .card-content{
+        line-height:2em;
+        padding:30px;
+        border:1px solid #bcbcbc;
+        position:relative;
+      }
+      #page-findability fieldset .page-findability-preview .card-content .arrow{
+        background-image:url("img/social-preview-arrow.png");
+        background-position:left center;
+        background-repeat:no-repeat;
+        position:absolute;
+        top:30px;
+        left:-7px;
+        width:7px;
+        height:12px;
+      }
+      #page-findability fieldset .page-findability-preview h2{
+        font-size:18px;
+        margin-bottom:30px;
+      }
+        #page-findability fieldset .card-content h3{
+          margin:0;
+        }
+          #page-findability fieldset.twitter .card-content h3{
+            color:#0085b0;
+          }
+        #page-findability fieldset .card-content span{
+          color:#a9a9a9;
+        }
+          #page-findability fieldset .card-content span a{
+            color:#999999;
+          }
+        #page-findability fieldset .card-content .card-content-text{
+          float:left;
+          width:70%;
+        }
+        #page-findability fieldset .card-content .card-image{
+          float:left;
+          width:25%;
+          margin-right:5%;
+        }
+          #page-findability fieldset .card-content .card-image img{
+            display: block;
+            width:100%;
+          }
+    /* MEDIA QUERY FOR SMALL SCREENS */
+    @media screen and (max-width: 935px) {
+      #page-findability .page-captions,
+      #page-findability .seo,
+      #page-findability fieldset .page-findability-content{
+        padding-right:0;
+        margin-right:0px;
+        width:100%;
+      }
+      #page-findability fieldset .page-findability-preview{
+        display:none;
+      }
+      #page-findability .seo{
+        padding-left:0%;
+      }
+      #page-findability .seo legend{
+        margin-left:0;
+      }
+      #page-findability .seo .grey-border{
+        border-left:none;
+        padding-left:0;
+      }
+    }
 /* =New page
 -------------------------------------------------------------- */
 
