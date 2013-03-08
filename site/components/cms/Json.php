@@ -3,6 +3,25 @@
 class Json extends \dependencies\BaseComponent
 {
   
+  protected function update_active_site($data, $params)
+  {
+    
+    $site = tx('Sql')->table('cms', 'Sites')
+      ->pk($params->{0})
+      ->execute_single()
+      ->is('empty', function(){
+        throw new \exception\NotFound('Site with given ID does not exist.');
+      });
+    
+    tx('Data')->session->cms->filters->site_id->set($site->id);
+    
+    return array(
+      'success' => true,
+      'site_id' => $site->id
+    );
+    
+  }
+  
   protected function get_config_app($data, $params)
   {
     

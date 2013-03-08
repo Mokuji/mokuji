@@ -301,11 +301,21 @@ function request(){
       'btn_refreshMenuItems': '#btn-refresh-menu-items',
       'btn_saveMenuItems': '#btn-save-menu-items',
       'btn_selectMenu': '#btn-select-menu',
-      'el_message': '#user-message'
+      'el_message': '#user-message',
+      'btn_selectSite': '#btn-select-site'
     },
     
     //Bind events to the sub-elements.
     events: {
+      
+      'change on btn_selectSite': function(e){
+        $.rest('PUT', '?rest=cms/active_site/'+$(e.target).val()).done(function(res){
+          if(res.success == true){
+            app.options.site_id = res.site_id;
+            app.MenuItems.reload();
+          }
+        });
+      },
       
       'click on btn_newMenuItem': function(e){
         e.preventDefault();
@@ -1489,22 +1499,13 @@ function request(){
     }
     
   });
+  
 
 })(this, jQuery, _);
 
 $(function(){
   
-  /* =Select site
-  -------------------------------------------------------------- */
-  $("#btn-select-site").on('change', function(e){
-    
-    $.ajax({
-      url: '?section=cms/menu_items&site_id='+$(e.target).val()
-    }).done(function(d){
-      $("#page-main-left .menu-item-list").html(d);
-    });
-    
-  });
+  
 
   //draggable sidebar
   var i = 0;
