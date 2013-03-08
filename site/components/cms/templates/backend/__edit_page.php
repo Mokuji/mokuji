@@ -41,15 +41,15 @@
 </script>
 
 <script id="edit_page_findability_tmpl" type="text/x-jquery-tmpl">
-  <form id="page-findability" class="form-inline-elements page-config" method="PUT" action="<?php echo url('rest=cms/page_findability/', true); ?>${page.id}">
+  <form id="page-findability" class="form-inline-elements page-config clearfix" method="PUT" action="<?php echo url('rest=cms/page_findability/', true); ?>${page.id}">
     
     {{each(language_id, language) languages}}
       
       <div class="multilingual-section" data-language-id="${language.id}">
         
-        <fieldset class="fieldset-general clearfix">
+        <fieldset class="fieldset-general clearfix page-captions">
           
-          <legend><i class="icon-tag"></i><span><?php __($names->component, 'Page captions'); ?></span></legend>
+          <legend><?php __($names->component, 'Page captions'); ?></legend>
           
           <div class="ctrlHolder">
             <label for="l_title_page_${language.code}"><?php __($names->component, 'Title'); ?></label>
@@ -79,87 +79,128 @@
           
         </fieldset>
         
-        <fieldset class="fieldset-general clearfix">
+        <fieldset class="fieldset-general clearfix seo">
           
-          <legend><i class="icon-search"></i><span><?php __($names->component, 'Search engine optimization'); ?></span></legend>
-          
-          <div class="ctrlHolder">
-            <label for="l_keywords_page_${language.code}"><?php __($names->component, 'Page keywords'); ?></label>
-            <input id="l_keywords_page_${language.code}" class="big page-keywords" type="text" name="info[${language.id}][keywords]"
-              placeholder="<?php echo tx('Config')->user('site_description'); ?>" value="${page.info && page.info[language.id] && page.info[language.id].keywords}" />
+          <legend><?php __($names->component, 'Search engine optimization'); ?></legend>
+          <div class="grey-border">
+            <div class="ctrlHolder">
+              <label for="l_keywords_page_${language.code}"><?php __($names->component, 'Page keywords'); ?></label>
+              <input id="l_keywords_page_${language.code}" class="big page-keywords" type="text" name="info[${language.id}][keywords]"
+                placeholder="<?php echo tx('Config')->user('site_description'); ?>" value="${page.info && page.info[language.id] && page.info[language.id].keywords}" />
+            </div>
+            
+            <div class="ctrlHolder">
+              <label for="l_description_page_${language.code}"><?php __($names->component, 'Page description'); ?></label>
+              <textarea id="l_description_page_${language.code}" class="big page-description" type="text" name="info[${language.id}][description]"
+                placeholder="<?php echo tx('Config')->user('site_keywords'); ?>">${page.info && page.info[language.id] && page.info[language.id].description}</textarea>
+            </div>
           </div>
-          
-          <div class="ctrlHolder">
-            <label for="l_description_page_${language.code}"><?php __($names->component, 'Page description'); ?></label>
-            <textarea id="l_description_page_${language.code}" class="big page-description" type="text" name="info[${language.id}][description]"
-              placeholder="<?php echo tx('Config')->user('site_keywords'); ?>">${page.info && page.info[language.id] && page.info[language.id].description}</textarea>
-          </div>
-          
         </fieldset>
         
-        <fieldset class="fieldset-general clearfix">
+        <fieldset class="fieldset-general clearfix social-media">
           
-          <legend><i class="icon-comment"></i><span><?php __($names->component, 'Social media'); ?></span></legend>
+          <legend><?php __($names->component, 'Social media'); ?></legend>
           <p class="subtle-hint"><?php __($names->component, 'SOCIAL_MEDIAL_OVERRIDE_VALUES_EXPLANATION') ?></p>
           
-          <fieldset class="fieldset-general clearfix">
+          <fieldset class="fieldset-general clearfix facebook">
             
-            <legend><i class="icon-facebook-sign"></i><span><?php __($names->component, 'Open Graph (Facebook)'); ?></span></legend>
-            
-            <div class="ctrlHolder">
-              <label for="l_title_og_${language.code}"><?php __($names->component, 'OG title'); ?></label>
-              <input id="l_title_og_${language.code}" class="big defaults-to-title" type="text" name="info[${language.id}][og_title]"
-                value="${page.info && page.info[language.id] && page.info[language.id].og_title}" />
+            <div class="page-findability-content">
+              <legend><span><?php //__($names->component, 'Open Graph (Facebook)'); ?> Open Graph<br /><strong>Facebook</strong></span><i class="icon-facebook"></i></legend>
+              <div class="ctrlHolder">
+                <label for="l_title_og_${language.code}"><?php __($names->component, 'OG title'); ?></label>
+                <input id="l_title_og_${language.code}" class="big defaults-to-title" type="text" name="info[${language.id}][og_title]"
+                  value="${page.info && page.info[language.id] && page.info[language.id].og_title}" />
+              </div>
+              
+              <div class="ctrlHolder">
+                <label for="l_description_og_${language.code}"><?php __($names->component, 'OG description'); ?></label>
+                <textarea id="l_description_og_${language.code}" class="big defaults-to-description"
+                  name="info[${language.id}][og_description]">${page.info && page.info[language.id] && page.info[language.id].og_description}</textarea>
+              </div>
+              
+              <div class="ctrlHolder">
+                <label for="l_keywords_og_${language.code}"><?php __($names->component, 'OG keywords'); ?></label>
+                <input id="l_keywords_og_${language.code}" class="big defaults-to-keywords" type="text" name="info[${language.id}][og_keywords]"
+                  value="${page.info && page.info[language.id] && page.info[language.id].og_keywords}" />
+              </div>
             </div>
-            
-            <div class="ctrlHolder">
-              <label for="l_description_og_${language.code}"><?php __($names->component, 'OG description'); ?></label>
-              <textarea id="l_description_og_${language.code}" class="big defaults-to-description"
-                name="info[${language.id}][og_description]">${page.info && page.info[language.id] && page.info[language.id].og_description}</textarea>
+            <div class="page-findability-preview">
+              <h2>Preview</h2>
+              <div class="card-content clearfix">
+                <div class="card-image"><img src="http://placehold.it/60x60" alt="Placeholder" /></div>
+                <div class="card-content-text">
+                  <h3>Twitter Title Goes here</h3>
+                  <span>By Twitter Author placed here @twitterauthor</span>
+                  <p>
+                  Sed sed dictum felis. Sed mollis ullamcorper luctus. Donec hendrerit posuere velit ac vulputate. Quisque posuere luctus odio, vitae posuere.
+                  </p>
+                </div>
+              <div class="arrow"></div>
+              </div>
             </div>
-            
-            <div class="ctrlHolder">
-              <label for="l_keywords_og_${language.code}"><?php __($names->component, 'OG keywords'); ?></label>
-              <input id="l_keywords_og_${language.code}" class="big defaults-to-keywords" type="text" name="info[${language.id}][og_keywords]"
-                value="${page.info && page.info[language.id] && page.info[language.id].og_keywords}" />
-            </div>
-            
           </fieldset>
           
-          <fieldset class="fieldset-general clearfix">
+          <fieldset class="fieldset-general clearfix twitter">
             
-            <legend><i class="icon-twitter-sign"></i><span><?php __($names->component, 'Twitter cards'); ?></span></legend>
-            
-            <div class="ctrlHolder">
-              <label for="l_title_tw_${language.code}"><?php __($names->component, 'Twitter title'); ?></label>
-              <input id="l_title_tw_${language.code}" class="big defaults-to-title" type="text" name="info[${language.id}][tw_title]"
-                value="${page.info && page.info[language.id] && page.info[language.id].tw_title}" />
+            <div class="page-findability-content">
+             <legend><span><?php //__($names->component, 'Twitter cards'); ?>Cards<br /><strong>Twitter</strong></span><i class="icon-twitter"></i></legend>
+              <div class="ctrlHolder">
+                <label for="l_title_tw_${language.code}"><?php __($names->component, 'Twitter title'); ?></label>
+                <input id="l_title_tw_${language.code}" class="big defaults-to-title" type="text" name="info[${language.id}][tw_title]"
+                  value="${page.info && page.info[language.id] && page.info[language.id].tw_title}" />
+              </div>
+              
+              <div class="ctrlHolder">
+                <label for="l_description_tw_${language.code}"><?php __($names->component, 'Twitter description'); ?></label>
+                <textarea id="l_description_tw_${language.code}" class="big defaults-to-description"
+                  name="info[${language.id}][tw_description]">${page.info && page.info[language.id] && page.info[language.id].tw_description}</textarea>
+              </div>
+              
+              <div class="ctrlHolder">
+                <label for="l_author_tw_${language.code}"><?php __($names->component, 'Twitter author'); ?></label>
+                <input id="l_author_tw_${language.code}" class="big" type="text" name="info[${language.id}][tw_author]"
+                  placeholder="<?php echo tx('Config')->user('site_twitter'); ?>" value="${page.info && page.info[language.id] && page.info[language.id].tw_author}" />
+              </div>
             </div>
-            
-            <div class="ctrlHolder">
-              <label for="l_description_tw_${language.code}"><?php __($names->component, 'Twitter description'); ?></label>
-              <textarea id="l_description_tw_${language.code}" class="big defaults-to-description"
-                name="info[${language.id}][tw_description]">${page.info && page.info[language.id] && page.info[language.id].tw_description}</textarea>
+            <div class="page-findability-preview">
+              <h2>Preview</h2>
+              <div class="card-content clearfix">
+                <div class="card-image"><img src="http://placehold.it/60x60" alt="Placeholder" /></div>
+                <div class="card-content-text">
+                  <h3>Twitter Title Goes here</h3>
+                  <span>By Twitter Author placed here @twitterauthor</span>
+                  <p>
+                    Sed sed dictum felis. Sed mollis ullamcorper luctus. Donec hendrerit posuere velit ac vulputate. Quisque posuere luctus odio, vitae posuere.
+                  </p>
+                </div>
+              <div class="arrow"></div>
+              </div>
             </div>
-            
-            <div class="ctrlHolder">
-              <label for="l_author_tw_${language.code}"><?php __($names->component, 'Twitter author'); ?></label>
-              <input id="l_author_tw_${language.code}" class="big" type="text" name="info[${language.id}][tw_author]"
-                placeholder="<?php echo tx('Config')->user('site_twitter'); ?>" value="${page.info && page.info[language.id] && page.info[language.id].tw_author}" />
-            </div>
-            
           </fieldset>
           
-          <fieldset class="fieldset-general clearfix">
+          <fieldset class="fieldset-general clearfix google-plus">
             
-            <legend><i class="icon-google-plus-sign"></i><span><?php __($names->component, 'Google+'); ?></span></legend>
-            
-            <div class="ctrlHolder">
-              <label for="l_author_gp_${language.code}"><?php __($names->component, 'Google+ author'); ?></label>
-              <input id="l_author_gp_${language.code}" class="big" type="text" name="info[${language.id}][gp_author]"
-                placeholder="<?php echo tx('Config')->user('site_googleplus'); ?>" value="${page.info && page.info[language.id] && page.info[language.id].gp_author}" />
+            <div class="page-findability-content">
+              <legend><span><?php //__($names->component, 'Google+'); ?>&nbsp;<br /><strong>Google+</strong></span><i class="icon-google-plus"></i></legend>
+              <div class="ctrlHolder">
+                <label for="l_author_gp_${language.code}"><?php __($names->component, 'Google+ author'); ?></label>
+                <input id="l_author_gp_${language.code}" class="big" type="text" name="info[${language.id}][gp_author]"
+                  placeholder="<?php echo tx('Config')->user('site_googleplus'); ?>" value="${page.info && page.info[language.id] && page.info[language.id].gp_author}" />
+              </div>
             </div>
-            
+            <div class="page-findability-preview">
+              <h2>Preview</h2>
+              <div class="card-content clearfix">
+                <div class="card-image"><img src="http://placehold.it/60x60" alt="Placeholder" /></div>
+                <div class="card-content-text">
+                  <span>By Twitter Author placed here @twitterauthor</span>
+                  <p>
+                    Sed sed dictum felis. Sed mollis ullamcorper luctus. Donec hendrerit posuere velit ac vulputate. Quisque posuere luctus odio, vitae posuere.
+                  </p>
+                </div>
+              <div class="arrow"></div>
+              </div>
+            </div>
           </fieldset>
           
         </fieldset>
