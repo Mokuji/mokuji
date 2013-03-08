@@ -6,7 +6,7 @@
     <h2>Site configuration</h2>
   </div>
   <div class="body clearfix">
-    <p>We can now configure the site. >>TODO give more info</p>
+    <p>We can now configure the site.<!-- #TODO give more info --></p>
     
     <form method="post" action="#" data-action="<?php echo url('?rest=update/site_installation', true); ?>" class="form install-site-form">
       

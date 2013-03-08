@@ -143,21 +143,28 @@ class Json extends \dependencies\BaseViews
     if(INSTALLING !== true)
       throw new \exception\Authorisation('The CMS is not in install mode.');
     
-    //Validate input.
-    $data = Data($data)->having('site_title', 'email_webmaster', 'email_webmaster_name',
-                                'email_automated', 'email_automated_name', 'lang_code', 'lang_shortcode',
-                                'paths_base', 'paths_url')
-      ->site_title->validate('Site title', array('required', 'string', 'not_empty'))->back()
-      ->email_webmaster_name->validate('Webmaster name', array('required', 'string', 'not_empty'))->back()
-      ->email_webmaster->validate('Webmaster email', array('required', 'email'))->back()
-      ->email_automated_name->validate('Automated messages name', array('required', 'string', 'not_empty'))->back()
-      ->email_automated->validate('Automated messages email', array('required', 'email'))->back()
-      ->lang_title->validate('Language title', array('required', 'string', 'not_empty'))->back()
-      ->lang_code->validate('Language code', array('required', 'string', 'not_empty'))->back()
-      ->lang_shortcode->validate('Short code', array('required', 'string', 'not_empty'))->back()
-      ->paths_base->validate('Base path', array('required', 'string', 'not_empty'))->back()
-      ->paths_url->validate('Url path', array('string'))->back()
-    ;
+    //Since we're in install mode, we need to include the database settings manually.
+    require_once(PATH_BASE.DS.'config'.DS.'database'.EXT);
+    tx('Sql')->set_connection_data(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PREFIX);
+    
+    //Get all the values we need.
+    $data = Data($data)->having(
+      'site_title', 'email_webmaster', 'email_webmaster_name',
+      'email_automated', 'email_automated_name', 'lang_code',
+      'lang_title', 'lang_shortcode', 'paths_base', 'paths_url'
+    )
+    
+    //Validate each of these values.
+    ->site_title->validate('Site title', array('required', 'string', 'not_empty'))->back()
+    ->email_webmaster_name->validate('Webmaster name', array('required', 'string', 'not_empty'))->back()
+    ->email_webmaster->validate('Webmaster email', array('required', 'email'))->back()
+    ->email_automated_name->validate('Automated messages name', array('required', 'string', 'not_empty'))->back()
+    ->email_automated->validate('Automated messages email', array('required', 'email'))->back()
+    ->lang_title->validate('Language title', array('required', 'string', 'not_empty'))->back()
+    ->lang_code->validate('Language code', array('required', 'string', 'not_empty'))->back()
+    ->lang_shortcode->validate('Short code', array('required', 'string', 'not_empty'))->back()
+    ->paths_base->validate('Base path', array('required', 'string', 'not_empty'))->back()
+    ->paths_url->validate('Url path', array('string'))->back();
     
     //Write email config file.
     $f = fopen(PATH_BASE.DS.'config'.DS.'email'.EXT, 'w');
@@ -181,10 +188,6 @@ class Json extends \dependencies\BaseViews
     }
     
     //There's no viable way to validate base and url paths, that's why it's advanced.
-    
-    //Since we're in install mode, we need to include the database settings manually.
-    require_once(PATH_BASE.DS.'config'.DS.'database'.EXT);
-    tx('Sql')->set_connection_data(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PREFIX);
     
     //Store this info.
     tx('Sql')->query("INSERT INTO `#__core_languages` (`code`, `shortcode`, `title`) VALUES ('{$data->lang_code}', '{$data->lang_shortcode}', '{$data->lang_title}')");
