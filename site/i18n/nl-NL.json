@@ -93,6 +93,9 @@
   "CLAIMING_ACCOUNT_SUCCEEDED": "Je account is nu geactiveerd.",
 
   "E-mail address": "E-mailadres",
-  "New password": "Nieuw wachtwoord"
+  "New password": "Nieuw wachtwoord",
+  
+  "Yes": "Ja",
+  "No": "Nee"
 
 }

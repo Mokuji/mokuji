@@ -18,6 +18,7 @@
 **Properties**
 * [`protected static mixed $relations`](#property-relations)
 * [`protected static mixed $table_name`](#property-table_name)
+* [`protected static mixed $validate`](#property-validate)
 
 **Methods**
 * [`public mixed get_groups()`](#method-get_groups)
@@ -34,9 +35,9 @@
 * [`protected static mixed $labels`](#property-labels)
 * [`protected static mixed $relation_preferences`](#property-relation_preferences)
 * [`protected static mixed $relations_by_column`](#property-relations_by_column)
-* [`protected static mixed $validate`](#property-validate)
 
 **Methods**
+* [`public static mixed get_related_model($name)`](#method-get_related_model)
 * [`public static mixed model_data($get)`](#method-model_data)
 * [`public static mixed table_data($get, $set)`](#method-table_data)
 * [`private static mixed create_table_data()`](#method-create_table_data)
@@ -254,7 +255,7 @@ protected mixed $table_name = 'core_users'
 In class: [components\account\models\Accounts](#top)
 
 ```
-protected mixed $validate = array()
+protected mixed $validate = array('email' => array('required', 'email'), 'username' => array('string', 'between' => array(0, 255), 'no_html'), 'name' => array('string', 'between' => array(0, 255), 'no_html'), 'preposition' => array('string', 'between' => array(0, 255), 'no_html'), 'family_name' => array('string', 'between' => array(0, 255), 'no_html'), 'comments' => array('string', 'no_html'))
 ```
 
 
@@ -263,10 +264,33 @@ protected mixed $validate = array()
 
 * Visibility: **protected**
 * This property is **static**.
-* This property is defined by [dependencies\BaseModel](../../../dependencies/BaseModel.md)
 
 
 # Methods
+
+
+## Method `get_related_model`
+In class: [components\account\models\Accounts](#top)
+
+```
+mixed dependencies\BaseModel::get_related_model($name)
+```
+
+
+
+
+
+* Visibility: **public**
+* This method is **static**.
+* This method is defined by [dependencies\BaseModel](../../../dependencies/BaseModel.md)
+
+#### Arguments
+
+* $name **mixed**
+
+
+
+
 
 
 ## Method `model_data`
@@ -738,7 +762,7 @@ mixed dependencies\BaseModel::as_form($id)
 
 Create an HTML form for updating this model.
 
-as_form(&amp;$id[, $action][, $columns]
+as_form(&amp;$id[, $action][, $columns])
 
 * Visibility: **public**
 * This method is defined by [dependencies\BaseModel](../../../dependencies/BaseModel.md)
@@ -2655,7 +2679,8 @@ Validates the whole model, based on static validation rules.
 
 Options:
    array $rules - Defines extra rules per field name.
-   bool $force_create - Tries to ignore the PK if it has an auto_increment attribute. Otherwise throws programmer exception
+   boolean $force_create - Tries to ignore the PK if it has an auto_increment attribute. Otherwise throws programmer exception.
+   boolean $nullify - When set to true, fields that are valid but empty will be set to NULL (default: false).
 
 * Visibility: **public**
 * This method is defined by [dependencies\BaseModel](../../../dependencies/BaseModel.md)

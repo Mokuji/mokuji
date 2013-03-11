@@ -3,7 +3,7 @@
 
 The Superclass that allows for the tx() notation of loading core classes.
 
-Your main gateway of expression in the Tuxion CMS
+Your main gateway of expression in the Tuxion CMS.
 
 
 * Class name: Superclass
@@ -57,7 +57,7 @@ In class: [Superclass](#top)
 
 Retrieves the superclass singleton instance.
 
-Note: uses lazy initiation
+Note: uses lazy initiation.
 
 * Visibility: **public**
 * This method is **static**.

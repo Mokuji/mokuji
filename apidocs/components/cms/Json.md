@@ -25,6 +25,7 @@
 * [`protected mixed get_menu_item_info($options, $params)`](#method-get_menu_item_info)
 * [`protected mixed get_new_page($data, $params)`](#method-get_new_page)
 * [`protected mixed get_page_info($options, $params)`](#method-get_page_info)
+* [`protected mixed update_active_site($data, $params)`](#method-update_active_site)
 * [`protected mixed update_page($data, $params)`](#method-update_page)
 * [`protected mixed update_page_findability($data, $params)`](#method-update_page_findability)
 * [`protected mixed update_settings($data, $params)`](#method-update_settings)
@@ -524,6 +525,29 @@ mixed components\cms\Json::get_page_info($options, $params)
 #### Arguments
 
 * $options **mixed**
+* $params **mixed**
+
+
+
+
+
+
+## Method `update_active_site`
+In class: [components\cms\Json](#top)
+
+```
+mixed components\cms\Json::update_active_site($data, $params)
+```
+
+
+
+
+
+* Visibility: **protected**
+
+#### Arguments
+
+* $data **mixed**
 * $params **mixed**
 
 

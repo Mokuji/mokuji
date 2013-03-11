@@ -20,6 +20,7 @@
 * [`public mixed delete_menu_item($data, $arguments)`](#method-delete_menu_item)
 * [`protected mixed create_menu_item($data, $params)`](#method-create_menu_item)
 * [`protected mixed delete_menu_item_image($data, $params)`](#method-delete_menu_item_image)
+* [`protected mixed get_link($data, $params)`](#method-get_link)
 * [`protected mixed update_menu_item($data, $params)`](#method-update_menu_item)
 * [`protected mixed update_menu_items($data, $arguments)`](#method-update_menu_items)
 
@@ -392,6 +393,29 @@ In class: [components\menu\Json](#top)
 
 ```
 mixed components\menu\Json::delete_menu_item_image($data, $params)
+```
+
+
+
+
+
+* Visibility: **protected**
+
+#### Arguments
+
+* $data **mixed**
+* $params **mixed**
+
+
+
+
+
+
+## Method `get_link`
+In class: [components\menu\Json](#top)
+
+```
+mixed components\menu\Json::get_link($data, $params)
 ```
 
 

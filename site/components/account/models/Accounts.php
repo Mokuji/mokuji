@@ -10,6 +10,15 @@ class Accounts extends \dependencies\BaseModel
     $relations = array(
       'UserInfo' => array('id' => 'UserInfo.user_id'),
       'AccountsToUserGroups' => array('id' => 'AccountsToUserGroups.user_id')
+    ),
+    
+    $validate = array(
+      'email' => array('required', 'email'),
+      'username' => array('string', 'between'=>array(0, 255), 'no_html'),
+      'name' => array('string', 'between'=>array(0, 255), 'no_html'),
+      'preposition' => array('string', 'between'=>array(0, 255), 'no_html'),
+      'family_name' => array('string', 'between'=>array(0, 255), 'no_html'),
+      'comments' => array('string', 'no_html')
     );
   
   public function get_is_administrator()

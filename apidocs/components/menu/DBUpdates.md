@@ -23,6 +23,7 @@
 * [`public mixed install_1_1($dummydata, $forced)`](#method-install_1_1)
 * [`public mixed update_to_1_2($current_version, $forced)`](#method-update_to_1_2)
 * [`public mixed update_to_1_3($current_version, $forced)`](#method-update_to_1_3)
+* [`public mixed update_to_1_4($current_version, $forced)`](#method-update_to_1_4)
 
 
 ## Inheritance index
@@ -120,7 +121,7 @@ protected mixed $theme
 In class: [components\menu\DBUpdates](#top)
 
 ```
-protected mixed $updates = array('1.1' => '1.2', '1.2' => '1.3')
+protected mixed $updates = array('1.1' => '1.2', '1.2' => '1.3', '1.3' => '1.4')
 ```
 
 
@@ -442,6 +443,29 @@ In class: [components\menu\DBUpdates](#top)
 
 ```
 mixed components\menu\DBUpdates::update_to_1_3($current_version, $forced)
+```
+
+
+
+
+
+* Visibility: **public**
+
+#### Arguments
+
+* $current_version **mixed**
+* $forced **mixed**
+
+
+
+
+
+
+## Method `update_to_1_4`
+In class: [components\menu\DBUpdates](#top)
+
+```
+mixed components\menu\DBUpdates::update_to_1_4($current_version, $forced)
 ```
 
 
