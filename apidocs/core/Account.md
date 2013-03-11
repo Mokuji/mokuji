@@ -111,7 +111,7 @@ boolean core\Account::is_login()
 
 Returns true if the user is logged in.
 
-Short for $this->user->check('login').
+Short for $this-&gt;user-&gt;check('login').
 
 * Visibility: **public**
 

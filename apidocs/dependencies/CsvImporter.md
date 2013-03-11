@@ -28,12 +28,12 @@
 **Methods**
 * [`public mixed __construct(string $component, string $title, boolean $retry)`](#method-__construct)
 * [`public \dependencies\CsvImporter commit(boolean $stop_on_errors)`](#method-commit)
-* [`public mixed errors()`](#method-errors)
+* [`public array errors()`](#method-errors)
 * [`public \dependencies\CsvImporter initialize_source_file(string $delimiter)`](#method-initialize_source_file)
-* [`public mixed is_success()`](#method-is_success)
+* [`public boolean is_success()`](#method-is_success)
 * [`public array logs()`](#method-logs)
 * [`public \dependencies\CsvImporter process_import_data(string $main_model, array $field_titles, array $options)`](#method-process_import_data)
-* [`public mixed resultset()`](#method-resultset)
+* [`public \dependencies\Data resultset()`](#method-resultset)
 * [`protected void log(string $message, boolean $verbose)`](#method-log)
 * [`protected \dependencies\Data session()`](#method-session)
 
@@ -236,10 +236,10 @@ Commits the results from the processing we've done.
 In class: [dependencies\CsvImporter](#top)
 
 ```
-mixed dependencies\CsvImporter::errors()
+array dependencies\CsvImporter::errors()
 ```
 
-
+Getter for errors.
 
 
 
@@ -289,10 +289,10 @@ Prepares the uploaded source CSV file to read data from.
 In class: [dependencies\CsvImporter](#top)
 
 ```
-mixed dependencies\CsvImporter::is_success()
+boolean dependencies\CsvImporter::is_success()
 ```
 
-
+Whether the processing was successful or not.
 
 
 
@@ -339,11 +339,11 @@ These will be checked for uniqueness in both the import and the existing databas
 
 Field titles are used to determine the order and in which models a field should be placed.
 Field titles key-value pairs are defined like this:
-'model_field' => 'Humanly readable field name'
+'model_field' =&gt; 'Humanly readable field name'
 
 Additional models will be inserted into the correct field through the relations defined in the main model.
 Additional model field mappings are in this format:
-'RelationName' => array('csv_field' => 'target_field' [, ...])
+'RelationName' =&gt; array('csv_field' =&gt; 'target_field' [, ...])
 
 * Visibility: **public**
 
@@ -379,7 +379,7 @@ Additional model field mappings are in this format:
 In class: [dependencies\CsvImporter](#top)
 
 ```
-mixed dependencies\CsvImporter::resultset()
+\dependencies\Data dependencies\CsvImporter::resultset()
 ```
 
 Getter for the result set.
@@ -425,7 +425,7 @@ In class: [dependencies\CsvImporter](#top)
 
 Shortcut to the session variables, scoped for this import.
 
-Refers to <component> -> import_<title> in the session object.
+Refers to &lt;component&gt; -&gt; import_&lt;title&gt; in the session object.
 
 * Visibility: **protected**
 

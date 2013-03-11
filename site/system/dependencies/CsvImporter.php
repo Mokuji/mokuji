@@ -60,6 +60,10 @@ class CsvImporter
     
   }
   
+  /**
+   * Getter for errors.
+   * @return array
+   */
   public function errors()
   {
     
@@ -69,6 +73,7 @@ class CsvImporter
   
   /**
    * Getter for the result set.
+   * @return \dependencies\Data
    */
   public function resultset()
   {
@@ -77,6 +82,10 @@ class CsvImporter
     
   }
   
+  /**
+   * Whether the processing was successful or not.
+   * @return boolean
+   */
   public function is_success()
   {
     

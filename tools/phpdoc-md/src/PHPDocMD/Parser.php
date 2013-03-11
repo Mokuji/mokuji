@@ -391,6 +391,8 @@ class Parser
             return $input;
         $input = str_replace('<p>', '', $input);
         $input = str_replace('</p>', '', $input);
+        $input = str_replace('<', '&lt;', $input);
+        $input = str_replace('>', '&gt;', $input);
         return $input;
         
     }
