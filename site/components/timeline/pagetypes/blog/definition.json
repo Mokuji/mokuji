@@ -1,0 +1,16 @@
+{
+  
+  "javascript": ["../../includes/timeline-controller.js"],
+  
+  "templates": {
+    
+    "postsTab": "posts.tmpl.php",
+    "filtersTab": "filters.tmpl.php",
+    
+    "entry": "entry.tmpl.php"
+    
+  },
+  
+  "controller": "cmsBackend.timeline.TimelineController"
+  
+}
