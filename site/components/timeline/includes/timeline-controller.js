@@ -8,16 +8,92 @@
     
     //Define the tabs to be created.
     tabs: {
-      'Posts': 'postsTab',
-      'Filters': 'filtersTab'
+      'Entries': 'entriesTab',
+      'Composition': 'compositionTab'
     },
     
     //Define the elements for jsFramework to keep track of.
     elements: {
-      'filtersForm': '#timeline-filters-form',
-      'timelinePreview': '#timeline-preview'
+      'titleForm': '#timeline-title-form',
+      'compositionForm': '#timeline-composition-form',
+      'timelinePreview': '#timeline-preview',
+      'paginationWrapper': '.pagination-wrapper',
+      'editingPage': '.pagination-wrapper .page-2',
+      'btn_edit_item': '.edit-item',
+      'btn_entry_cancel': '#timeline-entry-form .cancel'
     },
     
+    events: {
+      
+      'click on btn_edit_item': function(e){
+        e.preventDefault();
+        this.editEntry($(e.target).attr('data-entry'));
+      },
+      
+      'click on btn_entry_cancel': function(e){
+        e.preventDefault();
+        this.returnToPosts();
+      }
+      
+    },
+    
+    //Return to posts.
+    returnToPosts: function(){
+      
+      var self = this;
+      
+      self.paginationWrapper.animate({left:'0%'}, 300, function(){
+        self.editingPage.empty();
+        self.refreshElements();
+      });
+      
+    },
+    
+    //Edit entry.
+    editEntry: function(id){
+      
+      var self = this;
+      
+      self.paginationWrapper.animate({left:'-100%'}, 300);
+      
+      self.editingPage.html('<p class="loading">Loading...</p>');
+      
+      $.rest('GET', '?rest=timeline/entry/'+id).done(function(data){
+        
+        self.editingPage.empty();
+        
+        var form = self.definition.templates.entryEdit.tmpl(
+          
+          //With an extension of the given data (forces languages attribute, regardless of input).
+          $.extend({}, data, {languages: app.Page.Languages.data.languages})
+          
+        ).appendTo(self.editingPage);
+        
+        form.restForm({
+          success: function(entry){
+            self.loadEntries();
+            self.returnToPosts();
+          }
+        });
+        
+        //Create unique id for the text editors.
+        form.find('textarea.editor').each(function(){
+          var $that = $(this);
+          $that.attr('id', $that.attr('id')+Math.floor((Math.random()*100000)+1));
+          tx_editor.init({selector:'#'+$that.attr('id')});
+        });
+        
+        //Refresh elements.
+        self.refreshElements();
+        
+        //Make sure the first tab (which has the previews) applies multilingual clauses.
+        app.Page.Tabs.state.controllers[0].setMultilanguageSection(
+          app.Page.Languages.currentLanguageData().id
+        );
+        
+      });
+      
+    },
     
     //Loads entries for this page.
     loadEntries: function(page){
@@ -56,6 +132,9 @@
         if(!hasEntries){
           self.timelinePreview.html('<p class="no-entries">There are no entries yet.</p>');
         }
+        
+        //Refresh elements.
+        self.refreshElements();
         
         //Make sure the first tab (which has the previews) applies multilingual clauses.
         app.Page.Tabs.state.controllers[0].setMultilanguageSection(
@@ -115,27 +194,31 @@
       
       var self = this;
       
+      //Make titles a REST form.
+      self.titleForm.restForm();
+      
       //Load the filters used.
-      self.filters = self.filtersForm.formToObject();
+      self.filters = self.compositionForm.formToObject();
       
       //Make filters a REST form.
-      self.filtersForm.restForm({
+      self.compositionForm.restForm({
         success:function(filters){
           self.filters = filters;
+          self.titleForm.trigger('submit');
         }
       });
       
       //When altering filters, flag the previews as dirty.
-      self.filtersForm.on('change', ':input', function(){
+      self.compositionForm.on('change', ':input', function(){
         self.dirty = true;
-        self.filters = self.filtersForm.formToObject();
+        self.filters = self.compositionForm.formToObject();
       });
       
       //When switching tabs, see if we need to reload entries.
       app.Page.Tabs.subscribe('tabChanged', function(e, tab){
         
         //Reload if we need to.
-        if(tab.title === 'Posts' && self.dirty)
+        if(tab.title === 'Entries' && self.dirty)
           self.loadEntries();
         
       });
@@ -148,8 +231,8 @@
     //Saves the data currently present in the different tabs controlled by this controller.
     save: function(e, pageId){
       
-      //Save the filters.
-      this.filtersForm.trigger('submit');
+      //Save the filters (which chains into titles).
+      this.compositionForm.trigger('submit');
       
     },
     

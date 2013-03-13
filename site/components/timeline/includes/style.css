@@ -1,0 +1,15 @@
+.pagination-viewport{
+  width:100%;
+  overflow:hidden;
+}
+
+.pagination-wrapper{
+  left:0;
+  position:relative;
+  width:200%;
+}
+
+.page-1, .page-2{
+  width:50%; /* 50% of 200%! */
+  float:left;
+}

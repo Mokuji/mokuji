@@ -1,6 +1,6 @@
 <?php namespace components\timeline; if(!defined('TX')) die('No direct access.'); ?>
 
-<form method="PUT" action="?rest=timeline/page" id="timeline-filters-form" class="form">
+<form method="PUT" action="?rest=timeline/page" id="timeline-composition-form" class="form">
   
   <input type="hidden" name="page_id" value="${data.page.page_id}" />
   
@@ -21,7 +21,11 @@
     
     <label><?php __($component, 'Display type for the entries') ?></label>
     <select name="display_type_id">
-      {{each(i, display) data.display_types}} <option value="${display.id}">${display.title}</option> {{/each}}
+      {{each(i, display) data.display_types}}
+        <option value="${display.id}"{{if data.page.display_type_id == display.id}} selected="selected"{{/if}}>
+          ${display.title}
+        </option>
+      {{/each}}
     </select>
     
   </div>

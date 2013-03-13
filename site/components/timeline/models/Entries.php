@@ -9,6 +9,13 @@ class Entries extends \dependencies\BaseModel
     
     $relations = array(
       'EntriesToTimelines' => array('id' => 'EntriesToTimelines.entry_id')
+    ),
+    
+    $validate = array(
+      'id' => array('required', 'number'=>'int', 'gt'=>0),
+      'type' => array('string', 'in'=>array('blogpost')),
+      'dt_publish' => array('datetime'),
+      'author_id' => array('number'=>'int', 'gt'=>0),
     );
     
   public function get_info()

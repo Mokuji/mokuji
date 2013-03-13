@@ -421,6 +421,13 @@
           #edit_page .tab-bar .tab.config:before{
             content:"\f013" !important;
           }
+          #edit_page .tab-bar .tab.entries:before {
+            content:"\f00b" !important;
+          }
+          #edit_page .tab-bar .tab.composition:before {
+            content:"\f0c3" !important;
+          }
+          
     #edit_page .tab-body{
       padding:10px;
     }

@@ -4,10 +4,11 @@
   
   "templates": {
     
-    "postsTab": "posts.tmpl.php",
-    "filtersTab": "filters.tmpl.php",
+    "entriesTab": "entries.tmpl.php",
+    "compositionTab": "composition.tmpl.php",
     
-    "entry": "entry.tmpl.php"
+    "entry": "entry.tmpl.php",
+    "entryEdit": "entry-edit.tmpl.php"
     
   },
   

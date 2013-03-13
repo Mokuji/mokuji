@@ -14,5 +14,22 @@ class Pages extends \dependencies\BaseModel
       'is_chronologic' => array('required', 'boolean'),
       'is_future_hidden' => array('required', 'boolean')
     );
+  
+  public function get_info()
+  {
     
+    $ret = Data();
+    
+    tx('Sql')
+      ->table('timeline', 'PageInfo')
+      ->where('page_id', $this->page_id)
+      ->execute()
+      ->each(function($info)use($ret){
+        $ret[$info->language_id] = $info;
+      });
+    
+    return $ret;
+    
+  }
+  
 }
