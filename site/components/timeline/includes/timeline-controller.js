@@ -6,6 +6,13 @@
     //Is this a dirty timeline preview?
     dirty: false,
     
+    //Cache timelines and filters.
+    timelines: {},
+    filters: {},
+    
+    //Force a language?
+    force_language: false,
+    
     //Define the tabs to be created.
     tabs: {
       'Entries': 'entriesTab',
@@ -16,11 +23,13 @@
     elements: {
       'titleForm': '#timeline-title-form',
       'compositionForm': '#timeline-composition-form',
+      'compositionFormInput': '#timeline-composition-form :input',
       'timelinePreview': '#timeline-preview',
       'paginationWrapper': '.pagination-wrapper',
       'editingPage': '.pagination-wrapper .page-2',
       'btn_edit_item': '.edit-item',
-      'btn_entry_cancel': '#timeline-entry-form .cancel'
+      'btn_entry_cancel': '#timeline-entry-form .cancel',
+      'sel_force_language': '#timeline-composition-form select[name=force_language]'
     },
     
     events: {
@@ -33,6 +42,17 @@
       'click on btn_entry_cancel': function(e){
         e.preventDefault();
         this.returnToPosts();
+      },
+      
+      'change on compositionFormInput': function(e){
+        this.dirty = true;
+        this.filters = this.compositionForm.formToObject();
+      },
+      
+      'change on sel_force_language': function(e){
+        var value = $(e.target).val();
+        this.force_language = value > 0 ? value : false;
+        this.editingPage.find(':input[name=force_language]').val(value);
       }
       
     },
@@ -62,12 +82,14 @@
         
         self.editingPage.empty();
         
-        var form = self.definition.templates.entryEdit.tmpl(
-          
-          //With an extension of the given data (forces languages attribute, regardless of input).
-          $.extend({}, data, {languages: app.Page.Languages.data.languages})
-          
-        ).appendTo(self.editingPage);
+        var form = self.definition.templates.entryEdit.tmpl({
+          data: data,
+          page_id: self.page,
+          timelines: self.timelines,
+          force_timeline: self.filters && self.filters.timeline_id ? self.filters.timeline_id : false,
+          force_language: self.force_language,
+          languages: app.Page.Languages.data.languages
+        }).appendTo(self.editingPage);
         
         form.restForm({
           success: function(entry){
@@ -88,6 +110,7 @@
         
         //Make sure the first tab (which has the previews) applies multilingual clauses.
         app.Page.Tabs.state.controllers[0].setMultilanguageSection(
+          self.force_language > 0 ? self.force_language :
           app.Page.Languages.currentLanguageData().id
         );
         
@@ -138,6 +161,7 @@
         
         //Make sure the first tab (which has the previews) applies multilingual clauses.
         app.Page.Tabs.state.controllers[0].setMultilanguageSection(
+          self.force_language > 0 ? self.force_language :
           app.Page.Languages.currentLanguageData().id
         );
         
@@ -153,12 +177,11 @@
     templateEntry: function(data){
       
       //Template the entry template.
-      return this.definition.templates.entry.tmpl(
-        
-        //With an extension of the given data (forces languages attribute, regardless of input).
-        $.extend({}, data, {languages: app.Page.Languages.data.languages})
-        
-      );
+      return this.definition.templates.entry.tmpl({
+        data: data,
+        force_language: self.force_language,
+        languages: app.Page.Languages.data.languages
+      });
       
     },
     
@@ -175,6 +198,8 @@
       //In case of success, this is no longer fresh.
       .done(function(d){
         self.page = d.page.page_id;
+        self.timelines = d.timelines;
+        self.force_language = d.page.force_language ? d.page.force_language : false,
         D.resolve(d);
       })
       
@@ -208,20 +233,26 @@
         }
       });
       
-      //When altering filters, flag the previews as dirty.
-      self.compositionForm.on('change', ':input', function(){
-        self.dirty = true;
-        self.filters = self.compositionForm.formToObject();
-      });
-      
       //When switching tabs, see if we need to reload entries.
       app.Page.Tabs.subscribe('tabChanged', function(e, tab){
         
         //Reload if we need to.
-        if(tab.title === 'Entries' && self.dirty)
-          self.loadEntries();
+        if(tab.title === 'Entries'){
+          
+          //Fresh diapers are applied here.
+          if(self.dirty)
+            self.loadEntries();
+          
+          //Force disable language tabs if it's set.
+          app.Page.setMultilingual(self.force_language === false);
+          
+        }
+        
         
       });
+      
+      //Force language please.
+      app.Page.setMultilingual(self.force_language === false);
       
       //Load preview entries.
       self.loadEntries();

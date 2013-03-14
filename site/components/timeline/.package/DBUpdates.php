@@ -10,7 +10,26 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
   protected
     $component = 'timeline',
     $updates = array(
+      '0.1' => '0.2'
     );
+  
+  public function update_to_0_2($current_version, $forced)
+  {
+    
+    try{
+      
+      tx('Sql')->query('
+        ALTER TABLE `#__timeline_pages`
+          ADD `force_language` INT(10) UNSIGNED NULL DEFAULT NULL AFTER `timeline_id`
+      ');
+      
+    }
+    
+    catch(\Exception $ex){
+      if(!$forced) throw $ex;
+    }
+    
+  }
   
   public function install_0_1($dummydata, $forced)
   {

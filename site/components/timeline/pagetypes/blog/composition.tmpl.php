@@ -19,12 +19,11 @@
   </div>
   <div class="ctrlHolder">
     
-    <label><?php __($component, 'Display type for the entries') ?></label>
-    <select name="display_type_id">
-      {{each(i, display) data.display_types}}
-        <option value="${display.id}"{{if data.page.display_type_id == display.id}} selected="selected"{{/if}}>
-          ${display.title}
-        </option>
+    <label><?php __($component, 'Entry language') ?></label>
+    <select name="force_language">
+      <option value="">-- <?php __($component, 'Multilingual') ?> --</option>
+      {{each(language_id, language) languages}}
+        <option value="${language.id}"{{if data.page.force_language === language.id}} selected="selected"{{/if}}>${language.title}</option>
       {{/each}}
     </select>
     
@@ -33,8 +32,20 @@
     
     <label><?php __($component, 'Display order of the entries') ?></label>
     <select name="is_chronologic">
-      <option value="1"{{if data.page.is_chronologic}} selected="selected"{{/if}}><?php __('Chronologically') ?></option>
-      <option value="0"{{if !data.page.is_chronologic}} selected="selected"{{/if}}><?php __('Reversed chronologically') ?></option>
+      <option value="1"{{if data.page.is_chronologic}} selected="selected"{{/if}}><?php __($component, 'Old entries first') ?></option>
+      <option value="0"{{if !data.page.is_chronologic}} selected="selected"{{/if}}><?php __($component, 'New entries first') ?></option>
+    </select>
+    
+  </div>
+  <div class="ctrlHolder">
+    
+    <label><?php __($component, 'Display type for the entries') ?></label>
+    <select name="display_type_id">
+      {{each(i, display) data.display_types}}
+        <option value="${display.id}"{{if data.page.display_type_id == display.id}} selected="selected"{{/if}}>
+          ${display.title}
+        </option>
+      {{/each}}
     </select>
     
   </div>

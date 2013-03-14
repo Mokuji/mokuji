@@ -17,7 +17,38 @@ class Entries extends \dependencies\BaseModel
       'dt_publish' => array('datetime'),
       'author_id' => array('number'=>'int', 'gt'=>0),
     );
+  
+  public function get_timelines()
+  {
     
+    $that = $this;
+    $ret = Data();
+    
+    tx('Sql')
+      ->table('timeline', 'Timelines')
+      ->execute()
+      ->each(function($timeline)use($ret, $that){
+        
+        if($that->id->is_set()){
+          $matched = tx('Sql')
+            ->table('timeline', 'EntriesToTimelines')
+            ->where('entry_id', $that->id)
+            ->where('timeline_id', $timeline->id)
+            ->count()->get('int');
+        }
+        
+        else{
+          $matched = 0;
+        }
+        
+        $ret[$timeline->id] = $matched > 0;
+        
+      });
+    
+    return $ret;
+    
+  }
+  
   public function get_info()
   {
     

@@ -19,6 +19,7 @@ class Json extends \dependencies\BaseComponent
       ->is('set', function($entry){
         $entry->info;
         $entry->author;
+        $entry->timelines;
         $entry->authors->set(
           tx('Sql')
             ->table('account', 'UserInfo', $UI)
@@ -32,11 +33,52 @@ class Json extends \dependencies\BaseComponent
     
   }
   
+  protected function create_entry($data, $params)
+  {
+    
+    //Store info, validate_model would filter it.
+    $infos = $data->info;
+    $timelines = $data->timelines;
+    
+    //Filter info based on force_language.
+    if(!$data->force_language->is_empty()){
+      $infos = $infos->having($data->force_language->get('string'));
+    }
+    
+    $entry = tx('Sql')
+      ->model('timeline', 'Entries')
+      ->set(array('id' => $params->{0}))
+      ->merge($data)
+      ->validate_model(array(
+        'force_create' => true,
+        'nullify' => true
+      ))
+      ->save();
+    
+    //Store if something is stored in the 'NEW' meta-timeline.
+    if($timelines->NEW->validate('Timeline checkbox', array('boolean'))->is_true()){
+      tx('Data')->session->timline->new_page_items->{$data->page_id}->push($entry->id);
+      $timelines->NEW->un_set();
+    }
+    
+    tx('Component')->helpers('timeline')->_call('update_entry_info', array($entry, $infos));
+    tx('Component')->helpers('timeline')->_call('update_entry_timelines', array($entry, $timelines));
+    
+    return $entry;
+    
+  }
+  
   protected function update_entry($data, $params)
   {
     
-    //Store multilingual info, validate_model would filter it.
+    //Store info, validate_model would filter it.
     $infos = $data->info;
+    $timelines = $data->timelines;
+    
+    //Filter info based on force_language.
+    if(!$data->force_language->is_empty()){
+      $infos = $infos->having($data->force_language->get('string'));
+    }
     
     $entry = tx('Sql')
       ->model('timeline', 'Entries')
@@ -47,36 +89,14 @@ class Json extends \dependencies\BaseComponent
       ))
       ->save();
     
-    $infos->each(function($info, $lid)use($entry){
-      
-      //Get existing info (if any).
-      tx('Sql')
-        ->table('timeline', 'EntryInfo')
-        ->pk($entry->id, $lid)
-        ->execute_single()
-        
-        //If none, make an empty one.
-        ->is('empty', function()use($entry, $lid){
-          return tx('Sql')
-            ->model('timeline', 'EntryInfo')
-            ->set(array(
-              'entry_id' => $entry->id,
-              'language_id' => $lid
-            ));
-        })
-        
-        //Then set the input.
-        ->merge($info)
-        
-        // //Validate.
-        // ->validate_model(array(
-        //   'force_create' => $info->
-        // ))
-        
-        //Saves :D
-        ->save();
-      
-    });
+    //Store if something is stored in the 'NEW' meta-timeline.
+    if($timelines->NEW->validate('Timeline checkbox', array('boolean'))->is_true()){
+      tx('Data')->session->timline->new_page_items->{$data->page_id}->push($entry->id);
+      $timelines->NEW->un_set();
+    }
+    
+    tx('Component')->helpers('timeline')->_call('update_entry_info', array($entry, $infos));
+    tx('Component')->helpers('timeline')->_call('update_entry_timelines', array($entry, $timelines));
     
     return $entry;
     
@@ -108,7 +128,7 @@ class Json extends \dependencies\BaseComponent
       })
       
       //Chronologically?
-      ->order('dt_publish', $data->is_chronological->get('int') > 0 ? 'ASC' : 'DESC')
+      ->order('dt_publish', $data->is_chronologic->get('int') > 0 ? 'ASC' : 'DESC')
       
       //How many and offset?
       ->limit(
