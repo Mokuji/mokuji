@@ -34,7 +34,7 @@
         {{/each}}
         
         <div class="ctrlHolder">
-          <a class="edit-item" href="#" data-entry=""><?php __($component, 'New post') ?></a>
+          <a class="edit-item button grey" href="#" data-entry=""><?php __($component, 'New post') ?></a>
         </div>
         
       </form>

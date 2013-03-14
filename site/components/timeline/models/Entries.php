@@ -18,6 +18,13 @@ class Entries extends \dependencies\BaseModel
       'author_id' => array('number'=>'int', 'gt'=>0),
     );
   
+  public function get_is_future()
+  {
+    
+    return strtotime($this->dt_publish->get('string')) > time();
+    
+  }
+  
   public function get_timelines()
   {
     

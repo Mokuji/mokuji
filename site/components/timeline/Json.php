@@ -19,17 +19,20 @@ class Json extends \dependencies\BaseComponent
       ->is('set', function($entry){
         $entry->info;
         $entry->author;
+        $entry->is_future;
         $entry->timelines;
-        $entry->authors->set(
-          tx('Sql')
-            ->table('account', 'UserInfo', $UI)
-            ->where("(`$UI.status` & (1|4))", '>', 0)
-            ->execute()
-            ->each(function($info){
-              return $info->having('user_id', 'full_name');
-            })
-        );
-      });
+      })
+      
+      //Cludge the authors in here.
+      ->authors->set(
+        tx('Sql')
+          ->table('account', 'UserInfo', $UI)
+          ->where("(`$UI.status` & (1|4))", '>', 0)
+          ->execute()
+          ->each(function($info){
+            return $info->having('user_id', 'full_name');
+          })
+      )->back();
     
   }
   
@@ -108,8 +111,6 @@ class Json extends \dependencies\BaseComponent
   protected function get_entries($data, $params)
   {
     
-    #TODO: hide future items?
-    
     $page = $params->{0};
     
     return tx('Sql')
@@ -143,6 +144,7 @@ class Json extends \dependencies\BaseComponent
       ->each(function($entry){
         $entry->info;
         $entry->author;
+        $entry->is_future;
       });
     
   }

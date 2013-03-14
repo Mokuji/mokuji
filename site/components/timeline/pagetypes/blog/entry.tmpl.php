@@ -10,10 +10,14 @@
       {{else}}
         {{html '<em class="untitled">&laquo;<?php __($component, 'Untitled in this language') ?>&raquo;</em>'}}
       {{/if}}
-      <a class="edit-item" href="#" data-entry="${data.id}">edit</a>
+      <a class="edit-item icon-pencil" href="#" data-entry="${data.id}"></a>
     </h2>
     
-    <p class="dt-published">${data.dt_published}</p>
+    <p class="publish-date">
+      <?php __($component, 'Publish date') ?>:
+      <span class="dt-publish">${data.dt_publish}</span>
+      {{if data.is_future}}<span class="future">(<?php __($component, 'In the future') ?>)</span>{{/if}}
+    </p>
     
     {{if data.thumbnail_image}}<img src="${data.thumbnail_image.url}" class="thumbnail" />{{/if}}
     
@@ -23,7 +27,7 @@
     
     {{if data.author}}
       <p class="credits">
-        <?php __($component, 'Posted by') ?>
+        <?php __($component, 'Posted by') ?>:
         <span class="author">${data.author.full_name}</span>
       </p>
     {{/if}}
