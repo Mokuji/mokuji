@@ -1,5 +1,29 @@
 <?php if(!defined('TX')) die('No direct access.');
 
+function format_error_keys(\exception\ModelValidation $mex, $format)
+{
+  
+  $errors = array();
+  
+  //Errors are of type \exception\Validation
+  foreach($mex->errors as $error){
+    
+    //Replicate exception, but set new key.
+    $ex = new \exception\Validation($error->getMessage());
+    $ex->key(sprintf($format, $error->key()));
+    $ex->errors($error->errors());
+    $ex->value($error->value());
+    
+    $errors[] = $ex;
+    
+  }
+  
+  $mex->set_validation_errors($errors);
+  
+  throw $mex;
+  
+}
+
 function url($url, $discard_old_querystring=false, $build_on_redirect=false, $keep_module_id=false)
 {
   

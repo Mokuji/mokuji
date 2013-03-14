@@ -68,7 +68,7 @@
             for(var name in errorMeta){
               
               //Find the element to add errors to.
-              $errorEl = $(form).find('[name='+name+']')
+              $errorEl = $(form).find('[name="'+name+'"]')
                 .eq(0); //Only one please.
               
               //Focus the first element.
