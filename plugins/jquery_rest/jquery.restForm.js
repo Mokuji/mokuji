@@ -3,6 +3,7 @@
   $.fn.restForm = function(callbacks){
     
     callbacks = $.extend({
+      beforeSubmit: function(data){},
       success: function(){},
       error: function(){}
     }, callbacks);
@@ -25,6 +26,9 @@
       
       //Tell the world we're loading things.
       if(hasFeedback) app.Feedback.working('Saving data');
+      
+      //Pre-process data.
+      callbacks.beforeSubmit.apply(this, [data]);
       
       $.rest($(form).attr('method'), form.action, data)
         
