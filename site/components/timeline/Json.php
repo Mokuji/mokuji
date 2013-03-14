@@ -57,7 +57,7 @@ class Json extends \dependencies\BaseComponent
     
     //Store if something is stored in the 'NEW' meta-timeline.
     if($timelines->NEW->validate('Timeline checkbox', array('boolean'))->is_true()){
-      tx('Data')->session->timline->new_page_items->{$data->page_id}->push($entry->id);
+      tx('Data')->session->timeline->new_page_items->{$data->page_id}->push($entry->id);
       $timelines->NEW->un_set();
     }
     
@@ -91,7 +91,7 @@ class Json extends \dependencies\BaseComponent
     
     //Store if something is stored in the 'NEW' meta-timeline.
     if($timelines->NEW->validate('Timeline checkbox', array('boolean'))->is_true()){
-      tx('Data')->session->timline->new_page_items->{$data->page_id}->push($entry->id);
+      tx('Data')->session->timeline->new_page_items->{$data->page_id}->push($entry->id);
       $timelines->NEW->un_set();
     }
     
@@ -124,7 +124,7 @@ class Json extends \dependencies\BaseComponent
       //When getting from timeline 'NEW'.
       ->is($data->timeline_id->get('string') == 'NEW', function($t)use($data){
         #TODO: Validate page ID.
-        $t->pk(tx('Data')->session->timline->new_page_items->{$data->page_id});
+        $t->pk(tx('Data')->session->timeline->new_page_items->{$data->page_id});
       })
       
       //Chronologically?
@@ -191,7 +191,54 @@ class Json extends \dependencies\BaseComponent
     $infos = $data->info;
     
     //See if we need to make a new timeline.
-    #TODO
+    if($data->timeline_id->get() === 'NEW'){
+      
+      //Find the language from which to take the title.
+      $title_lang = (string)(!$data->force_language->is_empty() ? $data->force_language->get() : tx('Language')->id);
+      
+      //Create timeline.
+      $timeline = tx('Sql')
+        ->model('timeline', 'Timelines')
+        ->set(array(
+          'title' => $data->info->{$title_lang}->title,
+          'is_public' => true
+        ))
+        ->validate_model(array(
+          'force_create' => true
+        ))
+        ->save();
+      
+      //Store timeline ID in submit data.
+      $data->timeline_id->set($timeline->id->get());
+      
+      //Link items created for this timeline from the session to the DB.
+      tx('Data')->session->timeline->new_page_items->{$data->page_id}->each(function($entry)use($timeline){
+        
+        //Get existing info (if any).
+        tx('Sql')
+          ->table('timeline', 'EntriesToTimelines')
+          ->where('entry_id', $entry)
+          ->where('timeline_id', $timeline->id)
+          ->execute_single()
+          
+          //If none, make an empty one.
+          ->is('empty', function()use($entry, $timeline){
+            return tx('Sql')
+              ->model('timeline', 'EntriesToTimelines')
+              ->set(array(
+                'entry_id' => $entry,
+                'timeline_id' => $timeline->id
+              ));
+          })
+          
+          //Always save :D
+          ->save();
+        
+      }) //End - each session entry
+      
+      ->un_set();
+      
+    }
     
     $page = tx('Sql')
       ->model('timeline', 'Pages')
@@ -232,54 +279,20 @@ class Json extends \dependencies\BaseComponent
       
     });
     
-    return $page;
+    $display_types = tx('Sql')
+      ->table('timeline', 'DisplayTypes')
+      ->execute();
     
-  }
-  
-  protected function update_page_title($data, $params)
-  {
+    $timelines = tx('Sql')
+      ->table('timeline', 'Timelines')
+      ->where('is_public', true)
+      ->execute();
     
-    $page = tx('Sql')
-      ->table('timeline', 'Pages')
-      ->pk($data->page_id)
-      ->execute_single()
-      
-      ->is('empty', function()use($data){
-        throw new \exception\NotFound('No page with page ID "%s".', $data->page_id);
-      });
-    
-    $data->info->each(function($info, $lid)use($page){
-      
-      //Get existing info (if any).
-      tx('Sql')
-        ->table('timeline', 'PageInfo')
-        ->pk($page->page_id, $lid)
-        ->execute_single()
-        
-        //If none, make an empty one.
-        ->is('empty', function()use($page, $lid){
-          return tx('Sql')
-            ->model('timeline', 'pageInfo')
-            ->set(array(
-              'page_id' => $page->page_id,
-              'language_id' => $lid
-            ));
-        })
-        
-        //Then set the input.
-        ->merge($info)
-        
-        // //Validate.
-        // ->validate_model(array(
-        //   'force_create' => $info->
-        // ))
-        
-        //Saves :D
-        ->save();
-      
-    });
-    
-    return $page->info->back();
+    return array(
+      'display_types' => $display_types,
+      'timelines' => $timelines,
+      'page' => $page
+    );
     
   }
   

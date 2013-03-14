@@ -23,7 +23,7 @@
     <select name="force_language">
       <option value="">-- <?php __($component, 'Multilingual') ?> --</option>
       {{each(language_id, language) languages}}
-        <option value="${language.id}"{{if data.page.force_language === language.id}} selected="selected"{{/if}}>${language.title}</option>
+        <option value="${language.id}"{{if data.page.force_language == language.id}} selected="selected"{{/if}}>${language.title}</option>
       {{/each}}
     </select>
     

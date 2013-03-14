@@ -185,6 +185,19 @@
       
     },
     
+    //Refresh the composition form.
+    refreshComposition: function(data){
+      
+      //Template the composition template and replace HTML.
+      this.compositionForm.replaceWith(
+        this.definition.templates.compositionTab.tmpl({
+          data: data,
+          languages: app.Page.Languages.data.languages
+        })
+      );
+      
+    },
+    
     //Retrieve input data (from the server probably).
     getData: function(pageId){
       
@@ -219,17 +232,17 @@
       
       var self = this;
       
-      //Make titles a REST form.
-      self.titleForm.restForm();
-      
       //Load the filters used.
       self.filters = self.compositionForm.formToObject();
       
       //Make filters a REST form.
       self.compositionForm.restForm({
-        success:function(filters){
-          self.filters = filters;
-          self.titleForm.trigger('submit');
+        beforeSubmit: function(data){
+          $.extend(true, data, self.titleForm.formToObject());
+        },
+        success:function(data){
+          self.filters = data.page;
+          self.refreshComposition(data);
         }
       });
       

@@ -9,6 +9,12 @@ class Timelines extends \dependencies\BaseModel
     
     $relations = array(
       'EntriesToTimelines' => array('id' => 'EntriesToTimelines.timeline_id')
+    ),
+    
+    $validate = array(
+      'id' => array('required', 'number'=>'int', 'gt'=>0),
+      'title' => array('required', 'string', 'not_empty', 'no_html'),
+      'is_public' => array('boolean')
     );
     
 }
