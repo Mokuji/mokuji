@@ -259,6 +259,12 @@
           //Force disable language tabs if it's set.
           app.Page.setMultilingual(self.force_language === false);
           
+          //Make sure the first tab (which has the previews) applies multilingual clauses.
+          app.Page.Tabs.state.controllers[0].setMultilanguageSection(
+            self.force_language > 0 ? self.force_language :
+            app.Page.Languages.currentLanguageData().id
+          );
+          
         }
         
         
