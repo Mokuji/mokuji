@@ -89,7 +89,8 @@ class EntryPoint extends \dependencies\BaseEntryPoint
       $that = $this;
       
       //If we need to claim our account, do that now before anything else.
-      if(tx('Component')->helpers('account')->call('should_claim')){
+      if(tx('Component')->helpers('account')->call('should_claim'))
+      {
         
         $template_id = tx('Config')->user('template_id')->otherwise(1)->get('int');
         $template = tx('Sql')->table('cms', 'Templates')->pk($template_id)->execute_single();
@@ -110,31 +111,29 @@ class EntryPoint extends \dependencies\BaseEntryPoint
         ),
         array(
           'content' => tx('Component')->views('account')->get_html('claim_account')
-        )); //$that->template();
+        ));
         
       }
-
-      tx('Validating get variables', function()use($that){
+      
+      //Validate input variables to see if they will generate proper content.
+      tx('Validating input.', function()use($that){
         
-        //validate page id
-        tx('Data')->get->pid->not('set', function(){
-
-          tx('Config')->user('homepage')->is('empty', function(){
-            throw new \exception\NotFound('No homepage was set.');
-          })->failure(function(){
-            tx('Url')->redirect(tx('Config')->user('homepage'), true);
-          });
-
-        })->validate('Page ID', array('number'=>'integer', 'gt'=>0));
+        //Address page ID.
+        tx('Data')->get->pid
         
-        //check if page id is present in database
+        //Validate it.
+        ->validate('Page ID', array('required', 'number'=>'integer', 'gt'=>0));
+        
+        //Get the record for this page from the database.
         $page = tx('Sql')
-          ->table('cms', 'Pages')
-          ->pk(tx('Data')->get->pid)
-          ->execute_single()
-          ->is('empty', function(){
-            throw new \exception\EmptyResult('The page ID does not refer to an existing page.');
-          });
+        ->table('cms', 'Pages')
+        ->pk(tx('Data')->get->pid)
+        ->execute_single()
+        
+        //If the records didn't exist. We assume the page-id is invalid.
+        ->is('empty', function(){
+          throw new \exception\EmptyResult('The page ID does not refer to an existing page.');
+        });
         
         //Check user permissions.
         tx('Component')->helpers('cms')->page_authorisation($page->id);
@@ -145,20 +144,30 @@ class EntryPoint extends \dependencies\BaseEntryPoint
         });
 
       })
-
+      
+      //If any of the above validations failed..
       ->failure(function(){
 
-        //first see if we can go back to where we came from
+        //We might be able to redirect the user back to the page they came from.
         $prev = tx('Url')->previous(false, false);
         if($prev !== false && !$prev->compare(tx('Url')->url)){
           tx('Url')->redirect(url($prev, true));
           return;
         }
-
-        tx('Config')->user('homepage')->is('set', function($homepage){
-
+        
+        //Address the user-defined home page in the configuration.
+        tx('Config')->user('homepage')
+        
+        //Check if it's set.
+        ->is('set')
+        
+        //In case it is.. We will attempt to redirect there.
+        ->success(function($homepage){
+          
+          //Make the redirect URL.
           $redirect = url($homepage);
-
+          
+          //Validate if the homepage will lead to a valid page.
           $redirect->data->pid->is('set')->and_is(function($pid){
             return tx('Sql')
               ->table('cms', 'Pages')
@@ -166,13 +175,23 @@ class EntryPoint extends \dependencies\BaseEntryPoint
               ->execute_single()
               ->is_set();
           })
+          
+          //In case it does - redirect there.
           ->success(function()use($redirect){tx('Url')->redirect($redirect);})
+          
+          //Otherwise we'll redirect to the administrators panel.
           ->failure(function(){tx('Url')->redirect('/admin/');});
 
+        })
+        
+        //In case there is no home page defined, we'll redirect to the administrators panel.
+        ->failure(function(){
+          tx('Url')->redirect('/admin/');
         });
 
       })
-
+      
+      //In case all validations succeeded, we can load the requested page.
       ->success(function()use($that, &$output){
         
         //load a layout-part
