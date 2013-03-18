@@ -1,4 +1,5 @@
 * Frontend weergaves renderen.
-* Automatisch naar de pagina gaan waar het laatst bewerkte item staat?
-* Config pagina maken voor timeline beheer.
 * Nieuwsmodule maken.
+* Config pagina maken voor timeline beheer.
+* 'Delete uit deze timeline' inbouwen.
+* Context menu, shortcuts, etc. inbouwen.

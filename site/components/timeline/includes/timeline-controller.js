@@ -8,6 +8,9 @@
     //Is this a dirty timeline preview?
     dirty: false,
     
+    //Please keep on the same page.
+    entriesPage: 1,
+    
     //Cache timelines and filters.
     timelines: {},
     filters: {},
@@ -167,8 +170,16 @@
       self.dirty = false;
       
       //Pages start at 1.
-      if(!page || page <= 0)
+      if(page <= 0)
         page = 1;
+      
+      //Load the page we're on.
+      if(!page)
+        page = self.entriesPage;
+      
+      //Store the page we specified.
+      else
+        self.entriesPage = page;
       
       self.timelinePreview.html('<p class="loading">Loading...</p>');
       self.entryPagination.empty();
@@ -178,6 +189,10 @@
       
       //When we got them.
       .done(function(entries){
+        
+        //If we ended up with less pages than the page we requested. Get the last page.
+        if(entries.pages < page)
+          return self.loadEntries(entries.pages);
         
         self.timelinePreview.empty();
         
