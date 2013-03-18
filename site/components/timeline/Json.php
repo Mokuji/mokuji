@@ -148,50 +148,8 @@ class Json extends \dependencies\BaseComponent
   protected function get_entries($data, $params)
   {
     
-    $page = $params->{0}->get('int');
-    
-    $items_per_page = $data->items_per_page->otherwise(10)->get('int');
-    
-    $baseTable = tx('Sql')
-      ->table('timeline', 'Entries')
-      
-      //When getting from a timeline_id.
-      ->is($data->timeline_id->get('int') > 0, function($t)use($data){
-        $t->join('EntriesToTimelines', $ET)
-          ->where("$ET.timeline_id", $data->timeline_id);
-      })
-      
-      //When getting from timeline 'NEW'.
-      ->is($data->timeline_id->get('string') == 'NEW', function($t)use($data){
-        #TODO: Validate page ID.
-        $t->pk(tx('Data')->session->timeline->new_page_items->{$data->page_id});
-      })
-      
-      //Chronologically?
-      ->order('dt_publish', $data->is_chronologic->get('int') > 0 ? 'ASC' : 'DESC');
-      
-    $total = $baseTable->count()->get('int');
-    
-    //Continue filtering.  
-    return $baseTable
-      
-      //How many and offset?
-      ->limit(
-        $items_per_page,
-        ($page-1) * $items_per_page
-      )
-      
-      //Go fetch them boy!
-      ->execute()
-      
-      //Call additional getters.
-      ->each(function($entry){
-        $entry->info;
-        $entry->author;
-        $entry->is_future;
-      })
-      
-      ->merge(array('pages' => ceil($total / $items_per_page), 'page' => $page));
+    //Helpers::get_entries($filters, $page);
+    return tx('Component')->helpers('timeline')->_call('get_entries', array($data, $params->{0}));
     
   }
   

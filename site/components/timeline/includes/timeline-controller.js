@@ -184,34 +184,30 @@
       self.timelinePreview.html('<p class="loading">Loading...</p>');
       self.entryPagination.empty();
       
-      //Load a page of entries.
-      $.rest('GET', '?rest=timeline/entries/'+page, self.filters)
+      //Load a page of entries. (Note: don't hide the future for admins)
+      $.rest('GET', '?rest=timeline/entries/'+page, $.extend({}, self.filters, {is_future_hidden: 0}))
       
       //When we got them.
-      .done(function(entries){
+      .done(function(result){
         
         //If we ended up with less pages than the page we requested. Get the last page.
-        if(entries.pages < page)
-          return self.loadEntries(entries.pages);
+        if(result.pages < page)
+          return self.loadEntries(result.pages);
         
         self.timelinePreview.empty();
         
         //Insert pagination.
         var page_numbers = {};
-        for(var i = 1; i <= entries.pages; i++) page_numbers[i] = i;
+        for(var i = 1; i <= result.pages; i++) page_numbers[i] = i;
         self.entryPagination.html(self.definition.templates.entryPagination.tmpl({
-          page: entries.page,
-          pages: entries.pages,
+          page: result.page,
+          pages: result.pages,
           page_numbers: page_numbers
         }));
         
         var hasEntries = false;
         
-        $.each(entries, function(i){
-          
-          //Skip pagination information.
-          if(isNaN(parseInt(i, 10)))
-            return;
+        $.each(result.entries, function(i){
           
           hasEntries = true;
           

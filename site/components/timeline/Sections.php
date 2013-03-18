@@ -3,4 +3,11 @@
 class Sections extends \dependencies\BaseViews
 {
   
+  protected function blogposts_entry($options)
+  {
+    
+    return $options;
+    
+  }
+  
 }

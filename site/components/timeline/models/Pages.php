@@ -17,6 +17,16 @@ class Pages extends \dependencies\BaseModel
       'items_per_page' => array('number'=>'int', 'in'=>array(5, 10, 20, 30, 40, 50))
     );
   
+  public function get_display_type()
+  {
+    
+    return tx('Sql')
+      ->table('timeline', 'DisplayTypes')
+      ->pk($this->display_type_id)
+      ->execute_single();
+    
+  }
+  
   public function get_info()
   {
     
@@ -31,6 +41,16 @@ class Pages extends \dependencies\BaseModel
       });
     
     return $ret;
+    
+  }
+  
+  public function get_timeline()
+  {
+    
+    return tx('Sql')
+      ->table('timeline', 'Timelines')
+      ->pk($this->timeline_id)
+      ->execute_single();
     
   }
   

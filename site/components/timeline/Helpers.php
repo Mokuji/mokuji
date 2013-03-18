@@ -3,6 +3,66 @@
 class Helpers extends \dependencies\BaseComponent
 {
   
+  public function get_entries($filters, $page)
+  {
+    
+    raw($page);
+    
+    if($page < 1)
+      $page = 1;
+    
+    $items_per_page = $filters->items_per_page->otherwise(10)->get('int');
+    
+    $baseTable = tx('Sql')
+      ->table('timeline', 'Entries')
+      
+      //When getting from a timeline_id.
+      ->is($filters->timeline_id->get('int') > 0, function($t)use($filters){
+        $t->join('EntriesToTimelines', $ET)
+          ->where("$ET.timeline_id", $filters->timeline_id);
+      })
+      
+      //When getting from timeline 'NEW'.
+      ->is($filters->timeline_id->get('string') == 'NEW', function($t)use($filters){
+        #TODO: Validate page ID.
+        $t->pk(tx('Data')->session->timeline->new_page_items->{$filters->page_id});
+      })
+      
+      //Filter the future.
+      ->is($filters->is_future_hidden->get('boolean'), function($t){
+        $t->where('dt_publish', '<=', date('Y-m-d H:i:s'));
+      })
+      
+      //Chronologically?
+      ->order('dt_publish', $filters->is_chronologic->get('int') > 0 ? 'ASC' : 'DESC');
+      
+    $total = $baseTable->count()->get('int');
+    
+    //Continue filtering.  
+    return Data(array(
+      'pages' => ceil($total / $items_per_page),
+      'page' => $page,
+      'entries' => $baseTable
+        
+        //How many and offset?
+        ->limit(
+          $items_per_page,
+          ($page-1) * $items_per_page
+        )
+        
+        //Go fetch them boy!
+        ->execute()
+        
+        //Call additional getters.
+        ->each(function($entry){
+          $entry->info;
+          $entry->author;
+          $entry->is_future;
+        })
+    ));
+    
+  }
+  
   public function update_entry_info($entry, $infos)
   {
     
