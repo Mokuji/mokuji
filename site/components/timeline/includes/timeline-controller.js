@@ -27,6 +27,8 @@
       'compositionForm': '#timeline-composition-form',
       'compositionFormInput': '#timeline-composition-form :input',
       'timelinePreview': '#timeline-preview',
+      'entryPagination': '.entry-pagination',
+      'btn_entries_page': '.entry-pagination .page',
       'paginationWrapper': '.pagination-wrapper',
       'editingPage': '.pagination-wrapper .page-2',
       'btn_edit_item': '.edit-item',
@@ -36,6 +38,11 @@
     },
     
     events: {
+      
+      'click on btn_entries_page': function(e){
+        e.preventDefault();
+        this.loadEntries($(e.target).attr('data-page'));
+      },
       
       'click on btn_edit_item': function(e){
         e.preventDefault();
@@ -164,6 +171,7 @@
         page = 1;
       
       self.timelinePreview.html('<p class="loading">Loading...</p>');
+      self.entryPagination.empty();
       
       //Load a page of entries.
       $.rest('GET', '?rest=timeline/entries/'+page, self.filters)
@@ -173,9 +181,22 @@
         
         self.timelinePreview.empty();
         
+        //Insert pagination.
+        var page_numbers = {};
+        for(var i = 1; i <= entries.pages; i++) page_numbers[i] = i;
+        self.entryPagination.html(self.definition.templates.entryPagination.tmpl({
+          page: entries.page,
+          pages: entries.pages,
+          page_numbers: page_numbers
+        }));
+        
         var hasEntries = false;
         
         $.each(entries, function(i){
+          
+          //Skip pagination information.
+          if(isNaN(parseInt(i, 10)))
+            return;
           
           hasEntries = true;
           

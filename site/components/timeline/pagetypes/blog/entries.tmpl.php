@@ -38,8 +38,10 @@
         </div>
         
       </form>
-
+      
+      <div class="entry-pagination"></div>
       <div id="timeline-preview"></div>
+      <div class="entry-pagination"></div>
       
     </div>
     

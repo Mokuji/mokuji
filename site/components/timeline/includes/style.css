@@ -55,3 +55,21 @@
   #timeline-preview .entry .content p{
     margin:1em 0;
   }
+
+.pagination-label{
+  display:block;
+}
+
+.entry-pagination .prev-page,
+.entry-pagination .page-number{
+  margin-right:6px;
+}
+.entry-pagination .page-number{
+  display:inline-block;
+  padding:2px 6px;
+  border:1px solid #ccc;
+}
+
+.entry-pagination .active{
+  font-weight:bold;
+}

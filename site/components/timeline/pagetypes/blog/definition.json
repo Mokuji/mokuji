@@ -8,7 +8,8 @@
     "compositionTab": "composition.tmpl.php",
     
     "entry": "entry.tmpl.php",
-    "entryEdit": "entry-edit.tmpl.php"
+    "entryEdit": "entry-edit.tmpl.php",
+    "entryPagination": "entry-pagination.tmpl.php"
     
   },
   
