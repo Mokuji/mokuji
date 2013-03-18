@@ -106,6 +106,43 @@ class Json extends \dependencies\BaseComponent
   }
   
   /**
+   * Moves an entry to 'the trash'. By removing it from all timelines.
+   * This makes sure the entry is still preserved and collected in the unlinked items.
+   */
+  public function delete_entry($data, $params)
+  {
+    
+    //Get the entry.
+    $entry = tx('Sql')
+      ->table('timeline', 'Entries')
+      ->pk($params->{0})
+      ->execute_single()
+      
+      //Check it's there.
+      ->is('empty', function($entry){
+        throw new \exception\NotFound('The entry with ID "%s" was not found.', $params->{0});
+      });
+    
+    //Do the removing.
+    $removed = array();
+    
+    tx('Sql')
+      ->table('timeline', 'EntriesToTimelines')
+      ->where('entry_id', $entry->id)
+      ->execute()
+      ->each(function($link)use(&$removed){
+        $link->delete();
+        $removed[] = $link->timeline_id->get();
+      });
+    
+    return array(
+      'success' => true,
+      'removed_from' => $removed
+    );
+    
+  }
+  
+  /**
    * Get the entries for a specified timeline.
    */
   protected function get_entries($data, $params)

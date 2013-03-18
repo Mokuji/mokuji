@@ -1,5 +1,7 @@
 (function($, exports){
   
+  var hasFeedback = (window.app && app.Feedback);
+  
   //Create a new page type controller called TimelineController.
   var TimelineController = PageType.sub({
     
@@ -28,6 +30,7 @@
       'paginationWrapper': '.pagination-wrapper',
       'editingPage': '.pagination-wrapper .page-2',
       'btn_edit_item': '.edit-item',
+      'btn_delete_item': '.delete-item',
       'btn_entry_cancel': '#timeline-entry-form .cancel',
       'sel_force_language': '#timeline-composition-form select[name=force_language]'
     },
@@ -37,6 +40,11 @@
       'click on btn_edit_item': function(e){
         e.preventDefault();
         this.editEntry($(e.target).attr('data-entry'));
+      },
+      
+      'click on btn_delete_item': function(e){
+        e.preventDefault();
+        this.deleteEntry($(e.target).attr('data-entry'));
       },
       
       'click on btn_entry_cancel': function(e){
@@ -69,6 +77,24 @@
       
     },
     
+    deleteEntry: function(id){
+      
+      var self = this;
+      
+      if(window.confirm('This entry will be deleted from every timeline. Are you sure?')){
+        
+        if(hasFeedback) app.Feedback.working('Deleting entry.');
+        $.rest('DELETE', '?rest=timeline/entry/'+id).done(function(data){
+          self.loadEntries();
+          app.Feedback.success('Deleting entry succeeded.');
+        }).error(function(){
+          app.Feedback.error('Deleting entry failed.');
+        });
+        
+      }
+      
+    },
+    
     //Edit entry.
     editEntry: function(id){
       
@@ -76,7 +102,7 @@
       
       self.paginationWrapper.animate({left:'-100%'}, 300);
       
-      self.editingPage.html('<p class="loading">Loading...</p>');
+      self.editingPage.html('<p class="loading">Loading timeline entry...</p>');
       
       $.rest('GET', '?rest=timeline/entry/'+id).done(function(data){
         
@@ -92,9 +118,16 @@
         }).appendTo(self.editingPage);
         
         form.restForm({
+          beforeSubmit: function(){
+            if(hasFeedback) app.Feedback.working('Saving entry...').startBuffer();
+          },
           success: function(entry){
             self.loadEntries();
             self.returnToPosts();
+            if(hasFeedback) app.Feedback.success('Saving entry succeeded.').stopBuffer();
+          },
+          error: function(){
+            if(hasFeedback) app.Feedback.error('Saving entry failed.').stopBuffer();
           }
         });
         
@@ -131,7 +164,6 @@
         page = 1;
       
       self.timelinePreview.html('<p class="loading">Loading...</p>');
-      
       
       //Load a page of entries.
       $.rest('GET', '?rest=timeline/entries/'+page, self.filters)
@@ -239,10 +271,15 @@
       self.compositionForm.restForm({
         beforeSubmit: function(data){
           $.extend(true, data, self.titleForm.formToObject());
+          if(hasFeedback) app.Feedback.working('Saving timeline composition...').startBuffer();
         },
-        success:function(data){
+        success: function(data){
           self.filters = data.page;
           self.refreshComposition(data);
+          if(hasFeedback) app.Feedback.success('Saving timeline composition succeeded.').stopBuffer();
+        },
+        error: function(){
+          if(hasFeedback) app.Feedback.error('Saving timeline composition failed.').stopBuffer();
         }
       });
       

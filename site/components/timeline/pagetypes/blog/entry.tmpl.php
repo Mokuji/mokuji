@@ -10,7 +10,8 @@
       {{else}}
         {{html '<em class="untitled">&laquo;<?php __($component, 'Untitled in this language') ?>&raquo;</em>'}}
       {{/if}}
-      <a class="edit-item icon-pencil" href="#" data-entry="${data.id}"></a>
+      <a class="delete-item operation-icon icon-remove" href="#" data-entry="${data.id}"></a>
+      <a class="edit-item operation-icon icon-pencil" href="#" data-entry="${data.id}"></a>
     </h2>
     
     <p class="publish-date">

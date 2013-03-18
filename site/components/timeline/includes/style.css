@@ -20,16 +20,20 @@
   border:1px solid #D6DCE1;
   box-shadow:1px 1px 1px rgba(0,0,0,0.4);
 }
-  #timeline-preview .entry .edit-item{
+  #timeline-preview .entry .operation-icon{
     text-decoration:none;
     visibility:hidden;
     padding:5px 10px;
+    float:right;
+  }
+  #timeline-preview .entry .delete-item{
+    color:#a22;
   }
   #timeline-preview .entry .title{
     font-size:200%;
     line-height:150%;
   }
-  #timeline-preview .entry:hover .edit-item{
+  #timeline-preview .entry:hover .operation-icon{
     visibility:visible;
     opacity:0.7;
   }
