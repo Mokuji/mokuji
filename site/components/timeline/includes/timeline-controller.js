@@ -228,6 +228,30 @@
         })
       );
       
+      this.refreshElements();
+      this.bindCompositionForm();
+      
+    },
+    
+    //Bind composition form.
+    bindCompositionForm: function(){
+      
+      var self = this;
+      
+      self.compositionForm.restForm({
+        beforeSubmit: function(data){
+          $.extend(true, data, self.titleForm.formToObject());
+        },
+        success: function(data){
+          self.filters = data.page;
+          self.refreshComposition(data);
+          if(hasFeedback) app.Feedback.success('Saving timeline composition succeeded.');
+        },
+        error: function(){
+          if(hasFeedback) app.Feedback.error('Saving timeline composition failed.');
+        }
+      });
+      
     },
     
     //Retrieve input data (from the server probably).
@@ -267,21 +291,8 @@
       //Load the filters used.
       self.filters = self.compositionForm.formToObject();
       
-      //Make filters a REST form.
-      self.compositionForm.restForm({
-        beforeSubmit: function(data){
-          $.extend(true, data, self.titleForm.formToObject());
-          if(hasFeedback) app.Feedback.working('Saving timeline composition...').startBuffer();
-        },
-        success: function(data){
-          self.filters = data.page;
-          self.refreshComposition(data);
-          if(hasFeedback) app.Feedback.success('Saving timeline composition succeeded.').stopBuffer();
-        },
-        error: function(){
-          if(hasFeedback) app.Feedback.error('Saving timeline composition failed.').stopBuffer();
-        }
-      });
+      //Make composition a REST form.
+      this.bindCompositionForm();
       
       //When switching tabs, see if we need to reload entries.
       app.Page.Tabs.subscribe('tabChanged', function(e, tab){
@@ -303,7 +314,6 @@
           );
           
         }
-        
         
       });
       

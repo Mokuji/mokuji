@@ -51,6 +51,18 @@
   </div>
   <div class="ctrlHolder">
     
+    <label><?php __($component, 'Entries per page') ?></label>
+    <select name="items_per_page">
+      {{each(i, amount) [5, 10, 20, 30, 40, 50]}}
+        <option value="${amount}"{{if data.page.items_per_page == amount}} selected="selected"{{/if}}>
+          ${amount} <?php __($component, 'Entries', 'lowercase') ?>
+        </option>
+      {{/each}}
+    </select>
+    
+  </div>
+  <div class="ctrlHolder">
+    
     <label>
       <input name="is_future_hidden" type="checkbox"{{if data.page.is_future_hidden}} checked="checked"{{/if}} value="1" />
       <?php __($component, 'Hide entries posted in the future') ?>

@@ -13,7 +13,8 @@ class Pages extends \dependencies\BaseModel
       'display_type_id' => array('required', 'number'=>'int', 'gt'=>0),
       'force_language' => array('number'=>'int', 'gt'=>0),
       'is_chronologic' => array('required', 'boolean'),
-      'is_future_hidden' => array('required', 'boolean')
+      'is_future_hidden' => array('required', 'boolean'),
+      'items_per_page' => array('number'=>'int', 'in'=>array(5, 10, 20, 30, 40, 50))
     );
   
   public function get_info()
