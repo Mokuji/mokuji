@@ -36,6 +36,7 @@
 * [`protected static mixed $validate`](#property-validate)
 
 **Methods**
+* [`public static mixed get_related_model($name)`](#method-get_related_model)
 * [`public static mixed model_data($get)`](#method-model_data)
 * [`public static mixed table_data($get, $set)`](#method-table_data)
 * [`private static mixed create_table_data()`](#method-create_table_data)
@@ -296,6 +297,30 @@ protected mixed $validate = array()
 
 
 # Methods
+
+
+## Method `get_related_model`
+In class: [components\menu\models\MenuItems](#top)
+
+```
+mixed dependencies\BaseModel::get_related_model($name)
+```
+
+
+
+
+
+* Visibility: **public**
+* This method is **static**.
+* This method is defined by [dependencies\BaseModel](../../../dependencies/BaseModel.md)
+
+#### Arguments
+
+* $name **mixed**
+
+
+
+
 
 
 ## Method `model_data`
@@ -767,7 +792,7 @@ mixed dependencies\BaseModel::as_form($id)
 
 Create an HTML form for updating this model.
 
-as_form(&amp;$id[, $action][, $columns]
+as_form(&amp;$id[, $action][, $columns])
 
 * Visibility: **public**
 * This method is defined by [dependencies\BaseModel](../../../dependencies/BaseModel.md)
@@ -2630,7 +2655,8 @@ Validates the whole model, based on static validation rules.
 
 Options:
    array $rules - Defines extra rules per field name.
-   bool $force_create - Tries to ignore the PK if it has an auto_increment attribute. Otherwise throws programmer exception
+   boolean $force_create - Tries to ignore the PK if it has an auto_increment attribute. Otherwise throws programmer exception.
+   boolean $nullify - When set to true, fields that are valid but empty will be set to NULL (default: false).
 
 * Visibility: **public**
 * This method is defined by [dependencies\BaseModel](../../../dependencies/BaseModel.md)

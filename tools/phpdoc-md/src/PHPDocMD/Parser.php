@@ -389,13 +389,10 @@ class Parser
         
         if(!is_string($input))
             return $input;
-        
-        if(strpos($input, '<p>') === 0)
-            $input = substr($input, strlen('<p>'));
-        
-        if(strrpos($input, '</p>') === strlen($input)-strlen('</p>'))
-            $input = substr($input, 0, strlen($input)-strlen('</p>')-1);
-        
+        $input = str_replace('<p>', '', $input);
+        $input = str_replace('</p>', '', $input);
+        $input = str_replace('<', '&lt;', $input);
+        $input = str_replace('>', '&gt;', $input);
         return $input;
         
     }

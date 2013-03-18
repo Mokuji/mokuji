@@ -21,6 +21,7 @@
 * [`protected mixed create_db_installation($data, $params)`](#method-create_db_installation)
 * [`protected mixed create_db_test($data, $params)`](#method-create_db_test)
 * [`protected mixed create_site_installation($data, $params)`](#method-create_site_installation)
+* [`protected mixed get_db_test()`](#method-get_db_test)
 * [`protected mixed get_update_count($options, $params)`](#method-get_update_count)
 
 
@@ -452,6 +453,24 @@ mixed components\update\Json::create_site_installation($data, $params)
 
 * $data **mixed**
 * $params **mixed**
+
+
+
+
+
+
+## Method `get_db_test`
+In class: [components\update\Json](#top)
+
+```
+mixed components\update\Json::get_db_test()
+```
+
+
+
+
+
+* Visibility: **protected**
 
 
 

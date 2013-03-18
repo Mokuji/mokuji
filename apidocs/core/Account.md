@@ -62,7 +62,7 @@ boolean core\Account::check_level(int $level, boolean $exact)
 Checks whether the currently logged in user has a certain user level.
 
 When not checking the exact level,
-it checks whether the user level is greater than or equal to the provided level
+it checks whether the user level is greater than or equal to the provided level.
 
 * Visibility: **public**
 
@@ -93,7 +93,7 @@ Initializes the class.
 
 Checks if the user is logged in.
 Updates session expiry.
-Logs out the user if session expired
+Logs out the user if session expired.
 
 * Visibility: **public**
 
@@ -111,7 +111,7 @@ boolean core\Account::is_login()
 
 Returns true if the user is logged in.
 
-Short for $this->user->check('login')
+Short for $this-&gt;user-&gt;check('login').
 
 * Visibility: **public**
 
@@ -189,7 +189,7 @@ void core\Account::page_authorisation(int $level, boolean $exact)
 
 Checks whether the currently logged in user has permission to view this page.
 
-Similar to check_level except it redirects the user if the user is not authorized
+Similar to check_level except it redirects the user if the user is not authorized.
 
 * Visibility: **public**
 

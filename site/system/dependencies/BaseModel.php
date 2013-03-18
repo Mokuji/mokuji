@@ -96,9 +96,53 @@ abstract class BaseModel extends Data
 
       case 'secondary_keys':
         return isset(static::$secondary_keys) && is_array(static::$secondary_keys) ? static::$secondary_keys : array();
-
+      
+      case 'validate':
+        return isset(static::$validate) && is_array(static::$validate) ? static::$validate : array();
+      
     }
 
+  }
+  
+  public static function get_related_model($name)
+  {
+    
+    $relations = static::model_data('relations');
+    $model_name = substr(strrchr(get_class($this), '\\'), 1);
+    
+    if(!isset($relations[$name]))
+      throw new \exception\NotFound('The relation "%s" is not defined in model %s.', $name, $model_name);
+    
+    $parts = explode('.', current($relations[$name]));
+    $part_count = count($parts);
+    
+    if($part_count < 2 || $part_count > 3){
+      throw new \exception\Programmer(
+        'The foreign column in the relation to %s defined in %s has an invalid format. Expected format '.
+        'is: "[ComponentName.]ModelName.column_name". Given value is: "%s"', $model_name, $name, current($relations[$name])
+      );
+    }
+    
+    switch ($part_count) {
+      case 2:
+        $component = array_get(explode('\\', get_class($this)), 1);
+        $model = $parts[0];
+        $field_name = $parts[1];
+        break;
+      
+      case 3:
+        $component = $parts[0];
+        $model = $parts[1];
+        $field_name = $parts[2];
+        break;
+    }
+    
+    return array(
+      'class' => load_model($component, $model),
+      'foreign_field' => $field_name,
+      'source_field' => key($relations[$name])
+    );
+    
   }
   
   /**
@@ -1250,7 +1294,8 @@ abstract class BaseModel extends Data
    * Validates the whole model, based on static validation rules.
    * Options:
    *    array $rules - Defines extra rules per field name.
-   *    bool $force_create - Tries to ignore the PK if it has an auto_increment attribute. Otherwise throws programmer exception.
+   *    boolean $force_create - Tries to ignore the PK if it has an auto_increment attribute. Otherwise throws programmer exception.
+   *    boolean $nullify - When set to true, fields that are valid but empty will be set to NULL (default: false).
    */
   public function validate_model($options=array())
   {
@@ -1258,16 +1303,19 @@ abstract class BaseModel extends Data
     //Filter out what we don't need.
     $data = $this->having(array_keys(static::$generatedLabels));
     
+    //Do we nullify?
+    $nullify = isset($options['nullify']) && $options['nullify'] === true;
+    
     //Allow additional rules to be prepended.
     $ruleSet = array_merge(
       (isset($options['rules']) ? $options['rules'] : array()),
       static::$validate
     );
     
+    $table_data = $this->table_data();
+    
     //See if we need to remove the ID.
     if(isset($options['force_create']) && $options['force_create'] === true){
-      
-      $table_data = $this->table_data();
       
       $keys = $table_data->primary_keys->as_array();
       $first_key = array_shift($keys);
@@ -1297,7 +1345,13 @@ abstract class BaseModel extends Data
     {
       
       try{
+        
         $data->{$key}->validate(static::$generatedLabels[$key], $rules);
+        
+        if($nullify && $data->{$key}->is_empty() && $table_data->fields[$key]->check('null_allowed')){
+          $data->{$key}->set('NULL');
+        }
+        
       }
       
       catch(\exception\Validation $ex){

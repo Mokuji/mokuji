@@ -19,6 +19,7 @@
 * [`protected mixed $permissions`](#property-permissions)
 
 **Methods**
+* [`public mixed editable($data)`](#method-editable)
 * [`protected mixed delete_page($data)`](#method-delete_page)
 * [`protected mixed detach_page($data)`](#method-detach_page)
 * [`protected mixed edit_page($data)`](#method-edit_page)
@@ -115,7 +116,7 @@ protected mixed $default_permission
 In class: [components\cms\Actions](#top)
 
 ```
-protected mixed $permissions = array('select_menu' => 2, 'new_page' => 2, 'edit_page' => 2, 'logout' => 1)
+protected mixed $permissions = array('select_menu' => 2, 'new_page' => 2, 'edit_page' => 2, 'logout' => 1, 'editable' => 2)
 ```
 
 
@@ -188,6 +189,28 @@ mixed dependencies\BaseComponent::call($controller, $data)
 #### Arguments
 
 * $controller **mixed**
+* $data **mixed**
+
+
+
+
+
+
+## Method `editable`
+In class: [components\cms\Actions](#top)
+
+```
+mixed components\cms\Actions::editable($data)
+```
+
+
+
+
+
+* Visibility: **public**
+
+#### Arguments
+
 * $data **mixed**
 
 

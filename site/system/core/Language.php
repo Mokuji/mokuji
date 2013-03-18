@@ -175,7 +175,7 @@ class Language
     
     //If the translation is not found in this file, and we specified a component, fall back on the core translation files.
     else if($component) {
-      tx('Logging')->log('Translate', 'Com '.$component.' fallback', $phrase);
+      if($language_code !== 'en-GB') tx('Logging')->log('Translate', 'Com '.$component.' fallback', $phrase);
       return $this->translate($phrase, null, $lang_id, $case);
     }
     

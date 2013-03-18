@@ -19,7 +19,6 @@
 **Methods**
 * [`protected mixed menu_link($options)`](#method-menu_link)
 * [`protected mixed menus($return)`](#method-menus)
-* [`protected mixed sitemap()`](#method-sitemap)
 
 
 ## Inheritance index
@@ -402,24 +401,6 @@ mixed components\menu\Views::menus($return)
 #### Arguments
 
 * $return **mixed**
-
-
-
-
-
-
-## Method `sitemap`
-In class: [components\menu\Views](#top)
-
-```
-mixed components\menu\Views::sitemap()
-```
-
-
-
-
-
-* Visibility: **protected**
 
 
 

@@ -230,11 +230,11 @@ Gets the prefered hashing algorithm for a certain amount of bits worth of entrop
 
 When setting inclusive = false that means:
  The prefered algorithm that is used to it's optimum with the given entropy.
- For instance: given 230 bits of entropy the best 224 bits algorithm is picked.</p>
+ For instance: given 230 bits of entropy the best 224 bits algorithm is picked.
 
-<p>When setting inclusive = true that means:
+When setting inclusive = true that means:
  The prefered algorithm that is able to contain the full entropy available.
- For instance: given 230 bits of entropy the best 256 bits algorithm is picked
+ For instance: given 230 bits of entropy the best 256 bits algorithm is picked.
 
 * Visibility: **public**
 

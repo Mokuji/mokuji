@@ -196,7 +196,7 @@ string dependencies\forms\FormBuilder::detect_optimal_field(string $column_name,
 Based on the given field data, tries to detect the class name of the optimal field type.
 
 Note that this is for detecting the base type field and does not take relations into account.
-Defined relations should override this value
+Defined relations should override this value.
 
 * Visibility: **protected**
 
@@ -227,7 +227,7 @@ string dependencies\forms\FormBuilder::detect_optimal_relation_field(string $col
 Based on the given field data, tries to detect the class name of the optimal field type.
 
 Note that this is for detecting the relation field and does not take base types into account.
-This should be used to override base types
+This should be used to override base types.
 
 * Visibility: **protected**
 
@@ -256,7 +256,7 @@ mixed dependencies\forms\FormBuilder::find_additional_relation_data(array $relat
 
 Depending on all the earlier detected variables gathers all relevant data about the relation.
 
-For example when applicable gathers an option_set
+For example when applicable gathers an option_set.
 
 * Visibility: **protected**
 

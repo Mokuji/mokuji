@@ -128,7 +128,7 @@ Gets or sets site related configuration variables.
 Usage:
   0 params returns Data of all configuration variables.
   1 param: String $key The key for the variable to get.
-  2 params: String $key The key of the variable to set. mixed $val The value to set
+  2 params: String $key The key of the variable to set. mixed $val The value to set.
 
 * Visibility: **public**
 
@@ -149,7 +149,7 @@ Gets or sets system related configuration variables.
 Usage:
   0 params returns Data of all configuration variables.
   1 param: String $key The key for the variable to get.
-  2 params: String $key The key of the variable to set. mixed $val The value to set
+  2 params: String $key The key of the variable to set. mixed $val The value to set.
 
 * Visibility: **public**
 
@@ -171,7 +171,7 @@ Usage:
   0 params returns Data of all configuration variables.
   1 param: String $key The key for the variable to get.
   2 params: String $key The key of the variable to set. mixed $val The value to set.
-  3 params: String $key The key of the variable to set. mixed $val The value to set. int $lang The optional language ID for which to store the value in the database
+  3 params: String $key The key of the variable to set. mixed $val The value to set. int $lang The optional language ID for which to store the value in the database.
 
 * Visibility: **public**
 

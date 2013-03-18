@@ -62,11 +62,17 @@ $data->get()
           foreach($userfunction->exception->errors() as $error)
           {
             
+            $error = Data($error);
+            
             ?>
             
             <div class="message error">
               
               <?php echo $error->message; ?>
+              
+              <?php $error->errors->each(function($suberror){ ?>
+                <div><?php echo $suberror->get()->getMessage(); ?></div>
+              <?php }); ?>
               
               <?php $error->input->is('set', function()use($error){ ?>
                 <div class="override">

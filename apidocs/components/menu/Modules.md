@@ -20,7 +20,6 @@
 * [`protected mixed breadcrumbs($options)`](#method-breadcrumbs)
 * [`protected mixed menu(array $options)`](#method-menu)
 * [`protected mixed menu_image($options)`](#method-menu_image)
-* [`protected mixed sitemap($options)`](#method-sitemap)
 
 
 ## Inheritance index
@@ -422,28 +421,6 @@ In class: [components\menu\Modules](#top)
 
 ```
 mixed components\menu\Modules::menu_image($options)
-```
-
-
-
-
-
-* Visibility: **protected**
-
-#### Arguments
-
-* $options **mixed**
-
-
-
-
-
-
-## Method `sitemap`
-In class: [components\menu\Modules](#top)
-
-```
-mixed components\menu\Modules::sitemap($options)
 ```
 
 

@@ -19,7 +19,7 @@ class Helpers extends \dependencies\BaseComponent
    */
   public function get_menu_items($options)
   {
-
+    
     $options->menu_item_id = ($options->menu_item_id->is('set')->get('bool') ? $options->menu_item_id : tx('Data')->get->menu);
 
     //if $select_from_root is true: select root item to show items from.
