@@ -65,13 +65,13 @@ class Json extends \dependencies\BaseComponent
     $pid = $params->{0};
     $pid->validate('Page ID', array('required', 'number'=>'integer', 'gt'=>0));
     
-    $data = $data->having('theme_id', 'template_id', 'layout_id', 'notes', 'access_level', 'published', 'user_group_permission')
-      -> theme_id      ->validate('Theme', array('number', 'gt'=>0))->back()
-      -> template_id   ->validate('Template', array('number', 'gt'=>0))->back()
-      -> layout_id     ->validate('Layout', array('number', 'gt'=>0))->back()
-      -> notes         ->validate('Notes', array('string', 'no_html'))->back()
-      -> access_level  ->validate('Access level', array('number', 'between'=>array(0, 3)))->back()
-      -> published     ->validate('Published', array('number', 'between'=>array(0, 1)))->back();
+    $savedata = $data->having('theme_id', 'template_id', 'layout_id', 'notes', 'access_level', 'published')
+      -> theme_id     -> validate('Theme',      array('number', 'gt'=>0))                 ->back()
+      -> template_id  -> validate('Template',   array('number', 'gt'=>0))                 ->back()
+      -> layout_id    -> validate('Layout',     array('number', 'gt'=>0))                 ->back()
+      -> notes        -> validate('Notes',      array('string', 'no_html'))               ->back()
+      -> access_level -> validate('Access level', array('number', 'between'=>array(0, 3)))->back()
+      -> published    -> validate('Published',  array('number', 'between'=>array(0, 1)))  ->back();
     
     $page = tx('Sql')
       ->table('cms', 'Pages')
@@ -82,10 +82,20 @@ class Json extends \dependencies\BaseComponent
         throw new \exception\EmptyResult('Could not retrieve the page you were trying to edit. This could be because the ID was invalid.');
       })
       
-      ->merge($data)
+      ->merge($savedata)
       ->save();
     
     tx('Component')->helpers('cms')->set_page_permissions($page->id, $data->user_group_permission);
+    
+    //Set the page as homepage?
+    if($data->homepage->is_set()){
+      $this->update_settings(Data(array(
+        'key' => 'homepage',
+        'value' => array(
+          'NULL' => "?pid=$pid"
+        )
+      )), null);
+    }
     
     return $page;
     
@@ -179,11 +189,13 @@ class Json extends \dependencies\BaseComponent
   protected function get_page_info($options, $params)
   {
     
+    //Get required variables.
     $pid = $params->{0};
-    $pid->validate('Page ID', array('required', 'number'=>'integer', 'gt'=>0));
-    
     $page_info = $this->helper('get_page_info', $pid);
     $page_options = $this->helper('get_page_options', $page_info->id);
+    
+    //Validate variables.
+    $pid->validate('Page ID', array('required', 'number'=>'integer', 'gt'=>0));
     
     
     if($page_info)
@@ -239,6 +251,30 @@ class Json extends \dependencies\BaseComponent
       $info['pagetype'] = $pagetype;
     else
       $info['content'] = $content;
+    
+    ##
+    ## Find out if this page is used as a home-page.
+    ##
+    
+    //Let's assume it's not.
+    $info['is_homepage'] = false;
+    
+    //Address the user defined home-page.
+    $home = tx('Config')->user('homepage');
+    
+    //If it's set we have work to do.
+    if($home->is_set())
+    {
+      
+      //Convert it to a URL so we can read the parameters.
+      $home_url = url($home->get(), true);
+      
+      //Compare the page id in the home to our own id.
+      if($home_url->data->pid->get('int') == $pid->get('int')){
+        $info['is_homepage'] = true;
+      }
+      
+    }
     
     return $info;
     
@@ -405,7 +441,7 @@ class Json extends \dependencies\BaseComponent
       tx('Sql')
         ->table('cms', 'CmsConfig')
         ->where('key', "'{$data->key}'")
-        ->where('language_id', "'".$val->key()."'")
+        ->where('language_id', $val->key() === 'NULL' ? 'NULL' : "'".$val->key()."'")
         ->execute_single()
         
         ->is('empty', function()use($data, $val){

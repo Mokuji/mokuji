@@ -256,11 +256,21 @@
       
     </fieldset>
     
+    <fieldset class="fieldset-homepage">
+      
+      <legend><?php __('Home page'); ?></legend>
+      
+      <input type="checkbox" name="homepage" value="1" {{if is_homepage == true}}checked="checked" disabled="disabled"{{/if}}/>
+      
+      <label for="checkbox-set-as-homepage"><?php __('Use this page as the home-page'); ?></label>
+      
+    </fieldset>
+    
     <fieldset class="fieldset-rights">
       
       <legend><?php __('User rights'); ?></legend>
       
-      <?php __('Accessable to'); ?>:
+      <?php __('Accessible to'); ?>:
       <ul>
         <li><label><input type="radio" name="access_level" value="0"{{if page.access_level <= 0}}checked="checked"{{/if}} /> <?php __('Everyone'); ?></label></li>
         <li><label><input type="radio" name="access_level" value="1"{{if page.access_level == 1}}checked="checked"{{/if}} /> <?php __('Logged in users'); ?></label></li>
