@@ -1,4 +1,3 @@
-* Frontend weergaves renderen.
 * Nieuwsmodule maken.
 * Config pagina maken voor timeline beheer.
 * 'Delete uit deze timeline' inbouwen.

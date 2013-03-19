@@ -11,6 +11,9 @@ class Views extends \dependencies\BaseViews
     $pid = $options->pid->value->otherwise(tx('Data')->get->pid);
     $page_nr = $options->page->value->otherwise(tx('Data')->get->page);
     $post = $options->post->value->otherwise(tx('Data')->get->post);
+    $year = $options->year->value->otherwise(tx('Data')->get->year);
+    $month = $options->month->value->otherwise(tx('Data')->get->month);
+    $day = $options->day->value->otherwise(tx('Data')->get->day);
     
     $page = tx('Sql')
       ->table('timeline', 'Pages')
@@ -70,7 +73,11 @@ class Views extends \dependencies\BaseViews
       //Use the helper to get the matching entries.
       return tx('Component')
         ->helpers('timeline')
-        ->_call('get_entries', array($page, $page_nr))
+        ->_call('get_entries', array($page->merge(array(
+          'year' => $year,
+          'month' => $month,
+          'day' => $day
+        )), $page_nr))
         
         //Template each entry.
         ->entries

@@ -13,6 +13,58 @@ class Helpers extends \dependencies\BaseComponent
     
     $items_per_page = $filters->items_per_page->otherwise(10)->get('int');
     
+    //Make a timeframe.
+    $dt_start = Data(array(
+      'month' => 1,
+      'day' => 1
+    ));
+    $dt_end = Data(array(
+      'month' => 1,
+      'day' => 1
+    ));
+    
+    //Only if the year is set.
+    if($filters->year->is_set()){
+      
+      $dt_start->year->set($filters->year->get('int'));
+      $dt_end->year->set($filters->year->get('int') + 1);
+      
+      //Further filtering.
+      if($filters->month->is_set()){
+        
+        $dt_start->month->set($filters->month->get('int'));
+        $dt_end->year->set($filters->year->get('int'));
+        $dt_end->month->set($filters->month->get('int') + 1);
+        
+        //Further filtering.
+        if($filters->day->is_set()){
+          
+          $dt_start->day->set($filters->day->get('int'));
+          $dt_end->month->set($filters->month->get('int'));
+          $dt_end->day->set($filters->day->get('int') + 1);
+          
+        }
+        
+      }
+      
+      $dt_start->set(mktime(0,0,0, $dt_start->month->get(), $dt_start->day->get(), $dt_start->year->get()));
+      $dt_end->set(mktime(0,0,0, $dt_end->month->get(), $dt_end->day->get(), $dt_end->year->get()));
+      
+    } else {
+      $dt_start->un_set();
+      $dt_end->un_set();
+    }
+    
+    //Check if we are trying to search the future, while the future must be hidden.
+    if($filters->is_future_hidden->get('boolean') && $dt_start->is_set() && $dt_start->get() > time()){
+      return Data(array(
+        'pages' => 1,
+        'page' => $page,
+        'entries' => array(),
+        'funny_man' => 'FUTURE_SEARCH'
+      ));
+    }
+    
     $baseTable = tx('Sql')
       ->table('timeline', 'Entries')
       
@@ -29,8 +81,14 @@ class Helpers extends \dependencies\BaseComponent
       })
       
       //Filter the future.
-      ->is($filters->is_future_hidden->get('boolean'), function($t){
+      ->is($filters->is_future_hidden->get('boolean'), function($t)use($dt_start){
         $t->where('dt_publish', '<=', date('Y-m-d H:i:s'));
+      })
+      
+      //Create a time-bracket.
+      ->is($dt_start->is_set() && $dt_end->is_set(), function($t)use($dt_start, $dt_end){
+        $t->where('dt_publish', '<=', date('Y-m-d H:i:s', $dt_end->get('int')));
+        $t->where('dt_publish', '>=', date('Y-m-d H:i:s', $dt_start->get('int')));
       })
       
       //Chronologically?

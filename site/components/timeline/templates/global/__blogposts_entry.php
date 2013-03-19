@@ -4,7 +4,9 @@ switch($data->type->get('string')){
   
   case 'blogpost':
     ?>
-      
+    
+    <div class="entry blogpost-entry">
+    
       <h2 class="title">
         <?php echo $data->info->{$data->language}->title; ?>
       </h2>
@@ -36,6 +38,8 @@ switch($data->type->get('string')){
           <span class="author"><?php echo $data->author->full_name; ?></span>
         </p>
       <?php } ?>
+    
+    </div>
       
     <?php
     break;

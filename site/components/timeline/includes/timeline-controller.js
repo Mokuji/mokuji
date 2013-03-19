@@ -200,8 +200,8 @@
         var page_numbers = {};
         for(var i = 1; i <= result.pages; i++) page_numbers[i] = i;
         self.entryPagination.html(self.definition.templates.entryPagination.tmpl({
-          page: result.page,
-          pages: result.pages,
+          page: parseInt(result.page, 10),
+          pages: parseInt(result.pages, 10),
           page_numbers: page_numbers
         }));
         
