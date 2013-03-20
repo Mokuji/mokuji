@@ -69,7 +69,7 @@ class Json extends \dependencies\BaseComponent
     tx('Component')->helpers('cms')->set_page_permissions($page->id, $data->user_group_permission);
     
     //Set the page as homepage?
-    if($data->homepage->is_set()){
+    if($data->homepage->get('int') == 1){
       $this->update_settings(Data(array(
         'key' => 'homepage',
         'value' => array(
