@@ -260,7 +260,7 @@
       
       <legend><?php __('Home page'); ?></legend>
       
-      <input type="checkbox" name="homepage" value="1" {{if is_homepage == true}}checked="checked" disabled="disabled"{{/if}}/>
+      <input id="checkbox-set-as-homepage" type="checkbox" name="homepage" value="{{if is_homepage == true}}0{{else}}1{{/if}}" {{if is_homepage == true}}checked="checked" disabled="disabled"{{/if}}/>
       
       <label for="checkbox-set-as-homepage"><?php __('Use this page as the home-page'); ?></label>
       

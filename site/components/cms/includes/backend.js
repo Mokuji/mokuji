@@ -903,16 +903,24 @@ function request(){
       
       'click on radio_access_levels': function(e){
         $('.fieldset-rights .fieldset-groups').toggle($(e.target).is('.members'));
+      },
+      
+      'saveComplete': function(){
+        $('#checkbox-set-as-homepage').filter(':checked[value=1]').prop('disabled', true).val(0);
       }
       
     },
     
     render: function(data){
       
-      this.view
-        .html($(this.template).tmpl(data))
-        .find(this.form)
-        .restForm();
+      var v = this.view;
+      
+      v
+      .html($(this.template).tmpl(data))
+      .find(this.form)
+      .restForm({
+        success: function(){v.trigger('saveComplete')}
+      });
       
     },
     
