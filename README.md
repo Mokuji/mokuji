@@ -62,6 +62,7 @@ The change-log can be found in `CHANGES.md` in this directory.
 * __menu__      : 1.4
 * __text__      : 1.2
 * __update__    : 1.2
+* __timeline__  : 0.2
 
 ## Licenses
 
