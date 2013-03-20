@@ -949,6 +949,7 @@ function request(){
         e.preventDefault();
         var i = $(e.target).attr('data-index');
         this.state.controllers[i].activate();
+        this.publish('tabChanged', this.state.controllers[i]);
       }
     },
     
@@ -1032,6 +1033,7 @@ function request(){
     }
     
   });
+  PageTabManager.include(PubSub);
   
   //The page controller for editing page contents and settings.
   var PageController = Controller.sub({

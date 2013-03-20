@@ -99,6 +99,9 @@
       //Call parent constructor.
       self.previous(null);
       
+      //Store the definition.
+      self.definition = definition;
+      
       //Add our view to it.
       page.view.find('#page-tab-body').append(this.view);
       

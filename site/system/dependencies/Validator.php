@@ -174,6 +174,11 @@ class Validator extends Successable
       return true;
     }
     
+    if(!$this->check_rule('boolean')){
+      $this->data = false;
+      return true;
+    }
+    
     return __('This is a required field.', 1);
     
   }

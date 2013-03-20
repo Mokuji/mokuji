@@ -1,0 +1,20 @@
+{
+  "title": "Timeline component",
+  "description": "Het timeline component maakt tijd gerelateerde weergaven mogelijk, zoals blogs en activity-feeds.",
+  "type": "manual",
+  "dbUpdates": true,
+  "versions": [
+    {
+      "version": "0.2",
+      "date": "2013-03-14",
+      "description": "Taal forceren nu mogelijk.",
+      "changes": []
+    },
+    {
+      "version": "0.1",
+      "date": "2013-03-12",
+      "description": "Eerste ontwikkelversie.",
+      "changes": []
+    }
+  ]
+}

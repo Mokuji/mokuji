@@ -267,5 +267,57 @@ class Helpers extends \dependencies\BaseComponent
     return ($key->is_empty() ? $config : $config->{$key});
 
   }
+  
+  public function ensure_pagetypes($component, $views)
+  {
+    
+    //Look for the component in the CMS tables.
+    $component = tx('Sql')
+      ->table('cms', 'Components')
+      ->where('name', "'{$component['name']}'")
+      ->limit(1)
+      ->execute_single()
+      
+      //If it's not there, create it.
+      ->is('empty', function()use($component){
+        
+        return tx('Sql')
+          ->model('cms', 'Components')
+          ->set(array(
+            'name' => $component['name'],
+            'title' => $component['title']
+          ))
+          ->save();
+        
+      });
+    
+    //Look for the views.
+    foreach($views as $name => $is_config){
+      
+      tx('Sql')
+        ->table('cms', 'ComponentViews')
+        ->where('com_id', $component->id)
+        ->where('name', "'$name'")
+        ->limit(1)
+        ->execute_single()
+        
+        //If it's not there, create it.
+        ->is('empty', function()use($component, $name, $is_config){
+          
+          $view = tx('Sql')
+            ->model('cms', 'ComponentViews')
+            ->set(array(
+              'com_id' => $component->id,
+              'name' => $name,
+              'tk_title' => strtoupper(sprintf('%s_%s_TITLE', $component->name, $name)),
+              'tk_description' => strtoupper(sprintf('%s_%s_DESCRIPTION', $component->name, $name)),
+              'is_config' => ($is_config == true ? 1 : 0)
+            ))
+            ->save();
+        });
+      
+    }
+    
+  }
 
 }
