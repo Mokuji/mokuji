@@ -58,7 +58,7 @@ class Helpers extends \dependencies\BaseComponent
     //Check if we are trying to search the future, while the future must be hidden.
     if($filters->is_future_hidden->get('boolean') && $dt_start->is_set() && $dt_start->get() > time()){
       return Data(array(
-        'pages' => 1,
+        'pages' => 0,
         'page' => $page,
         'entries' => array(),
         'funny_man' => 'FUTURE_SEARCH'

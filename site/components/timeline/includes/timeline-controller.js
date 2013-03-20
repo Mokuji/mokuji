@@ -191,7 +191,7 @@
       .done(function(result){
         
         //If we ended up with less pages than the page we requested. Get the last page.
-        if(result.pages < page)
+        if(result.pages > 0 && result.pages < page)
           return self.loadEntries(result.pages);
         
         self.timelinePreview.empty();
@@ -207,7 +207,7 @@
         
         var hasEntries = false;
         
-        $.each(result.entries, function(i){
+        if(result.entries) $.each(result.entries, function(i){
           
           hasEntries = true;
           
