@@ -81,8 +81,17 @@ class Language
     if( ! $lang->is_set())
     {
       
-      tx('Setting language from database.', function()use($lang){
-        $lang->set(tx('Sql')->execute_scalar('SELECT id FROM #__core_languages ORDER BY id ASC LIMIT 1'))
+      tx('Setting default language from database.', function()use($lang){
+        
+        $lang->set(tx('Config')
+          
+          //See if the config gives a default.
+          ->user('default_language')
+          
+          //Otherwise get it from the DB.
+          ->otherwise(tx('Sql')->execute_scalar('SELECT id FROM #__core_languages ORDER BY id ASC LIMIT 1'))
+          
+        )
         ->is('empty', function(){
           throw new \exception\NotFound('No languages have been set up');
         });
