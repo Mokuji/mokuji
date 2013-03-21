@@ -1,5 +1,25 @@
 <?php
 
+//Force admin rights.
+try{
+
+	//Tell TX who we are.
+	define('WHOAMI', 'elFinder 2.0-rc1');
+	
+	//Override url_path.
+	$url_path = str_replace('/plugins/elfinder/php/connector.php', '', $_SERVER['PHP_SELF']);
+	if(isset($url_path[0]) && $url_path[0] === '/'){ //Not an array, but first string character.
+	  $url_path = substr($url_path, 1);
+	}
+	$_SERVER['x-tx-urlpath'] = $url_path;
+	
+	//Do the validation.
+	require('../../../admin/tx-require-admin.php');
+	
+} catch(\Exception $ex) {
+	die('{"error":"'.$ex->getMessage().'"}');
+}
+
 error_reporting(0); // Set E_ALL for debuging
 
 //load config files
