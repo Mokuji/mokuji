@@ -1,5 +1,10 @@
 #### Development
 
+* CMS improvements:
+  - Added a "set as homepage" checkbox in the configuration tab for every page.
+* Bug fixes:
+  - The install wizard is no longer unresponsive when saving the website configuration.
+
 #### [Version 1.1.0 Beta 1](https://github.com/Tuxion/tuxion.cms/tree/v1.1.0-beta1)
 _5-Mar-2013_
 
