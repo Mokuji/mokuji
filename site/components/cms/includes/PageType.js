@@ -99,6 +99,9 @@
       //Call parent constructor.
       self.previous(null);
       
+      //Store the definition.
+      self.definition = definition;
+      
       //Add our view to it.
       page.view.find('#page-tab-body').append(this.view);
       
@@ -219,16 +222,53 @@
     
     //Retrieve input data stub.
     getData: function(pageId){
+      
       var D = $.Deferred();
-      D.resolve({page_id: pageId});
+      
+      //Gets data source.
+      $tmpl = this.definition.templates.contentTab;
+      if($tmpl.size() > 0 && $tmpl[0].innerHTML){
+        
+        //Parse the comment.
+        //Format: [datasource$http://somesite.com/url/mydata.php]
+        var datasource = $tmpl[0].innerHTML.match(/\[datasource\$([^\]]+)\]/);
+        
+        //Retrieve input data from the server based on the page ID
+        $.rest('GET', datasource[1], {
+          pid: pageId
+        })
+        
+        //In case of success, this is no longer fresh.
+        .done(function(d){
+          self.fresh = false;
+          D.resolve($.extend(d, {page_id: pageId}));
+        })
+        
+        //In case of failure, provide default data.
+        .fail(function(){
+          D.resolve({page_id: pageId});
+        });
+        
+      }
+      
+      //No data source, so no request.
+      else{
+        D.resolve({page_id: pageId});
+      }
+      
       return D.promise();
+      
     },
     
     //After render stub.
-    afterRender: function(){},
+    afterRender: function(){
+      this.view.find('form.rest-form').restForm({});
+    },
     
     //Save stub.
-    save: function(pageId){},
+    save: function(pageId){
+      this.view.find('form.auto-submit').trigger('submit');
+    },
     
     //After save stub.
     afterSave: function(data){}

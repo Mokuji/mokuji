@@ -1334,7 +1334,7 @@ abstract class BaseModel extends Data
       
       //This option should not be set otherwise.
       else{
-        throw new \exception\Programmer('Tried to force_create on model where PK is not auto_increment');
+        throw new \exception\Programmer('Tried to force_create on model "%s" where PK is not auto_increment', $this->model());
       }
       
     }

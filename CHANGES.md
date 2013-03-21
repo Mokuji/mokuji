@@ -1,5 +1,6 @@
 #### Development
 
+* Timeline component now added to the base components.
 * CMS improvements:
   - Added a "set as homepage" checkbox in the configuration tab for every page.
 * Bug fixes:

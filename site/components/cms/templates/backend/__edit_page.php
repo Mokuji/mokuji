@@ -47,55 +47,59 @@
       
       <div class="multilingual-section" data-language-id="${language.id}">
         
-        <fieldset class="fieldset-general clearfix page-captions">
-          
-          <legend><?php __($names->component, 'Page captions'); ?></legend>
-          
-          <div class="ctrlHolder">
-            <label for="l_title_page_${language.code}"><?php __($names->component, 'Title'); ?></label>
-            <input id="l_title_page_${language.code}" class="big page-title" type="text" name="info[${language.id}][title]"
-              placeholder="<?php echo tx('Config')->user('site_name'); ?>" value="${page.info && page.info[language.id] && page.info[language.id].title}" />
-          </div>
-          
-          <div class="ctrlHolder">
-            <div>
-              <label for="l_page_key_${language.code}"><?php __($names->component, 'URL-key'); ?></label>
-              <input id="l_page_key_${language.code}" class="big page-key" type="text" name="info[${language.id}][url_key]"
-                placeholder="<?php __($names->component, 'URL-key') ?>" value="${page.info && page.info[language.id] && page.info[language.id].url_key}" />
-            </div>
-            <div>
-              <label for="l_page_key_example_${language.code}" class="subtle-hint"><?php __($names->component, 'Example'); ?></label>
-              <div id="l_page_key_example_${language.code}" class="subtle-hint page_key_example">
-                <?php echo URL_BASE; ?>${page.id}/<span class="key-section">${page.info && page.info[language.id] && page.info[language.id].url_key ? page.info[language.id].url_key : "<?php __($names->component, 'URL-key') ?>"}</span>
-              </div>
-            </div>
-          </div>
-          
-          <div class="ctrlHolder">
-            <label for="l_slogan_page_${language.code}"><?php __($names->component, 'Slogan'); ?></label>
-            <input id="l_slogan_page_${language.code}" class="big page-slogan" type="text" name="info[${language.id}][slogan]"
-              placeholder="<?php echo tx('Config')->user('site_slogan'); ?>" value="${page.info && page.info[language.id] && page.info[language.id].slogan}" />
-          </div>
-          
-        </fieldset>
+        <div class="clearfix">
         
-        <fieldset class="fieldset-general clearfix seo">
-          
-          <legend><?php __($names->component, 'Search engine optimization'); ?></legend>
-          <div class="grey-border">
+          <fieldset class="fieldset-general clearfix page-captions">
+            
+            <legend><?php __($names->component, 'Page captions'); ?></legend>
+            
             <div class="ctrlHolder">
-              <label for="l_keywords_page_${language.code}"><?php __($names->component, 'Page keywords'); ?></label>
-              <input id="l_keywords_page_${language.code}" class="big page-keywords" type="text" name="info[${language.id}][keywords]"
-                placeholder="<?php echo tx('Config')->user('site_description'); ?>" value="${page.info && page.info[language.id] && page.info[language.id].keywords}" />
+              <label for="l_title_page_${language.code}"><?php __($names->component, 'Title'); ?></label>
+              <input id="l_title_page_${language.code}" class="big page-title" type="text" name="info[${language.id}][title]"
+                placeholder="<?php echo tx('Config')->user('site_name'); ?>" value="${page.info && page.info[language.id] && page.info[language.id].title}" />
             </div>
             
             <div class="ctrlHolder">
-              <label for="l_description_page_${language.code}"><?php __($names->component, 'Page description'); ?></label>
-              <textarea id="l_description_page_${language.code}" class="big page-description" type="text" name="info[${language.id}][description]"
-                placeholder="<?php echo tx('Config')->user('site_keywords'); ?>">${page.info && page.info[language.id] && page.info[language.id].description}</textarea>
+              <div>
+                <label for="l_page_key_${language.code}"><?php __($names->component, 'URL-key'); ?></label>
+                <input id="l_page_key_${language.code}" class="big page-key" type="text" name="info[${language.id}][url_key]"
+                  placeholder="<?php __($names->component, 'URL-key') ?>" value="${page.info && page.info[language.id] && page.info[language.id].url_key}" />
+              </div>
+              <div>
+                <label for="l_page_key_example_${language.code}" class="subtle-hint"><?php __($names->component, 'Example'); ?></label>
+                <div id="l_page_key_example_${language.code}" class="subtle-hint page_key_example">
+                  <?php echo URL_BASE; ?>${page.id}/<span class="key-section">${page.info && page.info[language.id] && page.info[language.id].url_key ? page.info[language.id].url_key : "<?php __($names->component, 'URL-key') ?>"}</span>
+                </div>
+              </div>
             </div>
-          </div>
-        </fieldset>
+            
+            <div class="ctrlHolder">
+              <label for="l_slogan_page_${language.code}"><?php __($names->component, 'Slogan'); ?></label>
+              <input id="l_slogan_page_${language.code}" class="big page-slogan" type="text" name="info[${language.id}][slogan]"
+                placeholder="<?php echo tx('Config')->user('site_slogan'); ?>" value="${page.info && page.info[language.id] && page.info[language.id].slogan}" />
+            </div>
+            
+          </fieldset>
+          
+          <fieldset class="fieldset-general clearfix seo">
+            
+            <legend><?php __($names->component, 'Search engine optimization'); ?></legend>
+            <div class="grey-border">
+              <div class="ctrlHolder">
+                <label for="l_keywords_page_${language.code}"><?php __($names->component, 'Page keywords'); ?></label>
+                <input id="l_keywords_page_${language.code}" class="big page-keywords" type="text" name="info[${language.id}][keywords]"
+                  placeholder="<?php echo tx('Config')->user('site_description'); ?>" value="${page.info && page.info[language.id] && page.info[language.id].keywords}" />
+              </div>
+              
+              <div class="ctrlHolder">
+                <label for="l_description_page_${language.code}"><?php __($names->component, 'Page description'); ?></label>
+                <textarea id="l_description_page_${language.code}" class="big page-description" type="text" name="info[${language.id}][description]"
+                  placeholder="<?php echo tx('Config')->user('site_keywords'); ?>">${page.info && page.info[language.id] && page.info[language.id].description}</textarea>
+              </div>
+            </div>
+          </fieldset>
+        
+        </div>
         
         <fieldset class="fieldset-general clearfix social-media">
           
