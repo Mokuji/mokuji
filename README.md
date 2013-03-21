@@ -11,7 +11,7 @@
 * [Twitter](http://twitter.com/Tuxion)
 * [Google+](http://tuxion.nl/+)
 
-# Tuxion CMS - Version 1.1.0 Beta 1
+# Tuxion CMS - Version 1.1.0 Beta 2
 
 ## Description
 
@@ -34,7 +34,7 @@ If you need functionality that does not exist yet, you could create the componen
 [Tuxion](http://web.tuxion.nl/).
 
 ## Features
- 
+
 * Fast
 * Flexible
 

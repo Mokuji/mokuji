@@ -1,3 +1,13 @@
+#### [Version 1.1.0 Beta 2](https://github.com/Tuxion/tuxion.cms/tree/v1.1.0-beta2)
+_21-Mar-2013_
+
+* Important updates
+  - Installer bug that prevented installing completely.
+  - Homepage system implemented to prevent having to edit DB manually.
+  - URL parser did not properly detect external URLs.
+* Critical security update
+  - elFinder remote code execution exploit.
+
 #### [Version 1.1.0 Beta 1](https://github.com/Tuxion/tuxion.cms/tree/v1.1.0-beta1)
 _5-Mar-2013_
 
