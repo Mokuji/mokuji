@@ -541,4 +541,215 @@ class Helpers extends \dependencies\BaseComponent
     
   }
   
+  //Checks permissions on hierarchies.
+  public function table__hcheck_permissions(\dependencies\Table $table, $meta, $user_id=null)
+  {
+    
+    $meta = Data($meta)->having('access_level_field', 'group_permissions_join', 'user_group_id_field');
+    
+    //Get the user info we need.
+    if($user_id == null || (int)$user_id === tx('Account')->user->id->get('int')){
+      $user_id = tx('Account')->user->id->get('int');
+      $user_level = tx('Account')->user->level->get('int');
+    }
+    
+    elseif($user_id > 0){
+      $user_id = (int)$user_id;
+      $user_level = tx('Sql')
+        ->table('account', 'Accounts')
+        ->pk($user_id)
+        ->execute_single()
+        ->level->otherwise(0)->get('int');
+    }
+    
+    else{
+      $user_id = null;
+      $user_level = 0;
+    }
+    
+    //Make the query depending on the user level.
+    switch($user_level){
+      
+      //Visitors can only see when access level is 0.
+      case 0:
+        //Create the table conditions.
+        $table
+          ->join('__CURRENT__', $IC, function($S, $T, $conditions)use($meta){
+            
+            $conditions
+              
+              //Must be parent or self.
+              ->add('parents_or_self_lft', array("`$S.lft`", '>=', "`$T.lft`"))
+              ->add('parents_or_self_rgt', array("`$S.lft`", '<', "`$T.rgt`"))
+              
+              //Access level is 0-1, means any user can see, regardless of groups.
+              ->add('logged_in_users', array("`$T.{$meta->access_level_field}`", '>', 0))
+              
+              //Put it together.
+              ->combine('invalid_user_level', array('parents_or_self_lft', 'parents_or_self_rgt', 'logged_in_users'), 'AND')
+              ->utilize('invalid_user_level');
+            
+          })
+          ->where("`$IC.{$meta->access_level_field}`", null);
+        break;
+      
+      //Normal users are more complex, because... user groups.
+      case 1:
+        
+        //Find the user's groups.
+        $groups = Data();
+        tx('Sql')
+          ->table('account', 'AccountsToUserGroups')
+          ->where('user_id', $user_id)
+          ->execute()
+          ->each(function($link)use($groups){
+            $groups->push($link->user_group_id->get());
+          });
+        
+        //Create the table conditions for just logged in users.
+        $table
+          ->join('__CURRENT__', $IC, function($S, $T, $conditions)use($meta){
+            
+            $conditions
+              
+              //Must be parent or self.
+              ->add('parents_or_self_lft', array("`$S.lft`", '>=', "`$T.lft`"))
+              ->add('parents_or_self_rgt', array("`$S.lft`", '<', "`$T.rgt`"))
+              
+              //Access level is 0-1, means any user can see, regardless of groups.
+              ->add('logged_in_users', array("`$T.{$meta->access_level_field}`", '>', 1))
+              
+              //Put it together.
+              ->combine('invalid_user_level', array('parents_or_self_lft', 'parents_or_self_rgt', 'logged_in_users'), 'AND')
+              ->utilize('invalid_user_level');
+            
+          });
+        
+        //Depending on whether we have usergroups, also look for matches there.
+        if($groups->size() > 0){
+          
+          $local = $meta->group_permissions_join->{0};
+          $foreign = $meta->group_permissions_join->{2};
+          
+          //Group up with the permission groups too and find authorization paths.
+          //But only when the access_level == 2.
+          $table->distinct()
+            ->join($meta->group_permissions_join->{1}, $VG, function($S, $T, $conditions)use($meta, $groups, $local, $foreign){
+              
+              $conditions
+                
+                //Must be tied to invalid categories.
+                ->add('to_ics', array("`$S.$local`", "`$T.$foreign`"))
+                
+                //Access level is 2, means any user can only see, when in one of the right groups.
+                ->add('in_my_groups', array("`$T.{$meta->user_group_id_field}`", $groups))
+                
+                //Put it together.
+                ->combine('valid_group_paths', array('to_ics', 'in_my_groups'), 'AND')
+                ->utilize('valid_group_paths');
+                
+            });
+          
+          //Now that we have the data, set the conditions.  
+          $table->where(tx('Sql')->conditions()
+            ->add('empty_ics', array("`$IC.{$meta->access_level_field}`", null))
+            ->add('is_group_access', array("`$IC.{$meta->access_level_field}`", 2))
+            ->add('has_valid_groups', array("`$VG.$foreign`", '!', null))
+            ->combine('has_group_access', array('is_group_access', 'has_valid_groups'), 'AND')
+            ->combine('has_access', array('has_group_access', 'empty_ics'), 'OR')
+            ->utilize('has_access')
+          );
+          
+        }
+        
+        //When no groups are involved, just check for invalid categories not being there.
+        else{
+          $table->where("`$IC.{$meta->access_level_field}`", null);
+        }
+        
+        break;
+      
+      //Admins can see everything! (Including the future.)
+      case 2:
+        break;
+      
+    }
+    
+  }
+  
+  //Checks permissions on individual items.
+  public function table__check_permissions(\dependencies\Table $table, $access_level, $group_id, $user_id=null)
+  {
+    
+    raw($access_level, $group_id, $user_id);
+    
+    //Get the user info we need.
+    if($user_id == null || (int)$user_id === tx('Account')->user->id->get('int')){
+      $user_id = tx('Account')->user->id->get('int');
+      $user_level = tx('Account')->user->level->get('int');
+    }
+    
+    elseif($user_id > 0){
+      $user_id = (int)$user_id;
+      $user_level = tx('Sql')
+        ->table('account', 'Accounts')
+        ->pk($user_id)
+        ->execute_single()
+        ->level->otherwise(0)->get('int');
+    }
+    
+    else{
+      $user_id = null;
+      $user_level = 0;
+    }
+    
+    //Make the query depending on the user level.
+    switch($user_level){
+      
+      //Visitors can only see when access level is 0.
+      case 0:
+        $table->where($access_level, 0);
+        break;
+      
+      //Normal users are more complex, because... user groups.
+      case 1:
+        
+        //Find the user's groups.
+        $groups = Data();
+        tx('Sql')
+          ->table('account', 'AccountsToUserGroups')
+          ->where('user_id', $user_id)
+          ->execute()
+          ->each(function($link)use($groups){
+            $groups->push($link->user_group_id->get());
+          });
+        
+        //Create the table conditions.
+        $table->where(tx('Sql')->conditions()
+          
+          //Access level is 1, means any user can see, regardless of groups.
+          ->add('logged_in_users', array($access_level, '<=', 1))
+          
+          //Access level 2 means we need to be in the right group.
+          ->add('group_check_level', array($access_level, 2))
+          ->add('in_group', array($group_id, $groups))
+          ->combine('group_member', array('group_check_level', 'in_group'), 'AND')
+          
+          //Combine these scenario's.
+          ->combine('can_see', array('logged_in_users', 'group_member'), 'OR')
+          
+          //Depending on whether the user is in any groups at all, pick either the logged in user scenario only, or both.
+          ->utilize($groups->size() > 0 ? 'can_see' : 'logged_in_users')
+          
+        );
+        break;
+      
+      //Admins can see everything! (Including the future.)
+      case 2:
+        break;
+      
+    }
+    
+  }
+  
 }
