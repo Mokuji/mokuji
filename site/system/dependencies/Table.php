@@ -11,6 +11,7 @@ class Table extends Successable
     $models=array(),
 
     $select=array(),
+    $distinct=false,
     $hierarchy=array(),
     $from=array(),
     $joins=array(),
@@ -54,7 +55,27 @@ class Table extends Successable
   ###
   ###  HIGH LEVEL PUBLIC FUNCTIONS
   ###
-
+  
+  //Call a helper function to do complex table operations.
+  public function helper($component, $name)
+  {
+    
+    $args = func_get_args();
+    $component = array_shift($args);
+    $name = array_shift($args);
+    
+    tx('Component')->helpers($component)->_call('table__'.$name, array_merge(array($this), $args));
+    return $this;
+    
+  }
+  
+  //Make a distinct select statement (if that's not already the case).
+  public function distinct($value=true)
+  {
+    $this->distinct = $value !== false;
+    return $this;
+  }
+  
   // filter by primary keys
   public function pk()
   {
@@ -403,12 +424,53 @@ class Table extends Successable
   }
 
   // Join a foreign model
-  public function join($model_name, &$id=null)
+  public function join($model_name, &$id=null, $join_conditions=null)
   {
-
+    
+    raw($model_name);
+    
+    //Check for proper conditions.
+    if($join_conditions && !$join_conditions instanceof \Closure){
+      throw new \exception\InvalidArgument('The join conditions must be a Closure');
+    }
+    
     // initial join is always on the working model
     $target = $this->models[$this->working_model];
-
+    
+    //In case of a join condition, we do a direct join (not several hops).
+    if($join_conditions){
+      
+      $src = $target;
+      
+      //When we have join conditions, we can use the __CURRENT__ reference.
+      if($model_name === '__CURRENT__'){
+        $target = $this->get_model_info("{$target['component']}.{$target['name']}");
+      }
+      else{
+        $target = $this->get_model_info($model_name);
+      }
+      
+      //Add target to the models.
+      $this->models[$target['id']] = $target;
+      
+      //collect join information
+      $conditions = tx('Sql')->conditions();
+      $join_conditions($src['id'], $target['id'], $conditions);
+      $info = array(
+        'model' => $target['id'],
+        'conditions' => $conditions
+      );
+      
+      //add the new information to out global join array so it can be used to build the query with
+      $this->joins[$src['id']][] = $info;
+      
+      //set the &$id to the last target id
+      $id = $target['id'];
+      
+      return $this;
+      
+    }
+    
     //we keep following the directions the models give us, until the right model has been joined
     do
     {
@@ -425,7 +487,7 @@ class Table extends Successable
       if(!(is_string(key($target['relations'][$model_name])) && is_string(current($target['relations'][$model_name])))){
         throw new \exception\InvalidArgument('Relations to %s defined in %s have an invalid format.', $model_name, $target['path']);
       }
-
+      
       //get local information
       $local_info = $this->get_column_info($target['id'].'.'.key($target['relations'][$model_name]));
 
@@ -447,7 +509,7 @@ class Table extends Successable
       //Set new target.
       //Either ComponentName.ModelName or ModelName.
       $target = $this->get_model_info($foreign_array_count == 3 ? $foreign_array[0].'.'.$foreign_array[1] : $foreign_array[0]);
-
+      
       //check if the foreign model is the same as the local model
       if($local_info['model'] === $target['id']){
         throw new \exception\Programmer("A connection to %s has been defined in %s using itself as foreign model. Not good.", $model_name, $this->models[$local_info['model']]['path']);
@@ -482,7 +544,7 @@ class Table extends Successable
 
     //set the &$id to the last target id
     $id = $target['id'];
-
+    
     return $this;
 
   }
@@ -616,7 +678,7 @@ class Table extends Successable
   // print the query like it would be when executed (for debugging purposes)
   public function write($as=null)
   {
-
+    
     if(is_string($as))
     {
 
@@ -757,13 +819,13 @@ class Table extends Successable
   {
 
     if(is_null($all)){
-      $select = 'SELECT '.current($this->select);
+      $select = 'SELECT '.($this->distinct ? 'DISTINCT ' : '').current($this->select);
     }
 
     else
     {
 
-      $select = 'SELECT '.$all;
+      $select = 'SELECT '.($this->distinct ? 'DISTINCT ' : '').$all;
 
       foreach($this->select as $as => $content)
       {
@@ -796,10 +858,18 @@ class Table extends Successable
           if(!array_key_exists('type', $join_info)){
             $join_info['type'] = 'LEFT JOIN';
           }
-
-          $from .=
-            " {$join_info['type']} {$this->models[$join_info['model']]['table']} AS `{$this->models[$join_info['model']]['id']}`".
-            " ON {$join_info['local']} = {$join_info['foreign']}";
+          
+          if(isset($join_info['conditions'])){
+            $from .=
+              " LEFT JOIN {$this->models[$join_info['model']]['table']} AS `{$this->models[$join_info['model']]['id']}`".
+              " ON ".$this->conditions_to_comparisons($join_info['conditions']);
+          }
+          
+          else{
+            $from .=
+              " {$join_info['type']} {$this->models[$join_info['model']]['table']} AS `{$this->models[$join_info['model']]['id']}`".
+              " ON {$join_info['local']} = {$join_info['foreign']}";
+          }
 
         }
 
@@ -856,7 +926,7 @@ class Table extends Successable
   {
     
     if(func_num_args() < 2){
-      throw new \exception\Tip('Single argument not implemented yet.');
+      throw new \exception\Programmer('Single argument not implemented yet.');
       return;
     }
 
