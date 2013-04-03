@@ -536,7 +536,8 @@ abstract class BaseModel extends Data
       $query = 'UPDATE '.self::model_data('table_name').' SET `'.implode('` = ?, `', array_keys($data)).'` = ? WHERE 1';
       
       foreach(self::table_data()->primary_keys as $primary_key){
-        $query .= " AND `$primary_key` = ".$this[$primary_key];
+        $query .= " AND `$primary_key` = ?";
+        $data[] = $this[$primary_key]->get();
       }
       
       $query = tx('Sql')->make_query($query, $data);
