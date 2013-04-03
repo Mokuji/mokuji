@@ -11,7 +11,7 @@
     <li id="tabber-groups"><a href="#tab-groups"><?php __($names->component, 'Groups'); ?></a></li>
     <li id="tabber-group"><a href="#tab-group"><?php __($names->component, 'New group'); ?></a></li>
     <?php if(tx('Component')->available('mail')){ ?>
-      <li id="tabber-mail"><a href="#tab-mail"><?php __($names->component, 'Mailing'); ?></a></li>
+      <li id="tabber-mail"><a href="#tab-mail"><?php __($names->component, 'Send mail'); ?></a></li>
     <?php } ?>
     <li id="tabber-import"><a href="#tab-import"><?php __($names->component, 'IMPORT_VERB', 'ucfirst'); ?></a></li>
   </ul>

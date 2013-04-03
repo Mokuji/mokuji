@@ -143,7 +143,7 @@ class Json extends \dependencies\BaseComponent
       $ex->errors(array('You must provide at least one recipient'));
       throw $ex;
     }
-
+    
     //Mailers only validate, so store them for later.
     $mailers = Data();
     
