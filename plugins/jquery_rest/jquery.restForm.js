@@ -20,9 +20,13 @@
       
       e.preventDefault();
       
+      var $usedButton = false;
+      if(e.originalEvent && e.originalEvent.explicitOriginalTarget)
+        $usedButton = $(e.originalEvent.explicitOriginalTarget);
+      
       var form = this;
       
-      var data = $(form).formToObject();
+      var data = $(form).formToObject($usedButton ? $usedButton.attr('name') : null);
       
       //Tell the world we're loading things.
       if(hasFeedback) app.Feedback.working('Saving data');

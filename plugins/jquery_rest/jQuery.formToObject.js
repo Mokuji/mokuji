@@ -12,16 +12,17 @@
 
 (function($){
   
-  $.fn.formToObject = function(){
+  $.fn.formToObject = function(submitter){
     
     var finalData = {}
       , splitName = /\]\[|\[|\]/g
-      , isNumber = /^[0-9]+$/;
+      , isNumber = /^[0-9]+$/
+      , submitter = submitter ? submitter.toString() : null;
     
     //Gets the proper value of the field.
     var getFieldValue = function(field){
       
-      //For files: {name: [ {"name": filename, "type":mimetype, "length":filelength}, ... ] }
+      //For files: {name: [ {"name": filename, "type":mimetype, "size":filelength}, ... ] }
       //Support for file bodies is not across all browsers, so it's left out.
       if($(field).is('[type=file]')){
         
@@ -59,7 +60,11 @@
       var field = $(this);
       
       //Since this function does not perform a submit, we don't look for the submitter button/submit/image.
-      if(field.is('[type=button], [type=submit], [type=image]')) return true;
+      //Except when it's explicitly given as the function parameter.
+      if(
+        field.is('[type=button], [type=submit], [type=image]') &&
+        (submitter ? field.is(':not([name="'+submitter+'"])') : true)
+      ) return true;
       
       //Checkboxes or radios that are not checked are not included.
       if(field.is('[type=checkbox]:not(:checked), [type=radio]:not(:checked)')) return true;
