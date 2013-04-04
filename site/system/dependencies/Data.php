@@ -1601,10 +1601,10 @@ class Data extends Successable implements \Serializable, \IteratorAggregate, \Ar
   }
   
   // validates given rules
-  public function validate($name, array $rules)
+  public function validate($name, array $rules, $translate=true)
   {
     
-    $validator = new Validator($this->get(), $rules);
+    $validator = new Validator($this->get(), $rules, $translate);
     
     if($validator->failure())
     {

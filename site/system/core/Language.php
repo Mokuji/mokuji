@@ -127,7 +127,7 @@ class Language
     
   }
   
-  public function translate($phrase, $component=null, $lang_id=null, $case = null)
+  public function translate($phrase, $component=null, $lang_id=null, $case = null, $is_fallback=false)
   {
     
     $this->translating_started = true;
@@ -149,15 +149,30 @@ class Language
       $lang_file = ($component ? PATH_COMPONENTS.DS.$component : PATH_SITE).DS.'i18n'.DS.$language_code.'.json';
       
       //Parse file.
+      $parsed_it = false;
       try
       {
         
         if(is_file($lang_file)){
           $arr = json_decode(file_get_contents($lang_file), true);
+          $parsed_it = true;
         }
         
       }
-      catch(\exception $e){ /* best effort */ }
+      catch(\exception $e){/* That was our best effort, sorry. */}
+      
+      //If we didn't parse it, see if we can log it.
+      if($parsed_it === false && tx('Component')->available('sdk')){
+        
+        //Log in the SDK to improve it later.
+        tx('Sql')
+          ->model('sdk', 'TranslationMissingFiles')
+          ->register(array(
+            'language_code' => $language_code,
+            'component' => $component
+          ));
+        
+      }
       
       //Fallback.
       if(!isset($arr) || !is_array($arr))
@@ -184,8 +199,53 @@ class Language
     
     //If the translation is not found in this file, and we specified a component, fall back on the core translation files.
     else if($component) {
-      if($language_code !== 'en-GB') tx('Logging')->log('Translate', 'Com '.$component.' fallback', $phrase);
-      return $this->translate($phrase, null, $lang_id, $case);
+      
+      //Fallbacks are acceptable for en-GB since that's the language used for the keys.
+      if($language_code !== 'en-GB'){
+        
+        tx('Logging')->log('Translate', 'Com '.$component.' fallback', $phrase);
+        
+        //Log in the SDK to improve it later.
+        if(tx('Component')->available('sdk')){
+          
+          tx('Sql')
+            ->model('sdk', 'TranslationMissingPhrases')
+            ->register(array(
+              'language_code' => $language_code,
+              'component' => $component,
+              'phrase' => $phrase
+            ));
+          
+        }
+        
+      }
+      
+      //Translate from core translations, but with a flag that this is a fallback attempt.
+      return $this->translate($phrase, null, $lang_id, $case, true);
+      
+    }
+    
+    //When we did not do a fallback but are translating straight from the core and failed.
+    else if($is_fallback === false && !$component){
+      
+      //This is acceptable for en-GB since that's the language used for the keys.
+      if($language_code !== 'en-GB'){
+        
+        //Log in the SDK to improve it later.
+        if(tx('Component')->available('sdk')){
+          
+          tx('Sql')
+            ->model('sdk', 'TranslationMissingPhrases')
+            ->register(array(
+              'language_code' => $language_code,
+              'component' => null,
+              'phrase' => $phrase
+            ));
+          
+        }
+        
+      }
+      
     }
     
     //Convert case?
