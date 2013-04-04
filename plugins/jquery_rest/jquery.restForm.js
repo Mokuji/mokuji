@@ -20,6 +20,7 @@
       
       e.preventDefault();
       
+      //Only supported in Firefox.
       var $usedButton = false;
       if(e.originalEvent && e.originalEvent.explicitOriginalTarget)
         $usedButton = $(e.originalEvent.explicitOriginalTarget);
