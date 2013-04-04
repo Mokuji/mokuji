@@ -5,6 +5,30 @@ ini_set('memory_limit', '-1');
 class Helpers extends \dependencies\BaseComponent
 {
   
+  /**
+   * Attempts to get the component entry in the database of a given component name.
+   */
+  public function get_component_package($component)
+  {
+    
+    raw($component);
+    $packageFile = PATH_COMPONENTS.DS.$component.DS.'.package'.DS.'package.json';
+    
+    //Check the file is there.
+    if(!is_file($packageFile))
+      return Data(null);
+    
+    //Get package info.
+    $package = Data(json_decode(file_get_contents($packageFile), true));
+    
+    //Find the package.
+    return tx('Sql')
+      ->table('update', 'Packages')
+      ->where('title', "'{$package->title}'")
+      ->execute_single();
+    
+  }
+  
   protected function check_updates($options)
   {
     
