@@ -55,24 +55,26 @@ function __(){
   
 }
 
-/*
-function __($phrase, $only_return = false, $case = null)
-{
-  
-  //Let the core do this.
-  $phrase = tx('Language')->translate($phrase, null, null, $case);
-  
-  //Return (translated) phrase.
-  if($only_return){
-    return $phrase;
-  }else{
-    echo $phrase;
-  }
-
-}
-*/
-
 function ___($phrase, $case = null)
 {
   return __($phrase, 1, $case);
+}
+
+function transf($component, $phrase)
+{
+  
+  //Shift the first two arguments out of the array.
+  $args = func_get_args();
+  $component = array_shift($args);
+  $phrase = array_shift($args);
+  
+  //Get a translated version of the format.
+  $format = __($component, $phrase, true);
+  
+  //Prepend this format to the arguments.
+  array_unshift($args, $format);
+  
+  //Use sprintf to put it all together.
+  return call_user_func_array('sprintf', $args);
+  
 }

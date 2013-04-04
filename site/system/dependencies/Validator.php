@@ -121,14 +121,14 @@ class Validator extends Successable
     
     if($this->check_rule('string')===true){
       if(!(strlen($this->data) >= $min && ($max < 0 ? true : strlen($this->data) <= $max))){
-        return "The value must be between $min and $max characters.";
+        return transf(null, "The value must be between %s and %s characters.", $min, $max);
       }
       return true;
     }
     
     elseif($this->check_rule('number')===true){
       if(!($this->data >= $min && ($max < 0 ? true : $this->data <= $max))){
-        return "The value must be between $min and $max.";
+        return transf(null, "The value must be between %s and %s.", $min, $max);
       }
       return true;
     }
@@ -139,13 +139,13 @@ class Validator extends Successable
         
         case 'array':
           if(!(count($this->data) >= $min && ($max < 0 ? true : count($this->data) <= $max))){
-            return "The value must contain between $min and $max nodes.";
+            return transf(null, "The value must contain between %s and %s nodes.", $min, $max);
           }
           return true;
         
         case 'string':
           if(!(strlen($this->data) >= $min && ($max < 0 ? true : strlen($this->data) <= $max))){
-            return "The value must be between $min and $max characters.";
+            return transf(null, "The value must be between %s and %s characters.", $min, $max);
           }
           return true;
           
@@ -154,12 +154,12 @@ class Validator extends Successable
         case 'number':
         case 'double':
           if(!($this->data >= $min && ($max < 0 ? true : $this->data <= $max))){
-            return "The value must be between $min and $max.";
+            return transf(null, "The value must be between %s and %s.", $min, $max);
           }
           return true;
           
         default:
-          return 'The value is of a format which can not lie between 2 numbers: '.gettype($this->data);
+          return transf(null, "The value is of a format which can not lie between 2 numbers: %s", gettype($this->data));
       
       }
     }
@@ -193,7 +193,7 @@ class Validator extends Successable
     if($this->_number() === true && (!empty($this->data)))
       return true;
     
-    return "The value can not be empty.";
+    return __("The value can not be empty.", 1);
     
   }
   
@@ -253,7 +253,7 @@ class Validator extends Successable
       return true;
     }
     
-    return "The value must be a number.";
+    return __("The value must be a number.",1);
   
   }
   
@@ -266,7 +266,7 @@ class Validator extends Successable
 		{
 			
       if(is_array($this->data) || (is_object($this->data) && !method_exists($this->data, '__toString'))){
-        return 'The value must be textual.';
+        return __('The value must be textual.',1);
       }
       
       $this->data = (string) $this->data;
@@ -286,7 +286,7 @@ class Validator extends Successable
     }
     
     if(preg_match('~(?<=\<\w).*?\>~', $this->data) > 0){
-      return "The value may not contain html.";
+      return __("The value may not contain html.",1);
     }
     
     return true;
@@ -302,7 +302,7 @@ class Validator extends Successable
     }
     
     if(!$this->check_rule('required')) return true;
-    return "The value must be greater than $number.";
+    return transf(null, "The value must be greater than %s.", $number);
     
   }
   
@@ -314,7 +314,7 @@ class Validator extends Successable
       return true;
     }
     
-    return "The value must be greater than or equal to $number.";
+    return transf(null, "The value must be greater than or equal to %s.", $number);
     
   }
   
@@ -326,7 +326,7 @@ class Validator extends Successable
       return true;
     }
     
-    return "The value must be lesser than $number.";
+    return transf(null, "The value must be lesser than %s.", $number);
     
   }
   
@@ -338,7 +338,7 @@ class Validator extends Successable
       return true;
     }
     
-    return "The value must be lesser than or equal to $number.";
+    return transf(null, "The value must be lesser than or equal to %s.", $number);
     
   }
   
@@ -350,7 +350,7 @@ class Validator extends Successable
       return true;
     }
     
-    return "The value must be equal to $value.";
+    return transf(null, "The value must be equal to %s.", $number);
     
   }
   
@@ -360,7 +360,7 @@ class Validator extends Successable
     
     if(!in_array($this->data, func_get_args(), true)){
       if(!$this->_not_empty() && !$this->check_rule('required')) return true;
-      return "The value must be one of the following values: ".implode(', ', func_get_args()).'.';
+      return transf(null, "The value must be one of the following values: %s.", implode(', ', func_get_args()));
     }
     
     return true;
@@ -373,7 +373,7 @@ class Validator extends Successable
     
     if(in_array($this->data, func_get_args(), true)){
       if(!$this->_not_empty() && !$this->check_rule('required')) return true;
-      return "The value must not be one of the following values: ".implode(', ', func_get_args()).'.';
+      return transf(null, "The value must not be one of the following values: %s.", implode(', ', func_get_args()));
     }
     
     return true;
@@ -392,7 +392,7 @@ class Validator extends Successable
       return true;
     }
     
-    return 'The value must be a javascript variable name.';
+    return __('The value must be a javascript variable name.',1);
   
   }
   
@@ -416,7 +416,7 @@ class Validator extends Successable
       
     }
     
-    return 'The value must be a boolean.';
+    return __('The value must be a boolean.',1);
     
   }
   
@@ -428,7 +428,7 @@ class Validator extends Successable
     if(is_array($data))
       return true;
     
-    return 'The value must be an array.';
+    return __('The value must be an array.',1);
     
   }
   
@@ -446,7 +446,7 @@ class Validator extends Successable
       
       //Must contain a domain at the very least.
       if(!array_key_exists('domain', $segments))
-        return 'The value must be a url.';
+        return __('The value must be a url.',1);
       
       //See if it's an IP.
       $is_ip = !!filter_var($segments['domain'], FILTER_VALIDATE_IP);
@@ -456,20 +456,20 @@ class Validator extends Successable
         
         //It also can't be localhost, so must have a dot.
         if(strpos($segments['domain'], '.') === false)
-          return 'The value must be a url.';
+          return __('The value must be a url.',1);
         
         //The domain must have a valid top level domain.
         $domainparts = explode('.', $segments['domain']);
         $tld = end($domainparts);
         if(!in_array($tld, \core\Url::$TOP_LEVEL_DOMAINS))
-          return 'The value must be a url.';
+          return __('The value must be a url.',1);
         
       }
       
       $this->data = url($url)->output;
       
     } catch (\exception\Unexpected $ue) {
-      return 'The value must be a url.';
+      return __('The value must be a url.',1);
     }
     
     return true;
@@ -486,8 +486,9 @@ class Validator extends Successable
     
     //Validate a password is strong enough.
     if(tx('Security')->get_password_strength($this->data) < SECURITY_PASSWORD_STRENGTH)
-      return __('The value must be a strong password please mix at least '.SECURITY_PASSWORD_STRENGTH.
-        ' of the following: uppercase letters, lowercase letters, numbers and special characters.', 1);
+      return transf(null, 'The value must be a strong password please mix at least %s'.
+        ' of the following: uppercase letters, lowercase letters, numbers and special characters.',
+        SECURITY_PASSWORD_STRENGTH);
     
     return true;
     
@@ -513,17 +514,17 @@ class Validator extends Successable
       case 'string':
         $input = @strtotime($input);
         if($input === false)
-          return 'The value must be a valid date-time value.';
+          return __('The value must be a valid date-time value.',1);
         
       case 'integer':
         $input = @date($target_format, $input);
         if($input === false)
-          return 'The value must be a valid date-time value.';
+          return __('The value must be a valid date-time value.',1);
         $this->data = $input;
         return true;
         
       default:
-        return 'The value must be a valid date-time value.';
+        return __('The value must be a valid date-time value.',1);
         
     }
     
@@ -537,7 +538,7 @@ class Validator extends Successable
     
     if($this->check_rule('string')===true){
       if(strlen($this->data) !== $length && (strlen($this->data) !== 0 && $this->check_rule('required') !== true)){
-        return "The value must be $length characters.";
+        return transf(null, "The value must be %s characters.", $length);
       }
       return true;
     }

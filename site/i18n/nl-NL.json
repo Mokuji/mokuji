@@ -78,7 +78,7 @@
   "This is a required field.": "Dit is een verplicht veld.",
   "Title": "Titel",
 
-  "The value must be a strong password please mix at least 3 of the following: uppercase letters, lowercase letters, numbers and special characters.": "De waarde moet een sterk wachtwoord zijn. Mix alsjeblieft tenminste 3 van de volgende zaken: hoofdletters, 'kleine' letters, cijfers en speciale tekens.",
+  "The value must be a strong password please mix at least %s of the following: uppercase letters, lowercase letters, numbers and special characters.": "De waarde moet een sterk wachtwoord zijn. Mix alsjeblieft tenminste %s van de volgende zaken: hoofdletters, 'kleine' letters, cijfers en speciale tekens.",
 
   "Username": "Gebruikersnaam",
   "Users": "Gebruikers",
