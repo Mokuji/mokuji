@@ -881,6 +881,21 @@ function request(){
       
     },
     
+    recommendTitle: function(title, languageId){
+      if(languageId === 'ALL'){
+        this.view.find('.page-title-recommendation').val(title);
+        this.view.find('.page-title')
+          .attr('placeholder', title)
+          .trigger('keyup');
+      }else{
+        $langSection = this.view.find('.multilingual-section[data-language-id='+languageId+']');
+        $langSection.find('.page-title-recommendation').val(title);
+        $langSection.find('.page-title')
+          .attr('placeholder', title)
+          .trigger('keyup');
+      }
+    },
+    
     updateDefault: function(which, what){
       var $which = $(which)
         , $targets = $which.closest('.multilingual-section').find('.defaults-to-'+what);

@@ -124,7 +124,7 @@ class Json extends \dependencies\BaseComponent
       $language_id = $info->key();
       
       $info = $info->having(
-          'title', 'url_key', 'slogan', 'description', 'keywords',
+          'title', 'title_recommendation', 'url_key', 'slogan', 'description', 'keywords',
           'og_title', 'og_description', 'og_keywords',
           'tw_title', 'tw_description', 'tw_author',
           'gp_author'
@@ -132,6 +132,7 @@ class Json extends \dependencies\BaseComponent
         
         // ->title->validate('Title', array('required', 'string', 'not_empty'))->back()
         ->title->validate('Title', array('string'))->back()
+        ->title_recommendation->validate('Title recommendation', array('string'))->back()
         ->url_key->validate('URL key', array('string', 'not_empty'))->back()
         ->slogan->validate('Slogan', array('string', 'not_empty'))->back()
         ->description->validate('Description', array('string', 'not_empty'))->back()
@@ -150,7 +151,7 @@ class Json extends \dependencies\BaseComponent
       ;
       
       string_if_empty($info,
-        'title', 'url_key', 'slogan', 'description', 'keywords',
+        'title', 'title_recommendation', 'url_key', 'slogan', 'description', 'keywords',
         'og_title', 'og_description', 'og_keywords',
         'tw_title', 'tw_description', 'tw_author',
         'gp_author'

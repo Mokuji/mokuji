@@ -10,7 +10,11 @@
   <div id="edit_page">
     
     <div class="title-bar page-title">
-      <h2><span class="title">${page.title}</span> <span style="font-weight:normal;">(<?php __('Page', 0, 'l'); ?>)</span></h2>
+      <h2><span class="title">${
+        page.info && page.info[<?php echo tx('Language')->id; ?>] &&
+        (page.info[<?php echo tx('Language')->id; ?>].title || page.info[<?php echo tx('Language')->id; ?>].title_recommendation) ||
+        page.title
+      }</span> <span style="font-weight:normal;">(<?php __('Page', 0, 'l'); ?>)</span></h2>
       <div class="clear"></div>
     </div>
     
@@ -56,7 +60,10 @@
             <div class="ctrlHolder">
               <label for="l_title_page_${language.code}"><?php __($names->component, 'Title'); ?></label>
               <input id="l_title_page_${language.code}" class="big page-title" type="text" name="info[${language.id}][title]"
-                placeholder="<?php echo tx('Config')->user('site_name'); ?>" value="${page.info && page.info[language.id] && page.info[language.id].title}" />
+                placeholder="${page.info && page.info[language.id] && page.info[language.id].title_recommendation || '<?php echo str_replace("'", "\\'", tx('Config')->user('site_name')); ?>'}"
+                value="${page.info && page.info[language.id] && page.info[language.id].title}" />
+              <input class="page-title-recommendation" type="hidden" name="info[${language.id}][title_recommendation]"
+                value="${page.info && page.info[language.id] && page.info[language.id].title_recommendation}" />
             </div>
             
             <div class="ctrlHolder">

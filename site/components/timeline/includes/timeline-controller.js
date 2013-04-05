@@ -26,6 +26,7 @@
     
     //Define the elements for jsFramework to keep track of.
     elements: {
+      'title': '#timeline-title-form .title',
       'titleForm': '#timeline-title-form',
       'compositionForm': '#timeline-composition-form',
       'compositionFormInput': '#timeline-composition-form :input',
@@ -71,6 +72,17 @@
         var value = $(e.target).val();
         this.force_language = value > 0 ? value : false;
         this.editingPage.find(':input[name=force_language]').val(value);
+        this.title.trigger('blur');
+      },
+      
+      //Let findability know we have a recommended default.
+      'blur on title': function(e){
+        app.Page.Tabs.findabilityTab.recommendTitle(
+          $(e.target).val(),
+          this.force_language ?
+            'ALL':
+            $(e.target).closest('.multilingual-section').attr('data-language-id')
+        );
       }
       
     },
@@ -262,6 +274,7 @@
       
       this.refreshElements();
       this.bindCompositionForm();
+      this.title.trigger('blur');
       
     },
     

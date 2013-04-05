@@ -13,8 +13,27 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
       '1.1' => '1.2',
       '1.2' => '1.3',
       '1.3' => '1.4',
-      '1.4' => '2.0'
+      '1.4' => '2.0',
+      '2.0' => '2.1'
     );
+  
+  public function update_to_2_1($current_version, $forced)
+  {
+    
+    try{
+      
+      tx('Sql')->query('
+        ALTER TABLE `#__cms_page_info`
+          ADD `title_recommendation` varchar(255) NULL after `title`
+      ');
+      
+    }catch(\exception\Sql $ex){
+      //When it's not forced, this is a problem.
+      //But when forcing, ignore this.
+      if(!$forced) throw $ex;
+    }
+    
+  }
   
   public function update_to_2_0($current_version, $forced)
   {

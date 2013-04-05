@@ -227,7 +227,7 @@ class EntryPoint extends \dependencies\BaseEntryPoint
           $site_author = tx('Config')->user('site_author');
           $site_description = tx('Config')->user('site_description')->otherwise('My Tuxion CMS Website');
           $site_keywords = tx('Config')->user('site_keywords')->otherwise('Tuxion, CMS');
-          $title = $lpi->title->otherwise($pi->title)->get();
+          $title = $lpi->title->otherwise($lpi->title_recommendation->otherwise($pi->title))->get();
           $title .= ($title ? ' - ' : '') . $site_name;
           $description = $lpi->description->otherwise($site_description)->get();
           $keywords = $lpi->keywords->otherwise($site_keywords)->get();

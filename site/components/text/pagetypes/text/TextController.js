@@ -13,7 +13,20 @@
     
     //Define the elements for jsFramework to keep track of.
     elements: {
+      'title': '#text-contentTab-form .title',
       'contentForm': '#text-contentTab-form'
+    },
+    
+    events:{
+      
+      //Let findability know we have a recommended default.
+      'blur on title': function(e){
+        app.Page.Tabs.findabilityTab.recommendTitle(
+          $(e.target).val(),
+          $(e.target).closest('.multilingual-section').attr('data-language-id')
+        );
+      }
+      
     },
     
     //Retrieve input data (from the server probably).
@@ -47,6 +60,9 @@
     
     //When rendering of the tab templates has been done, do some final things.
     afterRender: function(){
+      
+      //Just to be sure, push all recommendations to the findability tab.
+      this.title.trigger('blur');
       
       //Turn the form on the content tab into a REST form.
       this.contentForm.restForm({success: this.proxy(this.afterSave)});
