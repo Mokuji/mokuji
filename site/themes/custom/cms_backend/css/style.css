@@ -1000,4 +1000,31 @@ body.cursor_disabled{
     color:#fff;
   }
 
-  
+
+/*
+  Config pages, new navigators
+*/
+.config-navigation{
+  list-style:none;
+  float:left;
+  width:18%;
+  margin-right:2%;
+  border-bottom:1px solid #000;
+}
+  .config-navigation li{
+    display:block;
+  }
+  .config-navigation .nav-item{
+    display:block;
+    overflow:hidden;
+    padding:10px 20px;
+    font-size:120%;
+    text-decoration:none;
+    border:1px solid #000;
+    border-bottom:none;
+  }
+
+.config-content-pane{
+  float:left;
+  width:80%;
+}
