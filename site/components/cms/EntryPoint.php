@@ -72,7 +72,8 @@ class EntryPoint extends \dependencies\BaseEntryPoint
         ),
         'scripts' => array(
           'cms_backend' => '<script type="text/javascript" src="'.URL_COMPONENTS.'cms/includes/backend.js"></script>',
-          'cms_backend_pagetype' => '<script type="text/javascript" src="'.URL_COMPONENTS.'cms/includes/PageType.js"></script>'
+          'cms_backend_pagetype' => '<script type="text/javascript" src="'.URL_COMPONENTS.'cms/includes/PageType.js"></script>',
+          'i18nSetup' => '<script type="text/javascript">i18nSetup("'.tx('Language')->code.'", "'.URL_BASE.'");</script>'
         )
       ),
       array(
