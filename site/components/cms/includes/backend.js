@@ -1521,6 +1521,14 @@ function request(){
       
       this.Feedback = new FeedbackController;
       
+      //Grab the Home button.
+      $('#topbar_menu .website').on('click', function(e){
+        e.preventDefault();
+        window.location = app.options.url_base +
+          (app.Page.data.page ? '?pid=' + app.Page.data.page.id + '&' : '?') +
+          (app.Item.data.item ? 'menu=' + app.Item.data.item.id : '');
+      });
+      
     }
     
   });

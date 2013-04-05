@@ -81,9 +81,9 @@
   opacity:0.5;
 }
 #topbar_menu li.advanced-edit{
-  display:none;
 }
 #topbar_menu li.website-edit{
+  display:none;
 }
 #topbar_menu li.profile{
   background:url('img/icons/topbar/button-wide.png') center top no-repeat;
