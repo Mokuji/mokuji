@@ -75,10 +75,11 @@
   "The value must be a valid email address.": "De waarde moet een geldig e-mail adres zijn.",
   "The value must be a url.": "De waarde moet een url zijn.",
   "The value must be textual.": "De waarde moet textueel zijn.",
+  "The value must be between {0} and {1} characters.": "De waarde moet tussen de {0} en de {1} tekens zijn.",
   "This is a required field.": "Dit is een verplicht veld.",
   "Title": "Titel",
 
-  "The value must be a strong password please mix at least %s of the following: uppercase letters, lowercase letters, numbers and special characters.": "De waarde moet een sterk wachtwoord zijn. Mix alsjeblieft tenminste %s van de volgende zaken: hoofdletters, 'kleine' letters, cijfers en speciale tekens.",
+  "The value must be a strong password please mix at least {0} of the following: uppercase letters, lowercase letters, numbers and special characters.": "De waarde moet een sterk wachtwoord zijn. Mix alsjeblieft tenminste {0} van de volgende zaken: hoofdletters, 'kleine' letters, cijfers en speciale tekens.",
 
   "Username": "Gebruikersnaam",
   "Users": "Gebruikers",

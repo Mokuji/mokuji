@@ -71,10 +71,15 @@ function transf($component, $phrase)
   //Get a translated version of the format.
   $format = __($component, $phrase, true);
   
-  //Prepend this format to the arguments.
-  array_unshift($args, $format);
+  //Find all {#} tags.
+  preg_match_all('~\{(\d+)\}~', $format, $matches, PREG_PATTERN_ORDER);
   
-  //Use sprintf to put it all together.
-  return call_user_func_array('sprintf', $args);
+  //Iterate over the tags.
+  foreach($matches[1] as $nr){
+    $format = str_replace('{'.$nr.'}', $args[$nr], $format);
+  }
+  
+  //Return the resulting string.
+  return $format;
   
 }
