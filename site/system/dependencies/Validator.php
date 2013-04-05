@@ -564,4 +564,24 @@ class Validator extends Successable
     
   }
   
+  private function _component_name()
+  {
+    
+    //Check if value is not empty.
+    if(empty($this->data)){
+      return true;
+    }
+    
+    if($this->check_rule('string')===true){
+      
+      //No character outside of this range my be included.
+      if(preg_match('~[^a-z_]+~', $this->data) === 0)
+        return true;
+      
+    }
+    
+    return $this->ctransf("The value must be a valid component name having lowercase and underscore characters only.");
+    
+  }
+  
 }
