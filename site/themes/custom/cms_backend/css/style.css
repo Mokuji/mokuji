@@ -250,14 +250,17 @@ body.cursor_disabled{
   margin-left:-20px;
   padding-left:20px;
 }
+#page-main-left .menu-items-list li{
+  padding-left:40px;
+  margin-left:-20px;
+}
 #page-main-left .menu-items-list li a{
   display:block;
   padding:10px 0;
   border-bottom:1px solid #d6dce1;
 }
-#page-main-left .menu-items-list li{
-  padding-left:40px;
-  margin-left:-20px;
+#page-main-left .menu-items-list a.active{
+  background-color:#E2E2E2;
 }
 #page-main-left .menu-items-list > li a:hover{
   text-decoration:none;

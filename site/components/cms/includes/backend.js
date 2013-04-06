@@ -425,6 +425,7 @@ function request(){
       
       'click on item': function(e){
         e.preventDefault();
+        this.highlight($(e.target).attr('data-menu-item'));
         app.App.activate();
         app.Item.loadItemContents($(e.target).attr('data-menu-item'));
         app.Page.loadPageContents($(e.target).attr('data-page'));
@@ -496,7 +497,7 @@ function request(){
         expression: (/()([0-9]+)/),
         omitRoot: true
       });
-      
+    
       return this;
       
     },
@@ -616,6 +617,11 @@ function request(){
         - this.view.siblings('.menu-items-toolbar').height()
         - 15 //Margin
       );
+    },
+
+    //Add class to highlight the active menu item.
+    highlight: function(menu_item_id){
+      this.view.find('li').removeClass('active').end().find('li[data-id='+menu_item_id+']').addClass('active');
     }
     
   });
