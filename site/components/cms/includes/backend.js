@@ -1058,9 +1058,9 @@ function request(){
     isEmpty: true,
     
     elements: {
-      btn_detach: '.title-bar #detach-page',
-      btn_save_page: '#save-buttons #save-page',
-      select_pageLink: '#new-page-wrap #page-link',
+      btn_detach: '#detach-page',
+      btn_save_page: '#save-page',
+      select_pageLink: '#page-link',
       pageTypes: '#new-page-wrap .pagetypes-list li a'
     },
     
