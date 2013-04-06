@@ -420,7 +420,9 @@ function request(){
       
       'click on btn_delete': function(e){
         e.preventDefault();
-        this.deleteItem($(e.target).closest('li').id())
+        if(confirm('Are you sure you want to delete this menu-item? ('+$(e.target).closest('li').find('a.menu-item').text()+')')){
+          this.deleteItem($(e.target).closest('li').id())
+        }
       },
       
       'click on item': function(e){
@@ -621,7 +623,7 @@ function request(){
 
     //Add class to highlight the active menu item.
     highlight: function(menu_item_id){
-      this.view.find('li').removeClass('active').end().find('li[data-id='+menu_item_id+']').addClass('active');
+      this.view.find('a').removeClass('active').end().find('a[data-menu-item='+menu_item_id+']').addClass('active');
     }
     
   });
