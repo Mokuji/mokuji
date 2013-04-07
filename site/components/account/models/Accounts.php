@@ -69,5 +69,24 @@ class Accounts extends \dependencies\BaseModel
       ->execute_single()
       ->date;
   }
+
+  //Return the avatar URL.
+  public function get_avatar()
+  {
+
+    $image = tx('Sql')->table('media', 'Images')
+      ->pk($this->user_info->avatar_image_id)
+      ->execute_single();
+    
+    if($image->get())
+      return $image->generate_url(array('fit_width' => 200, 'fit_height' => 200));
+
+    else
+      return false;
+    
+
+  }
+  
+
   
 }

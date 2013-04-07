@@ -24,7 +24,6 @@ class Modules extends \dependencies\BaseViews
       ->table('Accounts')
       ->join('UserInfo', $ai)
       ->select("$ai.avatar_image_id", 'avatar_image_id')
-      ->select("$ai.username", 'username')
       ->select("$ai.name", 'name')
       ->select("$ai.preposition", 'preposition')
       ->select("$ai.family_name", 'family_name')

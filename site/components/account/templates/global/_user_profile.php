@@ -4,6 +4,9 @@ echo $user_profile->image_uploader;
 
 ?>
 <div id="edit-profile-form">
+
+  <h1><?php __('account', 'Edit profile'); ?></h1>
+
   <form method="post" action="<?php echo url('?action=account/edit_profile/post', true); ?>">
   
     <input type="hidden" name="id" value="<?php echo tx('Account')->user->id->get('int'); ?>" />
@@ -15,8 +18,8 @@ echo $user_profile->image_uploader;
         <?php if($data->has_media->is_true()): ?>
           <div class="avatar_holder">
             <input type="hidden" id="avatar_image_id" name="avatar_image_id" value="<?php $user_profile->user->avatar_image_id->get('int'); ?>" />
-            <?php if($user_profile->user->avatar_image_id->get('int') > 0){ ?>
-            <img src="<?php echo url('section=media/image&id='.$user_profile->user->avatar_image_id->get('int').'&resize=0/97', true); ?>" />
+            <?php if($data->user->avatar != false){ ?>
+            <img src="<?php echo $data->user->avatar; ?>" />
             <?php } ?>
           </div>
 
@@ -26,7 +29,7 @@ echo $user_profile->image_uploader;
               <div id="file-drop" class="drag-here"></div>
             </div>
             <div class="buttonHolder">
-              <a id="file-browse" class="file-browse" href="#"><?php __($names->component, 'Upload your picture'); ?></a>
+              <a id="file-browse" class="file-browse" href="#"><?php __($names->component, 'Upload your avatar'); ?></a>
             </div>
           </div>
         
@@ -38,6 +41,10 @@ echo $user_profile->image_uploader;
       <fieldset>
         <label for="l_email"><?php __('Email address'); ?>:</label>
         <input type="text" name="email_address" id="l_email" value="<?php echo tx('Account')->user->email->get('string'); ?>" disabled="disabled" />
+      </fieldset>
+      <fieldset>
+        <label for="l_username"><?php __('Username'); ?>:</label>
+        <input type="text" name="username" id="l_username" value="<?php echo $user_profile->user->username; ?>" />
       </fieldset>
       <fieldset>
         <?php if($user_profile->need_old_password->is_true()){ ?>
@@ -93,7 +100,7 @@ window.plupload_avatar_image_id_report = function(up, ids, file_id)
   })
   .done(function(data){
     //Show thumbnail of uploaded icon
-    $("#edit-profile-form .avatar_holder").html("<img src=\"<?php echo url('section=media/image'); ?>&id="+file_id+"&resize=0/97\" height=\"97\" />");
+    $("#edit-profile-form .avatar_holder").html("<img src=\"<?php echo url('section=media/image'); ?>&id="+file_id+"&resize=200/0\" width=\"200\" />");
   })
   .fail(function(){
     console.log("Failed to save avatar.");

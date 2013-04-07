@@ -92,7 +92,7 @@ class Actions extends \dependencies\BaseComponent
     tx('Editing profile', function()use($data){
       
       //Validate input.
-      $data = $data->having('id', 'avatar_image_id', 'password_old', 'password1', 'password2', 'name', 'preposition', 'family_name')
+      $data = $data->having('id', 'avatar_image_id', 'username', 'password_old', 'password1', 'password2', 'name', 'preposition', 'family_name')
         ->id->validate('User ID', array('required', 'number', 'gt'=>0))->back();
       
       //Check if operation is allowed.

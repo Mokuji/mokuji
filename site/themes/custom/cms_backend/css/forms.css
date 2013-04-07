@@ -34,7 +34,8 @@
   width: 80px;
   display: inline-block;
   float: left;
-  line-height: 22px;
+  /*line-height: 22px;*/
+  line-height: 28px;
 }
 
 .inputHolder input {
@@ -243,7 +244,7 @@
     font-family:arial, sans-serif;
     background:#fff;
     /*padding:10px 10px;*/
-    padding:4px 3px;
+    padding: 6px 8px;
   }
   input:focus,
   textarea:focus,

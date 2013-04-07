@@ -1531,10 +1531,18 @@ function request(){
       
       //Grab the Home button.
       $('#topbar_menu .website').on('click', function(e){
+
         e.preventDefault();
-        window.location = app.options.url_base +
-          (app.Page.data.page ? '?pid=' + app.Page.data.page.id + '&' : '?') +
-          (app.Item.data.item ? 'menu=' + app.Item.data.item.id : '');
+
+        var url = app.options.url_base +
+                  (app.Page.data.page ? '?pid=' + app.Page.data.page.id + '&' : '?') +
+                  (app.Item.data.item ? 'menu=' + app.Item.data.item.id : '');
+
+        if(e.which == 2){//Catch middle mouse click.
+          window.open(url, 'tx-website', 'toolbar=yes,location=yes,directories=yes,status=yes,menubar=yes,scrollbars=yes,copyhistory=yes,resizable=yes');//width=400,height=200,
+        }else{
+          window.location = url;
+        }
       });
       
     }
