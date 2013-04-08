@@ -584,4 +584,156 @@ class Validator extends Successable
     
   }
   
+  /*
+   Jabber ID's differ from email addresses in that they allow a lot of characters in the
+   identifier and have a resource ID. Bare JID's do not have a resource ID and is often
+   used to specify a user or room, rather than a particular client or user in a room.
+  */
+  
+  private function _jid($type=null, $externalOnly=true)
+  {
+    
+    //Split the JID in parts.
+    $input = (string)$this->data;
+    
+    //Get the first / and split off the resource on that.
+    $resource = null;
+    $slashIndex = strpos($input, '/');
+    if($slashIndex !== false){
+      $resource = substr($input, $slashIndex+1);
+      $input = substr($input, 0, $slashIndex);
+    }
+    
+    //Next, see what is required.
+    //Note: using this order, since bare strips the resource.
+    switch($type){
+      
+      //Loose spec: [node@]domain[/resource]
+      case null:
+        $requireNode = false;
+        $requireResource = false;
+        break;
+      
+      //'Bare' spec: node@domain
+      case 'bare':
+        $requireNode = true;
+        $requireResource = false;
+        
+        //Resource should be stripped.
+        $resource = null;
+        break;
+      
+      //Resource spec: [node@]domain/resource
+      case 'resource':
+        $requireNode = false;
+        $requireResource = true;
+        break;
+      
+      //Full spec: node@domain/resource
+      case 'full':
+        $requireNode = true;
+        $requireResource = true;
+        break;
+      
+      default:
+        throw new \exception\Programmer('Unknown JID type specifier "%s"', $type);
+      
+    }
+    
+    $type = $type ? "'$type'" : null;
+    
+    //Then the @ character.
+    $parts = explode('@', $input);
+    switch(count($parts)){
+      case 2:
+        $node = $parts[0];
+        $domain = $parts[1];
+        break;
+      case 1:
+        $node = null;
+        $domain = $parts[0];
+        break;
+      default:
+        return $this->ctransf("The value must be a valid {0} Jabber ID.", $type);
+    }
+    
+    /*
+      First find out if the node identifier is valid.
+      Note: this assumes PHP or your webserver handles unassigned unicode code paths,
+        mapping and control characters.
+      Invalid characters:
+        - whitespace
+        - the additional characters ["&'/:<>@]
+    */
+    if($requireNode && $node === null)
+      return $this->ctransf("The value must be a valid {0} Jabber ID.", $type);
+    
+    if($node !== null && preg_match("~^[^ \t\r\n\"&'/:<>@]+$~", $node) !== 1)
+      return $this->ctransf("The value must be a valid {0} Jabber ID.", $type);
+    
+    if(strlen($node) >= 1024)
+      return $this->ctransf("The value must be a valid {0} Jabber ID.", $type);
+    
+    /*
+      Next validate the resource.
+      Note: this assumes PHP or your webserver handles unassigned unicode code paths,
+        mapping and control characters.
+      Invalid characters:
+        - whitespace
+    */
+    if($requireResource && $resource === null)
+      return $this->ctransf("The value must be a valid {0} Jabber ID.", $type);
+    
+    if($resource !== null && preg_match("~^[^ \t\r\n]+$~", $resource) !== 1)
+      return $this->ctransf("The value must be a valid {0} Jabber ID.", $type);
+    
+    if(strlen($resource) >= 1024)
+      return $this->ctransf("The value must be a valid {0} Jabber ID.", $type);
+    
+    //Now validate the domain in a bit of a clunky way.
+    //Note: it's always required.
+    #TODO: Use the internationalized version of the XMPP spec instead of email domains.
+    if(!(
+      filter_var($domain, FILTER_VALIDATE_IP,
+        $externalOnly ? FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE : null
+      ) || filter_var('henk@'.$domain, FILTER_VALIDATE_EMAIL)
+    )) return $this->ctransf("The value must be a valid {0} Jabber ID.", $type);
+    
+    if(strlen($domain) >= 1024)
+      return $this->ctransf("The value must be a valid {0} Jabber ID.", $type);
+    
+    //Since we do stripping, set the result.
+    $this->data =
+      ($node ? $node.'@' : ''). $domain.
+      ($resource ? '/'.$resource : '');
+    
+    //All good!
+    return true;
+    
+  }
+  
+  private function _phonenumber($countrycode=null)
+  {
+    
+    //First strip all dashes, spaces, brackets and dots.
+    $input = str_replace('~[- ().]~', '', (string)$this->data);
+    
+    //Next, see if it starts with a 0, thus asking a localized replacement.
+    if($countrycode && $input[0] === '0')
+      $input = $countrycode . substr($input, 1);
+    
+    //Now go and match it.
+    $pattern = '~^\+(9[976]\d|8[987530]\d|6[987]\d|5[90]\d|42\d|3[875]\d|2[98654321]\d|'.
+      '9[8543210]|8[6421]|6[6543210]|5[87654321]|4[987654310]|3[9643210]|2[70]|7|1)'.
+      '\d{1,14}$~';
+    
+    if(preg_match($pattern, $input) === 1)
+      return true;
+    
+    #TODO: Add local pattern restrictions based on the $countrycode variable.
+    
+    return $this->ctransf("The value must be a valid international phone number (starts with a + and your countrycode).");
+    
+  }
+  
 }
