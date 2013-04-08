@@ -44,7 +44,8 @@ if(window.$) (function($){
   
   //Do an initial load when jQuery is ready.
   jQuery(function($){
-    i18nLoad();
+    if(i18n.locale && i18n.baseUrl)
+      i18nLoad();
   });
   
   window.i18nSetup = function(locale, baseUrl){

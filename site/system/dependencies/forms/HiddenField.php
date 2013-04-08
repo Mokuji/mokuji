@@ -16,7 +16,7 @@ class HiddenField extends BaseFormField
     parent::render($options);
     
     $value = $this->insert_value ? $this->value : '';
-    echo '<input type="hidden" class="for_<?php echo $this->column_name; ?>" name="'.$this->column_name.'" value="'.$value.'" />'.n;
+    echo '<input type="hidden" class="for_'.$this->column_name.'" name="'.$this->column_name.'" value="'.$value.'" />'.n;
     
   }
   

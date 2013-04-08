@@ -266,11 +266,18 @@ class FormBuilder
       $override = array();
       if(isset($this->options['fields']) &&
         is_array($this->options['fields']) &&
-        isset($this->options['fields'][$column_name]) &&
-        is_array($this->options['fields'][$column_name]))
+        isset($this->options['fields'][$column_name]))
       {
         
         $override = $this->options['fields'][$column_name];
+        
+        //If the override is equal to false, exclude this field.
+        if($override === false)
+          continue;
+        
+        //Otherwise it must be an array.
+        if(!is_array($override))
+          $override = array();
         
       }
       
