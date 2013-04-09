@@ -36,7 +36,9 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
             ->where('com_id', $component->id)
             ->where('name', "'sitemap'")
             ->execute_single()
-            ->delete();
+            ->not('empty', function()use($row){
+              $row->delete();
+            });
           
         }); //END - Queue CMS 1.2+
     
