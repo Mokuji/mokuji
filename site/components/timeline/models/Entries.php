@@ -8,7 +8,8 @@ class Entries extends \dependencies\BaseModel
     $table_name = 'timeline_entries',
     
     $relations = array(
-      'EntriesToTimelines' => array('id' => 'EntriesToTimelines.entry_id')
+      'EntriesToTimelines' => array('id' => 'EntriesToTimelines.entry_id'),
+      'EntryInfo' => array('id' => 'EntryInfo.entry_id')
     ),
     
     $validate = array(

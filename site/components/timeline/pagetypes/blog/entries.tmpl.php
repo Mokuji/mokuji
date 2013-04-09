@@ -24,7 +24,7 @@
             
             <div class="ctrlHolder">
               <label><?php echo $title_in; ?>${language.title}</label>
-              <input type="text" class="title" name="info[${language.id}][title]"
+              <input type="text" class="title big" name="info[${language.id}][title]"
                 placeholder="<?php echo $title_in; ?>${language.title}"
                 value="${data.page.info && data.page.info[language.id] ? data.page.info[language.id]['title'] : ''}" />
             </div>

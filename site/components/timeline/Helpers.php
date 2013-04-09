@@ -3,7 +3,7 @@
 class Helpers extends \dependencies\BaseComponent
 {
   
-  public function get_entries($filters, $page)
+  public function get_entries($filters, $page = 0)
   {
     
     raw($page);

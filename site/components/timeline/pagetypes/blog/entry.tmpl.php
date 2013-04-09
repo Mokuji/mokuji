@@ -24,7 +24,7 @@
     
     <div class="summary">{{html data.info && data.info[language.id] && data.info[language.id].summary}}</div>
     
-    <div class="content">{{html data.info && data.info[language.id] && data.info[language.id].content}}</div>
+    <!--<div class="content">{{html data.info && data.info[language.id] && data.info[language.id].content}}</div>-->
     
     {{if data.author}}
       <p class="credits">

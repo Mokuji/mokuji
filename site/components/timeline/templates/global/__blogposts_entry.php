@@ -8,7 +8,7 @@ switch($data->type->get('string')){
     <div class="entry blogpost-entry">
     
       <h2 class="title">
-        <?php echo $data->info->{$data->language}->title; ?>
+        <a href="<?php echo url('post='.$data->id); ?>"><?php echo $data->info->{$data->language}->title; ?></a>
       </h2>
       
       <p class="publish-date">
@@ -37,6 +37,10 @@ switch($data->type->get('string')){
           <?php __($names->component, 'Posted by') ?>:
           <span class="author"><?php echo $data->author->full_name; ?></span>
         </p>
+      <?php } ?>
+
+      <?php if(!$data->is_summary->is_true()){ ?>
+        <a href="<?php echo url('post=NULL'); ?>" class="back-to-overview">Terug naar het overzicht</a>
       <?php } ?>
     
     </div>

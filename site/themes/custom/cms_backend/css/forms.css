@@ -142,7 +142,7 @@
   .button.green,
   .button.red,
   .button.yellow{
-    width:98px;
+    /*width:98px;*/
   }
   .button.green{
     color:#0b5810;

@@ -16,7 +16,7 @@
       ?>
       <div class="ctrlHolder">
         <label><?php echo $title_in; ?>${language.title}</label>
-        <input type="text" class="title" name="info[${language.id}][title]"
+        <input type="text" class="title big" name="info[${language.id}][title]"
           placeholder="<?php echo $title_in; ?>${language.title}" value="${data.info && data.info[language.id] ? data.info[language.id]['title'] : ''}" />
       </div>
       
@@ -44,7 +44,7 @@
   
   <div class="ctrlHolder">
     <label><?php __($component, 'Publish date and time') ?></label>
-    <input type="text" class="date-time-input" name="dt_publish" placeholder="yyyy-mm-dd hh:mm:ss" value="${data.dt_publish}" />
+    <input type="text" class="date-time-input" name="dt_publish" placeholder="yyyy-mm-dd hh:mm:ss" value="{{if data.dt_publish}}${data.dt_publish}{{else}}<?php echo date("Y-m-d H:i"); ?>{{/if}}" />
   </div>
   
   <div class="ctrlHolder">
