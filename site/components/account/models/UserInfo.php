@@ -16,6 +16,17 @@ class UserInfo extends \dependencies\BaseModel
       'Accounts' => array('user_id' => 'Accounts.id')
     );
   
+  public function get_avatar()
+  {
+    
+    if(tx('Component')->available('media'))
+      return tx('Sql')
+        ->table('media', 'Images')
+        ->pk($this->avatar_image_id)
+        ->execute_single();
+    
+  }
+  
   public function get_full_name()
   {
     
