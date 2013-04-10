@@ -11,7 +11,7 @@ class Helpers extends \dependencies\BaseComponent
       return;
     
     if(tx('Config')->user('login_page')->is_set()){
-      $redirect = url(URL_BASE.'?'.tx('Config')->user('login_page'), true);
+      $redirect = url(tx('Config')->user('login_page'), true);
     }
     
     else{

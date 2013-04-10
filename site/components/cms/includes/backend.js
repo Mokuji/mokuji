@@ -471,11 +471,14 @@ function request(){
       
       'click on btn_delete': function(e){
         e.preventDefault();
-        this.deleteItem($(e.target).closest('li').id())
+        if(confirm('Are you sure you want to delete this menu-item? ('+$(e.target).closest('li').find('a.menu-item').text()+')')){
+          this.deleteItem($(e.target).closest('li').id())
+        }
       },
       
       'click on item': function(e){
         e.preventDefault();
+        this.highlight($(e.target).attr('data-menu-item'));
         app.App.activate();
         app.Item.loadItemContents($(e.target).attr('data-menu-item'));
         app.Page.loadPageContents($(e.target).attr('data-page'));
@@ -672,6 +675,11 @@ function request(){
         - this.view.siblings('.menu-items-toolbar').height()
         - 15 //Margin
       );
+    },
+
+    //Add class to highlight the active menu item.
+    highlight: function(menu_item_id){
+      this.view.find('a').removeClass('active').end().find('a[data-menu-item='+menu_item_id+']').addClass('active');
     }
     
   });
@@ -936,6 +944,21 @@ function request(){
         .trigger('submit');
       
     },
+
+    recommendTitle: function(title, languageId){
+      if(languageId === 'ALL'){
+        this.view.find('.page-title-recommendation').val(title);
+        this.view.find('.page-title')
+          .attr('placeholder', title)
+          .trigger('keyup');
+      }else{
+        $langSection = this.view.find('.multilingual-section[data-language-id='+languageId+']');
+        $langSection.find('.page-title-recommendation').val(title);
+        $langSection.find('.page-title')
+          .attr('placeholder', title)
+          .trigger('keyup');
+      }
+    },
     
     updateDefault: function(which, what){
       var $which = $(which)
@@ -1099,9 +1122,9 @@ function request(){
     isEmpty: true,
     
     elements: {
-      btn_detach: '.title-bar #detach-page',
-      btn_save_page: '#save-buttons #save-page',
-      select_pageLink: '#new-page-wrap #page-link',
+      btn_detach: '#detach-page',
+      btn_save_page: '#save-page',
+      select_pageLink: '#page-link',
       pageTypes: '#new-page-wrap .pagetypes-list li a'
     },
     
@@ -1562,11 +1585,21 @@ function request(){
       // this.App.add([this.Page, this.Item]);
       
       this.Feedback = new FeedbackController;
-      
+
+      //Grab the Home button.
+      $('#topbar_menu .website a').on('click, mousedown', function(e){
+        
+        var url = app.options.url_base +
+                  (app.Page.data.page ? '?pid=' + app.Page.data.page.id + '&' : '?') +
+                  (app.Item.data.item ? 'menu=' + app.Item.data.item.id : '');
+        
+        $(this).attr('href', url);
+        
+      });
+
     }
     
   });
-  
 
 })(this, jQuery, _);
 

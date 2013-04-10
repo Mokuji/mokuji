@@ -38,7 +38,7 @@
       <?php
       
       //Menu select.
-      if($data->menus->size() > 1)
+      if(true || $data->menus->size() > 1)
       {
         
         echo $data->menus->as_options('menu_id', 'title', 'id', array(
@@ -72,4 +72,8 @@
     </div>
     {{html subitems}}
   </li>
+</script>
+
+<script id="menu-option-tmpl" type="text/x-jquery-tmpl">
+  <option value="${id}" title="">${title}</option>
 </script>

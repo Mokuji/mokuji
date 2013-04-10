@@ -145,7 +145,7 @@ class Sections extends \dependencies\BaseViews
           ->where('is_config', 0)
         ->execute(),
       'pages' => tx('Sql')->table('cms', 'Pages')
-        ->join('LayoutInfo', $li)
+        ->join('LayoutInfo', $li)->left()
         ->select("$li.title", 'layout_title')
         ->where('trashed', 0)
         ->order('title')
@@ -211,7 +211,7 @@ class Sections extends \dependencies\BaseViews
   {
     
     //Get all configured sites.
-    $sites = tx('Sql')->table('cms', 'Sites')->execute();
+    $sites = tx('Sql')->table('cms', 'Sites')->order('title', 'ASC')->execute();
     
     //Get menu's.
     $menus = tx('Sql')
@@ -293,8 +293,9 @@ class Sections extends \dependencies\BaseViews
   {
 
     return tx('Sql')->table('cms', 'Sites')
-      ->order('title')
+      ->order('title', 'ASC')
       ->execute();
+
   }
 
   protected function configbar()

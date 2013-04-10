@@ -6,7 +6,7 @@
   
   <ul id="topbar_menu">
     <li class="profile dropdown">
-      <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"><?php echo tx('Account')->user->username; ?></a>
+      <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"><span title="<?php echo tx('Account')->user->username; ?>"><?php echo tx('Account')->user->username; ?></span></a>
       <ul class="dropdown-menu" role="menu">
         <li><a tabindex="-1" href="<?php echo url('action=account/logout'); ?>"><?php __($names->component, 'Logout', 'ucfirst'); ?></a></li>
       </ul>

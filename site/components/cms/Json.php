@@ -467,5 +467,15 @@ class Json extends \dependencies\BaseComponent
     return $this->helper('get_settings', $data->key);
     
   }
+
+  protected function get_menus($data)
+  {
+    //Get menu's.
+    return tx('Sql')
+      ->table('menu', 'Menus')
+      ->where('site_id', $data->options->site_id)
+      ->order('title')
+      ->execute();
+  }
   
 }

@@ -23,7 +23,7 @@
     <option value=""><?php __($names->component, 'Select a page'); ?></option>
   <?php
   $new_page->pages->each(function($page){
-    echo '<option value="'.$page->id.'">'.$page->preferred_title.'</option>';
+    echo '<option value="'.$page->id.'">'.$page->preferred_title.($page->notes->get() != '' ? ' ('.$page->notes->split("\n")->{0}->trim().')' : '').'</option>';
   });
   ?>
   </select>

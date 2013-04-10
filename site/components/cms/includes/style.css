@@ -97,6 +97,12 @@
   background:url('img/icons/topbar/profile.png') 50px 50% no-repeat;
   cursor:default;
 }
+#topbar_menu li.profile > a span{
+  max-width:48px;
+  text-overflow: ellipsis;
+  overflow:hidden;
+  display:inline-block;
+}
 #topbar_menu li.logout{
   background:none;
   margin-right:25px;

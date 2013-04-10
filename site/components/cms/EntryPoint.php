@@ -96,7 +96,7 @@ class EntryPoint extends \dependencies\BaseEntryPoint
         $template_id = tx('Config')->user('template_id')->otherwise(1)->get('int');
         $template = tx('Sql')->table('cms', 'Templates')->pk($template_id)->execute_single();
         
-        $theme_id = tx('Config')->user('theme_id')->otherwise(1)->get('int');
+        $theme_id = tx('Config')->user('forced_theme_id')->otherwise(tx('Config')->user('theme_id')->otherwise(1)->get('int'));
         $theme = tx('Sql')->table('cms', 'Themes')->pk($theme_id)->execute_single();
         
         //Define plugins to be loaded.
@@ -214,7 +214,11 @@ class EntryPoint extends \dependencies\BaseEntryPoint
             return;
           }
           
-          
+          //If forced theme is set: re-set theme id.
+          if(tx('Config')->user('forced_theme_id')->get() > 0){
+            $pi->theme->set($that->table('Themes')->pk(tx('Config')->user('forced_theme_id'))->execute_single()->name);
+          }
+
           /* ------- Set all the headers! ------- */
           
           //TODO: improve some of the default site-wide settings
