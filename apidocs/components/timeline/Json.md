@@ -1,4 +1,4 @@
-# components\update\Helpers
+# components\timeline\Json
 [API index](../../API-index.md)
 
 
@@ -6,8 +6,8 @@
 
 
 
-* Class name: Helpers
-* Namespace: components\update
+* Class name: Json
+* Namespace: components\timeline
 * Parent class: [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 
@@ -17,10 +17,13 @@
 
 
 **Methods**
-* [`public mixed get_component_package($component)`](#method-get_component_package)
-* [`protected mixed check_updates($options)`](#method-check_updates)
-* [`private mixed check_folder($folder, $namespace, $silent, $force)`](#method-check_folder)
-* [`private mixed sync_manual_package($package, $folder, $namespace, $silent, $force)`](#method-sync_manual_package)
+* [`public mixed delete_entry($data, $params)`](#method-delete_entry)
+* [`protected mixed create_entry($data, $params)`](#method-create_entry)
+* [`protected mixed get_entries($data, $params)`](#method-get_entries)
+* [`protected mixed get_entry($data, $params)`](#method-get_entry)
+* [`protected mixed get_page($data, $params)`](#method-get_page)
+* [`protected mixed update_entry($data, $params)`](#method-update_entry)
+* [`protected mixed update_page($data, $params)`](#method-update_page)
 
 
 ## Inheritance index
@@ -49,7 +52,7 @@
 
 
 ## Property `$reserved`
-In class: [components\update\Helpers](#top)
+In class: [components\timeline\Json](#top)
 
 ```
 protected mixed $reserved = array('__construct', 'filter', 'module', 'section', 'view', 'table', 'get_html', 'call', 'template')
@@ -65,7 +68,7 @@ protected mixed $reserved = array('__construct', 'filter', 'module', 'section', 
 
 
 ## Property `$component`
-In class: [components\update\Helpers](#top)
+In class: [components\timeline\Json](#top)
 
 ```
 protected mixed $component
@@ -80,7 +83,7 @@ protected mixed $component
 
 
 ## Property `$default_permission`
-In class: [components\update\Helpers](#top)
+In class: [components\timeline\Json](#top)
 
 ```
 protected mixed $default_permission
@@ -95,7 +98,7 @@ protected mixed $default_permission
 
 
 ## Property `$permissions`
-In class: [components\update\Helpers](#top)
+In class: [components\timeline\Json](#top)
 
 ```
 protected mixed $permissions = array()
@@ -113,7 +116,7 @@ protected mixed $permissions = array()
 
 
 ## Method `__construct`
-In class: [components\update\Helpers](#top)
+In class: [components\timeline\Json](#top)
 
 ```
 mixed dependencies\BaseComponent::__construct()
@@ -132,7 +135,7 @@ mixed dependencies\BaseComponent::__construct()
 
 
 ## Method `_call`
-In class: [components\update\Helpers](#top)
+In class: [components\timeline\Json](#top)
 
 ```
 mixed dependencies\BaseComponent::_call($controller, array $args)
@@ -156,7 +159,7 @@ mixed dependencies\BaseComponent::_call($controller, array $args)
 
 
 ## Method `call`
-In class: [components\update\Helpers](#top)
+In class: [components\timeline\Json](#top)
 
 ```
 mixed dependencies\BaseComponent::call($controller, $data)
@@ -179,8 +182,32 @@ mixed dependencies\BaseComponent::call($controller, $data)
 
 
 
+## Method `delete_entry`
+In class: [components\timeline\Json](#top)
+
+```
+mixed components\timeline\Json::delete_entry($data, $params)
+```
+
+Moves an entry to 'the trash'.
+
+By removing it from all timelines.
+This makes sure the entry is still preserved and collected in the unlinked items.
+
+* Visibility: **public**
+
+#### Arguments
+
+* $data **mixed**
+* $params **mixed**
+
+
+
+
+
+
 ## Method `filters`
-In class: [components\update\Helpers](#top)
+In class: [components\timeline\Json](#top)
 
 ```
 mixed dependencies\BaseComponent::filters()
@@ -198,30 +225,8 @@ mixed dependencies\BaseComponent::filters()
 
 
 
-## Method `get_component_package`
-In class: [components\update\Helpers](#top)
-
-```
-mixed components\update\Helpers::get_component_package($component)
-```
-
-Attempts to get the component entry in the database of a given component name.
-
-
-
-* Visibility: **public**
-
-#### Arguments
-
-* $component **mixed**
-
-
-
-
-
-
 ## Method `helper`
-In class: [components\update\Helpers](#top)
+In class: [components\timeline\Json](#top)
 
 ```
 mixed dependencies\BaseComponent::helper($controller)
@@ -244,7 +249,7 @@ mixed dependencies\BaseComponent::helper($controller)
 
 
 ## Method `model`
-In class: [components\update\Helpers](#top)
+In class: [components\timeline\Json](#top)
 
 ```
 mixed dependencies\BaseComponent::model($model_name)
@@ -267,7 +272,7 @@ mixed dependencies\BaseComponent::model($model_name)
 
 
 ## Method `module`
-In class: [components\update\Helpers](#top)
+In class: [components\timeline\Json](#top)
 
 ```
 mixed dependencies\BaseComponent::module($module_name, $options)
@@ -291,7 +296,7 @@ mixed dependencies\BaseComponent::module($module_name, $options)
 
 
 ## Method `section`
-In class: [components\update\Helpers](#top)
+In class: [components\timeline\Json](#top)
 
 ```
 mixed dependencies\BaseComponent::section($section, $options)
@@ -315,7 +320,7 @@ mixed dependencies\BaseComponent::section($section, $options)
 
 
 ## Method `table`
-In class: [components\update\Helpers](#top)
+In class: [components\timeline\Json](#top)
 
 ```
 mixed dependencies\BaseComponent::table($model_name, $id)
@@ -339,7 +344,7 @@ mixed dependencies\BaseComponent::table($model_name, $id)
 
 
 ## Method `view`
-In class: [components\update\Helpers](#top)
+In class: [components\timeline\Json](#top)
 
 ```
 mixed dependencies\BaseComponent::view($module_name, $options)
@@ -362,11 +367,11 @@ mixed dependencies\BaseComponent::view($module_name, $options)
 
 
 
-## Method `check_updates`
-In class: [components\update\Helpers](#top)
+## Method `create_entry`
+In class: [components\timeline\Json](#top)
 
 ```
-mixed components\update\Helpers::check_updates($options)
+mixed components\timeline\Json::create_entry($data, $params)
 ```
 
 
@@ -377,58 +382,123 @@ mixed components\update\Helpers::check_updates($options)
 
 #### Arguments
 
-* $options **mixed**
+* $data **mixed**
+* $params **mixed**
 
 
 
 
 
 
-## Method `check_folder`
-In class: [components\update\Helpers](#top)
+## Method `get_entries`
+In class: [components\timeline\Json](#top)
 
 ```
-mixed components\update\Helpers::check_folder($folder, $namespace, $silent, $force)
+mixed components\timeline\Json::get_entries($data, $params)
 ```
 
+Get the entries for a specified timeline.
 
 
 
-
-* Visibility: **private**
+* Visibility: **protected**
 
 #### Arguments
 
-* $folder **mixed**
-* $namespace **mixed**
-* $silent **mixed**
-* $force **mixed**
+* $data **mixed**
+* $params **mixed**
 
 
 
 
 
 
-## Method `sync_manual_package`
-In class: [components\update\Helpers](#top)
+## Method `get_entry`
+In class: [components\timeline\Json](#top)
 
 ```
-mixed components\update\Helpers::sync_manual_package($package, $folder, $namespace, $silent, $force)
+mixed components\timeline\Json::get_entry($data, $params)
 ```
 
+Get one entry.
 
 
 
-
-* Visibility: **private**
+* Visibility: **protected**
 
 #### Arguments
 
-* $package **mixed**
-* $folder **mixed**
-* $namespace **mixed**
-* $silent **mixed**
-* $force **mixed**
+* $data **mixed**
+* $params **mixed**
+
+
+
+
+
+
+## Method `get_page`
+In class: [components\timeline\Json](#top)
+
+```
+mixed components\timeline\Json::get_page($data, $params)
+```
+
+Get a page's timeline filters, or resort to the defaults.
+
+
+
+* Visibility: **protected**
+
+#### Arguments
+
+* $data **mixed**
+* $params **mixed**
+
+
+
+
+
+
+## Method `update_entry`
+In class: [components\timeline\Json](#top)
+
+```
+mixed components\timeline\Json::update_entry($data, $params)
+```
+
+
+
+
+
+* Visibility: **protected**
+
+#### Arguments
+
+* $data **mixed**
+* $params **mixed**
+
+
+
+
+
+
+## Method `update_page`
+In class: [components\timeline\Json](#top)
+
+```
+mixed components\timeline\Json::update_page($data, $params)
+```
+
+
+
+
+
+* Visibility: **protected**
+
+#### Arguments
+
+* $data **mixed**
+* $params **mixed**
 
 
 

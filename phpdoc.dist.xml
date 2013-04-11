@@ -14,6 +14,7 @@
     <directory>site/components/cms</directory>
     <directory>site/components/menu</directory>
     <directory>site/components/text</directory>
+    <directory>site/components/timeline</directory>
     <directory>site/components/update</directory>
   </files>
   <logging>

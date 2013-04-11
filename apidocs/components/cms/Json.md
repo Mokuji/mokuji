@@ -23,6 +23,7 @@
 * [`protected mixed get_detach_page($data, $params)`](#method-get_detach_page)
 * [`protected mixed get_link_page($data, $params)`](#method-get_link_page)
 * [`protected mixed get_menu_item_info($options, $params)`](#method-get_menu_item_info)
+* [`protected mixed get_menus($data)`](#method-get_menus)
 * [`protected mixed get_new_page($data, $params)`](#method-get_new_page)
 * [`protected mixed get_page_info($options, $params)`](#method-get_page_info)
 * [`protected mixed update_active_site($data, $params)`](#method-update_active_site)
@@ -480,6 +481,28 @@ mixed components\cms\Json::get_menu_item_info($options, $params)
 
 * $options **mixed**
 * $params **mixed**
+
+
+
+
+
+
+## Method `get_menus`
+In class: [components\cms\Json](#top)
+
+```
+mixed components\cms\Json::get_menus($data)
+```
+
+
+
+
+
+* Visibility: **protected**
+
+#### Arguments
+
+* $data **mixed**
 
 
 

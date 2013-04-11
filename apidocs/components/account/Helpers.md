@@ -25,6 +25,8 @@
 * [`public mixed set_group_members($group_id, $members)`](#method-set_group_members)
 * [`public mixed set_user_group_memberships($data)`](#method-set_user_group_memberships)
 * [`public Boolean should_claim()`](#method-should_claim)
+* [`public mixed table__check_permissions(\dependencies\Table $table, $access_level, $group_id, $user_id)`](#method-table__check_permissions)
+* [`public mixed table__hcheck_permissions(\dependencies\Table $table, $meta, $user_id)`](#method-table__hcheck_permissions)
 
 
 ## Inheritance index
@@ -511,6 +513,55 @@ mixed dependencies\BaseComponent::table($model_name, $id)
 
 * $model_name **mixed**
 * $id **mixed**
+
+
+
+
+
+
+## Method `table__check_permissions`
+In class: [components\account\Helpers](#top)
+
+```
+mixed components\account\Helpers::table__check_permissions(\dependencies\Table $table, $access_level, $group_id, $user_id)
+```
+
+
+
+
+
+* Visibility: **public**
+
+#### Arguments
+
+* $table **[dependencies\Table](../../dependencies/Table.md)**
+* $access_level **mixed**
+* $group_id **mixed**
+* $user_id **mixed**
+
+
+
+
+
+
+## Method `table__hcheck_permissions`
+In class: [components\account\Helpers](#top)
+
+```
+mixed components\account\Helpers::table__hcheck_permissions(\dependencies\Table $table, $meta, $user_id)
+```
+
+
+
+
+
+* Visibility: **public**
+
+#### Arguments
+
+* $table **[dependencies\Table](../../dependencies/Table.md)**
+* $meta **mixed**
+* $user_id **mixed**
 
 
 

@@ -29,7 +29,7 @@
 * [`public mixed init()`](#method-init)
 * [`public mixed multilanguage(\Closure $closure)`](#method-multilanguage)
 * [`public mixed set_language_id($id)`](#method-set_language_id)
-* [`public mixed translate($phrase, $component, $lang_id, $case)`](#method-translate)
+* [`public mixed translate($phrase, $component, $lang_id, $case, $is_fallback)`](#method-translate)
 
 
 
@@ -255,7 +255,7 @@ mixed core\Language::set_language_id($id)
 In class: [core\Language](#top)
 
 ```
-mixed core\Language::translate($phrase, $component, $lang_id, $case)
+mixed core\Language::translate($phrase, $component, $lang_id, $case, $is_fallback)
 ```
 
 
@@ -270,6 +270,7 @@ mixed core\Language::translate($phrase, $component, $lang_id, $case)
 * $component **mixed**
 * $lang_id **mixed**
 * $case **mixed**
+* $is_fallback **mixed**
 
 
 

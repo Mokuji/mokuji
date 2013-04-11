@@ -21,10 +21,12 @@
 * [`protected static mixed $validate`](#property-validate)
 
 **Methods**
+* [`public mixed get_avatar()`](#method-get_avatar)
 * [`public mixed get_groups()`](#method-get_groups)
 * [`public mixed get_is_administrator()`](#method-get_is_administrator)
 * [`public mixed get_last_login()`](#method-get_last_login)
 * [`public mixed get_logins()`](#method-get_logins)
+* [`public mixed get_title()`](#method-get_title)
 * [`public mixed get_user_info()`](#method-get_user_info)
 
 
@@ -143,7 +145,7 @@
 * [`public mixed unserialize($d)`](#method-unserialize)
 * [`public mixed unserialized()`](#method-unserialized)
 * [`public mixed uppercase()`](#method-uppercase)
-* [`public mixed validate($name, array $rules)`](#method-validate)
+* [`public mixed validate($name, array $rules, $translate)`](#method-validate)
 * [`public mixed validate_model($options)`](#method-validate_model)
 * [`public mixed validation_errors($names)`](#method-validation_errors)
 * [`public mixed walk($callback)`](#method-walk)
@@ -1306,6 +1308,24 @@ mixed dependencies\Data::getIterator()
 
 
 
+## Method `get_avatar`
+In class: [components\account\models\Accounts](#top)
+
+```
+mixed components\account\models\Accounts::get_avatar()
+```
+
+
+
+
+
+* Visibility: **public**
+
+
+
+
+
+
 ## Method `get_groups`
 In class: [components\account\models\Accounts](#top)
 
@@ -1365,6 +1385,24 @@ In class: [components\account\models\Accounts](#top)
 
 ```
 mixed components\account\models\Accounts::get_logins()
+```
+
+
+
+
+
+* Visibility: **public**
+
+
+
+
+
+
+## Method `get_title`
+In class: [components\account\models\Accounts](#top)
+
+```
+mixed components\account\models\Accounts::get_title()
 ```
 
 
@@ -2648,7 +2686,7 @@ mixed dependencies\Data::uppercase()
 In class: [components\account\models\Accounts](#top)
 
 ```
-mixed dependencies\Data::validate($name, array $rules)
+mixed dependencies\Data::validate($name, array $rules, $translate)
 ```
 
 
@@ -2662,6 +2700,7 @@ mixed dependencies\Data::validate($name, array $rules)
 
 * $name **mixed**
 * $rules **array**
+* $translate **mixed**
 
 
 

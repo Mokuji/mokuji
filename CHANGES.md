@@ -1,10 +1,37 @@
-#### Development
+#### [Version 1.2.0 Beta](https://github.com/Tuxion/tuxion.cms/tree/v1.2.0-beta1)
+_11-Apr-2013_
 
-* Timeline component now added to the base components.
-* CMS improvements:
+* Timeline component (enabling blogs) now added to the base components.
+* Translation formatting is now added, so translations can handle indexed variables.
+* New ORM features:
+  - Added `Table->helper`.
+  - Added `Table->distinct`.
+  - Improved `Table->join` which now supports join conditions.
+* UI improvements:
+  - Findability tabs has had a visual upgrade.
   - Added a "set as homepage" checkbox in the configuration tab for every page.
+  - The active menu item is now highlighted in the backend.
+  - The 'home' button in the site switcher now takes you to the page you were viewing in the backend.
+* CMS improvements:
+  - Default language can be set per site.
+  - Greatly improved the jQuery.restForm plugin.
+  - SimplePageType now allow simple forms and datasources.
+  - Implemented a CSV import helper in the core.
+  - Added helper for page-type deployment.
+  - Created table helpers for permissions.
+  - Integrated translating with the SDK to log untranslated phrases and missing files.
+  - Validation translations are now optional.
+  - Implemented experimental javascript translations.
+  - Added new validators `component_name`, `jid` and `phonenumber`.
+  - Page titles can now be recommended by the page-type controller.
+  - Menu-items now need a confirm before being deleted.
+  - The `BaseModel->render_form` function can now exclude fields.
 * Bug fixes:
   - The install wizard is no longer unresponsive when saving the website configuration.
+  - The site switcher did not work as expected.
+  - Stack traces now display HTML tags in arguments properly.
+  - String based primary keys no longer breaks the `BaseModel->save` function.
+  - Detach page has been fixed.
 
 #### [Version 1.1.0 Beta 2](https://github.com/Tuxion/tuxion.cms/tree/v1.1.0-beta2)
 _21-Mar-2013_

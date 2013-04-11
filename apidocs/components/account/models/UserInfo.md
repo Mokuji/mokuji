@@ -25,6 +25,7 @@
 
 **Methods**
 * [`public \components\account\models\UserInfo check_status(mixed $value, $callback)`](#method-check_status)
+* [`public mixed get_avatar()`](#method-get_avatar)
 * [`public mixed get_full_name()`](#method-get_full_name)
 * [`public mixed set_status($value)`](#method-set_status)
 * [`protected mixed get_account()`](#method-get_account)
@@ -146,7 +147,7 @@
 * [`public mixed unserialize($d)`](#method-unserialize)
 * [`public mixed unserialized()`](#method-unserialized)
 * [`public mixed uppercase()`](#method-uppercase)
-* [`public mixed validate($name, array $rules)`](#method-validate)
+* [`public mixed validate($name, array $rules, $translate)`](#method-validate)
 * [`public mixed validate_model($options)`](#method-validate_model)
 * [`public mixed validation_errors($names)`](#method-validation_errors)
 * [`public mixed walk($callback)`](#method-walk)
@@ -1367,6 +1368,24 @@ mixed dependencies\Data::getIterator()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../../../dependencies/Data.md)
+
+
+
+
+
+
+## Method `get_avatar`
+In class: [components\account\models\UserInfo](#top)
+
+```
+mixed components\account\models\UserInfo::get_avatar()
+```
+
+
+
+
+
+* Visibility: **public**
 
 
 
@@ -2665,7 +2684,7 @@ mixed dependencies\Data::uppercase()
 In class: [components\account\models\UserInfo](#top)
 
 ```
-mixed dependencies\Data::validate($name, array $rules)
+mixed dependencies\Data::validate($name, array $rules, $translate)
 ```
 
 
@@ -2679,6 +2698,7 @@ mixed dependencies\Data::validate($name, array $rules)
 
 * $name **mixed**
 * $rules **array**
+* $translate **mixed**
 
 
 

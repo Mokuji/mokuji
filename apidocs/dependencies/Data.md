@@ -104,7 +104,7 @@
 * [`public mixed unserialize($d)`](#method-unserialize)
 * [`public mixed unserialized()`](#method-unserialized)
 * [`public mixed uppercase()`](#method-uppercase)
-* [`public mixed validate($name, array $rules)`](#method-validate)
+* [`public mixed validate($name, array $rules, $translate)`](#method-validate)
 * [`public mixed validation_errors($names)`](#method-validation_errors)
 * [`public mixed walk($callback)`](#method-walk)
 
@@ -1961,7 +1961,7 @@ mixed dependencies\Data::uppercase()
 In class: [dependencies\Data](#top)
 
 ```
-mixed dependencies\Data::validate($name, array $rules)
+mixed dependencies\Data::validate($name, array $rules, $translate)
 ```
 
 
@@ -1974,6 +1974,7 @@ mixed dependencies\Data::validate($name, array $rules)
 
 * $name **mixed**
 * $rules **array**
+* $translate **mixed**
 
 
 

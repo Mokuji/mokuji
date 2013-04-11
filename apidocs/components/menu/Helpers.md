@@ -18,6 +18,7 @@
 
 **Methods**
 * [`public mixed get_menu_items(array $options)`](#method-get_menu_items)
+* [`public mixed get_root_item($options)`](#method-get_root_item)
 
 
 ## Inheritance index
@@ -220,6 +221,28 @@ Returns a result set with the menu items you asked for.
  @key bool $select_from_root If true: select items from root.
             tx(&#039;Data&#039;)-&gt;get-&gt;menu will be used to calculate root.
             $parent_pk, $template_key and $site_id will be overwritten.
+
+
+
+
+
+
+## Method `get_root_item`
+In class: [components\menu\Helpers](#top)
+
+```
+mixed components\menu\Helpers::get_root_item($options)
+```
+
+
+
+
+
+* Visibility: **public**
+
+#### Arguments
+
+* $options **mixed**
 
 
 

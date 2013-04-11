@@ -19,10 +19,11 @@
 * [`private mixed $data`](#property-data)
 * [`private mixed $errors`](#property-errors)
 * [`private mixed $rules`](#property-rules)
+* [`private mixed $translate`](#property-translate)
 
 **Methods**
 * [`public mixed __call($rule, $options)`](#method-__call)
-* [`public mixed __construct($data, $rules)`](#method-__construct)
+* [`public mixed __construct($data, $rules, $translate)`](#method-__construct)
 * [`public mixed _datetime($target_format)`](#method-_datetime)
 * [`public mixed _gte($number)`](#method-_gte)
 * [`public mixed _in()`](#method-_in)
@@ -35,19 +36,23 @@
 * [`private mixed _array()`](#method-_array)
 * [`private mixed _between($min, $max)`](#method-_between)
 * [`private mixed _boolean()`](#method-_boolean)
+* [`private mixed _component_name()`](#method-_component_name)
 * [`private mixed _email()`](#method-_email)
 * [`private mixed _eq($value)`](#method-_eq)
 * [`private mixed _gt($number)`](#method-_gt)
 * [`private mixed _javascript_variable_name()`](#method-_javascript_variable_name)
+* [`private mixed _jid($type, $externalOnly)`](#method-_jid)
 * [`private mixed _length($length)`](#method-_length)
 * [`private mixed _lt($number)`](#method-_lt)
 * [`private mixed _no_html()`](#method-_no_html)
 * [`private mixed _not_empty()`](#method-_not_empty)
 * [`private mixed _number($type)`](#method-_number)
 * [`private mixed _password()`](#method-_password)
+* [`private mixed _phonenumber($countrycode)`](#method-_phonenumber)
 * [`private mixed _required()`](#method-_required)
 * [`private mixed _string()`](#method-_string)
 * [`private mixed _url()`](#method-_url)
+* [`private mixed ctransf()`](#method-ctransf)
 
 
 ## Inheritance index
@@ -110,6 +115,20 @@ private mixed $rules = array()
 * Visibility: **private**
 
 
+## Property `$translate`
+In class: [dependencies\Validator](#top)
+
+```
+private mixed $translate
+```
+
+
+
+
+
+* Visibility: **private**
+
+
 # Methods
 
 
@@ -140,7 +159,7 @@ mixed dependencies\Validator::__call($rule, $options)
 In class: [dependencies\Validator](#top)
 
 ```
-mixed dependencies\Validator::__construct($data, $rules)
+mixed dependencies\Validator::__construct($data, $rules, $translate)
 ```
 
 
@@ -153,6 +172,7 @@ mixed dependencies\Validator::__construct($data, $rules)
 
 * $data **mixed**
 * $rules **mixed**
+* $translate **mixed**
 
 
 
@@ -560,6 +580,24 @@ mixed dependencies\Validator::_boolean()
 
 
 
+## Method `_component_name`
+In class: [dependencies\Validator](#top)
+
+```
+mixed dependencies\Validator::_component_name()
+```
+
+
+
+
+
+* Visibility: **private**
+
+
+
+
+
+
 ## Method `_do_check`
 In class: [dependencies\Validator](#top)
 
@@ -657,6 +695,29 @@ mixed dependencies\Validator::_javascript_variable_name()
 
 
 * Visibility: **private**
+
+
+
+
+
+
+## Method `_jid`
+In class: [dependencies\Validator](#top)
+
+```
+mixed dependencies\Validator::_jid($type, $externalOnly)
+```
+
+
+
+
+
+* Visibility: **private**
+
+#### Arguments
+
+* $type **mixed**
+* $externalOnly **mixed**
 
 
 
@@ -783,6 +844,28 @@ mixed dependencies\Validator::_password()
 
 
 
+## Method `_phonenumber`
+In class: [dependencies\Validator](#top)
+
+```
+mixed dependencies\Validator::_phonenumber($countrycode)
+```
+
+
+
+
+
+* Visibility: **private**
+
+#### Arguments
+
+* $countrycode **mixed**
+
+
+
+
+
+
 ## Method `_required`
 In class: [dependencies\Validator](#top)
 
@@ -824,6 +907,24 @@ In class: [dependencies\Validator](#top)
 
 ```
 mixed dependencies\Validator::_url()
+```
+
+
+
+
+
+* Visibility: **private**
+
+
+
+
+
+
+## Method `ctransf`
+In class: [dependencies\Validator](#top)
+
+```
+mixed dependencies\Validator::ctransf()
 ```
 
 

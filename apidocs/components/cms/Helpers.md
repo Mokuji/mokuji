@@ -18,6 +18,7 @@
 
 **Methods**
 * [`public mixed check_page_authorisation($pid)`](#method-check_page_authorisation)
+* [`public mixed ensure_pagetypes($component, $views)`](#method-ensure_pagetypes)
 * [`public mixed get_page_info($pid)`](#method-get_page_info)
 * [`public mixed get_page_options($pid)`](#method-get_page_options)
 * [`public mixed get_page_permissions($pid)`](#method-get_page_permissions)
@@ -198,6 +199,29 @@ mixed components\cms\Helpers::check_page_authorisation($pid)
 #### Arguments
 
 * $pid **mixed**
+
+
+
+
+
+
+## Method `ensure_pagetypes`
+In class: [components\cms\Helpers](#top)
+
+```
+mixed components\cms\Helpers::ensure_pagetypes($component, $views)
+```
+
+
+
+
+
+* Visibility: **public**
+
+#### Arguments
+
+* $component **mixed**
+* $views **mixed**
 
 
 

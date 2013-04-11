@@ -1,4 +1,4 @@
-# components\update\Helpers
+# components\timeline\Actions
 [API index](../../API-index.md)
 
 
@@ -6,8 +6,8 @@
 
 
 
-* Class name: Helpers
-* Namespace: components\update
+* Class name: Actions
+* Namespace: components\timeline
 * Parent class: [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 
@@ -16,11 +16,6 @@
 ## Class index
 
 
-**Methods**
-* [`public mixed get_component_package($component)`](#method-get_component_package)
-* [`protected mixed check_updates($options)`](#method-check_updates)
-* [`private mixed check_folder($folder, $namespace, $silent, $force)`](#method-check_folder)
-* [`private mixed sync_manual_package($package, $folder, $namespace, $silent, $force)`](#method-sync_manual_package)
 
 
 ## Inheritance index
@@ -49,7 +44,7 @@
 
 
 ## Property `$reserved`
-In class: [components\update\Helpers](#top)
+In class: [components\timeline\Actions](#top)
 
 ```
 protected mixed $reserved = array('__construct', 'filter', 'module', 'section', 'view', 'table', 'get_html', 'call', 'template')
@@ -65,7 +60,7 @@ protected mixed $reserved = array('__construct', 'filter', 'module', 'section', 
 
 
 ## Property `$component`
-In class: [components\update\Helpers](#top)
+In class: [components\timeline\Actions](#top)
 
 ```
 protected mixed $component
@@ -80,7 +75,7 @@ protected mixed $component
 
 
 ## Property `$default_permission`
-In class: [components\update\Helpers](#top)
+In class: [components\timeline\Actions](#top)
 
 ```
 protected mixed $default_permission
@@ -95,7 +90,7 @@ protected mixed $default_permission
 
 
 ## Property `$permissions`
-In class: [components\update\Helpers](#top)
+In class: [components\timeline\Actions](#top)
 
 ```
 protected mixed $permissions = array()
@@ -113,7 +108,7 @@ protected mixed $permissions = array()
 
 
 ## Method `__construct`
-In class: [components\update\Helpers](#top)
+In class: [components\timeline\Actions](#top)
 
 ```
 mixed dependencies\BaseComponent::__construct()
@@ -132,7 +127,7 @@ mixed dependencies\BaseComponent::__construct()
 
 
 ## Method `_call`
-In class: [components\update\Helpers](#top)
+In class: [components\timeline\Actions](#top)
 
 ```
 mixed dependencies\BaseComponent::_call($controller, array $args)
@@ -156,7 +151,7 @@ mixed dependencies\BaseComponent::_call($controller, array $args)
 
 
 ## Method `call`
-In class: [components\update\Helpers](#top)
+In class: [components\timeline\Actions](#top)
 
 ```
 mixed dependencies\BaseComponent::call($controller, $data)
@@ -180,7 +175,7 @@ mixed dependencies\BaseComponent::call($controller, $data)
 
 
 ## Method `filters`
-In class: [components\update\Helpers](#top)
+In class: [components\timeline\Actions](#top)
 
 ```
 mixed dependencies\BaseComponent::filters()
@@ -198,30 +193,8 @@ mixed dependencies\BaseComponent::filters()
 
 
 
-## Method `get_component_package`
-In class: [components\update\Helpers](#top)
-
-```
-mixed components\update\Helpers::get_component_package($component)
-```
-
-Attempts to get the component entry in the database of a given component name.
-
-
-
-* Visibility: **public**
-
-#### Arguments
-
-* $component **mixed**
-
-
-
-
-
-
 ## Method `helper`
-In class: [components\update\Helpers](#top)
+In class: [components\timeline\Actions](#top)
 
 ```
 mixed dependencies\BaseComponent::helper($controller)
@@ -244,7 +217,7 @@ mixed dependencies\BaseComponent::helper($controller)
 
 
 ## Method `model`
-In class: [components\update\Helpers](#top)
+In class: [components\timeline\Actions](#top)
 
 ```
 mixed dependencies\BaseComponent::model($model_name)
@@ -267,7 +240,7 @@ mixed dependencies\BaseComponent::model($model_name)
 
 
 ## Method `module`
-In class: [components\update\Helpers](#top)
+In class: [components\timeline\Actions](#top)
 
 ```
 mixed dependencies\BaseComponent::module($module_name, $options)
@@ -291,7 +264,7 @@ mixed dependencies\BaseComponent::module($module_name, $options)
 
 
 ## Method `section`
-In class: [components\update\Helpers](#top)
+In class: [components\timeline\Actions](#top)
 
 ```
 mixed dependencies\BaseComponent::section($section, $options)
@@ -315,7 +288,7 @@ mixed dependencies\BaseComponent::section($section, $options)
 
 
 ## Method `table`
-In class: [components\update\Helpers](#top)
+In class: [components\timeline\Actions](#top)
 
 ```
 mixed dependencies\BaseComponent::table($model_name, $id)
@@ -339,7 +312,7 @@ mixed dependencies\BaseComponent::table($model_name, $id)
 
 
 ## Method `view`
-In class: [components\update\Helpers](#top)
+In class: [components\timeline\Actions](#top)
 
 ```
 mixed dependencies\BaseComponent::view($module_name, $options)
@@ -356,79 +329,6 @@ mixed dependencies\BaseComponent::view($module_name, $options)
 
 * $module_name **mixed**
 * $options **mixed**
-
-
-
-
-
-
-## Method `check_updates`
-In class: [components\update\Helpers](#top)
-
-```
-mixed components\update\Helpers::check_updates($options)
-```
-
-
-
-
-
-* Visibility: **protected**
-
-#### Arguments
-
-* $options **mixed**
-
-
-
-
-
-
-## Method `check_folder`
-In class: [components\update\Helpers](#top)
-
-```
-mixed components\update\Helpers::check_folder($folder, $namespace, $silent, $force)
-```
-
-
-
-
-
-* Visibility: **private**
-
-#### Arguments
-
-* $folder **mixed**
-* $namespace **mixed**
-* $silent **mixed**
-* $force **mixed**
-
-
-
-
-
-
-## Method `sync_manual_package`
-In class: [components\update\Helpers](#top)
-
-```
-mixed components\update\Helpers::sync_manual_package($package, $folder, $namespace, $silent, $force)
-```
-
-
-
-
-
-* Visibility: **private**
-
-#### Arguments
-
-* $package **mixed**
-* $folder **mixed**
-* $namespace **mixed**
-* $silent **mixed**
-* $force **mixed**
 
 
 

@@ -18,6 +18,7 @@
 **Properties**
 * [`private mixed $applied_sks`](#property-applied_sks)
 * [`private mixed $component`](#property-component)
+* [`private mixed $distinct`](#property-distinct)
 * [`private mixed $from`](#property-from)
 * [`private mixed $group`](#property-group)
 * [`private mixed $having`](#property-having)
@@ -41,14 +42,16 @@
 * [`public mixed add_relative_depth($as)`](#method-add_relative_depth)
 * [`public mixed count()`](#method-count)
 * [`public mixed delete($model_name)`](#method-delete)
+* [`public mixed distinct($value)`](#method-distinct)
 * [`public mixed execute($as)`](#method-execute)
 * [`public mixed execute_single($as)`](#method-execute_single)
 * [`public mixed filter()`](#method-filter)
 * [`public mixed from($model, $id)`](#method-from)
 * [`public mixed group($column, $direction)`](#method-group)
 * [`public mixed having()`](#method-having)
+* [`public mixed helper($component, $name)`](#method-helper)
 * [`public mixed inner()`](#method-inner)
-* [`public mixed join($model_name, $id)`](#method-join)
+* [`public mixed join($model_name, $id, $join_conditions)`](#method-join)
 * [`public mixed left()`](#method-left)
 * [`public mixed limit($rowcount, $offset)`](#method-limit)
 * [`public mixed max_depth($gt)`](#method-max_depth)
@@ -114,6 +117,20 @@ In class: [dependencies\Table](#top)
 
 ```
 private mixed $component = false
+```
+
+
+
+
+
+* Visibility: **private**
+
+
+## Property `$distinct`
+In class: [dependencies\Table](#top)
+
+```
+private mixed $distinct = false
 ```
 
 
@@ -550,6 +567,28 @@ mixed dependencies\Table::delete($model_name)
 
 
 
+## Method `distinct`
+In class: [dependencies\Table](#top)
+
+```
+mixed dependencies\Table::distinct($value)
+```
+
+
+
+
+
+* Visibility: **public**
+
+#### Arguments
+
+* $value **mixed**
+
+
+
+
+
+
 ## Method `execute`
 In class: [dependencies\Table](#top)
 
@@ -699,6 +738,29 @@ mixed dependencies\Table::having()
 
 
 
+## Method `helper`
+In class: [dependencies\Table](#top)
+
+```
+mixed dependencies\Table::helper($component, $name)
+```
+
+
+
+
+
+* Visibility: **public**
+
+#### Arguments
+
+* $component **mixed**
+* $name **mixed**
+
+
+
+
+
+
 ## Method `inner`
 In class: [dependencies\Table](#top)
 
@@ -745,7 +807,7 @@ mixed dependencies\Successable::is($check, $callback)
 In class: [dependencies\Table](#top)
 
 ```
-mixed dependencies\Table::join($model_name, $id)
+mixed dependencies\Table::join($model_name, $id, $join_conditions)
 ```
 
 
@@ -758,6 +820,7 @@ mixed dependencies\Table::join($model_name, $id)
 
 * $model_name **mixed**
 * $id **mixed**
+* $join_conditions **mixed**
 
 
 

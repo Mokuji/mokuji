@@ -70,6 +70,22 @@
         * **components\text\models**
             * [ItemInfo](components/text/models/ItemInfo.md)
             * [Items](components/text/models/Items.md)
+    * **components\timeline**
+        * [Actions](components/timeline/Actions.md)
+        * [DBUpdates](components/timeline/DBUpdates.md)
+        * [Helpers](components/timeline/Helpers.md)
+        * [Json](components/timeline/Json.md)
+        * [Modules](components/timeline/Modules.md)
+        * [Sections](components/timeline/Sections.md)
+        * [Views](components/timeline/Views.md)
+        * **components\timeline\models**
+            * [DisplayTypes](components/timeline/models/DisplayTypes.md)
+            * [Entries](components/timeline/models/Entries.md)
+            * [EntriesToTimelines](components/timeline/models/EntriesToTimelines.md)
+            * [EntryInfo](components/timeline/models/EntryInfo.md)
+            * [PageInfo](components/timeline/models/PageInfo.md)
+            * [Pages](components/timeline/models/Pages.md)
+            * [Timelines](components/timeline/models/Timelines.md)
     * **components\update**
         * [Actions](components/update/Actions.md)
         * [DBUpdates](components/update/DBUpdates.md)

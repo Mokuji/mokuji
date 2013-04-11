@@ -410,6 +410,9 @@ Returns a result set with the menu items you asked for.
  @key bool $display_select_menu - If true: a select menu will be returned.
  @key bool $no_active           - If false: suppresses the &quot;active&quot; class on active menu items.
  @key bool $no_selected         - If false: suppresses the &quot;selected&quot; class on selected menu items.
+ @key bool $select_from_root If true: select items from root.
+            tx(&#039;Data&#039;)-&gt;get-&gt;menu will be used to calculate root.
+            $parent_pk, $template_key and $site_id will be overwritten.
 
 
 
