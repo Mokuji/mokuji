@@ -15,6 +15,9 @@ class Modules extends \dependencies\BaseViews
    *  @key bool $display_select_menu - If true: a select menu will be returned.
    *  @key bool $no_active           - If false: suppresses the "active" class on active menu items.
    *  @key bool $no_selected         - If false: suppresses the "selected" class on selected menu items.
+   *  @key bool $select_from_root If true: select items from root.
+   *             tx('Data')->get->menu will be used to calculate root.
+   *             $parent_pk, $template_key and $site_id will be overwritten.
    */
   protected function menu($options)
   {
@@ -26,16 +29,16 @@ class Modules extends \dependencies\BaseViews
       'show_unlinked' => false,
       'show_unauthorised' => false
     ))->merge($options);
-    
+
     //Create menu.
     $menu =
 
       $menu_items
-
+        ->menu_items
         ->not('empty')
 
         //If menu items are found:
-        ->success(function($items)use($options){
+        ->success(function($items)use($options, $menu_items){
           
           //Get the selected items.
           $selected_items = tx('Sql')
@@ -45,11 +48,28 @@ class Modules extends \dependencies\BaseViews
           
           //Show a 'select menu'.
           if($options->display_select_menu->get('bool') == true){
+
+            $items->convert('filter', function($item)use($options){
+
+              $access = false;
+
+              if(1
+                 && ($item->page_id->is_set() || $options->show_unlinked->get('bool') == true)
+                 && (tx('Component')->helpers('cms')->check_page_authorisation($item->page_id) || $options->show_unauthorised->get('bool') == true)
+              ){
+                $access = true;
+              }
+
+              return $access;
+
+            });
+
             return $items->as_options('menu', 'title', 'id', array(
               'placeholder_text' => __('Select a season', 1),
               'rel' => 'page_id',
-              'default' => tx('Data')->get->menu
+              'default' => ($menu_items->root_item->otherwise(tx('Data')->get->menu))
             ));
+
           }
           
           //Figure out the class string.
@@ -75,7 +95,7 @@ class Modules extends \dependencies\BaseViews
               //Add class 'selected' if this is a selected item.
               if(1
                 && $options->no_selected->get() != true
-                && $selected_items->any(function($v)use($item){ return ($item->lft->get() <= $v->lft->get() && $item->rgt->get() >= $v->rgt->get()); })
+                && $selected_items->any(function($v)use($item){ return ($item->menu_id->get() == $v->menu_id->get() && ($item->lft->get() <= $v->lft->get() && $item->rgt->get() >= $v->rgt->get())); })
               ){
                 $properties['class'] .= ' selected';
               }
@@ -86,7 +106,7 @@ class Modules extends \dependencies\BaseViews
               
               $properties['class'] = trim($properties['class']);
               
-              return '<a href="'.url('pid='.$item->page_id, true).'">'.$item->title.'</a>';
+              return '<a href="'.url('menu='.$item->id.'&pid='.$item->page_id, true).'">'.$item->title.'</a>';
             }
             
             //Since we do not have permissions for this item, hide it.
@@ -120,23 +140,18 @@ class Modules extends \dependencies\BaseViews
   protected function breadcrumbs($options)
   {
     
-    return;
-    throw new \exception\Programmer('Breadcrumbs under construction.');
+    // return;
+    // throw new \exception\Programmer('Breadcrumbs under construction.');
     
-    $options
-      ->page_id->validate('Page #ID', array('number', 'gt'=>0))->back()
-      ->menu_id->validate('Menu #ID', array('number', 'gt'=>0))->back();
+    // $options
+    //   ->page_id->validate('Page #ID', array('number', 'gt'=>0))->back()
+    //   ->menu_id->validate('Menu #ID', array('number', 'gt'=>0))->back();
   
-    //Get all active menu items.
-    $active = tx('Sql')->table('menu', 'MenuItems')
-      ->where('page_id', $options->page_id)
-      ->where('menu_id', $options->menu_id)
-      ->execute();
-    
-    
-    
-    
-    
+    // //Get all active menu items.
+    // $active = tx('Sql')->table('menu', 'MenuItems')
+    //   ->where('page_id', $options->page_id)
+    //   ->where('menu_id', $options->menu_id)
+    //   ->execute();
     
     //OLD
     
@@ -146,14 +161,12 @@ class Modules extends \dependencies\BaseViews
       ->pk($options->menu_item_id)
       ->execute_single();
 
-
-    
-    tx('Sql')
+    return tx('Sql')
 
       ->table('menu', 'MenuItems', $mi)
 
         //filter menu
-        ->sk(tx('Data')->filter('menu')->menu_id->is_set() ? tx('Data')->filter('menu')->menu_id : '1')
+        ->sk($menu_item_info->menu_id)
       
         //join menu item info
         ->join('MenuItemInfo', $mii)->inner()
@@ -168,9 +181,11 @@ class Modules extends \dependencies\BaseViews
         ->where('lft', '<=', $menu_item_info->lft)
         ->where('rgt', '>=', $menu_item_info->rgt)
         ->order('lft', 'ASC')
+        
+        ->group('lft')
 
       ->execute();
-
+      
   }
   
 }

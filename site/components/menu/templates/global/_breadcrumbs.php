@@ -5,7 +5,6 @@
 <?php
 
 $data
-  ->menu_items
   ->not('empty')
   ->success(function($items)use(&$last_menu_item){
     $items->each(function($item, $i)use(&$last_menu_item){

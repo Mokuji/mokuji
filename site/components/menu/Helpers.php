@@ -19,51 +19,7 @@ class Helpers extends \dependencies\BaseComponent
    */
   public function get_menu_items($options)
   {
-    
-    $options->menu_item_id = ($options->menu_item_id->is('set')->get('bool') ? $options->menu_item_id : tx('Data')->get->menu);
 
-    //if $select_from_root is true: select root item to show items from.
-    $no_menu_items_found  = false;
-
-    if($options->select_from_root->is_set() && $options->menu_item_id->get() > 0)
-    {
-      tx('Sql')->table('menu', 'MenuItems')->pk($options->menu_item_id)->execute_single()->not('empty', function($item)use(&$options){
-
-        tx('Sql')
-
-          ->table('menu', 'MenuItems')
-
-          //filter menu.
-          ->sk($options->menu_id->is_set() ? $options->menu_id : '1')
-
-          //add absolute depth.
-          ->add_absolute_depth('depth')
-          
-          //set minimum depth to show.
-          ->is($options->min_depth->is('set'), function($q)use($options){
-            $q->where('depth', '>=', $options->min_depth->get('int'));
-          })
-
-          ->where('lft', '<', $item->lft)
-          ->where('rgt', '>', $item->rgt)
-          ->order('lft')
-          ->limit(1)
-          ->execute_single()
-          ->is('empty', function()use(&$options){
-              $options->parent_pk->set($options->menu_item_id);
-            })->failure(function($root_item)use(&$options){
-              $options->parent_pk->set($root_item->id);
-            });
-
-      })->failure(function()use(&$no_menu_items_found){
-        $no_menu_items_found = true;
-      });
-    }
-    
-    if($no_menu_items_found){
-      return array();
-    }
-    
     //Get menu.
     $menu = tx('Sql')
       ->table('menu', 'Menus')
@@ -72,6 +28,13 @@ class Helpers extends \dependencies\BaseComponent
         $table->where('template_key', "'{$options->template_key}'");
       })
       ->execute_single();
+
+    $root_item = $this->helper('get_root_item', Data($options)->merge(array('menu_id' => $menu->id)));
+   
+    //Overwrite parent_pk is you want to select from root.
+    if($options->select_from_root->is_set()){
+      $options->parent_pk = $root_item;
+    }
     
     //Get menu items.
     $menu_items =
@@ -91,11 +54,6 @@ class Helpers extends \dependencies\BaseComponent
             $q->parent_pk($options->parent_pk->get('int'));
           })
           
-          //set minimum depth to show.
-          ->is($options->min_depth->is('set'), function($q)use($options){
-            $q->where('depth', '>=', $options->min_depth->get('int'));
-          })
-          
           //set how far in submenus it should go. 3 will let it go on to a sub-sub-sub menu and no further.
           ->is($options->max_depth->is('set'), function($q)use($options){
             $q->max_depth($options->max_depth->get('int'));
@@ -112,11 +70,71 @@ class Helpers extends \dependencies\BaseComponent
         
           ->select('title', 'title')
           ->where('language_id', tx('Language')->get_language_id())
-        
+
         ->execute();
-    
-    return $menu_items;
+
+    return Data(array(
+      'menu_items' => $menu_items,
+      'root_item' => $root_item
+    ));
 
   }
-  
+
+  public function get_root_item($options)
+  {
+
+    $options->menu_item_id = ($options->menu_item_id->is('set')->get('bool') ? $options->menu_item_id : tx('Data')->get->menu);
+
+    //if $select_from_root is true: select root item to show items from.
+    $no_menu_items_found = false;
+
+    $root_item = null;
+    if($options->menu_item_id->get() > 0)
+    {
+
+      tx('Sql')->table('menu', 'MenuItems')
+        ->pk($options->menu_item_id)
+        ->execute_single()
+        ->not('empty', function($item)use($options, &$root_item){
+
+          tx('Sql')
+
+            ->table('menu', 'MenuItems')
+
+            //filter menu.
+            ->sk($options->menu_id->is_set() ? $options->menu_id : '1')
+
+            //add absolute depth.
+            ->add_absolute_depth('depth')
+            
+            //set minimum depth to show.
+            ->is($options->min_depth->is('set'), function($q)use($options){
+              $q->where('depth', '>=', $options->min_depth->get('int'));
+            })
+
+            ->where('lft', '<', $item->lft)
+            ->where('rgt', '>', $item->rgt)
+            ->order('lft')
+            ->limit(1)
+            ->execute_single()
+            ->is('empty', function()use($options, &$root_item){
+                $root_item = $options->menu_item_id;
+              })->failure(function($row)use($options, &$root_item){
+                $root_item = $row->id;
+              });
+
+      })->failure(function()use(&$no_menu_items_found){
+        $no_menu_items_found = true;
+      });
+
+    }
+    
+    if($no_menu_items_found){
+      return false;
+    }else{
+      return $root_item;
+    }
+
+  }
+
 }
