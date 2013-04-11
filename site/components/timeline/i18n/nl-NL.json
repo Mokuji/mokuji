@@ -1,8 +1,12 @@
 {
-  "NEXT_PAGE_NOTATION": "Next",
-  "PREVIOUS_PAGE_NOTATION": "Previous",
-  "FUNNY_MAN": "You are a funny man, doing a",
-  "FUTURE_SEARCH": "Search into the future",
+  "TIMELINE_BLOG_TITLE": "Blog pagina",
+  "TIMELINE_BLOG_DESCRIPTION": "Blog pagina",
+  
+  "NEXT_PAGE_NOTATION": "Volgende",
+  "PREVIOUS_PAGE_NOTATION": "Vorige",
+  "FUNNY_MAN": "Jij bent lollig, met je",
+  "FUTURE_SEARCH": "Zoekopdracht in de toekomst",
+  
   "Publish date": "Publicatiedatum",
   "Read more": "Lees meer"
 }

@@ -1,9 +1,9 @@
 {
   "PAGES_VIEW_TITLE": "Pages",
-  "PAGES_VIEW_DESCRIPTION": "",
+  "PAGES_VIEW_DESCRIPTION": "Page management, returns a list view of editable pages",
   
   "SETTINGS_VIEW_TITLE": "Website settings",
-  "SETTINGS_VIEW_DESCRIPTION": "",
+  "SETTINGS_VIEW_DESCRIPTION": "Website settings",
   
   "FEEDBACK_INTRODUCTION": "What do you think of the website? Do you have comments or suggestions for improving the site? Let <a href=\"http://tuxion.nl\" target=\"_blank\">our development team</a> know. Thank you!",
   "PAGE_DISPLAY": "Display",
