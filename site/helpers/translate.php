@@ -43,8 +43,10 @@ function __(){
     $case = $args > 2 ? $arguments[2] : null;
   }
   
+  
   //Let the core do this part.
-  $phrase = tx('Language')->translate($phrase, $component, null, $case);
+  if(INSTALLING !== true)
+    $phrase = tx('Language')->translate($phrase, $component, null, $case);
   
   //Return (translated) phrase.
   if($only_return){
