@@ -218,6 +218,11 @@ class Validator extends Successable
   private function _email()
   {
     
+    //Check if not empty.
+    if(empty($this->data)){
+      return true;
+    }
+    
     if(!filter_var($this->data, FILTER_VALIDATE_EMAIL)){
       return $this->ctransf('The value must be a valid email address.');
     }
@@ -423,13 +428,18 @@ class Validator extends Successable
       
       $str = strtolower($this->data);
       $is_true = in_array($str, array('true', '1', 'yes'));
-      $is_false = in_array($str, array('false', '0', 'no'));
+      $is_false = in_array($str, array('false', '0', 'no', ''));
       $is_bool = $is_true || $is_false;
       
       if($is_bool)
         $this->data = ($is_true ? true : false);
       
       return $is_bool;
+      
+    } else {
+      
+      $this->data = !empty($this->data);
+      return true;
       
     }
     
@@ -593,6 +603,11 @@ class Validator extends Successable
   private function _jid($type=null, $externalOnly=true)
   {
     
+    //Check if not empty.
+    if(empty($this->data)){
+      return true;
+    }
+    
     //Split the JID in parts.
     $input = (string)$this->data;
     
@@ -715,11 +730,16 @@ class Validator extends Successable
   private function _phonenumber($countrycode=null)
   {
     
+    //Check if not empty.
+    if(empty($this->data)){
+      return true;
+    }
+    
     //First strip all dashes, spaces, brackets and dots.
-    $input = str_replace('~[- ().]~', '', (string)$this->data);
+    $input = preg_replace('~[- ().]+~', '', (string)$this->data);
     
     //Next, see if it starts with a 0, thus asking a localized replacement.
-    if($countrycode && $input[0] === '0')
+    if($countrycode && strlen($input) > 0 && $input[0] === '0')
       $input = $countrycode . substr($input, 1);
     
     //Now go and match it.
@@ -727,12 +747,14 @@ class Validator extends Successable
       '9[8543210]|8[6421]|6[6543210]|5[87654321]|4[987654310]|3[9643210]|2[70]|7|1)'.
       '\d{1,14}$~';
     
-    if(preg_match($pattern, $input) === 1)
+    if(preg_match($pattern, $input) === 1){
+      $this->data = $input;
       return true;
+    }
     
     #TODO: Add local pattern restrictions based on the $countrycode variable.
     
-    return $this->ctransf("The value must be a valid international phone number (starts with a + and your countrycode).");
+    return $this->ctransf("The value must be a valid ".($countrycode ? '' : 'international ')."phone number.");
     
   }
   

@@ -944,7 +944,7 @@ function request(){
         .trigger('submit');
       
     },
-
+    
     recommendTitle: function(title, languageId){
       if(languageId === 'ALL'){
         this.view.find('.page-title-recommendation').val(title);

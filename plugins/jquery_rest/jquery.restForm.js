@@ -69,33 +69,40 @@
           if(xhr.responseText)
           {
             
-            //Parse JSON.
-            var errorMeta = JSON.parse(xhr.responseText)
-              , focusedBefore = false;
-            
-            //Highlight and comment each field.
-            for(var name in errorMeta){
+            try{
               
-              //Find the element to add errors to.
-              $errorEl = $(form).find('[name="'+name+'"]')
-                .eq(0); //Only one please.
+              //Parse JSON.
+              var errorMeta = JSON.parse(xhr.responseText)
+                , focusedBefore = false;
               
-              //Focus the first element.
-              if(!focusedBefore && !$errorEl.is('[type=hidden]')){
-                $errorEl.focus();
-                focusedBefore = true;
+              //Highlight and comment each field.
+              for(var name in errorMeta){
+                
+                //Find the element to add errors to.
+                $errorEl = $(form).find('[name="'+name+'"]')
+                  .eq(0); //Only one please.
+                
+                //Focus the first element.
+                if(!focusedBefore && !$errorEl.is('[type=hidden]')){
+                  $errorEl.focus();
+                  focusedBefore = true;
+                }
+                
+                //Go one level up for radio's or checkboxes.
+                if($errorEl.is('[type=radio],[type=checkbox]'))
+                  $errorEl = $errorEl.parent();
+                
+                //Add classes and a notification.
+                $errorEl
+                  .addClass('invalid')
+                  .after(
+                    $('<span>').addClass('validation-error').text(errorMeta[name])
+                  );
               }
               
-              //Go one level up for radio's or checkboxes.
-              if($errorEl.is('[type=radio],[type=checkbox]'))
-                $errorEl = $errorEl.parent();
-              
-              //Add classes and a notification.
-              $errorEl
-                .addClass('invalid')
-                .after(
-                  $('<span>').addClass('validation-error').text(errorMeta[name])
-                );
+            }
+            catch(ex){
+              $(form).append($('<div class="restform-error-message" />').html(xhr.responseText));
             }
             
           }

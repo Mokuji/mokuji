@@ -233,6 +233,12 @@
         //Format: [datasource$http://somesite.com/url/mydata.php]
         var datasource = $tmpl[0].innerHTML.match(/\[datasource\$([^\]]+)\]/);
         
+        //No datasource, so no request.
+        if(!datasource){
+          D.resolve({page_id: pageId});
+          return D.promise();
+        }
+        
         //Retrieve input data from the server based on the page ID
         $.rest('GET', datasource[1], {
           pid: pageId
@@ -251,7 +257,7 @@
         
       }
       
-      //No data source, so no request.
+      //No template, so no datasource, so no request.
       else{
         D.resolve({page_id: pageId});
       }

@@ -21,6 +21,11 @@ class Accounts extends \dependencies\BaseModel
       'comments' => array('string', 'no_html')
     );
   
+  public function get_title()
+  {
+    return $this->user_info->full_name->otherwise($this->email);
+  }
+  
   public function get_is_administrator()
   {
     
