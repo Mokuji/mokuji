@@ -6,14 +6,18 @@ class EntryPoint extends \dependencies\BaseEntryPoint
   public function entrance()
   {
 
-    //Used for installing.
-    if(INSTALLING === true){
-      
-      return $this->template('cms_backend', 'cms_backend', array(
+    //We have to be installing.
+    if(INSTALLING !== true){
+      throw new \exception\Authorisation('The CMS has already been installed.');
+    }
+    
+    //Return the view.
+    return $this->template('cms_backend', 'cms_backend',
+      array(
         'plugins' =>  array(
           load_plugin('jquery'),
           load_plugin('jquery_ui'),
-          load_plugin('jquery_formtoobject')
+          load_plugin('jquery_rest')
         ),
         'links' => array(
           'cms_style' => '<link rel="stylesheet" type="text/css" href="'.URL_COMPONENTS.'cms/includes/style.css" />',
@@ -25,13 +29,8 @@ class EntryPoint extends \dependencies\BaseEntryPoint
       ),
       array(
         'content' => $this->view('install')
-      ));
-      
-    }
-    
-    else{
-      throw new \exception\Authorisation('The CMS has already been installed.');
-    }
+      )
+    );
 
   }
 

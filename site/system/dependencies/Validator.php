@@ -2,16 +2,18 @@
 
 class Validator extends Successable
 {
-
+  
   private
     $data=null,
     $rules=array(),
-    $errors=array();
+    $errors=array(),
+    $translate;
   
-  public function __construct($data, $rules=array())
+  public function __construct($data, $rules=array(), $translate=true)
   {
-  
+    
     $this->data = data_of($data);
+    $this->translate = $translate;
     $this->validate($rules);
     
   }
@@ -107,6 +109,21 @@ class Validator extends Successable
     
   }
   
+  //Does a conditional translate with formatting.
+  private function ctransf()
+  {
+    
+    $args = func_get_args();
+    if($this->translate === true){
+      array_unshift($args, null);
+      return call_user_func_array('transf', $args);
+    }
+    else{
+      return call_user_func_array('sprintf', $args);
+    }
+    
+  }
+  
   // returns true for arrays with a size between $min and $max, for strings with a length between $min and $max, for numbers between $min and $max
   private function _between($min=0, $max=-1)
   {
@@ -121,14 +138,14 @@ class Validator extends Successable
     
     if($this->check_rule('string')===true){
       if(!(strlen($this->data) >= $min && ($max < 0 ? true : strlen($this->data) <= $max))){
-        return "The value must be between $min and $max characters.";
+        return $this->ctransf("The value must be between {0} and {1} characters.", $min, $max);
       }
       return true;
     }
     
     elseif($this->check_rule('number')===true){
       if(!($this->data >= $min && ($max < 0 ? true : $this->data <= $max))){
-        return "The value must be between $min and $max.";
+        return $this->ctransf("The value must be between {0} and {1}.", $min, $max);
       }
       return true;
     }
@@ -139,13 +156,13 @@ class Validator extends Successable
         
         case 'array':
           if(!(count($this->data) >= $min && ($max < 0 ? true : count($this->data) <= $max))){
-            return "The value must contain between $min and $max nodes.";
+            return $this->ctransf("The value must contain between {0} and {1} nodes.", $min, $max);
           }
           return true;
         
         case 'string':
           if(!(strlen($this->data) >= $min && ($max < 0 ? true : strlen($this->data) <= $max))){
-            return "The value must be between $min and $max characters.";
+            return $this->ctransf("The value must be between {0} and {1} characters.", $min, $max);
           }
           return true;
           
@@ -154,12 +171,12 @@ class Validator extends Successable
         case 'number':
         case 'double':
           if(!($this->data >= $min && ($max < 0 ? true : $this->data <= $max))){
-            return "The value must be between $min and $max.";
+            return $this->ctransf("The value must be between {0} and {1}.", $min, $max);
           }
           return true;
           
         default:
-          return 'The value is of a format which can not lie between 2 numbers: '.gettype($this->data);
+          return $this->ctransf("The value is of a format which can not lie between 2 numbers: {0}", gettype($this->data));
       
       }
     }
@@ -174,7 +191,12 @@ class Validator extends Successable
       return true;
     }
     
-    return "It is a required field.";
+    if(!$this->check_rule('boolean')){
+      $this->data = false;
+      return true;
+    }
+    
+    return $this->ctransf('This is a required field.');
     
   }
   
@@ -188,7 +210,7 @@ class Validator extends Successable
     if($this->_number() === true && (!empty($this->data)))
       return true;
     
-    return "The value can not be empty.";
+    return $this->ctransf("The value can not be empty.");
     
   }
   
@@ -196,8 +218,13 @@ class Validator extends Successable
   private function _email()
   {
     
+    //Check if not empty.
+    if(empty($this->data)){
+      return true;
+    }
+    
     if(!filter_var($this->data, FILTER_VALIDATE_EMAIL)){
-      return "The value must be a valid email address.";
+      return $this->ctransf('The value must be a valid email address.');
     }
 
     //Removed DNS check because it's too slow.
@@ -248,7 +275,7 @@ class Validator extends Successable
       return true;
     }
     
-    return "The value must be a number.";
+    return $this->ctransf("The value must be a number.");
   
   }
   
@@ -261,7 +288,7 @@ class Validator extends Successable
 		{
 			
       if(is_array($this->data) || (is_object($this->data) && !method_exists($this->data, '__toString'))){
-        return 'The value must be textual.';
+        return $this->ctransf('The value must be textual.');
       }
       
       $this->data = (string) $this->data;
@@ -281,7 +308,7 @@ class Validator extends Successable
     }
     
     if(preg_match('~(?<=\<\w).*?\>~', $this->data) > 0){
-      return "The value may not contain html.";
+      return $this->ctransf("The value may not contain html.");
     }
     
     return true;
@@ -297,7 +324,7 @@ class Validator extends Successable
     }
     
     if(!$this->check_rule('required')) return true;
-    return "The value must be greater than $number.";
+    return $this->ctransf("The value must be greater than {0}.", $number);
     
   }
   
@@ -309,7 +336,7 @@ class Validator extends Successable
       return true;
     }
     
-    return "The value must be greater than or equal to $number.";
+    return $this->ctransf("The value must be greater than or equal to {0}.", $number);
     
   }
   
@@ -321,7 +348,7 @@ class Validator extends Successable
       return true;
     }
     
-    return "The value must be lesser than $number.";
+    return $this->ctransf("The value must be lesser than {0}.", $number);
     
   }
   
@@ -333,7 +360,7 @@ class Validator extends Successable
       return true;
     }
     
-    return "The value must be lesser than or equal to $number.";
+    return $this->ctransf("The value must be lesser than or equal to {0}.", $number);
     
   }
   
@@ -345,7 +372,7 @@ class Validator extends Successable
       return true;
     }
     
-    return "The value must be equal to $value.";
+    return $this->ctransf("The value must be equal to {0}.", $number);
     
   }
   
@@ -355,7 +382,7 @@ class Validator extends Successable
     
     if(!in_array($this->data, func_get_args(), true)){
       if(!$this->_not_empty() && !$this->check_rule('required')) return true;
-      return "The value must be one of the following values: ".implode(', ', func_get_args()).'.';
+      return $this->ctransf("The value must be one of the following values: {0}.", implode(', ', func_get_args()));
     }
     
     return true;
@@ -368,7 +395,7 @@ class Validator extends Successable
     
     if(in_array($this->data, func_get_args(), true)){
       if(!$this->_not_empty() && !$this->check_rule('required')) return true;
-      return "The value must not be one of the following values: ".implode(', ', func_get_args()).'.';
+      return $this->ctransf("The value must not be one of the following values: {0}.", implode(', ', func_get_args()));
     }
     
     return true;
@@ -387,7 +414,7 @@ class Validator extends Successable
       return true;
     }
     
-    return 'The value must be a javascript variable name.';
+    return $this->ctransf('The value must be a javascript variable name.');
   
   }
   
@@ -401,7 +428,7 @@ class Validator extends Successable
       
       $str = strtolower($this->data);
       $is_true = in_array($str, array('true', '1', 'yes'));
-      $is_false = in_array($str, array('false', '0', 'no'));
+      $is_false = in_array($str, array('false', '0', 'no', ''));
       $is_bool = $is_true || $is_false;
       
       if($is_bool)
@@ -409,9 +436,14 @@ class Validator extends Successable
       
       return $is_bool;
       
+    } else {
+      
+      $this->data = !empty($this->data);
+      return true;
+      
     }
     
-    return 'Value must be a boolean.';
+    return $this->ctransf('The value must be a boolean.');
     
   }
   
@@ -423,7 +455,7 @@ class Validator extends Successable
     if(is_array($data))
       return true;
     
-    return 'Value must be an array.';
+    return $this->ctransf('The value must be an array.');
     
   }
   
@@ -431,9 +463,40 @@ class Validator extends Successable
   {
   
     try{
-      tx('Url')->parse($this->data);
+      
+      $url = $this->data;
+      
+      if(strpos($this->data, '://') === false)
+        $url = 'http://'.$url;
+      
+      $segments = tx('Url')->parse($url);
+      
+      //Must contain a domain at the very least.
+      if(!array_key_exists('domain', $segments))
+        return $this->ctransf('The value must be a url.');
+      
+      //See if it's an IP.
+      $is_ip = !!filter_var($segments['domain'], FILTER_VALIDATE_IP);
+      
+      //If it's not an IP, check the domain.
+      if(!$is_ip){
+        
+        //It also can't be localhost, so must have a dot.
+        if(strpos($segments['domain'], '.') === false)
+          return $this->ctransf('The value must be a url.');
+        
+        //The domain must have a valid top level domain.
+        $domainparts = explode('.', $segments['domain']);
+        $tld = end($domainparts);
+        if(!in_array($tld, \core\Url::$TOP_LEVEL_DOMAINS))
+          return $this->ctransf('The value must be a url.');
+        
+      }
+      
+      $this->data = url($url)->output;
+      
     } catch (\exception\Unexpected $ue) {
-      return 'Value must be a url.';
+      return $this->ctransf('The value must be a url.');
     }
     
     return true;
@@ -442,11 +505,17 @@ class Validator extends Successable
   
   private function _password()
   {
+
+    //Check if password is not empty.
+    if(empty($this->data)){
+      return true;
+    }
     
     //Validate a password is strong enough.
     if(tx('Security')->get_password_strength($this->data) < SECURITY_PASSWORD_STRENGTH)
-      return 'The value must be a strong password please mix at least '.SECURITY_PASSWORD_STRENGTH.
-        ' of the following: uppercase letters, lowercase letters, numbers and special characters.';
+      return $this->ctransf('The value must be a strong password please mix at least {0}'.
+        ' of the following: uppercase letters, lowercase letters, numbers and special characters.',
+        SECURITY_PASSWORD_STRENGTH);
     
     return true;
     
@@ -472,17 +541,17 @@ class Validator extends Successable
       case 'string':
         $input = @strtotime($input);
         if($input === false)
-          return 'The value must be a valid date-time value.';
+          return $this->ctransf('The value must be a valid date-time value.');
         
       case 'integer':
         $input = @date($target_format, $input);
         if($input === false)
-          return 'The value must be a valid date-time value.';
+          return $this->ctransf('The value must be a valid date-time value.');
         $this->data = $input;
         return true;
         
       default:
-        return 'The value must be a valid date-time value.';
+        return $this->ctransf('The value must be a valid date-time value.');
         
     }
     
@@ -496,12 +565,196 @@ class Validator extends Successable
     
     if($this->check_rule('string')===true){
       if(strlen($this->data) !== $length && (strlen($this->data) !== 0 && $this->check_rule('required') !== true)){
-        return "The value must be $length characters.";
+        return $this->ctransf("The value must be {0} characters.", $length);
       }
       return true;
     }
     
     throw new \exception\Programmer('Length check is only implemented for strings.');
+    
+  }
+  
+  private function _component_name()
+  {
+    
+    //Check if value is not empty.
+    if(empty($this->data)){
+      return true;
+    }
+    
+    if($this->check_rule('string')===true){
+      
+      //No character outside of this range my be included.
+      if(preg_match('~[^a-z_]+~', $this->data) === 0)
+        return true;
+      
+    }
+    
+    return $this->ctransf("The value must be a valid component name having lowercase and underscore characters only.");
+    
+  }
+  
+  /*
+   Jabber ID's differ from email addresses in that they allow a lot of characters in the
+   identifier and have a resource ID. Bare JID's do not have a resource ID and is often
+   used to specify a user or room, rather than a particular client or user in a room.
+  */
+  
+  private function _jid($type=null, $externalOnly=true)
+  {
+    
+    //Check if not empty.
+    if(empty($this->data)){
+      return true;
+    }
+    
+    //Split the JID in parts.
+    $input = (string)$this->data;
+    
+    //Get the first / and split off the resource on that.
+    $resource = null;
+    $slashIndex = strpos($input, '/');
+    if($slashIndex !== false){
+      $resource = substr($input, $slashIndex+1);
+      $input = substr($input, 0, $slashIndex);
+    }
+    
+    //Next, see what is required.
+    //Note: using this order, since bare strips the resource.
+    switch($type){
+      
+      //Loose spec: [node@]domain[/resource]
+      case null:
+        $requireNode = false;
+        $requireResource = false;
+        break;
+      
+      //'Bare' spec: node@domain
+      case 'bare':
+        $requireNode = true;
+        $requireResource = false;
+        
+        //Resource should be stripped.
+        $resource = null;
+        break;
+      
+      //Resource spec: [node@]domain/resource
+      case 'resource':
+        $requireNode = false;
+        $requireResource = true;
+        break;
+      
+      //Full spec: node@domain/resource
+      case 'full':
+        $requireNode = true;
+        $requireResource = true;
+        break;
+      
+      default:
+        throw new \exception\Programmer('Unknown JID type specifier "%s"', $type);
+      
+    }
+    
+    $type = $type ? "'$type'" : null;
+    
+    //Then the @ character.
+    $parts = explode('@', $input);
+    switch(count($parts)){
+      case 2:
+        $node = $parts[0];
+        $domain = $parts[1];
+        break;
+      case 1:
+        $node = null;
+        $domain = $parts[0];
+        break;
+      default:
+        return $this->ctransf("The value must be a valid {0} Jabber ID.", $type);
+    }
+    
+    /*
+      First find out if the node identifier is valid.
+      Note: this assumes PHP or your webserver handles unassigned unicode code paths,
+        mapping and control characters.
+      Invalid characters:
+        - whitespace
+        - the additional characters ["&'/:<>@]
+    */
+    if($requireNode && $node === null)
+      return $this->ctransf("The value must be a valid {0} Jabber ID.", $type);
+    
+    if($node !== null && preg_match("~^[^ \t\r\n\"&'/:<>@]+$~", $node) !== 1)
+      return $this->ctransf("The value must be a valid {0} Jabber ID.", $type);
+    
+    if(strlen($node) >= 1024)
+      return $this->ctransf("The value must be a valid {0} Jabber ID.", $type);
+    
+    /*
+      Next validate the resource.
+      Note: this assumes PHP or your webserver handles unassigned unicode code paths,
+        mapping and control characters.
+      Invalid characters:
+        - whitespace
+    */
+    if($requireResource && $resource === null)
+      return $this->ctransf("The value must be a valid {0} Jabber ID.", $type);
+    
+    if($resource !== null && preg_match("~^[^ \t\r\n]+$~", $resource) !== 1)
+      return $this->ctransf("The value must be a valid {0} Jabber ID.", $type);
+    
+    if(strlen($resource) >= 1024)
+      return $this->ctransf("The value must be a valid {0} Jabber ID.", $type);
+    
+    //Now validate the domain in a bit of a clunky way.
+    //Note: it's always required.
+    #TODO: Use the internationalized version of the XMPP spec instead of email domains.
+    if(!(
+      filter_var($domain, FILTER_VALIDATE_IP,
+        $externalOnly ? FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE : null
+      ) || filter_var('henk@'.$domain, FILTER_VALIDATE_EMAIL)
+    )) return $this->ctransf("The value must be a valid {0} Jabber ID.", $type);
+    
+    if(strlen($domain) >= 1024)
+      return $this->ctransf("The value must be a valid {0} Jabber ID.", $type);
+    
+    //Since we do stripping, set the result.
+    $this->data =
+      ($node ? $node.'@' : ''). $domain.
+      ($resource ? '/'.$resource : '');
+    
+    //All good!
+    return true;
+    
+  }
+  
+  private function _phonenumber($countrycode=null)
+  {
+    
+    //Check if not empty.
+    if(empty($this->data)){
+      return true;
+    }
+    
+    //First strip all dashes, spaces, brackets and dots.
+    $input = preg_replace('~[- ().]+~', '', (string)$this->data);
+    
+    //Next, see if it starts with a 0, thus asking a localized replacement.
+    if($countrycode && strlen($input) > 0 && $input[0] === '0')
+      $input = $countrycode . substr($input, 1);
+    
+    //Now go and match it.
+    $pattern = '~^\+(9[976]\d|8[987530]\d|6[987]\d|5[90]\d|42\d|3[875]\d|2[98654321]\d|'.
+      '9[8543210]|8[6421]|6[6543210]|5[87654321]|4[987654310]|3[9643210]|2[70]|7|1)'.
+      '\d{1,14}$~';
+    
+    if(preg_match($pattern, $input) === 1){
+      $this->data = $input;
+      return true;
+    }
+    
+    #TODO: Add local pattern restrictions based on the $countrycode variable.
+    
+    return $this->ctransf("The value must be a valid ".($countrycode ? '' : 'international ')."phone number.");
     
   }
   

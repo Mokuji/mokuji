@@ -15,6 +15,8 @@ class Sections extends \dependencies\BaseViews
       define('PHP_VERSION_ID', ($version[0] * 10000 + $version[1] * 100 + $version[2]));
     }
     
+    $mySqlVersion = function_exists('mysql_get_client_info') ? explode('.', mysql_get_client_info()) : false;
+    
     return array(
       'requirements' => array(
         
@@ -23,9 +25,10 @@ class Sections extends \dependencies\BaseViews
           'passed' => PHP_VERSION_ID >= 50308
         ),
         
-        'MySQL' => array(
+        'MySQL 5.x' => array(
           'component' => 'Tuxion CMS Core',
-          'passed' => function_exists('mysql_get_client_info') && mysql_get_client_info() == true
+          'passed' => $mySqlVersion &&
+            $mySqlVersion[0] >= 5
         )
         
       )
@@ -50,6 +53,9 @@ class Sections extends \dependencies\BaseViews
   protected function install_site($data)
   {
     
+    if(INSTALLING !== true)
+      throw new \exception\Authorisation('The CMS is not in install mode.');
+    
     //Include email config file if there is one and we don't have it included yet.
     if(file_exists(PATH_BASE.DS.'config'.DS.'email'.EXT))
       require_once(PATH_BASE.DS.'config'.DS.'email'.EXT);
@@ -59,6 +65,9 @@ class Sections extends \dependencies\BaseViews
   
   protected function install_admin($data)
   {
+    
+    if(INSTALLING !== true)
+      throw new \exception\Authorisation('The CMS is not in install mode.');
     
     return array();
     

@@ -130,7 +130,10 @@ class Url extends \dependencies\Data
     ##
     ## file segments
     ##
-    $this->segments->file->set(array_key_exists('file', $segments) ? $segments['file'] : $old_url->segments->file);
+    $this->segments->file->set(
+      array_key_exists('file', $segments) ? $segments['file'] :
+      (!$this->check('external') ? $old_url->segments->file : '')
+    );
     
     ##
     ## query segment (and data)

@@ -38,7 +38,6 @@ $(function(){
         successUrl: '<?php echo URL_BASE; ?>',
         failureUrl: '<?php echo url("/admin/", true); ?>'
       },
-      path_ckfinder:"<?php echo URL_PLUGINS; ?>ckfinder/",
       toolbar_Full: [
         {/* 0 */}, {/* 1 */}, {/* 2 */}, {/* 3 */}, '/',
         {/* 5 */}, {/* 6 */}, {/* 7 */ items:[<?php cond_print(tx('Component')->available('autologin'), '\'Autologin\', '); ?>'Link', 'Unlink', 'Anchor']}

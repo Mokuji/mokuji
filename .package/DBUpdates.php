@@ -11,11 +11,62 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
     $is_core = true,
     $updates = array(
       '3.2.0' => '3.3.0',
-      '3.3.0' => '3.3.1'
+      '3.3.0' => '3.3.1',
+      '3.3.1' => '3.3.2',
+      '3.3.2' => '3.3.3'
     );
+  
+  public function update_to_3_3_3($current_version, $forced)
+  {
     
+    try{
+      
+      //Add language_id column.
+      tx('Sql')->query("
+        ALTER TABLE `#__core_config`
+          ADD `language_id` INT NULL ,
+          ADD INDEX ( `language_id` ) 
+      ");
+      
+    }catch(\exception\Sql $ex){
+      //When it's not forced, this is a problem.
+      //But when forcing, ignore this.
+      if(!$forced) throw $ex;
+    }
+    
+  }
+  
+  public function update_to_3_3_2($current_version, $forced)
+  {
+    
+    try{
+      
+      //Add title column.
+      tx('Sql')->query("
+        ALTER TABLE `#__core_languages`
+          ADD `title` VARCHAR( 255 ) NOT NULL
+      ");
+      
+      //Update existing languages for their titles.
+      tx('Sql')->query("UPDATE `#__core_languages` SET `title`='English' WHERE `code` = 'en-GB'");
+      tx('Sql')->query("UPDATE `#__core_languages` SET `title`='French' WHERE `code` = 'fr-FR'");
+      tx('Sql')->query("UPDATE `#__core_languages` SET `title`='Dutch' WHERE `code` = 'nl-NL'");
+      
+    }catch(\exception\Sql $ex){
+      //When it's not forced, this is a problem.
+      //But when forcing, ignore this.
+      if(!$forced) throw $ex;
+    }
+    
+  }
+  
   public function update_to_3_3_1($current_version, $forced)
   {
+    
+    if($forced === true){
+      tx('Sql')->query('DROP TABLE IF EXISTS `#__core_user_logins`');
+      tx('Sql')->query('DROP TABLE IF EXISTS `#__core_user_login_shared_sessions`');
+    }
     
     //Create the logged-in users table.
     tx('Sql')->query("
@@ -31,8 +82,7 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
         UNIQUE INDEX `session_id` (`session_id`, `user_id`)
       )
       COLLATE='latin1_swedish_ci'
-      ENGINE=MyISAM;
-
+      ENGINE=MyISAM
     ");
     
     //Create the shared sessions table.
@@ -46,7 +96,7 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
         PRIMARY KEY (`id`)
       )
       COLLATE='latin1_swedish_ci'
-      ENGINE=MyISAM;
+      ENGINE=MyISAM
     ");
     
     //Port the current logged-in user?
@@ -72,12 +122,18 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
     }
     
     //Alter the user table.
-    tx('Sql')->query('
-      ALTER TABLE `#__core_users`
-        DROP COLUMN `session`,
-        DROP COLUMN `ipa`,
-        DROP COLUMN `dt_last_login`;
-    ');
+    try{
+      tx('Sql')->query('
+        ALTER TABLE `#__core_users`
+          DROP COLUMN `session`,
+          DROP COLUMN `ipa`,
+          DROP COLUMN `dt_last_login`
+      ');
+    }catch(\exception\Sql $ex){
+      //When it's not forced, this is a problem.
+      //But when forcing, ignore this.
+      if(!$forced) throw $ex;
+    }
     
   }
   

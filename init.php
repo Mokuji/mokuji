@@ -39,9 +39,17 @@ require_once('config'.DS.'miscelanious'.EXT);
 if(INSTALLING !== true)
 {
   
-  $url_path = str_replace('/index.php', '', str_replace('/admin/index.php', '', $_SERVER['PHP_SELF']));
-  if(isset($url_path[0]) && $url_path[0] === '/'){ //Not an array, but first string character.
-    $url_path = substr($url_path, 1);
+  //Allow url-path overrides from other scripts.
+  if(!empty($_SERVER['x-tx-urlpath'])){
+    $url_path = $_SERVER['x-tx-urlpath'];
+  }
+  
+  //When no override is used.
+  else{
+    $url_path = str_replace('/index.php', '', str_replace('/admin/index.php', '', $_SERVER['PHP_SELF']));
+    if(isset($url_path[0]) && $url_path[0] === '/'){ //Not an array, but first string character.
+      $url_path = substr($url_path, 1);
+    }
   }
 
   $mysqlConnection = @mysql_connect(DB_HOST, DB_USER, DB_PASS);

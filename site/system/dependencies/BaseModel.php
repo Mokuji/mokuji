@@ -2,23 +2,34 @@
 
 abstract class BaseModel extends Data
 {
-
-  private static $table_data=array();
-
+  
+  protected static
+    $generatedLabels = array(),
+    $labels = array(),
+    $validate = array(),
+    $relation_preferences = array(),
+    $relations_by_column;
+  
+  private static
+    $table_data = array();
+  
   private
     $deleted=false,
     $component,
     $model;
-
+  
   // Constructor is to be executed after the extended class's constructor.
   public function __construct($database_row=null, &$resultset=false, $key=false)
   {
-
+    
     // set component
     $this->component = array_get(explode('\\', get_class($this)), 1);
 
     //set model
     $this->model = substr(strrchr(get_class($this), '\\'), 1);
+    
+    //Compile label names.
+    $this->refresh_labels();
 
     // be sure table data is retrieved
     self::table_data();
@@ -64,12 +75,15 @@ abstract class BaseModel extends Data
   // get metadata from the model extending this basemodel: table_name, aliases, nesting, or relations
   public static function model_data($get)
   {
-
+    
     switch($get)
     {
       
       case 'table_name':
         return tx('Sql')->get_prefix().static::$table_name;
+      
+      case 'title_field':
+        return isset(static::$title_field) && is_string(static::$title_field) ? static::$title_field : 'title';
       
       case 'fields':
         return isset(static::$fields) && is_array(static::$fields) ? static::$fields : array();
@@ -82,21 +96,115 @@ abstract class BaseModel extends Data
 
       case 'secondary_keys':
         return isset(static::$secondary_keys) && is_array(static::$secondary_keys) ? static::$secondary_keys : array();
-
+      
+      case 'validate':
+        return isset(static::$validate) && is_array(static::$validate) ? static::$validate : array();
+      
     }
 
+  }
+  
+  public static function get_related_model($name)
+  {
+    
+    $relations = static::model_data('relations');
+    $model_name = substr(strrchr(get_class($this), '\\'), 1);
+    
+    if(!isset($relations[$name]))
+      throw new \exception\NotFound('The relation "%s" is not defined in model %s.', $name, $model_name);
+    
+    $parts = explode('.', current($relations[$name]));
+    $part_count = count($parts);
+    
+    if($part_count < 2 || $part_count > 3){
+      throw new \exception\Programmer(
+        'The foreign column in the relation to %s defined in %s has an invalid format. Expected format '.
+        'is: "[ComponentName.]ModelName.column_name". Given value is: "%s"', $model_name, $name, current($relations[$name])
+      );
+    }
+    
+    switch ($part_count) {
+      case 2:
+        $component = array_get(explode('\\', get_class($this)), 1);
+        $model = $parts[0];
+        $field_name = $parts[1];
+        break;
+      
+      case 3:
+        $component = $parts[0];
+        $model = $parts[1];
+        $field_name = $parts[2];
+        break;
+    }
+    
+    return array(
+      'class' => load_model($component, $model),
+      'foreign_field' => $field_name,
+      'source_field' => key($relations[$name])
+    );
+    
+  }
+  
+  /**
+   * Gets the relations grouped by column name, rather than target model name.
+   * 
+   * @param string $column Gets the result for one specific column. Defaults to returning all columns.
+   * @return array The relations of this model grouped by column name.
+   *    The format for this is:
+   *      [column_name] => array(   | For every column... (only if $column is not set)
+   *        [0,1,...,n] => array(   | A 0-indexed array of relations.
+   *          [target] => (string), | The target field of the relation.
+   *          [model] => (string)   | The target model of the relation.
+   *        )
+   *      )
+   */
+  public function relations_by_column($column=null)
+  {
+    
+    if(!isset(static::$relations_by_column))
+    {
+      
+      $relations = $this->model_data('relations');
+      $result = array();
+      
+      foreach($relations as $model => $relation)
+      {
+        
+        reset($relation);
+        $column_name = key($relation);
+        $target = current($relation);
+        
+        if(!isset($result[$column_name])){
+          $result[$column_name] = array();
+        }
+        
+        $result[$column_name][] = array(
+          'target' => $target,
+          'model' => $model
+        );
+        
+      }
+      
+      static::$relations_by_column = $result;
+      
+    }
+    
+    if(isset($column))
+      return static::$relations_by_column[$column_name];
+    return static::$relations_by_column;
+    
   }
 
   // Magic set function either sets the attribute directly or calls a custom setter function if it exists.
   public function __set($var_name, $value)
   {
-
+    
     if(method_exists($this, 'set_'.$var_name)){
       $this->set(array($var_name=>call_user_func(array($this, 'set_'.$var_name), $value)));
     }else{
       $this->set(array($var_name=>$value));
     }
-
+    
   }
 
   // Magic get function either gets the attribute directly or calls a custom getter function if it exists.
@@ -145,6 +253,16 @@ abstract class BaseModel extends Data
 
     return $this->having(self::model_data('secondary_keys'));
 
+  }
+  
+  public function component()
+  {
+    return $this->component;
+  }
+  
+  public function model()
+  {
+    return $this->model;
   }
 
   /**
@@ -418,7 +536,8 @@ abstract class BaseModel extends Data
       $query = 'UPDATE '.self::model_data('table_name').' SET `'.implode('` = ?, `', array_keys($data)).'` = ? WHERE 1';
       
       foreach(self::table_data()->primary_keys as $primary_key){
-        $query .= " AND `$primary_key` = ".$this[$primary_key];
+        $query .= " AND `$primary_key` = ?";
+        $data[] = $this[$primary_key]->get();
       }
       
       $query = tx('Sql')->make_query($query, $data);
@@ -763,7 +882,7 @@ abstract class BaseModel extends Data
         ->un_set('extra')
         
         ->arguments->set(function($arguments){
-          return $arguments->lowercase()->split(',')->trim(' \'');
+          return $arguments->split(',')->trim(' \'');
         })
         
         ->back();
@@ -1136,5 +1255,144 @@ abstract class BaseModel extends Data
   public function table($model_name){
     return tx('Sql')->table($this->component, $model_name);
   }
-
+  
+  protected function refresh_labels()
+  {
+    
+    //Start from scratch.
+    $labels = array();
+    
+    //The default is to ucfirst all the validation rule keys.
+    foreach(array_keys(static::$validate) as $key){
+      $labels[$key] = ucfirst(str_replace('_', ' ', $key));
+    }
+    
+    //Override and compliment those labels with the protected static values.
+    //For example to use a custom title or to add a label for something without validation.
+    $labels = array_merge($labels, static::$labels);
+    
+    //Set these labels.
+    static::$generatedLabels = $labels;
+    
+  }
+  
+  //Gets the field labels, pretty labels by default.
+  //If $originals is true, returns the table column names.
+  public function labels($originals=false)
+  {
+    
+    $this->refresh_labels();
+    return $originals ? array_keys(static::$generatedLabels) : static::$generatedLabels;
+    
+  }
+  
+  public function relation_preferences()
+  {
+    return static::$relation_preferences;
+  }
+  
+  /**
+   * Validates the whole model, based on static validation rules.
+   * Options:
+   *    array $rules - Defines extra rules per field name.
+   *    boolean $force_create - Tries to ignore the PK if it has an auto_increment attribute. Otherwise throws programmer exception.
+   *    boolean $nullify - When set to true, fields that are valid but empty will be set to NULL (default: false).
+   */
+  public function validate_model($options=array())
+  {
+    
+    //Filter out what we don't need.
+    $data = $this->having(array_keys(static::$generatedLabels));
+    
+    //Do we nullify?
+    $nullify = isset($options['nullify']) && $options['nullify'] === true;
+    
+    //Allow additional rules to be prepended.
+    $ruleSet = array_merge(
+      (isset($options['rules']) ? $options['rules'] : array()),
+      static::$validate
+    );
+    
+    $table_data = $this->table_data();
+    
+    //See if we need to remove the ID.
+    if(isset($options['force_create']) && $options['force_create'] === true){
+      
+      $keys = $table_data->primary_keys->as_array();
+      $first_key = array_shift($keys);
+      
+      //If we have one PK that is auto_increment.
+      if($table_data->auto_increment->is_set() &&
+        $table_data->primary_keys->size() == 1 &&
+        $first_key === $table_data->auto_increment->get())
+      {
+        
+        //Remove the pk data and validation rules that go with it.
+        $data->{$first_key}->set('NULL');
+        unset($ruleSet[$first_key]);
+        
+      }
+      
+      //This option should not be set otherwise.
+      else{
+        throw new \exception\Programmer('Tried to force_create on model "%s" where PK is not auto_increment', $this->model());
+      }
+      
+    }
+    
+    //Iterate over each rule and collect validation exceptions from it.
+    $validationExceptions = array();
+    foreach($ruleSet as $key => $rules)
+    {
+      
+      try{
+        
+        $data->{$key}->validate(static::$generatedLabels[$key], $rules);
+        
+        if($nullify && $data->{$key}->is_empty() && $table_data->fields[$key]->check('null_allowed')){
+          $data->{$key}->set('NULL');
+        }
+        
+      }
+      
+      catch(\exception\Validation $ex){
+        $validationExceptions[] = $ex;
+      }
+      
+    }
+    
+    //See if things went wrong.
+    if(count($validationExceptions) > 0){
+      
+      $ex = new \exception\ModelValidation('There were validation errors');
+      $ex->set_validation_errors($validationExceptions);
+      throw $ex;
+      
+    }
+    
+    //Store data.
+    $this->set($data);
+    
+    return $this;
+    
+  }
+  
+  public function render_form(&$id, $action, array $options=array())
+  {
+    
+    $builder = new \dependencies\forms\FormBuilder($this, array(
+      'fields' => isset($options['fields']) ? $options['fields'] : null,
+      'relations' => isset($options['relations']) ? $options['relations'] : null,
+    ));
+    
+    $id = $builder->id();
+    
+    $options = array_merge($options, array(
+      'action' => $action
+    ));
+    
+    $builder->render($options);
+    
+  }
+  
 }

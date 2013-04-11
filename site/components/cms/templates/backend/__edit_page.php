@@ -1,475 +1,292 @@
 <?php namespace components\cms; if(!defined('TX')) die('No direct access.'); tx('Account')->page_authorisation(2); ?>
 
-<?php if($edit_page->page->get() === false): ?>
-
-<div id="edit_page">
-
-  <div class="title-bar page-title">
-    <h2><?php __($names->component, 'Page was deleted') ?>.</h2>
-    <ul class="title-bar-icons clearfix">
-      <?php if(tx('Data')->get->menu->is_set()){ ?><li><a href="<?php echo url('action=cms/detach_page&menu='.tx('Data')->get->menu.'&pid='.tx('Data')->get->pid); ?>" class="icon detach-page" id="detach-page" title="<?php __($names->component, 'Detach page from menu item'); ?>">Detach</a></li><?php } ?>
-    </ul>
-    <div class="clear"></div>
+<script id="edit_page_tmpl" type="text/x-jquery-tmpl">
+  
+  {{if menu_id}}
+    <div class="detach-page-wrapper">
+      <a href="?action=cms/detach_page&menu=${menu_id}&pid=${page.id}" class="icon detach-page" id="detach-page" title="<?php __($names->component, 'Detach page from menu item'); ?>">Detach</a>
+    </div>
+  {{/if}}
+  <div id="edit_page">
+    
+    <div class="title-bar page-title">
+      <h2><span class="title">${page.title}</span> <span style="font-weight:normal;">(<?php __('Page', 0, 'l'); ?>)</span></h2>
+      <div class="clear"></div>
+    </div>
+    
+    <div id="page-languages" class="language-bar" data-id="<?php echo tx('Language')->get_language_id(); ?>" data-iln="<?php __('IN_LANGUAGE_NAME'); ?>">
+      <?php $data->languages->each(function($language){ ?>
+        <a href="#" class="language"
+          data-id="<?php echo $language->id; ?>"
+          data-code="<?php echo $language->code; ?>"
+          data-shortcode="<?php echo $language->shortcode; ?>"
+          data-title="<?php __($language->title); ?>"><?php __($language->title); ?></a
+        >
+      <?php }); ?>
+    </div>
+    
+    <div id="page-tabs" class="tab-bar"></div>
+    
+    <div id="page-tab-body" class="tab-body"></div>
+    
+    <div class="footer" id="save-buttons">
+      
+      <button id="save-page" class="button black" data-success="<?php __('Saved page'); ?>"
+        data-working="<?php __('Saving page'); ?>"><?php __('Save'); ?></button>
+      
+    </div>
+    
   </div>
+  
+</script>
 
-  <div class="body">
-    <?php __($names->component, 'This page was deleted from the database. Unlink it from the menu item.'); ?>
-  </div>
-
-</div>
-
-<?php return; endif; ?>
-
-<div id="edit_page">
-
-  <div class="title-bar page-title">
-    <h2><span class="title"><?php echo $edit_page->page->title; ?></span> <span style="font-weight:normal;">(<?php __('Page', 0, 'l'); ?>)</span></h2>
-    <ul class="title-bar-icons clearfix">
-      <li><a href="#" class="icon page-settings" id="toggle-page-settings" title="<?php __($names->component, 'Toggle page settings'); ?>">Toggle page settings</a></li>
-      <?php if(tx('Data')->get->menu->is_set()){ ?><li><a href="<?php echo url('action=cms/detach_page&menu='.tx('Data')->get->menu.'&pid='.$edit_page->page->id); ?>" class="icon detach-page" id="detach-page" title="<?php __($names->component, 'Detach page from menu item'); ?>">Detach</a></li><?php } ?>
-    </ul>
-    <div class="clear"></div>
-  </div>
-
-  <div class="header">
-
-    <form method="post" action="<?php echo url("action=cms/edit_page/post&menu=NULL"); ?>" class="form-inline-elements">
-
-      <input type="hidden" name="page_id" id="page_id" value="<?php echo $edit_page->page->id; ?>" />
-
-      <fieldset class="fieldset-general clearfix">
-
-        <div class="inputHolder">
-          <label for="l_title_page"><?php __($names->component, 'Page title'); ?></label>
-          <input id="l_title_page" class="big" type="text" name="title" value="<?php echo $edit_page->page->title ?>" placeholder="<?php __($names->component, 'Page title') ?>" />
-        </div>
-
-        <?php if($edit_page->layout_info->size() > 0){ ?>
-          <div class="inputHolder last">
-            <label for="l_layout"><?php echo __($names->component, 'Layout'); ?></label>
-            <select name="layout_id" id="l_layout">
-              <?php
-              foreach($edit_page->layout_info as $layout){
-                echo '<option value="'.$layout->layout_id.'"'.($layout->layout_id->get()===$edit_page->page->layout_id->get() ? ' selected' : '').'>'.$layout->title.'</option>';
-              }
-              ?>
-            </select>
+<script id="edit_page_findability_tmpl" type="text/x-jquery-tmpl">
+  <form id="page-findability" class="form-inline-elements page-config clearfix" method="PUT" action="<?php echo url('rest=cms/page_findability/', true); ?>${page.id}">
+    
+    {{each(language_id, language) languages}}
+      
+      <div class="multilingual-section" data-language-id="${language.id}">
+        
+        <fieldset class="fieldset-general clearfix page-captions">
+          
+          <legend><?php __($names->component, 'Page captions'); ?></legend>
+          
+          <div class="ctrlHolder">
+            <label for="l_title_page_${language.code}"><?php __($names->component, 'Title'); ?></label>
+            <input id="l_title_page_${language.code}" class="big page-title" type="text" name="info[${language.id}][title]"
+              placeholder="<?php echo tx('Config')->user('site_name'); ?>" value="${page.info && page.info[language.id] && page.info[language.id].title}" />
           </div>
-        <?php } ?>
-
-      </fieldset>
-
-    <!-- PAGE CONFIG -->
-      <div id="page-config">
-
-        <div class="inner">
-
-          <h3><?php __($names->component, 'Page settings') ?></h3>
-
-          <div class="page-item">
-
-            <div class="left">
-
-              <fieldset class="fieldset-display">
-
-                <legend><?php __($names->component, 'PAGE_DISPLAY', 'ucfirst'); ?></legend>
-
-                <div class="inputHolder">
-                  <label><?php __($names->component, 'Site layout'); ?></label>
-                  <?php echo $edit_page->templates->as_options('template_id', 'title', 'id', array('id' => 'template_id', 'default' => ($edit_page->page->template_id->get('int') > 0 ? $edit_page->page->template_id->get('int') : tx('Config')->user('template_id')->get('int')), 'placeholder_text' => __($names->component, 'Select a site layout', 1))); ?>
-                </div>
-
-                <div class="inputHolder">
-                  <label><?php __($names->component, 'Theme'); ?></label>
-                  <?php echo $edit_page->themes->as_options('theme_id', 'title', 'id', array('default' => ($edit_page->page->theme_id->get('int') > 0 ? $edit_page->page->theme_id->get('int') : tx('Config')->user('theme_id')->get('int')), 'placeholder_text' => __($names->component, 'Select a theme', 1))); ?>
-                </div>
-
-  <?php
-  /*
-                <div id="appearance-slider" style="height:auto;">
-
-                  <div class="toolbar theme">
-                    <a href="#" class="btn-prev"></a>
-                    <div class="title">
-                      <?php
-                      echo $edit_page->themes->as_options('theme_id', 'title', 'id', array('default' => ($edit_page->page->theme_id->get('int') > 0 ? $edit_page->page->theme_id->get('int') : tx('Config')->user('theme_id')), 'placeholder_text' => __('Select a theme', 1)));
-                      ?>
-                    </div>
-                    <a href="#" class="btn-next"></a>
-                  </div>
-
-  <!--
-                  <div class="preview-container">
-
-                  </div>
-  -->
-
-                  <div class="toolbar template">
-                    <a href="#" class="btn-prev"></a>
-                    <div class="title">
-                      <?php
-                      echo $edit_page->templates->as_options('template_id', 'title', 'id', array('id' => 'template_id', 'default' => ($edit_page->page->template_id->get('int') > 0 ? $edit_page->page->template_id->get('int') : tx('Config')->user('template_id')), 'placeholder_text' => __('Select a template', 1)));
-                      ?>
-                    </div>
-                    <a href="#" class="btn-next"></a>
-                  </div>
-
-                </div>
-  */
-  ?>
-
-              </fieldset>
-
+          
+          <div class="ctrlHolder">
+            <div>
+              <label for="l_page_key_${language.code}"><?php __($names->component, 'URL-key'); ?></label>
+              <input id="l_page_key_${language.code}" class="big page-key" type="text" name="info[${language.id}][url_key]"
+                placeholder="<?php __($names->component, 'URL-key') ?>" value="${page.info && page.info[language.id] && page.info[language.id].url_key}" />
             </div>
-
-            <div class="right">
-
-  <!--
-              <fieldset class="fieldset-variables">
-
-                <legend>Variabelen</legend>
-
-                <label for="variable_1"><?php __('Variable'); ?> 1</label>
-                <input id="variable_1" class="big" type="text" name="title" value="<?php echo $edit_page->page->title ?>" placeholder="<?php __('Page title') ?>" />
-
-                <label for="variable_2"><?php __('Variable'); ?> 2</label>
-                <input id="variable_2" class="big" type="text" name="title" value="<?php echo $edit_page->page->title ?>" placeholder="<?php __('Page title') ?>" />
-
-              </fieldset>
-
-              <fieldset class="fieldset-metatags">
-
-                <legend>Meta tags</legend>
-
-                <label for="metatags"><?php __('Meta tags'); ?></label>
-                <input id="metatags" class="big" type="text" name="title" value="<?php echo $edit_page->page->title ?>" placeholder="<?php __('Page title') ?>" />
-
-              </fieldset>
-
-              <fieldset class="fieldset-publish">
-
-                <legend>Variabelen</legend>
-
-                <label for="variable_1"><?php __('Variable'); ?> 1</label>
-                <input id="variable_1" class="big" type="text" name="title" value="<?php echo $edit_page->page->title ?>" placeholder="<?php __('Page title') ?>" />
-
-                <label for="variable_2"><?php __('Variable'); ?> 2</label>
-                <input id="variable_2" class="big" type="text" name="title" value="<?php echo $edit_page->page->title ?>" placeholder="<?php __('Page title') ?>" />
-
-              </fieldset>
-  -->
-
-              <fieldset class="fieldset-rights">
-
-                <legend><?php __('User rights'); ?></legend>
-
-                <?php __('Accessable to'); ?>:
-                <ul>
-                  <li><label><input type="radio" name="access_level" value="0"<?php echo ($edit_page->page->access_level->get('int') <= 0 ? ' checked="checked"' : ''); ?> /> <?php __('Everyone'); ?></label></li>
-                  <li><label><input type="radio" name="access_level" value="1"<?php echo ($edit_page->page->access_level->get('int') == 1 ? ' checked="checked"' : ''); ?> /> <?php __('Logged in users'); ?></label></li>
-                  <li><label><input type="radio" name="access_level" value="2"<?php echo ($edit_page->page->access_level->get('int') == 2 ? ' checked="checked"' : ''); ?> class="members" /> <?php __($names->component, 'Group members'); ?></label></li>
-                  <li><label><input type="radio" name="access_level" value="3"<?php echo ($edit_page->page->access_level->get('int') == 3 ? ' checked="checked"' : ''); ?> /> <?php __('Admins'); ?></label></li>
-                </ul>
-
-                <fieldset class="fieldset-groups">
-
-                  <legend><?php __($names->component, 'Groups with access'); ?></legend>
-
-                  <ul>
-                    <?php
-                    
-                    tx('Component')
-                      ->helpers('cms')
-                      ->get_page_permissions($data->page->id)
-                      ->group_permissions->each(function($group){
-                        echo '<li><label><input type="checkbox" name="user_group_permission['.$group->id.']" value="1"'.($group->access_level->get() > 0 ? ' CHECKED' : '').' /> '.$group->title.'</label></li>'.n;
-                      });
-                    
-                    ?>
-                  </ul>
-
-                </fieldset>
-
-              </fieldset>
-
-              <fieldset class="fieldset-page-info" style="display:none;">
-
-                <legend><?php __($names->component, 'Page info'); ?></legend>
-
-                <?php
-                
-                if(tx('Component')->available('language')){
-                
-                  tx('Component')->helpers('language')->get_languages(array('in_language_id'=>tx('Language')->get_language_code()))
-                    ->each(function($lang)use($data){
-                    ?>
-
-                    <div class="inputHolder" hidden>
-                      <label for="l_page_info__title_<?php echo $lang->id; ?>"><?php __($names->component, 'Page title (visible in addressbar)'); ?> <?php __('IN_LANGUAGE_NAME'); ?> <?php echo $lang->title; ?></label>
-                      <input class="big" type="text" id="l_page_info__title_<?php echo $lang->id; ?>" name="info[<?php echo $lang->id; ?>][title]" value="<?php echo $data->page->info[$lang->id]->title; ?>" />
-                    </div>
-
-                    <div class="inputHolder"style="height:auto;">
-                      <label style="float:none;width:280px;clear:both;"  for="l_page_info__slogan_<?php echo $lang->id; ?>"><?php __($names->component, 'Slogan (visible in header)'); ?> <?php __('IN_LANGUAGE_NAME'); ?> <?php echo $lang->title; ?></label>
-                      <input style="float:none;clear:both;" class="big" type="text" id="l_page_info__slogan_<?php echo $lang->id; ?>" name="info[<?php echo $lang->id; ?>][slogan]" value="<?php echo $data->page->info[$lang->id]->slogan; ?>" />
-                    </div>
-
-                    <?php
-                  });
-                  
-                }
-                
-                //Without language component.
-                else {
-                  
-                  ?>
-                  <div class="inputHolder" hidden>
-                    <label for="l_page_info__title_<?php echo tx('Language')->get_language_code(); ?>"><?php __($names->component, 'Page title (visible in addressbar)'); ?></label>
-                    <input class="big" type="text" id="l_page_info__title_<?php echo tx('Language')->get_language_code(); ?>" name="info[<?php echo tx('Language')->get_language_code(); ?>][title]" value="<?php echo $data->page->info[tx('Language')->get_language_code()]->title; ?>" />
-                  </div>
-
-                  <div class="inputHolder"style="height:auto;">
-                    <label style="float:none;width:280px;clear:both;"  for="l_page_info__slogan_<?php echo tx('Language')->get_language_code(); ?>"><?php __($names->component, 'Slogan (visible in header)'); ?></label>
-                    <input style="float:none;clear:both;" class="big" type="text" id="l_page_info__slogan_<?php echo tx('Language')->get_language_code(); ?>" name="info[<?php echo tx('Language')->get_language_code(); ?>][slogan]" value="<?php echo $data->page->info[tx('Language')->get_language_code()]->slogan; ?>" />
-                  </div>
-                  <?php
-                  
-                }
-                ?>
-
-              </fieldset>
-
+            <div>
+              <label for="l_page_key_example_${language.code}" class="subtle-hint"><?php __($names->component, 'Example'); ?></label>
+              <div id="l_page_key_example_${language.code}" class="subtle-hint page_key_example">
+                <?php echo URL_BASE; ?>${page.id}/<span class="key-section">${page.info && page.info[language.id] && page.info[language.id].url_key ? page.info[language.id].url_key : "<?php __($names->component, 'URL-key') ?>"}</span>
+              </div>
             </div>
-
-            <div class="clear"></div>
-
           </div>
-
-        </div>
-
-      </div><!-- eof:#page-config -->
-
-    </form>
-
-  </div><!-- eof:.header -->
-
-  <div class="body">
-
-    <div id="page_content">
-
-      <div class="inner">
-        <h3><?php echo __($names->component, 'Page content'); ?></h3>
-        <?php echo $edit_page->content; ?>
+          
+          <div class="ctrlHolder">
+            <label for="l_slogan_page_${language.code}"><?php __($names->component, 'Slogan'); ?></label>
+            <input id="l_slogan_page_${language.code}" class="big page-slogan" type="text" name="info[${language.id}][slogan]"
+              placeholder="<?php echo tx('Config')->user('site_slogan'); ?>" value="${page.info && page.info[language.id] && page.info[language.id].slogan}" />
+          </div>
+          
+        </fieldset>
+        
+        <fieldset class="fieldset-general clearfix seo">
+          
+          <legend><?php __($names->component, 'Search engine optimization'); ?></legend>
+          <div class="grey-border">
+            <div class="ctrlHolder">
+              <label for="l_keywords_page_${language.code}"><?php __($names->component, 'Page keywords'); ?></label>
+              <input id="l_keywords_page_${language.code}" class="big page-keywords" type="text" name="info[${language.id}][keywords]"
+                placeholder="<?php echo tx('Config')->user('site_description'); ?>" value="${page.info && page.info[language.id] && page.info[language.id].keywords}" />
+            </div>
+            
+            <div class="ctrlHolder">
+              <label for="l_description_page_${language.code}"><?php __($names->component, 'Page description'); ?></label>
+              <textarea id="l_description_page_${language.code}" class="big page-description" type="text" name="info[${language.id}][description]"
+                placeholder="<?php echo tx('Config')->user('site_keywords'); ?>">${page.info && page.info[language.id] && page.info[language.id].description}</textarea>
+            </div>
+          </div>
+        </fieldset>
+        
+        <fieldset class="fieldset-general clearfix social-media">
+          
+          <legend><?php __($names->component, 'Social media'); ?></legend>
+          <p class="subtle-hint"><?php __($names->component, 'SOCIAL_MEDIAL_OVERRIDE_VALUES_EXPLANATION') ?></p>
+          
+          <fieldset class="fieldset-general clearfix facebook">
+            
+            <div class="page-findability-content">
+              <legend><span><?php //__($names->component, 'Open Graph (Facebook)'); ?> Open Graph<br /><strong>Facebook</strong></span><i class="icon-facebook"></i></legend>
+              <div class="ctrlHolder">
+                <label for="l_title_og_${language.code}"><?php __($names->component, 'OG title'); ?></label>
+                <input id="l_title_og_${language.code}" class="big defaults-to-title" type="text" name="info[${language.id}][og_title]"
+                  value="${page.info && page.info[language.id] && page.info[language.id].og_title}" />
+              </div>
+              
+              <div class="ctrlHolder">
+                <label for="l_description_og_${language.code}"><?php __($names->component, 'OG description'); ?></label>
+                <textarea id="l_description_og_${language.code}" class="big defaults-to-description"
+                  name="info[${language.id}][og_description]">${page.info && page.info[language.id] && page.info[language.id].og_description}</textarea>
+              </div>
+              
+              <div class="ctrlHolder">
+                <label for="l_keywords_og_${language.code}"><?php __($names->component, 'OG keywords'); ?></label>
+                <input id="l_keywords_og_${language.code}" class="big defaults-to-keywords" type="text" name="info[${language.id}][og_keywords]"
+                  value="${page.info && page.info[language.id] && page.info[language.id].og_keywords}" />
+              </div>
+            </div>
+            <div class="page-findability-preview">
+              <h2>Preview</h2>
+              <div class="card-content clearfix">
+                <div class="card-image"><img src="http://placehold.it/260x260" alt="Placeholder" /></div>
+                <div class="card-content-text">
+                  <h3>Web page title on Facebook</h3>
+                  <p>
+                    Sed sed dictum felis. Sed mollis ullamcorper luctus. Donec hendrerit posuere velit ac vulputate. Quisque posuere luctus odio, vitae posuere.
+                  </p>
+                </div>
+              <div class="arrow"></div>
+              </div>
+            </div>
+          </fieldset>
+          
+          <fieldset class="fieldset-general clearfix twitter">
+            
+            <div class="page-findability-content">
+             <legend><span><?php //__($names->component, 'Twitter cards'); ?>Cards<br /><strong>Twitter</strong></span><i class="icon-twitter"></i></legend>
+              <div class="ctrlHolder">
+                <label for="l_title_tw_${language.code}"><?php __($names->component, 'Twitter title'); ?></label>
+                <input id="l_title_tw_${language.code}" class="big defaults-to-title" type="text" name="info[${language.id}][tw_title]"
+                  value="${page.info && page.info[language.id] && page.info[language.id].tw_title}" />
+              </div>
+              
+              <div class="ctrlHolder">
+                <label for="l_description_tw_${language.code}"><?php __($names->component, 'Twitter description'); ?></label>
+                <textarea id="l_description_tw_${language.code}" class="big defaults-to-description"
+                  name="info[${language.id}][tw_description]">${page.info && page.info[language.id] && page.info[language.id].tw_description}</textarea>
+              </div>
+              
+              <div class="ctrlHolder">
+                <label for="l_author_tw_${language.code}"><?php __($names->component, 'Twitter author'); ?></label>
+                <input id="l_author_tw_${language.code}" class="big" type="text" name="info[${language.id}][tw_author]"
+                  placeholder="<?php echo tx('Config')->user('site_twitter'); ?>" value="${page.info && page.info[language.id] && page.info[language.id].tw_author}" />
+              </div>
+            </div>
+            <div class="page-findability-preview">
+              <h2>Preview</h2>
+              <div class="card-content clearfix">
+                <div class="card-image"><img src="http://placehold.it/260x260" alt="Placeholder" /></div>
+                <div class="card-content-text">
+                  <h3>Twitter Title Goes here</h3>
+                  <span>By Twitter Author placed here @twitterauthor</span>
+                  <p>
+                    Sed sed dictum felis. Sed mollis ullamcorper luctus. Donec hendrerit posuere velit ac vulputate. Quisque posuere luctus odio, vitae posuere.
+                  </p>
+                </div>
+              <div class="arrow"></div>
+              </div>
+            </div>
+          </fieldset>
+          
+          <fieldset class="fieldset-general clearfix google-plus">
+            
+            <div class="page-findability-content">
+              <legend><span><?php //__($names->component, 'Google+'); ?>&nbsp;<br /><strong>Google+</strong></span><i class="icon-google-plus"></i></legend>
+              <div class="ctrlHolder">
+                <label for="l_author_gp_${language.code}"><?php __($names->component, 'Google+ author'); ?></label>
+                <input id="l_author_gp_${language.code}" class="big" type="text" name="info[${language.id}][gp_author]"
+                  placeholder="<?php echo tx('Config')->user('site_googleplus'); ?>" value="${page.info && page.info[language.id] && page.info[language.id].gp_author}" />
+              </div>
+            </div>
+            <div class="page-findability-preview">
+              <h2>Preview</h2>
+              <div class="card-content clearfix">
+                <div class="card-content-text">
+                  <span>By Google+ author +Tuxion</span>
+                  <p>
+                    Sed sed dictum felis. Sed mollis ullamcorper luctus. Donec hendrerit posuere velit ac vulputate. Quisque posuere luctus odio, vitae posuere.
+                  </p>
+                </div>
+              <div class="arrow"></div>
+              </div>
+            </div>
+          </fieldset>
+          
+        </fieldset>
+        
       </div>
-
-    </div><!-- eof:#page-content -->
-    
-    <div class="reset"></div>    
-
-  </div>
-  
-  <div class="footer" id="save-buttons">
-    <button id="save-page" class="button black"><?php __('Save'); ?></button>
-    <button id="save-page-return" href="<?php echo url(('section='.(tx('Data')->get->pid->is_set() ? 'cms/config_app&view=cms/pages' : 'cms/app')), true); ?>" class="button grey"><?php __('Save and return'); ?></button>
-    <button id="cancel-page" href="<?php echo url(('section='.(tx('Data')->get->pid->is_set() ? 'cms/config_app&view=cms/pages' : 'cms/app')), true); ?>" class="button grey"><?php __('Cancel'); ?></button>
-    <!--<?php if(tx('Data')->get->pid->is_set()){ ?><button id="delete-page" href="<?php echo url('action=cms/delete_page&page_id='.tx('Data')->get->pid); ?>" class="button grey"><?php __('Delete'); ?></button><?php } ?>-->
-  </div>
-
-</div>
-
-<script type="text/javascript">
-
-var com_cms = (function(TxComCms){
-
-  var //private properties
-    defaults = {
-    };
-  
-  //Public callbacks collection.
-  if(!TxComCms.submitCallbacks)
-    TxComCms.submitCallbacks = {};
-  
-  //public init(o)
-  TxComCms.init_edit_page = function(){
-
-    //
-    if($('.fieldset-rights').find('input[name=access_level]').hasClass('members')){
-          $('.fieldset-groups').show();
-    }
-
-    //page permissions
-    $('.fieldset-rights')
-
-      .on('click', 'input[name=access_level]', function(){
-        if($(this).hasClass('members')){
-          $('.fieldset-groups').show();
-        }else{
-          $('.fieldset-groups').hide();
-        }
-      });
-
-    $('#edit_page')
-
-      //Toggle page settings.        
-      .on('click', '#toggle-page-settings', function(){
-        $('#page-config').toggle();
-        $('#page_content').toggle();
-        $('#toggle-page-settings').toggleClass('page-content');
-      })
-
-      //Detach page from menu item.
-      .on('click', '#detach-page', function(e){
-        // e.preventDefault();
-        // if(confirm('<?php __('Are you sure you want to detach this page from the menu item?'); ?>')){
-        //   return true;
-        // }else{
-        //   return false;
-        // }
-      })
-
-      //Update page title on change.
-      .on('keyup', '#l_title_page', function(){
-        $('#edit_page .title-bar.page-title .title').text($(this).attr('value'));
-      });
-
-/*    //layout select
-    $('#edit_page select[name=layout_id]').change(function(e){
-
-      e.preventDefault();
-
-      $.ajax({
-        data : {
-          part: $(this).children(':selected').val().toInt(),
-          pid: <?php echo $edit_page->page->page_info->id->get('int'); ?>
-        }
-      });
-
-    }); */
-    
-    //cycle themes
-    $('#appearance-slider')
-
-      .on('click', '.theme a.btn-prev', function(e){
-        e.preventDefault();
-        var to_select = $('.theme .tx-select').find('option:selected').prev('option');
-        $('.theme .tx-select option').removeAttr('selected');
-        $(to_select).attr('selected', 'selected');
-      })
-      .on('click', '.theme a.btn-next', function(e){
-        e.preventDefault();
-        var to_select = $('.theme .tx-select option:selected').next('option');
-        $('.theme .tx-select option').removeAttr('selected');
-        $(to_select).attr('selected', 'selected');
-      })
-      .on('click', '.template a.btn-prev', function(e){
-        e.preventDefault();
-        var to_select =  $('.template .tx-select option:selected').prev('option');
-        $('.template .tx-select option').removeAttr('selected');
-        $(to_select).attr('selected', 'selected');
-      })
-      .on('click', '.template a.btn-next', function(e){
-        e.preventDefault();
-        var to_select = $('.template .tx-select option:selected').next('option');
-        $('.template .tx-select option').removeAttr('selected');
-        $(to_select).attr('selected', 'selected');
-      });
-
-    $("#detach-page").on("click", function(e){
-    
-      e.preventDefault();
       
-      $.ajax({
-        url: $(this).attr("href")
-      }).done(function(data){
-        $("#page-main-right").html(data);
-      });
+    {{/each}}
+  
+  </form>
+</script>
+
+<script id="edit_page_config_tmpl" type="text/x-jquery-tmpl">
+  <form id="page-config" class="form-inline-elements page-config" method="PUT" action="<?php echo url('rest=cms/page/', true); ?>${page.id}">
     
-    });
-    
-    //submit edit_page form
-    $('#edit_page .header form').on('submit', function(e){
-
-      e.preventDefault();
-
-      //save page
-      if($.isFunction(com_cms.save_page)){
-        com_cms.save_page();
-      }
-
-      // save page content
-      if($.isFunction(com_cms.save_page_content)){
-        com_cms.save_page_content();
-      }
-      $("#page_app form").each(function(){
-        var cb = $(this).attr('data-callback');
-        $(this).ajaxSubmit({
-          data: {
-            page_id: <?php echo ($edit_page->page->id->get('int') > 0 ? $edit_page->page->id->get('int') : tx('Data')->get->pid->get('int')); ?>
-          },
-          success: function(data){
-            if(com_cms.submitCallbacks[cb])
-              com_cms.submitCallbacks[cb].apply(this, arguments);
-            //alert(data);
+    <fieldset class="fieldset-display">
+      
+      <legend><?php __($names->component, 'PAGE_DISPLAY', 'ucfirst'); ?></legend>
+      
+      <?php if($data->layout_info->size() > 0){ ?>
+        <div class="ctrlHolder">
+          <label for="l_layout"><?php echo __($names->component, 'Layout'); ?></label>
+          <select name="layout_id" id="l_layout">
+            <?php
+            foreach($data->layout_info as $layout){
+              echo '<option value="'.$layout->layout_id.'"{{if page.layout_id && page.layout_id == '.$layout->layout_id.'}}selected="selected"{{/if}}>'.$layout->title.'</option>';
+            }
+            ?>
+          </select>
+        </div>
+      <?php } ?>
+      
+      <div class="ctrlHolder">
+        <label for="cf_site_layout"><?php __($names->component, 'Site layout'); ?></label>
+        <select id="cf_site_layout" name="template_id">
+          <?php
+          foreach($data->templates as $template){
+            echo '<option value="'.$template->id.'"{{if default_template && default_template == '.$template->id.'}}selected="selected"{{/if}}>'.$template->title.'</option>';
           }
-        });
-      });
-
-      // save menu item
-      if($.isFunction(com_cms.save_menu_item)){
-        com_cms.save_menu_item();
-      }
+          ?>
+        </select>
+      </div>
       
-    });
-  
-    //button:save-page buttonhandler
-    $('#save-page').click(function(e){
-      e.preventDefault();
-      $('#edit_page .header form').trigger('submit');
-    });
-  
-    //button:save-page-return handler
-    $('#save-page-return').click(function(e){
-      e.preventDefault();
-      $('#edit_page .header form').trigger('submit');
-      $.ajax({
-        url: $(this).attr('href')
-      }).done(function(data){
-        $("#page-main-right").html(data);
-      });
-    });
-
-    //button:cancel-page handler
-    $('#cancel-page').click(function(e){
-      e.preventDefault();
-      $.ajax({
-        url: $(this).attr('href')
-      }).done(function(data){
-        $("#page-main-right").html(data);
-      });
-    });
+      <div class="ctrlHolder">
+        <label for="cf_theme"><?php __($names->component, 'Theme'); ?></label>
+        <select id="cf_theme" name="theme_id">
+          <?php
+          foreach($data->themes as $themes){
+            echo '<option value="'.$themes->id.'"{{if default_theme && default_theme == '.$themes->id.'}}selected="selected"{{/if}}>'.$themes->title.'</option>';
+          }
+          ?>
+        </select>
+      </div>
+      
+    </fieldset>
     
-    return this;
-
-  }
-  
-  //public save_page()
-  TxComCms.save_page = function(){
-    $('#save-page').text('<?php __('Saving'); echo '...'; ?>');
-    $("#edit_page .header form").ajaxSubmit(function(){
-      $('#save-page').text('<?php __('Saved'); echo '.'; ?>');
-      setTimeout(function(){
-        $('#save-page').text('<?php __('Save'); ?>');
-      }, 750);
-    });
-    return this;
-  }
-  
-  return TxComCms;
-
-})(com_cms||{});
-
-$(function(){
-  com_cms.init_edit_page();
-});
-
+    <fieldset class="fieldset-rights">
+      
+      <legend><?php __('User rights'); ?></legend>
+      
+      <?php __('Accessable to'); ?>:
+      <ul>
+        <li><label><input type="radio" name="access_level" value="0"{{if page.access_level <= 0}}checked="checked"{{/if}} /> <?php __('Everyone'); ?></label></li>
+        <li><label><input type="radio" name="access_level" value="1"{{if page.access_level == 1}}checked="checked"{{/if}} /> <?php __('Logged in users'); ?></label></li>
+        <li><label><input type="radio" name="access_level" value="2"{{if page.access_level == 2}}checked="checked"{{/if}} class="members" /> <?php __($names->component, 'Group members'); ?></label></li>
+        <li><label><input type="radio" name="access_level" value="3"{{if page.access_level == 3}}checked="checked"{{/if}} /> <?php __('Admins'); ?></label></li>
+      </ul>
+      
+      <fieldset class="fieldset-groups"{{if page.access_level == 2}} style="display:block;"{{/if}}>
+        
+        <legend><?php __($names->component, 'Groups with access'); ?></legend>
+        
+        <ul>
+          {{each permissions.group_permissions}}
+            <li><label><input type="checkbox" name="user_group_permission[${$value.id}]" value="1"{{if $value.access_level > 0}}checked="checked"{{/if}} /> ${$value.title}</label></li>
+          {{/each}}
+        </ul>
+        
+      </fieldset>
+      
+    </fieldset>
+    
+    <fieldset class="fieldset-general">
+      
+      <legend><?php __('Page notes'); ?></legend>
+      
+      <textarea name="notes" class="big large">${page.notes}</textarea>
+      
+    </fieldset>
+    
+  </form>
 </script>

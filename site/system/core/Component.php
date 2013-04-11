@@ -1,51 +1,86 @@
 <?php namespace core; if(!defined('TX')) die('No direct access.');
 
+/**
+ * Provides core features to manage and access components.
+ */
 class Component
 {
 
-  private 
-    $components,
-    $checks=array();
+  /**
+   * Keeps track of a components information that has been loaded.
+   */
+  private $components;
   
-  // Contructor sets holder for component classes
+  /**
+   * Caches whether components are available and valid.
+   */
+  private $checks=array();
+  
+  /**
+   * Initializes the class.
+   */
   public function __construct()
   {
-  
+    
     $this->components = Data();
     
   }
   
-  // returns instance of the "Views" class for the given component
+  /**
+   * Returns an instance of the "Views" class for the given component.
+   * @param String $of The component name.
+   * @return \dependencies\BaseViews
+   */
   public function views($of)
   {
     return $this->load($of, 'Views');
   }
   
-  // returns instance of the "Actions" class for the given component
+  /**
+   * Returns an instance of the "Actions" class for the given component.
+   * @param String $of The component name.
+   * @return \dependencies\BaseComponent
+   */
   public function actions($of)
   {
     return $this->load($of, 'Actions');
   }
   
-  // returns instance of the "Modules" class for the given component
+  /**
+   * Returns an instance of the "Modules" class for the given component.
+   * @param String $of The component name.
+   * @return \dependencies\BaseViews
+   */
   public function modules($of)
   {
     return $this->load($of, 'Modules');
   }
   
-  // returns instance of the "Sections" class for the given component
+  /**
+   * Returns an instance of the "Sections" class for the given component.
+   * @param String $of The component name.
+   * @return \dependencies\BaseViews
+   */
   public function sections($of)
   {
     return $this->load($of, 'Sections');
   }
   
-  // returns instance of the "Sections" class for the given component
+  /**
+   * Returns an instance of the "Json" class for the given component.
+   * @param String $of The component name.
+   * @return \dependencies\BaseComponent
+   */
   public function json($of)
   {
     return $this->load($of, 'Json');
   }
   
-  // returns instance of the "Helpers" class for the given component
+  /**
+   * Returns an instance of the "Helpers" class for the given component.
+   * @param String $of The component name.
+   * @return \dependencies\BaseComponent
+   */
   public function helpers($of)
   {
     
@@ -57,7 +92,10 @@ class Component
     
   }
   
-  // returns the return value of EntryPoint::entrance() for the given component
+  /**
+   * Calls the entrance function of the components "EntryPoint" class
+   * @param String $component The component name.
+   */
   public function enter($component)
   {
     
@@ -77,7 +115,14 @@ class Component
     
   }
   
-  // loading method
+  /**
+   * Allows loading components and their parts.
+   * @param String $component The component name.
+   * @param String $part The optional name of the part to load.
+   * @param boolean $instantiate Whether or not to instantiate the requested part.
+   * @return mixed Returns null if `$part` is null, a boolean if `$instantiate` is false or the instantiated part if `$instantiate` is true.
+   * @throws \exception\NotFound If the loaded file does not contain the expected part.
+   */
   public function load($component, $part=null, $instantiate=true)
   {
 
@@ -102,20 +147,47 @@ class Component
     //if the component part was not yet set, now would be the time to include it
     if(!$this->components->{$component}->{$part}->is_set() || $this->components->{$component}->{$part}->is_true() && $instantiate === true)
     {
-      require_once(PATH_COMPONENTS.DS.$component.DS.str_replace('\\', DS, $part).EXT);
+      
+      //Create the file and class name.
+      $class = "\\components\\$component\\$part";
+      $file = PATH_COMPONENTS.DS.$component.DS.str_replace('\\', DS, $part).EXT;
+      
+      //Require the file that should contain the class.
+      require_once($file);
+      
+      //Check if the file actually contains this class.
+      if(!class_exists($class, false)){
+        throw new \exception\NotFound('The file "%s" does not appear to contain the expected "%s"-class.', $file, $class);
+      }
+      
+      //Instantiate the class right away?
       if($instantiate){
-        $class = "\\components\\$component\\$part";
         $this->components->{$component}->{$part}->set(new $class);
-      }else{
+      }
+      
+      //Only set a boolean to indicate that the file has been loaded.
+      else{
         $this->components->{$component}->{$part}->set(true);
       }
+      
     }
     
+    //Return the instance (or boolean).
     return $this->components->{$component}->{$part}->get();
     
   }
   
-  // validate a component's folder structure
+  /**
+   * Validates a component's folder structure.
+   * @param String $component_name The name of the component.
+   * @return boolean
+   * @throws \exception\InvalidArgument If the component name is empty.
+   * @throws \exception\InvalidArgument If the component name contains invalid characters.
+   * @throws \exception\FileMissing If the component does not exist.
+   * @throws \exception\FileMissing If the component does not have Actions, Modules, Views or Sections.
+   * @throws \exception\FileMissing If the component does not have includes, models or templates.
+   * @throws \exception\FileMissing If the component does not have frontend, backend or global templates.
+   */
   public function check($component_name)
   {
     
@@ -173,6 +245,11 @@ class Component
   
   }
   
+  /**
+   * Checks whether a component is available and has a valid structure.
+   * @param String $component_name The name of the component.
+   * @return boolean
+   */
   public function available($component_name)
   {
     

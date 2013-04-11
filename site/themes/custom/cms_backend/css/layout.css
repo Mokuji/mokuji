@@ -26,8 +26,11 @@
     #page-main-left .content{
       overflow:hidden;
       position: absolute;
-      top:0px;
-      bottom:0px;
+      top:1px;/* 0->1 because of rounded (custom) scrollbar in Webkit */
+      bottom:31px;
+    }
+    #page-main-left:hover .content{
+      overflow-y:auto;
     }
   #page-main-right{
     padding-left:241px;

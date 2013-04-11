@@ -1,10 +1,10 @@
 {
   
   "PAGES_VIEW_TITLE": "Pagina's",
-  "PAGES_VIEW_DESCRIPTION": "",
+  "PAGES_VIEW_DESCRIPTION": "Paginabeheer, geeft een lijstweergave van bewerkbare pagina's",
   
   "SETTINGS_VIEW_TITLE": "Website instellingen",
-  "SETTINGS_VIEW_DESCRIPTION": "",
+  "SETTINGS_VIEW_DESCRIPTION": "Website instellingen",
   
   
   
@@ -14,8 +14,8 @@
   "Control Panel Home": "Beheerderspaneel homepagina",
   "Create user": "Gebruiker aanmaken",
   
-  "Detach menu item from page": "Koppel menu-item los van pagina",
-  "Detach page from menu item": "Koppel pagina los van menu-item",
+  "Detach menu item from page": "Ontkoppel menu-item van pagina",
+  "Detach page from menu item": "Ontkoppel pagina van menu-item",
   "Delete image": "Verwijder afbeelding",
   "Domains": "Domeinen",
   
@@ -44,7 +44,9 @@
   
   "New menu": "Nieuw menu",
   "New menu item": "Nieuw menu-item",
+  "New page": "Nieuwe pagina",
   "New site": "Nieuwe site",
+  "No menu items found": "Geen menu-items gevonden",
   
   "Page content": "Pagina inhoud",
   "PAGE_DISPLAY": "Weergave",
@@ -77,6 +79,11 @@
   
   "URL path": "URL-pad",
   
-  "Website settings": "Website instellingen"
+  "Website settings": "Website instellingen",
+
+  "SOCIAL_MEDIAL_OVERRIDE_VALUES_EXPLANATION": "Each field for the social media information has a default value. You're not required to fill them in to use social media optimizations. However they are available should you want to tailor them.",
+
+  "Username": "Gebruikersnaam",
+  "Password": "Wachtwoord"
   
 }

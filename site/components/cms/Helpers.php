@@ -11,7 +11,7 @@ class Helpers extends \dependencies\BaseComponent
       return;
     
     if(tx('Config')->user('login_page')->is_set()){
-      $redirect = url(URL_BASE.'?'.tx('Config')->user('login_page'), true);
+      $redirect = url(tx('Config')->user('login_page'), true);
     }
     
     else{
@@ -124,10 +124,12 @@ class Helpers extends \dependencies\BaseComponent
       ->join('Components', $co)
       ->select("$co.name", 'component')
     ->execute_single();
-
+    
     if($result->is_empty()){
       return false;
     }
+    
+    $result->title->set($result->preferred_title);
     
     $page_info[$pid] = $result;
     
@@ -215,9 +217,6 @@ class Helpers extends \dependencies\BaseComponent
       //For each usergroup.
       ->each(function($userGroup)use($pid, $permissions, $knownPermissions){
         
-        echo('Set permissions of '.$userGroup);
-        trace($knownPermissions->{$userGroup->id}->dump());
-
         //Take it's known permission.
         $knownPermissions->{$userGroup->id}
           
@@ -232,7 +231,7 @@ class Helpers extends \dependencies\BaseComponent
           })
           
           //Now set access_level and save.
-          ->access_level->set($permissions->{$userGroup->id->get()}->otherwise(0))->back()
+          ->access_level->set($permissions->{$userGroup->id->get()}->otherwise(0)->get('int'))->back()
           ->save();
         
       });
@@ -241,28 +240,84 @@ class Helpers extends \dependencies\BaseComponent
   
   /**
    * $options[]
-   * @id: setting ID
+   * @key: setting key
    */
-  public function get_settings()
+  public function get_settings($key='')
   {
+    
+    $key = Data($key);
+    
+    $config = Data();
+    
+    tx('Sql')
+      ->table('cms', 'CmsConfig')
+      ->is(!$key->is_empty(), function($tbl)use($key){
+        $tbl->where('key', "'$key'");
+      })
+      ->execute()
+      ->each(function($item)use($config){
+        
+        $config->{$item->key->get()}->merge(array(
+          'key' => $item->key,
+          'value_'.($item->language_id->is_set() ? $item->language_id->get() : 'default') => $item->value->get()
+        ));
+          
+      });
+    
+    return ($key->is_empty() ? $config : $config->{$key});
 
-    $q =
-      $this
-      ->table('CmsConfig');
-
-    if(is_numeric(tx('Data')->get->setting_id->get()))
-    {
-      $q = $q
-      ->where('id', tx('Data')->get->setting_id)
-      ->execute_single();
+  }
+  
+  public function ensure_pagetypes($component, $views)
+  {
+    
+    //Look for the component in the CMS tables.
+    $component = tx('Sql')
+      ->table('cms', 'Components')
+      ->where('name', "'{$component['name']}'")
+      ->limit(1)
+      ->execute_single()
+      
+      //If it's not there, create it.
+      ->is('empty', function()use($component){
+        
+        return tx('Sql')
+          ->model('cms', 'Components')
+          ->set(array(
+            'name' => $component['name'],
+            'title' => $component['title']
+          ))
+          ->save();
+        
+      });
+    
+    //Look for the views.
+    foreach($views as $name => $is_config){
+      
+      tx('Sql')
+        ->table('cms', 'ComponentViews')
+        ->where('com_id', $component->id)
+        ->where('name', "'$name'")
+        ->limit(1)
+        ->execute_single()
+        
+        //If it's not there, create it.
+        ->is('empty', function()use($component, $name, $is_config){
+          
+          $view = tx('Sql')
+            ->model('cms', 'ComponentViews')
+            ->set(array(
+              'com_id' => $component->id,
+              'name' => $name,
+              'tk_title' => strtoupper(sprintf('%s_%s_TITLE', $component->name, $name)),
+              'tk_description' => strtoupper(sprintf('%s_%s_DESCRIPTION', $component->name, $name)),
+              'is_config' => ($is_config == true ? 1 : 0)
+            ))
+            ->save();
+        });
+      
     }
-    else
-    {
-      $q = $q->execute();
-    }
-
-    return $q;
-
+    
   }
 
 }

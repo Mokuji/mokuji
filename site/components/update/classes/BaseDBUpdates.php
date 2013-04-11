@@ -64,7 +64,8 @@ abstract class BaseDBUpdates
   
   /* ---------- Static ---------- */
   
-  static function base_dir($type = 'core', $name = null){
+  static function base_dir($type = 'core', $name = null)
+  {
     
     switch($type){
       
@@ -356,30 +357,28 @@ abstract class BaseDBUpdates
     //If it exists, call it.
     if(method_exists($this, $method))
     {
-      
-      //Log and perform the update call.
       tx('Logging')->log('Update', 'Updating DB', 'Calling '.$method.' for package '.$this->package()->title.' from version '.$this->current_version());
       call_user_func_array(array($this, $method), array($this->current_version(), $forced));
-      $this->version_bump($next);
-      
-      //Repeat.
-      $this->update($forced, $maybe_install);
-      return true;
-      
     }
     
     //Otherwise just report we're skipping it, but once looked for it.
     else{
       tx('Logging')->log('Update', 'Updating DB', 'No method '.$method.' for package '.$this->package()->title.' from version '.$this->current_version());
-      $this->version_bump($next);
-      return true;
     }
+    
+    //Bump version.
+    $this->version_bump($next);
+    
+    //Repeat.
+    $this->update($forced, $maybe_install);
+    return true;
     
   }
   
   /* ---------- Protected ---------- */
   
-  protected function get_base_dir(){
+  protected function get_base_dir()
+  {
     
     if($this->is_core === true)
       return self::base_dir('core');
@@ -511,9 +510,12 @@ abstract class BaseDBUpdates
     if(!$this->package()->id->is_set() && $this->component === 'update'){
       
       //Get the version data from the package.json.
-      $version = $this->get_package_data()->versions->filter(function($packageVersion)use($version){
-        return $packageVersion->version->get('string') === $version;
-      })->{0};
+      foreach($this->get_package_data()->versions as $packageVersion){
+        if($packageVersion->version->get('string') === $version){
+          $version = $packageVersion;
+          break;
+        }
+      }
       
       //Insert it into the database.
       $dbPackage = $this->package()->merge(array(

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpdoc>
+  <title>TX.CMS</title>
+  <parser>
+    <target>.</target>
+  </parser>
+  <files>
+    <directory>.package</directory>
+    <directory>config</directory>
+    <directory>site/helpers</directory>
+    <directory>site/tx.cms</directory>
+    <directory>site/system</directory>
+    <directory>site/components/account</directory>
+    <directory>site/components/cms</directory>
+    <directory>site/components/menu</directory>
+    <directory>site/components/text</directory>
+    <directory>site/components/timeline</directory>
+    <directory>site/components/update</directory>
+  </files>
+  <logging>
+    <level>quiet</level>
+  </logging>
+</phpdoc>

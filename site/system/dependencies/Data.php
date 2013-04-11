@@ -1601,10 +1601,10 @@ class Data extends Successable implements \Serializable, \IteratorAggregate, \Ar
   }
   
   // validates given rules
-  public function validate($name, array $rules)
+  public function validate($name, array $rules, $translate=true)
   {
     
-    $validator = new Validator($this->get(), $rules);
+    $validator = new Validator($this->get(), $rules, $translate);
     
     if($validator->failure())
     {
@@ -1743,6 +1743,46 @@ class Data extends Successable implements \Serializable, \IteratorAggregate, \Ar
     }
     
     return $this;
+    
+  }
+  
+  // the same as each, except returns false when one fails the truth test
+  public function all($callback)
+  {
+    
+    if(!is_callable($callback)){
+      throw new \exception\InvalidArgument('Expecting $callback to be callable. It is not.');
+      return $this;
+    }
+    
+    foreach($this as $key => $node){
+      $r = $callback($node, $key);
+      if($r === false){
+        return false;
+      }
+    }
+    
+    return true;
+    
+  }
+  
+  // the same as each, except returns false when all fail the truth test
+  public function any($callback)
+  {
+    
+    if(!is_callable($callback)){
+      throw new \exception\InvalidArgument('Expecting $callback to be callable. It is not.');
+      return $this;
+    }
+    
+    foreach($this as $key => $node){
+      $r = $callback($node, $key);
+      if($r === true){
+        return true;
+      }
+    }
+    
+    return false;
     
   }
   

@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="nl" lang="nl">
   <head>
 
-    <title>tuxion.cms <?php echo $head->title; ?></title>
+    <title>Website-beheer</title>
     <base href="<?php echo $head->base->href; ?>" target="<?php echo $head->base->target; ?>" />
 
     <!-- character encoding -->
@@ -17,11 +17,11 @@
     <meta name="revisit-after" content="15 days" />
     <?php echo $head->meta; ?>
     
-    <?php echo $head->plugins; ?>
-
     <?php echo $head->theme; ?>
 
     <?php echo $head->links; ?>
+
+    <?php echo $head->plugins; ?>
     
     <?php echo $head->scripts; ?>
 
@@ -32,6 +32,10 @@
   <div id="page">
 
     <?php echo $body->content; ?>
+    
+    <div id="application-notifications-wrapper">
+      <div id="application-notifications" style="display:none;"></div>
+    </div>
     
   </div>
   <!-- /PAGE -->

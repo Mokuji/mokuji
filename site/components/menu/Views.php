@@ -11,11 +11,6 @@ class Views extends \dependencies\BaseViews
     );
   }
   
-  protected function sitemap()
-  {
-    return $this->module('sitemap');
-  }
-  
   protected function menu_link($options)
   {
     

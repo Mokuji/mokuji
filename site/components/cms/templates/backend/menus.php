@@ -1,7 +1,8 @@
 <?php namespace components\cms; if(!defined('TX')) die('No direct access.'); ?>
 
-<div class="content">    
-  <?php echo $menus->items; ?>
+<div class="content">
+  <?php echo $menus->menu_toolbar; ?>
+  <?php echo $menus->menu_items; ?>
 </div>
 
 

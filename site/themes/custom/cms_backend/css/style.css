@@ -39,6 +39,45 @@
   -webkit-border-radius:4px;
 }
 
+/* =Tools
+--------------------------------------
+
+Example:
+
+[toggle description]
+  [a:trigger]
+    txt
+    l1
+    l2(hidden)
+  [/a]
+  [hidden-wrapper/]
+[/]
+
+*/
+
+.hidden{
+  display:none; 
+}
+  
+.toggle-wrapper .toggle.hidden{
+  display:none;
+}
+
+  .toggle-wrapper.open .trigger .toggle{
+    display:none;
+  }
+  .toggle-wrapper.open .trigger .toggle.hidden{
+    display:inline;
+  }
+
+.toggle-wrapper.open .hidden.description{
+  display:block;
+}
+
+
+/* =
+--------------------------------------*/
+
 html, body{
   height:100%;
 }
@@ -92,7 +131,7 @@ body.cursor_resizing{
 body.cursor_disabled{
   cursor: not-allowed;
 }
-  
+
 /* =Content
 --------------------------------------*/
   #page-main-left{
@@ -201,7 +240,7 @@ body.cursor_disabled{
   border-bottom:1px solid #d6dce1;
 }
   .multisite #page-main-left .menu-items-list{
-    top:82px;
+    /*top:82px;*/
   }
 #page-main-left .menu-items-list ul{
   list-style:none;
@@ -211,14 +250,17 @@ body.cursor_disabled{
   margin-left:-20px;
   padding-left:20px;
 }
+#page-main-left .menu-items-list li{
+  padding-left:40px;
+  margin-left:-20px;
+}
 #page-main-left .menu-items-list li a{
   display:block;
   padding:10px 0;
   border-bottom:1px solid #d6dce1;
 }
-#page-main-left .menu-items-list li{
-  padding-left:40px;
-  margin-left:-20px;
+#page-main-left .menu-items-list a.active{
+  background-color:#E2E2E2;
 }
 #page-main-left .menu-items-list > li a:hover{
   text-decoration:none;
@@ -321,6 +363,7 @@ body.cursor_disabled{
   border-top:1px solid #d6dce1;
   position:absolute;
   bottom:0;
+  height:17px;
   padding:7px 0;
   width:100%;
   background: #ffffff; /* Old browsers */
@@ -833,7 +876,7 @@ body.cursor_disabled{
     background: linear-gradient(to bottom, rgba(232,232,232,1) 0%,rgba(211,211,211,1) 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e8e8e8', endColorstr='#d3d3d3',GradientType=0 ); /* IE6-8 */
   }
-
+  
   table.dataTable tbody tr.even:hover td.sorting_1,
   table.dataTable tbody tr.odd:hover td.sorting_1,
   table.dataTable tbody tr.even:hover,
@@ -850,10 +893,12 @@ body.cursor_disabled{
   #page-main-right li{
     /*margin-left:15px;*/
   }
+  
   #page-main-right ul.pagetypes-list li{
     margin-left:6px;
     overflow:hidden;
   }
+  
   #page-main-right .paginate_disabled_next,
   #page-main-right .paginate_enabled_next,
   #page-main-right .paginate_enabled_previous,
@@ -958,4 +1003,31 @@ body.cursor_disabled{
     color:#fff;
   }
 
-  
+
+/*
+  Config pages, new navigators
+*/
+.config-navigation{
+  list-style:none;
+  float:left;
+  width:18%;
+  margin-right:2%;
+  border-bottom:1px solid #000;
+}
+  .config-navigation li{
+    display:block;
+  }
+  .config-navigation .nav-item{
+    display:block;
+    overflow:hidden;
+    padding:10px 20px;
+    font-size:120%;
+    text-decoration:none;
+    border:1px solid #000;
+    border-bottom:none;
+  }
+
+.config-content-pane{
+  float:left;
+  width:80%;
+}

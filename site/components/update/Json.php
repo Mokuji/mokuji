@@ -20,6 +20,11 @@ class Json extends \dependencies\BaseViews
     
   }
   
+  protected function get_db_test()
+  {
+    
+  }
+
   /* ---------- Install calls ---------- */
   protected function create_db_test($data, $params)
   {
@@ -35,7 +40,7 @@ class Json extends \dependencies\BaseViews
       ->name->validate('Database name', array('required', 'string', 'not_empty'))->back()
       ->prefix->validate('Table prefix', array('required', 'string', 'not_empty'))->back()
     ;
-    
+
     //Attempt to connect.
     $connection = @mysql_connect($data->host->get(), $data->username->get(), $data->password->get());
     
@@ -124,7 +129,7 @@ class Json extends \dependencies\BaseViews
     require_once(PATH_COMPONENTS.DS.'update'.DS.'.package'.DS.'DBUpdates'.EXT);
     $updater = new \components\update\DBUpdates();
     $success = $updater->install(false, true, true) && $this->helper('check_updates', array('silent'=>true, 'force'=>true));
-    
+
     return array(
       'success' => $success,
       'message' => 'Database installation finished, you can now proceed to the next step.'
@@ -138,20 +143,28 @@ class Json extends \dependencies\BaseViews
     if(INSTALLING !== true)
       throw new \exception\Authorisation('The CMS is not in install mode.');
     
-    //Validate input.
-    $data = Data($data)->having('site_title', 'email_webmaster', 'email_webmaster_name',
-                                'email_automated', 'email_automated_name', 'lang_code', 'lang_shortcode',
-                                'paths_base', 'paths_url')
-      ->site_title->validate('Site title', array('required', 'string', 'not_empty'))->back()
-      ->email_webmaster_name->validate('Webmaster name', array('required', 'string', 'not_empty'))->back()
-      ->email_webmaster->validate('Webmaster email', array('required', 'email'))->back()
-      ->email_automated_name->validate('Automated messages name', array('required', 'string', 'not_empty'))->back()
-      ->email_automated->validate('Automated messages email', array('required', 'email'))->back()
-      ->lang_code->validate('Language code', array('required', 'string', 'not_empty'))->back()
-      ->lang_shortcode->validate('Short code', array('required', 'string', 'not_empty'))->back()
-      ->paths_base->validate('Base path', array('required', 'string', 'not_empty'))->back()
-      ->paths_url->validate('Url path', array('string'))->back()
-    ;
+    //Since we're in install mode, we need to include the database settings manually.
+    require_once(PATH_BASE.DS.'config'.DS.'database'.EXT);
+    tx('Sql')->set_connection_data(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PREFIX);
+    
+    //Get all the values we need.
+    $data = Data($data)->having(
+      'site_title', 'email_webmaster', 'email_webmaster_name',
+      'email_automated', 'email_automated_name', 'lang_code',
+      'lang_title', 'lang_shortcode', 'paths_base', 'paths_url'
+    )
+    
+    //Validate each of these values.
+    ->site_title->validate('Site title', array('required', 'string', 'not_empty'))->back()
+    ->email_webmaster_name->validate('Webmaster name', array('required', 'string', 'not_empty'))->back()
+    ->email_webmaster->validate('Webmaster email', array('required', 'email'))->back()
+    ->email_automated_name->validate('Automated messages name', array('required', 'string', 'not_empty'))->back()
+    ->email_automated->validate('Automated messages email', array('required', 'email'))->back()
+    ->lang_title->validate('Language title', array('required', 'string', 'not_empty'))->back()
+    ->lang_code->validate('Language code', array('required', 'string', 'not_empty'))->back()
+    ->lang_shortcode->validate('Short code', array('required', 'string', 'not_empty'))->back()
+    ->paths_base->validate('Base path', array('required', 'string', 'not_empty'))->back()
+    ->paths_url->validate('Url path', array('string'))->back();
     
     //Write email config file.
     $f = fopen(PATH_BASE.DS.'config'.DS.'email'.EXT, 'w');
@@ -166,9 +179,9 @@ class Json extends \dependencies\BaseViews
       'define("EMAIL_ADDRESS_AUTOMATED_MESSAGES","'.$data->email_automated.'");'
     );
     
-    //Check language code is valid.
-    if(!file_exists(PATH_SITE.DS.'languages'.DS.$data->lang_code->get('string').'.ini')){
-      $ex = new \exception\Validation('No translation files found for '.PATH_SITE.DS.'languages'.DS.$data->lang_code->get('string').'.ini');
+    //Check language code valid is.
+    if(!file_exists(PATH_SITE.DS.'i18n'.DS.$data->lang_code->get('string').'.json')){
+      $ex = new \exception\Validation('No translation files found for '.PATH_SITE.DS.'i18n'.DS.$data->lang_code->get('string').'.json');
       $ex->key('lang_code');
       $ex->errors(array('No translation files found for this language code'));
       throw $ex;
@@ -176,12 +189,8 @@ class Json extends \dependencies\BaseViews
     
     //There's no viable way to validate base and url paths, that's why it's advanced.
     
-    //Since we're in install mode, we need to include the database settings manually.
-    require_once(PATH_BASE.DS.'config'.DS.'database'.EXT);
-    tx('Sql')->set_connection_data(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PREFIX);
-    
     //Store this info.
-    tx('Sql')->query("INSERT INTO `#__core_languages` (`code`, `shortcode`) VALUES ('{$data->lang_code}', '{$data->lang_shortcode}')");
+    tx('Sql')->query("INSERT INTO `#__core_languages` (`code`, `shortcode`, `title`) VALUES ('{$data->lang_code}', '{$data->lang_shortcode}', '{$data->lang_title}')");
     tx('Sql')->query("INSERT INTO `#__core_sites` (`title`, `path_base`, `url_path`) VALUES ('{$data->site_title}', '{$data->paths_base}', '{$data->paths_url}')");
     $site_id = tx('Sql')->get_insert_id();
     tx('Sql')->query("INSERT INTO `#__core_site_domains` (`site_id`, `domain`) VALUES ({$site_id}, '*')");

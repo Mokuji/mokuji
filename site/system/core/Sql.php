@@ -29,7 +29,7 @@ class Sql
   {
     
     if(INSTALLING === true && !isset($this->connection)){
-      $this->connection = mysql_connect($host, $user, $pass);
+      $this->connection = mysql_connect($host, $user, $pass) or die('Could not connect to database.');
       mysql_select_db($name, $this->connection);
       $this->prefix = $prefix;
     } else {
@@ -90,7 +90,7 @@ class Sql
   
   public function query($query)
   {
-    
+
     $query = str_replace('#__', $this->prefix, $query);
     $result = mysql_query($query, $this->connection);
     

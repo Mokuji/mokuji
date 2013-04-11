@@ -32,11 +32,6 @@ audio:not([controls]) { display: none; }
 
 html { font-size: 100%; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
 
-body, html { overflow:hidden; }
-body { margin: 0; font-size: 12px; line-height: 21px; }
-
-body, button, input, select, textarea { font-family: "lucida grande",tahoma,verdana,arial,sans-serif;  color: #323232; }
-
 /* 
  * Remove text-shadow in selection highlight: h5bp.com/i
  * These selection declarations have to be separate
@@ -57,9 +52,6 @@ input::placeholder{
    Links
    ========================================================================== */
 
-a { color: #000000; text-decoration: none; }
-a:visited { color: #000; }
-a:hover { color: #0063a2; }
 a:focus { outline: none;}
 
 /* Improve readability when focused and hovered in all browsers: h5bp.com/h */
@@ -218,15 +210,6 @@ td { vertical-align: top; }
    Author: Tuxion
    ========================================================================== */
    
-/* page structure */
-
-#container
-{
-  width:100%;
-  height:100%;
-  overflow:hidden;
-}
-
 
   
 /* ==|== non-semantic helper classes ========================================
@@ -256,25 +239,6 @@ td { vertical-align: top; }
 .clear{clear:left;}
 
 
-
-/* ==|== media queries ======================================================
-   PLACEHOLDER Media Queries for Responsive Design.
-   These override the primary ('mobile first') styles
-   Modify as content requires.
-   ========================================================================== */
-
-@media only screen and (min-width: 480px) {
-  /* Style adjustments for viewports 480px and over go here */
-
-}
-
-@media only screen and (min-width: 768px) {
-  /* Style adjustments for viewports 768px and over go here */
-
-}
-
-
-
 /* ==|== print styles =======================================================
    Print styles.
    Inlined to avoid required HTTP connection: h5bp.com/r
@@ -294,84 +258,3 @@ td { vertical-align: top; }
   p, h2, h3 { orphans: 3; widows: 3; }
   h2, h3 { page-break-after: avoid; }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/************* Other CSS ***/
-
-#com-gallery #sub-bar {
-}
-header{
-  display:none;
-}
-#com-gallery div#fullscreen-overlay, #com-gallery ul#gallery{
-  top:43px !important;
-}
-#com-gallery #logo {
-  display:none !important;
-}
-
-/* =com:gallery
--------------------------------------------------------------- */
-
-  /* logo */
-
-  #com-gallery #logo{
-    background:url(../img/logo.png) no-repeat left top;
-    width:161px;
-    height:57px;
-    margin-top:8px !important;
-    margin-bottom:30px !important;
-  }
-/*
-  #com-gallery #paging .active,
-  #left ul li a:hover,
-	#left li.active > div > a,
-  #left li li.active > div > a,
-  #com-gallery li.download:hover > a,
-  #com-gallery li.preview:hover > a,
-  #com-gallery li.collect:hover > a,
-  #com-gallery ul.dl-tooltip,
-  #feedback-btn:hover{
-    background-color:#0e2180 !important;
-    color:#fff !important;
-  }
-  
-  #com-gallery ul.dl-tooltip a{
-    color:#fff !important;
-  }
-  #com-gallery #left h2{
-    color:#0e2180 !important;
-  }
-  
-*/

@@ -12,11 +12,68 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
     $updates = array(
       '1.1' => '1.2',
       '1.2' => '1.3',
-      '1.3' => '1.4'
+      '1.3' => '1.4',
+      '1.4' => '2.0',
+      '2.0' => '2.1'
     );
+  
+  public function update_to_2_1($current_version, $forced)
+  {
+    
+    try{
+      
+      tx('Sql')->query('
+        ALTER TABLE `#__cms_page_info`
+          ADD `title_recommendation` varchar(255) NULL after `title`
+      ');
+      
+    }catch(\exception\Sql $ex){
+      //When it's not forced, this is a problem.
+      //But when forcing, ignore this.
+      if(!$forced) throw $ex;
+    }
+    
+  }
+  
+  public function update_to_2_0($current_version, $forced)
+  {
+    
+    try{
+      
+      tx('Sql')->query('
+        ALTER TABLE `#__cms_pages`
+          CHANGE `keywords` `notes` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL 
+      ');
+      
+      tx('Sql')->query('
+        ALTER TABLE `#__cms_page_info`
+          ADD `description` TEXT NULL,
+          ADD `keywords` VARCHAR( 255 ) NULL,
+          ADD `url_key` VARCHAR( 255 ) NULL,
+          ADD `og_title` VARCHAR( 255 ) NULL,
+          ADD `og_description` TEXT NULL,
+          ADD `og_keywords` VARCHAR( 255 ) NULL,
+          ADD `tw_title` VARCHAR( 255 ) NULL,
+          ADD `tw_description` TEXT NULL,
+          ADD `tw_author` VARCHAR( 255 ) NULL,
+          ADD `gp_author` VARCHAR( 255 ) NULL,
+          ADD INDEX ( `page_id` ),
+          ADD INDEX ( `language_id` )
+      ');
+      
+      
+    }catch(\exception\Sql $ex){
+      //When it's not forced, this is a problem.
+      //But when forcing, ignore this.
+      if(!$forced) throw $ex;
+    }
+    
+  }
   
   public function update_to_1_4($current_version, $forced)
   {
+    
+    $comname = $this->component;
     
     $component = tx('Sql')
       ->table('cms', 'Components')
@@ -27,19 +84,19 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
       ->table('cms', 'ComponentViews')
       ->where('com_id', $component->id)
       ->execute()
-      ->each(function($view){
+      ->each(function($view)use($comname){
         
         //If tk_title starts with 'COMNAME_' remove it.
-        if(strpos($view->tk_title->get('string'), strtoupper($this->component.'_')) === 0){
+        if(strpos($view->tk_title->get('string'), strtoupper($comname.'_')) === 0){
           $view->tk_title->set(
-            substr($view->tk_title->get('string'), (strlen($this->component)+1))
+            substr($view->tk_title->get('string'), (strlen($comname)+1))
           );
         }
         
         //If tk_description starts with 'COMNAME_' remove it.
-        if(strpos($view->tk_description->get('string'), strtoupper($this->component.'_')) === 0){
+        if(strpos($view->tk_description->get('string'), strtoupper($comname.'_')) === 0){
           $view->tk_description->set(
-            substr($view->tk_description->get('string'), (strlen($this->component)+1))
+            substr($view->tk_description->get('string'), (strlen($comname)+1))
           );
         }
         
@@ -53,8 +110,8 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
   {
     
     tx('Sql')->query('
-      ALTER TABLE  `#__cms_options`
-        DROP INDEX  `key`
+      ALTER TABLE `#__cms_options`
+        DROP INDEX `key`
     ');
     
   }

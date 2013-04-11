@@ -6,7 +6,7 @@
     <h2>Site configuration</h2>
   </div>
   <div class="body clearfix">
-    <p>We can now configure the site. >>TODO give more info</p>
+    <p>We can now configure the site.<!-- #TODO give more info --></p>
     
     <form method="post" action="#" data-action="<?php echo url('?rest=update/site_installation', true); ?>" class="form install-site-form">
       
@@ -15,8 +15,8 @@
         <h3>Site information</h3>
         
         <div class="ctrlHolder">
-          <label for="l_site_title" accesskey="v">Internal site title</label>
-          <input class="small" type="text" id="l_site_title" name="site_title" value="main_site" required />
+          <label for="l_site_title" accesskey="v">Site title</label>
+          <input class="small" type="text" id="l_site_title" name="site_title" value="My website" required />
         </div>
         
         <div class="ctrlHolder">
@@ -44,6 +44,11 @@
       <div class="setting language">
         
         <h3>Default language</h3>
+        
+        <div class="ctrlHolder">
+          <label for="l_lang_title" accesskey="v">Language title (in English)</label>
+          <input class="small" type="text" id="l_lang_title" name="lang_title" value="English" required />
+        </div>
         
         <div class="ctrlHolder">
           <label for="l_lang_code" accesskey="v">Language code</label>

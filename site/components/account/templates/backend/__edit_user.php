@@ -3,7 +3,7 @@ $create = $data->id->get('int') < 1;
 $uid = tx('Security')->random_string(20);
 ?>
 
-<form method="post" id="<?php echo $uid; ?>" action="<?php echo url('action=account/edit_user/post'); ?>" class="form edit-user-form">
+<form method="<?php echo ($create ? 'post' : 'put') ?>" id="<?php echo $uid; ?>" action="<?php echo url('rest=account/user'); ?>" class="form edit-user-form">
   
   <input type="hidden" name="id" value="<?php echo $edit_user->id ?>" />
   
@@ -19,7 +19,7 @@ $uid = tx('Security')->random_string(20);
   
   <div class="ctrlHolder">
     <label for="l_password" accesskey="p"><?php __('Password'); ?></label>
-    <input class="big large" type="password" id="l_password" name="password" value="" placeholder="wachtwoord verborgen" />
+    <input class="big large" type="password" id="l_password" name="password" value="" placeholder="<?php __('Password hidden'); ?>" />
   </div>
   
   <div class="ctrlHolder">
@@ -42,20 +42,11 @@ $uid = tx('Security')->random_string(20);
     <textarea class="big large" id="l_comments" name="comments"><?php echo $edit_user->user_info->comments; ?></textarea>
   </div>
   
-  <?php
-    
-    if($create)
-    {
-      
-      ?>
-        <div class="ctrlHolder">
-          <label for="l_choose_password" accesskey="a"><input class="big large" type="checkbox" id="l_choose_password" name="choose_password" value="1" /> <?php __($names->component, 'Let user choose password'); ?></label>
-        </div>
-      <?php
-      
-    }
-  
-  ?>
+  <?php if(false && $create): ?>
+    <div class="ctrlHolder">
+      <label for="l_choose_password" accesskey="a"><input class="big large" type="checkbox" id="l_choose_password" name="choose_password" value="1" /> <?php __($names->component, 'Let user choose password'); ?></label>
+    </div>
+  <?php endif; ?>
   
   <div class="ctrlHolder">
     <label for="l_admin" accesskey="a">
@@ -64,20 +55,11 @@ $uid = tx('Security')->random_string(20);
     </label>
   </div>
   
-  <?php
-  
-    if($create)
-    {
-      
-      ?>
-        <div class="ctrlHolder" hidden>
-          <label for="l_notify_user" accesskey="n"><input class="big large" type="checkbox" id="l_notify_user" name="notify_user" value="1" /> <?php __($names->component, 'Notify user of update'); ?></label>
-        </div>
-      <?php
-      
-    }
-  
-  ?>
+  <?php if($create): ?>
+    <div class="ctrlHolder" hidden>
+      <label for="l_notify_user" accesskey="n"><input class="big large" type="checkbox" id="l_notify_user" name="notify_user" value="1" /> <?php __($names->component, 'Notify user of update'); ?></label>
+    </div>
+  <?php endif; ?>
   
   <fieldset class="fieldset-user-groups">
     
@@ -108,6 +90,7 @@ $uid = tx('Security')->random_string(20);
   </div>
 
 </form>
+
 <script type="text/javascript">
 $(function(){
   
@@ -146,6 +129,17 @@ $(function(){
     }
     
   }).trigger('change');
+  
+  $('#<?php echo $uid; ?>').restForm({
+    success: function(data){
+      $('#tab-users').html(data);
+      $('#tabber-users a').trigger('click');
+    },
+    failure: function(xhr, state, message){
+      console.log(arguments);
+      alert('error');
+    }
+  });
   
 });
 </script>

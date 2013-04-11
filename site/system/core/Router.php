@@ -55,12 +55,6 @@ class Router
         );
       });
       
-      //test for UserFunction.
-      if(!($userfunc instanceof \dependencies\UserFunction)){
-        set_status_header(500, "Method {$methodtype}_{$methodname}() must return an instance of UserFunction.");
-        exit;
-      }
-      
       //Decide on the response code.
       if($userfunc->failure())
       {
@@ -68,21 +62,53 @@ class Router
         switch($userfunc->exception->getExCode()){
           case EX_AUTHORISATION: $code = 401; break;
           case EX_EMPTYRESULT: $code = 404; break;
-          case EX_VALIDATION: $code = 412; break;
+          
+          //Validation errors
+          case EX_VALIDATION:
+          case EX_MODEL_VALIDATION:
+            $code = 412; break;
+          
           default: $code = 500; break;
         }
         
         set_status_header($code, $userfunc->get_user_message());
         
+        $AND = __('And', true, 'l');
+        
+        //Return field specific errors in JSON for Validation exceptions.
         if($userfunc->exception->getExCode() === EX_VALIDATION){
           $errors = $userfunc->exception->errors();
           for($i = 0, $total = count($errors), $sep = '', $msg = ''; $i < $total; $i++){
             $msg .= $sep.strtolower(substr($errors[$i], 0, 1)).substr($errors[$i], 1);
             $sep = ', ';
-            if($i == $total-2) $sep = ' and ';
+            if($i == $total-2) $sep = " $AND ";
           }
           echo '{"'.$userfunc->exception->key().'":"'.ucfirst($msg).'."}';
         }
+        
+        //Return field specific errors in JSON for ModelValidation exceptions.
+        if($userfunc->exception->getExCode() === EX_MODEL_VALIDATION){
+          
+          $errorData = Data();
+          
+          foreach ($userfunc->exception->errors as $error){
+            $sep = '';
+            $msg = '';
+            $errors = $error->errors();
+            $total = count($errors);
+            for($i = 0; $i < $total; $i++){
+              $msg .= $sep.strtolower(substr($errors[$i], 0, 1)).substr($errors[$i], 1);
+              $sep = ', ';
+              if($i == $total-2) $sep = " $AND ";
+            }
+            $msg .= '.';
+            $errorData->{$error->key()}->set(ucfirst($msg));
+          }
+          
+          echo $errorData->as_json();
+          
+        }//END - JSON for ModelValidation exceptions.
+        
         exit;
         
       }
@@ -103,13 +129,13 @@ class Router
     //or load a section
     elseif(tx('Data')->get->section->is_set()){
       $si = $this->parse_section(tx('Data')->get->section);
-      $contents = tx('Component')->sections($si['component'])->get_html($si['controller']);
+      $contents = tx('Component')->sections($si['component'])->get_html($si['controller'], tx('Data')->get->options->get());
     }
     
     //maybe a module?
     elseif(tx('Data')->get->module->is_set()){
       $mi = $this->parse_module(tx('Data')->get->module);
-      $contents = tx('Component')->modules($mi['component'])->get_html($mi['controller']);
+      $contents = tx('Component')->modules($mi['component'])->get_html($mi['controller'], tx('Data')->get->options->get());
     }
     
     //load the template

@@ -64,7 +64,7 @@ class Security
    *
    * @author Beanow
    * @param String $password The password to get the strength of.
-   * @return Boolean Returns TRUE if strong, throws validation exception if weak.
+   * @return int Returns an integer indicating the password strength. See the constants of this class.
    */
   public function get_password_strength($password)
   {

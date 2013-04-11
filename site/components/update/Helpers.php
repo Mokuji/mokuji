@@ -1,7 +1,33 @@
 <?php namespace components\update; if(!defined('TX')) die('No direct access.');
 
+ini_set('memory_limit', '-1');
+
 class Helpers extends \dependencies\BaseComponent
 {
+  
+  /**
+   * Attempts to get the component entry in the database of a given component name.
+   */
+  public function get_component_package($component)
+  {
+    
+    raw($component);
+    $packageFile = PATH_COMPONENTS.DS.$component.DS.'.package'.DS.'package.json';
+    
+    //Check the file is there.
+    if(!is_file($packageFile))
+      return Data(null);
+    
+    //Get package info.
+    $package = Data(json_decode(file_get_contents($packageFile), true));
+    
+    //Find the package.
+    return tx('Sql')
+      ->table('update', 'Packages')
+      ->where('title', "'{$package->title}'")
+      ->execute_single();
+    
+  }
   
   protected function check_updates($options)
   {
@@ -12,9 +38,25 @@ class Helpers extends \dependencies\BaseComponent
     $silent = $options->silent->is_true();
     $force = $options->force->is_true();
     
+    if(!$silent){
+      ?>
+      <script type="text/javascript">
+        jQuery(function($){
+          if(app){
+            $('#update-logs a.back-to-summary').click(function(e){
+              e.preventDefault();
+              app.Settings.loadView('update/summary');
+              app.Settings.activate();
+            });
+          }
+        });
+      </script>
+      <?php
+    }
+    
     if(!$silent) echo '<div id="update-logs">'.n.
       '<h1>'.__($this->component, 'Update logs', 1).'</h1>'.n.
-      '<a class="back button grey" href="?view=update/summary">'.__($this->component, 'Back to summary', 1).'</a>'.br.n;
+      '<a class="back button grey back-to-summary" href="?view=update/summary">'.__($this->component, 'Back to summary', 1).'</a>'.br.n;
     
     //Look through root dir.
     if(is_dir(PATH_BASE.DS.'.package'))
@@ -199,7 +241,7 @@ class Helpers extends \dependencies\BaseComponent
         ))->save();
       }
       
-      if(!$silent) echo __($this->component, 'New versions loaded', 1).'!'.br.n;
+      if(!$silent) echo '<span class="new-version-loaded">'. __($this->component, 'New versions loaded', 1) .'!</span>'.br.n;
       
     }
     else if(!$silent) echo __($this->component, 'No new updates', 1).'.'.br.n;

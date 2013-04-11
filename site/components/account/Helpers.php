@@ -57,17 +57,19 @@ class Helpers extends \dependencies\BaseComponent
           //Create various links.
           $links = Data(array(
             'for_link' => url('/', true)->output,
-            'claim_link' => url('/?action=account/claim_account/get&id='.$user->id.'&claim_key='.$claim_key)->output,
-            'unsubscribe_link' => url('/?action=account/unsubscribe/get&email='.urlencode($user->email->get('string')))->output
+            'claim_link' => url('/?action=account/claim_account/get&id='.$user->id.'&claim_key='.$claim_key, true)->output,
+            'unsubscribe_link' => url('/?action=account/unsubscribe/get&email='.urlencode($user->email->get('string')), true)->output
           ));
+
+          $username = $user->username->otherwise($user->user_info->email);
           
           //Send the invitation email.
           if(tx('Component')->available('mail')){
-          
+
             tx('Component')->helpers('mail')->send_fleeting_mail(array(
               'to' => array('name'=>$user->user_info->username->otherwise(''), 'email'=>$user->email),
-              'subject' => __('Information about your account', 1),
-              'html_message' => tx('Component')->views('account')->get_html('email_user_password_reset', $links->having('for_link', 'claim_link', 'unsubscribe_link'))
+              'subject' => __('Klaar voor de start... AF!', 1),
+              'html_message' => tx('Component')->views('account')->get_html('email_user_password_reset', $links->having('for_link', 'claim_link', 'unsubscribe_link')->merge(array('username' => $username)))
             ))
             
             ->failure(function($info){
@@ -81,7 +83,7 @@ class Helpers extends \dependencies\BaseComponent
             mail(
               $user->email,
               __('Invitation for', 1).': '.$data->for_title,
-              tx('Component')->views('account')->get_html('email_user_invited', $data->having('for_link', 'for_title', 'claim_link', 'unsubscribe_link'))
+              tx('Component')->views('account')->get_html('email_user_invited', $data->having('for_link', 'for_title', 'claim_link', 'unsubscribe_link')->merge(array('username' => $username)))
             );
             
           }
@@ -158,12 +160,12 @@ class Helpers extends \dependencies\BaseComponent
       
       //Create various links.
       $data->for_link = url($data->for_link->get('string'), true)->output;
-      $data->claim_link = url('/?action=account/claim_account/get&id='.$user->id.'&claim_key='.$data->claim_key)->output;
-      $data->unsubscribe_link = url('/?action=account/unsubscribe/get&email='.urlencode($user->email->get('string')))->output;
+      $data->claim_link = url('/?action=account/claim_account/get&id='.$user->id.'&claim_key='.$data->claim_key, true)->output;
+      $data->unsubscribe_link = url('/?action=account/unsubscribe/get&email='.urlencode($user->email->get('string')), true)->output;
       
       //Send the invitation email.
       if(tx('Component')->available('mail')){
-      
+        
         tx('Component')->helpers('mail')->send_fleeting_mail(array(
           'to' => array('name'=>$data->username->otherwise(''), 'email'=>$user->email),
           'subject' => __('Invitation for', 1).': '.$data->for_title,
@@ -208,7 +210,7 @@ class Helpers extends \dependencies\BaseComponent
     //Validate input.
     $data = $data->having('email', 'username', 'password', 'level', 'name', 'preposition', 'family_name', 'comments')
       ->email->validate('Email address', array('required', 'email'))->back()
-      ->password->validate('Password', array('required', 'string', 'password'))->back()
+      ->password->validate('Password', array('string', 'password'))->back()
       ->username->validate('Username', array('string', 'between' => array(0, 30), 'no_html'))->back()
       ->level->validate('User level', array('required', 'number', 'between' => array(1, 2)))->back()
       ->name->validate('Name', array('string', 'between' => array(0, 30), 'no_html'))->back()
@@ -250,7 +252,7 @@ class Helpers extends \dependencies\BaseComponent
     //Store additional info in the account tables.
     tx('Sql')
       ->model('account', 'UserInfo')
-      ->set($data->having('name', 'preposition', 'family_name', 'comments')->merge($user->having(array('user_id'=>'id'))))
+      ->set($data->having('name', 'preposition', 'family_name', 'comments')->merge($user->having(array('user_id'=>'id')))->merge(array('status'=>1)))
       ->save();
 
     //Return the user model.
@@ -377,300 +379,63 @@ class Helpers extends \dependencies\BaseComponent
     $that = $this;
     return tx('Importing users', function()use($data, $that){
       
-      $errors = Data();
-      
       tx('Validating input', function()use($data){
         
-        $data = $data->having('overrides', 'retry', 'collumn_name', 'delimiter')
+        $data = $data->having('overrides', 'retry', 'collumn_name', 'delimiter', 'user_group')
           ->overrides->validate('Overrides', array('array'))->back()
           ->collumn_name->validate('Collumn names', array('array'))->back()
           ->delimiter->validate('CSV delimiter', array('string', 'length'=>1))->back()
           ->user_group->validate('User groups', array('array'))->back();
-          
+        
+        //Set the user groups if there are any.
+        $data->user_group->is('set', function($user_group){
+          tx('Data')->session->account->import->user_group->set($user_group->as_array());
+        });
+        
       })
       
       //If data is not ok, push an error.
-      ->failure(function($userfunction)use($errors){
-        
-        $errors->push(Data(array(
-          'message' => $userfunction->get_user_message()
-        )));
-        
-      });
-      
-      //Don't even copy the file to the temp dir if this goes wrong.
-      if($errors->size())
-      {
+      ->failure(function($userfunction){
         
         //Set this as failure.
         $ex = new \exception\Validation("");
-        $ex->errors($errors->get());
+        $ex->errors(array(array(
+          'message' => $userfunction->get_user_message()
+        )));
         $ex->value(false);
         throw $ex;
         
-      }
-      
-      //When not retrying, remove all session data that might confuse things.
-      $data->retry->not('set', function(){
-        @unlink(tx('Data')->session->account->import->file->get());
-        tx('Data')->session->account->import->un_set();
       });
       
-      //When there's a retry and a csv file is available, we can skip the file upload stuff.
-      $data->retry->not('empty')->and_is(tx('Data')->session->account->import->file->is_set())
+      //Perform the import.
+      $import = tx('CSV')
+        ->import('account', 'users', $data->retry->is_set())
+        ->initialize_source_file($data->delimiter->get('string'))
+        ->process_import_data('Accounts', $data->collumn_name, array(
+          'unique_fields' => array('email', 'username'),
+          'overrides' => $data->overrides->as_array()
+        ));
+      
+      //Check for errors.
+      $errors = $import->errors();
+      if(count($errors) > 0){
         
-        ->failure(function()use($data){
-          
-          /* ---------- FILE UPLOAD ---------- */
-          
-          //Create target dirs.
-          $upload_dir = PATH_COMPONENTS.DS.'account'.DS.'uploads'.DS;
-          $target_dir = $upload_dir.'imports'.DS;
-          
-          //Unique filename.
-          do{
-            $filename = tx('Security')->random_string(64).'.csv';
-          }
-          while(file_exists($target_dir.$filename));
-          
-          //Create folders if they don't exist.
-          if (!file_exists($upload_dir)){
-            @mkdir($upload_dir);
-          }
-          if (!file_exists($target_dir)){
-            @mkdir($target_dir);
-          }
-          
-          //Handle file upload.
-          if(!(tx('Data')->files->file->tmp_name->is_set() && is_uploaded_file(tx('Data')->files->file->tmp_name))){
-            throw new \exception\Unexpected('Failed to store uploaded file. Error: '.file_upload_error_message(tx('Data')->files->file->error));
-          }
-          
-          //Open temp file.
-          $out = fopen($target_dir.$filename, "wb");
-          if(!$out) throw new \exception\Unexpected('Failed to open output stream.');
-          
-          //Read binary input stream and append it to temp file.
-          $in = fopen(tx('Data')->files->file->tmp_name, "rb");
-          if(!$in) throw new \exception\Unexpected('Failed to open input stream.');
-          
-          while($buff = fread($in, 4096)){
-            fwrite($out, $buff);
-          }
-          
-          //Clean up.
-          fclose($in);
-          fclose($out);
-          @unlink(tx('Data')->files->file->tmp_name);
-          
-          //Store filename in case we need to stop for user feedback.
-          tx('Data')->session->account->import->file->set($target_dir.$filename);
-          
-        });
-      
-      
-      /* ---------- VALIDATION ---------- */
-      
-      $required = array('email');
-      $fields = array('email', 'username', 'name', 'preposition', 'family_name', 'comments');
-      
-      //Set the delimiter if there is one.
-      $data->delimiter->is('set', function($delimiter){
-        tx('Data')->session->account->import->delimiter->set($delimiter->get());
-      });
-      
-      //Set the user groups if there are any.
-      $data->user_group->is('set', function($user_group){
-        tx('Data')->session->account->import->user_group->set($user_group->as_array());
-      });
-      
-      //Open CSV stream.
-      if(($handle = fopen(tx('Data')->session->account->import->file->get('string'), 'r')) === false)
-        throw new \exception\Unexpected('Unable to open uploaded CSV file.');
-      
-      $row_number = 0;
-      $map = array();
-      $users = Data();
-      $emailaddresses = array();
-      $usernames = array();
-      
-      //Parse lines.
-      while(($row = fgetcsv($handle, 0, tx('Data')->session->account->import->delimiter->otherwise(','))) !== false)
-      {
-        
-        $cols = count($row);
-        
-        //First row are collumn names.
-        if($row_number == 0)
-        {
-          
-          tx('Mapping collumns', function()use($data, $row, $required, $fields, &$map){
-            
-            //If this is a retry we should already have a mapping.
-            if(!$data->retry->is_empty() && tx('Data')->session->account->import->map->is_set()){
-              $map = tx('Data')->session->account->import->map->as_array();
-            }
-            
-            //Otherwise go ahead and map it.
-            else
-            {
-              
-              foreach($row as $index => $collumn_name)
-              {
-                
-                foreach($data->collumn_name->as_array() as $colname_db => $colname_csv)
-                {
-                  
-                  if(strtolower(trim($colname_csv)) == strtolower(trim($collumn_name)) && in_array($colname_db, $fields)){
-                    $map[$colname_db] = $index;
-                    break;
-                  }
-                  
-                }
-                
-              }
-              
-              //Check all required fields are mapped.
-              foreach ($required as $field)
-              {
-                if(!(isset($map[$field]) && is_int($map[$field])))
-                  throw new \exception\Validation('The required collumn "'.$field.'" has not been mapped in the first row of the CSV file (check your collumn names and CSV delimiter).');
-              }
-              
-              //Store this mapping in the session along with the file.
-              tx('Data')->session->account->import->map->set($map);
-              
-            }
-            
-          })
-          
-          //If data is not ok, push an error.
-          ->failure(function($userfunction)use($errors){
-            
-            $errors->push(Data(array(
-              'message' => $userfunction->get_user_message()
-            )));
-            
-          });
-          
-          if($errors->size() > 0)
-            break;
-          
-        }
-        
-        //Other rows are data.
-        else
-        {
-          
-          $mapped_row = Data();
-          $overrides = $data->overrides->{$row_number};
-          
-          tx('Importing user', function()use($data, $row, $map, $users, $mapped_row, $overrides, $row_number, &$usernames, &$emailaddresses){
-            
-            //Perhaps we are supposed to skip this one.
-            if($overrides->skip->is_set()) return;
-            
-            //Map the raw data.
-            foreach($map as $field => $index){
-              $mapped_row->merge(array($field => trim($overrides->{$field}->is_set() ? $overrides->{$field}->get() : $row[$index])));
-            }
-            
-            //Validate data.
-            $mapped_row
-              ->email->validate('Email', array('required', 'email'))->back()
-              ->username->validate('Username', array('string', 'between' => array(0, 30), 'no_html'))->back()
-              ->name->validate('Name', array('string', 'between' => array(0, 30), 'no_html'))->back()
-              ->preposition->validate('Preposition', array('string', 'between' => array(0, 30), 'no_html'))->back()
-              ->family_name->validate('Family name', array('string', 'between' => array(0, 30), 'no_html'))->back()
-              ->comments->validate('Comments', array('string', 'no_html'))->back();
-            
-            //Check for duplicates.
-            tx('Sql')
-              ->table('account', 'Accounts')
-              ->where('email', "'{$mapped_row->email}'")
-              ->join('UserInfo', $UI)
-              ->where("(`$UI.status` & (1 | 4))", '>', 0) //activated or claimable
-              ->count()
-              ->gt(0, function(){
-                $ex = new \exception\Validation('Duplicate email in the database.');
-                $ex->key('email');
-                throw $ex;
-              });
-            
-            if(in_array($mapped_row->email->get(), $emailaddresses)){
-              $ex = new \exception\Validation('Duplicate email in the CSV file.');
-              $ex->key('email');
-              throw $ex;
-            }
-            
-            tx('Sql')
-              ->table('account', 'Accounts')
-              ->where('username', "'{$mapped_row->username}'")
-              ->join('UserInfo', $UI)
-              ->where("(`$UI.status` & (1 | 4))", '>', 0) //activated or claimable
-              ->count()
-              ->gt(0, function(){
-                $ex = new \exception\Validation('Duplicate username in the database.');
-                $ex->key('username');
-                throw $ex;
-              });
-            
-            if(in_array($mapped_row->username->get(), $usernames)){
-              $ex = new \exception\Validation('Duplicate username in the CSV file.');
-              $ex->key('username');
-              throw $ex;
-            }
-            
-            //If data is ok, push it to the ready users.
-            $users->push($mapped_row);
-            $emailaddresses[] = $mapped_row->email->get();
-            $usernames[] = $mapped_row->usernames->get();
-            
-          })
-          
-          //If data is not ok, push an error.
-          ->failure(function($userfunction)use($errors, $mapped_row, $row_number, $overrides){
-            
-            $errors->push(Data(array(
-              'message' => $userfunction->get_user_message(),
-              'input' => $mapped_row,
-              'row_number' => $row_number,
-              'field' => $userfunction->exception instanceof \exception\Validation ? $userfunction->exception->key() : null,
-              'overrides' => $overrides
-            )));
-            
-          });
-          
-        }
-        
-        $row_number++;
-        
-      }
-      
-      //Close CSV stream.
-      fclose($handle);
-      
-      
-      /* ---------- EXECUTE ---------- */
-      
-      //Before executing, check if we have to halt for errors.
-      if($errors->size())
-      {
-        
-        //Set this as failure.
+        //Set this as recoverable error.
         $ex = new \exception\Validation("");
-        $ex->errors($errors->get());
+        $ex->errors($errors);
         $ex->value(true);
         throw $ex;
         
       }
       
       //Go over the users.
-      $users->each(function($user)use($that){
+      $import->resultset()->each(function($user)use($that){
+        
+        tx('Logging')->log('Account', 'User import', 'Inviting user '.$user->email);
         
         //Invite them.
         tx('Component')->helpers('account')->invite_user($user->merge(array(
-          'for_link' => '?pid=11',
+          'for_link' => url('pid=1', true)->output,
           'for_title' => 'Import testing'
         )))
           
@@ -690,16 +455,7 @@ class Helpers extends \dependencies\BaseComponent
         
       });
       
-      //Delete the temp file.
-      tx('Data')->session->account->import->file->is('set', function($file){
-        @unlink($file->get());
-      });
-      
-      //Clear all other session data, since we're done!
-      tx('Data')->session->account->import->un_set();
-      
-      //Give the users we invited.
-      return $users;
+      return $import->resultset();
       
     });
     
@@ -780,6 +536,217 @@ class Helpers extends \dependencies\BaseComponent
         ->each(function($usergroup){
           $usergroup->delete();
         });
+      
+    }
+    
+  }
+  
+  //Checks permissions on hierarchies.
+  public function table__hcheck_permissions(\dependencies\Table $table, $meta, $user_id=null)
+  {
+    
+    $meta = Data($meta)->having('access_level_field', 'group_permissions_join', 'user_group_id_field');
+    
+    //Get the user info we need.
+    if($user_id == null || (int)$user_id === tx('Account')->user->id->get('int')){
+      $user_id = tx('Account')->user->id->get('int');
+      $user_level = tx('Account')->user->level->get('int');
+    }
+    
+    elseif($user_id > 0){
+      $user_id = (int)$user_id;
+      $user_level = tx('Sql')
+        ->table('account', 'Accounts')
+        ->pk($user_id)
+        ->execute_single()
+        ->level->otherwise(0)->get('int');
+    }
+    
+    else{
+      $user_id = null;
+      $user_level = 0;
+    }
+    
+    //Make the query depending on the user level.
+    switch($user_level){
+      
+      //Visitors can only see when access level is 0.
+      case 0:
+        //Create the table conditions.
+        $table
+          ->join('__CURRENT__', $IC, function($S, $T, $conditions)use($meta){
+            
+            $conditions
+              
+              //Must be parent or self.
+              ->add('parents_or_self_lft', array("`$S.lft`", '>=', "`$T.lft`"))
+              ->add('parents_or_self_rgt', array("`$S.lft`", '<', "`$T.rgt`"))
+              
+              //Access level is 0-1, means any user can see, regardless of groups.
+              ->add('logged_in_users', array("`$T.{$meta->access_level_field}`", '>', 0))
+              
+              //Put it together.
+              ->combine('invalid_user_level', array('parents_or_self_lft', 'parents_or_self_rgt', 'logged_in_users'), 'AND')
+              ->utilize('invalid_user_level');
+            
+          })
+          ->where("`$IC.{$meta->access_level_field}`", null);
+        break;
+      
+      //Normal users are more complex, because... user groups.
+      case 1:
+        
+        //Find the user's groups.
+        $groups = Data();
+        tx('Sql')
+          ->table('account', 'AccountsToUserGroups')
+          ->where('user_id', $user_id)
+          ->execute()
+          ->each(function($link)use($groups){
+            $groups->push($link->user_group_id->get());
+          });
+        
+        //Create the table conditions for just logged in users.
+        $table
+          ->join('__CURRENT__', $IC, function($S, $T, $conditions)use($meta){
+            
+            $conditions
+              
+              //Must be parent or self.
+              ->add('parents_or_self_lft', array("`$S.lft`", '>=', "`$T.lft`"))
+              ->add('parents_or_self_rgt', array("`$S.lft`", '<', "`$T.rgt`"))
+              
+              //Access level is 0-1, means any user can see, regardless of groups.
+              ->add('logged_in_users', array("`$T.{$meta->access_level_field}`", '>', 1))
+              
+              //Put it together.
+              ->combine('invalid_user_level', array('parents_or_self_lft', 'parents_or_self_rgt', 'logged_in_users'), 'AND')
+              ->utilize('invalid_user_level');
+            
+          });
+        
+        //Depending on whether we have usergroups, also look for matches there.
+        if($groups->size() > 0){
+          
+          $local = $meta->group_permissions_join->{0};
+          $foreign = $meta->group_permissions_join->{2};
+          
+          //Group up with the permission groups too and find authorization paths.
+          //But only when the access_level == 2.
+          $table->distinct()
+            ->join($meta->group_permissions_join->{1}, $VG, function($S, $T, $conditions)use($meta, $groups, $local, $foreign){
+              
+              $conditions
+                
+                //Must be tied to invalid categories.
+                ->add('to_ics', array("`$S.$local`", "`$T.$foreign`"))
+                
+                //Access level is 2, means any user can only see, when in one of the right groups.
+                ->add('in_my_groups', array("`$T.{$meta->user_group_id_field}`", $groups))
+                
+                //Put it together.
+                ->combine('valid_group_paths', array('to_ics', 'in_my_groups'), 'AND')
+                ->utilize('valid_group_paths');
+                
+            });
+          
+          //Now that we have the data, set the conditions.  
+          $table->where(tx('Sql')->conditions()
+            ->add('empty_ics', array("`$IC.{$meta->access_level_field}`", null))
+            ->add('is_group_access', array("`$IC.{$meta->access_level_field}`", 2))
+            ->add('has_valid_groups', array("`$VG.$foreign`", '!', null))
+            ->combine('has_group_access', array('is_group_access', 'has_valid_groups'), 'AND')
+            ->combine('has_access', array('has_group_access', 'empty_ics'), 'OR')
+            ->utilize('has_access')
+          );
+          
+        }
+        
+        //When no groups are involved, just check for invalid categories not being there.
+        else{
+          $table->where("`$IC.{$meta->access_level_field}`", null);
+        }
+        
+        break;
+      
+      //Admins can see everything! (Including the future.)
+      case 2:
+        break;
+      
+    }
+    
+  }
+  
+  //Checks permissions on individual items.
+  public function table__check_permissions(\dependencies\Table $table, $access_level, $group_id, $user_id=null)
+  {
+    
+    raw($access_level, $group_id, $user_id);
+    
+    //Get the user info we need.
+    if($user_id == null || (int)$user_id === tx('Account')->user->id->get('int')){
+      $user_id = tx('Account')->user->id->get('int');
+      $user_level = tx('Account')->user->level->get('int');
+    }
+    
+    elseif($user_id > 0){
+      $user_id = (int)$user_id;
+      $user_level = tx('Sql')
+        ->table('account', 'Accounts')
+        ->pk($user_id)
+        ->execute_single()
+        ->level->otherwise(0)->get('int');
+    }
+    
+    else{
+      $user_id = null;
+      $user_level = 0;
+    }
+    
+    //Make the query depending on the user level.
+    switch($user_level){
+      
+      //Visitors can only see when access level is 0.
+      case 0:
+        $table->where($access_level, 0);
+        break;
+      
+      //Normal users are more complex, because... user groups.
+      case 1:
+        
+        //Find the user's groups.
+        $groups = Data();
+        tx('Sql')
+          ->table('account', 'AccountsToUserGroups')
+          ->where('user_id', $user_id)
+          ->execute()
+          ->each(function($link)use($groups){
+            $groups->push($link->user_group_id->get());
+          });
+        
+        //Create the table conditions.
+        $table->where(tx('Sql')->conditions()
+          
+          //Access level is 1, means any user can see, regardless of groups.
+          ->add('logged_in_users', array($access_level, '<=', 1))
+          
+          //Access level 2 means we need to be in the right group.
+          ->add('group_check_level', array($access_level, 2))
+          ->add('in_group', array($group_id, $groups))
+          ->combine('group_member', array('group_check_level', 'in_group'), 'AND')
+          
+          //Combine these scenario's.
+          ->combine('can_see', array('logged_in_users', 'group_member'), 'OR')
+          
+          //Depending on whether the user is in any groups at all, pick either the logged in user scenario only, or both.
+          ->utilize($groups->size() > 0 ? 'can_see' : 'logged_in_users')
+          
+        );
+        break;
+      
+      //Admins can see everything! (Including the future.)
+      case 2:
+        break;
       
     }
     

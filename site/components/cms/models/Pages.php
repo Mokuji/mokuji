@@ -21,6 +21,23 @@ class Pages extends \dependencies\BaseModel
       'PageGroupPermissions' => array('id' => 'PageGroupPermissions.page_id')
     );
   
+  protected function get_preferred_title()
+  {
+    
+    $that = $this;
+
+    return tx('Sql')
+      ->table('cms', 'PageInfo')
+      ->where('page_id', $this->id)
+      ->where('language_id', tx('Language')->id)
+      ->execute_single()
+      ->title
+      ->is('empty', function()use($that){
+        return $that->title;
+      });
+    
+  }
+  
   protected function get_menu_items()
   {
   

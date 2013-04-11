@@ -2,7 +2,7 @@
 
 abstract class BaseViews extends BaseComponent
 {
-
+  
   public function get_html($view, $options=array())
   {
   

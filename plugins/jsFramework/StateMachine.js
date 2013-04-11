@@ -6,10 +6,10 @@
   
   StateMachine.include({
     
-    controllers: [],
     activeController: -1,
     
     init: function(){
+      this.controllers = [];
       this.add.apply(this, arguments);
     },
     
@@ -20,7 +20,8 @@
       $.each(arguments, this.proxy(function(k, controller){
         
         //validate
-        assert(controller instanceof Controller || controller instanceof Manager, "Only Controller's or Manager's may be added to the StateMachine.");
+        /*if(!controller instanceof Controller || controller instanceof Manager)
+          log('Only Controller\'s or Manager\'s may be added to the StateMachine.');*/
         
         //wrap the activate function in a StateMachine function
         controller.activate = (function(activator){return function(){
@@ -82,7 +83,6 @@
   //a manager controls controllers (instead of methods it has controllers)
   var Manager = Controller.sub({
     
-    state: new StateMachine(),
     devault: -1,
     controllers: {},
     
@@ -96,6 +96,7 @@
     },
     
     init: function(){
+      this.state = new StateMachine();
       this.previous();
       for(var i in this){
         if(this[i] instanceof Controller){

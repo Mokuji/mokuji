@@ -11,7 +11,8 @@ class Actions extends \dependencies\BaseComponent
       'register' => 0,
       'edit_profile' => 1,
       'claim_account' => 0,
-      'save_avatar' => 1
+      'save_avatar' => 1,
+      'set_password' => 1
     );
   
   protected function login($data)
@@ -91,7 +92,7 @@ class Actions extends \dependencies\BaseComponent
     tx('Editing profile', function()use($data){
       
       //Validate input.
-      $data = $data->having('id', 'avatar_image_id', 'password_old', 'password1', 'password2', 'name', 'preposition', 'family_name')
+      $data = $data->having('id', 'avatar_image_id', 'username', 'password_old', 'password1', 'password2', 'name', 'preposition', 'family_name')
         ->id->validate('User ID', array('required', 'number', 'gt'=>0))->back();
       
       //Check if operation is allowed.
@@ -238,151 +239,6 @@ class Actions extends \dependencies\BaseComponent
     
   }
   
-  protected function edit_user($data)
-  {
-    
-    $that = $this;
-
-    //update
-    tx($data->id->get('int') > 0 ? 'Updating a user.' : 'Adding a new user.', function()use($data, $that){
-      $data = $data->having('id', 'email', 'username', 'password', 'choose_password', 'notify_user', 'name', 'preposition', 'family_name', 'user_group', 'comments')
-        ->email->validate('Email address', array('required', 'email'))->back()
-        ->username->validate('Username', array('between' => array(0, 30), 'no_html'))->back()
-        ->user_group->validate('User groups', array('array'=>'int'))->back()
-        ->level->set($data->admin->is_set() ? 2 : 1)->back();
-      
-      if($data->id->get('int') > 0)
-      {
-        
-        //UPDATED: 28 June 2012, by Beanow
-        //Now defaults to the default hashing algorithm and salt settings defined by core-security.
-        $data->password->is('set')->and_not('empty')->success(function()use(&$data){
-          
-          //Get salt and algorithm.
-          $data->salt = tx('Security')->random_string();
-          $data->hashing_algorithm = tx('Security')->pref_hash_algo();
-          
-          //Hash using above information.
-          $data->password = tx('Security')->hash(
-            $data->salt->get() . $data->password->get(),
-            $data->hashing_algorithm
-          );
-          
-        })->failure(function()use(&$data){
-          $data->password->un_set();
-        });
-
-        $user = tx('Sql')->table('account', 'Accounts')->pk($data->id)->execute_single()->is('empty', function(){
-          throw new \exception\User('Could not update because no entry was found in the database with id %s.', $data->id);
-        })
-        ->merge($data->having('email','username', 'password', 'salt', 'hashing_algorithm'))->save();
-        
-        tx('Sql')->table('account', 'UserInfo')->pk($user->id)->execute_single()->is('empty')
-          ->success(function($user_info)use($data, $user){
-            tx('Sql')->model('account', 'UserInfo')->set($data->having('name', 'preposition', 'family_name', 'comments')->merge($user->having(array('user_id'=>'id'))))->save();
-          })
-          ->failure(function($user_info)use($data){
-            $user_info->merge($data->having('name', 'preposition', 'family_name', 'comments'))->save();
-          });
-
-      }
-
-      //insert
-      else{
-        
-        //If the user is to choose their own password.
-        if($data->choose_password->get('boolean'))
-        {
-          
-          //Invite the user.
-          $user = tx('Component')->helpers('account')->call('invite_user', array(
-            'email' => $data->email,
-            'username' => $data->username,
-            'level' => $data->level,
-            'for_title' => url('/', true)->output,
-            'for_link' => '/'
-          ))
-          
-          ->failure(function($info){
-            
-            tx('Controller')->message(array(
-              'error' => $info->get_user_message()
-            ));
-            
-            tx('Url')->redirect('section=account/user_list&user_id=NULL');
-            
-          });
-          
-        }
-        
-        else
-        {
-
-          //Create the user.
-          $user = tx('Component')->helpers('account')->call('create_user', array(
-            'email' => $data->email,
-            'username' => $data->username,
-            'password' => $data->password,
-            'name' => $data->name,
-            'preposition' => $data->preposition,
-            'family_name' => $data->family_name,
-            'level' => $data->level,
-            'comments' => $data->comments
-          ))
-          
-          ->failure(function($info){
-            
-            tx('Controller')->message(array(
-              'error' => $info->get_user_message()
-            ));
-            
-            tx('Url')->redirect('section=account/user_list&user_id=NULL');
-            
-            return;
-            
-          });
-          
-          //If we need to notify the user.
-          if($data->notify_user->get('boolean'))
-          {
-            
-            //Send email.
-            tx('Component')->helpers('mail')->send_fleeting_mail(array(
-              'to' => $data->username.' <'.$user->email.'>',
-              'subject' => __('Account created', 1),
-              'html_message' => tx('Component')->views('account')->get_html('email_user_created', $data->having('email', 'username', 'user_id', 'level'))
-            ))
-            
-            ->failure(function($info){
-              tx('Controller')->message(array(
-                'error' => $info->get_user_message()
-              ));
-            }); 
-            
-          } 
-          
-        }
-        
-      } //end - insert/update of user.
-      
-      //Set the proper groups.
-      $that->helper('set_user_group_memberships', Data(array(
-        'user_group' => $data->user_group,
-        'user_id' => $user->id
-      )));
-      
-    })
-    
-    ->failure(function($info)use($data){
-      tx('Controller')->message(array(
-        'error' => $info->get_user_message()
-      ));
-    });
-    
-    tx('Url')->redirect('section=account/user_list&user_id=NULL');
-    
-  }
-  
   protected function save_avatar($data)
   {
 
@@ -497,7 +353,7 @@ class Actions extends \dependencies\BaseComponent
       $data = $data->having('id', 'claim_key')
         ->id->validate('User ID', array('required', 'number', 'gt'=>0))->back()
         ->claim_key->validate('Claim key', array('required', 'string'))->back();
-        
+      
       $user = tx('Sql')
         ->table('account', 'UserInfo')
         ->where('user_id', $data->id)
@@ -506,16 +362,16 @@ class Actions extends \dependencies\BaseComponent
       $error = false;
       
       //Check user is found.
-      $user->is('empty', function(){
+      $user->is('empty', function()use(&$error){
         $error = true;
       });
       
       //Check if user is claimable.
       if(!$error){
         
-        $user->check_status('not_claimable', function($user){
+        $user->check_status('not_claimable', function($user)use(&$error){
           $error = true;
-        }); 
+        });
         
       }
       
@@ -523,7 +379,7 @@ class Actions extends \dependencies\BaseComponent
       if(!$error){
         
         $user->claim_key->eq($data->claim_key)
-        ->failure(function(){
+        ->failure(function()use(&$error){
           $error = true;
         }); 
         
@@ -531,25 +387,36 @@ class Actions extends \dependencies\BaseComponent
       
       //Use identical error messages and send them from the same line of code.
       //To make finding claimable accounts impossible through this action.
-      if($error)
+      if($error !== false)
         throw new \exception\User('Claim is invalid.');
       
       //Don't claim the user in the database here.
       //Use tx('Component')->helpers('account')->should_claim() to check if the account should be claimed.
       //Then do the actual claiming when editing the user profile.
       
-      //Save the current IP address and current session as the last login.
-      $account = $user->account
-        ->ipa->set(tx('Data')->server->REMOTE_ADDR)->back()
-        ->session->set(tx('Session')->id)->back()
+      //Get the account data.
+      $account = $user->account;
+      
+      //Insert this login session in the database.
+      $user_login = tx('Sql')->model('account', 'UserLogins')
+        ->set(array(
+          'user_id' => $account->id,
+          'session_id' => tx('Session')->id,
+          'dt_expiry' => date('Y-m-d H:i:s', time() + (2 * 3600)), //2 hours to set your password.
+          'IPv4' => tx('Data')->server->REMOTE_ADDR,
+          'user_agent' => tx('Data')->server->HTTP_USER_AGENT,
+          'date' => time()
+        ))
         ->save();
+      
+      tx('Logging')->log('LEDATE', $user_login->dt_expiry, date('Y-m-d H:i:s', time() + (2 * 3600)));
       
       //Set user in session.
       tx('Data')->session->user->set(array(
         'id' => $account->id->get('int'),
         'email' => $account->email->get('string'),
+        'username' => $account->username->get('string'),
         'level' => $account->level->get('int'),
-        'ipa' => $account->ipa->get('string'),
         'login' => true
       ));
       tx('Account')->user->set(tx('Data')->session->user);
@@ -621,7 +488,7 @@ class Actions extends \dependencies\BaseComponent
   
   protected function update_user_groups($data)
   {
-    
+
     tx('Updating user group.', function()use($data){
       
       //Store members, because validator will otherwise remove it.
@@ -651,7 +518,7 @@ class Actions extends \dependencies\BaseComponent
       //Set group members.
       tx('Component')->helpers('account')
         ->set_group_members($group->id, $members);
-      
+
       return $group;
       
     })

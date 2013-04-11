@@ -1,11 +1,9 @@
 <?php namespace components\cms; if(!defined('TX')) die('No direct access.'); ?>
 
-<ul id="configbar">
-
-  <?php foreach($configbar->items as $item){ ?>
-  <li class="<?php echo $item->component->name.'-'.$item->name; ?>">
-    <a href="<?php echo url("view={$item->component->name}/{$item->name}", true) ?>" title="<?php echo $item->prefered_description ?>"><?php echo $item->prefered_title ?></a>
+<script id="configbar_item_tmpl" type="text/x-jquery-tmpl">
+  <li class="${component.name}-${name}">
+    <a href="#" data-view="${component.name}/${name}" title="${preferred_description}">${preferred_title}</a>
   </li>
-  <?php } ?>
-  
-</ul>
+</script>
+
+<ul id="configbar"></ul>

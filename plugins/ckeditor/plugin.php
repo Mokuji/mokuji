@@ -2,5 +2,4 @@
 
   <script type="text/javascript" src="<?php echo $plugin ?>ckeditor.js"></script>
 	<script type="text/javascript" src="<?php echo $plugin ?>adapters/jquery.js"></script>
-	<script type="text/javascript" src="<?php echo $plugin ?>plugin.js"></script>
-  
+  <script type="text/javascript" src="<?php echo $plugin ?>plugin.js"></script>

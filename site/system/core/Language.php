@@ -14,22 +14,36 @@ class Language
   public function get_language_id(){ return $this->language_id; }
   public function get_language_code(){ return $this->language_code; }
   
+  //Short notation for some getters.
+  public function __get($key)
+  {
+    switch($key){
+      case 'id': return $this->get_language_id();
+      case 'code': return $this->get_language_code();
+    }
+  }
+  
   //Setter for language_id.
   public function set_language_id($id){
     
     $id = Data($id);
-    
+
+    $that = $this;
+
     if($this->translating_started)
       throw new \exception\Programmer('Can\'t set language, translating has already started');
     
-    tx('Validating language.', function()use($id){
+    tx('Validating language.', function()use($id, &$language_code){
       $id->validate('Language', array('number'=>'integer'));
-      $this->language_code = tx('Sql')->execute_scalar('SELECT code FROM #__core_languages WHERE id = '.$id)->get();
+      $language_code = tx('Sql')->execute_scalar('SELECT code FROM #__core_languages WHERE id = '.$id)->get();
     })
     
-    ->success(function($info)use($id){
-      $this->language_id = $id->get();
+    ->success(function($info)use($id, &$language_id){
+      $language_id = $id->get();
     });
+
+    $this->language_code = $language_code;
+    $this->language_id = $language_id;
     
   }
   
@@ -67,8 +81,17 @@ class Language
     if( ! $lang->is_set())
     {
       
-      tx('Setting language from database.', function()use($lang){
-        $lang->set(tx('Sql')->execute_scalar('SELECT id FROM #__core_languages ORDER BY id ASC LIMIT 1'))
+      tx('Setting default language from database.', function()use($lang){
+        
+        $lang->set(tx('Config')
+          
+          //See if the config gives a default.
+          ->user('default_language')
+          
+          //Otherwise get it from the DB.
+          ->otherwise(tx('Sql')->execute_scalar('SELECT id FROM #__core_languages ORDER BY id ASC LIMIT 1'))
+          
+        )
         ->is('empty', function(){
           throw new \exception\NotFound('No languages have been set up');
         });
@@ -96,7 +119,15 @@ class Language
     
   }
   
-  public function translate($phrase, $component=null, $lang_id=null, $case = null)
+  public function multilanguage(\Closure $closure)
+  {
+    
+    $this->get_languages()->each($closure);
+    return $this;
+    
+  }
+  
+  public function translate($phrase, $component=null, $lang_id=null, $case = null, $is_fallback=false)
   {
     
     $this->translating_started = true;
@@ -116,13 +147,36 @@ class Language
       
       //Load json file.
       $lang_file = ($component ? PATH_COMPONENTS.DS.$component : PATH_SITE).DS.'i18n'.DS.$language_code.'.json';
-      if(!is_file($lang_file)){
-        throw new \exception\FileMissing('The file \'%s\' can not be found.', $lang_file);
-      }
       
       //Parse file.
-      $arr = json_decode(file_get_contents($lang_file), true);
-      if(!is_array($arr)) $arr = array();
+      $parsed_it = false;
+      try
+      {
+        
+        if(is_file($lang_file)){
+          $arr = json_decode(file_get_contents($lang_file), true);
+          $parsed_it = true;
+        }
+        
+      }
+      catch(\exception $e){/* That was our best effort, sorry. */}
+      
+      //If we didn't parse it, see if we can log it.
+      if($parsed_it === false && tx('Component')->available('sdk')){
+        
+        //Log in the SDK to improve it later.
+        tx('Sql')
+          ->model('sdk', 'TranslationMissingFiles')
+          ->register(array(
+            'language_code' => $language_code,
+            'component' => $component
+          ));
+        
+      }
+      
+      //Fallback.
+      if(!isset($arr) || !is_array($arr))
+        $arr = array();
       
       //Create an array for this language in the cache if it doesn't exist yet.
       if(!array_key_exists($language_code, $this->translations))
@@ -145,8 +199,53 @@ class Language
     
     //If the translation is not found in this file, and we specified a component, fall back on the core translation files.
     else if($component) {
-      tx('Logging')->log('Translate', 'Com '.$component.' fallback', $phrase);
-      return $this->translate($phrase, null, $lang_id, $case);
+      
+      //Fallbacks are acceptable for en-GB since that's the language used for the keys.
+      if($language_code !== 'en-GB'){
+        
+        tx('Logging')->log('Translate', 'Com '.$component.' fallback', $phrase);
+        
+        //Log in the SDK to improve it later.
+        if(tx('Component')->available('sdk')){
+          
+          tx('Sql')
+            ->model('sdk', 'TranslationMissingPhrases')
+            ->register(array(
+              'language_code' => $language_code,
+              'component' => $component,
+              'phrase' => $phrase
+            ));
+          
+        }
+        
+      }
+      
+      //Translate from core translations, but with a flag that this is a fallback attempt.
+      return $this->translate($phrase, null, $lang_id, $case, true);
+      
+    }
+    
+    //When we did not do a fallback but are translating straight from the core and failed.
+    else if($is_fallback === false && !$component){
+      
+      //This is acceptable for en-GB since that's the language used for the keys.
+      if($language_code !== 'en-GB'){
+        
+        //Log in the SDK to improve it later.
+        if(tx('Component')->available('sdk')){
+          
+          tx('Sql')
+            ->model('sdk', 'TranslationMissingPhrases')
+            ->register(array(
+              'language_code' => $language_code,
+              'component' => null,
+              'phrase' => $phrase
+            ));
+          
+        }
+        
+      }
+      
     }
     
     //Convert case?

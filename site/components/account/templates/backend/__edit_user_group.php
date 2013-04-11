@@ -9,7 +9,7 @@ echo $data->group->as_form($id, array(
     'custom_field' => true,
     'type' => 'custom',
     'custom_html' =>
-      '<select id="members" name="members[]" class="comboselect" multiple="mulitple">'.n.
+      '<select id="members" name="members[]" class="comboselect" multiple="multiple">'.n.
         $data->users->map(function($user){
           return '<option value="'.$user->id.'"'.($user->is_member->is_true() ? ' selected="selected"' : '').'>'.$user->user_info->full_name->otherwise($user->email).'</option>';
         })->join(n).n.

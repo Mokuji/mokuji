@@ -1,19 +1,17 @@
 {
   
   "ACCOUNTS_VIEW_TITLE": "Gebruikersbeheer",
-  "ACCOUNTS_VIEW_DESCRIPTION": "",
+  "ACCOUNTS_VIEW_DESCRIPTION": "Gebruikersbeheer",
   
   "PROFILE_VIEW_TITLE": "Profiel",
-  "PROFILE_VIEW_DESCRIPTION": "",
-  
-  
+  "PROFILE_VIEW_DESCRIPTION": "Profiel pagina, geeft uw gebruikersinformatie weer",
   
   "A message from": "Een bericht van",
   "Account management": "Accountbeheer",
   
   "Click here to go to the frontpage quickly": "Klik hier om snel naar de voorpagina te gaan",
   "Column names": "Kolom namen",
-  "Confirm new password": "Bevestig nieuwe wachtwoord",
+  "Confirm new password": "Bevestig nieuw wachtwoord",
   "CSV delimiter": "CSV scheidingsteken",
   "CSV file": "CSV bestand",
   "CSV name": "CSV naam",
@@ -42,7 +40,7 @@
   
   "Never logged in": "Nooit ingelogd",
   "New group": "Nieuwe groep",
-  "New password": "Nieuwe wachtwoord",
+  "New password": "Nieuw wachtwoord",
   "New user": "Nieuwe gebruiker",
   
   "Old password": "Oude wachtwoord",
@@ -57,10 +55,12 @@
   "Send email message to selection": "Verstuur e-mailbericht aan selectie",
   "Sent mail successfully": "Bericht succesvol verzonden",
   
-  "Upload your picture": "Upload uw foto",
+  "Upload your avatar": "Upload uw avatar",
   "User must set this": "Door gebruiker in te vullen",
   
   "Welcome": "Welkom",
-  "Welcome back": "Welkom terug"
+  "Welcome back": "Welkom terug",
+
+  "Edit profile": "Profiel wijzigen"
   
 }

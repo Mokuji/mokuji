@@ -43,8 +43,10 @@ function __(){
     $case = $args > 2 ? $arguments[2] : null;
   }
   
+  
   //Let the core do this part.
-  $phrase = tx('Language')->translate($phrase, $component, null, $case);
+  if(INSTALLING !== true)
+    $phrase = tx('Language')->translate($phrase, $component, null, $case);
   
   //Return (translated) phrase.
   if($only_return){
@@ -54,25 +56,32 @@ function __(){
   }
   
 }
-
-/*
-function __($phrase, $only_return = false, $case = null)
-{
-  
-  //Let the core do this.
-  $phrase = tx('Language')->translate($phrase, null, null, $case);
-  
-  //Return (translated) phrase.
-  if($only_return){
-    return $phrase;
-  }else{
-    echo $phrase;
-  }
-
-}
-*/
 
 function ___($phrase, $case = null)
 {
   return __($phrase, 1, $case);
+}
+
+function transf($component, $phrase)
+{
+  
+  //Shift the first two arguments out of the array.
+  $args = func_get_args();
+  $component = array_shift($args);
+  $phrase = array_shift($args);
+  
+  //Get a translated version of the format.
+  $format = __($component, $phrase, true);
+  
+  //Find all {#} tags.
+  preg_match_all('~\{(\d+)\}~', $format, $matches, PREG_PATTERN_ORDER);
+  
+  //Iterate over the tags.
+  foreach($matches[1] as $nr){
+    $format = str_replace('{'.$nr.'}', $args[$nr], $format);
+  }
+  
+  //Return the resulting string.
+  return $format;
+  
 }

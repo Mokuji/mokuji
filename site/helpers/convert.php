@@ -2,11 +2,12 @@
 
 function argument_to_string($arg)
 {
-	switch(strtolower(gettype($arg))){
+	
+  switch(strtolower(gettype($arg))){
 
 		case 'string':
 		case 'boolean':
-			return '<span title="'.$arg.'">'.var_export((strlen($arg) > 20 ? substr($arg, 0, 10).'...'.substr($arg, -10) : $arg), true).'</span>';
+			return '<span title="'.json_encode(htmlspecialchars($arg)).'">'.json_encode(htmlspecialchars(var_export((strlen($arg) > 20 ? substr($arg, 0, 10).'...'.substr($arg, -10) : $arg), true))).'</span>';
 
 		case 'object':
       if(is_data($arg)){
@@ -39,6 +40,7 @@ function argument_to_string($arg)
 		default:
 			return var_export($arg, true);
 	}
+  
 }
 
 function query_string_to_array($qs)

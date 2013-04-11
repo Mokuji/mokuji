@@ -25,16 +25,17 @@
 
 .inputHolder label,
 .inputHolder input {
-  margin:0;
-  padding: 0px 5px;
-  height: 20px;
+  /*margin:0;*/
+/*  padding: 5px 5px;
+  height: 20px;*/
 }
 
 .inputHolder label {
   width: 80px;
   display: inline-block;
   float: left;
-  line-height: 22px;
+  /*line-height: 22px;*/
+  line-height: 28px;
 }
 
 .inputHolder input {
@@ -141,7 +142,7 @@
   .button.green,
   .button.red,
   .button.yellow{
-    width:98px;
+    /*width:98px;*/
   }
   .button.green{
     color:#0b5810;
@@ -233,13 +234,17 @@
   .button{
     -webkit-background-clip: padding-box;
     border:1px solid #bcbcbc;
-    border-radius:3px;
-    -moz-border-radius:3px;
-    -webkit-border-radius:3px;
-    font-size:12px;
+    border-radius:2px;
+    -moz-border-radius:2px;
+    -webkit-border-radius:2px;
+    box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    font-size:14px;
     font-family:arial, sans-serif;
     background:#fff;
-    padding:2px 5px;
+    /*padding:10px 10px;*/
+    padding: 6px 8px;
   }
   input:focus,
   textarea:focus,
@@ -252,13 +257,15 @@
   }
   input[type=password],
   input[type=text]{
-    background: -webkit-gradient(linear, 0 0, 0 bottom, from(#f1f1f1), to(#fff));
+/*    background: -webkit-gradient(linear, 0 0, 0 bottom, from(#f1f1f1), to(#fff));
     background: -webkit-linear-gradient(#f1f1f1, #fff);
     background: -moz-linear-gradient(#f1f1f1, #fff);
     background: -ms-linear-gradient(#f1f1f1, #fff);
     background: -o-linear-gradient(#f1f1f1, #fff);
     background: linear-gradient(#f1f1f1, #fff);
+*/
     -webkit-background-clip: padding-box;
+    babckground:#fff;
   } 
   input[type=text].tiny,
   input[type=password].tiny{
@@ -281,7 +288,7 @@
   button,
   .button{
     cursor:pointer;
-    padding:4px 5px;
+    padding:6px 7px;
     min-width:90px;
   }
   .button,

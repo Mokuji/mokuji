@@ -3,14 +3,17 @@
 class Sections extends \dependencies\BaseViews
 {
 
-  protected function app()
+  protected function app($view)
   {
-
+    
     return array(
-      'menu' => $this->section('menu_app'),
-      'page' => $this->section('page_app')
+      'menu_id' => tx('Data')->get->menu,
+      'page_id' => tx('Data')->get->pid,
+      'edit_menu_item' => $this->section('edit_menu_item'),
+      'edit_page' => $this->section('edit_page'),
+      'view' => $view->get()
     );
-
+    
   }
 
   protected function config_app()
@@ -74,6 +77,7 @@ class Sections extends \dependencies\BaseViews
           ->sk(1)
           ->add_absolute_depth('depth')
           ->join('MenuItemInfo', $mii)->left()
+        ->where('page_id', 'NULL')
         ->workwith($mii)
           ->select('title', 'title')
           ->where('language_id', tx('Language')->get_language_id())
@@ -84,28 +88,15 @@ class Sections extends \dependencies\BaseViews
 
   protected function edit_menu_item($data)
   {
-
+    
     return array(
-      'item' => tx('Sql')->table('menu', 'MenuItems')->where('id', $data->id)->execute_single(),
-      'menus' => tx('Sql')->table('menu', 'Menus')->where('site_id', tx('Data')->filter('cms')->site_id)->execute(),
       'image_uploader' => 
         tx('Component')->available('media') ?
-          tx('Component')->modules('media')->get_html('image_uploader', array(
-            'insert_html' => array(
-              'header' => '',
-              'drop' => 'Sleep de afbeelding.',
-              'upload' => 'Uploaden',
-              'browse' => 'Bladeren'
-            ),
-            'auto_upload' => true,
-            'callbacks' => array(
-              'ServerFileIdReport' => 'plupload_image_file_id'
-            )))
+          tx('Component')->modules('media')->get_html('image_upload_module')
         : null
     );
 
   }
-
 
   protected function page_app()
   {
@@ -154,7 +145,7 @@ class Sections extends \dependencies\BaseViews
           ->where('is_config', 0)
         ->execute(),
       'pages' => tx('Sql')->table('cms', 'Pages')
-        ->join('LayoutInfo', $li)
+        ->join('LayoutInfo', $li)->left()
         ->select("$li.title", 'layout_title')
         ->where('trashed', 0)
         ->order('title')
@@ -166,13 +157,9 @@ class Sections extends \dependencies\BaseViews
   protected function edit_page($options)
   {
     
-    $page_info = $this->helper('get_page_info', $options->id->is_set() ? $options->id->get('int') : tx('Data')->filter('cms')->pid->get('int'));
-    $page_options = $this->helper('get_page_options', $page_info->id);
-    
     return array(
+      'languages' => tx('Language')->get_languages(),
       'layout_info' => tx('Sql')->table('cms', 'LayoutInfo')->execute(),
-      'page' => $page_info,
-      'content' => $page_info === false ? 'Page was removed.' : tx('Component')->views($page_info->component)->get_html($page_info->view_name, $page_options),
       'themes' => $this->table('Themes')->order('title')->execute(),
       'templates' => $this->table('Templates')->order('title')->execute()
     );
@@ -219,28 +206,35 @@ class Sections extends \dependencies\BaseViews
 
   }
   
-  protected function menu_items($options)
+  //The tool-bar containing the buttons to control menu items with.
+  protected function menu_toolbar($options)
   {
     
-    //Get menu id and set it in session filters.
-    $mid = tx('Data')->filter('cms')->menu_id->is_set() ? tx('Data')->filter('cms')->menu_id : '1';
-    tx('Data')->session->cms->filters->menu_id->set(data_of($mid));
-    
-    //Get site id and set it in sessions filters.
-    $sid = tx('Data')->filter('cms')->site_id->is_set() ? tx('Data')->filter('cms')->site_id : tx('Site')->id;
-    tx('Data')->session->cms->filters->site_id->set(data_of($sid));
+    //Get all configured sites.
+    $sites = tx('Sql')->table('cms', 'Sites')->order('title', 'ASC')->execute();
     
     //Get menu's.
     $menus = tx('Sql')
       ->table('menu', 'Menus')
-      ->where('site_id', $sid)
+      ->where('site_id', $options['site_id'])
       ->order('title')
-      ->execute()
-      ->is('empty', function($menus){
-        // $menus->{0}->set(array(
-        //   'title'=>__('No menu\'s found')
-        // ));
-      });
+      ->execute();
+    
+    return array(
+      'sites' => $sites,
+      'selected_site' => $options['site_id'],
+      'menus' => $menus,
+      'selected_menu' => $options['menu_id']
+    );
+    
+  }
+  
+  protected function menu_items($options)
+  {
+    
+    //Menu and site id.
+    $mid = $options['menu_id'];
+    $sid = $options['site_id'];
     
     //Get the menu.
     $menu = tx('Sql')
@@ -273,14 +267,10 @@ class Sections extends \dependencies\BaseViews
         ->execute();
     });
 
-    //Get all configured sites.
-    $sites = tx('Sql')->table('cms', 'Sites')->execute();
   
     return array(
       'menu_id' => $mid,
       'site_id' => $sid,
-      'sites' => $sites,
-      'menus' => $menus,
       'menu' => $menu,
       'items' => $menu_items
     );
@@ -289,32 +279,29 @@ class Sections extends \dependencies\BaseViews
   
   protected function page_list($options)
   {
-
+    
     return tx('Sql')->table('cms', 'Pages')
       ->join('LayoutInfo', $li)
       ->select("$li.title", 'layout_title')
       ->where('trashed', 0)
       ->order('title')
     ->execute();
+    
   }
   
   protected function site_list($options)
   {
 
     return tx('Sql')->table('cms', 'Sites')
-      ->order('title')
+      ->order('title', 'ASC')
       ->execute();
+
   }
 
   protected function configbar()
   {
     
-    return array(
-      'items' => tx('Sql')
-        ->table('cms', 'ComponentViews')
-          ->where('is_config', 1)
-        ->execute()
-    );
+    return array();
     
   }
 
@@ -332,16 +319,16 @@ class Sections extends \dependencies\BaseViews
 
   protected function setting_list()
   {
-
+    
     return $this->helper('get_settings');
-
+    
   }
 
-  protected function setting_edit()
+  protected function setting_edit($data)
   {
-
+    
     return array(
-      'item' => $this->helper('get_settings', tx('Data')->get->setting_id)
+      'item' => $this->helper('get_settings', tx('Data')->get->setting_key)
     );
 
   }
@@ -397,6 +384,11 @@ class Sections extends \dependencies\BaseViews
     
     return tx('Component')->sections('account')->get_html('login_form');
     
+  }
+  
+  protected function context_menus()
+  {
+    return array();
   }
 
 }

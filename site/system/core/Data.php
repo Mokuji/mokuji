@@ -26,7 +26,7 @@ class Data
 			'env'=>$_ENV,
 			'cookie'=>$_COOKIE
 		);
-	
+    
 		//filter all data and put them in appropiate arrays, then unset the data arrays to prevent direct use
 		foreach($datatypes as $type => $global)
 		{
@@ -42,6 +42,12 @@ class Data
 		
 		unset($_POST, $_GET, $_SERVER, $_FILES, $_ENV, $_COOKIE, $_REQUEST);
     $_SESSION = array();
+    
+    //Make sure session is kept after fatals.
+    register_shutdown_function(function(){
+      tx('Logging')->log('Data', 'Session', 'The session was restored.');
+      tx('Data')->restore_session();
+    });
 		
 	}
 	
@@ -136,8 +142,11 @@ class Data
       $this->session->tx->postdata->un_set();
     }
     
+  }
+  
+  public function restore_session()
+  {
     $_SESSION = $this->session->as_array();
-    
   }
 	
   public function __get($name)

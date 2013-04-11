@@ -1,4 +1,123 @@
-(function($){
+//Only if jQuery is present.
+if(window.$) (function($){
+  
+  var i18n = {
+    hasLoaded: false,
+    baseUrl: null,
+    locale: null,
+    components: {
+      "/": null //Always load root
+    },
+    translations: {} //Per component. Root is called '/'.
+  };
+  
+  var i18nLoad = function(){
+    
+    jQuery(function($){
+      
+      for(var name in i18n.components){
+        
+        if(i18n.components[name] !== null)
+          continue;
+        
+        var isRoot = name === '/';
+        
+        $.ajax(i18n.baseUrl + (isRoot ?
+          'site/i18n/'+i18n.locale :
+          'site/components/'+name+'/i18n/'+i18n.locale
+        ) + '.json').done(function(translations){
+          i18n.translations[name] = translations;
+          i18n.components[name] = true;
+        });
+        
+        i18n.components[name] = false;
+        
+      }
+      
+      i18n.hasLoaded = true;
+      
+    });
+    
+    return window;
+    
+  };
+  
+  //Do an initial load when jQuery is ready.
+  jQuery(function($){
+    if(i18n.locale && i18n.baseUrl)
+      i18nLoad();
+  });
+  
+  window.i18nSetup = function(locale, baseUrl){
+    
+    if(i18n.locale !== null)
+      throw('Locale has already been set.');
+    
+    if(locale.toString().length < 5)
+      throw('Locale needs to be a string of at least 5 characters. Example: en-GB');
+    
+    if(i18n.baseUrl !== null)
+      throw('Base URL has already been set.');
+    
+    i18n.locale = locale.toString();
+    i18n.baseUrl = baseUrl.toString();
+    
+    return window;
+    
+  };
+  
+  //This function includes a component to be translated.
+  window.includeTranslations = function(component){
+    
+    //Already tried this one.
+    if(i18n.components.hasOwnProperty(component) && i18n.components[component] !== null)
+      return window;
+    
+    //Queue it.
+    i18n.components[component] = null;
+    
+    if(i18n.hasLoaded){
+      i18nLoad();
+    }
+    
+    return window;
+    
+  };
+  
+  window.transf = function(){
+    
+    if(i18n.hasLoaded !== true)
+      window.console &&
+      window.console.log &&
+      window.console.log('Tried to translate before loading completed.');
+    
+    var args = [];
+    for(var i in arguments)
+      args[i] = arguments[i];
+    
+    var component = args.shift() || '/'
+      , phrase = args.shift();
+    
+    if(component == undefined || phrase == undefined)
+      throw('Not enough arguments. transf(component, phrase[, paramN, ...])');
+    
+    var available = i18n.hasLoaded && i18n.translations[component] && i18n.translations[component][phrase]
+      , fallback = i18n.hasLoaded && !(available || component === '/')
+    ;
+    
+    //Fallback is kind of special.
+    if(fallback){
+      args.unshift('/', phrase);
+      return window.transf.apply(this, args);
+    }
+    
+    //Get a translated version of the format.
+    var format = available && i18n.translations[component][phrase] || phrase;
+    
+    //Do a pattern replace.
+    return format.replace(/\{\d+\}/g, function(capture){ return args[capture.match(/\d+/)]; });
+    
+  };
   
   //hash handling
   (function(){

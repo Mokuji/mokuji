@@ -8,7 +8,8 @@ class Actions extends \dependencies\BaseComponent
       'select_menu' => 2,
       'new_page' => 2,
       'edit_page' => 2,
-      'logout' => 1
+      'logout' => 1,
+      'editable' => 2
     );
   
   protected function select_menu($data)
@@ -31,7 +32,7 @@ class Actions extends \dependencies\BaseComponent
 
     $action = tx('Adding a new menu item <-> page link.', function()use($data){
 
-      $page = tx('Sql')->table('menu', 'MenuItems')->pk($data->menu_item_id)->execute_single()->is('empty', function()use($data){
+      tx('Sql')->table('menu', 'MenuItems')->pk($data->menu_item_id)->execute_single()->is('empty', function()use($data){
         throw new \exception\EmptyResult('No menu item entry was found with id %s.', $data->menu_item_id);
       })
       ->merge($data->having('page_id'))->save();
@@ -57,7 +58,7 @@ class Actions extends \dependencies\BaseComponent
   
     $action = tx('Detaching a page from a menu item.', function()use($data){
 
-      $test = tx('Sql')->table('menu', 'MenuItems')->pk($data->menu)->where('page_id', $data->pid)->execute_single()->is('empty', function()use($data){
+      tx('Sql')->table('menu', 'MenuItems')->pk($data->menu)->where('page_id', $data->pid)->execute_single()->is('empty', function()use($data){
         throw new \exception\EmptyResult('No menu item entry was found with id %s.', $data->menu);
       })
       ->merge(array('page_id' => 'NULL'))
@@ -79,7 +80,7 @@ class Actions extends \dependencies\BaseComponent
     $page = null;
 
     tx('Adding a new page.', function()use($data){
-
+      
       //save page
       $page = tx('Sql')->model('cms', 'Pages')->set(array(
         'title' => __('New page', 1),
@@ -314,7 +315,7 @@ class Actions extends \dependencies\BaseComponent
   protected function logout($data)
   {
     
-    throw new \exception\Deprecated();
+    throw new \exception\Deprecated('Please use account/logout');
     
     tx('Logging out.', function(){tx('Account')->logout();})->failure(function($info){
       tx('Controller')->message(array(
@@ -463,7 +464,7 @@ class Actions extends \dependencies\BaseComponent
   {
 
     tx('Setting the language.', function()use($data){
-      $data->lang_id->validate('Language', array('number', 'type'=>'integer'))->moveto(tx('Data')->session->tx->language);
+      $data->lang_id->validate('Language', array('number'=>'integer'))->moveto(tx('Data')->session->tx->language);
     })
 
     ->failure(function($info){
@@ -602,7 +603,7 @@ class Actions extends \dependencies\BaseComponent
         ->merge($data)
         ->save();
       
-      echo $link->id->get();
+      echo $link->page_id->get();
       exit;
       
     })
@@ -618,6 +619,18 @@ class Actions extends \dependencies\BaseComponent
       ));
       
     });
+
+  }
+
+  public function editable($data)
+  {
+    if(tx('Data')->session->tx->editable->get() == true){
+      tx('Data')->session->tx->editable->set(false);
+    }else{
+      tx('Data')->session->tx->editable->set(true);
+    }
+
+    tx('Url')->redirect(url(''));
 
   }
 

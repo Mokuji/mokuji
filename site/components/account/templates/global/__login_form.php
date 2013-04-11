@@ -18,7 +18,7 @@ if(!$user->check('login')){
 
     <div class="ctrlHolder clearfix">
       <label for="l_username"><?php __('Username'); ?></label>
-      <input id="l_username" type="text" name="email" value="<?php echo tx('Data')->postdata()->email->otherwise(tx('Data')->get->email); ?>" placeholder="<?php __('Username'); ?>" />
+      <input id="l_username" type="text" name="email" value="<?php echo tx('Data')->post->email->otherwise(tx('Data')->get->email); ?>" placeholder="<?php __('Username'); ?>" />
     </div>
 
     <div class="ctrlHolder clearfix">

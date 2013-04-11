@@ -11,7 +11,7 @@
     <li id="tabber-groups"><a href="#tab-groups"><?php __($names->component, 'Groups'); ?></a></li>
     <li id="tabber-group"><a href="#tab-group"><?php __($names->component, 'New group'); ?></a></li>
     <?php if(tx('Component')->available('mail')){ ?>
-      <li id="tabber-mail"><a href="#tab-mail"><?php __($names->component, 'Mailing'); ?></a></li>
+      <li id="tabber-mail"><a href="#tab-mail"><?php __($names->component, 'Send mail'); ?></a></li>
     <?php } ?>
     <li id="tabber-import"><a href="#tab-import"><?php __($names->component, 'IMPORT_VERB', 'ucfirst'); ?></a></li>
   </ul>
@@ -83,14 +83,14 @@
       }
       
       switch(id){
-        case '#tab-users': var gowhere = '<?php echo url("?section=account/user_list"); ?>'; break;
-        case '#tab-user': var gowhere = '<?php echo url("?section=account/edit_user"); ?>'; break;
-        case '#tab-groups': var gowhere = '<?php echo url("?section=account/group_list"); ?>'; break;
-        case '#tab-group': var gowhere = '<?php echo url("?section=account/edit_user_group"); ?>'; break;
+        case '#tab-users': var gowhere = '<?php echo url("?section=account/user_list", true); ?>'; break;
+        case '#tab-user': var gowhere = '<?php echo url("?section=account/edit_user", true); ?>'; break;
+        case '#tab-groups': var gowhere = '<?php echo url("?section=account/group_list", true); ?>'; break;
+        case '#tab-group': var gowhere = '<?php echo url("?section=account/edit_user_group", true); ?>'; break;
         <?php if(tx('Component')->available('mail')){ ?>
-          case '#tab-mail': var gowhere = '<?php echo url("?section=account/compose_mail"); ?>'; break;
+          case '#tab-mail': var gowhere = '<?php echo url("?section=account/compose_mail", true); ?>'; break;
         <?php } ?>
-        case '#tab-import': var gowhere = '<?php echo url("?section=account/import_users"); ?>'; break;
+        case '#tab-import': var gowhere = '<?php echo url("?section=account/import_users", true); ?>'; break;
       }
       
       if(gowhere)
@@ -114,17 +114,6 @@
       
     });
     
-    $('#tabs-accounts').on('submit', '.edit-user-form', function(e){
-      
-      e.preventDefault();
-      
-      $(this).ajaxSubmit(function(d){
-        $('#tab-users').html(d);
-        $('#tabber-users a').trigger('click');
-      });
-      
-    });
-    
     $('#tabs-accounts').on('submit', '#tab-group form', function(e){
       
       e.preventDefault();
@@ -139,9 +128,3 @@
   });
 
 </script>
-
-<style>
-body{
-  background-color:#fff;
-}
-</style>
