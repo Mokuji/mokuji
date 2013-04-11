@@ -12,6 +12,83 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
       '1.1' => '1.2'
     );
   
+  //Replacing installer for new page view tables.
+  public function install_1_2($dummydata, $forced)
+  {
+    
+    if($forced === true){
+      //Since we are self-reinstalling, make sure the base class knows to refresh it's cached data about versions.
+      $this->clear_cache();
+      tx('Sql')->query('DROP TABLE IF EXISTS `#__update_packages`');
+      tx('Sql')->query('DROP TABLE IF EXISTS `#__update_package_versions`');
+      tx('Sql')->query('DROP TABLE IF EXISTS `#__update_package_version_changes`');
+      tx('Sql')->query('DROP TABLE IF EXISTS `#__update_user_last_reads`');
+    }
+    
+    tx('Sql')->query('
+      CREATE TABLE `#__update_packages` (
+        `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+        `title` varchar(255) NOT NULL,
+        `type` int(10) unsigned NOT NULL,
+        `installed_version` varchar(255) NOT NULL,
+        `installed_version_date` date NOT NULL,
+        `description` text NOT NULL,
+        PRIMARY KEY (`id`),
+        KEY `type` (`type`),
+        KEY `title` (`title`)
+      ) ENGINE=MyISAM  DEFAULT CHARSET=utf8
+    ');
+    tx('Sql')->query('
+      CREATE TABLE `#__update_package_versions` (
+        `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+        `package_id` int(10) unsigned NOT NULL,
+        `version` varchar(255) NOT NULL,
+        `date` date NOT NULL,
+        `description` text NOT NULL,
+        PRIMARY KEY (`id`),
+        KEY `package_id` (`package_id`,`date`)
+      ) ENGINE=MyISAM  DEFAULT CHARSET=utf8
+    ');
+    tx('Sql')->query('
+      CREATE TABLE `#__update_package_version_changes` (
+        `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+        `package_version_id` int(10) unsigned NOT NULL,
+        `title` varchar(255) NOT NULL,
+        `description` text NOT NULL,
+        `url` varchar(255) DEFAULT NULL,
+        PRIMARY KEY (`id`),
+        KEY `package_update_id` (`package_version_id`)
+      ) ENGINE=MyISAM  DEFAULT CHARSET=utf8
+    ');
+    tx('Sql')->query('
+      CREATE TABLE `#__update_user_last_reads` (
+        `user_id` int(10) unsigned NOT NULL,
+        `last_read` date NOT NULL,
+        PRIMARY KEY (`user_id`)
+      ) ENGINE=MyISAM DEFAULT CHARSET=utf8
+    ');
+    
+    //Queue self-deployment with CMS component.
+    $this->queue(array(
+      'component' => 'cms',
+      'min_version' => '3.0'
+      ), function($version){
+        
+        tx('Component')->helpers('cms')->_call('ensure_pagetypes', array(
+          array(
+            'name' => 'update',
+            'title' => 'Update management'
+          ),
+          array(
+            'summary' => 'MANAGER'
+          )
+        ));
+        
+      }
+    ); //END - Queue CMS 3.0+
+    
+  }
+  
   public function update_to_1_2($current_version, $forced)
   {
     

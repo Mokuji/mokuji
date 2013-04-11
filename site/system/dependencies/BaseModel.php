@@ -59,7 +59,12 @@ abstract class BaseModel extends Data
     }
 
   }
-
+  
+  public static function clear_table_data_cache()
+  {
+    self::$table_data=array();
+  }
+  
   // Getter for table data
   public static function table_data($get=false, $set=false)
   {

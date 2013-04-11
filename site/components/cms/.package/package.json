@@ -5,6 +5,12 @@
   "dbUpdates": true,
   "versions": [
     {
+      "version": "3.0",
+      "date": "2013-04-11",
+      "description": "Herontwerp dashboard en website configuratie.",
+      "changes": []
+    },
+    {
       "version": "2.1",
       "date": "2013-04-05",
       "description": "PageTypes kunnen een titel voor findability aanraden.",

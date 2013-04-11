@@ -140,21 +140,44 @@ class Views extends \dependencies\BaseViews
     );
 
   }
-
+  
   protected function instructions()
   {
     return null;
   }
-
+  
   protected function settings()
   {
+    
     return array(
-      'setting_list' => $this->section('setting_list'),
-      'setting_edit_simple' => $this->section('setting_edit_simple'),
-      'ip_list' => $this->section('ip_list'),
-      'theme_list' => $this->section('theme_list'),
-      'template_list' => $this->section('template_list')
+      'menu' => tx('Sql')
+        ->table('cms', 'ComponentViews')
+        ->where('type', "'SETTINGS'")
+        ->execute(),
+      'content' => ''
     );
+    
   }
-
+  
+  protected function generic_site_settings()
+  {
+    
+    $result = array();
+    $multilanguage = array(
+      'site_name',
+      'site_description',
+      'site_keywords',
+      'site_author',
+      'site_twitter',
+      'site_googleplus'
+    );
+    
+    foreach($multilanguage as $key){
+      $result[$key] = $this->helper('get_settings', array('key'=>$key));
+    }
+    
+    return $result;
+    
+  }
+  
 }

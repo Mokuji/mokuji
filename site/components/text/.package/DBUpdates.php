@@ -13,6 +13,62 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
       '1.1' => '1.2'
     );
   
+  //Lets install new features! Said no text component ever.
+  public function install_1_2($dummydata, $forced)
+  {
+    
+    if($forced === true){
+      tx('Sql')->query('DROP TABLE IF EXISTS `#__text_items`');
+      tx('Sql')->query('DROP TABLE IF EXISTS `#__text_item_info`');
+    }
+    
+    tx('Sql')->query('
+      CREATE TABLE `#__text_items` (
+        `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+        `page_id` int(10) unsigned NOT NULL,
+        `order_nr` int(10) unsigned DEFAULT NULL,
+        `dt_created` datetime NOT NULL,
+        `user_id` int(10) unsigned NOT NULL,
+        `trashed` tinyint(1) NOT NULL,
+        PRIMARY KEY (`id`),
+        KEY `page_id` (`page_id`)
+      ) ENGINE=MyISAM  DEFAULT CHARSET=utf8
+    ');
+    
+    tx('Sql')->query('
+      CREATE TABLE `#__text_item_info` (
+        `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+        `item_id` int(10) unsigned NOT NULL,
+        `language_id` int(10) unsigned NOT NULL,
+        `title` varchar(255) NOT NULL,
+        `description` text NOT NULL,
+        `text` text NOT NULL,
+        PRIMARY KEY (`id`),
+        KEY `item_id` (`item_id`,`language_id`)
+      ) ENGINE=MyISAM DEFAULT CHARSET=utf8
+    ');
+    
+    //Queue self-deployment with CMS component.
+    $this->queue(array(
+      'component' => 'cms',
+      'min_version' => '3.0'
+      ), function($version){
+        
+        tx('Component')->helpers('cms')->_call('ensure_pagetypes', array(
+          array(
+            'name' => 'text',
+            'title' => 'Text component'
+          ),
+          array(
+            'text' => 'PAGETYPE'
+          )
+        ));
+        
+      }
+    ); //END - Queue CMS 3.0+
+    
+  }
+  
   public function update_to_1_2($current_version, $forced)
   {
     

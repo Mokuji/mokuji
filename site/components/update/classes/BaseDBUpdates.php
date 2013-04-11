@@ -286,7 +286,9 @@ abstract class BaseDBUpdates
     
     if($latest->is_empty()) throw new \exception\Exception('No install method exists for package '.$this->package()->title);
     
-    call_user_func_array(array($this, 'install_'.str_replace('.', '_', $latest->version->get())), array($dummydata, $forced));
+    $method = 'install_'.str_replace('.', '_', $latest->version->get());
+    tx('Logging')->log('Update', 'Installing DB', 'Calling '.$method.' for package '.$this->package()->title.' from version '.$this->current_version());
+    call_user_func_array(array($this, $method), array($dummydata, $forced));
     $this->version_bump($latest->version);
     
     if($update_to_latest === true) $this->update($forced);
@@ -505,6 +507,9 @@ abstract class BaseDBUpdates
   {
     
     raw($version);
+    
+    //We need to clear this cache regularly, because otherwise this may mess up the ORM during install.
+    \dependencies\BaseModel::clear_table_data_cache();
     
     //In case of a self-install the package will not be inserted yet.
     if(!$this->package()->id->is_set() && $this->component === 'update'){

@@ -14,8 +14,45 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
       '1.2' => '1.3',
       '1.3' => '1.4',
       '1.4' => '2.0',
-      '2.0' => '2.1'
+      '2.0' => '2.1',
+      '2.1' => '3.0'
     );
+  
+  public function update_to_3_0($current_version, $forced)
+  {
+    
+    try{
+      
+      //Add new column.
+      tx('Sql')->query('
+        ALTER TABLE `#__cms_component_views`
+          ADD `type` ENUM(\'PAGETYPE\', \'MANAGER\', \'SETTINGS\') NOT NULL after `name`
+      ');
+      
+      //Convert all is_config values to the new type enum.
+      tx('Sql')
+        ->table('cms', 'ComponentViews')
+        ->execute()
+        ->each(function($view){
+          $view->merge(array(
+            'type' => $view->is_config->get('int') > 0 ? 'MANAGER' : 'PAGETYPE'
+          ))->save();
+        });
+      
+      //Drop unused columns.
+      tx('Sql')->query('
+        ALTER TABLE `#__cms_component_views`
+          DROP `is_config`,
+          DROP `thumbnail`
+      ');
+      
+    }catch(\exception\Sql $ex){
+      //When it's not forced, this is a problem.
+      //But when forcing, ignore this.
+      if(!$forced) throw $ex;
+    }
+    
+  }
   
   public function update_to_2_1($current_version, $forced)
   {

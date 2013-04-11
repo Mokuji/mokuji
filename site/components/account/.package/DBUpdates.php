@@ -13,8 +13,75 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
       '1.2' => '1.3'
     );
   
+  //Add new installer, since pretty much nothing changed except the pagetype registering.
+  public function install_1_3($dummydata, $forced)
+  {
+    
+    if($forced === true){
+      tx('Sql')->query('DROP TABLE IF EXISTS `#__account_accounts_to_user_groups`');
+      tx('Sql')->query('DROP TABLE IF EXISTS `#__account_user_groups`');
+      tx('Sql')->query('DROP TABLE IF EXISTS `#__account_user_info`');
+    }
+    
+    tx('Sql')->query('
+      CREATE TABLE `#__account_accounts_to_user_groups` (
+        `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+        `user_id` int(10) unsigned NOT NULL,
+        `user_group_id` int(10) unsigned NOT NULL,
+        PRIMARY KEY (`id`),
+        KEY `user_id` (`user_id`,`user_group_id`)
+      ) ENGINE=MyISAM DEFAULT CHARSET=utf8
+    ');
+    tx('Sql')->query('
+      CREATE TABLE `#__account_user_groups` (
+        `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+        `title` varchar(255) NOT NULL,
+        `description` text,
+        PRIMARY KEY (`id`)
+      ) ENGINE=MyISAM DEFAULT CHARSET=utf8
+    ');
+    tx('Sql')->query('
+      CREATE TABLE `#__account_user_info` (
+        `user_id` int(10) unsigned NOT NULL,
+        `avatar_image_id` int(10) unsigned DEFAULT NULL,
+        `username` varchar(255) DEFAULT NULL,
+        `name` varchar(255) DEFAULT NULL,
+        `preposition` varchar(255) DEFAULT NULL,
+        `family_name` varchar(255) DEFAULT NULL,
+        `status` int(10) unsigned NOT NULL DEFAULT \'1\',
+        `claim_key` varchar(255) DEFAULT NULL,
+        `comments` text,
+        PRIMARY KEY (`user_id`)
+      ) ENGINE=MyISAM DEFAULT CHARSET=utf8
+    ');
+    
+    //Queue self-deployment with CMS component.
+    $this->queue(array(
+      'component' => 'cms',
+      'min_version' => '3.0'
+      ), function($version){
+        
+        tx('Component')->helpers('cms')->_call('ensure_pagetypes', array(
+          array(
+            'name' => 'account',
+            'title' => 'Account management'
+          ),
+          array(
+            'accounts' => 'MANAGER',
+            'profile' => 'PAGETYPE'
+          )
+        ));
+        
+      }
+    ); //END - Queue CMS 3.0+
+    
+  }
+  
+  //This one will be deprecated soon.
   public function update_to_1_3($current_version, $forced)
   {
+    
+    tx('Logging')->log('Account', 'DEPRECATED', 'Used deprecated update_to_1_3 function.');
     
     $comname = $this->component;
     
@@ -57,8 +124,11 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
     
   }
   
+  //This one will be deprecated soon.
   public function install_1_2($dummydata, $forced)
   {
+    
+    tx('Logging')->log('Account', 'DEPRECATED', 'Used deprecated install_1_2 function.');
     
     if($forced === true){
       tx('Sql')->query('DROP TABLE IF EXISTS `#__account_accounts_to_user_groups`');

@@ -275,7 +275,6 @@ class Helpers extends \dependencies\BaseComponent
     $component = tx('Sql')
       ->table('cms', 'Components')
       ->where('name', "'{$component['name']}'")
-      ->limit(1)
       ->execute_single()
       
       //If it's not there, create it.
@@ -292,28 +291,34 @@ class Helpers extends \dependencies\BaseComponent
       });
     
     //Look for the views.
-    foreach($views as $name => $is_config){
+    foreach($views as $name => $type){
       
       tx('Sql')
         ->table('cms', 'ComponentViews')
         ->where('com_id', $component->id)
         ->where('name', "'$name'")
-        ->limit(1)
         ->execute_single()
         
         //If it's not there, create it.
-        ->is('empty', function()use($component, $name, $is_config){
+        ->is('empty', function()use($component, $name, $type){
+          
+          //Compatability with old notation.
+          if(!is_string($type))
+            $type = ($type ? 'MANAGER' : 'PAGETYPE');
           
           $view = tx('Sql')
             ->model('cms', 'ComponentViews')
-            ->set(array(
+            ->merge(array(
               'com_id' => $component->id,
               'name' => $name,
-              'tk_title' => strtoupper(sprintf('%s_%s_TITLE', $component->name, $name)),
-              'tk_description' => strtoupper(sprintf('%s_%s_DESCRIPTION', $component->name, $name)),
-              'is_config' => ($is_config == true ? 1 : 0)
+              'type' => strtoupper($type),
+              'tk_title' => strtoupper(sprintf('%s_VIEW_TITLE', $name)),
+              'tk_description' => strtoupper(sprintf('%s_VIEW_DESCRIPTION', $name))
             ))
             ->save();
+          
+          tx('Logging')->log('CMS', 'Ensure pagetype', 'Ensuring '.$component.', '.$name.', '.$type.' RESULT >> '.$view->type->dump());
+          
         });
       
     }
