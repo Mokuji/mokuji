@@ -24,6 +24,7 @@ are:
 * __menu__    : Menu control. Allows the CMS component to implement menus in a page.
 * __text__    : Creating, storing and editing text. Allows the CMS component to create text pages.
 * __update__  : Installing and updating other components or the framework itself.
+* __timeline__: Creating and managing timelines, such as a blog or news page.
 
 For more specific components, you can take a look at our
 [repository list](https://github.com/Tuxion). All repositories prefixed with `tx.cms-` are
