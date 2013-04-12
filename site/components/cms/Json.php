@@ -46,17 +46,37 @@ class Json extends \dependencies\BaseComponent
   
   protected function get_configbar_items($data, $params)
   {
-    return tx('Sql')
-      ->table('cms', 'ComponentViews')
-        ->where('is_config', 1)
-      ->execute()
-      
-      //Also get the meta info we need.
-      ->each(function($view){
-        $view->component;
-        $view->preferred_title;
-        $view->preferred_description;
-      });
+    
+    //Attempt to use the new types.
+    try{
+      return tx('Sql')
+        ->table('cms', 'ComponentViews')
+        ->where('type', "'MANAGER'")
+        ->execute()
+        
+        //Also get the meta info we need.
+        ->each(function($view){
+          $view->component;
+          $view->preferred_title;
+          $view->preferred_description;
+        });  
+    }
+    
+    //Otherwise use a fallback.
+    catch(\exception\Sql $sex){
+      return tx('Sql')
+        ->table('cms', 'ComponentViews')
+          ->where('is_config', 1)
+        ->execute()
+        
+        //Also get the meta info we need.
+        ->each(function($view){
+          $view->component;
+          $view->preferred_title;
+          $view->preferred_description;
+        });
+    }
+    
   }
   
   protected function update_page($data, $params)

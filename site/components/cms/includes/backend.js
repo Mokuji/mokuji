@@ -471,9 +471,7 @@ function request(){
       
       'click on btn_delete': function(e){
         e.preventDefault();
-        if(confirm('Are you sure you want to delete this menu-item? ('+$(e.target).closest('li').find('a.menu-item').text()+')')){
-          this.deleteItem($(e.target).closest('li').id())
-        }
+        this.deleteItem($(e.target).closest('li').id());
       },
       
       'click on item': function(e){
@@ -566,10 +564,10 @@ function request(){
     deleteItem: function(id){
       
       var $item = this.el_items.filter('[data-id='+id+']');
-
-      if(confirm('Weet u zeker dat u dit menu-item wilt verwijderen?'))
+      
+      if(confirm(transf('cms', 'Are you sure you want to delete this menu item')+'?'))
       {
-
+        
         $item.slideUp();
         
         return (request(DELETE, 'menu/menu_item/'+id)
@@ -579,12 +577,11 @@ function request(){
           })
           
           .fail(function(){
-            console.dir(arguments);
             $item.show();
           })
           
         );
-
+        
       }
       
     },
@@ -1600,7 +1597,9 @@ function request(){
     }
     
   });
-
+  
+  includeTranslations('cms');
+  
 })(this, jQuery, _);
 
 $(function(){

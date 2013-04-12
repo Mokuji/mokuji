@@ -15,8 +15,79 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
       '1.3' => '1.4'
     );
   
+  //Add new installer to prevent pagetype problems.
+  public function install_1_4($dummydata, $forced)
+  {
+    
+    if($forced === true){
+      tx('Sql')->query('DROP TABLE IF EXISTS `#__menu_items`');
+      tx('Sql')->query('DROP TABLE IF EXISTS `#__menu_item_info`');
+      tx('Sql')->query('DROP TABLE IF EXISTS `#__menu_menus`');
+    }
+    
+    tx('Sql')->query('
+      CREATE TABLE `#__menu_items` (
+        `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+        `menu_id` int(10) unsigned NOT NULL,
+        `lft` int(10) unsigned NOT NULL,
+        `rgt` int(10) unsigned NOT NULL,
+        `page_id` int(10) unsigned DEFAULT NULL,
+        `image_id` INT(10) unsigned NULL,
+        PRIMARY KEY (`id`)
+      ) ENGINE=MyISAM  DEFAULT CHARSET=utf8
+    ');
+    
+    tx('Sql')->query('
+      CREATE TABLE `#__menu_item_info` (
+        `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+        `item_id` int(10) unsigned NOT NULL,
+        `language_id` int(10) unsigned NOT NULL,
+        `title` varchar(255) NOT NULL,
+        `description` longtext,
+        PRIMARY KEY (`id`),
+        KEY `item_id` (`item_id`),
+        KEY `language_id` (`language_id`)
+      ) ENGINE=MyISAM  DEFAULT CHARSET=utf8
+    ');
+    
+    tx('Sql')->query('
+      CREATE TABLE `#__menu_menus` (
+        `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+        `site_id` int(10) unsigned NOT NULL,
+        `template_key` varchar(255) NOT NULL,
+        `title` varchar(255) NOT NULL,
+        PRIMARY KEY (`id`),
+        KEY `site_id` (`site_id`),
+        KEY `template_key` (`template_key`)
+      ) ENGINE=MyISAM  DEFAULT CHARSET=utf8
+    ');
+    
+    //Queue self-deployment with CMS component.
+    $this->queue(array(
+      'component' => 'cms',
+      'min_version' => '3.0'
+      ), function($version){
+        
+        tx('Component')->helpers('cms')->_call('ensure_pagetypes', array(
+          array(
+            'name' => 'menu',
+            'title' => 'Menu component'
+          ),
+          array(
+            'menu_link' => 'PAGETYPE'
+          )
+        ));
+        
+      }
+    ); //END - Queue CMS 3.0+
+    
+  }
+  
+  //This one will be deprecated soon.
   public function update_to_1_4($current_version, $forced)
   {
+    
+    tx('Logging')->log('Menu', 'DEPRECATED', 'Used deprecated update_to_1_4 function.');
     
     //Queue translation token update with CMS component.
     $this->queue(array(
@@ -44,8 +115,11 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
     
   }
   
+  //This one will be deprecated soon.
   public function update_to_1_3($current_version, $forced)
   {
+    
+    tx('Logging')->log('Menu', 'DEPRECATED', 'Used deprecated update_to_1_3 function.');
     
     //Queue translation token update with CMS component.
     $this->queue(array(
@@ -86,8 +160,11 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
     
   }
   
+  //This one will be deprecated soon.
   public function update_to_1_2($current_version, $forced)
   {
+    
+    tx('Logging')->log('Menu', 'DEPRECATED', 'Used deprecated update_to_1_2 function.');
     
     //If this goes wrong it's because of the column already existing.
     try{
@@ -100,9 +177,12 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
     }
     
   }
-
+  
+  //This one will be deprecated soon.
   public function install_1_1($dummydata, $forced)
   {
+    
+    tx('Logging')->log('Menu', 'DEPRECATED', 'Used deprecated install_1_1 function.');
     
     if($forced === true){
       tx('Sql')->query('DROP TABLE IF EXISTS `#__menu_items`');

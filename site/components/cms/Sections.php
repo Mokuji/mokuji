@@ -139,11 +139,25 @@ class Sections extends \dependencies\BaseViews
   protected function new_page($options)
   {
     
-    return array(
-      'page_types' => tx('Sql')
+    //Try the new view types.
+    $page_types = Data();
+    try{
+      $page_types = tx('Sql')
         ->table('cms', 'ComponentViews')
-          ->where('is_config', 0)
-        ->execute(),
+        ->where('type', "'PAGETYPE'")
+        ->execute();
+    }
+    
+    //Or use fallback.
+    catch(\exception\Sql $sex){
+      $page_types = tx('Sql')
+        ->table('cms', 'ComponentViews')
+        ->where('is_config', 0)
+        ->execute();
+    }
+    
+    return array(
+      'page_types' => $page_types,
       'pages' => tx('Sql')->table('cms', 'Pages')
         ->join('LayoutInfo', $li)->left()
         ->select("$li.title", 'layout_title')
@@ -389,6 +403,29 @@ class Sections extends \dependencies\BaseViews
   protected function context_menus()
   {
     return array();
+  }
+  
+  protected function settings_page($options)
+  {
+    
+    $view = tx('Sql')
+      ->table('cms', 'ComponentViews')
+      ->pk($options->id)
+      ->execute_single()
+      
+      ->is('empty', function(){
+        throw new \exception\NotFound('No settings view with this ID');
+      })
+      
+      ->failure(function($view){
+        
+        if($view->type->get() !== 'SETTINGS')
+          throw new \exception\NotFound('No settings view with this ID');
+        
+      });
+    
+    return tx('Component')->views($view->component->name)->get_html($view->name);
+      
   }
 
 }

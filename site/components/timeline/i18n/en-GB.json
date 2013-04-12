@@ -1,6 +1,8 @@
 {
   "TIMELINE_BLOG_TITLE": "Blog page",
+  "BLOG_VIEW_TITLE": "Blog page",
   "TIMELINE_BLOG_DESCRIPTION": "Creates a blog page",
+  "BLOG_VIEW_DESCRIPTION": "Creates a blog page",
   
   "NEXT_PAGE_NOTATION": "Next",
   "PREVIOUS_PAGE_NOTATION": "Previous",
