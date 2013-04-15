@@ -46,9 +46,9 @@ class Controller
     
     //include css from /includes
     $css=array();
-    // foreach(files(PATH_INCLUDES.DS.'css'.DS.'*.css') as $file){
-      // $css[] = "\n".'<link rel="stylesheet" type="text/css" href="'.URL_INCLUDES.'css/'.basename($file).'" />';
-    // }
+    foreach(files(PATH_INCLUDES.DS.'css'.DS.'*.css') as $file){
+      $css[] = "\n".'<link rel="stylesheet" type="text/css" href="'.URL_INCLUDES.'css/'.basename($file).'" />';
+    }
     
     //create injection data
     $data = array(
