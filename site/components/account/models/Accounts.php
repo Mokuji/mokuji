@@ -9,7 +9,8 @@ class Accounts extends \dependencies\BaseModel
     
     $relations = array(
       'UserInfo' => array('id' => 'UserInfo.user_id'),
-      'AccountsToUserGroups' => array('id' => 'AccountsToUserGroups.user_id')
+      'AccountsToUserGroups' => array('id' => 'AccountsToUserGroups.user_id'),
+      'UserGroups' => array('id' => 'AccountsToUserGroups.user_id')
     ),
     
     $validate = array(
@@ -20,11 +21,6 @@ class Accounts extends \dependencies\BaseModel
       'family_name' => array('string', 'between'=>array(0, 255), 'no_html'),
       'comments' => array('string', 'no_html')
     );
-  
-  public function get_title()
-  {
-    return $this->user_info->full_name->otherwise($this->email);
-  }
   
   public function get_is_administrator()
   {
@@ -74,24 +70,5 @@ class Accounts extends \dependencies\BaseModel
       ->execute_single()
       ->date;
   }
-
-  //Return the avatar URL.
-  public function get_avatar()
-  {
-
-    $image = tx('Sql')->table('media', 'Images')
-      ->pk($this->user_info->avatar_image_id)
-      ->execute_single();
-    
-    if($image->get())
-      return $image->generate_url(array('fit_width' => 200, 'fit_height' => 200));
-
-    else
-      return false;
-    
-
-  }
-  
-
   
 }
