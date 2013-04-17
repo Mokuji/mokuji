@@ -1,6 +1,6 @@
 {
-  "title": "CMS backend thema",
-  "description": "Verzorgt het thema van de backend van het CMS component.",
+  "title": "Minimal thema",
+  "description": "Verzorgt de meest minimale weergave van een pagina.",
   "type": "manual",
   "dbUpdates": true,
   "versions": [
