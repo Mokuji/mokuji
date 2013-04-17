@@ -1,0 +1,206 @@
+/* HTML5 Boilerplate */
+
+/* HTML5 display definitions */
+article, aside, details, figcaption, figure, footer, header, hgroup, nav, section { display: block; }
+audio, canvas, video { display: inline-block; *display: inline; *zoom: 1; }
+audio:not([controls]) { display: none; }
+[hidden] { display: none; }
+
+/* Base */
+html { font-size: 100%; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+::-moz-selection { background: #0063a2; color: #fff; text-shadow: none; }
+::selection { background: #0063a2; color: #fff; text-shadow: none; }
+input::-webkit-input-placeholder,
+input:-moz-placeholder,
+input::placeholder{
+  color:#f00;
+}
+
+/* Links */
+a:focus { outline: none;}
+a:hover, a:active { outline: 0; }
+
+/* Typography */
+abbr[title] { border-bottom: 1px dotted; }
+b, strong { font-weight: bold; }
+blockquote { margin: 1em 40px; }
+dfn { font-style: italic; }
+hr { display: block; height: 1px; border: 0; border-top: 1px solid #ccc; margin: 1em 0; padding: 0; }
+ins { background: #ff9; color: #000; text-decoration: none; }
+mark { background: #ff0; color: #000; font-style: italic; font-weight: bold; }
+pre, code, kbd, samp { font-family: monospace, monospace; _font-family: 'courier new', monospace; font-size: 1em; }
+pre { white-space: pre; white-space: pre-wrap; word-wrap: break-word; }
+q { quotes: none; }
+q:before, q:after { content: ""; content: none; }
+small { font-size: 85%; }
+sub, sup { font-size: 75%; line-height: 0; position: relative; vertical-align: baseline; }
+sup { top: -0.5em; }
+sub { bottom: -0.25em; }
+
+/* Lists */
+ul, ol { margin: 0; padding; 0;}
+dd { margin: 0 0 0 40px; }
+nav ul, nav ol { list-style: none; list-style-image: none; margin: 0; padding: 0; }
+
+/* Embedded content */
+img { border: 0; -ms-interpolation-mode: bicubic; vertical-align: middle; }
+svg:not(:root) { overflow: hidden; }
+
+/* Figures */
+figure { margin: 0; }
+
+/* Forms */
+form { margin: 0; }
+fieldset { border: 0; margin: 0; padding: 0; }
+label { cursor: pointer; }
+legend { border: 0; *margin-left: -7px; padding: 0; }
+button, input, select, textarea { font-size: 100%; margin: 0; vertical-align: baseline; *vertical-align: middle; }
+button, input { line-height: normal; *overflow: visible; }
+table button, table input { *overflow: auto; }
+button, input[type="button"], input[type="reset"], input[type="submit"] { cursor: pointer; -webkit-appearance: button; }
+input[type="checkbox"], input[type="radio"] { box-sizing: border-box; }
+input[type="search"] { -webkit-appearance: textfield; -moz-box-sizing: content-box; -webkit-box-sizing: content-box; box-sizing: content-box; }
+input[type="search"]::-webkit-search-decoration { -webkit-appearance: none; }
+button::-moz-focus-inner, input::-moz-focus-inner { border: 0; padding: 0; }
+textarea { overflow: auto; vertical-align: top; resize: vertical; }
+input:valid, textarea:valid {  }
+input:invalid, textarea:invalid { background-color: #f0dddd; }
+
+/* Tables */
+table { border-collapse: collapse; border-spacing: 0; }
+td { vertical-align: top; }
+
+/* For image replacement */
+.ir { display: block; border: 0; text-indent: -999em; overflow: hidden; background-color: transparent; background-repeat: no-repeat; text-align: left; direction: ltr; }
+.ir br { display: none; }
+
+/* Hide from both screenreaders and browsers: h5bp.com/u */
+.hidden { display: none !important; visibility: hidden; }
+
+/* Hide only visually, but have it available for screenreaders: h5bp.com/v */
+.visuallyhidden { border: 0; clip: rect(0 0 0 0); height: 1px; margin: -1px; overflow: hidden; padding: 0; position: absolute; width: 1px; }
+
+/* Extends the .visuallyhidden class to allow the element to be focusable when navigated to via the keyboard: h5bp.com/p */
+.visuallyhidden.focusable:active, .visuallyhidden.focusable:focus { clip: auto; height: auto; margin: 0; overflow: visible; position: static; width: auto; }
+
+/* Hide visually and from screenreaders, but maintain layout */
+.invisible { visibility: hidden; }
+
+/* Contain floats: h5bp.com/q */ 
+.clearfix:before, .clearfix:after { content: ""; display: table; }
+.clearfix:after { clear: both; }
+.clearfix { zoom: 1; }
+.clear{clear:left;}
+
+/* Print styles */
+@media print {
+  * { background: transparent !important; color: black !important; text-shadow: none !important; filter:none !important; -ms-filter: none !important; } /* Black prints faster: h5bp.com/s */
+  a, a:visited { text-decoration: underline; }
+  a[href]:after { content: " (" attr(href) ")"; }
+  abbr[title]:after { content: " (" attr(title) ")"; }
+  .ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after { content: ""; }  /* Don't show links for images, or javascript/internal links */
+  pre, blockquote { border: 1px solid #999; page-break-inside: avoid; }
+  thead { display: table-header-group; } /* h5bp.com/t */
+  tr, img { page-break-inside: avoid; }
+  img { max-width: 100% !important; }
+  @page { margin: 0.5cm; }
+  p, h2, h3 { orphans: 3; widows: 3; }
+  h2, h3 { page-break-after: avoid; }
+}
+
+/* ============== Custom styles from here on ======================== */
+
+html, body{
+  margin:0;
+  padding:0;
+}
+
+html{
+  color:#535353;
+  background:#f7f6f6; /* TODO: noise image */
+  font-family:verdana;
+  font-size:90%;
+}
+
+a, a:visited{
+  color:#b1b1b1;
+  text-decoration:none;
+}
+a:hover{
+  color:#e77694;
+}
+
+
+/* ==== Header ==== */
+
+#header{
+  padding:1em 8em;
+  line-height:2.5em;
+  background:#fefefe; /* TODO: noise image */
+  box-shadow:0px 0px 2px rgba(0,0,0,0.2);
+}
+
+#header .logo{
+  display:inline;
+}
+
+#header .main-menu{
+  float:right;
+  color:#b1b1b1;
+}
+  
+  #header .main-menu li{
+    display:inline-block;
+    margin-left:0.5em;
+  }
+  
+  #header .main-menu a{
+    margin-left:0.5em;
+  }
+  
+  #header .main-menu li:before{
+    content:"|";
+  }
+  
+  #header .main-menu li:first-child:before{
+    content:normal;
+  }
+
+/* ==== Content ==== */
+
+#content-body{
+  padding:1em 8em;
+}
+
+h1, h2, h3, h4, h5, h6{
+  color:#282828;
+}
+
+/* ==== Tablet ==== */
+@media (max-width:840px){
+  #header, #content-body{
+    padding:1em 5em;
+  }
+}
+
+/* ==== Mobile ==== */
+@media (max-width:640px){
+  #header, #content-body{
+    padding:1em 3em;
+  }
+  #header{
+    text-align:center;
+  }
+  #header .main-menu{
+    display:block;
+    float:none;
+    margin-top:1em;
+  }
+  #header .main-menu li{
+    display:block;
+    margin:0;
+  }
+  #header .main-menu li:before{
+    content:none;
+  }
+}
