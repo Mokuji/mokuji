@@ -11,11 +11,13 @@
     <title><?php echo $head->title; ?></title>
     
     <meta name="revisit-after" content="5 days" />
-    <?php echo $head->meta; ?>
-    <?php echo $head->links; ?>
-    <?php echo $head->plugins; ?>
-    <?php echo $head->theme; ?>
-    <?php echo $head->scripts; ?>
+    <?php
+      echo $head->meta;
+      echo $head->links;
+      echo $head->plugins;
+      echo $head->theme;
+      echo $head->scripts;
+    ?>
     
   </head>
   

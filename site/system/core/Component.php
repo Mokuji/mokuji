@@ -133,10 +133,10 @@ class Component
     //if this component was not used before, we're also going to put the stylesheet and javascript into the html if they exist
     if(!$this->components->{$component}->is_set()){
       if(file_exists(PATH_COMPONENTS.DS."$component/includes/style.css")){
-        tx('Ob')->add("<link rel=\"stylesheet\" type=\"text/css\" href=\"".URL_COMPONENTS."$component/includes/style.css\" />", 'link', array('tx', 'components', $component));
+        tx('Ob')->add(t.t."<link rel=\"stylesheet\" type=\"text/css\" href=\"".URL_COMPONENTS."$component/includes/style.css\" />", 'link', array('tx', 'components', $component));
       }
       if(file_exists(PATH_COMPONENTS.DS."$component/includes/javascript.js")){
-        tx('Ob')->add("<script type=\"text/javascript\" src=\"".URL_COMPONENTS."$component/includes/javascript.js\"></script>", 'script', array('tx', 'components', $component));
+        tx('Ob')->add(t.t."<script type=\"text/javascript\" src=\"".URL_COMPONENTS."$component/includes/javascript.js\"></script>", 'script', array('tx', 'components', $component));
       }
     }
     
