@@ -1,0 +1,14 @@
+{
+  "title": "Underduck template",
+  "description": "Het standaard template voor nieuwe websites.",
+  "type": "manual",
+  "dbUpdates": true,
+  "versions": [
+    {
+      "version": "1.0",
+      "date": "2013-04-17",
+      "description": "Installatie mogelijk gemaakt.",
+      "changes": []
+    }
+  ]
+}
