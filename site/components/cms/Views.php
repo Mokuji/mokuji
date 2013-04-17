@@ -159,24 +159,59 @@ class Views extends \dependencies\BaseViews
     
   }
   
-  protected function generic_site_settings()
+  protected function settings_website_information()
   {
     
     $result = array();
-    $multilanguage = array(
-      'site_name',
-      'site_description',
-      'site_keywords',
-      'site_author',
-      'site_twitter',
-      'site_googleplus'
+    $settings = array(
+      'site_name' => 'Website name',
+      'site_description' => 'Website description',
+      'site_keywords' => 'Keywords',
+      'site_author' => 'Website author',
+      'site_twitter' => 'Twitter account',
+      'site_googleplus' => 'Google+ account'
     );
     
-    foreach($multilanguage as $key){
-      $result[$key] = $this->helper('get_settings', array('key'=>$key));
+    foreach($settings as $key => $title){
+      $result[$key] = tx('Component')->helpers('cms')->_call('get_settings', array($key));
     }
     
-    return $result;
+    return array(
+      'languages' => Data()
+        ->merge(array('default'=>array('id'=>'default', 'title'=>'Default')))
+        ->merge(tx('Language')->get_languages()),
+      'settings' => $result,
+      'titles' => $settings
+    );
+    
+  }
+  
+  protected function settings_cms_configuration()
+  {
+    
+    $result = array();
+    $settings = array(
+      'homepage' => 'Homepage',
+      'login_page' => 'Login page',
+      'template_id' => 'Default template',
+      'forced_template_id' => 'Forced template',
+      'theme_id' => 'Default theme',
+      'forced_theme_id' => 'Forced theme',
+      'default_language' => 'Default language',
+      'log_shared_login_sessions' => 'Log shared sessions'
+    );
+    
+    foreach($settings as $key => $title){
+      $result[$key] = tx('Component')->helpers('cms')->_call('get_settings', array($key));
+    }
+    
+    return array(
+      'languages' => Data()
+        ->merge(array('default'=>array('id'=>'default', 'title'=>'Default')))
+        ->merge(tx('Language')->get_languages()),
+      'settings' => $result,
+      'titles' => $settings
+    );
     
   }
   

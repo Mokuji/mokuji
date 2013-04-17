@@ -1031,3 +1031,37 @@ body.cursor_disabled{
   float:left;
   width:80%;
 }
+
+
+/*
+  Config pages, multi-language settings tabs
+*/
+.language-tabs{
+}
+  .language-tabs .content{
+    border:1px solid #ccc;
+    padding:2em;
+    border-radius:3px;
+  }
+  .language-tabs .tabs{
+    list-style:none;
+    display:block;
+    width:100%;
+    padding-left:10px;
+  }
+  .language-tabs .tabs li{
+    display:inline;
+  }
+    .language-tabs .tabs a{
+      display:inline-block;
+      margin:2px;
+      background:#ddd;
+      padding:0 10px;
+      line-height:27px;
+      border-radius:3px 3px 0 0;
+    }
+    .language-tabs .tabs a.selected{
+      background:#fff;
+      border:1px solid #ccc;
+      margin:1px;
+    }
