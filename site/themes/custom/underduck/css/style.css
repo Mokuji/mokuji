@@ -108,7 +108,7 @@ td { vertical-align: top; }
   h2, h3 { page-break-after: avoid; }
 }
 
-/* ============== Custom styles from here on ======================== */
+/* =================== Custom styles from here on =================== */
 
 html, body{
   margin:0;
@@ -117,7 +117,7 @@ html, body{
 
 html{
   color:#535353;
-  background:#f7f6f6; /* TODO: noise image */
+  background:#414141; /* TODO: noise image */
   font-family:verdana;
   font-size:90%;
 }
@@ -131,13 +131,18 @@ a:hover{
 }
 
 
-/* ==== Header ==== */
+/* ======= Header ======= */
 
 #header{
   padding:1em 8em;
   line-height:2.5em;
   background:#fefefe; /* TODO: noise image */
   box-shadow:0px 0px 2px rgba(0,0,0,0.2);
+  
+  /* Otherwise shadow is under the body element. */
+  position:relative;
+  z-index:1;
+  
 }
 
 #header .logo{
@@ -166,41 +171,100 @@ a:hover{
     content:normal;
   }
 
-/* ==== Content ==== */
+/* ======= Content ======= */
 
 #content-body{
   padding:1em 8em;
+  background:#f7f6f6; /* TODO: noise image */
 }
 
 h1, h2, h3, h4, h5, h6{
   color:#282828;
 }
 
-/* ==== Tablet ==== */
+/* ======= Footer ======= */
+
+#footer{
+  padding:1em 8em;
+  border-top:10px solid #e8e8e8;
+  color:#a0a0a0;
+}
+  
+  #footer a,
+  #footer a:visited{
+    color:#d7d7d7;
+  }
+  
+  #footer a:hover,
+  #footer h1,
+  #footer h2,
+  #footer h3,
+  #footer h4,
+  #footer h5,
+  #footer h6{
+    color:#eeeeee;
+  }
+  
+  #footer hr{
+    height:0px;
+    border-top:1px solid #2f2f2f;
+    border-bottom:1px solid #575757;
+  }
+  
+  #footer .col1,
+  #footer .col2,
+  #footer .col3{
+    float:left;
+    width:30%;
+    margin-right:3%;
+  }
+  #footer .col3{
+    margin-right:0;
+  }
+
+/* ======= Tablet ======= */
 @media (max-width:840px){
-  #header, #content-body{
+  
+  #header, #content-body, #footer{
     padding:1em 5em;
   }
+  
+  #footer .col1,
+  #footer .col2,
+  #footer .col3{
+    float:none;
+    width:auto;
+    margin-right:0;
+    margin-bottom:4em;
+  }
+  
+  #footer .col2,
+  #footer .col3{
+  }
+  
 }
 
-/* ==== Mobile ==== */
+/* ======= Mobile ======= */
 @media (max-width:640px){
-  #header, #content-body{
+  
+  #header, #content-body, #footer{
     padding:1em 3em;
   }
+  
   #header{
     text-align:center;
   }
-  #header .main-menu{
-    display:block;
-    float:none;
-    margin-top:1em;
-  }
-  #header .main-menu li{
-    display:block;
-    margin:0;
-  }
-  #header .main-menu li:before{
-    content:none;
-  }
+    #header .main-menu{
+      display:block;
+      float:none;
+      margin-top:1em;
+    }
+      #header .main-menu li{
+        display:block;
+        margin:0;
+      }
+      #header .main-menu li:before{
+        content:none;
+      }
+  
 }

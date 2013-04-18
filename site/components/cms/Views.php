@@ -168,6 +168,7 @@ class Views extends \dependencies\BaseViews
       'site_description' => 'Website description',
       'site_keywords' => 'Keywords',
       'site_author' => 'Website author',
+      'site_copyright' => 'Copyright text',
       'site_twitter' => 'Twitter account',
       'site_googleplus' => 'Google+ account'
     );

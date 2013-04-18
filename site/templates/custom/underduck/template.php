@@ -30,6 +30,43 @@
       <?php echo $body->content; ?>
     </div>
     
+    <footer id="footer">
+      <div class="clearfix">
+        
+        <div class="col1">
+          <h4>About</h4>
+          <p>Cras ornare metus sit amet massa dapibus laoreet. Quisque eu sapien ante. Curabitur placerat eleifend elementum. Aenean lorem justo, tincidunt eu dictum quis, gravida quis sapien. Mauris convallis consectetur lectus quis tempor. Cras eget erat nibh. Nullam erat nisl, mattis adipiscing viverra quis, cursus pretium neque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In augue velit, pulvinar et tempor sit amet, scelerisque consequat mi. Duis imperdiet aliquet eleifend.</p>
+        </div>
+        
+        <div class="col2">
+          <h4>Tweets</h4>
+          <p>
+            Hi this is a very interesting <a href="#">#tweet</a>! <a href="#">j.mp/blabla</a><br>
+            <a href="#">5 minutes ago</a>
+          </p>
+          <hr>
+          <p>
+            Wow, tweets can be so awesome <a href="#">#awesomeness</a>! <a href="#">j.mp/abjkla</a><br>
+            <a href="#">12 minutes ago</a>
+          </p>
+        </div>
+        
+        <div class="col3">
+          <h4>Latest news</h4>
+          <p>Ut sollicitudin cursus odio, id gravida odio sodales at. Morbi dapibus suscipit urna, vel aliquam neque tincidunt id.</p>
+          <p>Duis dapibus, ligula sit amet bibendum blandit, justo odio accumsan lorem, eu euismod urna risus id sapien. Nam pulvinar elit at sapien fermentum ullamcorper. Integer fringilla mattis ante, id hendrerit velit malesuada eget. Mauris eu erat vulputate mauris posuere venenatis. Cras sed nisi dui, in pulvinar arcu.</p>
+        </div>
+        
+      </div>
+      
+      <hr>
+      
+      <p>
+        <?php echo tx('Config')->user('site_copyright')->is_set() ? tx('Config')->user('site_copyright').br : ''; ?>
+        Powered by <a href="http://cms.tuxion.nl/" target="_blank">Tuxion CMS</a>. Underduck theme by <a href="#">iarehero</a>.
+      </p>
+    </footer>
+    
     <?php echo $body->admin_toolbar; ?>
   </body>
 </html>
