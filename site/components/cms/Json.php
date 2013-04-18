@@ -27,12 +27,14 @@ class Json extends \dependencies\BaseComponent
           ->each(function($setting)use($set, &$newKeys){
             
             //When we have a match on language, replace the old data.
-            if($setting->language_id->is_set() && array_key_exists($setting->language_id->get(), $newKeys)){
+            if($setting->language_id->is_set() &&
+              array_key_exists($setting->language_id->get(), $newKeys) &&
+              !$set->{$setting->language_id}->is_empty()){
               
               //Set the new value.
               $setting
                 ->merge(array(
-                  'value' => $set->{$settings->language_id}->get()
+                  'value' => $set->{$setting->language_id}->get()
                 ))
                 ->save();
               
@@ -42,7 +44,9 @@ class Json extends \dependencies\BaseComponent
             }
             
             //When we have a match on the default setting.
-            elseif($setting->language_id->is_empty() && array_key_exists('default', $newKeys)){
+            elseif($setting->language_id->is_empty() &&
+              array_key_exists('default', $newKeys) &&
+              !$set->default->is_empty()){
               
               //Set the new value.
               $setting
@@ -65,6 +69,9 @@ class Json extends \dependencies\BaseComponent
         
         //Insert whatever is left.
         foreach($newKeys as $key){
+          
+          if($set->{$key}->is_empty())
+            continue;
           
           tx('Sql')
             ->model('cms', 'CmsConfig')
