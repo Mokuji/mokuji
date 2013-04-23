@@ -3,7 +3,9 @@
 }
 
 #text-contentTab-form .title{
-  font-size:20pt;
+  font-size:14pt;
+  font-weight:bold;
+  padding:10px;
   width:100%;
   display:block;
   margin-bottom:10px;
