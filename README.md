@@ -59,7 +59,7 @@ The change-log can be found in `CHANGES.md` in this directory.
 
 * __framework__ : 3.3.3
 * __account__   : 1.3
-* __cms__       : 2.1
+* __cms__       : 3.0
 * __menu__      : 1.4
 * __text__      : 1.2
 * __update__    : 1.2

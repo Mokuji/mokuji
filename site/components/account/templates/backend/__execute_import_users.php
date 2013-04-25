@@ -4,7 +4,7 @@ $uid = tx('Security')->random_string(20);
 $data->get()
   
   //Import finished
-  ->success(function($userfunction)use($uid){
+  ->success(function($userfunction)use($uid, $names){
     
     ?>
     
@@ -12,12 +12,12 @@ $data->get()
       
       <div class="import-result finished">
         <div class="message first">
-          <?php echo $userfunction->return_value->size() . ' ' . __('users successfully imported', 1); ?>.
+          <?php echo transf($names->component, '{0} user(s) successfully imported', $userfunction->return_value->size()); ?>.
         </div>
       </div>
       
       <div class="buttonHolder">
-        <input class="button b_return" type="button" value="<?php __('Return'); ?>" />
+        <input class="button b_return" type="button" value="<?php __($names->component, 'Return'); ?>" />
       </div>
       
     </div>
@@ -44,7 +44,7 @@ $data->get()
   })
   
   //Import halted
-  ->failure(function($userfunction)use($uid){
+  ->failure(function($userfunction)use($uid, $names){
     
     ?>
     
@@ -54,7 +54,7 @@ $data->get()
       
       <div class="import-result halted">
         <div class="message first">
-          <?php echo count($userfunction->exception->errors()) . ' ' . __('errors occured while importing', 1); ?>.
+          <?php echo transf($names->component, '{0} error(s) occured while importing', count($userfunction->exception->errors())); ?>.
         </div>
         
         <?php
@@ -74,35 +74,35 @@ $data->get()
                 <div><?php echo $suberror->get()->getMessage(); ?></div>
               <?php }); ?>
               
-              <?php $error->input->is('set', function()use($error){ ?>
+              <?php $error->input->is('set', function()use($error, $names){ ?>
                 <div class="override">
                   <label>
                     <input type="checkbox" name="overrides[<?php echo $error->row_number; ?>][skip]" value="1"<?php cond_print($error->overrides->skip->is_set(), 'checked="checked"'); ?> />
-                    <?php __('Skip this user'); ?>
+                    <?php __($names->component, 'Skip this user'); ?>
                   </label>
                   <div class="user_edit">
                     <div class="ctrlHolder">
-                      <label><?php __('E-mailadres'); ?></label>
+                      <label><?php __('E-mail'); ?></label>
                       <input class="big large" type="text" name="overrides[<?php echo $error->row_number; ?>][email]" value="<?php echo $error->input->email; ?>" required />
                     </div>
                     
                     <div class="ctrlHolder">
-                      <label for="l_username" accesskey="g"><?php __('Gebruikersnaam'); ?></label>
+                      <label for="l_username" accesskey="g"><?php __('Username'); ?></label>
                       <input class="big large" type="text" name="overrides[<?php echo $error->row_number; ?>][username]" value="<?php echo $error->input->username; ?>" />
                     </div>
                     
                     <div class="ctrlHolder">
-                      <label for="l_name" accesskey="f"><?php __('Voornaam'); ?></label>
+                      <label for="l_name" accesskey="f"><?php __('First name'); ?></label>
                       <input class="big large" type="text" name="overrides[<?php echo $error->row_number; ?>][name]" value="<?php echo $error->input->name; ?>" />
                     </div>
                     
                     <div class="ctrlHolder">
-                      <label for="l_preposition" accesskey="t"><?php __('Tussenvoegsel'); ?></label>
+                      <label for="l_preposition" accesskey="t"><?php __('Preposition'); ?></label>
                       <input class="big large" type="text" name="overrides[<?php echo $error->row_number; ?>][preposition]" value="<?php echo $error->input->preposition; ?>" />
                     </div>
                     
                     <div class="ctrlHolder">
-                      <label for="l_family_name" accesskey="l"><?php __('Achternaam'); ?></label>
+                      <label for="l_family_name" accesskey="l"><?php __('Last name'); ?></label>
                       <input class="big large" type="text" name="overrides[<?php echo $error->row_number; ?>][family_name]" value="<?php echo $error->input->family_name; ?>" />
                     </div>
                     
@@ -123,7 +123,7 @@ $data->get()
       
       <div class="buttonHolder">
         <?php if($userfunction->exception->value() === true){ ?>
-          <input class="primaryAction button black" type="submit" value="<?php __('Import'); ?>" />
+          <input class="primaryAction button black" type="submit" value="<?php __($names->component, 'Import'); ?>" />
         <?php } ?>
         <input class="button b_cancel" type="button" value="<?php __('Cancel'); ?>" />
       </div>

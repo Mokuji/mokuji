@@ -476,7 +476,6 @@ function request(){
       
       'click on item': function(e){
         e.preventDefault();
-        this.highlight($(e.target).attr('data-menu-item'));
         app.App.activate();
         app.Item.loadItemContents($(e.target).attr('data-menu-item'));
         app.Page.loadPageContents($(e.target).attr('data-page'));
@@ -573,7 +572,13 @@ function request(){
         return (request(DELETE, 'menu/menu_item/'+id)
           
           .done(function(){
+            
             $item.remove();
+            
+            //When it's done, also check if we just removed the active item.
+            if(app.Item.data.item.id == id)
+              app.Item.loadItemContents(false);
+            
           })
           
           .fail(function(){
@@ -676,7 +681,12 @@ function request(){
 
     //Add class to highlight the active menu item.
     highlight: function(menu_item_id){
-      this.view.find('a').removeClass('active').end().find('a[data-menu-item='+menu_item_id+']').addClass('active');
+      
+      this.view.find('a').removeClass('active');
+      
+      if(menu_item_id)
+        this.view.find('a[data-menu-item='+menu_item_id+']').addClass('active');
+      
     }
     
   });
@@ -1451,6 +1461,9 @@ function request(){
         return this.clear();
       }
       
+      //Highlight the item.
+      app.MenuItems.highlight(menu);
+      
       //Request menu item info from the server.
       return $.ajax('?rest=cms/menu_item_info/'+(menu?menu:'0'))
       
@@ -1550,6 +1563,11 @@ function request(){
           view.html(data.contents);
         });
       
+    },
+    
+    activate: function(){
+      this.previous();
+      app.MenuItems.highlight(null);
     }
     
   });

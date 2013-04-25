@@ -61,6 +61,16 @@
   "Welcome": "Welkom",
   "Welcome back": "Welkom terug",
 
-  "Edit profile": "Profiel wijzigen"
+  "Edit profile": "Profiel wijzigen",
+  
+  "Edit user": "Gebruiker bewerken",
+  
+  "Notify user of update": "Meld wijziging aan de gebruiker",
+  
+  "Send mail": "Stuur mail",
+  
+  "{0} error(s) occured while importing": "{0} fout(en) zijn opgetreden tijdens het importeren",
+  
+  "Skip this user": "Sla deze gebruiker over"
   
 }

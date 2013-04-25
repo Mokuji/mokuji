@@ -46,6 +46,21 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
           DROP `thumbnail`
       ');
       
+      //We need to clear this cache because we used the ComponentViews model just now with different fields.
+      \dependencies\BaseModel::clear_table_data_cache();
+      
+      //Add the configuration pages.
+      tx('Component')->helpers('cms')->_call('ensure_pagetypes', array(
+        array(
+          'name' => 'cms',
+          'title' => 'CMS component'
+        ),
+        array(
+          'settings_website_information' => 'SETTINGS',
+          'settings_cms_configuration' => 'SETTINGS'
+        )
+      ));
+      
     }catch(\exception\Sql $ex){
       //When it's not forced, this is a problem.
       //But when forcing, ignore this.

@@ -71,9 +71,9 @@ class EntryPoint extends \dependencies\BaseEntryPoint
           load_plugin('idtabs3')
         ),
         'scripts' => array(
-          'cms_backend' => '<script type="text/javascript" src="'.URL_COMPONENTS.'cms/includes/backend.js"></script>',
-          'cms_backend_pagetype' => '<script type="text/javascript" src="'.URL_COMPONENTS.'cms/includes/PageType.js"></script>',
-          'i18nSetup' => '<script type="text/javascript">i18nSetup("'.tx('Language')->code.'", "'.URL_BASE.'");</script>'
+          'cms_backend' => t.t.'<script type="text/javascript" src="'.URL_COMPONENTS.'cms/includes/backend.js"></script>',
+          'cms_backend_pagetype' => t.t.'<script type="text/javascript" src="'.URL_COMPONENTS.'cms/includes/PageType.js"></script>',
+          'i18nSetup' => t.t.'<script type="text/javascript">i18nSetup("'.tx('Language')->code.'", "'.URL_BASE.'");</script>'
         )
       ),
       array(
@@ -236,35 +236,34 @@ class EntryPoint extends \dependencies\BaseEntryPoint
           $description = $lpi->description->otherwise($site_description)->get();
           $keywords = $lpi->keywords->otherwise($site_keywords)->get();
           
-          tx('Ob')->meta('Page Headers');?>
-            
-            <!-- Standard HTML SEO -->
-            <meta http-equiv="content-language" content="<?php echo tx('Language')->get_language_code(); ?>" />
-            <meta name="description" content="<?php echo $description; ?>" />
-            <meta name="keywords" content="<?php echo $keywords; ?>" />
-            <meta name="author" content="<?php echo $lpi->author->otherwise($site_author); ?>" />
-            
-            <!-- Open Graph (Facebook) -->
-            <meta property="og:url" content="<?php echo $pretty_url; ?>" />
-            <meta property="og:type" content="website" />
-            <meta property="og:article:tag" content="<?php echo $lpi->og_keywords->otherwise($keywords); ?>" />
-            <meta property="og:locale" content="<?php echo tx('Language')->get_language_code(); ?>" />
-            <meta property="og:title" content="<?php echo $lpi->og_title->otherwise($title); ?>" />
-            <meta property="og:description" content="<?php echo $lpi->og_description->otherwise($description); ?>" />
-            <meta property="og:site_name" content="<?php echo $site_name; ?>" />
-            
-            <!-- Twitter Cards -->
-            <meta name="twitter:card" content="summary" />
-            <meta name="twitter:title" content="<?php echo $lpi->tw_title->otherwise($title); ?>" />
-            <meta name="twitter:description" content="<?php echo $lpi->tw_description->otherwise($description); ?>" />
-            <meta name="twitter:url" content="<?php echo $pretty_url; ?>" />
-            <meta name="twitter:site" content="<?php echo $site_twitter; ?>" />
-            <meta name="twitter:creator" content="<?php echo $lpi->tw_author->otherwise($site_twitter); ?>" />
-            
-            <!-- Google+ Authorship -->
-            <link rel="author" href="<?php echo $lpi->gp_author->otherwise($site_googleplus); ?>" />
-            
-          <?php tx('Ob')->end();
+          tx('Ob')->meta('Page Headers');
+?>
+    <!-- Standard HTML SEO -->
+    <meta http-equiv="content-language" content="<?php echo tx('Language')->get_language_code(); ?>" />
+    <meta name="description" content="<?php echo $description; ?>" />
+    <meta name="keywords" content="<?php echo $keywords; ?>" />
+    <meta name="author" content="<?php echo $lpi->author->otherwise($site_author); ?>" />
+
+    <!-- Open Graph (Facebook) -->
+    <meta property="og:url" content="<?php echo $pretty_url; ?>" />
+    <meta property="og:type" content="website" />
+    <meta property="og:article:tag" content="<?php echo $lpi->og_keywords->otherwise($keywords); ?>" />
+    <meta property="og:locale" content="<?php echo tx('Language')->get_language_code(); ?>" />
+    <meta property="og:title" content="<?php echo $lpi->og_title->otherwise($title); ?>" />
+    <meta property="og:description" content="<?php echo $lpi->og_description->otherwise($description); ?>" />
+    <meta property="og:site_name" content="<?php echo $site_name; ?>" />
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="<?php echo $lpi->tw_title->otherwise($title); ?>" />
+    <meta name="twitter:description" content="<?php echo $lpi->tw_description->otherwise($description); ?>" />
+    <meta name="twitter:url" content="<?php echo $pretty_url; ?>" />
+    <meta name="twitter:site" content="<?php echo $site_twitter; ?>" />
+    <meta name="twitter:creator" content="<?php echo $lpi->tw_author->otherwise($site_twitter); ?>" />
+
+    <!-- Google+ Authorship -->
+    <link rel="author" href="<?php echo $lpi->gp_author->otherwise($site_googleplus); ?>" />
+<?php tx('Ob')->end();
           
           /* ------- END - headers ------- */
           
@@ -272,7 +271,7 @@ class EntryPoint extends \dependencies\BaseEntryPoint
           $plugins = array(
             load_plugin('jquery')
           );
-
+          
           //If EDITABLE: load ckeditor & elfinder.
           if(EDITABLE){
             $plugins = array_merge($plugins, array(

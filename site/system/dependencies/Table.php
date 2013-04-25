@@ -971,9 +971,9 @@ class Table extends Successable
         $compare = 'NOT LIKE';
         break;
     }
-
+    
     $value = $this->prepare($value);
-
+    
     return "($column $compare $value)";
 
   }

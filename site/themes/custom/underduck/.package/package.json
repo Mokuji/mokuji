@@ -1,12 +1,12 @@
 {
-  "title": "Minimal thema",
-  "description": "Verzorgt de meest minimale weergave van een pagina.",
+  "title": "Underduck thema",
+  "description": "Het standaard thema voor nieuwe websites.",
   "type": "manual",
   "dbUpdates": true,
   "versions": [
     {
       "version": "1.0",
-      "date": "2012-10-02",
+      "date": "2013-04-17",
       "description": "Installatie mogelijk gemaakt.",
       "changes": []
     }

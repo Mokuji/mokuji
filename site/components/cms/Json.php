@@ -3,6 +3,99 @@
 class Json extends \dependencies\BaseComponent
 {
   
+  //Expects: key_name[default|#] where # is a language ID.
+  protected function update_settings($data, $params)
+  {
+    
+    $site_id = tx('Data')->session->cms->filters->site_id->get();
+    
+    //Go over each key set.
+    $data->each(function($set)use($site_id){
+      
+      //Skip empty ones.
+      $set->not('empty', function($set)use($site_id){
+        
+        //Find out which can be replaced. (Prevents auto_increment from going too fast)
+        $newKeys = array_combine($set->keys()->get('array'), $set->keys()->get('array'));
+        
+        //Replace all old config nodes.
+        tx('Sql')
+          ->table('cms', 'CmsConfig')
+          ->where('key', "'{$set->key()}'")
+          ->where('site_id', "'$site_id'")
+          ->execute()
+          ->each(function($setting)use($set, &$newKeys){
+            
+            //When we have a match on language, replace the old data.
+            if($setting->language_id->is_set() &&
+              array_key_exists($setting->language_id->get(), $newKeys) &&
+              !$set->{$setting->language_id}->is_empty()){
+              
+              //Set the new value.
+              $setting
+                ->merge(array(
+                  'value' => $set->{$setting->language_id}->get()
+                ))
+                ->save();
+              
+              //Remove, so we know what's left for us to do.
+              unset($newKeys[$setting->language_id->get()]);
+              
+            }
+            
+            //When we have a match on the default setting.
+            elseif($setting->language_id->is_empty() &&
+              array_key_exists('default', $newKeys) &&
+              !$set->default->is_empty()){
+              
+              //Set the new value.
+              $setting
+                ->merge(array(
+                  'value' => $set->default->get()
+                ))
+                ->save();
+              
+              //Remove, so we know what's left for us to do.
+              unset($newKeys['default']);
+              
+            }
+            
+            //If it's not on our list, we assume deletion was intended.
+            else{
+              $setting->delete();
+            }
+            
+          });
+        
+        //Insert whatever is left.
+        foreach($newKeys as $key){
+          
+          if($set->{$key}->is_empty())
+            continue;
+          
+          tx('Sql')
+            ->model('cms', 'CmsConfig')
+            ->set(array(
+              'key' => $set->key(),
+              'site_id' => $site_id,
+              'autoload' => 1,
+              'language_id' => $key == 'default' ? 'NULL' : $key,
+              'value' => $set->{$key}->get()
+            ))
+            ->save();
+          
+        }
+        
+      });
+      
+    });
+    
+    return array(
+      'success' => true
+    );
+    
+  }
+  
   protected function update_active_site($data, $params)
   {
     
@@ -448,45 +541,45 @@ class Json extends \dependencies\BaseComponent
     
   }
   
-  protected function update_settings($data, $params)
-  {
+  // protected function update_settings($data, $params)
+  // {
     
-    $data->key->validate('Key', array('required', 'not_empty', 'string'));
+  //   $data->key->validate('Key', array('required', 'not_empty', 'string'));
     
-    $data->value_default->not('empty', function()use($data){
-      tx('Config')->user($data->key->get(), $data->value_default->get(), null);
-    });
+  //   $data->value_default->not('empty', function()use($data){
+  //     tx('Config')->user($data->key->get(), $data->value_default->get(), null);
+  //   });
     
-    $data->value->each(function($val)use($data){
+  //   $data->value->each(function($val)use($data){
       
-      tx('Sql')
-        ->table('cms', 'CmsConfig')
-        ->where('key', "'{$data->key}'")
-        ->where('language_id', $val->key() === 'NULL' ? 'NULL' : "'".$val->key()."'")
-        ->execute_single()
+  //     tx('Sql')
+  //       ->table('cms', 'CmsConfig')
+  //       ->where('key', "'{$data->key}'")
+  //       ->where('language_id', $val->key() === 'NULL' ? 'NULL' : "'".$val->key()."'")
+  //       ->execute_single()
         
-        ->is('empty', function()use($data, $val){
-          return tx('Sql')
-            ->model('cms', 'CmsConfig')
-            ->set(array(
-              'key' => $data->key,
-              'language_id' => $val->key(),
-              'site_id' => tx('Site')->id,
-              'autoload' => 1
-            ));
-        })
+  //       ->is('empty', function()use($data, $val){
+  //         return tx('Sql')
+  //           ->model('cms', 'CmsConfig')
+  //           ->set(array(
+  //             'key' => $data->key,
+  //             'language_id' => $val->key(),
+  //             'site_id' => tx('Site')->id,
+  //             'autoload' => 1
+  //           ));
+  //       })
         
-        ->merge(array(
-          'value' => $val->is_empty() ? 'NULL' : $val
-        ))
+  //       ->merge(array(
+  //         'value' => $val->is_empty() ? 'NULL' : $val
+  //       ))
         
-        ->save();
+  //       ->save();
         
-    });
+  //   });
     
-    return $this->helper('get_settings', $data->key);
+  //   return $this->helper('get_settings', $data->key);
     
-  }
+  // }
 
   protected function get_menus($data)
   {

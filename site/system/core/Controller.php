@@ -41,14 +41,14 @@ class Controller
     //include js from /includes
     $js=array();
     foreach(files(PATH_INCLUDES.DS.'js'.DS.'*.js') as $file){
-      $js[] = "\n".'<script type="text/javascript" src="'.URL_INCLUDES.'js/'.basename($file).'"></script>';
+      $js[] = t.t.'<script type="text/javascript" src="'.URL_INCLUDES.'js/'.basename($file).'"></script>';
     }
     
     //include css from /includes
     $css=array();
-    // foreach(files(PATH_INCLUDES.DS.'css'.DS.'*.css') as $file){
-      // $css[] = "\n".'<link rel="stylesheet" type="text/css" href="'.URL_INCLUDES.'css/'.basename($file).'" />';
-    // }
+    foreach(files(PATH_INCLUDES.DS.'css'.DS.'*.css') as $file){
+      $css[] = t.t.'<link rel="stylesheet" type="text/css" href="'.URL_INCLUDES.'css/'.basename($file).'" />';
+    }
     
     //create injection data
     $data = array(
@@ -63,7 +63,7 @@ class Controller
       //the body contains the given $body array
       'body' => Data($body),
       
-      //we get the messages that were send throught the session from the previous page
+      //we get the messages that were send through the session from the previous page
       'messages' => $this->get_messages()
       
     );

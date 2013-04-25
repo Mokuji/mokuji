@@ -1,6 +1,6 @@
 <?php namespace components\cms; if(!defined('TX')) die('No direct access.'); ?>
 
-<h1><?php __($names->component, 'Website settings', 'ucfirst'); ?></h1>
+<h1><?php __($names->component, 'SETTINGS_VIEW_TITLE', 'ucfirst'); ?></h1>
 
 <div class="clearfix">
   

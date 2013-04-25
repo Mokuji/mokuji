@@ -8,7 +8,8 @@ class UserGroups extends \dependencies\BaseModel
     $table_name = 'account_user_groups',
     
     $relations = array(
-      'AccountsToUserGroups' => array('id' => 'AccountsToUserGroups.user_group_id')
+      'AccountsToUserGroups' => array('id' => 'AccountsToUserGroups.user_group_id'),
+      'Accounts' => array('id' => 'AccountsToUserGroups.user_group_id')
     ),
 
     $validate = array(
