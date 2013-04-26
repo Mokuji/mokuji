@@ -19,6 +19,8 @@ class Sections extends \dependencies\BaseViews
   protected function config_app($options)
   {
     
+    raw($options);
+    
     $view_arr = explode('/', tx('Data')->get->view->get());
     
     switch(count($view_arr)){
@@ -40,7 +42,10 @@ class Sections extends \dependencies\BaseViews
       'cms' => URL_SITE.'tx.cms/cms/'
     );
     
-    array_merge($options, $paths);
+    if(is_array($options))
+      array_merge($options, $paths);
+    else
+      $options = $paths;
     
     return tx('Component')->views($component)->get_html($view, $options);
 
