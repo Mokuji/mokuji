@@ -211,25 +211,24 @@ body {
   margin:30px 0 0 160px;
 }
 
-
-#login_form{
+.login-form{
   width:440px;
   height:210px;
   margin:62px 0 0 40px;
   position:relative;
 }
 
-#login_form h1,
-#login_form label{
+.login-form h1,
+.login-form label{
   display:none;
 }
 
-#login_form .ctrlHolder{
+.login-form .ctrlHolder{
   margin:0 auto 20px 17px;
 }
 
-#login_form input[type=text],
-#login_form input[type=password]{
+.login-form input[type=text],
+.login-form input[type=password]{
   width:360px;
   border:none;
   -webkit-background-clip:border-box;
@@ -247,15 +246,15 @@ body {
   font-family:'Myriad Pro';
 }
 
-#login_form input[type=password]{
+.login-form input[type=password]{
   padding:10px 20px;
 }
 
-#login_form input[type=text]{
+.login-form input[type=text]{
   padding:11px 20px 9px;
 }
 
-#login_form input[type=submit]{
+.login-form input[type=submit]{
   width:140px;
   float:right;
   -webkit-background-clip:border-box;

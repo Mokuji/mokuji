@@ -119,7 +119,7 @@ class Json extends \dependencies\BaseComponent
   {
     
     $view_arr = explode('/', $data->view->get());
-
+    
     switch(count($view_arr)){
       case 1:
         $component = $this->component;
@@ -132,7 +132,7 @@ class Json extends \dependencies\BaseComponent
     }
     
     return array(
-      'contents' => tx('Component')->views($component)->get_html($view)
+      'contents' => tx('Component')->views($component)->get_html($view, $data->options)
     );
     
   }

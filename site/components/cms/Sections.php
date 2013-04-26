@@ -16,11 +16,11 @@ class Sections extends \dependencies\BaseViews
     
   }
 
-  protected function config_app()
+  protected function config_app($options)
   {
-
+    
     $view_arr = explode('/', tx('Data')->get->view->get());
-
+    
     switch(count($view_arr)){
       case 1:
         $component = $this->component;
@@ -31,7 +31,7 @@ class Sections extends \dependencies\BaseViews
         $view = $view_arr[1];
         break;
     }
-
+    
     $paths = array(
       'theme' => URL_THEMES.'system/backend/',
       'template' => URL_TEMPLATES.'system/backend/',
@@ -39,8 +39,10 @@ class Sections extends \dependencies\BaseViews
       'component' => URL_COMPONENTS.$component.'/',
       'cms' => URL_SITE.'tx.cms/cms/'
     );
-
-    return tx('Component')->views($component)->get_html($view, array($paths));
+    
+    array_merge($options, $paths);
+    
+    return tx('Component')->views($component)->get_html($view, $options);
 
   }
 

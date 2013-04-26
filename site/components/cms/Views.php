@@ -146,15 +146,28 @@ class Views extends \dependencies\BaseViews
     return null;
   }
   
-  protected function settings()
+  protected function settings($options)
   {
+    
+    $view_arr = explode('/', $options->settings->get());
+    switch(count($view_arr)){
+      case 1:
+        $component = $this->component;
+        $view = $view_arr[0];
+        break;
+      case 2:
+        $component = $view_arr[0];
+        $view = $view_arr[1];
+        break;
+    }
+    $options->settings->un_set();
     
     return array(
       'menu' => tx('Sql')
         ->table('cms', 'ComponentViews')
         ->where('type', "'SETTINGS'")
         ->execute(),
-      'content' => ''
+      'content' => $component && $view ? tx('Component')->views($component)->get_html($view, $options) : ''
     );
     
   }
