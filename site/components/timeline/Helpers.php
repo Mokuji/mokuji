@@ -116,6 +116,7 @@ class Helpers extends \dependencies\BaseComponent
           $entry->info;
           $entry->author;
           $entry->is_future;
+          $entry->thumbnail_image;
         })
     ));
     

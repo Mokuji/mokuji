@@ -20,7 +20,8 @@
       {{if data.is_future}}<span class="future">(<?php __($component, 'In the future') ?>)</span>{{/if}}
     </p>
     
-    {{if data.thumbnail_image}}<img src="${data.thumbnail_image.url}" class="thumbnail" />{{/if}}
+    {{if data.thumbnail_image}}<img src="${data.thumbnail_image.url}" class="thumbnail"
+     style="width:<?php echo floor(tx('Config')->user('timeline.resize-width')->otherwise(300)->get('int') / 2); ?>px;" />{{/if}}
     
     <div class="summary">{{html data.info && data.info[language.id] && data.info[language.id].summary}}</div>
     

@@ -139,6 +139,48 @@
           languages: app.Page.Languages.data.languages
         }).appendTo(self.editingPage);
         
+        var imageId = form.find('[name=thumbnail_image_id]')
+          , entryImage = form.find('.entry_image')
+          , deleteImage = form.find('.delete-entry-image');
+        
+        //Reload plupload, if present.
+        if($.fn.txMediaImageUploader)
+        {
+          
+          form.find('.image_upload_holder').txMediaImageUploader({
+            singleFile: true,
+            callbacks: {
+              
+              serverFileIdReport: function(up, ids, file_id){
+                imageId.val(file_id);
+                entryImage
+                  .attr('src', '?section=media/image&resize=0/150&id='+file_id)
+                  .show();
+                deleteImage.show();
+              }
+              
+            }
+          });
+          
+          //Allow image deletion.
+          form.on('click', '.delete-entry-image', function(e){
+            e.preventDefault();
+            $.rest('DELETE', '?rest=media/image/'+imageId.val())
+              .done(function(){
+                imageId.val('');
+                entryImage.attr('src', '').hide();
+                deleteImage.hide();
+              });
+            
+          });
+          
+        }
+        
+        //If not there, hide the div that holds the uploader normally.
+        else{
+          form.find('.image_upload_holder').hide();
+        }
+        
         form.restForm({
           beforeSubmit: function(){
             if(hasFeedback) app.Feedback.working('Saving entry...').startBuffer();
