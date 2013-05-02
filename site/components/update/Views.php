@@ -3,6 +3,12 @@
 class Views extends \dependencies\BaseViews
 {
   
+  protected
+    $default_permission = 2,
+    $permissions = array(
+      'install' => 0 //Uses INSTALLING constant for authorization
+    );
+  
   protected function summary($options)
   {
     

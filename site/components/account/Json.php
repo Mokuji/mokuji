@@ -2,6 +2,11 @@
 
 class Json extends \dependencies\BaseComponent
 {
+  protected
+    $default_permission = 2,
+    $permissions = array(
+      'update_password' => 1
+    );
   
   protected function update_password($data, $parameters)
   {

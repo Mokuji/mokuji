@@ -2,7 +2,12 @@
 
 class Actions extends \dependencies\BaseComponent
 {
-
+  
+  protected
+    $default_permission = 2,
+    $permissions = array(
+    );
+  
   protected function new_menu($data)
   {
     

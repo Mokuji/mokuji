@@ -3,6 +3,12 @@
 class Helpers extends \dependencies\BaseComponent
 {
   
+  protected
+    $default_permission = 2,
+    $permissions = array(
+      'get_entries' => 0
+    );
+  
   public function get_entries($filters, $page = 0)
   {
     
@@ -76,7 +82,7 @@ class Helpers extends \dependencies\BaseComponent
       
       //When getting from timeline 'NEW'.
       ->is($filters->timeline_id->get('string') == 'NEW', function($t)use($filters){
-        #TODO: Validate page ID.
+        #TODO: Validate page ID and permissions.
         $t->pk(tx('Data')->session->timeline->new_page_items->{$filters->page_id});
       })
       

@@ -90,7 +90,7 @@ class EntryPoint extends \dependencies\BaseEntryPoint
       $that = $this;
       
       //If we need to claim our account, do that now before anything else.
-      if(tx('Component')->helpers('account')->call('should_claim'))
+      if(tx('Account')->check_level(1) && tx('Component')->helpers('account')->call('should_claim'))
       {
         
         $template_id = tx('Config')->user('template_id')->otherwise(1)->get('int');

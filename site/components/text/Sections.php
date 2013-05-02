@@ -2,9 +2,12 @@
 
 class Sections extends \dependencies\BaseViews
 {
-
-  /* ---------- Frontend ---------- */
-
+  
+  protected
+    $default_permission = 2,
+    $permissions = array(
+    );
+  
   private function get_items($filter)
   {
 

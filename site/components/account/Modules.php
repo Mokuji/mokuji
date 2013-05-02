@@ -2,7 +2,14 @@
 
 class Modules extends \dependencies\BaseViews
 {
-
+  
+  protected
+    $default_permission = 2,
+    $permissions = array(
+      'welcome_user' => 0,
+      'user_profile' => 1
+    );
+  
   protected function welcome_user()
   {
     return tx('Data')->session->user;
@@ -35,7 +42,7 @@ class Modules extends \dependencies\BaseViews
       throw new \exception\User('The given user ID is not found.');
     });
     
-    //>>TODO Check for permissions here.
+    #TODO: Check for permissions here.
     
     return array(
       'has_media' => tx('Component')->available('media'),

@@ -3,6 +3,13 @@
 class Sections extends \dependencies\BaseViews
 {
   
+  protected
+    $default_permission = 2,
+    $permissions = array(
+      'login_form' => 0,
+      'profile' => 1
+    );
+  
   protected function edit_user()
   {
     

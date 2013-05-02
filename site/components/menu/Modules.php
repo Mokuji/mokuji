@@ -2,7 +2,15 @@
 
 class Modules extends \dependencies\BaseViews
 {
-
+  
+  protected
+    $default_permission = 2,
+    $permissions = array(
+      'menu' => 0,
+      'menu_image' => 0,
+      'breadcrumbs' => 0
+    );
+  
   /**
    * Returns a result set with the menu items you asked for.
    * 
