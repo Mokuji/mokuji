@@ -8,7 +8,7 @@ if(!$user->check('login')){
 
 ?>
 
-<form method="post" action="<?php echo url('action=account/login/post'); ?>"  id="login_form">
+<form method="post" action="<?php echo url('action=account/login/post'); ?>"  id="login_form" class="login-form">
 
   <h1><?php __('LOGIN_VERB'); ?></h1>
 

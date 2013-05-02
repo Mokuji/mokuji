@@ -20,7 +20,7 @@ switch($data->type->get('string')){
       </p>
       
       <?php if($data->thumbnail_image->is_set()){ ?>
-        <img src="<?php $data->thumbnail_image->url; ?>" class="thumbnail" />
+        <img src="<?php echo $data->thumbnail_image->url; ?>" class="thumbnail" />
       <?php } ?>
       
       <?php if($data->is_summary->is_true()){ ?>

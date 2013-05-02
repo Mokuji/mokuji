@@ -392,7 +392,13 @@ class Image extends File
     }
 
     $new = imagecreatetruecolor($width, $height);
-
+    
+    if($this->info['type'] == 'png'){
+      imagealphablending($new, false);
+      imagesavealpha($new, true);
+      imagefilledrectangle($new, 0, 0, $width, $height, imagecolorallocatealpha($new, 255, 255, 255, 127));
+    }
+    
     $this->prepare_sourcefile();
 
     imagecopyresampled($new, $this->image, 0, 0, $x, $y, $width, $height, $width, $height);

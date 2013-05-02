@@ -1554,11 +1554,11 @@ function request(){
     el: '#config_app',
     namespace: 'main',
     
-    loadView: function(viewName){
+    loadView: function(viewName, options){
       
       var view = this.view.find('.inner');
       view.empty();
-      request(GET, 'cms/config_app', {view: viewName})
+      request(GET, 'cms/config_app', {view: viewName, options:options||null})
         .done(function(data){
           view.html(data.contents);
         });

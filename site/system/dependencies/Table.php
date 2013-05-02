@@ -189,7 +189,7 @@ class Table extends Successable
   // add a depth field based on hierarchy
   public function add_absolute_depth($as='abs_depth')
   {
-
+    
     $this->add_hierarchy();
 
     $model_name = $this->models[$this->working_model]['name'];

@@ -42,6 +42,25 @@
     
   {{/each}}
   
+  <?php if(tx('Component')->available('media')){ ?>
+    <fieldset>
+      
+      <div class="ctrlHolder">
+        <label><?php __('Image'); ?></label><br />
+        <img class="entry_image" {{if data && data.thumbnail_image_id > 0}}src="<?php echo url(URL_BASE.'?section=media/image&resize=0/150', 1); ?>&id=${data.thumbnail_image_id}"{{else}}style="display:none;"{{/if}} />
+      </div>
+      
+      <div class="ctrlHolder">
+        <input type="button" class="button grey delete-entry-image" value="<?php __('timeline', 'Delete image') ?>" {{if !data.thumbnail_image_id || data.thumbnail_image_id <= 0}}style="display:none;"{{/if}} />
+      </div>
+      
+      <div class="ctrlHolder image_upload_holder">
+        <input type="hidden" id="l_entry_thumbnail_image_id" name="thumbnail_image_id" value="${data.thumbnail_image_id}" />
+      </div>
+      
+    </fieldset>
+  <?php } ?>
+  
   <div class="ctrlHolder">
     <label><?php __($component, 'Publish date and time') ?></label>
     <input type="text" class="date-time-input" name="dt_publish" placeholder="yyyy-mm-dd hh:mm:ss" value="{{if data.dt_publish}}${data.dt_publish}{{else}}<?php echo date("Y-m-d H:i"); ?>{{/if}}" />
@@ -82,8 +101,6 @@
     </ul>
     
   </fieldset>
-  
-  <!-- TODO: thumbnail image uploader -->
   
   <div class="buttonHolder">
     <input type="button" class="button grey cancel" value="<?php __('Back') ?>" />

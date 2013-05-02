@@ -37,7 +37,7 @@ jQuery(function($){
           $content.html(html);
           app.Feedback.success("<?php __($names->component, 'Loaded'); ?>")
         }else{
-          app.Feedback.error("<?php __($names->component, 'There was a problem loading the SDK section'); ?>");
+          app.Feedback.error("<?php __($names->component, 'There was a problem loading the section'); ?>");
         }
         
       })

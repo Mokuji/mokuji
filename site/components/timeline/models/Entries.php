@@ -17,6 +17,7 @@ class Entries extends \dependencies\BaseModel
       'type' => array('string', 'in'=>array('blogpost')),
       'dt_publish' => array('datetime'),
       'author_id' => array('number'=>'int', 'gt'=>0),
+      'thumbnail_image_id' => array('number'=>'int', 'gt'=>0)
     );
   
   public function get_is_future()
@@ -92,6 +93,34 @@ class Entries extends \dependencies\BaseModel
         $info->claim_key->un_set();
         $info->comments->un_set();
       });
+    
+  }
+  
+  public function get_thumbnail_image()
+  {
+    
+    if(!tx('Component')->available('media'))
+      return false;
+    
+    $image = tx('Sql')
+      ->table('media', 'Images')
+      ->pk($this->thumbnail_image_id)
+      ->execute_single();
+    
+    if($image->is_empty())
+      return false;
+    
+    $resizeType = tx('Config')->user('timeline.resize-type')->get() == 'fit' ? 'fit' : 'fill';
+    $resizeWidth = tx('Config')->user('timeline.resize-width')->otherwise(300)->get('int');
+    $resizeHeight = tx('Config')->user('timeline.resize-height')->otherwise(200)->get('int');
+    
+    return array(
+      'id' => $image->id,
+      'url' => (string)$image->generate_url(array(
+          $resizeType.'_width' => $resizeWidth,
+          $resizeType.'_height' => $resizeHeight
+        ), array('allow_growth'))
+    );
     
   }
     
