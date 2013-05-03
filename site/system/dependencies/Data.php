@@ -825,6 +825,37 @@ class Data extends Successable implements \Serializable, \IteratorAggregate, \Ar
     
   }
   
+  // returns a copy of this node without having the subnodes of which the keys were in the argument list passed to without
+  public function without()
+  {
+    
+    $return = $this->copy();
+    
+    if(func_num_args() == 1 && is_array(func_get_arg(0))){
+      $keys = func_get_arg(0);
+    }
+    
+    else{
+      $keys = array_flatten(func_get_args());
+    }
+    
+    foreach($keys as $key1 => $key2)
+    {
+      
+      if(is_string($key1)){
+        $return->__get($key1)->un_set();
+      }
+      
+      else{
+        $return->__get($key2)->un_set();
+      }
+      
+    }
+    
+    return $return;
+    
+  }
+  
   // returns a copy of this node having only the subnodes which made the given callback return true
   public function filter($callback)
   {
