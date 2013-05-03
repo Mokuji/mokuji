@@ -177,43 +177,51 @@ class Account
     });
     
     //Get the user record based on the given email address or user name.
+    $failed = false;
     $user = tx('Sql')->execute_single("SELECT * FROM #__core_users WHERE email = '$email' OR username = '$email'")->is('empty', function(){
       tx('Logging')->log('Core', 'Login attempt', 'FAILED: User account not found.');
-      throw new \exception\EmptyResult('User account not found.');
+      $failed = true;
     });
     
-    //See if we're using improved hashing.
-    $user->hashing_algorithm->not('empty')
+    //See if the username check didn't fail already.
+    if(!$failed){
       
-      //Use improved hashing.
-      ->success(function()use($user, $pass){
+      //See if we're using improved hashing.
+      $user->hashing_algorithm->not('empty')
         
-        //Apply salt, if any.
-        $spass = $user->salt->otherwise('')->get('string') . $pass;
-        
-        //Apply hashing algorithm.
-        $hspass = tx('Security')->hash($spass, $user->hashing_algorithm);
+        //Use improved hashing.
+        ->success(function()use($user, $pass, &$failed){
+          
+          //Apply salt, if any.
+          $spass = $user->salt->otherwise('')->get('string') . $pass;
+          
+          //Apply hashing algorithm.
+          $hspass = tx('Security')->hash($spass, $user->hashing_algorithm);
 
-        //Compare hashes.
-        if($user->password->get() !== $hspass){
-          tx('Logging')->log('Core', 'Login attempt', 'FAILED: Invalid password.');
-          throw new \exception\Validation('Invalid password.');
-        }
+          //Compare hashes.
+          if($user->password->get() !== $hspass){
+            tx('Logging')->log('Core', 'Login attempt', 'FAILED: Invalid password.');
+            $failed = true;
+          }
+          
+        })
         
-      })
+        //Use the old way.
+        ->failure(function()use($user, $pass, &$failed){
+          
+          if(md5($pass) !== $user->password->get()){
+            tx('Logging')->log('Core', 'Login attempt', 'FAILED: Invalid password.');
+            $failed = true;
+          }
+          
+        });
       
-      //Use the old way.
-      ->failure(function()use($user, $pass){
-        
-        if(md5($pass) !== $user->password->get()){
-          tx('Logging')->log('Core', 'Login attempt', 'FAILED: Invalid password.');
-          throw new \exception\Validation('Invalid password.');
-        }
-        
-      })
-      
-    ;//END - password checking.
+    } //End - password check
     
+    //Throw errors here.
+    if($failed) throw new \exception\Validation('Invalid username and password combination.');
+    
+    //Otherwise it worked.
     tx('Logging')->log('Core', 'Login attempt', 'SUCCESS: Logged in as user ID '.$user->id);
     
     //Regenerate the session ID.
@@ -245,7 +253,7 @@ class Account
       tx('Sql')->execute_non_query("
         INSERT INTO `#__core_user_logins` VALUES(
           NULL,
-          {$user->id},
+          '{$user->id}',
           '".tx('Session')->id."',
           {$dt_expiry},
           '".tx('Data')->server->REMOTE_ADDR."',
