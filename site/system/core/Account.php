@@ -36,7 +36,7 @@ class Account
       
       //Get the current user session from the database.
       tx('Sql')->execute_scalar(
-        "SELECT id FROM `#__core_users` WHERE id = {$this->user->id} AND session = '".tx('Sql')->escape(tx('Session')->id)."'"
+        "SELECT id FROM `#__core_users` WHERE id = {$this->user->id} AND session = ".tx('Sql')->escape(tx('Session')->id)
       )
       
       //No exist? Shoo!
@@ -58,7 +58,7 @@ class Account
       WHERE 1
         AND user_id = '{$this->user->id}'
         AND (dt_expiry IS NULL OR dt_expiry > '".date('Y-m-d H:i:s')."')
-        AND session_id = '".tx('Sql')->escape(tx('Session')->id)."'
+        AND session_id = ".tx('Sql')->escape(tx('Session')->id)."
     ");
     
     //No login data found? Away with you!
@@ -81,9 +81,9 @@ class Account
         SELECT id FROM `#__core_user_logins`
         WHERE 1
           AND user_id = {$this->user->id}
-          AND session_id = '".tx('Sql')->escape(tx('Session')->id)."'
+          AND session_id = ".tx('Sql')->escape(tx('Session')->id)."
           AND IPv4 = '".tx('Data')->server->REMOTE_ADDR."'
-          AND user_agent = '".tx('Sql')->escape(tx('Data')->server->HTTP_USER_AGENT)."'
+          AND user_agent = ".tx('Sql')->escape(tx('Data')->server->HTTP_USER_AGENT)."
       ");
       
       //Is the same session being used in a different environment?
@@ -96,7 +96,7 @@ class Account
             NULL,
             '{$login->id}',
             '".tx('Data')->server->REMOTE_ADDR."',
-            '".tx('Sql')->escape(tx('Data')->server->HTTP_USER_AGENT)."',
+            ".tx('Sql')->escape(tx('Data')->server->HTTP_USER_AGENT).",
             NULL
           )
         ");
@@ -163,7 +163,7 @@ class Account
     $ipa = tx('Data')->server->REMOTE_ADDR->get();
     
     //Get IP permissions.
-    $ipinfo = tx('Sql')->execute_single("SELECT * FROM #__core_ip_addresses WHERE address = '".tx('Sql')->escape($ipa)."'")
+    $ipinfo = tx('Sql')->execute_single("SELECT * FROM #__core_ip_addresses WHERE address = ".tx('Sql')->escape($ipa))
       
       //If no specific entry is available, get the global settings.
       ->is('empty', function(){
@@ -178,8 +178,8 @@ class Account
     
     //Get the user record based on the given email address or user name.
     $failed = false;
-    $user = tx('Sql')->execute_single("SELECT * FROM #__core_users WHERE email = '".tx('Sql')->escape($email)."' ".
-        "OR username = '".tx('Sql')->escape($email)."'")
+    $user = tx('Sql')->execute_single("SELECT * FROM #__core_users WHERE email = ".tx('Sql')->escape($email)." ".
+        "OR username = ".tx('Sql')->escape($email))
       ->is('empty', function(){
         tx('Logging')->log('Core', 'Login attempt', 'FAILED: User account not found.');
         $failed = true;
@@ -236,8 +236,8 @@ class Account
       //Update the login session.
       tx('Sql')->execute_non_query("
         UPDATE `#__core_users` SET
-          session = '".tx('Sql')->escape(tx('Session')->id)."',
-          ipa = '".tx('Sql')->escape(tx('Data')->server->REMOTE_ADDR)."',
+          session = ".tx('Sql')->escape(tx('Session')->id).",
+          ipa = ".tx('Sql')->escape(tx('Data')->server->REMOTE_ADDR).",
           dt_last_login = '".date('Y-m-d H:i:s')."'
         WHERE id = '{$user->id}'
       ");
@@ -256,10 +256,10 @@ class Account
         INSERT INTO `#__core_user_logins` VALUES(
           NULL,
           '{$user->id}',
-          '".tx('Sql')->escape(tx('Session')->id)."',
+          ".tx('Sql')->escape(tx('Session')->id).",
           {$dt_expiry},
-          '".tx('Sql')->escape(tx('Data')->server->REMOTE_ADDR)."',
-          '".tx('Sql')->escape(tx('Data')->server->HTTP_USER_AGENT)."',
+          ".tx('Sql')->escape(tx('Data')->server->REMOTE_ADDR).",
+          ".tx('Sql')->escape(tx('Data')->server->HTTP_USER_AGENT).",
           NULL
         )
       ");
@@ -306,7 +306,7 @@ class Account
               dt_expiry = '".date('Y-m-d H:i:s')."'
             WHERE 1
               AND user_id = '{$this->user->id}''
-              AND session_id = '".tx('Sql')->escape(tx('Session')->id)."'
+              AND session_id = ".tx('Sql')->escape(tx('Session')->id)."
         ");
         
       }
@@ -365,8 +365,8 @@ class Account
     tx('Sql')->execute_non_query(
       "INSERT INTO `#__core_users`
         (id,   dt_created, email,    username,    password,    level,    hashing_algorithm,            salt) VALUES 
-        (NULL, NOW(), '".tx('Sql')->escape($email)."', '".tx('Sql')->escape($username)."', '".
-        tx('Sql')->escape($password)."', '".tx('Sql')->escape($level)."', '{$data->hashing_algorithm}', '{$data->salt}')"
+        (NULL, NOW(), ".tx('Sql')->escape($email).", ".tx('Sql')->escape($username).", ".
+        tx('Sql')->escape($password).", ".tx('Sql')->escape($level).", '{$data->hashing_algorithm}', '{$data->salt}')"
     );
     
     if(tx('Component')->available('account'))
