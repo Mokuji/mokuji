@@ -85,7 +85,7 @@ class Views extends \dependencies\BaseViews
   {
     
     //Get menu and site id.
-    $mid = tx('Sql')->table('menu', 'Menus')->limit(1)->execute()->{0}->id->get('int');
+    $mid = tx('Sql')->table('menu', 'Menus')->order('title')->limit(1)->execute()->{0}->id->get('int');
     $sid = $this->table('Sites')->order('title', 'ASC')->limit(1)->execute_single()->id->get('int');
     
     //the app is going to make use of all components, so we are going to load all javascript and css needed
