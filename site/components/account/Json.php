@@ -303,6 +303,8 @@ class Json extends \dependencies\BaseComponent
   public function update_user($data, $parameters)
   {
     
+    //Does not check permissions, so access level 2.
+    
     //Check if the password was given and filled in..
     $data->password->is('set')->and_not('empty')
     

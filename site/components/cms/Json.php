@@ -3,6 +3,11 @@
 class Json extends \dependencies\BaseComponent
 {
   
+  protected
+    $default_permission = 2,
+    $permissions = array(
+    );
+  
   protected function update_active_site($data, $params)
   {
     
@@ -330,6 +335,7 @@ class Json extends \dependencies\BaseComponent
     
   }
   
+  #TODO: Needs a new name. Getters should not alter state. (XSS issue)
   protected function get_new_page($data, $params)
   {
     
@@ -376,6 +382,7 @@ class Json extends \dependencies\BaseComponent
     
   }
   
+  #TODO: Needs a new name. Getters should not alter state. (XSS issue)
   protected function get_link_page($data, $params)
   {
     
@@ -402,6 +409,7 @@ class Json extends \dependencies\BaseComponent
     
   }
   
+  #TODO: Needs a new name. Getters should not alter state. (XSS issue)
   protected function get_detach_page($data, $params)
   {
     

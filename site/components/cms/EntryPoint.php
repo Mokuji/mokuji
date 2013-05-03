@@ -90,10 +90,10 @@ class EntryPoint extends \dependencies\BaseEntryPoint
       $that = $this;
       
       //If we need to claim our account, do that now before anything else.
-      if(tx('Account')->check_level(1) && tx('Component')->helpers('account')->call('should_claim'))
+      if(tx('Component')->helpers('account')->call('should_claim'))
       {
         
-        $template_id = tx('Config')->user('template_id')->otherwise(1)->get('int');
+        $template_id = tx('Config')->user('forced_template_id')->otherwise(tx('Config')->user('template_id')->otherwise(1)->get('int'));
         $template = tx('Sql')->table('cms', 'Templates')->pk($template_id)->execute_single();
         
         $theme_id = tx('Config')->user('forced_theme_id')->otherwise(tx('Config')->user('theme_id')->otherwise(1)->get('int'));
@@ -105,7 +105,7 @@ class EntryPoint extends \dependencies\BaseEntryPoint
           load_plugin('jquery_rest'),
           load_plugin('jquery_postpone')
         );
-
+        
         return $that->template($template->name, $theme->name, array(
           'title' => __('cms', 'Claim your account', true),
           'plugins' => $plugins,
@@ -148,13 +148,8 @@ class EntryPoint extends \dependencies\BaseEntryPoint
       
       //If any of the above validations failed..
       ->failure(function(){
-
-        //We might be able to redirect the user back to the page they came from.
-        $prev = tx('Url')->previous(false, false);
-        if($prev !== false && !$prev->compare(tx('Url')->url)){
-          tx('Url')->redirect(url($prev, true));
-          return;
-        }
+        
+        //Don't redirect user to previous. Since this can be forged.
         
         //Address the user-defined home page in the configuration.
         tx('Config')->user('homepage')

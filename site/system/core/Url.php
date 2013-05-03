@@ -182,21 +182,21 @@ class Url
 
   public function previous($allow_external=false, $allow_backend_to_frontend=true)
   {
-
+    
     if($this->referer_url === false){
       return false;
     }
-
+    
     if($allow_external===false && $this->referer_url->check('external')){
       return false;
     }
-
+    
     if($allow_backend_to_frontend===false && ($this->referer_url->check('backend') !== $this->url->check('backend'))){
       return false;
     }
-
+    
     return $this->referer_url;
-
+    
   }
 
 }

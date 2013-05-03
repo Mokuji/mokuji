@@ -6,8 +6,11 @@ class Views extends \dependencies\BaseViews
   protected
     $default_permission = 2,
     $permissions = array(
-      'claim_account' => 1,
-      'profile' => 0
+      
+      'profile' => 0,
+      
+      'claim_account' => 1
+      
     );
   
   protected function accounts()
