@@ -695,6 +695,7 @@
     -moz-box-sizing:border-box;
     -webkit-box-sizing:border-box;
     border:none;
+    display: inline-block !important;
   }
   #page-findability .page-captions,
   #page-findability .seo{
@@ -740,6 +741,7 @@
   }
     #page-findability .social-media .fieldset-general{
       margin-bottom:30px;
+      width:100%;
     }
     #page-findability fieldset > fieldset legend{
       padding:0;
