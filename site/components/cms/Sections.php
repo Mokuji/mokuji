@@ -2,7 +2,14 @@
 
 class Sections extends \dependencies\BaseViews
 {
-
+  
+  protected
+    $default_permission = 2,
+    $permissions = array(
+      'admin_toolbar' => 0,
+      'login_form' => 0
+    );
+  
   protected function app($view)
   {
     

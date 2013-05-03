@@ -6,13 +6,15 @@ class Actions extends \dependencies\BaseComponent
   protected
     $default_permission = 2,
     $permissions = array(
+      
       'login' => 0,
-      'logout' => 1,
       'register' => 0,
-      'edit_profile' => 1,
       'claim_account' => 0,
+      
+      'logout' => 1,
       'save_avatar' => 1,
-      'set_password' => 1
+      'edit_profile' => 1
+      
     );
   
   protected function login($data)
@@ -270,7 +272,7 @@ class Actions extends \dependencies\BaseComponent
     // tx('Url')->redirect('section=sevendays/project_list&project_id=NULL');
     
   }
-
+  
   protected function deactivate_user($data)
   {
     $this->set_user_status($data->push('status', 'deactivated'));

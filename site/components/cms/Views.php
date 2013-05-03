@@ -2,7 +2,13 @@
 
 class Views extends \dependencies\BaseViews
 {
-
+  
+  protected
+    $default_permission = 2,
+    $permissions = array(
+      'page' => 0
+    );
+  
   protected function page()
   {
 
@@ -67,11 +73,12 @@ class Views extends \dependencies\BaseViews
     return $return;
 
   }
-
+  
   protected function mod()
   {
-    $module = tx('Sql')->execute_single('SELECT *, (SELECT name FROM #__cms_components WHERE id = pm.com_id) AS component FROM #__page_modules AS pm WHERE id = '.tx('Data')->get->mid);
-    return load_module($module->component, $module->name);
+    throw new \exception\Deprecated();
+    // $module = tx('Sql')->execute_single('SELECT *, (SELECT name FROM #__cms_components WHERE id = pm.com_id) AS component FROM #__page_modules AS pm WHERE id = '.tx('Data')->get->mid);
+    // return load_module($module->component, $module->name);
   }
 
   protected function app($view)

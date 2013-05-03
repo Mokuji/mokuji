@@ -6,7 +6,7 @@ abstract class BaseComponent
   protected static $reserved = array('__construct', 'filter', 'module', 'section', 'view', 'table', 'get_html', 'call', 'template');
   protected
     $component,
-    $default_permission = 0,
+    $default_permission = 2,
     $permissions = array();
   
   // constructor extracts the component name from the namespace

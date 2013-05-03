@@ -2,7 +2,13 @@
 
 class Views extends \dependencies\BaseViews
 {
-
+  
+  protected
+    $default_permission = 2,
+    $permissions = array(
+      'menu_link' => 0
+    );
+  
   protected function menus($return=null)
   {    
     return array(
@@ -51,12 +57,13 @@ class Views extends \dependencies\BaseViews
         
         //Redirect
         case 0:
-          tx('Url')->redirect('menu='.$link->menu_item_id->get().'&pid='.$link->menu_item->page_id->get());
+          tx('Url')->redirect('menu='.$link->menu_item_id->get('int').'&pid='.$link->menu_item->page_id->get('int'));
           return;
         
         //Copy content
         case 1:
-          tx('Url')->redirect('pid='.$link->menu_item->page_id->get());
+          #TODO: Wait what? Shouldn't this copy content?
+          tx('Url')->redirect('pid='.$link->menu_item->page_id->get('int'));
           return;
         
       }

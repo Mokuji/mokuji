@@ -36,7 +36,7 @@ class Account
       
       //Get the current user session from the database.
       tx('Sql')->execute_scalar(
-        "SELECT id FROM `#__core_users` WHERE id = {$this->user->id} AND session = '".tx('Session')->id."'"
+        "SELECT id FROM `#__core_users` WHERE id = {$this->user->id} AND session = ".tx('Sql')->escape(tx('Session')->id)
       )
       
       //No exist? Shoo!
@@ -56,9 +56,9 @@ class Account
     $login = tx('Sql')->execute_single("
       SELECT * FROM `#__core_user_logins`
       WHERE 1
-        AND user_id = {$this->user->id}
+        AND user_id = '{$this->user->id}'
         AND (dt_expiry IS NULL OR dt_expiry > '".date('Y-m-d H:i:s')."')
-        AND session_id = '".tx('Session')->id."'
+        AND session_id = ".tx('Sql')->escape(tx('Session')->id)."
     ");
     
     //No login data found? Away with you!
@@ -81,9 +81,9 @@ class Account
         SELECT id FROM `#__core_user_logins`
         WHERE 1
           AND user_id = {$this->user->id}
-          AND session_id = '".tx('Session')->id."'
+          AND session_id = ".tx('Sql')->escape(tx('Session')->id)."
           AND IPv4 = '".tx('Data')->server->REMOTE_ADDR."'
-          AND user_agent = '".tx('Data')->server->HTTP_USER_AGENT."'
+          AND user_agent = ".tx('Sql')->escape(tx('Data')->server->HTTP_USER_AGENT)."
       ");
       
       //Is the same session being used in a different environment?
@@ -94,9 +94,9 @@ class Account
         tx('Sql')->query("
           INSERT INTO `#__core_user_login_shared_sessions` VALUES(
             NULL,
-            {$login->id},
+            '{$login->id}',
             '".tx('Data')->server->REMOTE_ADDR."',
-            '".tx('Data')->server->HTTP_USER_AGENT."',
+            ".tx('Sql')->escape(tx('Data')->server->HTTP_USER_AGENT).",
             NULL
           )
         ");
@@ -116,7 +116,7 @@ class Account
       $dt_expiry = date('Y-m-d H:i:s', time() + $lifetime);
       
       //Update it in the database.
-      tx('Sql')->query("UPDATE `#__core_user_logins` SET dt_expiry = '$dt_expiry' WHERE id = {$login->id}");
+      tx('Sql')->query("UPDATE `#__core_user_logins` SET dt_expiry = '$dt_expiry' WHERE id = '{$login->id}'");
       tx('Logging')->log('Account', 'Update expiry time', 'From '.$login->dt_expiry.' to '.$dt_expiry.' lifetime was '.$lifetime);
       
     }
@@ -163,7 +163,7 @@ class Account
     $ipa = tx('Data')->server->REMOTE_ADDR->get();
     
     //Get IP permissions.
-    $ipinfo = tx('Sql')->execute_single("SELECT * FROM #__core_ip_addresses WHERE address = '$ipa'")
+    $ipinfo = tx('Sql')->execute_single("SELECT * FROM #__core_ip_addresses WHERE address = ".tx('Sql')->escape($ipa))
       
       //If no specific entry is available, get the global settings.
       ->is('empty', function(){
@@ -177,43 +177,53 @@ class Account
     });
     
     //Get the user record based on the given email address or user name.
-    $user = tx('Sql')->execute_single("SELECT * FROM #__core_users WHERE email = '$email' OR username = '$email'")->is('empty', function(){
-      tx('Logging')->log('Core', 'Login attempt', 'FAILED: User account not found.');
-      throw new \exception\EmptyResult('User account not found.');
-    });
+    $failed = false;
+    $user = tx('Sql')->execute_single("SELECT * FROM #__core_users WHERE email = ".tx('Sql')->escape($email)." ".
+        "OR username = ".tx('Sql')->escape($email))
+      ->is('empty', function(){
+        tx('Logging')->log('Core', 'Login attempt', 'FAILED: User account not found.');
+        $failed = true;
+      });
     
-    //See if we're using improved hashing.
-    $user->hashing_algorithm->not('empty')
+    //See if the username check didn't fail already.
+    if(!$failed){
       
-      //Use improved hashing.
-      ->success(function()use($user, $pass){
+      //See if we're using improved hashing.
+      $user->hashing_algorithm->not('empty')
         
-        //Apply salt, if any.
-        $spass = $user->salt->otherwise('')->get('string') . $pass;
-        
-        //Apply hashing algorithm.
-        $hspass = tx('Security')->hash($spass, $user->hashing_algorithm);
+        //Use improved hashing.
+        ->success(function()use($user, $pass, &$failed){
+          
+          //Apply salt, if any.
+          $spass = $user->salt->otherwise('')->get('string') . $pass;
+          
+          //Apply hashing algorithm.
+          $hspass = tx('Security')->hash($spass, $user->hashing_algorithm);
 
-        //Compare hashes.
-        if($user->password->get() !== $hspass){
-          tx('Logging')->log('Core', 'Login attempt', 'FAILED: Invalid password.');
-          throw new \exception\Validation('Invalid password.');
-        }
+          //Compare hashes.
+          if($user->password->get() !== $hspass){
+            tx('Logging')->log('Core', 'Login attempt', 'FAILED: Invalid password.');
+            $failed = true;
+          }
+          
+        })
         
-      })
+        //Use the old way.
+        ->failure(function()use($user, $pass, &$failed){
+          
+          if(md5($pass) !== $user->password->get()){
+            tx('Logging')->log('Core', 'Login attempt', 'FAILED: Invalid password.');
+            $failed = true;
+          }
+          
+        });
       
-      //Use the old way.
-      ->failure(function()use($user, $pass){
-        
-        if(md5($pass) !== $user->password->get()){
-          tx('Logging')->log('Core', 'Login attempt', 'FAILED: Invalid password.');
-          throw new \exception\Validation('Invalid password.');
-        }
-        
-      })
-      
-    ;//END - password checking.
+    } //End - password check
     
+    //Throw errors here.
+    if($failed) throw new \exception\Validation('Invalid username and password combination.');
+    
+    //Otherwise it worked.
     tx('Logging')->log('Core', 'Login attempt', 'SUCCESS: Logged in as user ID '.$user->id);
     
     //Regenerate the session ID.
@@ -226,10 +236,10 @@ class Account
       //Update the login session.
       tx('Sql')->execute_non_query("
         UPDATE `#__core_users` SET
-          session = '".tx('Session')->id."',
-          ipa = '".tx('Data')->server->REMOTE_ADDR."',
+          session = ".tx('Sql')->escape(tx('Session')->id).",
+          ipa = ".tx('Sql')->escape(tx('Data')->server->REMOTE_ADDR).",
           dt_last_login = '".date('Y-m-d H:i:s')."'
-        WHERE id = {$user->id}
+        WHERE id = '{$user->id}'
       ");
       
     }
@@ -245,11 +255,11 @@ class Account
       tx('Sql')->execute_non_query("
         INSERT INTO `#__core_user_logins` VALUES(
           NULL,
-          {$user->id},
-          '".tx('Session')->id."',
+          '{$user->id}',
+          ".tx('Sql')->escape(tx('Session')->id).",
           {$dt_expiry},
-          '".tx('Data')->server->REMOTE_ADDR."',
-          '".tx('Data')->server->HTTP_USER_AGENT."',
+          ".tx('Sql')->escape(tx('Data')->server->REMOTE_ADDR).",
+          ".tx('Sql')->escape(tx('Data')->server->HTTP_USER_AGENT).",
           NULL
         )
       ");
@@ -283,7 +293,7 @@ class Account
       
       //Log out the old way.
       if(tx('Sql')->execute_single("SHOW TABLES LIKE '#__core_user_logins'")->is_empty()){
-        tx('Sql')->execute_non_query("UPDATE `#__core_users` SET session = NULL, ipa = NULL WHERE id = {$this->user->id}");
+        tx('Sql')->execute_non_query("UPDATE `#__core_users` SET session = NULL, ipa = NULL WHERE id = '{$this->user->id}'");
       }
       
       //Log out the new way.
@@ -295,8 +305,8 @@ class Account
             SET
               dt_expiry = '".date('Y-m-d H:i:s')."'
             WHERE 1
-              AND user_id = {$this->user->id}
-              AND session_id = '".tx('Session')->id."'
+              AND user_id = '{$this->user->id}''
+              AND session_id = ".tx('Sql')->escape(tx('Session')->id)."
         ");
         
       }
@@ -337,7 +347,7 @@ class Account
       //Get salt and algorithm.
       $data->salt = tx('Security')->random_string();
       $data->hashing_algorithm = tx('Security')->pref_hash_algo();
-
+      
       //Hash using above information.
       $password = tx('Security')->hash(
         $data->salt->get() . $password->get(),
@@ -355,7 +365,8 @@ class Account
     tx('Sql')->execute_non_query(
       "INSERT INTO `#__core_users`
         (id,   dt_created, email,    username,    password,    level,    hashing_algorithm,            salt) VALUES 
-        (NULL, NOW(),      '$email', '$username', '$password', '$level', '{$data->hashing_algorithm}', '{$data->salt}')"
+        (NULL, NOW(), ".tx('Sql')->escape($email).", ".tx('Sql')->escape($username).", ".
+        tx('Sql')->escape($password).", ".tx('Sql')->escape($level).", '{$data->hashing_algorithm}', '{$data->salt}')"
     );
     
     if(tx('Component')->available('account'))
