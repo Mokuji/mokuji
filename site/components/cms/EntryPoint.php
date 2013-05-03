@@ -31,11 +31,20 @@ class EntryPoint extends \dependencies\BaseEntryPoint
       if(!tx('Account')->user->check('login'))
       {
         
+        //Use the previous scheme unless the on-login option is desired.
+        $targetScheme = tx('Url')->url->segments->scheme->get();
+        if(tx('Config')->user('tls_mode')->get('string') === 'logged-in')
+          $targetScheme = 'https';
+        
         //Redirect to custom login page is available.
         if(url('')->segments->path == '/admin/' && tx('Config')->user()->login_page->not('empty')->get('bool')){
-          header("Location: ".url(URL_BASE.tx('Config')->user()->login_page));
+          $goto = url(URL_BASE.tx('Config')->user()->login_page, true)->segments->merge(array('scheme' => $targetScheme))->back()->rebuild_output();
+          header("Location: ".$goto);
         }
-
+        
+        if($targetScheme !== tx('Url')->url->segments->scheme->get())
+          tx('Url')->redirect(url('')->segments->merge(array('scheme' => $targetScheme))->back()->rebuild_output());
+        
         //Otherwise: show awesome login screen.
         return $this->template('tx_login', 'tx_login', array(), array(
           'content' => tx('Component')->sections('account')->get_html('login_form')

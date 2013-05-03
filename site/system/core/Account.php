@@ -72,6 +72,11 @@ class Account
       return $this->logout();
     }
     
+    //This means we're logged in.
+    //Check for https in the on-login mode.
+    if(tx('Config')->user('tls_mode')->get() === 'logged-in' && tx('Url')->url->segments->scheme->get() !== 'https')
+      tx('Url')->redirect(url('')->segments->merge(array('scheme' => 'https'))->back()->rebuild_output());
+    
     //Check if we're interested in shared sessions.
     if(tx('Config')->user()->check('log_shared_login_sessions'))
     {
