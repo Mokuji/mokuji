@@ -305,7 +305,7 @@ class Account
             SET
               dt_expiry = '".date('Y-m-d H:i:s')."'
             WHERE 1
-              AND user_id = '{$this->user->id}''
+              AND user_id = '{$this->user->id}'
               AND session_id = ".tx('Sql')->escape(tx('Session')->id)."
         ");
         
