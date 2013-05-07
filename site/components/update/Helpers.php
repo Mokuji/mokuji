@@ -16,7 +16,10 @@ class Helpers extends \dependencies\BaseComponent
   {
     
     raw($component);
-    $packageFile = PATH_COMPONENTS.DS.$component.DS.'.package'.DS.'package.json';
+    if(empty($component))
+      $packageFile = PATH_BASE.DS.'.package'.DS.'package.json';
+    else
+      $packageFile = PATH_COMPONENTS.DS.$component.DS.'.package'.DS.'package.json';
     
     //Check the file is there.
     if(!is_file($packageFile))
