@@ -10,12 +10,20 @@ class Actions extends \dependencies\BaseComponent
       'login' => 0,
       'register' => 0,
       'claim_account' => 0,
+      'use_password_reset_token' => 0,
       
       'logout' => 1,
       'save_avatar' => 1,
       'edit_profile' => 1
       
     );
+  
+  protected function use_password_reset_token($data)
+  {
+    
+    tx('Url')->redirect(url('/admin/?password_forgotten=token&token=KEEP', true));
+    
+  }
   
   protected function login($data)
   {

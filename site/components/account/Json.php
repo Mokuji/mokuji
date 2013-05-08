@@ -5,8 +5,198 @@ class Json extends \dependencies\BaseComponent
   protected
     $default_permission = 2,
     $permissions = array(
+      'create_password_reset_request' => 0,
+      'create_password_reset_finalization' => 0,
       'update_password' => 1
     );
+  
+  protected function create_password_reset_finalization($data, $params)
+  {
+    
+    $data = Data($data)->having('token', 'password1', 'password2')
+      ->password1->validate('New password', array('required', 'string', 'not_empty', 'password'))->back()
+      ->password2->validate('Confirm new password', array('required', 'string', 'not_empty'))->back();
+    
+    if($data->password1->get() !== $data->password2->get()){
+      $vex = new \exception\Validation('Passwords do not match');
+      $vex->key('password1');
+      $vex->errors(array('Passwords do not match'));
+      throw $vex;
+    }
+    
+    $token = tx('Sql')
+      ->table('account', 'PasswordResetTokens')
+      ->where('token', "'{$data->token}'")
+      ->execute_single();
+    
+    if(!$token->is_expired->is_false())
+      throw new \exception\Validation('The token is invalid');
+    
+    $user = tx('Sql')
+      ->table('account', 'Accounts')
+      ->pk($token->user_id)
+      ->execute_single()
+      ->is('empty', function(){
+        throw new \exception\Validation('The token is invalid');
+      });
+    
+    //Get salt and algorithm.
+    $user->merge(array(
+      'salt' => tx('Security')->random_string(),
+      'hashing_algorithm' => tx('Security')->pref_hash_algo()
+    ));
+    
+    //Hash using above information.
+    $user->merge(array(
+      'password' =>
+        tx('Security')->hash(
+          $user->salt->get() . $data->password1->get(),
+          $user->hashing_algorithm
+        )
+    ));
+    
+    //Store the changes to the user.
+    $user->save();
+    
+    //Delete the token. Since it's been used now.
+    $token->delete();
+    
+    //Try logging in with that user.
+    #TODO: See if this is the right step to follow up with.
+    tx('Account')->login($user->email, $data->password1);
+    
+    return array(
+      'message' => __('account', 'Password has been set successfully', true).'.'
+    );
+    
+  }
+  
+  protected function create_password_reset_request($data, $params)
+  {
+    
+    $data = Data($data)->having('email', 'captcha')
+      ->email->validate('E-mail address', array('required', 'string', 'email'))->back();
+    
+    #TODO: validate captcha here.
+    
+    //Catch all exceptions here. We don't want to leak information to the user.
+    try{
+      
+      tx('Sql')
+        ->table('account', 'Accounts')
+        ->where('email', "'{$data->email}'")
+        ->execute_single()
+        ->is('set')
+        
+        //User found, create token and send it.
+        ->success(function($user){
+          
+          //First of all, clear expired token.
+          //Not required for this operation, but keeps things clean.
+          //And it makes generating unique tokens more efficient later on.
+          tx('Sql')
+            ->table('account', 'PasswordResetTokens')
+            ->where('dt_expiry', '>', time())
+            ->execute()
+            ->each(function($token){
+              $token->delete();
+            });
+          
+          //Now create a new one.
+          $token = tx('Sql')
+            ->model('account', 'PasswordResetTokens')
+            ->generate($user->id)
+            ->save();
+          
+          //Send it.
+          $subject = __('Password reset', 1);
+          $body = tx('Component')->views('account')->get_html('email_password_reset_token', array(
+            'email' => $user->email->get(),
+            'site_url' => url('/', true)->output,
+            'site_name' => tx('Config')->user('site_name')->otherwise(url('/', true)->output),
+            'ipa' => tx('Data')->server->REMOTE_ADDR,
+            'user_agent' => tx('Data')->server->HTTP_USER_AGENT,
+            'target_url' => url('/?action=account/use_password_reset_token/get&token='.$token->token->get(), true)
+          ));
+          
+          //Use fancy method to send if it's available.
+          if(tx('Component')->available('mail')){
+            
+            tx('Component')->helpers('mail')->send_fleeting_mail(array(
+              'to' => array('name'=>$user->info->full_name->get(), 'email'=>$user->email->get()),
+              'from' => array('name'=>EMAIL_NAME_AUTOMATED_MESSAGES, 'email'=>EMAIL_ADDRESS_AUTOMATED_MESSAGES),
+              'subject' => $subject,
+              'html_message' => $body
+            ));
+            
+          }
+          
+          else{
+            
+            mail(
+              $user->email->get('string'),
+              __('Password reset', 1),
+              $body,
+              'From: '.EMAIL_NAME_AUTOMATED_MESSAGES.'<'.EMAIL_ADDRESS_AUTOMATED_MESSAGES.'>'.n.
+              'Return-path: '.EMAIL_NAME_AUTOMATED_MESSAGES.'<'.EMAIL_ADDRESS_AUTOMATED_MESSAGES.'>'.n.
+              'Content-type: text/html'.n
+            );
+            
+          }
+          
+        })
+        
+        //User with email not found. Send them a message.
+        ->failure(function()use($data){
+          
+          $subject = __('Password reset', 1);
+          $body = tx('Component')->views('account')->get_html('email_password_reset_no_account', array(
+            'email' => $data->email->get(),
+            'site_url' => url('/', true)->output,
+            'site_name' => tx('Config')->user('site_name')->otherwise(url('/', true)->output),
+            'ipa' => tx('Data')->server->REMOTE_ADDR,
+            'user_agent' => tx('Data')->server->HTTP_USER_AGENT
+          ));
+          
+          //Use fancy method to send if it's available.
+          if(tx('Component')->available('mail')){
+            
+            tx('Component')->helpers('mail')->send_fleeting_mail(array(
+              'to' => array('email'=>$data->email->get()),
+              'from' => array('name'=>EMAIL_NAME_AUTOMATED_MESSAGES, 'email'=>EMAIL_ADDRESS_AUTOMATED_MESSAGES),
+              'subject' => $subject,
+              'html_message' => $body
+            ));
+            
+          }
+          
+          else{
+            
+            mail(
+              $data->email->get('string'),
+              __('Password reset', 1),
+              $body,
+              'From: '.EMAIL_NAME_AUTOMATED_MESSAGES.'<'.EMAIL_ADDRESS_AUTOMATED_MESSAGES.'>'.n.
+              'Return-path: '.EMAIL_NAME_AUTOMATED_MESSAGES.'<'.EMAIL_ADDRESS_AUTOMATED_MESSAGES.'>'.n.
+              'Content-type: text/html'.n
+            );
+            
+          }
+          
+        });
+      
+      
+    }catch(\Exception $ex){
+      
+      tx('Logging')->log('Account', 'Password reset request', 'Exception occurred: '.$ex->getMessage());
+      
+    }
+    
+    return array(
+      'message' => __('account', 'An email has been sent to the specified address with further instructions', true).'.'
+    );
+    
+  }
   
   protected function update_password($data, $parameters)
   {

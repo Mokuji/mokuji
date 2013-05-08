@@ -45,6 +45,30 @@ class EntryPoint extends \dependencies\BaseEntryPoint
         if($targetScheme !== tx('Url')->url->segments->scheme->get())
           tx('Url')->redirect(url('')->segments->merge(array('scheme' => $targetScheme))->back()->rebuild_output());
         
+        //Check for password reset process.
+        if(tx('Data')->get->password_forgotten->get() === 'init'){
+          
+          return $this->template('tx_login', 'tx_login', array('plugins' =>  array(
+            load_plugin('jquery'),
+            load_plugin('jquery_rest')
+          )), array(
+            'content' => tx('Component')->sections('account')->get_html('password_forgotten')
+          ));
+          
+        }
+        
+        //Check for password reset process.
+        if(tx('Data')->get->password_forgotten->get() === 'token'){
+          
+          return $this->template('tx_login', 'tx_login', array('plugins' =>  array(
+            load_plugin('jquery'),
+            load_plugin('jquery_rest')
+          )), array(
+            'content' => tx('Component')->sections('account')->get_html('password_forgotten_token', tx('Data')->get->having('token'))
+          ));
+          
+        }
+        
         //Otherwise: show awesome login screen.
         return $this->template('tx_login', 'tx_login', array(), array(
           'content' => tx('Component')->sections('account')->get_html('login_form')

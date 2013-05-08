@@ -298,6 +298,12 @@ body {
   font-family:'Myriad Pro';
 }
 
+.password-forgotten{
+  position:static;
+  line-height:80px;
+  margin-left:80px;
+}
+
 @media only screen and (min-width: 35em) {
 
 
