@@ -1344,7 +1344,7 @@ abstract class BaseModel extends Data
       }
       
     }
-    
+
     //Iterate over each rule and collect validation exceptions from it.
     $validationExceptions = array();
     foreach($ruleSet as $key => $rules)
