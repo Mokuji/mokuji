@@ -2,7 +2,14 @@
 
 class Helpers extends \dependencies\BaseComponent
 {
-
+  
+  protected
+    $default_permission = 2,
+    $permissions = array(
+      'get_menu_items' => 0,
+      'get_root_item' => 0
+    );
+  
   /**
    * Returns a result set with the menu items you asked for.
    * 

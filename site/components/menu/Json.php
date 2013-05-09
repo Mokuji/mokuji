@@ -3,6 +3,12 @@
 class Json extends \dependencies\BaseComponent
 {
   
+  protected
+    $default_permission = 2,
+    $permissions = array(
+      'get_link' => 0
+    );
+  
   //TODO: get_menu
   //TODO: full menu item spectrum (get/create/update/delete).
   

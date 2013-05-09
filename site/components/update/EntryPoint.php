@@ -2,7 +2,7 @@
 
 class EntryPoint extends \dependencies\BaseEntryPoint
 {
-
+  
   public function entrance()
   {
 

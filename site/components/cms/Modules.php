@@ -3,6 +3,14 @@
 class Modules extends \dependencies\BaseViews
 {
   
+  protected
+    $default_permission = 2,
+    $permissions = array(
+      'register' => 0,
+      'simple_login' => 0,
+      'feedback_form' => 0
+    );
+  
   protected function menus($options)
   {
     

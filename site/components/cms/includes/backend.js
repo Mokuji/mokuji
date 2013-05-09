@@ -108,7 +108,7 @@ function request(){
         || 'GET';
   
   //Build the url
-  var url = 'http://' + window.location.host + window.location.pathname + '?rest=' + model;
+  var url = window.location.protocol + '//' + window.location.host + window.location.pathname + '?rest=' + model;
   
   //Do it, jQuery!
   return $.ajax({

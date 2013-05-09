@@ -1306,8 +1306,15 @@ abstract class BaseModel extends Data
   public function validate_model($options=array())
   {
     
+    /*
+      Workaround for PHP problem.
+      Loading other models while running this function breaks the static:: call.
+      Therefore keep a reference to the value for the length of this function at least.
+    */
+    $generatedLabels = static::$generatedLabels;
+    
     //Filter out what we don't need.
-    $data = $this->having(array_keys(static::$generatedLabels));
+    $data = $this->having(array_keys($generatedLabels));
     
     //Do we nullify?
     $nullify = isset($options['nullify']) && $options['nullify'] === true;
@@ -1352,7 +1359,7 @@ abstract class BaseModel extends Data
       
       try{
         
-        $data->{$key}->validate(static::$generatedLabels[$key], $rules);
+        $data->{$key}->validate($generatedLabels[$key], $rules);
         
         if($nullify && $data->{$key}->is_empty() && $table_data->fields[$key]->check('null_allowed')){
           $data->{$key}->set('NULL');

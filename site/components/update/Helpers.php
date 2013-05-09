@@ -1,9 +1,13 @@
 <?php namespace components\update; if(!defined('TX')) die('No direct access.');
 
-ini_set('memory_limit', '-1');
-
 class Helpers extends \dependencies\BaseComponent
 {
+  
+  protected
+    $default_permission = 2,
+    $permissions = array(
+      'get_component_package' => 0
+    );
   
   /**
    * Attempts to get the component entry in the database of a given component name.
@@ -12,7 +16,10 @@ class Helpers extends \dependencies\BaseComponent
   {
     
     raw($component);
-    $packageFile = PATH_COMPONENTS.DS.$component.DS.'.package'.DS.'package.json';
+    if(empty($component))
+      $packageFile = PATH_BASE.DS.'.package'.DS.'package.json';
+    else
+      $packageFile = PATH_COMPONENTS.DS.$component.DS.'.package'.DS.'package.json';
     
     //Check the file is there.
     if(!is_file($packageFile))
@@ -31,6 +38,8 @@ class Helpers extends \dependencies\BaseComponent
   
   protected function check_updates($options)
   {
+    
+    ini_set('memory_limit', '-1');
     
     //May the silent force be with you.
     $options = Data($options)->having('silent', 'force');
