@@ -17,7 +17,7 @@ class Helpers extends \dependencies\BaseComponent
    *             tx('Data')->get->menu will be used to calculate root.
    *             $parent_pk, $template_key and $site_id will be overwritten.
    */
-  public function get_menu_items($options)
+  public function get_menu_items($options = null)
   {
 
     //Get menu.

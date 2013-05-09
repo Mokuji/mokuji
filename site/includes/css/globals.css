@@ -16,13 +16,13 @@
   list-style:none;
   z-index:50;
 }
-#topbar_menu li{
+#topbar_menu > li{
   float:left;
   margin-left:7px;
   margin-top:11px;
   background:url('../../themes/custom/cms_backend/img/icons/topbar/button.png') center center no-repeat;
 }
-#topbar_menu li a{
+#topbar_menu > li > a{
   line-height:20px;
   color:#fff;
   text-decoration:none;
@@ -34,8 +34,7 @@
   background:center center no-repeat;
   opacity:0.5;
 }
-#topbar_menu li.website-edit, 
-#topbar_menu li.advanced-edit{
+#topbar_menu li.website-edit{
   display:none;
 }
 #topbar_menu li.user-menu a{
