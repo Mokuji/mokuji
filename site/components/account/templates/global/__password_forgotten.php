@@ -20,7 +20,7 @@ if(!tx('Data')->session->user->check('login')){
       </div>
       
       <div class="ctrlHolder clearfix">
-        --Captcha--
+        <?php echo $data->captcha; ?>
       </div>
       
       <div class="ctrlHolder clearfix">
@@ -47,6 +47,13 @@ if(!tx('Data')->session->user->check('login')){
         $form
           .empty()
           .text(result.message);
+        
+      },
+      
+      error: function(){
+        
+        //Reloads the captcha if needed.
+        <?php echo $data->captcha_reload_js; ?>
         
       }
       

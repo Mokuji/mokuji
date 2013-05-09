@@ -122,7 +122,12 @@ class Sections extends \dependencies\BaseViews
   
   protected function password_forgotten()
   {
-    return array();
+    
+    return array(
+      'captcha' => tx('Component')->helpers('security')->call('generate_captcha'),
+      'captcha_reload_js' => tx('Component')->helpers('security')->call('reload_captcha_js')
+    );
+    
   }
   
   protected function password_forgotten_token($options)

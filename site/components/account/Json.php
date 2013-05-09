@@ -74,10 +74,17 @@ class Json extends \dependencies\BaseComponent
   protected function create_password_reset_request($data, $params)
   {
     
-    $data = Data($data)->having('email', 'captcha')
-      ->email->validate('E-mail address', array('required', 'string', 'email'))->back();
+    $data = Data($data)
+      ->email->validate('E-mail address', array('required', 'string', 'not_empty', 'email'))->back();
     
-    #TODO: validate captcha here.
+    if(!tx('Component')->helpers('security')->call('validate_captcha', array('form_data'=>$data))){
+      $vex = new \exception\Validation('Security code is invalid.');
+      $vex->key('captcha_response');
+      $vex->errors(array('The value is invalid'));
+      throw $vex;
+    }
+    
+    $data = $data->having('email');
     
     //Catch all exceptions here. We don't want to leak information to the user.
     try{

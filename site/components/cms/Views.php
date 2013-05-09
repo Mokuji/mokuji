@@ -218,9 +218,7 @@ class Views extends \dependencies\BaseViews
       'forced_template_id' => 'Forced template',
       'theme_id' => 'Default theme',
       'forced_theme_id' => 'Forced theme',
-      'default_language' => 'Default language',
-      'log_shared_login_sessions' => 'Log shared sessions',
-      'tls_mode' => 'TLS mode [never | logged-in | always]'
+      'default_language' => 'Default language'
     );
     
     foreach($settings as $key => $title){

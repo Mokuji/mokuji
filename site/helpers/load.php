@@ -86,16 +86,21 @@ function load_module()
 
 }
 
+function plugin_available($name)
+{
+  return file_exists(PATH_PLUGINS.DS.$name.DS.'plugin'.EXT);
+}
+
 function load_plugin($name, $___once=true)
 {
-
+  
   return load_html(PATH_PLUGINS.DS.$name.DS.'plugin'.EXT, array('plugin'=>URL_PLUGINS.$name.'/'), $___once);
   
 }
 
 function load_html($___path, array $___data=array(), $___once=false)
 {
-
+  
   static $file_checks = array();
   
   if(!in_array($___path, $file_checks)){
