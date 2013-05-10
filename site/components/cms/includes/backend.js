@@ -656,6 +656,23 @@ function request(){
       
     },
     
+    //Collapse a menu item and its sub-items.
+    collapseItems: function(level){
+      
+      var self = this;
+      
+      //Collapse all levels.
+      $(self.el).find('li').each(function(){
+        self.collapse($(this));
+      });
+
+      //Expand levels above level of active menu item.
+      $(self.el).find('.menu-item.active').parents('li').each(function(){
+        self.expand($(this));
+      });
+
+    },
+    
     //Add the has-sub class to items that have sub-menu items.
     checkHasSub: function(){
       
@@ -683,7 +700,7 @@ function request(){
     highlight: function(menu_item_id){
       
       this.view.find('a').removeClass('active');
-      
+      console.log('highlight');
       if(menu_item_id)
         this.view.find('a[data-menu-item='+menu_item_id+']').addClass('active');
       

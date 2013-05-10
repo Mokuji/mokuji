@@ -263,7 +263,7 @@ class Sections extends \dependencies\BaseViews
     //Menu and site id.
     $mid = $options['menu_id'];
     $sid = $options['site_id'];
-    
+
     //Get the menu.
     $menu = tx('Sql')
       ->table('menu', 'Menus')
@@ -273,6 +273,7 @@ class Sections extends \dependencies\BaseViews
       
       //If no menu is found for this site id, get the first one available and pre-select it.
       ->not('set', function()use($sid){
+
         return tx('Sql')
           ->table('menu', 'Menus')
           ->where('site_id', $sid)

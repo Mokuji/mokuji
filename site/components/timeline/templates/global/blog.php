@@ -38,7 +38,7 @@ $__pagination = function()use($data, $names){
 //Insert pagination at top.
 $__pagination();
 
-echo '<div class="entries blog-entries">';
+echo '<div class="entries blog-entries'.( ! $data->page->is_set() ? ' single-post' : '').'">';
 
 if($data->funny_man->is_set()){
   echo n.'<!-- '.__($names->component, 'FUNNY_MAN', true).' '.
