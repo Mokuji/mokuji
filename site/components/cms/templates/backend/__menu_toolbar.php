@@ -21,19 +21,19 @@
     
     <?php endif; ?>
     
-    <li><a href="<?php echo url('view=cms/sites&menu=NULL&pid=NULL'); ?>" id="btn-edit-sites" title="<?php __('Manage sites'); ?>"><?php __('Manage sites'); ?></a></li>
+    <li><a href="<?php echo url('view=cms/sites&menu=NULL&pid=NULL'); ?>" id="btn-edit-sites" title="<?php __($names->component, 'Manage sites'); ?>"><?php __($names->component, 'Manage sites'); ?></a></li>
   
   </menu>
   
   <!-- The set of buttons used to control the menu items. -->
   <menu>
     
-    <li><a href="<?php echo url('section=cms/app&menu=0', true); ?>" id="btn-new-menu-item" title="<?php __('New menu item'); ?>"><?php __('New menu item'); ?></a></li>
-    <li><a href="<?php echo url('section=cms/menu_item_list'); ?>" id="btn-refresh-menu-items" title="<?php __('Refresh menu items'); ?>"><?php __('Refresh menu items'); ?></a></li>
+    <li><a href="<?php echo url('section=cms/app&menu=0', true); ?>" id="btn-new-menu-item" title="<?php __($names->component, 'New menu item'); ?>"><?php __($names->component, 'New menu item'); ?></a></li>
+    <li><a href="<?php echo url('section=cms/menu_item_list'); ?>" id="btn-refresh-menu-items" title="<?php __($names->component, 'Refresh menu items'); ?>"><?php __($names->component, 'Refresh menu items'); ?></a></li>
     <li class="menu-state" id="dropdown-menu">
 
-      <a href="#" id="btn-save-menu-items"><?php __('Save menu items'); ?></a>
-      <a href="#" id="user-message"><?php __('Saved successfully'); ?></a>
+      <a href="#" id="btn-save-menu-items"><?php __($names->component, 'Save menu items'); ?></a>
+      <a href="#" id="user-message"><?php __($names->component, 'Saved successfully'); ?></a>
 
       <?php
       

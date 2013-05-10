@@ -1,0 +1,30 @@
+{
+  
+  "SETTINGS_SECURITY_VIEW_TITLE": "Beveiligingsinstellingen",
+  "SETTINGS_SECURITY_VIEW_DESCRIPTION": "Geavanceerde beveiligingsinstellingen voor Mokuji",
+  
+  
+  "Always enforce": "Altijd handhaven",
+  "Automatic detection": "Automatische detectie",
+  
+  "Captcha configuration": "Captcha configuratie",
+  
+  "Default captcha": "Standaard captcha",
+  "Disabled": "Uitgeschakeld",
+  
+  "Enforce on login": "Bij inloggen afdwingen",
+  
+  "Log shared login sessions": "Gedeelde login sessies registreren",
+  "Logging": "Registratie",
+  
+  "Never use TLS": "Nooit TLS gebruiken",
+  
+  "reCAPTCHA": "reCAPTCHA",
+  "reCAPTCHA private key": "reCAPTCHA privé-sleutel",
+  "reCAPTCHA public key": "reCAPTCHA publieke sleutel",
+  
+  "Security code": "Beveiligingscode",
+  
+  "TLS mode": "TLS modus"
+  
+}

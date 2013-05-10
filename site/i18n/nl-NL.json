@@ -2,7 +2,7 @@
   
   "And": "En",
   "Actions": "Acties",
-  "Accessable to": "Toegangkelijk voor",
+  "Accessible to": "Toegangkelijk voor",
   "Address": "Adres",
   "Administrator": "Beheerder",
   "Administrators": "Beheerders",
@@ -10,12 +10,14 @@
   "Advanced editing": "Geavanceerd bewerken",
   "Are you sure?": "Weet u het zeker?",
   
+  "Back": "Terug",
   "Browse": "Bladeren",
   
   "Cancel": "Annuleren",
   "Comments": "Opmerkingen",
   "Control panel": "Beheerderspaneel",
   
+  "Default": "Standaard",
   "Delete": "Verwijder",
   "Description": "Omschrijving",
   "Dutch": "Nederlands",
@@ -30,8 +32,11 @@
   "File": "Bestand",
   "First name": "Voornaam",
   
+  "Group members": "Groepsleden",
+  
   "Homepage": "Home-pagina",
   
+  "ID": "ID",
   "Image": "Afbeelding",
   "IN_LANGUAGE_NAME": "in het",
   
@@ -41,10 +46,12 @@
   "LOGIN_VERB": "Inloggen",
   "Login page": "Inlog-pagina",
   
+  "Menu": "Menu",
   "Message": "Bericht",
   
   "Name": "Naam",
   
+  "OK": "OK",
   "Or": "Of",
   
   "Page": "Pagina",
@@ -76,27 +83,33 @@
   "The value must be a url.": "De waarde moet een url zijn.",
   "The value must be textual.": "De waarde moet textueel zijn.",
   "The value must be between {0} and {1} characters.": "De waarde moet tussen de {0} en de {1} tekens zijn.",
+  "The value must be greater than {0}.": "De waarde moet groter zijn dan {0}.",
+  "The value must be one of the following values: {0}": "De waarde moet een van de volgende waarden zijn: {0}",
+  "The value is of a format which can not lie between 2 numbers: {0}": "De waarde is van een formaat dat niet tussen 2 getallen kan liggen: {0}",
   "This is a required field.": "Dit is een verplicht veld.",
   "Title": "Titel",
-
+  
   "The value must be a strong password please mix at least {0} of the following: uppercase letters, lowercase letters, numbers and special characters.": "De waarde moet een sterk wachtwoord zijn. Mix alsjeblieft tenminste {0} van de volgende zaken: hoofdletters, 'kleine' letters, cijfers en speciale tekens.",
-
+  
+  "Untitled": "Geen titel",
   "Username": "Gebruikersnaam",
   "Users": "Gebruikers",
   "User rights": "Gebruikersrechten",
   
   "Value": "Waarde",
-
+  
+  "Website": "Website",
+  
   "PLEASE_CLAIM_ACCOUNT_P1": "",
   "Confirm password": "Bevestig wachtwoord",
-
+  
   "Claim your account": "Activeer je account",
   "CLAIMING_ACCOUNT_SUCCEEDED": "Je account is nu geactiveerd.",
-
+  
   "E-mail address": "E-mailadres",
   "New password": "Nieuw wachtwoord",
   
   "Yes": "Ja",
   "No": "Nee"
-
+  
 }

@@ -19,7 +19,7 @@ $uid = tx('Security')->random_string(20);
   
   <div class="ctrlHolder">
     <label for="l_password" accesskey="p"><?php __('Password'); ?></label>
-    <input class="big large" type="password" id="l_password" name="password" value="" placeholder="<?php __('Password hidden'); ?>" />
+    <input class="big large" type="password" id="l_password" name="password" value="" placeholder="<?php __($names->component, 'Password hidden'); ?>" />
   </div>
   
   <div class="ctrlHolder">
