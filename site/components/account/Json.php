@@ -18,9 +18,9 @@ class Json extends \dependencies\BaseComponent
       ->password2->validate('Confirm new password', array('required', 'string', 'not_empty'))->back();
     
     if($data->password1->get() !== $data->password2->get()){
-      $vex = new \exception\Validation('Passwords do not match');
+      $vex = new \exception\Validation(__($this->component, 'The passwords do not match', true));
       $vex->key('password1');
-      $vex->errors(array('Passwords do not match'));
+      $vex->errors(array(__($this->component, 'The passwords do not match', true)));
       throw $vex;
     }
     
@@ -30,14 +30,14 @@ class Json extends \dependencies\BaseComponent
       ->execute_single();
     
     if(!$token->is_expired->is_false())
-      throw new \exception\Validation('The token is invalid');
+      throw new \exception\User(__($this->component, 'The token is invalid, it may have expired in the meantime', true));
     
     $user = tx('Sql')
       ->table('account', 'Accounts')
       ->pk($token->user_id)
       ->execute_single()
       ->is('empty', function(){
-        throw new \exception\Validation('The token is invalid');
+        throw new \exception\User(__($this->component, 'The token is invalid, it may have expired in the meantime', true));
       });
     
     //Get salt and algorithm.
@@ -61,12 +61,43 @@ class Json extends \dependencies\BaseComponent
     //Delete the token. Since it's been used now.
     $token->delete();
     
-    //Try logging in with that user.
-    #TODO: See if this is the right step to follow up with.
-    tx('Account')->login($user->email, $data->password1);
+    //Send a message to the user about this.
+    $subject = __($this->component, 'Password has been reset', 1);
+    $body = tx('Component')->views('account')->get_html('email_password_reset_complete', array(
+      'email' => $user->email->get(),
+      'site_url' => url('/', true)->output,
+      'site_name' => tx('Config')->user('site_name')->otherwise(url('/', true)->output),
+      'ipa' => tx('Data')->server->REMOTE_ADDR,
+      'user_agent' => tx('Data')->server->HTTP_USER_AGENT,
+      'target_url' => url('/?action=account/use_password_reset_token/get&token='.$token->token->get(), true)
+    ));
+    
+    //Use fancy method to send if it's available.
+    if(tx('Component')->available('mail')){
+      
+      tx('Component')->helpers('mail')->send_fleeting_mail(array(
+        'to' => array('name'=>$user->info->full_name->get(), 'email'=>$user->email->get()),
+        'from' => array('name'=>EMAIL_NAME_AUTOMATED_MESSAGES, 'email'=>EMAIL_ADDRESS_AUTOMATED_MESSAGES),
+        'subject' => $subject,
+        'html_message' => $body
+      ));
+      
+    }
+    
+    else{
+      
+      mail(
+        $user->email->get('string'),
+        $subject, $body,
+        'From: '.EMAIL_NAME_AUTOMATED_MESSAGES.'<'.EMAIL_ADDRESS_AUTOMATED_MESSAGES.'>'.n.
+        'Return-path: '.EMAIL_NAME_AUTOMATED_MESSAGES.'<'.EMAIL_ADDRESS_AUTOMATED_MESSAGES.'>'.n.
+        'Content-type: text/html'.n
+      );
+      
+    }
     
     return array(
-      'message' => __('account', 'Password has been set successfully', true).'.'
+      'message' => __($this->component, 'PASSWORD_RECOVERED_SUCCESSFULLY_P1', true)
     );
     
   }
@@ -78,13 +109,15 @@ class Json extends \dependencies\BaseComponent
       ->email->validate('E-mail address', array('required', 'string', 'not_empty', 'email'))->back();
     
     if(!tx('Component')->helpers('security')->call('validate_captcha', array('form_data'=>$data))){
-      $vex = new \exception\Validation('Security code is invalid.');
-      $vex->key('captcha_response');
-      $vex->errors(array('The value is invalid'));
+      $vex = new \exception\Validation(__($this->component, 'The security code is invalid', true));
+      $vex->key('captcha_section');
+      $vex->errors(array(__($this->component, 'The security code is invalid', true)));
       throw $vex;
     }
     
     $data = $data->having('email');
+    
+    $com_name = $this->component;
     
     //Catch all exceptions here. We don't want to leak information to the user.
     try{
@@ -96,7 +129,7 @@ class Json extends \dependencies\BaseComponent
         ->is('set')
         
         //User found, create token and send it.
-        ->success(function($user){
+        ->success(function($user, $com_name){
           
           //First of all, clear expired token.
           //Not required for this operation, but keeps things clean.
@@ -116,7 +149,7 @@ class Json extends \dependencies\BaseComponent
             ->save();
           
           //Send it.
-          $subject = __('Password reset', 1);
+          $subject = __($com_name, 'Password reset', 1);
           $body = tx('Component')->views('account')->get_html('email_password_reset_token', array(
             'email' => $user->email->get(),
             'site_url' => url('/', true)->output,
@@ -142,8 +175,7 @@ class Json extends \dependencies\BaseComponent
             
             mail(
               $user->email->get('string'),
-              __('Password reset', 1),
-              $body,
+              $subject, $body,
               'From: '.EMAIL_NAME_AUTOMATED_MESSAGES.'<'.EMAIL_ADDRESS_AUTOMATED_MESSAGES.'>'.n.
               'Return-path: '.EMAIL_NAME_AUTOMATED_MESSAGES.'<'.EMAIL_ADDRESS_AUTOMATED_MESSAGES.'>'.n.
               'Content-type: text/html'.n
@@ -154,9 +186,9 @@ class Json extends \dependencies\BaseComponent
         })
         
         //User with email not found. Send them a message.
-        ->failure(function()use($data){
+        ->failure(function()use($data, $com_name){
           
-          $subject = __('Password reset', 1);
+          $subject = __($com_name, 'Password reset', 1);
           $body = tx('Component')->views('account')->get_html('email_password_reset_no_account', array(
             'email' => $data->email->get(),
             'site_url' => url('/', true)->output,
@@ -181,8 +213,7 @@ class Json extends \dependencies\BaseComponent
             
             mail(
               $data->email->get('string'),
-              __('Password reset', 1),
-              $body,
+              $subject, $body,
               'From: '.EMAIL_NAME_AUTOMATED_MESSAGES.'<'.EMAIL_ADDRESS_AUTOMATED_MESSAGES.'>'.n.
               'Return-path: '.EMAIL_NAME_AUTOMATED_MESSAGES.'<'.EMAIL_ADDRESS_AUTOMATED_MESSAGES.'>'.n.
               'Content-type: text/html'.n
@@ -192,15 +223,12 @@ class Json extends \dependencies\BaseComponent
           
         });
       
-      
     }catch(\Exception $ex){
-      
       tx('Logging')->log('Account', 'Password reset request', 'Exception occurred: '.$ex->getMessage());
-      
     }
     
     return array(
-      'message' => __('account', 'An email has been sent to the specified address with further instructions', true).'.'
+      'message' => __($this->component, 'An e-mail has been sent to the specified address with further instructions', true).'.'
     );
     
   }

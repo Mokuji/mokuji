@@ -6,12 +6,12 @@ if(!tx('Data')->session->user->check('login')){
   
   <form method="POST" action="<?php echo url('rest=account/password_reset_request',1); ?>"  id="password_reset" class="login-form password-reset-form">
     
-    <h1><?php __('Password forgotten'); ?></h1>
+    <h1><?php __($names->component, 'Password forgotten'); ?></h1>
     
     <section>
       
       <div class="ctrlHolder clearfix">
-        Introduction text.
+        <p><?php __($names->component, 'PASSWORD_FORGOTTEN_INTRO_P1'); ?></p>
       </div>
       
       <div class="ctrlHolder clearfix">
@@ -51,6 +51,10 @@ if(!tx('Data')->session->user->check('login')){
       },
       
       error: function(){
+        
+        //Hides the error message if validation errors are added to specific fields.
+        if($form.find('.validation-error').size() > 0)
+          $form.find('.restform-error-message').hide();
         
         //Reloads the captcha if needed.
         <?php echo $data->captcha_reload_js; ?>

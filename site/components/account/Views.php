@@ -10,12 +10,11 @@ class Views extends \dependencies\BaseViews
       'profile' => 0,
       'email_password_reset_no_account' => 0,
       'email_password_reset_token' => 0,
+      'email_password_reset_complete' => 0,
       
       'claim_account' => 1
       
     );
-  
-  
   
   protected function accounts()
   {
@@ -102,6 +101,14 @@ class Views extends \dependencies\BaseViews
   }
   
   protected function email_password_reset_token($options)
+  {
+    
+    #TODO: Validation and defaults?
+    return $options;
+    
+  }
+  
+  protected function email_password_reset_complete($options)
   {
     
     #TODO: Validation and defaults?
