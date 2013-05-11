@@ -8,7 +8,7 @@
     
     <label><?php __($component, 'Timeline to use as the source of the entries') ?></label>
     <select name="timeline_id">
-      <option value="NEW">-- <?php __('New timeline for this page') ?> --</option>
+      <option value="NEW">-- <?php __($component, 'New timeline for this page') ?> --</option>
       {{each(i, timeline) data.timelines}}
         <option value="${timeline.id}"{{if data.page.timeline_id == timeline.id}} selected="selected"{{/if}}>
           ${timeline.title}

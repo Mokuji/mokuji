@@ -85,12 +85,13 @@ class Actions extends \dependencies\BaseComponent
   {
 
     $page = null;
-
-    tx('Adding a new page.', function()use($data){
+    $com_name = $this->component;
+    
+    tx('Adding a new page.', function()use($data, $com_name){
       
       //save page
       $page = tx('Sql')->model('cms', 'Pages')->set(array(
-        'title' => __('New page', 1),
+        'title' => __($com_name, 'New page', 1),
         'view_id' => $data->view_id->validate('View', array('required', 'number'))
       ))
       ->save();

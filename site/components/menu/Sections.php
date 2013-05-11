@@ -23,14 +23,5 @@ class Sections extends \dependencies\BaseViews
         ->where('language_id', tx('Language')->get_language_id())
       ->execute();
   }
-
-  protected function menu_item_edit($options)
-  {
-
-    return array(
-      'item' => $this->table('MenuItems')->join('MenuItemInfo', $ii)->left()->select("$ii.title", 'title')->select("$ii.description", 'description')->pk(tx('Data')->get->item_id)->execute_single()
-    );
-
-  }
   
 }

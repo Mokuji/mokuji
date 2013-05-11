@@ -700,7 +700,6 @@ function request(){
     highlight: function(menu_item_id){
       
       this.view.find('a').removeClass('active');
-      console.log('highlight');
       if(menu_item_id)
         this.view.find('a[data-menu-item='+menu_item_id+']').addClass('active');
       

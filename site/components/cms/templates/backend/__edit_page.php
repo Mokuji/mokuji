@@ -208,11 +208,11 @@
 
         <fieldset class="fieldset-homepage">
          
-          <legend><?php __('Home page'); ?></legend>
+          <legend><?php __('Homepage'); ?></legend>
           
           <input id="checkbox-set-as-homepage" type="checkbox" name="homepage" value="{{if is_homepage == true}}0{{else}}1{{/if}}" {{if is_homepage == true}}checked="checked" disabled="disabled"{{/if}}/>
           
-          <label for="checkbox-set-as-homepage"><?php __('Use this page as the home-page'); ?></label>
+          <label for="checkbox-set-as-homepage"><?php __($names->component, 'Use this page as the homepage'); ?></label>
           
         </fieldset>
         
@@ -295,7 +295,7 @@
     
     <fieldset class="fieldset-general">
       
-      <legend><?php __('Page notes'); ?></legend>
+      <legend><?php __($names->component, 'Page notes'); ?></legend>
       
       <textarea name="notes" class="big large">${page.notes}</textarea>
       

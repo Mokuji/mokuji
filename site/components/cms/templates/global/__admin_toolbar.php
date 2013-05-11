@@ -16,7 +16,7 @@
     <li class="website-edit"><a href="<?php echo $admin_toolbar->edit_url; ?>">Editable website</a></li>
     <li class="advanced-edit"><a href="<?php echo $admin_toolbar->edit_url; ?>">Advanced edit</a></li>
 -->
-    <li class="advanced active"><a href="<?php echo $admin_toolbar->admin_url; ?>" title="<?php __('You are now in the admin panel'); ?>"><?php __($names->component, 'Control Panel Home') ?></a></li>
+    <li class="advanced active"><a href="<?php echo $admin_toolbar->admin_url; ?>" title="<?php __($names->component, 'You are currently in the admin panel'); ?>"><?php __($names->component, 'Control Panel Home') ?></a></li>
   </ul>
 
 </div>

@@ -18,6 +18,8 @@ class Helpers extends \dependencies\BaseComponent
   public function generate_captcha($options)
   {
     
+    $hidden_field = t.t.'<input type="hidden" name="captcha_section" />'.n;
+    
     switch(tx('Config')->user('captcha_type')->get()){
       
       case 'recaptcha':
@@ -27,12 +29,14 @@ class Helpers extends \dependencies\BaseComponent
           throw new \exception\Programmer('reCAPTCHA plugin is not installed.');
         
         load_plugin('recaptcha');
-        return recaptcha_get_html(tx('Config')->user('recaptcha_public_key')->get(), null);
+        return recaptcha_get_html(tx('Config')->user('recaptcha_public_key')->get(), null)
+          . $hidden_field;
       
       case 'captcha':
       case '':
       case null:
-        return $this->section('generate_captcha_captcha', array('name'=>'securimage_captcha_response'));
+        return $this->section('generate_captcha_captcha', array('name'=>'securimage_captcha_response'))
+          . $hidden_field;
       
       case 'disabled';
         return '';

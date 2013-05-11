@@ -6,7 +6,7 @@
   
   <div class="ctrlHolder">
     
-    <label for="l_captcha_type">Captcha configuration</label>
+    <label for="l_captcha_type"><?php __($names->component, 'Captcha configuration'); ?></label>
     <select id="l_captcha_type" name="captcha_type[default]">
       
       <?php $data->recaptcha_available->is('true', function()use($data, $names){ ?>
@@ -19,10 +19,10 @@
     
     <?php $data->recaptcha_available->is('true', function()use($data, $names){ ?>
       
-      <label for="l_recaptcha_public_key">reCAPTCHA public key</label>
+      <label for="l_recaptcha_public_key"><?php __($names->component, 'reCAPTCHA public key'); ?></label>
       <input type="text" id="l_recaptcha_public_key" name="recaptcha_public_key[default]" value="<?php echo $data->recaptcha_public_key; ?>" />
       
-      <label for="l_recaptcha_private_key">reCAPTCHA private key</label>
+      <label for="l_recaptcha_private_key"><?php __($names->component, 'reCAPTCHA private key'); ?></label>
       <input type="text" id="l_recaptcha_private_key" name="recaptcha_private_key[default]" value="<?php echo $data->recaptcha_private_key; ?>" />
       
     <?php }); ?>

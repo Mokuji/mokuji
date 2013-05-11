@@ -1,4 +1,3 @@
-
 <?php namespace dependencies\forms; if(!defined('TX')) die('No direct access.');
 
 use \dependencies\BaseModel;

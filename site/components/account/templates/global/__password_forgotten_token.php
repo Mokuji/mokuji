@@ -10,7 +10,7 @@ if(!tx('Data')->session->user->check('login')){
     
     <form method="POST" action="<?php echo url('rest=account/password_reset_finalization',1); ?>"  id="password_reset" class="login-form password-reset-form">
       
-      <h1><?php __('Set new password'); ?></h1>
+      <h1><?php __($names->component, 'Set new password'); ?></h1>
       
       <section>
         
@@ -22,7 +22,7 @@ if(!tx('Data')->session->user->check('login')){
         <input type="hidden" name="email" value="<?php echo $data->email; ?>" />
         
         <div class="ctrlHolder clearfix">
-          Now you can set a new password for e-mail: <?php echo $data->email; ?>
+          <p><?php echo transf($names->component, 'You can now enter a new password for e-mail: {0}', $data->email); ?></p>
         </div>
         
         <div class="ctrlHolder clearfix">
@@ -43,6 +43,24 @@ if(!tx('Data')->session->user->check('login')){
       
     </form>
     
+    <form method="GET" action="<?php echo url('/',1); ?>"  id="operation_result" class="login-form modal-operation-result-form" style="display:none;">
+      
+      <h1><?php __($names->component, 'Password has been set'); ?></h1>
+      
+      <section>
+        
+        <div class="ctrlHolder clearfix">
+          <p class="message-p"></p>
+        </div>
+        
+        <div class="ctrlHolder clearfix">
+          <input type="submit" value="<?php __('OK'); ?>" />
+        </div>
+        
+      </section>
+      
+    </form>
+    
     <script type="text/javascript">
     jQuery(function($){
       
@@ -52,7 +70,18 @@ if(!tx('Data')->session->user->check('login')){
         
         success: function(result){
           
-          window.location = '<?php echo url("/admin/", true); ?>';
+          $form.hide();
+          $operation_result = $('#operation_result');
+          $operation_result.find('.message-p').text(result.message);
+          $operation_result.show();
+          
+        },
+        
+        error: function(){
+          
+          //Hides the error message if validation errors are added to specific fields.
+          if($form.find('.validation-error').size() > 0)
+            $form.find('.restform-error-message').hide();
           
         }
         
@@ -71,18 +100,14 @@ if(!tx('Data')->session->user->check('login')){
   //Otherwise display an error.
   else{
     ?>
-    <form method="GET" action="<?php echo url('/',1); ?>"  id="password_reset" class="login-form password-reset-form">
+    <form method="GET" action="<?php echo url('/',1); ?>"  id="operation_result" class="login-form modal-operation-result-form">
       
-      <h1><?php __('Token is invalid'); ?></h1>
+      <h1><?php __($names->component, 'Token is invalid'); ?></h1>
       
       <section>
         
         <div class="ctrlHolder clearfix">
-          <p>
-            Your token is no good bro.
-            Keep in mind tokens are only usable once and valid for one hour.
-            Try restarting the process.
-          </p>
+          <p><?php __($names->component, 'PASSWORD_RECOVERY_TOKEN_INVALID_P1'); ?></p>
         </div>
         
         <div class="ctrlHolder clearfix">
