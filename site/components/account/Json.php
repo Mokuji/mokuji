@@ -129,7 +129,7 @@ class Json extends \dependencies\BaseComponent
         ->is('set')
         
         //User found, create token and send it.
-        ->success(function($user, $com_name){
+        ->success(function($user)use($com_name){
           
           //First of all, clear expired token.
           //Not required for this operation, but keeps things clean.
