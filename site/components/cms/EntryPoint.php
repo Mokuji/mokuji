@@ -232,11 +232,12 @@ class EntryPoint extends \dependencies\BaseEntryPoint
         elseif(tx('Data')->get->pid->is_set()){
           
           $pi = $that->helper('get_page_info', tx('Data')->get->pid);
+          $mid = tx('Data')->get->menu->get();
           $lpi = $pi->info->{tx('Language')->get_language_id()};
           
           //See if the URL key is correct.
           $url_key = $lpi->url_key;
-          $pretty_url = URL_BASE."{$pi->id}/{$url_key}";
+          $pretty_url = URL_BASE."{$pi->id}/{$url_key}?menu={$mid}";
           if($url_key->is_set() && $url_key->get() != tx('Data')->get->pkey->get()){
             header('Location: '.$pretty_url);
             return;
