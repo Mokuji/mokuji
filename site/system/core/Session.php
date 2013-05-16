@@ -7,11 +7,15 @@ class Session
     $id,
     $keep_flashes=false;
   
+  private
+    $opened;
+  
   public function init()
   {
-  
+    
     session_start();
     $this->id = session_id();
+    $this->opened = true;
     
     if(!tx('Data')->session->tx->session_init->is_set()){
       $this->regenerate();
@@ -34,6 +38,21 @@ class Session
     
   }
   
+  public function close()
+  {
+    
+    tx('Logging')->log('Session', 'Closed', 'Continuing in read-only mode for this pageload.');
+    
+    //No need to do this more than once.
+    if(!$this->opened)
+      return;
+    
+    //Write session data and close it.
+    tx('Data')->restore_session();
+    session_write_close();
+    
+  }
+  
   public function __destruct()
   {
     $this->progress_flashes();
@@ -41,6 +60,7 @@ class Session
   
   public function regenerate()
   {
+    tx('Logging')->log('Session', 'Regenerated', 'Old ID was '.$this->id);
     session_regenerate_id();
     $this->id = session_id();
   }
