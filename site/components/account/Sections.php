@@ -3,6 +3,18 @@
 class Sections extends \dependencies\BaseViews
 {
   
+  protected
+    $default_permission = 2,
+    $permissions = array(
+      
+      'login_form' => 0,
+      'password_forgotten' => 0,
+      'password_forgotten_token' => 0,
+      
+      'profile' => 1
+      
+    );
+  
   protected function edit_user()
   {
     
@@ -102,10 +114,36 @@ class Sections extends \dependencies\BaseViews
     );
     
   }
-
+  
   protected function login_form()
   {
     return array();
+  }
+  
+  protected function password_forgotten()
+  {
+    
+    return array(
+      'captcha' => tx('Component')->helpers('security')->call('generate_captcha'),
+      'captcha_reload_js' => tx('Component')->helpers('security')->call('reload_captcha_js')
+    );
+    
+  }
+  
+  protected function password_forgotten_token($options)
+  {
+    
+    $token = tx('Sql')
+      ->table('account', 'PasswordResetTokens')
+      ->where('token', "'{$options->token}'")
+      ->execute_single();
+    
+    return array(
+      'token' => $token->token->get(),
+      'email' => $token->user->email->get(),
+      'is_valid' => $token->is_expired->is_false()
+    );
+    
   }
 
   protected function profile()

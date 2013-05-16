@@ -81,3 +81,12 @@ RewriteRule ^/?(\d+)/?([a-zA-Z0-9-_]*)(\.html|/)?$ index.php?pid=$1&pkey=$2&%{QU
   ExpiresByType application/javascript    "access plus 1 year"
 
 </IfModule>
+
+# ----------------------------------------------------------------------
+# Accept REST calls
+# ----------------------------------------------------------------------
+
+<Limit POST PUT DELETE>
+  Order allow,deny
+  Allow from all
+</Limit>

@@ -381,6 +381,12 @@
       //Make composition a REST form.
       this.bindCompositionForm();
       
+      //Bind title form once.
+      self.titleForm.submit(function(e){
+        e.preventDefault();
+        self.compositionForm.trigger('submit');
+      });
+      
       //When switching tabs, see if we need to reload entries.
       app.Page.Tabs.subscribe('tabChanged', function(e, tab){
         

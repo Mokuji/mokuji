@@ -7,7 +7,7 @@
   <!-- TABS -->
   <ul>
     <li id="tabber-pages" class="active"><a href="#tab-pages"><?php __('Summary'); ?></a></li>
-    <!--<li><a href="#tab-new-page"><?php __('New page'); ?></a></li>-->
+    <!--<li><a href="#tab-new-page"><?php __($names->component, 'New page'); ?></a></li>-->
   </ul>
   <!-- /TABS -->
   

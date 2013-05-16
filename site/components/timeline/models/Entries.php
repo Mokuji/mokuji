@@ -29,10 +29,22 @@ class Entries extends \dependencies\BaseModel
   
   public function get_timelines()
   {
+
+    return tx('Sql')
+      ->table('timeline', 'Timelines')
+      ->join('EntriesToTimelines', $link)->inner()
+      ->workwith($link)
+      ->where("$link.entry_id", $this->id)
+      ->execute();
+   
+  }
+  
+  public function get_timeline_ids()
+  {
     
     $that = $this;
     $ret = Data();
-    
+
     tx('Sql')
       ->table('timeline', 'Timelines')
       ->execute()
@@ -53,7 +65,7 @@ class Entries extends \dependencies\BaseModel
         $ret[$timeline->id] = $matched > 0;
         
       });
-    
+
     return $ret;
     
   }

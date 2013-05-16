@@ -3,11 +3,19 @@
 class Json extends \dependencies\BaseComponent
 {
   
+  protected
+    $default_permission = 2,
+    $permissions = array(
+      'get_entries' => 0
+    );
+  
   /**
    * Get one entry.
    */
   protected function get_entry($data, $params)
   {
+    
+    //Has no permission checks so access level 2.
     
     //Get entry.
     return tx('Sql')
@@ -20,7 +28,7 @@ class Json extends \dependencies\BaseComponent
         $entry->info;
         $entry->author;
         $entry->is_future;
-        $entry->timelines;
+        $entry->timeline_ids;
       })
       
       //Cludge the authors in here.

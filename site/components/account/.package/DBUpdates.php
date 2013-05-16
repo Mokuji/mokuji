@@ -10,8 +10,31 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
   protected
     $component = 'account',
     $updates = array(
-      '1.2' => '1.3'
+      '1.2' => '1.3',
+      '1.3' => '1.4'
     );
+  
+  public function update_to_1_4($current_version, $forced)
+  {
+    
+    if($forced === true){
+      tx('Sql')->query('DROP TABLE IF EXISTS `#__account_password_reset_tokens`');
+    }
+    
+    tx('Sql')->query("
+      CREATE TABLE `#__account_password_reset_tokens` (
+        `user_id` INT(10) UNSIGNED NOT NULL,
+        `token` varchar(255) NOT NULL,
+        `IPv4` varchar(15) NOT NULL,
+        `user_agent` varchar(255) NOT NULL,
+        `date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        `dt_expiry` TIMESTAMP NOT NULL,
+        PRIMARY KEY (`user_id`),
+        UNIQUE INDEX `token` (`token`)
+      ) ENGINE=MyISAM DEFAULT CHARSET=utf8
+    ");
+    
+  }
   
   //Add new installer, since pretty much nothing changed except the pagetype registering.
   public function install_1_3($dummydata, $forced)

@@ -3,6 +3,11 @@
 class Json extends \dependencies\BaseComponent
 {
   
+  protected
+    $default_permission = 2,
+    $permissions = array(
+    );
+  
   //Expects: key_name[default|#] where # is a language ID.
   protected function update_settings($data, $params)
   {
@@ -443,6 +448,7 @@ class Json extends \dependencies\BaseComponent
     
   }
   
+  #TODO: Needs a new name. Getters should not alter state. (XSS issue)
   protected function get_new_page($data, $params)
   {
     
@@ -489,6 +495,7 @@ class Json extends \dependencies\BaseComponent
     
   }
   
+  #TODO: Needs a new name. Getters should not alter state. (XSS issue)
   protected function get_link_page($data, $params)
   {
     
@@ -515,6 +522,7 @@ class Json extends \dependencies\BaseComponent
     
   }
   
+  #TODO: Needs a new name. Getters should not alter state. (XSS issue)
   protected function get_detach_page($data, $params)
   {
     

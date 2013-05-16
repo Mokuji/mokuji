@@ -5,6 +5,12 @@ use \components\timeline\models\Entries;
 class Views extends \dependencies\BaseViews
 {
   
+  protected
+    $default_permission = 2,
+    $permissions = array(
+      'blog' => 0
+    );
+  
   protected function blog($options)
   {
     
@@ -14,6 +20,8 @@ class Views extends \dependencies\BaseViews
     $year = $options->year->value->otherwise(tx('Data')->get->year);
     $month = $options->month->value->otherwise(tx('Data')->get->month);
     $day = $options->day->value->otherwise(tx('Data')->get->day);
+    
+    #TODO: check page permissions
     
     $page = tx('Sql')
       ->table('timeline', 'Pages')

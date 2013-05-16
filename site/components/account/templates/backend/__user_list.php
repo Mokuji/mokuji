@@ -28,7 +28,7 @@ echo $user_list->as_table(array(
     })->join(', ')->otherwise('-');
     
   },
-  __('Administrator', 1)                         => function($row){ return $row->is_administrator->get('boolean') ? __('ja', 1) : __('nee', 1); },
+  __('Administrator', 1)                         => function($row){ return $row->is_administrator->get('boolean') ? __('Yes', true) : __('No', true); },
   __($names->component, 'Last login', 1)         => function($row)use($names){
     return ($row->last_login != '' ? $row->last_login : __($names->component, 'Never logged in', 1));
   },

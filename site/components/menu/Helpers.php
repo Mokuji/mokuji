@@ -2,7 +2,14 @@
 
 class Helpers extends \dependencies\BaseComponent
 {
-
+  
+  protected
+    $default_permission = 2,
+    $permissions = array(
+      'get_menu_items' => 0,
+      'get_root_item' => 0
+    );
+  
   /**
    * Returns a result set with the menu items you asked for.
    * 
@@ -17,7 +24,7 @@ class Helpers extends \dependencies\BaseComponent
    *             tx('Data')->get->menu will be used to calculate root.
    *             $parent_pk, $template_key and $site_id will be overwritten.
    */
-  public function get_menu_items($options)
+  public function get_menu_items($options = null)
   {
 
     //Get menu.

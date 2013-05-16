@@ -8,6 +8,8 @@
   
   
   
+  "CLAIMING_ACCOUNT_SUCCEEDED" : "You have successfully claimed your account. You will be redirected to the homepage in 3 seconds.",
+  
   "EXCEL_SAVE_AS_CSV": "In Excel: 'File', 'Save as...', Chose as type 'CSV (*.csv)'",
   
   "IMPORT_EXPLANATION_P1": "Users can be imported using a CSV file. When saving a CSV file a delimiter is chosen. You can specify this delimiter in the designated field. If the delimiter does not match it's not possible to distinguish between columns and the import function will return an error.",
@@ -15,7 +17,9 @@
   "IMPORT_EXPLANATION_P3": "With the column names you can specify which data can be found in which columns. We assume that the first line in the CSV file indicates the column names (capitalization does not matter) and user information starts from the second line.",
   "IMPORT_VERB": "Import",
   
-  "PLEASE_CLAIM_ACCOUNT_P1": "Please claim your account now by setting an account password.",
-  "CLAIMING_ACCOUNT_SUCCEEDED" : "You have successfully claimed your account. You will be redirected to the homepage in 3 seconds."
+  "PASSWORD_FORGOTTEN_INTRO_P1": "Please fill in the form to perform a password reset.",
+  "PASSWORD_RECOVERY_TOKEN_INVALID_P1": "The supplied security token is invalid. Keep in mind tokens are usable for up to one hour. Please restart the password recovery process.",
+  "PASSWORD_RECOVERED_SUCCESSFULLY_P1": "Your password is changed successfully. From now on you can log in with your new password.",
+  "PLEASE_CLAIM_ACCOUNT_P1": "Please claim your account now by setting an account password."
   
 }

@@ -3,6 +3,14 @@
 class Helpers extends \dependencies\BaseComponent
 {
   
+  protected
+    $default_permission = 2,
+    $permissions = array(
+      'table__hcheck_permissions' => 0,
+      'table__check_permissions' => 0,
+      'should_claim' => 0
+    );
+  
   /**
    * Force a reset of the password of the user.
    *

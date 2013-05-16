@@ -3,12 +3,24 @@
 class Helpers extends \dependencies\BaseComponent
 {
   
+  protected
+    $default_permission = 2,
+    $permissions = array(
+      'page_authorisation' => 0,
+      'check_page_authorisation' => 0,
+      'get_page_info' => 0,
+      'get_page_options' => 0,
+      'get_page_permissions' => 0
+    );
+  
   public function page_authorisation($pid)
   {
     
     //If we qualify, skip the rest.
     if($this->check_page_authorisation($pid))
       return;
+    
+    tx('Logging')->log('CMS', 'Page permissions', 'Permission denied');
     
     if(tx('Config')->user('login_page')->is_set()){
       $redirect = url(tx('Config')->user('login_page'), true);

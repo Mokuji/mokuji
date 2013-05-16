@@ -3,6 +3,12 @@
 class Actions extends \dependencies\BaseComponent
 {
   
+  protected
+    $default_permission = 2,
+    $permissions = array(
+      'finalize_install' => 0 //Uses INSTALLING constant for authorization
+    );
+  
   protected function check_updates($options)
   {
     

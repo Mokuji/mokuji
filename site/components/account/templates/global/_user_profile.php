@@ -39,45 +39,54 @@ echo $user_profile->image_uploader;
     </div>
     <div class="right">
       <fieldset>
-        <label for="l_email"><?php __('Email address'); ?>:</label>
-        <input type="text" name="email_address" id="l_email" value="<?php echo tx('Account')->user->email->get('string'); ?>" disabled="disabled" />
+        <div class="ctrlHolder">
+          <label for="l_email"><?php __('Email address'); ?>:</label>
+          <input type="text" name="email_address" id="l_email" value="<?php echo tx('Account')->user->email->get('string'); ?>" disabled="disabled" />
+        </div>
       </fieldset>
       <fieldset>
-        <label for="l_username"><?php __('Username'); ?>:</label>
-        <input type="text" name="username" id="l_username" value="<?php echo $user_profile->user->username; ?>" />
+        <div class="ctrlHolder">
+          <label for="l_username"><?php __('Username'); ?>:</label>
+          <input type="text" name="username" id="l_username" value="<?php echo $user_profile->user->username; ?>" />
+        </div>
       </fieldset>
       <fieldset>
         <?php if($user_profile->need_old_password->is_true()){ ?>
-        <label for="l_password_old"><?php __($names->component, 'Old password'); ?>:</label>
-        <input type="password" name="password_old" placeholder="<?php __($names->component, 'Old password'); ?>" />
+        <div class="ctrlHolder">
+          <label for="l_password_old"><?php __($names->component, 'Old password'); ?>:</label>
+          <input type="password" name="password_old" placeholder="<?php __($names->component, 'Old password'); ?>" />
+        </div>
         <?php } ?>
-        <label for="l_password1"><?php __($names->component, 'New password'); ?>:</label>
-        <input type="password" name="password1" placeholder="<?php __($names->component, 'New password'); ?>" />
-        <label for="l_password2"><?php __($names->component, 'Confirm new password'); ?>:</label>
-        <input type="password" name="password2" placeholder="<?php __($names->component, 'Confirm new password'); ?>" />
+        <div class="ctrlHolder">
+          <label for="l_password1"><?php __($names->component, 'New password'); ?>:</label>
+          <input type="password" name="password1" placeholder="<?php __($names->component, 'New password'); ?>" />
+        </div>
+        <div class="ctrlHolder">
+          <label for="l_password2"><?php __($names->component, 'Confirm new password'); ?>:</label>
+          <input type="password" name="password2" placeholder="<?php __($names->component, 'Confirm new password'); ?>" />
+        </div>
       </fieldset>
       <fieldset>
-        <label><?php __('First name'); ?>:</label>
-        <input type="text" name="name" placeholder="<?php __('First name'); ?>" value="<?php echo $user_profile->user->name; ?>" />
-        <label><?php __('Preposition'); ?>:</label>
-        <input type="text" name="preposition" placeholder="<?php __('Preposition'); ?>" value="<?php echo $user_profile->user->preposition; ?>" />
-        <label><?php __('Last name'); ?>:</label>
-        <input type="text" name="family_name" placeholder="<?php __('Last name'); ?>" value="<?php echo $user_profile->user->family_name; ?>" />
+        <div class="ctrlHolder">
+          <label><?php __('First name'); ?>:</label>
+          <input type="text" name="name" placeholder="<?php __('First name'); ?>" value="<?php echo $user_profile->user->name; ?>" />
+        </div>
+        <div class="ctrlHolder">
+          <label><?php __('Preposition'); ?>:</label>
+          <input type="text" name="preposition" placeholder="<?php __('Preposition'); ?>" value="<?php echo $user_profile->user->preposition; ?>" />
+        </div>
+        <div class="ctrlHolder">
+          <label><?php __('Last name'); ?>:</label>
+          <input type="text" name="family_name" placeholder="<?php __('Last name'); ?>" value="<?php echo $user_profile->user->family_name; ?>" />
+        </div>
       </fieldset>
-      <!--
-      <fieldset>
-        <input type="text" name="street_name" value="Straatnaam" class="form_left width_65" value="<?php echo $user_profile->street_name; ?>" />
-        <input type="text" name="house_number" value="Huisnummer" class="form_right width_35" />
-        <input type="text" name="postcode" value="Postcode" class="form_left width_25" />
-        <input type="text" name="city" value="Woonplaats" class="form_right width_75" />
-      </fieldset>
-      <fieldset>
-        <input type="text" name="phone_land" value="Telefoon vast" />
-        <input type="text" name="phone_mobile" value="Telefoon mobiel" />
-      </fieldset>
-      -->
-      <input type="submit" value="<?php __('Save'); ?>" />
+
+      <div class="buttonHolder">
+        <input type="submit" value="<?php __('Save'); ?>" />
+      </div>
+
       <div class="clear"></div>
+      
     </div>
     <div class="clear"></div>
   </form>

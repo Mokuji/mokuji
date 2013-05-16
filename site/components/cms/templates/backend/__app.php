@@ -18,6 +18,7 @@
   jQuery(function($){
     app.Item.loadItemContents(<?php echo $data->menu_id->otherwise('false'); ?>);
     app.Page.loadPageContents(<?php echo $data->page_id->otherwise('false'); ?>);
+    app.MenuItems.collapseItems(0);
     var view = "<?php echo $data->view; ?>";
     if(view.length > 0){
       app.Settings.loadView(view);

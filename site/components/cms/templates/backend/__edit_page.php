@@ -10,7 +10,11 @@
   <div id="edit_page">
     
     <div class="title-bar page-title">
-      <h2><span class="title">${page.title}</span> <span style="font-weight:normal;">(<?php __('Page', 0, 'l'); ?>)</span></h2>
+      <h2><span class="title">${
+        page.info && page.info[<?php echo tx('Language')->id; ?>] &&
+        (page.info[<?php echo tx('Language')->id; ?>].title || page.info[<?php echo tx('Language')->id; ?>].title_recommendation) ||
+        page.title
+      }</span> <span style="font-weight:normal;">(<?php __('Page', 0, 'l'); ?>)</span></h2>
       <div class="clear"></div>
     </div>
     
@@ -54,7 +58,10 @@
           <div class="ctrlHolder">
             <label for="l_title_page_${language.code}"><?php __($names->component, 'Title'); ?></label>
             <input id="l_title_page_${language.code}" class="big page-title" type="text" name="info[${language.id}][title]"
-              placeholder="<?php echo tx('Config')->user('site_name'); ?>" value="${page.info && page.info[language.id] && page.info[language.id].title}" />
+              placeholder="${page.info && page.info[language.id] && page.info[language.id].title_recommendation || '<?php echo str_replace("'", "\\'", tx('Config')->user('site_name')); ?>'}"
+              value="${page.info && page.info[language.id] && page.info[language.id].title}" />
+            <input class="page-title-recommendation" type="hidden" name="info[${language.id}][title_recommendation]"
+              value="${page.info && page.info[language.id] && page.info[language.id].title_recommendation}" />
           </div>
           
           <div class="ctrlHolder">
@@ -69,12 +76,6 @@
                 <?php echo URL_BASE; ?>${page.id}/<span class="key-section">${page.info && page.info[language.id] && page.info[language.id].url_key ? page.info[language.id].url_key : "<?php __($names->component, 'URL-key') ?>"}</span>
               </div>
             </div>
-          </div>
-          
-          <div class="ctrlHolder">
-            <label for="l_slogan_page_${language.code}"><?php __($names->component, 'Slogan'); ?></label>
-            <input id="l_slogan_page_${language.code}" class="big page-slogan" type="text" name="info[${language.id}][slogan]"
-              placeholder="<?php echo tx('Config')->user('site_slogan'); ?>" value="${page.info && page.info[language.id] && page.info[language.id].slogan}" />
           </div>
           
         </fieldset>
@@ -95,6 +96,7 @@
                 placeholder="<?php echo tx('Config')->user('site_keywords'); ?>">${page.info && page.info[language.id] && page.info[language.id].description}</textarea>
             </div>
           </div>
+
         </fieldset>
         
         <fieldset class="fieldset-general clearfix social-media">
@@ -103,7 +105,6 @@
           <p class="subtle-hint"><?php __($names->component, 'SOCIAL_MEDIAL_OVERRIDE_VALUES_EXPLANATION') ?></p>
           
           <fieldset class="fieldset-general clearfix facebook">
-            
             <div class="page-findability-content">
               <legend><span><?php //__($names->component, 'Open Graph (Facebook)'); ?> Open Graph<br /><strong>Facebook</strong></span><i class="icon-facebook"></i></legend>
               <div class="ctrlHolder">
@@ -140,7 +141,7 @@
           </fieldset>
           
           <fieldset class="fieldset-general clearfix twitter">
-            
+
             <div class="page-findability-content">
              <legend><span><?php //__($names->component, 'Twitter cards'); ?>Cards<br /><strong>Twitter</strong></span><i class="icon-twitter"></i></legend>
               <div class="ctrlHolder">
@@ -175,6 +176,7 @@
               <div class="arrow"></div>
               </div>
             </div>
+            
           </fieldset>
           
           <fieldset class="fieldset-general clearfix google-plus">
@@ -199,7 +201,18 @@
               <div class="arrow"></div>
               </div>
             </div>
+            
           </fieldset>
+
+        </fieldset>
+
+        <fieldset class="fieldset-homepage">
+         
+          <legend><?php __('Homepage'); ?></legend>
+          
+          <input id="checkbox-set-as-homepage" type="checkbox" name="homepage" value="{{if is_homepage == true}}0{{else}}1{{/if}}" {{if is_homepage == true}}checked="checked" disabled="disabled"{{/if}}/>
+          
+          <label for="checkbox-set-as-homepage"><?php __($names->component, 'Use this page as the homepage'); ?></label>
           
         </fieldset>
         
@@ -258,7 +271,7 @@
       
       <legend><?php __('User rights'); ?></legend>
       
-      <?php __('Accessable to'); ?>:
+      <?php __('Accessible to'); ?>:
       <ul>
         <li><label><input type="radio" name="access_level" value="0"{{if page.access_level <= 0}}checked="checked"{{/if}} /> <?php __('Everyone'); ?></label></li>
         <li><label><input type="radio" name="access_level" value="1"{{if page.access_level == 1}}checked="checked"{{/if}} /> <?php __('Logged in users'); ?></label></li>
@@ -282,7 +295,7 @@
     
     <fieldset class="fieldset-general">
       
-      <legend><?php __('Page notes'); ?></legend>
+      <legend><?php __($names->component, 'Page notes'); ?></legend>
       
       <textarea name="notes" class="big large">${page.notes}</textarea>
       

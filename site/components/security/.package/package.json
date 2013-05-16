@@ -1,0 +1,23 @@
+{
+  "title": "Security component",
+  "description": "Handles advanced security functionality.",
+  "type": "manual",
+  "dbUpdates": true,
+  "versions": [
+    {
+      "version": "0.1",
+      "date": "2013-05-09",
+      "description": "Released first alpha version.",
+      "changes": [
+        {
+          "title": "TLS mode",
+          "description": "The recently added TLS mode functionality in the Mokuji core is now managed by this component."
+        },
+        {
+          "title": "Captcha settings",
+          "description": "A captcha helper has been added including several types of captcha. Currently supports a default local captcha and recaptcha."
+        }
+      ]
+    }
+  ]
+}

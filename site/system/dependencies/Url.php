@@ -46,6 +46,8 @@ class Url extends \dependencies\Data
       ($this->segments->anchor->is_set() ? '#'.$this->segments->anchor : '')
     );
     
+    return $this;
+    
   }
   
   private function _build_url($string, array $options=array())

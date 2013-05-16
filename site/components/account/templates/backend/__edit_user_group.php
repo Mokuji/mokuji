@@ -1,11 +1,11 @@
 <?php namespace components\account; if(!defined('TX')) die('No direct access.'); tx('Account')->page_authorisation(2);
 
 echo $data->group->as_form($id, array(
-  'id' => array('type' => 'hidden'),
-  'title' => array('label' => __('Title', 1)),
-  'description' => array('label' => __('Description', 1)),
+  'id' => array('type' => 'hidden', 'label'=>'ID'),
+  'title' => array('label' => 'Title'),
+  'description' => array('label' => 'Description'),
   'members' => array(
-    'label' => __($names->component, 'Group members', 1),
+    'label' => 'Group members',
     'custom_field' => true,
     'type' => 'custom',
     'custom_html' =>

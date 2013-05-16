@@ -250,7 +250,7 @@ class FormBuilder
       
       //Get the table information of this field.
       $field = $table->fields[$column_name];
-      
+            
       //First check that this field really exists.
       if(!$field->is_set())
       {

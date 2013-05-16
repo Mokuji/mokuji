@@ -2,14 +2,21 @@
 
 class Actions extends \dependencies\BaseComponent
 {
-
+  
   protected
+    $default_permission = 2,
     $permissions = array(
-      'select_menu' => 2,
-      'new_page' => 2,
-      'edit_page' => 2,
+      
+      'login' => 0,
+      'register' => 0,
+      'language' => 0,
+      'pause_redirects' => 0,
+      'play_redirects' => 0,
+      'send_feedback' => 0,
+      
       'logout' => 1,
-      'editable' => 2
+      'editable' => 1
+      
     );
   
   protected function select_menu($data)
@@ -78,12 +85,13 @@ class Actions extends \dependencies\BaseComponent
   {
 
     $page = null;
-
-    tx('Adding a new page.', function()use($data){
+    $com_name = $this->component;
+    
+    tx('Adding a new page.', function()use($data, $com_name){
       
       //save page
       $page = tx('Sql')->model('cms', 'Pages')->set(array(
-        'title' => __('New page', 1),
+        'title' => __($com_name, 'New page', 1),
         'view_id' => $data->view_id->validate('View', array('required', 'number'))
       ))
       ->save();

@@ -8,6 +8,12 @@ class Router
     
     $contents = '';
     
+    //If needed, switch to secure protocol or back.
+    if(tx('Config')->user('tls_mode')->get() === 'always' && tx('Url')->url->segments->scheme->get() !== 'https')
+      tx('Url')->redirect(url('')->segments->merge(array('scheme' => 'https'))->back()->rebuild_output());
+    elseif(tx('Config')->user('tls_mode')->get() === 'never' && tx('Url')->url->segments->scheme->get() !== 'http')
+      tx('Url')->redirect(url('')->segments->merge(array('scheme' => 'http'))->back()->rebuild_output());
+    
     //are we going to redirect
     if(tx('Url')->redirected){
       //yes we are, so we skip all the next elseif's

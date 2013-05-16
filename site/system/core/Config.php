@@ -147,9 +147,9 @@ class Config
       case 0: return $this->user;
       case 1: return $this->user[func_get_arg(0)];
       case 3: 
-        $val = mysql_real_escape_string(func_get_arg(1));
-        $key = mysql_real_escape_string(func_get_arg(0));
-        $lid = func_get_arg(2) ? mysql_real_escape_string(func_get_arg(2)) : null;
+        $val = tx('Sql')->escape(func_get_arg(1));
+        $key = tx('Sql')->escape(func_get_arg(0));
+        $lid = func_get_arg(2) ? tx('Sql')->escape(func_get_arg(2)) : null;
         $lidWhere = '`language_id` ' . ($lid ? "= '$lid'" : 'IS NULL');
         tx('Sql')->execute_non_query("UPDATE #__core_config SET `value` = '$val' WHERE `site_id` = '".tx('Site')->id."' AND `key` = '$key' AND $lidWhere");
       case 2: return $this->user[func_get_arg(0)]->set(func_get_arg(1));

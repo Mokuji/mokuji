@@ -5,14 +5,24 @@
   
   "SETTINGS_VIEW_TITLE": "Configuratie beheer",
   "SETTINGS_VIEW_DESCRIPTION": "Configuratie beheer",
+
+  "SETTINGS_WEBSITE_INFORMATION_VIEW_TITLE": "Website-informatie",
+  "SETTINGS_WEBSITE_INFORMATION_VIEW_DESCRIPTION": "Website-informatie kan hier geconfigureerd worden.",
   
+  "SETTINGS_CMS_CONFIGURATION_VIEW_TITLE": "CMS-configuratie",
+  "SETTINGS_CMS_CONFIGURATION_VIEW_DESCRIPTION": "Het CMS kan hier geconfigureerd worden.",
   
+  "Accessible to": "Toegankelijk voor",
   "Add a page": "Voeg een pagina toe",
   "Are you sure you want to delete this menu item": "Weet u zeker dat u dit menu-item wilt verwijderen",
   
+  "Copyright text": "Auteursrechten tekst",
   "Control Panel Home": "Beheerderspaneel homepagina",
   "Create user": "Gebruiker aanmaken",
   
+  "Default language": "Standaard taal",
+  "Default template": "Standaard template",
+  "Default theme": "Standaard thema",
   "Detach menu item from page": "Ontkoppel menu-item van pagina",
   "Detach page from menu item": "Ontkoppel pagina van menu-item",
   "Delete image": "Verwijder afbeelding",
@@ -20,22 +30,35 @@
   
   "Edit site": "Bewerk site",
   "Edit the current webpage": "Bewerk de huidige webpagina",
+  "Example": "Voorbeeld",
   
   "FEEDBACK_INTRODUCTION": "Wat vindt u van de site? Heeft u opmerkingen of suggesties ter verbetering van de site? Laat het <a href=\"http://tuxion.nl\" target=\"_blank\">ons ontwikkelaarsteam</a> weten. Bij voorbaat dank!",
+  "Forced template": "Geforceerde template",
+  "Forced theme": "Geforceerde thema",
   
   "Go back to the website": "Ga terug naar de website",
+  "Google+ author": "Google+ auteur",
+  "Google+ account": "Google+ account",
   "Group members": "Groepsleden",
   "Groups with access": "Groepen met toegang",
   
+  "Homepage": "Homepagina",
+  
   "IP filters": "IP-filters",
+  
+  "Keywords": "Sleutelwoorden",
   
   "Link a menu item": "Koppel een menu-item",
   "Link a menu item to this page": "Koppel een menu-item aan deze pagina",
+  "Loaded": "Geladen",
+  "Loading": "Laden",
+  "Login page": "Inlog-pagina",
   "Login level": "Inlog niveau",
   "Logout": "Uitloggen",
   
   "Main settings": "Hoofdinstellingen",
   "Manage the website": "Beheer de website",
+  "Manage sites": "Beheer websites",
   "Menu item": "Menu-item",
   "Menu items": "Menu-items",
   "Menu item settings": "Menu-item instellingen",
@@ -47,19 +70,32 @@
   "New site": "Nieuwe site",
   "No menu items found": "Geen menu-items gevonden",
   
+  "OG description": "OG omschrijving",
+  "OG keywords": "OG sleutelwoorden",
+  "OG title": "OG titel",
+  
+  "Page captions": "Pagina naamgeving",
   "Page content": "Pagina inhoud",
+  "Page description": "Pagina omschrijving",
   "PAGE_DISPLAY": "Weergave",
   "Page info": "Pagina info",
+  "Page keywords": "Pagina sleutelwoorden",
+  "Page note": "Pagina aantekening",
+  "Page notes": "Pagina aantekeningen",
   "Page settings": "Pagina instellingen",
   "Page title": "Paginatitel",
   "Page title (visible in addressbar)": "Pagina titel (zichtbaar in adresbalk)",
   "Page type": "Paginatype",
   "Page was deleted": "Pagina was verwijderd",
+  "Password": "Wachtwoord",
+  "Password hidden": "Wachtwoord verborgen",
   "Path base": "Pad basis",
   
   "Refresh menu items": "Ververs menu-items",
   
   "Save menu items": "Menu-items opslaan",
+  "Saved successfully": "Successvol opgeslagen",
+  "Search engine optimization": "Zoekmachine optimalizatie",
   "Select an existing page": "Selecteer een bestaande pagina",
   "Select a page": "Selecteer een pagina",
   "Select a site layout": "Selecteer een site-indeling",
@@ -70,19 +106,31 @@
   "Site layout": "Site-indeling",
   "Site title": "Site-titel",
   "Slogan (visible in header)": "Slagzin (zichtbaar in kop)",
+  "Social media": "Sociale media",
+  "SOCIAL_MEDIAL_OVERRIDE_VALUES_EXPLANATION": "Each field for the social media information has a default value. You're not required to fill them in to use social media optimizations. However they are available should you want to tailor them.",
   
   "Theme": "Thema",
+  "There was a problem loading the section": "Er was een probleem tijdens het laden van de sectie",
   "This page was deleted from the database. Unlink it from the menu item.": "Deze pagina is verwijderd van de database. Koppel het los van het menu-item.",
+  "Title": "Titel",
   "Toggle menu item settings": "Schakel menu-item instellingen",
   "Toggle page settings": "Schakel pagina instellingen",
+  "Twitter account": "Twitter account",
+  "Twitter author": "Twitter auteur",
+  "Twitter description": "Twitter omschrijving",
+  "Twitter keywords": "Twitter sleutelwoorden",
+  "Twitter title": "Twitter titel",
   
   "URL path": "URL-pad",
-  
-  "Website settings": "Website instellingen",
-
-  "SOCIAL_MEDIAL_OVERRIDE_VALUES_EXPLANATION": "Each field for the social media information has a default value. You're not required to fill them in to use social media optimizations. However they are available should you want to tailor them.",
-
+  "URL-key": "URL-sleutel",
+  "Use this page as the homepage": "Gebruik deze pagina als home-pagina",
   "Username": "Gebruikersnaam",
-  "Password": "Wachtwoord"
+  
+  "Website author": "Website auteur",
+  "Website description": "Website omschrijving",
+  "Website name": "Website naam",
+  "Website settings": "Website instellingen",
+  
+  "You are currently in the admin panel": "Je bent op dit moment in het beheerderspaneel"
   
 }

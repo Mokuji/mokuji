@@ -3,6 +3,15 @@
 class Sections extends \dependencies\BaseViews
 {
   
+  protected
+    $default_permission = 2,
+    $permissions = array(
+      'install_db' => 0,    //Uses INSTALLING constant for authorization
+      'install_site' => 0,  //Uses INSTALLING constant for authorization
+      'install_intro' => 0, //Uses INSTALLING constant for authorization
+      'install_admin' => 0  //Uses INSTALLING constant for authorization
+    );
+  
   protected function install_intro($data)
   {
     

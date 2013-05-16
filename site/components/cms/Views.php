@@ -2,7 +2,13 @@
 
 class Views extends \dependencies\BaseViews
 {
-
+  
+  protected
+    $default_permission = 2,
+    $permissions = array(
+      'page' => 0
+    );
+  
   protected function page()
   {
 
@@ -67,18 +73,19 @@ class Views extends \dependencies\BaseViews
     return $return;
 
   }
-
+  
   protected function mod()
   {
-    $module = tx('Sql')->execute_single('SELECT *, (SELECT name FROM #__cms_components WHERE id = pm.com_id) AS component FROM #__page_modules AS pm WHERE id = '.tx('Data')->get->mid);
-    return load_module($module->component, $module->name);
+    throw new \exception\Deprecated();
+    // $module = tx('Sql')->execute_single('SELECT *, (SELECT name FROM #__cms_components WHERE id = pm.com_id) AS component FROM #__page_modules AS pm WHERE id = '.tx('Data')->get->mid);
+    // return load_module($module->component, $module->name);
   }
 
   protected function app($view)
   {
     
     //Get menu and site id.
-    $mid = tx('Sql')->table('menu', 'Menus')->limit(1)->execute()->{0}->id->get('int');
+    $mid = tx('Sql')->table('menu', 'Menus')->order('title')->limit(1)->execute()->{0}->id->get('int');
     $sid = $this->table('Sites')->order('title', 'ASC')->limit(1)->execute_single()->id->get('int');
     
     //the app is going to make use of all components, so we are going to load all javascript and css needed
@@ -211,8 +218,7 @@ class Views extends \dependencies\BaseViews
       'forced_template_id' => 'Forced template',
       'theme_id' => 'Default theme',
       'forced_theme_id' => 'Forced theme',
-      'default_language' => 'Default language',
-      'log_shared_login_sessions' => 'Log shared sessions'
+      'default_language' => 'Default language'
     );
     
     foreach($settings as $key => $title){

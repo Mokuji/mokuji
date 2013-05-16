@@ -3,6 +3,12 @@
 class Json extends \dependencies\BaseComponent
 {
   
+  protected
+    $default_permission = 2,
+    $permissions = array(
+    );
+  
+  //Not used for frontend.
   protected function get_items($filter, $params)
   {
     

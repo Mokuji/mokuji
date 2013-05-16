@@ -31,11 +31,44 @@ class EntryPoint extends \dependencies\BaseEntryPoint
       if(!tx('Account')->user->check('login'))
       {
         
+        //Use the previous scheme unless the on-login option is desired.
+        $targetScheme = tx('Url')->url->segments->scheme->get();
+        if(tx('Config')->user('tls_mode')->get('string') === 'logged-in')
+          $targetScheme = 'https';
+        
         //Redirect to custom login page is available.
         if(url('')->segments->path == '/admin/' && tx('Config')->user()->login_page->not('empty')->get('bool')){
-          header("Location: ".url(URL_BASE.tx('Config')->user()->login_page));
+          $goto = url(URL_BASE.tx('Config')->user()->login_page, true)->segments->merge(array('scheme' => $targetScheme))->back()->rebuild_output();
+          header("Location: ".$goto);
         }
-
+        
+        if($targetScheme !== tx('Url')->url->segments->scheme->get())
+          tx('Url')->redirect(url('')->segments->merge(array('scheme' => $targetScheme))->back()->rebuild_output());
+        
+        //Check for password reset process.
+        if(tx('Data')->get->password_forgotten->get() === 'init'){
+          
+          return $this->template('tx_login', 'tx_login', array('plugins' =>  array(
+            load_plugin('jquery'),
+            load_plugin('jquery_rest')
+          )), array(
+            'content' => tx('Component')->sections('account')->get_html('password_forgotten')
+          ));
+          
+        }
+        
+        //Check for password reset process.
+        if(tx('Data')->get->password_forgotten->get() === 'token'){
+          
+          return $this->template('tx_login', 'tx_login', array('plugins' =>  array(
+            load_plugin('jquery'),
+            load_plugin('jquery_rest')
+          )), array(
+            'content' => tx('Component')->sections('account')->get_html('password_forgotten_token', tx('Data')->get->having('token'))
+          ));
+          
+        }
+        
         //Otherwise: show awesome login screen.
         return $this->template('tx_login', 'tx_login', array(), array(
           'content' => tx('Component')->sections('account')->get_html('login_form')
@@ -93,7 +126,7 @@ class EntryPoint extends \dependencies\BaseEntryPoint
       if(tx('Component')->helpers('account')->call('should_claim'))
       {
         
-        $template_id = tx('Config')->user('template_id')->otherwise(1)->get('int');
+        $template_id = tx('Config')->user('forced_template_id')->otherwise(tx('Config')->user('template_id')->otherwise(1)->get('int'));
         $template = tx('Sql')->table('cms', 'Templates')->pk($template_id)->execute_single();
         
         $theme_id = tx('Config')->user('forced_theme_id')->otherwise(tx('Config')->user('theme_id')->otherwise(1)->get('int'));
@@ -105,7 +138,7 @@ class EntryPoint extends \dependencies\BaseEntryPoint
           load_plugin('jquery_rest'),
           load_plugin('jquery_postpone')
         );
-
+        
         return $that->template($template->name, $theme->name, array(
           'title' => __('cms', 'Claim your account', true),
           'plugins' => $plugins,
@@ -148,13 +181,8 @@ class EntryPoint extends \dependencies\BaseEntryPoint
       
       //If any of the above validations failed..
       ->failure(function(){
-
-        //We might be able to redirect the user back to the page they came from.
-        $prev = tx('Url')->previous(false, false);
-        if($prev !== false && !$prev->compare(tx('Url')->url)){
-          tx('Url')->redirect(url($prev, true));
-          return;
-        }
+        
+        //Don't redirect user to previous. Since this can be forged.
         
         //Address the user-defined home page in the configuration.
         tx('Config')->user('homepage')
@@ -204,11 +232,12 @@ class EntryPoint extends \dependencies\BaseEntryPoint
         elseif(tx('Data')->get->pid->is_set()){
           
           $pi = $that->helper('get_page_info', tx('Data')->get->pid);
+          $mid = tx('Data')->get->menu->get();
           $lpi = $pi->info->{tx('Language')->get_language_id()};
           
           //See if the URL key is correct.
           $url_key = $lpi->url_key;
-          $pretty_url = URL_BASE."{$pi->id}/{$url_key}";
+          $pretty_url = URL_BASE."{$pi->id}/{$url_key}?menu={$mid}";
           if($url_key->is_set() && $url_key->get() != tx('Data')->get->pkey->get()){
             header('Location: '.$pretty_url);
             return;

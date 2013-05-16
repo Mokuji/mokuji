@@ -9,6 +9,21 @@
   "FUNNY_MAN": "Jij bent lollig, met je",
   "FUTURE_SEARCH": "Zoekopdracht in de toekomst",
   
+  "Blog title": "Blog-titel",
+  "New post": "Nieuw bericht",
+  
+  "Timeline to use as the source of the entries": "Tijdlijn om te gebruiken als bron voor de berichten",
+  "Entry language": "Taal van de berichten",
+  "Display order of the entries": "Volgorde van de berichten",
+  "Old entries first": "Oude berichten eerst",
+  "New entries first": "Nieuwe berichten eerst",
+  "Display type for the entries": "Type weergave voor de berichten",
+  "Blogposts": "Blog-berichten",
+  "Entries per page": "Berichten per pagina",
+  "Entries": "Berichten",
+  "Hide entries posted in the future": "Verberg berichten geplaatst in de toekomst",
+  "Multilingual": "Meertalig",
+    
   "Publish date": "Publicatiedatum",
   "Read more": "Lees meer"
 }
