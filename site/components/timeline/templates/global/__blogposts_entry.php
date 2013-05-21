@@ -15,12 +15,6 @@ switch($data->type->get('string')){
     <?php /* Class name: tl-$timeline_name */ ?>
     <div class="entry blogpost-entry tl-<?php echo implode(' tl-', $classes->get('array')); ?>">
           
-      <div class="thumbnail">
-        <?php if($data->thumbnail_image->get() != false){ ?>
-          <img src="<?php echo $data->thumbnail_image->url; ?>" />
-        <?php } ?>
-      </div>
-      
       <h2 class="title">
         <a href="<?php echo url('post='.$data->id); ?>"><?php echo $data->info->{$data->language}->title; ?></a>
       </h2>
@@ -32,6 +26,12 @@ switch($data->type->get('string')){
           <span class="future">(<?php __($names->component, 'In the future') ?>)</span>
         <?php } ?>
       </p>
+
+      <div class="thumbnail">
+        <?php if($data->thumbnail_image->get() != false){ ?>
+          <img src="<?php echo $data->thumbnail_image->url; ?>" />
+        <?php } ?>
+      </div>
 
       <?php if($data->is_summary->is_true()){ ?>
         <div class="summary">
@@ -52,7 +52,7 @@ switch($data->type->get('string')){
       <?php if(!$data->is_summary->is_true()){ ?>
         <a href="<?php echo url('post=NULL'); ?>" class="back-to-overview">Terug naar het overzicht</a>
       <?php } ?>
-    
+      
     </div>
       
     <?php
