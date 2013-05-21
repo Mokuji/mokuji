@@ -81,7 +81,7 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
         PRIMARY KEY (`id`),
         UNIQUE INDEX `session_id` (`session_id`, `user_id`)
       )
-      COLLATE='utf8'
+      DEFAULT CHARSET=utf8
       ENGINE=MyISAM
     ");
     
@@ -95,7 +95,7 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
         `date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         PRIMARY KEY (`id`)
       )
-      COLLATE='utf8'
+      DEFAULT CHARSET=utf8
       ENGINE=MyISAM
     ");
     
