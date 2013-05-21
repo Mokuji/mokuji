@@ -27,7 +27,7 @@ switch($data->type->get('string')){
       
       <p class="publish-date">
         <?php __($names->component, 'Publish date') ?>:
-        <span class="dt-publish"><?php echo $data->dt_publish; ?></span>
+        <span class="dt-publish"><?php echo $data->formatted_dt_publish->otherwise($data->dt_publish); ?></span>
         <?php if($data->is_future->is_true()){ ?>
           <span class="future">(<?php __($names->component, 'In the future') ?>)</span>
         <?php } ?>

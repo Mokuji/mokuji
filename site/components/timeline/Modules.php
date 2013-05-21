@@ -37,16 +37,18 @@ class Modules extends \dependencies\BaseViews
     //Return the entries.
     return tx('Component')
       ->helpers('timeline')
-      ->_call('get_entries', array($page->merge($options->overrides->otherwise(array())->as_array())))
+      ->_call('get_entries', array($page->merge($options->filters->otherwise(array())->as_array())))
       
       //Template each entry.
       ->entries
         ->each(function($entry)use($page, $options){
+          $entry->format_dt_publish($options->dt_format);
           $entry->html->set(tx('Component')
             ->sections($page->display_type->component_name)
             ->get_html($page->display_type->section_name, $entry->merge(array(
               'pid' => $page->page_id,
               'menu' => $options->menu->otherwise('NULL'),
+              'dt_format' => $options->filters->dt_format,
               'language' => $page->language,
               'is_summary' => true
             )))
