@@ -19,7 +19,7 @@ switch($data->type->get('string')){
         <a href="<?php echo url('post='.$data->id); ?>"><?php echo $data->info->{$data->language}->title; ?></a>
       </h2>
       
-      <p class="publish-date">
+      <p class="publishgit-date">
         <?php __($names->component, 'Publish date') ?>:
         <span class="dt-publish"><?php echo $data->dt_publish; ?></span>
         <?php if($data->is_future->is_true()){ ?>
