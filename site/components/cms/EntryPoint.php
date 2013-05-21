@@ -70,7 +70,10 @@ class EntryPoint extends \dependencies\BaseEntryPoint
         }
         
         //Otherwise: show awesome login screen.
-        return $this->template('tx_login', 'tx_login', array(), array(
+        return $this->template('tx_login', 'tx_login', array('plugins' =>  array(
+          load_plugin('jquery'),
+          load_plugin('jquery_rest')
+        )), array(
           'content' => tx('Component')->sections('account')->get_html('login_form')
         ));
 

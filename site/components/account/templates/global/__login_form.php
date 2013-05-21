@@ -8,7 +8,7 @@ if(!$user->check('login')){
 
 ?>
 
-<form method="post" action="<?php echo url('action=account/login/post',1); ?>"  id="login_form" class="login-form">
+<form method="POST" action="<?php echo url('rest=account/user_session',1); ?>"  id="login_form" class="login-form">
   
   <h1><?php __('LOGIN_VERB'); ?></h1>
   
@@ -23,7 +23,7 @@ if(!$user->check('login')){
     
     <div class="ctrlHolder clearfix">
       <label for="l_password"><?php __('Password'); ?></label>
-      <input id="l_password" type="password" name="pass" value="" placeholder="<?php __('Password'); ?>" />
+      <input id="l_password" type="password" name="password" value="" placeholder="<?php __('Password'); ?>" />
     </div>
     
     <div class="ctrlHolder clearfix">
@@ -33,12 +33,34 @@ if(!$user->check('login')){
     
   </section>
   
+  <script type="text/javascript">
+    jQuery(function($){
+      
+      $('#login_form').restForm({
+        
+        success: function(result){
+          
+          if(result.success === true)
+            window.location = result.target_url;
+          
+        },
+        
+        error: function(err){
+          $('#l_password').val('');
+          $('#l_username').focus().select();
+        }
+        
+      });
+      
+    });
+  </script>
+  
 </form>
 
 <?php }else{ ?>
 
 <script type="text/javascript">
-document.location = '<?php echo url(URL_BASE.'?'.tx('Config')->user('homepage'), true); ?>';
+window.location = '<?php echo url(URL_BASE.'?'.tx('Config')->user('homepage'), true); ?>';
 </script>
 
 <p>

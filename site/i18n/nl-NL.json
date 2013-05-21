@@ -16,6 +16,7 @@
   "Cancel": "Annuleren",
   "Comments": "Opmerkingen",
   "Control panel": "Beheerderspaneel",
+  "CREATE_VERB": "Aanmaken",
   
   "Default": "Standaard",
   "Delete": "Verwijder",
@@ -71,6 +72,8 @@
   "Subject": "Onderwerp",
   "Summary": "Samenvatting",
   
+  "Template": "Template",
+  "Theme": "Thema",
   "The value can not be empty.": "De waarde kan niet leeg zijn.",
   "The value can not be empty": "De waarde kan niet leeg zijn",
   "The value may not contain html.": "De waarde mag geen html bevatten.",
