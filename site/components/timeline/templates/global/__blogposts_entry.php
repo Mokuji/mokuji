@@ -3,18 +3,18 @@
 switch($data->type->get('string')){
   
   case 'blogpost':
-
+    
     //Get timeline names to set as css classes for this blogpost.
     $classes = Data(array());
     $data->timelines->each(function($row)use(&$classes){
       $classes[] = $row->name;
     });
-
+    
     ?>
-
+    
     <?php /* Class name: tl-$timeline_name */ ?>
     <div class="entry blogpost-entry tl-<?php echo implode(' tl-', $classes->get('array')); ?>">
-          
+      
       <div class="thumbnail">
         <?php if($data->thumbnail_image->get() != false){ ?>
           <img src="<?php echo $data->thumbnail_image->url; ?>" />
@@ -22,7 +22,7 @@ switch($data->type->get('string')){
       </div>
       
       <h2 class="title">
-        <a href="<?php echo url('post='.$data->id); ?>"><?php echo $data->info->{$data->language}->title; ?></a>
+        <a href="<?php echo url('post='.$data->id.'&pid='.$data->pid.'&menu='.$data->menu); ?>"><?php echo $data->info->{$data->language}->title; ?></a>
       </h2>
       
       <p class="publish-date">
@@ -32,11 +32,11 @@ switch($data->type->get('string')){
           <span class="future">(<?php __($names->component, 'In the future') ?>)</span>
         <?php } ?>
       </p>
-
+      
       <?php if($data->is_summary->is_true()){ ?>
         <div class="summary">
           <?php echo $data->info->{$data->language}->summary; ?>
-          <a href="<?php echo url('post='.$data->id); ?>" class="read-more"><?php __($names->component, 'Read more') ?></a>
+          <a href="<?php echo url('post='.$data->id.'&pid='.$data->pid.'&menu='.$data->menu); ?>" class="read-more"><?php __($names->component, 'Read more') ?></a>
         </div>
       <?php } else { ?>
         <div class="content"><?php echo $data->info->{$data->language}->content; ?></div>
@@ -48,9 +48,9 @@ switch($data->type->get('string')){
           <span class="author"><?php echo $data->author->full_name; ?></span>
         </p>
       <?php } ?>
-
+      
       <?php if(!$data->is_summary->is_true()){ ?>
-        <a href="<?php echo url('post=NULL'); ?>" class="back-to-overview">Terug naar het overzicht</a>
+        <a href="<?php echo url('post=NULL&pid='.$data->pid.'&menu='.$data->menu); ?>" class="back-to-overview"><?php __($names->component, 'Back to overview'); ?></a>
       <?php } ?>
     
     </div>
