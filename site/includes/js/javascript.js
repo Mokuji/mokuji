@@ -1,3 +1,8 @@
+//Make trim() available for IE8-.
+if (!String.prototype.trim) {
+  String.prototype.trim=function(){return this.replace(/^\s+|\s+$/g, '');};
+}
+
 //Only if jQuery is present.
 if(window.$) (function($){
   
