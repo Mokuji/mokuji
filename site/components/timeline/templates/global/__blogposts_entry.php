@@ -15,6 +15,14 @@ switch($data->type->get('string')){
     <?php /* Class name: tl-$timeline_name */ ?>
     <div class="entry blogpost-entry tl-<?php echo implode(' tl-', $classes->get('array')); ?>">
       
+
+      <div class="thumbnail">
+        <?php if($data->thumbnail_image->get() != false){ ?>
+          <img src="<?php echo $data->thumbnail_image->url; ?>" />
+        <?php } ?>
+      </div>
+
+      
       <h2 class="title">
         <a href="<?php echo url('post='.$data->id.'&pid='.$data->pid.'&menu='.$data->menu); ?>"><?php echo $data->info->{$data->language}->title; ?></a>
       </h2>
@@ -27,17 +35,11 @@ switch($data->type->get('string')){
         <?php } ?>
       </p>
 
-      <div class="thumbnail">
-        <?php if($data->thumbnail_image->get() != false){ ?>
-          <img src="<?php echo $data->thumbnail_image->url; ?>" />
-        <?php } ?>
-      </div>
-
       <?php if($data->is_summary->is_true()){ ?>
         <div class="summary">
           <?php echo $data->info->{$data->language}->summary; ?>
-          <a href="<?php echo url('post='.$data->id.'&pid='.$data->pid.'&menu='.$data->menu); ?>" class="read-more"><?php __($names->component, 'Read more') ?></a>
         </div>
+        <a href="<?php echo url('post='.$data->id.'&pid='.$data->pid.'&menu='.$data->menu); ?>" class="read-more"><?php __($names->component, 'Read more') ?></a>
       <?php } else { ?>
         <div class="content"><?php echo $data->info->{$data->language}->content; ?></div>
       <?php } ?>

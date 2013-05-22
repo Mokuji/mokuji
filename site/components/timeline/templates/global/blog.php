@@ -19,7 +19,7 @@ $__pagination = function()use($data, $names){
     <?php } ?>
     
     <?php for($i = 1; $i <= $data->pages->get('int'); $i++){ ?>
-      <a href="<?php echo url('page='.$data->page->get('int')); ?>" data-page="<?php echo $i; ?>"
+      <a href="<?php echo url('page='.$i); ?>" data-page="<?php echo $i; ?>"
         class="page page-number<?php echo $data->page->get('int') === $i ? ' active' : ''; ?>"><?php echo $i; ?></a>
     <?php } ?>
     
