@@ -243,7 +243,7 @@
       self.entryPagination.empty();
       
       //Load a page of entries. (Note: don't hide the future for admins)
-      $.rest('GET', '?rest=timeline/entries/'+page, $.extend({}, self.filters, {is_future_hidden: 0}))
+      $.rest('GET', '?rest=timeline/entries/'+page, $.extend({}, self.filters, {is_future_hidden: 0, is_past_hidden: 0}))
       
       //When we got them.
       .done(function(result){
