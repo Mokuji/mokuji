@@ -15,24 +15,24 @@ switch($data->type->get('string')){
     <?php /* Class name: tl-$timeline_name */ ?>
     <div class="entry blogpost-entry tl-<?php echo implode(' tl-', $classes->get('array')); ?>">
       
-      <div class="thumbnail">
-        <?php if($data->thumbnail_image->get() != false){ ?>
-          <img src="<?php echo $data->thumbnail_image->url; ?>" />
-        <?php } ?>
-      </div>
-      
       <h2 class="title">
         <a href="<?php echo url('post='.$data->id.'&pid='.$data->pid.'&menu='.$data->menu); ?>"><?php echo $data->info->{$data->language}->title; ?></a>
       </h2>
       
-      <p class="publish-date">
-        <?php __($names->component, 'Publish date') ?>:
+      <p class="publishgit-date">
+        <span class="label"><?php __($names->component, 'Publish date') ?>:</span>
         <span class="dt-publish"><?php echo $data->formatted_dt_publish->otherwise($data->dt_publish); ?></span>
         <?php if($data->is_future->is_true()){ ?>
           <span class="future">(<?php __($names->component, 'In the future') ?>)</span>
         <?php } ?>
       </p>
-      
+
+      <div class="thumbnail">
+        <?php if($data->thumbnail_image->get() != false){ ?>
+          <img src="<?php echo $data->thumbnail_image->url; ?>" />
+        <?php } ?>
+      </div>
+
       <?php if($data->is_summary->is_true()){ ?>
         <div class="summary">
           <?php echo $data->info->{$data->language}->summary; ?>
@@ -52,7 +52,7 @@ switch($data->type->get('string')){
       <?php if(!$data->is_summary->is_true()){ ?>
         <a href="<?php echo url('post=NULL&pid='.$data->pid.'&menu='.$data->menu); ?>" class="back-to-overview"><?php __($names->component, 'Back to overview'); ?></a>
       <?php } ?>
-    
+      
     </div>
       
     <?php
