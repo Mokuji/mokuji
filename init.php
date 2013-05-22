@@ -40,7 +40,7 @@ if(INSTALLING !== true)
 {
   
   //Allow url-path overrides from other scripts.
-  if(!empty($_SERVER['x-tx-urlpath'])){
+  if(isset($_SERVER['x-tx-urlpath'])){
     $url_path = $_SERVER['x-tx-urlpath'];
   }
   
