@@ -68,6 +68,11 @@
       <?php __($component, 'Hide entries posted in the future') ?>
     </label>
     
+    <label>
+      <input name="is_past_hidden" type="checkbox"{{if data.page.is_past_hidden}} checked="checked"{{/if}} value="1" />
+      <?php __($component, 'Hide entries posted in the past') ?>
+    </label>
+    
   </div>
   
 </form>

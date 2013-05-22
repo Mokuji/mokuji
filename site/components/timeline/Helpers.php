@@ -91,6 +91,11 @@ class Helpers extends \dependencies\BaseComponent
         $t->where('dt_publish', '<=', date('Y-m-d H:i:s'));
       })
       
+      //Filter the past.
+      ->is($filters->is_past_hidden->get('boolean'), function($t)use($dt_start){
+        $t->where('dt_publish', '>', date('Y-m-d H:i:s'));
+      })
+      
       //Create a time-bracket.
       ->is($dt_start->is_set() && $dt_end->is_set(), function($t)use($dt_start, $dt_end){
         $t->where('dt_publish', '<=', date('Y-m-d H:i:s', $dt_end->get('int')));

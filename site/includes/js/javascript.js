@@ -3,6 +3,39 @@ if (!String.prototype.trim) {
   String.prototype.trim=function(){return this.replace(/^\s+|\s+$/g, '');};
 }
 
+//Namespacing helper.
+window.namespace = (function(root){
+  
+  //regular expression to limit formatting of namespaces
+  var nsre = /^([\$\_a-z][\$\_a-z\d]*\.?)+$/i
+  
+  //define returned function
+  return function(ns) {
+    var args = Array.prototype.slice.call(arguments);
+    var ret = [];
+    while (args.length) {
+      ns = genNS(args.shift());
+      if (ns) ret.push(ns);
+    }
+    if (ret.length == 0) return; //undefined, no valid input
+    if (arguments.length == 1) return ret[0]; //only a single input, return that namespace
+    return ret; //used overload for multiple namespaces, return the array/list
+  }
+  
+  //private static method to generate a single namespace
+  function genNS(ns) {
+    if (!ns.match(nsre)) return;
+    ns = ns.split('.');
+    var base = root;
+    for (var i=0; i<ns.length; i++) {
+      base[ns[i]] = base[ns[i]] || {};
+      base = base[ns[i]];
+    }
+    return base; //return resulting namespace object
+  }
+  
+}(this));
+
 //Only if jQuery is present.
 if(window.$) (function($){
   

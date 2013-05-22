@@ -35,7 +35,7 @@
       
       <div class="ctrlHolder">
         <label><?php __('Image'); ?></label><br />
-        <img class="entry_image" {{if data && data.thumbnail_image_id > 0}}src="<?php echo url(URL_BASE.'?section=media/image&resize=0/150', 1); ?>&id=${data.thumbnail_image_id}"{{else}}style="display:none;"{{/if}} />
+        <img class="entry_image" {{if data && data.thumbnail_image_id > 0}}src="${data.thumbnail_image.url}"{{else}}style="display:none;"{{/if}} />
       </div>
       
       <div class="ctrlHolder">
