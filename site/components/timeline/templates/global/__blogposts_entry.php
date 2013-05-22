@@ -36,8 +36,8 @@ switch($data->type->get('string')){
       <?php if($data->is_summary->is_true()){ ?>
         <div class="summary">
           <?php echo $data->info->{$data->language}->summary; ?>
-          <a href="<?php echo url('post='.$data->id.'&pid='.$data->pid.'&menu='.$data->menu); ?>" class="read-more"><?php __($names->component, 'Read more') ?></a>
         </div>
+        <a href="<?php echo url('post='.$data->id.'&pid='.$data->pid.'&menu='.$data->menu); ?>" class="read-more"><?php __($names->component, 'Read more') ?></a>
       <?php } else { ?>
         <div class="content"><?php echo $data->info->{$data->language}->content; ?></div>
       <?php } ?>

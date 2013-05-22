@@ -10,31 +10,19 @@
     
     <div class="multilingual-section" data-language-id="${language.id}">
       
-      <?php
-        //Shorten the "Title in " translations.
-        $title_in = __($component, 'Title', true).' '.__('IN_LANGUAGE_NAME', true, 'lowercase').' ';
-      ?>
       <div class="ctrlHolder">
-        <label><?php echo $title_in; ?>${language.title}</label>
+        <label><?php __($component, 'Title'); ?>{{if languages.length > 1}} <?php __('IN_LANGUAGE_NAME', true, 'lowercase'); ?> ${language.title}{{/if}}</label>
         <input type="text" class="title big" name="info[${language.id}][title]"
-          placeholder="<?php echo $title_in; ?>${language.title}" value="${data.info && data.info[language.id] ? data.info[language.id]['title'] : ''}" />
+          placeholder="<?php __($component, 'Title', 1); ?>{{if languages.length > 1}} <?php __('IN_LANGUAGE_NAME', true, 'lowercase'); ?> ${language.title}{{/if}}" value="${data.info && data.info[language.id] ? data.info[language.id]['title'] : ''}" />
       </div>
       
-      <?php
-        //Shorten the "Summary in " translations.
-        $summary_in = __($component, 'Summary', true).' '.__('IN_LANGUAGE_NAME', true, 'lowercase').' ';
-      ?>
       <div class="ctrlHolder">
-        <label><?php echo $summary_in; ?>${language.title}</label>
+        <label><?php __($component, 'Summary'); ?>{{if languages.length > 1}} <?php __('IN_LANGUAGE_NAME', true, 'lowercase'); ?> ${language.title}{{/if}}</label>
         <textarea id="editor_summary_" name="info[${language.id}][summary]" class="summary editor">${data.info && data.info[language.id] ? data.info[language.id]['summary'] : ''}</textarea>
       </div>
       
-      <?php
-        //Shorten the "Content in " translations.
-        $content_in = __($component, 'Content', true).' '.__('IN_LANGUAGE_NAME', true, 'lowercase').' ';
-      ?>
       <div class="ctrlHolder">
-        <label><?php echo $content_in; ?>${language.title}</label>
+        <label><?php __($component, 'Content'); ?>{{if languages.length > 1}} <?php __('IN_LANGUAGE_NAME', true, 'lowercase'); ?> ${language.title}{{/if}}</label>
         <textarea id="editor_content_" name="info[${language.id}][content]" class="content editor">${data.info && data.info[language.id] ? data.info[language.id]['content'] : ''}</textarea>
       </div>
       

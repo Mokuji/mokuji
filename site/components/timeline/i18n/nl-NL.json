@@ -8,6 +8,11 @@
   "PREVIOUS_PAGE_NOTATION": "Vorige",
   "FUNNY_MAN": "Jij bent lollig, met je",
   "FUTURE_SEARCH": "Zoekopdracht in de toekomst",
+
+  "Title": "Titel",
+  "Summary": "Samenvatting",
+  "Content": "Inhoud",
+  "Timelines to publish this entry in": "Tijdlijnen om dit bericht in te publiceren",
   
   "Blog title": "Blog-titel",
   "New post": "Nieuw bericht",
@@ -24,6 +29,19 @@
   "Hide entries posted in the future": "Verberg berichten geplaatst in de toekomst",
   "Multilingual": "Meertalig",
     
+  "Untitled in this language": "Geen titel in deze taal",
   "Publish date": "Publicatiedatum",
-  "Read more": "Lees meer"
+  "In the future": "In de toekomst",
+  "Posted by": "Geplaatst door",
+  "Pages": "Pagina's",
+  "Publish date and time": "Publicatiedatum en -tijd",
+  "Author": "Auteur",
+  "New timeline for this page": "Nieuwe tijdlijn voor deze pagina",
+  "Other timelines to publish this entry in": "Publiceer dit bericht ook in de volgende tijdlijnen:",
+  "Read more": "Lees meer",
+  "Post entry": "Plaats bericht",
+  "Update entry": "Update bericht",
+  "Back to overview": "Terug naar het overzicht",
+  "Delete image": "Verwijder afbeelding",
+  "No author": "Geen auteur"
 }
