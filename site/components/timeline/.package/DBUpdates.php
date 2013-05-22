@@ -10,8 +10,27 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
   protected
     $component = 'timeline',
     $updates = array(
-      '0.1' => '0.2'
+      '0.1' => '0.2',
+      '0.2' => '0.3'
     );
+  
+  public function update_to_0_3($current_version, $forced)
+  {
+    
+    try{
+      
+      tx('Sql')->query('
+        ALTER TABLE `#__timeline_pages`
+          ADD `is_past_hidden` bit(1) NOT NULL DEFAULT b\'0\'
+      ');
+      
+    }
+    
+    catch(\Exception $ex){
+      if(!$forced) throw $ex;
+    }
+    
+  }
   
   public function update_to_0_2($current_version, $forced)
   {

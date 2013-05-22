@@ -26,13 +26,13 @@ switch($data->type->get('string')){
           <span class="future">(<?php __($names->component, 'In the future') ?>)</span>
         <?php } ?>
       </p>
-
+      
       <div class="thumbnail">
         <?php if($data->thumbnail_image->get() != false){ ?>
           <img src="<?php echo $data->thumbnail_image->url; ?>" />
         <?php } ?>
       </div>
-
+      
       <?php if($data->is_summary->is_true()){ ?>
         <div class="summary">
           <?php echo $data->info->{$data->language}->summary; ?>
