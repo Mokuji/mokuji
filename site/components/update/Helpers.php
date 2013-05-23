@@ -3,6 +3,9 @@
 class Helpers extends \dependencies\BaseComponent
 {
   
+  static private
+    $package_cache = array();
+  
   protected
     $default_permission = 2,
     $permissions = array(
@@ -16,6 +19,10 @@ class Helpers extends \dependencies\BaseComponent
   {
     
     raw($component);
+    
+    if(isset(self::$package_cache[$component ? $component : '/']))
+      return self::$package_cache[$component ? $component : '/'];
+    
     if(empty($component))
       $packageFile = PATH_BASE.DS.'.package'.DS.'package.json';
     else
@@ -29,10 +36,14 @@ class Helpers extends \dependencies\BaseComponent
     $package = Data(json_decode(file_get_contents($packageFile), true));
     
     //Find the package.
-    return tx('Sql')
+    $packageModel = tx('Sql')
       ->table('update', 'Packages')
       ->where('title', "'{$package->title}'")
       ->execute_single();
+    
+    self::$package_cache[$component ? $component : '/'] = $packageModel;
+    
+    return $packageModel;
     
   }
   
