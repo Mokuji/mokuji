@@ -60,12 +60,17 @@ class Helpers extends \dependencies\BaseComponent
           ->is($options->parent_pk->is('set')->and_not('empty'), function($q)use($options){
             $q->parent_pk($options->parent_pk->get('int'));
           })
-          
+            
+          //set minimum depth to show.
+          ->is($options->min_depth->is('set'), function($q)use($options){
+            $q->where('depth', '>=', $options->min_depth->get('int'));
+          })
+
           //set how far in submenus it should go. 3 will let it go on to a sub-sub-sub menu and no further.
           ->is($options->max_depth->is('set'), function($q)use($options){
             $q->max_depth($options->max_depth->get('int'));
           })
-          
+                    
           //join menu item info.
           ->join('MenuItemInfo', $mii)->inner()
           
