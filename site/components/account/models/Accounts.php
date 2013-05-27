@@ -7,6 +7,8 @@ class Accounts extends \dependencies\BaseModel
     
     $table_name = 'core_users',
     
+    $title_field = 'email',
+    
     $relations = array(
       'UserInfo' => array('id' => 'UserInfo.user_id'),
       'AccountsToUserGroups' => array('id' => 'AccountsToUserGroups.user_id'),
