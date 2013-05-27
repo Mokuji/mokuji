@@ -11,11 +11,12 @@
           { name: 'paragraph',  items : [ 'NumberedList','BulletedList','-','Outdent','Indent','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock' ] },
           { name: 'colors',   items : [ 'TextColor','BGColor' ] },
           { name: 'styles',   items : [ 'Format' ] },
-          { name: 'insert',   items : [ '-', 'Image', 'MediaEmbed', 'Flash' ] },
+          { name: 'insert',   items : [ '-', 'Templates', 'Image', 'MediaEmbed', 'Flash' ] },
           { name: 'links',    items : [ 'Link','Unlink' ] },
           { name: 'clipboard',  items : [ 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ] },
           { name: 'document',   items : [ 'Find','Replace','-','Source','-','Maximize' ] }
-        ]
+        ],
+        templates_files: [ '../config/ckeditor_templates.js' ]
       }
     }
 
