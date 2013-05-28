@@ -5,7 +5,7 @@ $id = 'captcha_'.tx('Security')->random_string();
 <div class="native-captcha">
   
   <div class="captcha-block">
-    <img src="<?php echo $data->url; ?>" id="<?php echo $id; ?>" class="captcha" alt="<?php __($names->component, 'CAPTCHA Image'); ?>" />
+    <img src="<?php echo $data->url; ?>" id="<?php echo $id; ?>" class="captcha" alt="<?php __($names->component, 'CAPTCHA image'); ?>" />
   </div>
   
   <div class="input-block">

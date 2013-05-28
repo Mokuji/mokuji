@@ -314,7 +314,11 @@ class Helpers extends \dependencies\BaseComponent
         //If it's not there, create it.
         ->is('empty', function()use($component, $name, $type){
           
-          //Compatability with old notation.
+          //Skip when we want to delete it.
+          if($type === 'DELETE')
+            return;
+          
+          //Compatibility with old notation.
           if(!is_string($type))
             $type = ($type ? 'MANAGER' : 'PAGETYPE');
           
@@ -330,6 +334,18 @@ class Helpers extends \dependencies\BaseComponent
             ->save();
           
           tx('Logging')->log('CMS', 'Ensure pagetype', 'Ensuring '.$component.', '.$name.', '.$type.' RESULT >> '.$view->type->dump());
+          
+        })
+        
+        ->is('set', function($view)use($component, $name, $type){
+          
+          //When we're not deleting, this is kind of awkward, since we don't do updates.
+          if($type !== 'DELETE')
+            return;
+          
+          $view->delete();
+          
+          tx('Logging')->log('CMS', 'Ensure pagetype', 'Ensuring '.$component.', '.$name.', '.$type.' RESULT >> DELETED');
           
         });
       
