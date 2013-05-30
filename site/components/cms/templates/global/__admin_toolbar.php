@@ -1,5 +1,22 @@
 <?php namespace components\cms; if(!defined('TX')) die('No direct access.'); ?>
 
+<script type="text/javascript">
+jQuery(function($){
+  
+  var keepAliveTimeout = 60*1000; //60s
+  var keepAlive = function(){
+    $.ajax({
+      type:'get',
+      url:'?rest=cms/keep_alive'
+    });
+  };
+  
+  //Please setInterval, keep us alive!
+  setInterval(keepAlive, keepAliveTimeout);
+  
+});
+</script>
+
 <?php if(tx('Config')->system()->check('backend')){/*BACKEND*/ ?>
 
 <div id="topbar">
