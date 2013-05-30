@@ -19,10 +19,12 @@ class DecimalField extends BaseFormField
     
     $value = $this->insert_value ? $this->value : '';
     
+    $uid = 'l_'.tx('Security')->random_string(); ?>
+
     ?>
     <div class="ctrlHolder for_<?php echo $this->column_name; ?>">
-      <label><?php __($this->model->component(), $this->title); ?></label>
-      <input type="text" name="<?php echo $this->column_name; ?>" value="<?php echo $value; ?>" />
+      <label for="<?php echo $uid; ?>" class="label"><?php __($this->model->component(), $this->title); ?></label>
+      <input id="<?php echo $uid; ?>" type="text" name="<?php echo $this->column_name; ?>" value="<?php echo $value; ?>" />
     </div>
     <?php
     

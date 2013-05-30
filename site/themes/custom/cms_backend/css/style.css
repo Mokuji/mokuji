@@ -836,15 +836,15 @@ body.cursor_disabled{
 /* =Table
 --------------------------------------*/
 
-.tx-table{
+.tx-table:not(.dataTable){
   width:100%;
   border-collapse: collapse;
 }
-  .tx-table th{
+  .tx-table:not(.dataTable) th{
     text-align:left;
     border-bottom:1px solid #BCBCBC;
   }
-  .tx-table tr{
+  .tx-table:not(.dataTable) tr{
     font-size: 12px;
     text-decoration: none;
     color: #5B6B7A;
@@ -853,19 +853,19 @@ body.cursor_disabled{
     border-bottom: none;
     background:#F7F7F7;
   }
-  .tx-table tr:nth-child(odd){
+  .tx-table:not(.dataTable) tr:nth-child(odd){
     background:#FFF;
   }
-  .tx-table tbody tr:hover{
+  .tx-table:not(.dataTable) tbody tr:hover{
     background: #D2E5F9;
     color: #54A8F1
   }
-  .tx-table td,
-  .tx-table th {
+  .tx-table:not(.dataTable) td,
+  .tx-table:not(.dataTable) th {
     padding:4px 22px;
     border-right:1px solid #D9D9D9;
   }
-  .tx-table th{
+  .tx-table:not(.dataTable) th{
     line-height: 26px;
     background: rgb(247,247,247); /* Old browsers */
     /* IE9 SVG, needs conditional override of 'filter' to 'none' */
@@ -878,11 +878,11 @@ body.cursor_disabled{
     background: linear-gradient(top, rgba(247,247,247,1) 0%,rgba(232,232,232,1) 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f7f7f7', endColorstr='#e8e8e8',GradientType=0 ); /* IE6-8 */
 }
-  .tx-table td{
+  .tx-table:not(.dataTable) td{
     line-height: 26px;
   }
-  .tx-table td .edit,
-  .tx-table td .delete{
+  .tx-table:not(.dataTable) td .edit,
+  .tx-table:not(.dataTable) td .delete{
     padding: 0 5px;
     min-width:20px;
     text-indent:-9999px;
@@ -890,10 +890,10 @@ body.cursor_disabled{
     background-repeat:no-repeat;
     background-position:center center;
   }
-  .tx-table td .edit{
+  .tx-table:not(.dataTable) td .edit{
     background-image: url(../img/icons/account_edit.png);
   }
-  .tx-table td .delete{
+  .tx-table:not(.dataTable) td .delete{
     background-image: url(../img/icons/account_delete.png);
   }
   table.dataTable tr.even td.sorting_1{
