@@ -20,6 +20,17 @@ class Entries extends \dependencies\BaseModel
       'thumbnail_image_id' => array('number'=>'int', 'gt'=>0)
     );
   
+  public function format_dt_publish($format=null)
+  {
+    
+    $format = Data($format)->otherwise('j M \'y, h:i')->get('string');
+    
+    return $this->formatted_dt_publish->set(
+      date($format, strtotime($this->dt_publish->get('string')))
+    );
+    
+  }
+  
   public function get_is_future()
   {
     

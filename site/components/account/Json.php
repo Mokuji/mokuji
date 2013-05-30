@@ -2,11 +2,13 @@
 
 class Json extends \dependencies\BaseComponent
 {
+  
   protected
     $default_permission = 2,
     $permissions = array(
       'create_password_reset_request' => 0,
       'create_password_reset_finalization' => 0,
+      'create_user_session' => 0,
       'update_password' => 1
     );
   
@@ -229,6 +231,31 @@ class Json extends \dependencies\BaseComponent
     
     return array(
       'message' => __($this->component, 'An e-mail has been sent to the specified address with further instructions', true).'.'
+    );
+    
+  }
+  
+  /**
+   * Attempt to log in the user.
+   * @param \dependencies\Data $data Array containing 'username' and 'password' keys.
+   * @param \dependencies\Data $params Empty array.
+   * @return array Array with 'success' boolean and 'target_url' to suggest a redirect.
+   */
+  protected function create_user_session($data, $params)
+  {
+    
+    //Validate input.
+    $data
+      ->email->validate('Email address / username', array('required', 'not_empty', 'no_html'))->back()
+      ->password->validate('Password', array('required', 'not_empty', 'between'=>array(3, 30)));
+    
+    //Perform login attempt.
+    tx('Account')->login($data->email, $data->password);
+    
+    //Exception would have been thrown if it failed, return as successful.
+    return array(
+      'success' => true,
+      'target_url' => (string)url(tx('Account')->check_level(2) ? '/admin/' : tx('Config')->user('homepage')->otherwise('/'), true)
     );
     
   }

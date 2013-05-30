@@ -152,11 +152,15 @@
             callbacks: {
               
               serverFileIdReport: function(up, ids, file_id){
+                
                 imageId.val(file_id);
-                entryImage
-                  .attr('src', '?section=media/image&resize=0/150&id='+file_id)
-                  .show();
-                deleteImage.show();
+                
+                $.rest('GET', '?rest=media/generate_url/'+file_id, {filters:{fit_height:200, fit_weight:300}})
+                  .done(function(result){
+                    entryImage.attr('src', result.url).show();
+                    deleteImage.show();
+                  });
+                
               }
               
             }
@@ -239,7 +243,7 @@
       self.entryPagination.empty();
       
       //Load a page of entries. (Note: don't hide the future for admins)
-      $.rest('GET', '?rest=timeline/entries/'+page, $.extend({}, self.filters, {is_future_hidden: 0}))
+      $.rest('GET', '?rest=timeline/entries/'+page, $.extend({}, self.filters, {is_future_hidden: 0, is_past_hidden: 0}))
       
       //When we got them.
       .done(function(result){

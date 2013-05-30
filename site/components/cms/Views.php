@@ -6,7 +6,8 @@ class Views extends \dependencies\BaseViews
   protected
     $default_permission = 2,
     $permissions = array(
-      'page' => 0
+      'page' => 0,
+      'modules' => 0
     );
   
   protected function page()

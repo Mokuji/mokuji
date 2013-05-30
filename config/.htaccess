@@ -1,1 +1,5 @@
 DENY FROM ALL
+
+<Files "ckeditor_templates.js">
+Allow from all
+</Files>

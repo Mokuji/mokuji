@@ -12,8 +12,9 @@ class Pages extends \dependencies\BaseModel
       'timeline_id' => array('required', 'number'=>'int', 'gt'=>0),
       'display_type_id' => array('required', 'number'=>'int', 'gt'=>0),
       'force_language' => array('number'=>'int', 'gt'=>0),
-      'is_chronologic' => array('required', 'boolean'),
-      'is_future_hidden' => array('required', 'boolean'),
+      'is_chronologic' => array('boolean'),
+      'is_future_hidden' => array('boolean'),
+      'is_past_hidden' => array('boolean'),
       'items_per_page' => array('number'=>'int', 'in'=>array(5, 10, 20, 30, 40, 50))
     );
   

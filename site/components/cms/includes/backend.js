@@ -414,6 +414,9 @@ function request(){
       
       //Call the parent initiator.
       this.previous();
+      
+      //Reload items to get site_id and menu_id.
+      this.reload();
     
     },
     
@@ -439,6 +442,8 @@ function request(){
         for(var i in menus){
           $(self.view).append($(self.menuOptionTmpl).tmpl(menus[i]));
         }
+        
+        app.options.menu_id = parseInt(menus[0].id);
 
       });
       

@@ -203,8 +203,6 @@ class Language
       //Fallbacks are acceptable for en-GB since that's the language used for the keys.
       if($language_code !== 'en-GB'){
         
-        tx('Logging')->log('Translate', 'Com '.$component.' fallback', $phrase);
-        
         //Log in the SDK to improve it later.
         if(tx('Component')->available('sdk')){
           
@@ -215,6 +213,10 @@ class Language
               'component' => $component,
               'phrase' => $phrase
             ));
+          
+        } else {
+          
+          tx('Logging')->log('Translate', 'Com '.$component.' fallback', $phrase);
           
         }
         

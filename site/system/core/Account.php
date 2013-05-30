@@ -316,10 +316,10 @@ class Account
         
       }
       
+      //Regenerate the session ID.
+      tx('Session')->regenerate();
+      
     }
-    
-    //Regenerate the session ID.
-    tx('Session')->regenerate();
     
     //Unset meta-data.
     $this->user->un_set('id', 'email', 'activity', 'username');

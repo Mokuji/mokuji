@@ -15,6 +15,7 @@ class Views extends \dependencies\BaseViews
   {
     
     $pid = $options->pid->value->otherwise(tx('Data')->get->pid);
+    $menu = $options->menu->value->otherwise(tx('Data')->get->menu);
     $page_nr = $options->page->value->otherwise(tx('Data')->get->page);
     $post = $options->post->value->otherwise(tx('Data')->get->post);
     $year = $options->year->value->otherwise(tx('Data')->get->year);
@@ -25,7 +26,7 @@ class Views extends \dependencies\BaseViews
     
     $page = tx('Sql')
       ->table('timeline', 'Pages')
-      ->pk($pid->get('string'))
+      ->pk($pid->get('int'))
       ->execute_single()
       ->is('empty', function(){
         throw new \exception\NotFound('No configuration found for this blog page.');
@@ -65,12 +66,14 @@ class Views extends \dependencies\BaseViews
         tx('Component')
           ->sections($page->display_type->component_name)
           ->get_html($page->display_type->section_name, $entry->merge(array(
+            'pid' => $page->page_id,
+            'menu' => $menu->otherwise('NULL'),
             'language' => $page->language,
             'is_summary' => false
           )))
       );
       
-      //Give em the entry in a wrapper.
+      //Give 'em the entry in a wrapper.
       return array('entries'=>array($entry));
       
     }
@@ -89,10 +92,12 @@ class Views extends \dependencies\BaseViews
         
         //Template each entry.
         ->entries
-          ->each(function($entry)use($page){
+          ->each(function($entry)use($page, $menu){
             $entry->html->set(tx('Component')
               ->sections($page->display_type->component_name)
               ->get_html($page->display_type->section_name, $entry->merge(array(
+                'pid' => $page->page_id,
+                'menu' => $menu->otherwise('NULL'),
                 'language' => $page->language,
                 'is_summary' => true
               )))

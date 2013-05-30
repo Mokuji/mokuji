@@ -29,6 +29,7 @@ class Json extends \dependencies\BaseComponent
         $entry->author;
         $entry->is_future;
         $entry->timeline_ids;
+        $entry->thumbnail_image;
       })
       
       //Cludge the authors in here.

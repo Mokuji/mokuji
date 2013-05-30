@@ -887,7 +887,7 @@ abstract class BaseModel extends Data
         ->un_set('extra')
         
         ->arguments->set(function($arguments){
-          return $arguments->split(',')->trim(' \'');
+          return $arguments->split("','")->trim(" '");
         })
         
         ->back();

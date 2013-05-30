@@ -1,4 +1,5 @@
 {
+  
   "TIMELINE_BLOG_TITLE": "Blog pagina",
   "BLOG_VIEW_TITLE": "Blog pagina",
   "TIMELINE_BLOG_DESCRIPTION": "Blog pagina",
@@ -9,21 +10,52 @@
   "FUNNY_MAN": "Jij bent lollig, met je",
   "FUTURE_SEARCH": "Zoekopdracht in de toekomst",
   
-  "Blog title": "Blog-titel",
-  "New post": "Nieuw bericht",
+  "Author": "Auteur",
   
-  "Timeline to use as the source of the entries": "Tijdlijn om te gebruiken als bron voor de berichten",
-  "Entry language": "Taal van de berichten",
-  "Display order of the entries": "Volgorde van de berichten",
-  "Old entries first": "Oude berichten eerst",
-  "New entries first": "Nieuwe berichten eerst",
-  "Display type for the entries": "Type weergave voor de berichten",
+  "Back to overview": "Terug naar het overzicht",
   "Blogposts": "Blog-berichten",
+  "Blog title": "Blog-titel",
+  
+  "Content": "Inhoud",
+  
+  "Delete image": "Verwijder afbeelding",
+  "Display order of the entries": "Volgorde van de berichten",
+  "Display type for the entries": "Type weergave voor de berichten",
+  
   "Entries per page": "Berichten per pagina",
   "Entries": "Berichten",
+  "Entry language": "Taal van de berichten",
+  
   "Hide entries posted in the future": "Verberg berichten geplaatst in de toekomst",
+  "Hide entries posted in the past": "Verberg berichten geplaatst in het verleden",
+  
+  "In the future": "In de toekomst",
+  
   "Multilingual": "Meertalig",
-    
+  
+  "New entries first": "Nieuwe berichten eerst",
+  "New post": "Nieuw bericht",
+  "New timeline for this page": "Nieuwe tijdlijn voor deze pagina",
+  "No author": "Geen auteur",
+  
+  "Old entries first": "Oude berichten eerst",
+  "Other timelines to publish this entry in": "Publiceer dit bericht ook in de volgende tijdlijnen:",
+  
+  "Pages": "Pagina's",
+  "Posted by": "Geplaatst door",
+  "Post entry": "Plaats bericht",
   "Publish date": "Publicatiedatum",
-  "Read more": "Lees meer"
+  "Publish date and time": "Publicatiedatum en -tijd",
+  
+  "Read more": "Lees meer",
+  
+  "Summary": "Samenvatting",
+  
+  "Timeline to use as the source of the entries": "Tijdlijn om te gebruiken als bron voor de berichten",
+  "Timelines to publish this entry in": "Tijdlijnen om dit bericht in te publiceren",
+  "Title": "Titel",
+  
+  "Update entry": "Update bericht",
+  "Untitled in this language": "Geen titel in deze taal"
+  
 }

@@ -6,6 +6,8 @@ class Sections extends \dependencies\BaseViews
   protected
     $default_permission = 2,
     $permissions = array(
+      'get_items' => 0,
+      'get_item' => 0
     );
   
   private function get_items($filter)
