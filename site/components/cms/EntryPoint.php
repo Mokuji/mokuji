@@ -257,12 +257,12 @@ class EntryPoint extends \dependencies\BaseEntryPoint
           //TODO: thumbnail images for twitter/facebook
           //TODO: author en (publish tijden?) voor facebook
           
-          $site_name = tx('Config')->user('site_name')->otherwise('My Tuxion CMS Website');
+          $site_name = tx('Config')->user('site_name')->otherwise('My Mokuji Website');
           $site_twitter = tx('Config')->user('site_twitter');
           $site_googleplus = tx('Config')->user('site_googleplus');
           $site_author = tx('Config')->user('site_author');
-          $site_description = tx('Config')->user('site_description')->otherwise('My Tuxion CMS Website');
-          $site_keywords = tx('Config')->user('site_keywords')->otherwise('Tuxion, CMS');
+          $site_description = tx('Config')->user('site_description')->otherwise('');
+          $site_keywords = tx('Config')->user('site_keywords')->otherwise('');
           $title = $lpi->title->otherwise($lpi->title_recommendation->otherwise($pi->title))->get();
           $title .= ($title ? ' - ' : '') . $site_name;
           $description = $lpi->description->otherwise($site_description)->get();

@@ -30,12 +30,12 @@ class Sections extends \dependencies\BaseViews
       'requirements' => array(
         
         'PHP 5.3.8+' => array(
-          'component' => 'Tuxion CMS Core',
+          'component' => 'Mokuji Core',
           'passed' => PHP_VERSION_ID >= 50308
         ),
         
         'MySQL 5.x' => array(
-          'component' => 'Tuxion CMS Core',
+          'component' => 'Mokuji Core',
           'passed' => $mySqlVersion &&
             $mySqlVersion[0] >= 5
         )

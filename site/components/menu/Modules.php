@@ -21,9 +21,10 @@ class Modules extends \dependencies\BaseViews
    *  @key int $min_depth            - Minimum depth to show items from.
    *  @key int $max_depth            - Number that indicates how far in submenus it should go.
    *  @key bool $display_select_menu - If true: a select menu will be returned.
-   *  @key bool $no_active           - If false: suppresses the "active" class on active menu items.
-   *  @key bool $no_selected         - If false: suppresses the "selected" class on selected menu items.
-   *  @key bool $select_from_root If true: select items from root.
+   *  @key bool $keep_menu           - If true: keeps the current menu key in the URL. Only the pid renews.
+   *  @key bool $no_active           - If true: suppresses the "active" class on active menu items.
+   *  @key bool $no_selected         - If true: suppresses the "selected" class on selected menu items.
+   *  @key bool $select_from_root    - If true: select items from root.
    *             tx('Data')->get->menu will be used to calculate root.
    *             $parent_pk, $template_key and $site_id will be overwritten.
    */
@@ -114,7 +115,11 @@ class Modules extends \dependencies\BaseViews
               
               $properties['class'] = trim($properties['class']);
               
-              return '<a href="'.url('menu='.$item->id.'&pid='.$item->page_id, true).'">'.$item->title.'</a>';
+              return
+                '<a href="'.
+                  url('pid='.$item->page_id.($options->keep_menu->get() == false ? '&menu='.$item->id : '&menu=KEEP'), true).
+                '">'.$item->title.'</a>';
+
             }
             
             //Since we do not have permissions for this item, hide it.

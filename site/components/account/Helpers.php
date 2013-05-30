@@ -76,7 +76,7 @@ class Helpers extends \dependencies\BaseComponent
 
             tx('Component')->helpers('mail')->send_fleeting_mail(array(
               'to' => array('name'=>$user->user_info->username->otherwise(''), 'email'=>$user->email),
-              'subject' => __('Klaar voor de start... AF!', 1),
+              'subject' => __('Claim your account', 1),
               'html_message' => tx('Component')->views('account')->get_html('email_user_password_reset', $links->having('for_link', 'claim_link', 'unsubscribe_link')->merge(array('username' => $username)))
             ))
             

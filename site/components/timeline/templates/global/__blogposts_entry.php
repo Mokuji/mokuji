@@ -21,7 +21,8 @@ switch($data->type->get('string')){
       
       <p class="publishgit-date">
         <span class="label"><?php __($names->component, 'Publish date') ?>:</span>
-        <span class="dt-publish"><?php echo $data->formatted_dt_publish->otherwise($data->dt_publish); ?></span>
+        <?php /* #TODO: add timezone to site config and integrate it in <time>-fields */ ?>
+        <time class="dt-publish" datetime="<?php echo str_replace(' ', 'T', $data->dt_publish->get()); ?>Z"><?php echo $data->formatted_dt_publish->otherwise($data->dt_publish); ?></time>
         <?php if($data->is_future->is_true()){ ?>
           <span class="future">(<?php __($names->component, 'In the future') ?>)</span>
         <?php } ?>

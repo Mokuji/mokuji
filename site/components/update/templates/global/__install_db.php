@@ -9,7 +9,7 @@
     <p>Next we will configure the MySQL database. Please enter the details below.</p>
     <p class="notes">
       Note 1: Make sure that the MySQL user you provide is granted full access to the database.<br>
-      Note 2: While passwords for MySQL users are optional, Tuxion CMS requires you to set a password for security reasons.
+      Note 2: While passwords for MySQL users are optional, Mokuji requires you to set a password for security reasons.
     </p>
     
     <form method="post" action="#" data-action="<?php echo url('?rest=update/db_installation', true); ?>" data-test-action="<?php echo url('?rest=update/db_test', true); ?>" class="form db-install-form">

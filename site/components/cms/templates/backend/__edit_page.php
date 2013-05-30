@@ -168,7 +168,7 @@
                 <div class="card-image"><img src="http://placehold.it/260x260" alt="Placeholder" /></div>
                 <div class="card-content-text">
                   <h3>Twitter Title Goes here</h3>
-                  <span>By Twitter Author placed here @twitterauthor</span>
+                  <span>By Twitter Author placed here @<?php echo tx('Config')->user('site_name')->otherwise('author'); ?></span>
                   <p>
                     Sed sed dictum felis. Sed mollis ullamcorper luctus. Donec hendrerit posuere velit ac vulputate. Quisque posuere luctus odio, vitae posuere.
                   </p>
@@ -193,7 +193,7 @@
               <h2>Preview</h2>
               <div class="card-content clearfix">
                 <div class="card-content-text">
-                  <span>By Google+ author +Tuxion</span>
+                  <span>By Google+ author +<?php echo tx('Config')->user('site_name')->otherwise('author'); ?></span>
                   <p>
                     Sed sed dictum felis. Sed mollis ullamcorper luctus. Donec hendrerit posuere velit ac vulputate. Quisque posuere luctus odio, vitae posuere.
                   </p>
@@ -206,16 +206,6 @@
 
         </fieldset>
 
-        <fieldset class="fieldset-homepage">
-         
-          <legend><?php __('Homepage'); ?></legend>
-          
-          <input id="checkbox-set-as-homepage" type="checkbox" name="homepage" value="{{if is_homepage == true}}0{{else}}1{{/if}}" {{if is_homepage == true}}checked="checked" disabled="disabled"{{/if}}/>
-          
-          <label for="checkbox-set-as-homepage"><?php __($names->component, 'Use this page as the homepage'); ?></label>
-          
-        </fieldset>
-        
       </div>
       
     {{/each}}
@@ -298,6 +288,16 @@
       <legend><?php __($names->component, 'Page notes'); ?></legend>
       
       <textarea name="notes" class="big large">${page.notes}</textarea>
+      
+    </fieldset>
+
+    <fieldset class="fieldset-homepage">
+     
+      <legend><?php __('Homepage'); ?></legend>
+      
+      <input id="checkbox-set-as-homepage" type="checkbox" name="homepage" value="{{if is_homepage == true}}0{{else}}1{{/if}}" {{if is_homepage == true}}checked="checked" disabled="disabled"{{/if}}/>
+      
+      <label for="checkbox-set-as-homepage"><?php __($names->component, 'Use this page as the homepage'); ?></label>
       
     </fieldset>
     
