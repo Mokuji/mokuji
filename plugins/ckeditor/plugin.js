@@ -5,6 +5,7 @@
       selector: '.editor',
       config: {
         skin: 'tx',
+        height: '320px',
         toolbar:
         [
           { name: 'basicstyles',  items : [ 'Bold','Italic','Underline','Strike','-','RemoveFormat' ] },

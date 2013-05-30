@@ -69,10 +69,16 @@ class SelectField extends BaseFormField
     
     $value = $this->insert_value ? $this->value->get() : '';
     
+    $uid = 'l_'.tx('Security')->random_string();
+    
     ?>
     <div class="ctrlHolder for_<?php echo $this->column_name; ?>">
-      <label><?php __($this->model->component(), $this->title); ?></label>
-      <select name="<?php echo $this->column_name; ?>">
+      
+      <label for="<?php echo $uid; ?>" class="label">
+        <?php __($this->model->component(), $this->title); ?>
+      </label>
+      
+      <select id="<?php echo $uid; ?>" name="<?php echo $this->column_name; ?>">
         <option value=""></option>
         <?php foreach($this->option_set as $key=>$title): ?>
           <option value="<?php echo $key; ?>" <?php if($value == $key) echo 'selected="selected"' ?>>

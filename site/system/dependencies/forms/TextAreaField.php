@@ -17,10 +17,12 @@ class TextAreaField extends BaseFormField
     
     $value = $this->insert_value ? $this->value : '';
     
+    $uid = 'l_'.tx('Security')->random_string();
+
     ?>
     <div class="ctrlHolder for_<?php echo $this->column_name; ?>">
-      <label><?php __($this->model->component(), $this->title); ?></label>
-      <textarea name="<?php echo $this->column_name; ?>"><?php echo $value; ?></textarea>
+      <label for="<?php echo $uid; ?>" class="label"><?php __($this->model->component(), $this->title); ?></label>
+      <textarea id="<?php echo $uid; ?>" name="<?php echo $this->column_name; ?>"><?php echo $value; ?></textarea>
     </div>
     <?php
     

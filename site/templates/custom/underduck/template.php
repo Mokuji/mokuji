@@ -63,7 +63,7 @@
       
       <p>
         <?php echo tx('Config')->user('site_copyright')->is_set() ? tx('Config')->user('site_copyright').br : ''; ?>
-        Powered by <a href="http://cms.tuxion.nl/" target="_blank">Tuxion CMS</a>. Underduck theme by <a href="#">iarehero</a>.
+        Powered by <a href="http://mokuji.net/" target="_blank">Mokuji</a>. Underduck theme by iarehero.
       </p>
     </footer>
     

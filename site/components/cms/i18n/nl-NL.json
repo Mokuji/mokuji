@@ -110,7 +110,7 @@
   "Site title": "Site-titel",
   "Slogan (visible in header)": "Slagzin (zichtbaar in kop)",
   "Social media": "Sociale media",
-  "SOCIAL_MEDIAL_OVERRIDE_VALUES_EXPLANATION": "Each field for the social media information has a default value. You're not required to fill them in to use social media optimizations. However they are available should you want to tailor them.",
+  "SOCIAL_MEDIAL_OVERRIDE_VALUES_EXPLANATION": "Onderstaand vind je de instellingen die bepalen hoe jouw webpagina op social media verschijnt als de pagina gelinkt wordt. Het toepassen van social media optimalisatie is optioneel, maar als dit wilt is hier er de mogelijkheid voor.",
   
   "Theme": "Thema",
   "There was a problem loading the section": "Er was een probleem tijdens het laden van de sectie",

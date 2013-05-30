@@ -80,7 +80,7 @@ class File
   
   public function output($options=null)
   {
-    
+   
     $options = Data($options);
     
     $this->create_output_headers();
@@ -102,7 +102,7 @@ class File
     });
     
     exit;
-    
+
   }
   
   protected function create_output_headers()

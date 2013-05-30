@@ -98,7 +98,7 @@ class CheckBoxField extends BaseFormField
       
       ?>
       <div class="ctrlHolder for_<?php echo $this->column_name; ?>">
-        <p><?php __($this->model->component(), $this->title); ?></legend>
+        <p class="label"><?php __($this->model->component(), $this->title); ?></legend>
         <?php foreach($this->option_set as $key=>$title): ?>
           <label>
             <input type="checkbox" name="<?php echo $this->column_name; ?>[<?php echo $key; ?>]" value="1"<?php if(in_array($key, $values)) echo 'checked="checked"' ?> />
