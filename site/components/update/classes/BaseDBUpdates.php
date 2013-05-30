@@ -210,8 +210,8 @@ abstract class BaseDBUpdates
         ->execute_single()
         
         //In case it's not found.
-        ->is('empty', function(){
-          throw new \exception\NotFound('The given min_version was not found, it needs to be listed in the package.json of it\'s component');
+        ->is('empty', function()use($operation_data){
+          throw new \exception\NotFound('The min_version "%s" was not found, it needs to be listed in the package.json of it\'s component "%s".', $operation_data['min_version'], $operation_data['component']);
         });
       
       //Find out if this or a later version has been installed.
