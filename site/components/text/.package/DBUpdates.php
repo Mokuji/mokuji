@@ -10,7 +10,8 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
   protected
     $component = 'text',
     $updates = array(
-      '1.1' => '1.2'
+      '1.1' => '1.2',
+      '1.2' => '0.2.0-beta' //No DB changes.
     );
   
   //Lets install new features! Said no text component ever.

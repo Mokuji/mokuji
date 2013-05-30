@@ -11,7 +11,8 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
     $component = 'timeline',
     $updates = array(
       '0.1' => '0.2',
-      '0.2' => '0.3'
+      '0.2' => '0.3',
+      '0.3' => '0.0.4-alpha' //No DB changes.
     );
   
   public function update_to_0_3($current_version, $forced)

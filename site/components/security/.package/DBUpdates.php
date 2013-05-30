@@ -10,6 +10,7 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
   protected
     $component = 'security',
     $updates = array(
+      '0.1' => '0.0.2-alpha' //No DB changes.
     );
   
   public function install_0_1($dummydata, $forced)

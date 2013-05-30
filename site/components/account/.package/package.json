@@ -5,6 +5,12 @@
   "dbUpdates": true,
   "versions": [
     {
+      "version": "0.2.0-beta",
+      "date": "2013-05-30",
+      "description": "Naar nieuwe versie systeem overgeschakeld.",
+      "changes": []
+    },
+    {
       "version": "1.4",
       "date": "2013-05-08",
       "description": "Password reset functionaliteit toegevoegd voor gebruikers.",
@@ -28,21 +34,6 @@
       ]
     },
     {
-      "version": "1.0",
-      "date": "2012-09-04",
-      "description": "Nieuwe functionaliteit voor accountbeheer is beschikbaar.",
-      "changes": [
-        {
-          "title": "Gebruiker importeerfunctie",
-          "description": "Gebruikers kunnen nu door middel van CSV bestanden worden ge&iuml;mporteerd. Per bestand kunnen de nieuw toegevoegde gebruikers ook lid worden gemaakt van een of meerdere gebruikersgroepen om deze tegelijkertijd permissies te geven of later makkelijker te beheren."
-        },
-        {
-          "title": "Verbeterde email functionaliteit",
-          "description": "Het is gemakkelijker geworden om de ontvangers te selecteren door een nieuw ontwerp. Daarnaast is het nu ook mogelijk om naar gehele gebruikersgroepen te emailen."
-        }
-      ]
-    },
-    {
       "version": "1.1",
       "date": "2012-09-11",
       "description": "Autologin support en extra veiligheid.",
@@ -59,6 +50,21 @@
         {
           "title": "Bugfixes",
           "description": "<ul><li>Bij het wisselen van tab in gebruikersbeheer verdwijnt geen informatie meer bij het laden.</li><li>'Gebruiker bewerken' en 'Groep bewerken' blijft niet meer staan bij het wisselen van tab.</li></ul>"
+        }
+      ]
+    },
+    {
+      "version": "1.0",
+      "date": "2012-09-04",
+      "description": "Nieuwe functionaliteit voor accountbeheer is beschikbaar.",
+      "changes": [
+        {
+          "title": "Gebruiker importeerfunctie",
+          "description": "Gebruikers kunnen nu door middel van CSV bestanden worden ge&iuml;mporteerd. Per bestand kunnen de nieuw toegevoegde gebruikers ook lid worden gemaakt van een of meerdere gebruikersgroepen om deze tegelijkertijd permissies te geven of later makkelijker te beheren."
+        },
+        {
+          "title": "Verbeterde email functionaliteit",
+          "description": "Het is gemakkelijker geworden om de ontvangers te selecteren door een nieuw ontwerp. Daarnaast is het nu ook mogelijk om naar gehele gebruikersgroepen te emailen."
         }
       ]
     }

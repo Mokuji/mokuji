@@ -5,6 +5,12 @@
   "dbUpdates": true,
   "versions": [
     {
+      "version": "0.0.4-alpha",
+      "date": "2013-05-30",
+      "description": "Naar nieuwe versie systeem overgeschakeld.",
+      "changes": []
+    },
+    {
       "version": "0.3",
       "date": "2013-05-22",
       "description": "Verleden verbergen nu mogelijk.",

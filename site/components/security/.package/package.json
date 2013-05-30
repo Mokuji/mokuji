@@ -5,6 +5,12 @@
   "dbUpdates": true,
   "versions": [
     {
+      "version": "0.0.2-alpha",
+      "date": "2013-05-30",
+      "description": "Switched to new version naming system.",
+      "changes": []
+    },
+    {
       "version": "0.1",
       "date": "2013-05-09",
       "description": "Released first alpha version.",

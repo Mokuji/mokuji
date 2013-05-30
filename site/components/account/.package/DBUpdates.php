@@ -11,7 +11,8 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
     $component = 'account',
     $updates = array(
       '1.2' => '1.3',
-      '1.3' => '1.4'
+      '1.3' => '1.4',
+      '1.4' => '0.2.0-beta' //No DB changes.
     );
   
   public function update_to_1_4($current_version, $forced)
