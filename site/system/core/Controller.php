@@ -46,9 +46,9 @@ class Controller
     
     //include css from /includes
     $css=array();
-    // foreach(files(PATH_INCLUDES.DS.'css'.DS.'*.css') as $file){
-      // $css[] = "\n".'<link rel="stylesheet" type="text/css" href="'.URL_INCLUDES.'css/'.basename($file).'" />';
-    // }
+    foreach(files(PATH_INCLUDES.DS.'css'.DS.'*.css') as $file){
+      $css[] = "\n".'<link rel="stylesheet" type="text/css" href="'.URL_INCLUDES.'css/'.basename($file).'" />';
+    }
     
     //create injection data
     $data = array(
@@ -80,13 +80,17 @@ class Controller
     
   }
   
+  /**
+   * Parses exception data into the error template and sends it to the output stream.
+   *
+   * @param  \Exception $e The exception containing the template data.
+   *
+   * @return void          This method exits the code.
+   */
   public function load_error_template(\Exception $e)
   {
     
-    $template = (file_exists(PATH_TEMPLATES.DS.'custom'.DS.'error'.DS.'template'.EXT) ? 'custom' : 'system');
-    $theme = (file_exists(PATH_THEMES.DS.'custom'.DS.'error'.DS.'theme'.EXT) ? 'custom' : 'system');
-    
-    $paths = array('theme' => URL_THEMES."/$theme/error/", 'template' => URL_TEMPLATES."/$template/error/");
+    $paths = array('theme' => URL_THEMES."error/", 'template' => URL_TEMPLATES."error/");
     
     $data = array(
       'head' => Data(array(
@@ -95,7 +99,7 @@ class Controller
           'robots' => 'noindex, nofollow',
           'description' => 'This used to be a nicely looking properly working web page - until YOU broke it!'
         ),
-        'theme' => load_html(PATH_THEMES.DS.$theme.DS.'error'.DS.'theme'.EXT, $paths)
+        'theme' => load_html(PATH_THEMES.DS.'error'.DS.'theme'.EXT, $paths)
       )),
       'body' => Data(array(
         'message' => $e->getMessage()
@@ -104,7 +108,7 @@ class Controller
     );
     
     
-    echo load_html(PATH_TEMPLATES.DS.$template.DS.'error'.DS.'template'.EXT, array_merge($data, $paths));
+    echo load_html(PATH_TEMPLATES.DS.'error'.DS.'template'.EXT, array_merge($data, $paths));
     
     exit;
     
