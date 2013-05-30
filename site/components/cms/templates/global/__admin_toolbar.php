@@ -25,10 +25,6 @@
 
 <ul id="topbar_menu">
   
-  <?php if(tx('Account')->check_level(1)): ?>
-    <li class="logout"><a href="<?php echo url('action=account/logout'); ?>"><?php __($names->component, 'Logout', 'ucfirst'); ?></a></li>
-  <?php endif; ?>
-
   <?php if(tx('Account')->check_level(2)): ?>
     <li class="website<?php if(!EDITABLE) echo ' active'; ?>"><a href="<?php echo $admin_toolbar->website_url; ?>"><?php __('Website'); ?></a></li>
     <li class="website-edit<?php if(EDITABLE) echo ' active'; ?>"><a href="<?php echo $admin_toolbar->edit_url; ?>">Edit</a></li>
