@@ -277,7 +277,7 @@ abstract class BaseDBUpdates
       if($version->timestamp->get() > $latest->timestamp->get())
       {
         
-        if(method_exists($that, 'install_'.str_replace('.', '_', $version->version->get())))
+        if(method_exists($that, 'install_'.self::vtfn($version->version)))
           $latest = $version;
         
       }
@@ -286,7 +286,7 @@ abstract class BaseDBUpdates
     
     if($latest->is_empty()) throw new \exception\Exception('No install method exists for package '.$this->package()->title);
     
-    $method = 'install_'.str_replace('.', '_', $latest->version->get());
+    $method = 'install_'.self::vtfn($latest->version);
     tx('Logging')->log('Update', 'Installing DB', 'Calling '.$method.' for package '.$this->package()->title.' from version '.$this->current_version());
     call_user_func_array(array($this, $method), array($dummydata, $forced));
     $this->version_bump($latest->version);
@@ -354,7 +354,7 @@ abstract class BaseDBUpdates
       return false;
     }
     
-    $method = 'update_to_'.str_replace('.', '_', $next);
+    $method = 'update_to_'.self::vtfn($next);
     
     //If it exists, call it.
     if(method_exists($this, $method))
@@ -501,6 +501,12 @@ abstract class BaseDBUpdates
       'operation' => $operation
     ));
     
+  }
+  
+  private static function vtfn($version)
+  {
+    raw($version);
+    return str_replace('.', '_', str_replace('-', '_', $version));
   }
   
   private function version_bump($version)

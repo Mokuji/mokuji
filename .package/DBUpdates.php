@@ -13,8 +13,31 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
       '3.2.0' => '3.3.0',
       '3.3.0' => '3.3.1',
       '3.3.1' => '3.3.2',
-      '3.3.2' => '3.3.3'
+      '3.3.2' => '3.3.3',
+      
+      '3.3.3' => '0.5.0-beta'
+      
     );
+  
+  public function update_to_0_5_0_beta($current_version, $forced)
+  {
+    
+    //Queue this because it would get it's changes undone in the DB otherwise.
+    $this->queue(array(
+      'component' => 'update',
+      'min_version' => '0.2.0-beta'
+      ), function($version){
+        
+        //Rename the package.
+        mk('Component')->helpers('update')->call('rename_component_package', array(
+          'component' => '/',
+          'old_title' => 'Tuxion CMS core'
+        ));
+        
+      }
+    ); //END - Queue
+    
+  }
   
   public function update_to_3_3_3($current_version, $forced)
   {

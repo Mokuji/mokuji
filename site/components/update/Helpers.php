@@ -12,6 +12,39 @@ class Helpers extends \dependencies\BaseComponent
       'get_component_package' => 0
     );
   
+  
+  /**
+   * Lets you rename a component package that's already installed.
+   * @param array $data A string array with keys 'component' and 'old_title', guess what they do.
+   * @return void
+   */
+  public function rename_component_package($data)
+  {
+    
+    if($data->component->get() === '/')
+      $packageFile = PATH_BASE.DS.'.package'.DS.'package.json';
+    else
+      $packageFile = PATH_COMPONENTS.DS.$data->component.DS.'.package'.DS.'package.json';
+    
+    //Check the file is there.
+    if(!is_file($packageFile))
+      return Data(null);
+    
+    //Get package info.
+    $package = Data(json_decode(file_get_contents($packageFile), true));
+    
+    mk('Sql')
+      ->table('update', 'Packages')
+      ->where('title', "'{$data->old_title}'")
+      ->execute_single()
+      ->is('empty', function()use($data){
+        throw new \exception\NotFound('Package with old title "%s" does not exist.', $data->old_title);
+      })
+      ->merge($package->having('title', 'description'))
+      ->save();
+    
+  }
+  
   /**
    * Attempts to get the component entry in the database of a given component name.
    */

@@ -5,6 +5,12 @@
   "dbUpdates": true,
   "versions": [
     {
+      "version": "0.4.1-beta",
+      "date": "2013-05-30",
+      "description": "Fout in versie. Nu met -beta teken.",
+      "changes": []
+    },
+    {
       "version": "0.4.0",
       "date": "2013-05-28",
       "description": "Naar nieuwe versie systeem overgeschakeld. En ensure_pagetypes helper heeft een delete mogelijkheid gekrekgen.",

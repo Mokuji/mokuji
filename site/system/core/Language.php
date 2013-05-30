@@ -200,8 +200,8 @@ class Language
     //If the translation is not found in this file, and we specified a component, fall back on the core translation files.
     else if($component) {
       
-      //Fallbacks are acceptable for en-GB since that's the language used for the keys.
-      if($language_code !== 'en-GB'){
+      //Fallbacks are acceptable for en-GB since that's the language used for the keys, except TRANSLATE_KEYS.
+      if($language_code !== 'en-GB' || preg_match('~^[A-Z0-9_]+$~', $phrase) === 1){
         
         //Log in the SDK to improve it later.
         if(tx('Component')->available('sdk')){
@@ -230,8 +230,8 @@ class Language
     //When we did not do a fallback but are translating straight from the core and failed.
     else if($is_fallback === false && !$component){
       
-      //This is acceptable for en-GB since that's the language used for the keys.
-      if($language_code !== 'en-GB'){
+      //This is acceptable for en-GB since that's the language used for the keys, except TRANSLATE_KEYS.
+      if($language_code !== 'en-GB' || preg_match('~^[A-Z0-9_]+$~', $phrase) === 1){
         
         //Log in the SDK to improve it later.
         if(tx('Component')->available('sdk')){
