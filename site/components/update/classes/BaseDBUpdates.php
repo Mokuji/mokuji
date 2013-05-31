@@ -76,10 +76,10 @@ abstract class BaseDBUpdates
         return PATH_COMPONENTS.DS.$name;
       
       case 'template':
-        return PATH_TEMPLATES.DS.'custom'.DS.$name;
+        return PATH_TEMPLATES.DS.$name;
       
       case 'theme':
-        return PATH_THEMES.DS.'custom'.DS.$name;
+        return PATH_THEMES.DS.$name;
       
       default:
         return false;

@@ -5,6 +5,12 @@
   "dbUpdates": true,
   "versions": [
     {
+      "version": "0.2.1-beta",
+      "date": "2013-05-31",
+      "description": "Kleine fixes om gebruik te maken van de nieuwe mapstructuur in de thema en templates mappen.",
+      "changes": []
+    },
+    {
       "version": "0.2.0-beta",
       "date": "2013-05-30",
       "description": "Omgeschakeld naar nieuwe versienummeringssysteem. Hernoemen van component packages mogelijk gemaakt.",
