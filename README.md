@@ -54,7 +54,7 @@ The change-log can be found in `CHANGES.md` in this directory.
 * __cms__       : 0.4.1-beta
 * __menu__      : 0.2.0-beta
 * __text__      : 0.2.0-beta
-* __update__    : 0.2.0-beta
+* __update__    : 0.2.1-beta
 * __timeline__  : 0.1.0-beta
 
 ## Licenses
