@@ -5,6 +5,12 @@
   "dbUpdates": true,
   "versions": [
     {
+      "version": "0.1.0-beta",
+      "date": "2013-05-31",
+      "description": "Bumping up to Beta state.",
+      "changes": []
+    },
+    {
       "version": "0.0.2-alpha",
       "date": "2013-05-30",
       "description": "Switched to new version naming system.",
