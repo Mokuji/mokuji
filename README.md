@@ -1,4 +1,4 @@
-#Mokuji (目次) - Active development branch
+#Mokuji (目次) - Version 0.19.0 Beta
 
 * [http://mokuji.net/](http://mokuji.net/)
 * [Twitter](http://twitter.com/mokujidev)

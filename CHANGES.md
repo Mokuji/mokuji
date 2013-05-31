@@ -1,4 +1,46 @@
-#### Development
+#### [Version 0.19.0 Beta](https://github.com/Tuxion/mokuji/tree/0.19.0-beta)
+_31-May-2013_
+
+* From now on this CMS is called Mokuji (目次).
+* New version naming system and release cycle.
+* `security` component has been added.
+* Underduck theme and template have been added.
+* Added image uploading to `timeline` component.
+* Password reset function added.
+* Sessions can now be closed by the core to improve performance.
+* Log in form uses AJAX to be faster and more user friendly.
+* Module created for `timeline` component to display entries based on page settings.
+* `timeline` component has better date-time formatting options.
+* `timeline` component now has an option to hide entries in the past.
+* CKEditor now has template options.
+* The `ensure_pagetypes` helper now has an option to delete.
+* Themes and templates no longer are split into a `system` and `custom` folder.
+* Option to extend URL keys has been implemented by CMS entrypoint.
+  - Pagetypes need to make use of this information for it to do anything.
+* New settings manager.
+  - Includes website information
+  - Includes CMS configuration
+  - Includes security settings
+* Security changes:
+  - Default permission requirements for new controllers is set to administrator.
+  - Added .htaccess files to protect sensitive folders.
+  - Fixed SQL injection vulnerability.
+  - Improved TLS support (using `security` component).
+  - Added a `without()` function to `\dependencies\Data` to filter sensitive information.
+  - Created a CAPTCHA helper. [Read more](http://development.mokuji.org/31/captcha?menu=32)
+  - Removed several unused functions.
+* Bug fixes:
+  - Fixed many translations in nl-NL (using [SDK component](https://github.com/Tuxion/mokuji-sdk)).
+  - Fixed highlighting menu items.
+  - Fixed ORM model caching problems in `update` component.
+  - Fixed findability tab layout bugs.
+  - Fixed bug where `timeline` titles would submit multiple times.
+  - Used workaround for PHP bug where multiple instances at the same time bugs some static variables.
+  - Pretty URL's now have menu item ID's so menu modules and breadcrumbs switching on this don't break.
+  - Shimmed the `string.trim()` function for IE8.
+  - Fixed bug that didn't allow `tx-require-admin` to submit an empty `url_path` to `init.php`.
+  - Fixed bug that caused `ENUM` datatype in ORM to be split incorrectly.
+  - Staying idle in the backend no longer logs you out.
 
 #### [Version 1.2.0 Beta](https://github.com/Tuxion/mokuji/tree/v1.2.0-beta1)
 _11-Apr-2013_
