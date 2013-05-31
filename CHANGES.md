@@ -1,6 +1,6 @@
 #### Development
 
-#### [Version 1.2.0 Beta](https://github.com/Tuxion/tuxion.cms/tree/v1.2.0-beta1)
+#### [Version 1.2.0 Beta](https://github.com/Tuxion/mokuji/tree/v1.2.0-beta1)
 _11-Apr-2013_
 
 * Timeline component (enabling blogs) now added to the base components.
@@ -35,7 +35,7 @@ _11-Apr-2013_
   - String based primary keys no longer breaks the `BaseModel->save` function.
   - Detach page has been fixed.
 
-#### [Version 1.1.0 Beta 2](https://github.com/Tuxion/tuxion.cms/tree/v1.1.0-beta2)
+#### [Version 1.1.0 Beta 2](https://github.com/Tuxion/mokuji/tree/v1.1.0-beta2)
 _21-Mar-2013_
 
 * Important updates
@@ -45,7 +45,7 @@ _21-Mar-2013_
 * Critical security update
   - elFinder remote code execution exploit.
 
-#### [Version 1.1.0 Beta 1](https://github.com/Tuxion/tuxion.cms/tree/v1.1.0-beta1)
+#### [Version 1.1.0 Beta 1](https://github.com/Tuxion/mokuji/tree/v1.1.0-beta1)
 _5-Mar-2013_
 
 * Base components are now fully driven on the PageTypes architecture.
@@ -96,7 +96,7 @@ _5-Mar-2013_
   - The `New versions loaded!` string displays properly again when updating.
   - Added first language title to install script.
 
-#### [Version 1.0.1 Beta 1](https://github.com/Tuxion/tuxion.cms/tree/v1.0.1-beta1)
+#### [Version 1.0.1 Beta 1](https://github.com/Tuxion/mokuji/tree/v1.0.1-beta1)
 _17-Jan-2013_
 
 * Automatically generated forms give much better feedback to the user submitting them.
@@ -115,6 +115,6 @@ _17-Jan-2013_
   - Pages now are properly named, instead of always being called "New Page".
   - Saving menu items, pages and texts should now cause no more trouble.
 
-#### [Version 1.0.0](https://github.com/Tuxion/tuxion.cms/tree/v1.0.0)
+#### [Version 1.0.0](https://github.com/Tuxion/mokuji/tree/v1.0.0)
 
 * The first stable version to be recorded as a version.

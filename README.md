@@ -1,23 +1,13 @@
-```
- _              _               
-| |_ _   ___  _(_) ___  _ __    
-| __| | | \ \/ / |/ _ \| '_ \   
-| |_| |_| |>  <| | (_) | | | |_ 
- \__|\__,_/_/\_\_|\___/|_| |_(_) 
-```
+#Mokuji (目次) - Active development branch
 
-* [http://tuxion.nl/](http://tuxion.nl/)
-* [team@tuxion.nl](mailto:team@tuxion.nl)
-* [Twitter](http://twitter.com/Tuxion)
-* [Google+](http://tuxion.nl/+)
+* [http://mokuji.net/](http://mokuji.net/)
+* [Twitter](http://twitter.com/mokujidev)
 
-# Tuxion CMS - Active development branch (Alpha)
 
 ## Description
 
-Tuxion CMS is a framework that comes with several components that form a CMS. The
-framework is built to make it as easy as we can to extend the CMS. The default components
-are:
+Mokuji is a framework that comes with several components that form a CMS. The framework is
+built to make it as easy as we can to extend the CMS. The 'base' components are:
 
 * __cms__     : "Page" creation and management. Essentially providing the content of the website.
 * __account__ : Login forms and user management. Allows the CMS component to create profile pages.
@@ -25,13 +15,14 @@ are:
 * __text__    : Creating, storing and editing text. Allows the CMS component to create text pages.
 * __update__  : Installing and updating other components or the framework itself.
 * __timeline__: Creating and managing timelines, such as a blog or news page.
+* __security__: Provides security tools and settings for good site-wide security.
 
 For more specific components, you can take a look at our
-[repository list](https://github.com/Tuxion). All repositories prefixed with `tx.cms-` are
+[repository list](https://github.com/Tuxion). All repositories prefixed with `mokuji-` are
 components for this framework.
 
 If you need functionality that does not exist yet, you could create the component yourself
-(an API documentation is planned to come soon), or you could contact
+using the [development documentation](http://development.mokuji.org/), or you could contact
 [Tuxion](http://web.tuxion.nl/).
 
 ## Features
@@ -47,9 +38,8 @@ If you need functionality that does not exist yet, you could create the componen
 
 ## Documentation
 
-A Dutch manual to to the installation and usage of the Tuxion CMS can be found
-[here](http://handleiding.tuxion.nl/). An English version and API documentation are
-planned to come out in the future.
+* [Users manual](http://manual.mokuji.net/)
+* [Development documentation](http://development.mokuji.org/)
 
 ## Change log
 
@@ -57,21 +47,23 @@ The change-log can be found in `CHANGES.md` in this directory.
 
 ## Subsystem Versions
 
-* __framework__ : 3.3.3
-* __account__   : 1.3
-* __cms__       : 3.0
-* __menu__      : 1.4
-* __text__      : 1.2
-* __update__    : 1.2
-* __timeline__  : 0.2
+[Explanation of the versioning system](http://development.mokuji.org/40/versioning?menu=43)
+
+* __framework__ : 0.5.0-beta
+* __account__   : 0.2.0-beta
+* __cms__       : 0.4.1-beta
+* __menu__      : 0.2.0-beta
+* __text__      : 0.2.0-beta
+* __update__    : 0.2.0-beta
+* __timeline__  : 0.1.0-beta
 
 ## Licenses
 
 ### GPLv3
 
-tuxion.cms uses the GPLv3 license. You can read more about this license on [Free Software
+Mokuji uses the GPLv3 license. You can read more about this license on [Free Software
 Foundations website](http://www.gnu.org/licenses/gpl-3.0.html). The license is also
-included as [LICENSE](https://raw.github.com/Tuxion/tuxion.cms/master/LICENSE) in this
+included as [LICENSE](https://raw.github.com/Tuxion/mokuji/master/LICENSE) in this
 directory.
 
 ### Commercial License
