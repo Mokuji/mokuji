@@ -42,7 +42,7 @@
     <label><?php __($component, 'Display type for the entries') ?></label>
     <select name="display_type_id">
       {{each(i, display) data.display_types}}
-        <option value="${display.id}"{{if (display.title == 'Blogposts' && !data.page.display_type_id) || data.page.display_type_id == display.id}} selected="selected"{{/if}}>
+        <option value="${display.id}"{{if (display.title == 'Events' && !data.page.display_type_id) || data.page.display_type_id == display.id}} selected="selected"{{/if}}>
           ${display.title}
         </option>
       {{/each}}

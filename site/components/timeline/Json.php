@@ -184,7 +184,6 @@ class Json extends \dependencies\BaseComponent
       ->otherwise(array(
         'page_id' => $params->{0}->get('int'),
         'timeline_id'=>'NEW',
-        'display_type_id' => $display_types->{0}->id->otherwise(0),
         'is_chronological' => false,
         'is_future_hidden' => true,
         'items_per_page' => 10

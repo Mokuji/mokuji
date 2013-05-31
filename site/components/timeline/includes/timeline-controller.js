@@ -186,8 +186,12 @@
         }
         
         form.restForm({
-          beforeSubmit: function(){
+          beforeSubmit: function(data){
             if(hasFeedback) app.Feedback.working('Saving entry...').startBuffer();
+            
+            //For types that don't have a publish date field, use the start time when available.
+            if(!data.dt_publish && data.dt_start)
+              data.dt_publish = data.dt_start;
           },
           success: function(entry){
             self.loadEntries();

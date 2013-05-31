@@ -14,9 +14,60 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
       '0.2' => '0.3',
       
       '0.3' => '0.0.4-alpha', //No DB changes.
-      '0.0.4-alpha' => '0.1.0-beta' //No DB changes.
+      '0.0.4-alpha' => '0.1.0-beta', //No DB changes.
+      '0.1.0-beta' => '0.2.0-beta'
       
     );
+  
+  public function update_to_0_2_0_beta($current_version, $forced)
+  {
+    
+    try{
+      
+      //Add event entry type and add timespan to entries.
+      mk('Sql')->query('
+        ALTER TABLE `#__timeline_entries`
+          CHANGE `type` `type` ENUM("blogpost", "event") NOT NULL DEFAULT "blogpost",
+          ADD `dt_start` TIMESTAMP NULL DEFAULT NULL,
+          ADD `dt_end` TIMESTAMP NULL DEFAULT NULL
+      ');
+      
+    }
+    
+    catch(\Exception $ex){
+      if(!$forced) throw $ex;
+    }
+    
+    //Create new display type.
+    mk('Sql')
+      ->model('timeline', 'DisplayTypes')
+      ->set(array(
+        'title' => 'Events',
+        'component_name' => 'timeline',
+        'section_name' => 'events_entry'
+      ))
+      ->save();
+    
+    //Queue self-deployment with CMS component.
+    $this->queue(array(
+      'component' => 'cms',
+      'min_version' => '0.4.1-beta'
+      ), function($version){
+        
+        tx('Component')->helpers('cms')->_call('ensure_pagetypes', array(
+          array(
+            'name' => 'timeline',
+            'title' => 'Timeline component'
+          ),
+          array(
+            'events' => 'PAGETYPE'
+          )
+        ));
+        
+      }
+    ); //END - Queue CMS 1.2+
+    
+  }
   
   public function update_to_0_3($current_version, $forced)
   {

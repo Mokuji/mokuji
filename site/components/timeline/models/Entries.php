@@ -14,8 +14,10 @@ class Entries extends \dependencies\BaseModel
     
     $validate = array(
       'id' => array('required', 'number'=>'int', 'gt'=>0),
-      'type' => array('string', 'in'=>array('blogpost')),
+      'type' => array('string', 'in'=>array('blogpost', 'event')),
       'dt_publish' => array('datetime'),
+      'dt_start' => array('datetime'),
+      'dt_end' => array('datetime'),
       'author_id' => array('number'=>'int', 'gt'=>0),
       'thumbnail_image_id' => array('number'=>'int', 'gt'=>0)
     );
