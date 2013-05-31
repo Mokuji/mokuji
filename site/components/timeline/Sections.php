@@ -6,7 +6,8 @@ class Sections extends \dependencies\BaseViews
   protected
     $default_permission = 2,
     $permissions = array(
-      'blogposts_entry' => 0
+      'blogposts_entry' => 0,
+      'events_entry' => 0
     );
   
   protected function blogposts_entry($options)
@@ -14,6 +15,11 @@ class Sections extends \dependencies\BaseViews
     
     return $options;
     
+  }
+  
+  protected function events_entry($options)
+  {
+    return $options;
   }
   
 }

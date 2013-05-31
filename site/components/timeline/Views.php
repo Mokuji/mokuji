@@ -8,8 +8,14 @@ class Views extends \dependencies\BaseViews
   protected
     $default_permission = 2,
     $permissions = array(
-      'blog' => 0
+      'blog' => 0,
+      'events' => 0
     );
+  
+  protected function events($options)
+  {
+    return $this->blog($options);
+  }
   
   protected function blog($options)
   {

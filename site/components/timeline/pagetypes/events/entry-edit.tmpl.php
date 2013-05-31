@@ -2,7 +2,7 @@
 
 <form method="{{if data.id}}PUT{{else}}POST{{/if}}" action="?rest=timeline/entry/${data.id}" id="timeline-entry-form" class="form">
   
-  <input type="hidden" name="type" value="blogpost" />
+  <input type="hidden" name="type" value="event" />
   <input type="hidden" name="force_language" value="${force_language ? force_language : ''}" />
   <input type="hidden" name="page_id" value="${page_id}" />
   
