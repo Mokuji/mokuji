@@ -25,6 +25,14 @@ class Views extends \dependencies\BaseViews
     $part=null;
     $options = $this->helper('get_page_options', $page_info->id);
     
+    //Parse additional keys.
+    $pkey_ext_parts = explode('/', tx('Data')->get->pkey_ext->get());
+    foreach($pkey_ext_parts as $pkey_ext_part){
+      $pkey_ext_part = trim($pkey_ext_part);
+      if(!empty($pkey_ext_part))
+        $options->page_key_extensions->push($pkey_ext_part);
+    }
+    
     tx('Sql')->table('cms', 'Layouts')
       ->parent_pk(true, (!is_null($part) ? $part : $page_info->layout_id))
       ->execute()

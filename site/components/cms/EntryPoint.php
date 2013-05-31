@@ -312,7 +312,7 @@ class EntryPoint extends \dependencies\BaseEntryPoint
               load_plugin('jquery_postpone')
             ));
           }
-
+          
           $output = $that->template($pi->template, $pi->theme, array(
             'title' => $title,
             'plugins' => $plugins

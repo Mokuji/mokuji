@@ -12,6 +12,9 @@ RewriteRule ^site - [S=1]
 #Pages format: /<pid>/<pkey>
 RewriteRule ^/?(\d+)/?([a-zA-Z0-9-_]*)(\.html|/)?$ index.php?pid=$1&pkey=$2&%{QUERY_STRING}
 
+#Pages format: /<pid>/<pkey>/<page_key_extensions>
+RewriteRule ^/?(\d+)/?([a-zA-Z0-9-_]+)/([a-zA-Z0-9-_/]+)(\.html)?$ index.php?pid=$1&pkey=$2&pkey_ext=$3&%{QUERY_STRING}
+
 
 # ----------------------------------------------------------------------
 # Gzip compression
