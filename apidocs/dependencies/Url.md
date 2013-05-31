@@ -116,6 +116,7 @@
 * [`public mixed validate($name, array $rules, $translate)`](#method-validate)
 * [`public mixed validation_errors($names)`](#method-validation_errors)
 * [`public mixed walk($callback)`](#method-walk)
+* [`public mixed without()`](#method-without)
 * [`private mixed _do_check($check)`](#method-_do_check)
 
 
@@ -2082,6 +2083,25 @@ mixed dependencies\Data::walk($callback)
 #### Arguments
 
 * $callback **mixed**
+
+
+
+
+
+
+## Method `without`
+In class: [dependencies\Url](#top)
+
+```
+mixed dependencies\Data::without()
+```
+
+
+
+
+
+* Visibility: **public**
+* This method is defined by [dependencies\Data](../dependencies/Data.md)
 
 
 

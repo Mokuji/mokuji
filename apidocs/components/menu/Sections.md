@@ -15,9 +15,11 @@
 
 ## Class index
 
+**Properties**
+* [`protected mixed $default_permission`](#property-default_permission)
+* [`protected mixed $permissions`](#property-permissions)
 
 **Methods**
-* [`protected mixed menu_item_edit($options)`](#method-menu_item_edit)
 * [`protected mixed menu_item_list($options)`](#method-menu_item_list)
 
 
@@ -26,8 +28,6 @@
 **Properties**
 * [`protected static mixed $reserved`](#property-reserved)
 * [`protected mixed $component`](#property-component)
-* [`protected mixed $default_permission`](#property-default_permission)
-* [`protected mixed $permissions`](#property-permissions)
 
 **Methods**
 * [`public mixed __construct()`](#method-__construct)
@@ -82,7 +82,7 @@ protected mixed $component
 In class: [components\menu\Sections](#top)
 
 ```
-protected mixed $default_permission
+protected mixed $default_permission = 2
 ```
 
 
@@ -90,7 +90,6 @@ protected mixed $default_permission
 
 
 * Visibility: **protected**
-* This property is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 
 ## Property `$permissions`
@@ -105,7 +104,6 @@ protected mixed $permissions = array()
 
 
 * Visibility: **protected**
-* This property is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 
 # Methods
@@ -356,28 +354,6 @@ mixed dependencies\BaseComponent::view($module_name, $options)
 #### Arguments
 
 * $module_name **mixed**
-* $options **mixed**
-
-
-
-
-
-
-## Method `menu_item_edit`
-In class: [components\menu\Sections](#top)
-
-```
-mixed components\menu\Sections::menu_item_edit($options)
-```
-
-
-
-
-
-* Visibility: **protected**
-
-#### Arguments
-
 * $options **mixed**
 
 

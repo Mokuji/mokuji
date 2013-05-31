@@ -15,7 +15,11 @@
 
 ## Class index
 
+**Properties**
+* [`protected mixed $permissions`](#property-permissions)
 
+**Methods**
+* [`protected mixed blog($options)`](#method-blog)
 
 
 ## Inheritance index
@@ -24,7 +28,6 @@
 * [`protected static mixed $reserved`](#property-reserved)
 * [`protected mixed $component`](#property-component)
 * [`protected mixed $default_permission`](#property-default_permission)
-* [`protected mixed $permissions`](#property-permissions)
 
 **Methods**
 * [`public mixed __construct()`](#method-__construct)
@@ -79,7 +82,7 @@ protected mixed $component
 In class: [components\timeline\Modules](#top)
 
 ```
-protected mixed $default_permission
+protected mixed $default_permission = 2
 ```
 
 
@@ -94,7 +97,7 @@ protected mixed $default_permission
 In class: [components\timeline\Modules](#top)
 
 ```
-protected mixed $permissions = array()
+protected mixed $permissions = array('blog' => 0)
 ```
 
 
@@ -102,7 +105,6 @@ protected mixed $permissions = array()
 
 
 * Visibility: **protected**
-* This property is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 
 # Methods
@@ -353,6 +355,28 @@ mixed dependencies\BaseComponent::view($module_name, $options)
 #### Arguments
 
 * $module_name **mixed**
+* $options **mixed**
+
+
+
+
+
+
+## Method `blog`
+In class: [components\timeline\Modules](#top)
+
+```
+mixed components\timeline\Modules::blog($options)
+```
+
+
+
+
+
+* Visibility: **protected**
+
+#### Arguments
+
 * $options **mixed**
 
 

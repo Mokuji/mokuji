@@ -21,6 +21,7 @@
 
 **Methods**
 * [`public mixed install_1_1($dummydata, $forced)`](#method-install_1_1)
+* [`public mixed install_1_2($dummydata, $forced)`](#method-install_1_2)
 * [`public mixed update_to_1_2($current_version, $forced)`](#method-update_to_1_2)
 
 
@@ -37,6 +38,7 @@
 * [`public static mixed init_statics()`](#method-init_statics)
 * [`public static mixed package_data($type, $name)`](#method-package_data)
 * [`public static mixed process_queue()`](#method-process_queue)
+* [`private static mixed vtfn($version)`](#method-vtfn)
 * [`public mixed __construct()`](#method-__construct)
 * [`public mixed clear_cache()`](#method-clear_cache)
 * [`public mixed current_version()`](#method-current_version)
@@ -119,7 +121,7 @@ protected mixed $theme
 In class: [components\update\DBUpdates](#top)
 
 ```
-protected mixed $updates = array('1.1' => '1.2')
+protected mixed $updates = array('1.1' => '1.2', '1.2' => '0.2.0-beta', '0.2.0-beta' => '0.2.1-beta')
 ```
 
 
@@ -242,6 +244,30 @@ mixed components\update\classes\BaseDBUpdates::process_queue()
 
 
 
+## Method `vtfn`
+In class: [components\update\DBUpdates](#top)
+
+```
+mixed components\update\classes\BaseDBUpdates::vtfn($version)
+```
+
+
+
+
+
+* Visibility: **private**
+* This method is **static**.
+* This method is defined by [components\update\classes\BaseDBUpdates](../../components/update/classes/BaseDBUpdates.md)
+
+#### Arguments
+
+* $version **mixed**
+
+
+
+
+
+
 ## Method `__construct`
 In class: [components\update\DBUpdates](#top)
 
@@ -329,6 +355,29 @@ In class: [components\update\DBUpdates](#top)
 
 ```
 mixed components\update\DBUpdates::install_1_1($dummydata, $forced)
+```
+
+
+
+
+
+* Visibility: **public**
+
+#### Arguments
+
+* $dummydata **mixed**
+* $forced **mixed**
+
+
+
+
+
+
+## Method `install_1_2`
+In class: [components\update\DBUpdates](#top)
+
+```
+mixed components\update\DBUpdates::install_1_2($dummydata, $forced)
 ```
 
 

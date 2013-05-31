@@ -15,6 +15,9 @@
 
 ## Class index
 
+**Properties**
+* [`protected mixed $default_permission`](#property-default_permission)
+* [`protected mixed $permissions`](#property-permissions)
 
 **Methods**
 * [`protected mixed compose_mail()`](#method-compose_mail)
@@ -24,6 +27,8 @@
 * [`protected mixed group_list()`](#method-group_list)
 * [`protected mixed import_users()`](#method-import_users)
 * [`protected mixed login_form()`](#method-login_form)
+* [`protected mixed password_forgotten()`](#method-password_forgotten)
+* [`protected mixed password_forgotten_token($options)`](#method-password_forgotten_token)
 * [`protected mixed profile()`](#method-profile)
 * [`protected mixed user_list()`](#method-user_list)
 
@@ -33,8 +38,6 @@
 **Properties**
 * [`protected static mixed $reserved`](#property-reserved)
 * [`protected mixed $component`](#property-component)
-* [`protected mixed $default_permission`](#property-default_permission)
-* [`protected mixed $permissions`](#property-permissions)
 
 **Methods**
 * [`public mixed __construct()`](#method-__construct)
@@ -89,7 +92,7 @@ protected mixed $component
 In class: [components\account\Sections](#top)
 
 ```
-protected mixed $default_permission
+protected mixed $default_permission = 2
 ```
 
 
@@ -97,14 +100,13 @@ protected mixed $default_permission
 
 
 * Visibility: **protected**
-* This property is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 
 ## Property `$permissions`
 In class: [components\account\Sections](#top)
 
 ```
-protected mixed $permissions = array()
+protected mixed $permissions = array('login_form' => 0, 'password_forgotten' => 0, 'password_forgotten_token' => 0, 'profile' => 1)
 ```
 
 
@@ -112,7 +114,6 @@ protected mixed $permissions = array()
 
 
 * Visibility: **protected**
-* This property is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 
 # Methods
@@ -494,6 +495,46 @@ mixed components\account\Sections::login_form()
 
 
 * Visibility: **protected**
+
+
+
+
+
+
+## Method `password_forgotten`
+In class: [components\account\Sections](#top)
+
+```
+mixed components\account\Sections::password_forgotten()
+```
+
+
+
+
+
+* Visibility: **protected**
+
+
+
+
+
+
+## Method `password_forgotten_token`
+In class: [components\account\Sections](#top)
+
+```
+mixed components\account\Sections::password_forgotten_token($options)
+```
+
+
+
+
+
+* Visibility: **protected**
+
+#### Arguments
+
+* $options **mixed**
 
 
 

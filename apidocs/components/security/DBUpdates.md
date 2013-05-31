@@ -1,4 +1,4 @@
-# components\timeline\DBUpdates
+# components\security\DBUpdates
 [API index](../../API-index.md)
 
 
@@ -7,7 +7,7 @@
 
 
 * Class name: DBUpdates
-* Namespace: components\timeline
+* Namespace: components\security
 * Parent class: [components\update\classes\BaseDBUpdates](../../components/update/classes/BaseDBUpdates.md)
 
 
@@ -21,8 +21,6 @@
 
 **Methods**
 * [`public mixed install_0_1($dummydata, $forced)`](#method-install_0_1)
-* [`public mixed update_to_0_2($current_version, $forced)`](#method-update_to_0_2)
-* [`public mixed update_to_0_3($current_version, $forced)`](#method-update_to_0_3)
 
 
 ## Inheritance index
@@ -59,10 +57,10 @@
 
 
 ## Property `$component`
-In class: [components\timeline\DBUpdates](#top)
+In class: [components\security\DBUpdates](#top)
 
 ```
-protected mixed $component = 'timeline'
+protected mixed $component = 'security'
 ```
 
 
@@ -73,7 +71,7 @@ protected mixed $component = 'timeline'
 
 
 ## Property `$is_core`
-In class: [components\timeline\DBUpdates](#top)
+In class: [components\security\DBUpdates](#top)
 
 ```
 protected mixed $is_core
@@ -88,7 +86,7 @@ protected mixed $is_core
 
 
 ## Property `$template`
-In class: [components\timeline\DBUpdates](#top)
+In class: [components\security\DBUpdates](#top)
 
 ```
 protected mixed $template
@@ -103,7 +101,7 @@ protected mixed $template
 
 
 ## Property `$theme`
-In class: [components\timeline\DBUpdates](#top)
+In class: [components\security\DBUpdates](#top)
 
 ```
 protected mixed $theme
@@ -118,10 +116,10 @@ protected mixed $theme
 
 
 ## Property `$updates`
-In class: [components\timeline\DBUpdates](#top)
+In class: [components\security\DBUpdates](#top)
 
 ```
-protected mixed $updates = array('0.1' => '0.2', '0.2' => '0.3', '0.3' => '0.0.4-alpha', '0.0.4-alpha' => '0.1.0-beta')
+protected mixed $updates = array('0.1' => '0.0.2-alpha', '0.0.2-alpha' => '0.1.0-beta')
 ```
 
 
@@ -135,7 +133,7 @@ protected mixed $updates = array('0.1' => '0.2', '0.2' => '0.3', '0.3' => '0.0.4
 
 
 ## Method `base_dir`
-In class: [components\timeline\DBUpdates](#top)
+In class: [components\security\DBUpdates](#top)
 
 ```
 mixed components\update\classes\BaseDBUpdates::base_dir($type, $name)
@@ -160,7 +158,7 @@ mixed components\update\classes\BaseDBUpdates::base_dir($type, $name)
 
 
 ## Method `clear_global_cache`
-In class: [components\timeline\DBUpdates](#top)
+In class: [components\security\DBUpdates](#top)
 
 ```
 mixed components\update\classes\BaseDBUpdates::clear_global_cache()
@@ -180,7 +178,7 @@ mixed components\update\classes\BaseDBUpdates::clear_global_cache()
 
 
 ## Method `init_statics`
-In class: [components\timeline\DBUpdates](#top)
+In class: [components\security\DBUpdates](#top)
 
 ```
 mixed components\update\classes\BaseDBUpdates::init_statics()
@@ -200,7 +198,7 @@ mixed components\update\classes\BaseDBUpdates::init_statics()
 
 
 ## Method `package_data`
-In class: [components\timeline\DBUpdates](#top)
+In class: [components\security\DBUpdates](#top)
 
 ```
 mixed components\update\classes\BaseDBUpdates::package_data($type, $name)
@@ -225,7 +223,7 @@ mixed components\update\classes\BaseDBUpdates::package_data($type, $name)
 
 
 ## Method `process_queue`
-In class: [components\timeline\DBUpdates](#top)
+In class: [components\security\DBUpdates](#top)
 
 ```
 mixed components\update\classes\BaseDBUpdates::process_queue()
@@ -245,7 +243,7 @@ mixed components\update\classes\BaseDBUpdates::process_queue()
 
 
 ## Method `vtfn`
-In class: [components\timeline\DBUpdates](#top)
+In class: [components\security\DBUpdates](#top)
 
 ```
 mixed components\update\classes\BaseDBUpdates::vtfn($version)
@@ -269,7 +267,7 @@ mixed components\update\classes\BaseDBUpdates::vtfn($version)
 
 
 ## Method `__construct`
-In class: [components\timeline\DBUpdates](#top)
+In class: [components\security\DBUpdates](#top)
 
 ```
 mixed components\update\classes\BaseDBUpdates::__construct()
@@ -288,7 +286,7 @@ mixed components\update\classes\BaseDBUpdates::__construct()
 
 
 ## Method `clear_cache`
-In class: [components\timeline\DBUpdates](#top)
+In class: [components\security\DBUpdates](#top)
 
 ```
 mixed components\update\classes\BaseDBUpdates::clear_cache()
@@ -307,7 +305,7 @@ mixed components\update\classes\BaseDBUpdates::clear_cache()
 
 
 ## Method `current_version`
-In class: [components\timeline\DBUpdates](#top)
+In class: [components\security\DBUpdates](#top)
 
 ```
 mixed components\update\classes\BaseDBUpdates::current_version()
@@ -326,7 +324,7 @@ mixed components\update\classes\BaseDBUpdates::current_version()
 
 
 ## Method `install`
-In class: [components\timeline\DBUpdates](#top)
+In class: [components\security\DBUpdates](#top)
 
 ```
 mixed components\update\classes\BaseDBUpdates::install($dummydata, $forced, $update_to_latest)
@@ -351,10 +349,10 @@ mixed components\update\classes\BaseDBUpdates::install($dummydata, $forced, $upd
 
 
 ## Method `install_0_1`
-In class: [components\timeline\DBUpdates](#top)
+In class: [components\security\DBUpdates](#top)
 
 ```
-mixed components\timeline\DBUpdates::install_0_1($dummydata, $forced)
+mixed components\security\DBUpdates::install_0_1($dummydata, $forced)
 ```
 
 
@@ -374,7 +372,7 @@ mixed components\timeline\DBUpdates::install_0_1($dummydata, $forced)
 
 
 ## Method `latest_version`
-In class: [components\timeline\DBUpdates](#top)
+In class: [components\security\DBUpdates](#top)
 
 ```
 mixed components\update\classes\BaseDBUpdates::latest_version()
@@ -393,7 +391,7 @@ mixed components\update\classes\BaseDBUpdates::latest_version()
 
 
 ## Method `uninstall`
-In class: [components\timeline\DBUpdates](#top)
+In class: [components\security\DBUpdates](#top)
 
 ```
 mixed components\update\classes\BaseDBUpdates::uninstall($forced)
@@ -416,7 +414,7 @@ mixed components\update\classes\BaseDBUpdates::uninstall($forced)
 
 
 ## Method `update`
-In class: [components\timeline\DBUpdates](#top)
+In class: [components\security\DBUpdates](#top)
 
 ```
 mixed components\update\classes\BaseDBUpdates::update($forced, $maybe_install)
@@ -439,54 +437,8 @@ mixed components\update\classes\BaseDBUpdates::update($forced, $maybe_install)
 
 
 
-## Method `update_to_0_2`
-In class: [components\timeline\DBUpdates](#top)
-
-```
-mixed components\timeline\DBUpdates::update_to_0_2($current_version, $forced)
-```
-
-
-
-
-
-* Visibility: **public**
-
-#### Arguments
-
-* $current_version **mixed**
-* $forced **mixed**
-
-
-
-
-
-
-## Method `update_to_0_3`
-In class: [components\timeline\DBUpdates](#top)
-
-```
-mixed components\timeline\DBUpdates::update_to_0_3($current_version, $forced)
-```
-
-
-
-
-
-* Visibility: **public**
-
-#### Arguments
-
-* $current_version **mixed**
-* $forced **mixed**
-
-
-
-
-
-
 ## Method `get_base_dir`
-In class: [components\timeline\DBUpdates](#top)
+In class: [components\security\DBUpdates](#top)
 
 ```
 mixed components\update\classes\BaseDBUpdates::get_base_dir()
@@ -505,7 +457,7 @@ mixed components\update\classes\BaseDBUpdates::get_base_dir()
 
 
 ## Method `get_package_data`
-In class: [components\timeline\DBUpdates](#top)
+In class: [components\security\DBUpdates](#top)
 
 ```
 mixed components\update\classes\BaseDBUpdates::get_package_data()
@@ -524,7 +476,7 @@ mixed components\update\classes\BaseDBUpdates::get_package_data()
 
 
 ## Method `next_version`
-In class: [components\timeline\DBUpdates](#top)
+In class: [components\security\DBUpdates](#top)
 
 ```
 mixed components\update\classes\BaseDBUpdates::next_version($version)
@@ -547,7 +499,7 @@ mixed components\update\classes\BaseDBUpdates::next_version($version)
 
 
 ## Method `package`
-In class: [components\timeline\DBUpdates](#top)
+In class: [components\security\DBUpdates](#top)
 
 ```
 mixed components\update\classes\BaseDBUpdates::package()
@@ -566,7 +518,7 @@ mixed components\update\classes\BaseDBUpdates::package()
 
 
 ## Method `queue`
-In class: [components\timeline\DBUpdates](#top)
+In class: [components\security\DBUpdates](#top)
 
 ```
 mixed components\update\classes\BaseDBUpdates::queue($data, \Closure $operation)
@@ -590,7 +542,7 @@ mixed components\update\classes\BaseDBUpdates::queue($data, \Closure $operation)
 
 
 ## Method `version_bump`
-In class: [components\timeline\DBUpdates](#top)
+In class: [components\security\DBUpdates](#top)
 
 ```
 mixed components\update\classes\BaseDBUpdates::version_bump($version)

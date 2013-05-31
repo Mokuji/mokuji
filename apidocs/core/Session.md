@@ -17,10 +17,12 @@
 **Properties**
 * [`public mixed $id`](#property-id)
 * [`public mixed $keep_flashes`](#property-keep_flashes)
+* [`private mixed $opened`](#property-opened)
 
 **Methods**
 * [`public mixed __destruct()`](#method-__destruct)
 * [`public mixed clear_flashes()`](#method-clear_flashes)
+* [`public mixed close()`](#method-close)
 * [`public mixed destroy()`](#method-destroy)
 * [`public mixed flash()`](#method-flash)
 * [`public mixed init()`](#method-init)
@@ -66,6 +68,20 @@ public mixed $keep_flashes = false
 * Visibility: **public**
 
 
+## Property `$opened`
+In class: [core\Session](#top)
+
+```
+private mixed $opened
+```
+
+
+
+
+
+* Visibility: **private**
+
+
 # Methods
 
 
@@ -92,6 +108,24 @@ In class: [core\Session](#top)
 
 ```
 mixed core\Session::clear_flashes()
+```
+
+
+
+
+
+* Visibility: **public**
+
+
+
+
+
+
+## Method `close`
+In class: [core\Session](#top)
+
+```
+mixed core\Session::close()
 ```
 
 

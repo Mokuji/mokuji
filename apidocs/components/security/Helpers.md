@@ -1,4 +1,4 @@
-# components\text\Views
+# components\security\Helpers
 [API index](../../API-index.md)
 
 
@@ -6,9 +6,9 @@
 
 
 
-* Class name: Views
-* Namespace: components\text
-* Parent class: [dependencies\BaseViews](../../dependencies/BaseViews.md)
+* Class name: Helpers
+* Namespace: components\security
+* Parent class: [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 
 
@@ -16,11 +16,12 @@
 ## Class index
 
 **Properties**
-* [`protected mixed $default_permission`](#property-default_permission)
 * [`protected mixed $permissions`](#property-permissions)
 
 **Methods**
-* [`protected mixed text($options)`](#method-text)
+* [`public string generate_captcha($options)`](#method-generate_captcha)
+* [`public string reload_captcha_js()`](#method-reload_captcha_js)
+* [`public boolean validate_captcha($options)`](#method-validate_captcha)
 
 
 ## Inheritance index
@@ -28,13 +29,13 @@
 **Properties**
 * [`protected static mixed $reserved`](#property-reserved)
 * [`protected mixed $component`](#property-component)
+* [`protected mixed $default_permission`](#property-default_permission)
 
 **Methods**
 * [`public mixed __construct()`](#method-__construct)
 * [`public mixed _call($controller, array $args)`](#method-_call)
 * [`public mixed call($controller, $data)`](#method-call)
 * [`public mixed filters()`](#method-filters)
-* [`public mixed get_html($view, $options)`](#method-get_html)
 * [`public mixed helper($controller)`](#method-helper)
 * [`public mixed model($model_name)`](#method-model)
 * [`public mixed module($module_name, $options)`](#method-module)
@@ -48,7 +49,7 @@
 
 
 ## Property `$reserved`
-In class: [components\text\Views](#top)
+In class: [components\security\Helpers](#top)
 
 ```
 protected mixed $reserved = array('__construct', 'filter', 'module', 'section', 'view', 'table', 'get_html', 'call', 'template')
@@ -64,7 +65,7 @@ protected mixed $reserved = array('__construct', 'filter', 'module', 'section', 
 
 
 ## Property `$component`
-In class: [components\text\Views](#top)
+In class: [components\security\Helpers](#top)
 
 ```
 protected mixed $component
@@ -79,7 +80,7 @@ protected mixed $component
 
 
 ## Property `$default_permission`
-In class: [components\text\Views](#top)
+In class: [components\security\Helpers](#top)
 
 ```
 protected mixed $default_permission = 2
@@ -90,13 +91,14 @@ protected mixed $default_permission = 2
 
 
 * Visibility: **protected**
+* This property is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 
 ## Property `$permissions`
-In class: [components\text\Views](#top)
+In class: [components\security\Helpers](#top)
 
 ```
-protected mixed $permissions = array('text' => 0)
+protected mixed $permissions = array('generate_captcha' => 0, 'validate_captcha' => 0, 'reload_captcha_js' => 0)
 ```
 
 
@@ -110,7 +112,7 @@ protected mixed $permissions = array('text' => 0)
 
 
 ## Method `__construct`
-In class: [components\text\Views](#top)
+In class: [components\security\Helpers](#top)
 
 ```
 mixed dependencies\BaseComponent::__construct()
@@ -129,7 +131,7 @@ mixed dependencies\BaseComponent::__construct()
 
 
 ## Method `_call`
-In class: [components\text\Views](#top)
+In class: [components\security\Helpers](#top)
 
 ```
 mixed dependencies\BaseComponent::_call($controller, array $args)
@@ -153,7 +155,7 @@ mixed dependencies\BaseComponent::_call($controller, array $args)
 
 
 ## Method `call`
-In class: [components\text\Views](#top)
+In class: [components\security\Helpers](#top)
 
 ```
 mixed dependencies\BaseComponent::call($controller, $data)
@@ -177,7 +179,7 @@ mixed dependencies\BaseComponent::call($controller, $data)
 
 
 ## Method `filters`
-In class: [components\text\Views](#top)
+In class: [components\security\Helpers](#top)
 
 ```
 mixed dependencies\BaseComponent::filters()
@@ -195,24 +197,28 @@ mixed dependencies\BaseComponent::filters()
 
 
 
-## Method `get_html`
-In class: [components\text\Views](#top)
+## Method `generate_captcha`
+In class: [components\security\Helpers](#top)
 
 ```
-mixed dependencies\BaseViews::get_html($view, $options)
+string components\security\Helpers::generate_captcha($options)
 ```
 
-
+Generates a CAPTCHA field based on the security settings.
 
 
 
 * Visibility: **public**
-* This method is defined by [dependencies\BaseViews](../../dependencies/BaseViews.md)
 
 #### Arguments
 
-* $view **mixed**
 * $options **mixed**
+
+
+#### Return value
+
+**string** - The generated HTML ready for inclusion into a form.
+
 
 
 
@@ -220,7 +226,7 @@ mixed dependencies\BaseViews::get_html($view, $options)
 
 
 ## Method `helper`
-In class: [components\text\Views](#top)
+In class: [components\security\Helpers](#top)
 
 ```
 mixed dependencies\BaseComponent::helper($controller)
@@ -243,7 +249,7 @@ mixed dependencies\BaseComponent::helper($controller)
 
 
 ## Method `model`
-In class: [components\text\Views](#top)
+In class: [components\security\Helpers](#top)
 
 ```
 mixed dependencies\BaseComponent::model($model_name)
@@ -266,7 +272,7 @@ mixed dependencies\BaseComponent::model($model_name)
 
 
 ## Method `module`
-In class: [components\text\Views](#top)
+In class: [components\security\Helpers](#top)
 
 ```
 mixed dependencies\BaseComponent::module($module_name, $options)
@@ -289,8 +295,32 @@ mixed dependencies\BaseComponent::module($module_name, $options)
 
 
 
+## Method `reload_captcha_js`
+In class: [components\security\Helpers](#top)
+
+```
+string components\security\Helpers::reload_captcha_js()
+```
+
+Generates javascript code to dynamically reload the generated captcha.
+
+Useful for restForms.
+
+* Visibility: **public**
+
+
+#### Return value
+
+**string** - The generated javascript code to reload with.
+
+
+
+
+
+
+
 ## Method `section`
-In class: [components\text\Views](#top)
+In class: [components\security\Helpers](#top)
 
 ```
 mixed dependencies\BaseComponent::section($section, $options)
@@ -314,7 +344,7 @@ mixed dependencies\BaseComponent::section($section, $options)
 
 
 ## Method `table`
-In class: [components\text\Views](#top)
+In class: [components\security\Helpers](#top)
 
 ```
 mixed dependencies\BaseComponent::table($model_name, $id)
@@ -337,8 +367,36 @@ mixed dependencies\BaseComponent::table($model_name, $id)
 
 
 
+## Method `validate_captcha`
+In class: [components\security\Helpers](#top)
+
+```
+boolean components\security\Helpers::validate_captcha($options)
+```
+
+Validates a response based on the security settings.
+
+
+
+* Visibility: **public**
+
+#### Arguments
+
+* $options **mixed**
+
+
+#### Return value
+
+**boolean** - Whether the response was valid or not.
+
+
+
+
+
+
+
 ## Method `view`
-In class: [components\text\Views](#top)
+In class: [components\security\Helpers](#top)
 
 ```
 mixed dependencies\BaseComponent::view($module_name, $options)
@@ -354,28 +412,6 @@ mixed dependencies\BaseComponent::view($module_name, $options)
 #### Arguments
 
 * $module_name **mixed**
-* $options **mixed**
-
-
-
-
-
-
-## Method `text`
-In class: [components\text\Views](#top)
-
-```
-mixed components\text\Views::text($options)
-```
-
-
-
-
-
-* Visibility: **protected**
-
-#### Arguments
-
 * $options **mixed**
 
 

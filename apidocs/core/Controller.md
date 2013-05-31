@@ -17,7 +17,7 @@
 
 **Methods**
 * [`public mixed get_messages()`](#method-get_messages)
-* [`public mixed load_error_template(\Exception $e)`](#method-load_error_template)
+* [`public void load_error_template(\Exception $e)`](#method-load_error_template)
 * [`public mixed load_redirect_template(\dependencies\Url $redirect)`](#method-load_redirect_template)
 * [`public mixed load_template($template, $theme, $body, $head)`](#method-load_template)
 * [`public mixed message($message)`](#method-message)
@@ -56,10 +56,10 @@ mixed core\Controller::get_messages()
 In class: [core\Controller](#top)
 
 ```
-mixed core\Controller::load_error_template(\Exception $e)
+void core\Controller::load_error_template(\Exception $e)
 ```
 
-
+Parses exception data into the error template and sends it to the output stream.
 
 
 
@@ -67,7 +67,13 @@ mixed core\Controller::load_error_template(\Exception $e)
 
 #### Arguments
 
-* $e **Exception**
+* $e **Exception** - The exception containing the template data.
+
+
+#### Return value
+
+**void** - This method exits the code.
+
 
 
 

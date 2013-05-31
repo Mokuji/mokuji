@@ -19,7 +19,7 @@
 **Properties**
 
 **Methods**
-* [`public mixed template()`](#method-template)
+* [`public string template()`](#method-template)
 
 
 ## Inheritance index
@@ -82,7 +82,7 @@ protected mixed $component
 In class: [dependencies\BaseEntryPoint](#top)
 
 ```
-protected mixed $default_permission
+protected mixed $default_permission = 2
 ```
 
 
@@ -319,14 +319,22 @@ mixed dependencies\BaseComponent::table($model_name, $id)
 In class: [dependencies\BaseEntryPoint](#top)
 
 ```
-mixed dependencies\BaseEntryPoint::template()
+string dependencies\BaseEntryPoint::template()
 ```
 
+Load a template.
 
-
-
+Loads a template of the given name, with a theme of the given name with given content
+for the &lt;head&gt; tag and given content for the &lt;body&gt; tag. All parameters are optional,
+and can be left out.
 
 * Visibility: **public**
+
+
+#### Return value
+
+**string** - The resulting HTML.
+
 
 
 

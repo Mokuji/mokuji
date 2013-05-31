@@ -15,10 +15,16 @@
 
 ## Class index
 
+**Properties**
+* [`protected mixed $default_permission`](#property-default_permission)
+* [`protected mixed $permissions`](#property-permissions)
 
 **Methods**
 * [`protected mixed accounts()`](#method-accounts)
 * [`protected mixed claim_account()`](#method-claim_account)
+* [`protected mixed email_password_reset_complete($options)`](#method-email_password_reset_complete)
+* [`protected mixed email_password_reset_no_account($options)`](#method-email_password_reset_no_account)
+* [`protected mixed email_password_reset_token($options)`](#method-email_password_reset_token)
 * [`protected mixed email_user_created()`](#method-email_user_created)
 * [`protected mixed email_user_invited($options)`](#method-email_user_invited)
 * [`protected mixed email_user_password_reset($options)`](#method-email_user_password_reset)
@@ -31,8 +37,6 @@
 **Properties**
 * [`protected static mixed $reserved`](#property-reserved)
 * [`protected mixed $component`](#property-component)
-* [`protected mixed $default_permission`](#property-default_permission)
-* [`protected mixed $permissions`](#property-permissions)
 
 **Methods**
 * [`public mixed __construct()`](#method-__construct)
@@ -87,7 +91,7 @@ protected mixed $component
 In class: [components\account\Views](#top)
 
 ```
-protected mixed $default_permission
+protected mixed $default_permission = 2
 ```
 
 
@@ -95,14 +99,13 @@ protected mixed $default_permission
 
 
 * Visibility: **protected**
-* This property is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 
 ## Property `$permissions`
 In class: [components\account\Views](#top)
 
 ```
-protected mixed $permissions = array()
+protected mixed $permissions = array('profile' => 0, 'email_password_reset_no_account' => 0, 'email_password_reset_token' => 0, 'email_password_reset_complete' => 0, 'claim_account' => 1)
 ```
 
 
@@ -110,7 +113,6 @@ protected mixed $permissions = array()
 
 
 * Visibility: **protected**
-* This property is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 
 # Methods
@@ -398,6 +400,72 @@ mixed components\account\Views::claim_account()
 
 
 * Visibility: **protected**
+
+
+
+
+
+
+## Method `email_password_reset_complete`
+In class: [components\account\Views](#top)
+
+```
+mixed components\account\Views::email_password_reset_complete($options)
+```
+
+
+
+
+
+* Visibility: **protected**
+
+#### Arguments
+
+* $options **mixed**
+
+
+
+
+
+
+## Method `email_password_reset_no_account`
+In class: [components\account\Views](#top)
+
+```
+mixed components\account\Views::email_password_reset_no_account($options)
+```
+
+
+
+
+
+* Visibility: **protected**
+
+#### Arguments
+
+* $options **mixed**
+
+
+
+
+
+
+## Method `email_password_reset_token`
+In class: [components\account\Views](#top)
+
+```
+mixed components\account\Views::email_password_reset_token($options)
+```
+
+
+
+
+
+* Visibility: **protected**
+
+#### Arguments
+
+* $options **mixed**
 
 
 

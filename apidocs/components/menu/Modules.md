@@ -15,6 +15,9 @@
 
 ## Class index
 
+**Properties**
+* [`protected mixed $default_permission`](#property-default_permission)
+* [`protected mixed $permissions`](#property-permissions)
 
 **Methods**
 * [`protected mixed breadcrumbs($options)`](#method-breadcrumbs)
@@ -27,8 +30,6 @@
 **Properties**
 * [`protected static mixed $reserved`](#property-reserved)
 * [`protected mixed $component`](#property-component)
-* [`protected mixed $default_permission`](#property-default_permission)
-* [`protected mixed $permissions`](#property-permissions)
 
 **Methods**
 * [`public mixed __construct()`](#method-__construct)
@@ -83,7 +84,7 @@ protected mixed $component
 In class: [components\menu\Modules](#top)
 
 ```
-protected mixed $default_permission
+protected mixed $default_permission = 2
 ```
 
 
@@ -91,14 +92,13 @@ protected mixed $default_permission
 
 
 * Visibility: **protected**
-* This property is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 
 ## Property `$permissions`
 In class: [components\menu\Modules](#top)
 
 ```
-protected mixed $permissions = array()
+protected mixed $permissions = array('menu' => 0, 'menu_image' => 0, 'breadcrumbs' => 0)
 ```
 
 
@@ -106,7 +106,6 @@ protected mixed $permissions = array()
 
 
 * Visibility: **protected**
-* This property is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 
 # Methods
@@ -408,9 +407,10 @@ Returns a result set with the menu items you asked for.
  @key int $min_depth            - Minimum depth to show items from.
  @key int $max_depth            - Number that indicates how far in submenus it should go.
  @key bool $display_select_menu - If true: a select menu will be returned.
- @key bool $no_active           - If false: suppresses the &quot;active&quot; class on active menu items.
- @key bool $no_selected         - If false: suppresses the &quot;selected&quot; class on selected menu items.
- @key bool $select_from_root If true: select items from root.
+ @key bool $keep_menu           - If true: keeps the current menu key in the URL. Only the pid renews.
+ @key bool $no_active           - If true: suppresses the &quot;active&quot; class on active menu items.
+ @key bool $no_selected         - If true: suppresses the &quot;selected&quot; class on selected menu items.
+ @key bool $select_from_root    - If true: select items from root.
             tx(&#039;Data&#039;)-&gt;get-&gt;menu will be used to calculate root.
             $parent_pk, $template_key and $site_id will be overwritten.
 

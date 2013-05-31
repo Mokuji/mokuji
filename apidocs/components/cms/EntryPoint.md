@@ -38,7 +38,7 @@
 * [`public mixed module($module_name, $options)`](#method-module)
 * [`public mixed section($section, $options)`](#method-section)
 * [`public mixed table($model_name, $id)`](#method-table)
-* [`public mixed template()`](#method-template)
+* [`public string template()`](#method-template)
 * [`public mixed view($module_name, $options)`](#method-view)
 
 
@@ -81,7 +81,7 @@ protected mixed $component
 In class: [components\cms\EntryPoint](#top)
 
 ```
-protected mixed $default_permission
+protected mixed $default_permission = 2
 ```
 
 
@@ -336,15 +336,23 @@ mixed dependencies\BaseComponent::table($model_name, $id)
 In class: [components\cms\EntryPoint](#top)
 
 ```
-mixed dependencies\BaseEntryPoint::template()
+string dependencies\BaseEntryPoint::template()
 ```
 
+Load a template.
 
-
-
+Loads a template of the given name, with a theme of the given name with given content
+for the &lt;head&gt; tag and given content for the &lt;body&gt; tag. All parameters are optional,
+and can be left out.
 
 * Visibility: **public**
 * This method is defined by [dependencies\BaseEntryPoint](../../dependencies/BaseEntryPoint.md)
+
+
+#### Return value
+
+**string** - The resulting HTML.
+
 
 
 

@@ -21,9 +21,12 @@
 * [`protected static mixed $validate`](#property-validate)
 
 **Methods**
+* [`public mixed format_dt_publish($format)`](#method-format_dt_publish)
 * [`public mixed get_author()`](#method-get_author)
 * [`public mixed get_info()`](#method-get_info)
 * [`public mixed get_is_future()`](#method-get_is_future)
+* [`public mixed get_thumbnail_image()`](#method-get_thumbnail_image)
+* [`public mixed get_timeline_ids()`](#method-get_timeline_ids)
 * [`public mixed get_timelines()`](#method-get_timelines)
 
 
@@ -36,6 +39,7 @@
 * [`protected static mixed $relations_by_column`](#property-relations_by_column)
 
 **Methods**
+* [`public static mixed clear_table_data_cache()`](#method-clear_table_data_cache)
 * [`public static mixed get_related_model($name)`](#method-get_related_model)
 * [`public static mixed model_data($get)`](#method-model_data)
 * [`public static mixed table_data($get, $set)`](#method-table_data)
@@ -146,6 +150,7 @@
 * [`public mixed validate_model($options)`](#method-validate_model)
 * [`public mixed validation_errors($names)`](#method-validation_errors)
 * [`public mixed walk($callback)`](#method-walk)
+* [`public mixed without()`](#method-without)
 * [`protected mixed refresh_labels()`](#method-refresh_labels)
 * [`private mixed _do_check($check)`](#method-_do_check)
 * [`private mixed get_save_data($insert, $data)`](#method-get_save_data)
@@ -254,7 +259,7 @@ protected mixed $table_name = 'timeline_entries'
 In class: [components\timeline\models\Entries](#top)
 
 ```
-protected mixed $validate = array('id' => array('required', 'number' => 'int', 'gt' => 0), 'type' => array('string', 'in' => array('blogpost')), 'dt_publish' => array('datetime'), 'author_id' => array('number' => 'int', 'gt' => 0))
+protected mixed $validate = array('id' => array('required', 'number' => 'int', 'gt' => 0), 'type' => array('string', 'in' => array('blogpost')), 'dt_publish' => array('datetime'), 'author_id' => array('number' => 'int', 'gt' => 0), 'thumbnail_image_id' => array('number' => 'int', 'gt' => 0))
 ```
 
 
@@ -266,6 +271,26 @@ protected mixed $validate = array('id' => array('required', 'number' => 'int', '
 
 
 # Methods
+
+
+## Method `clear_table_data_cache`
+In class: [components\timeline\models\Entries](#top)
+
+```
+mixed dependencies\BaseModel::clear_table_data_cache()
+```
+
+
+
+
+
+* Visibility: **public**
+* This method is **static**.
+* This method is defined by [dependencies\BaseModel](../../../dependencies/BaseModel.md)
+
+
+
+
 
 
 ## Method `get_related_model`
@@ -1244,6 +1269,28 @@ mixed dependencies\Data::format($format)
 
 
 
+## Method `format_dt_publish`
+In class: [components\timeline\models\Entries](#top)
+
+```
+mixed components\timeline\models\Entries::format_dt_publish($format)
+```
+
+
+
+
+
+* Visibility: **public**
+
+#### Arguments
+
+* $format **mixed**
+
+
+
+
+
+
 ## Method `generation`
 In class: [components\timeline\models\Entries](#top)
 
@@ -1346,6 +1393,42 @@ In class: [components\timeline\models\Entries](#top)
 
 ```
 mixed components\timeline\models\Entries::get_is_future()
+```
+
+
+
+
+
+* Visibility: **public**
+
+
+
+
+
+
+## Method `get_thumbnail_image`
+In class: [components\timeline\models\Entries](#top)
+
+```
+mixed components\timeline\models\Entries::get_thumbnail_image()
+```
+
+
+
+
+
+* Visibility: **public**
+
+
+
+
+
+
+## Method `get_timeline_ids`
+In class: [components\timeline\models\Entries](#top)
+
+```
+mixed components\timeline\models\Entries::get_timeline_ids()
 ```
 
 
@@ -2716,6 +2799,25 @@ mixed dependencies\Data::walk($callback)
 #### Arguments
 
 * $callback **mixed**
+
+
+
+
+
+
+## Method `without`
+In class: [components\timeline\models\Entries](#top)
+
+```
+mixed dependencies\Data::without()
+```
+
+
+
+
+
+* Visibility: **public**
+* This method is defined by [dependencies\Data](../../../dependencies/Data.md)
 
 
 

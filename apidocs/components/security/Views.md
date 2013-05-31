@@ -1,4 +1,4 @@
-# components\text\Views
+# components\security\Views
 [API index](../../API-index.md)
 
 
@@ -7,7 +7,7 @@
 
 
 * Class name: Views
-* Namespace: components\text
+* Namespace: components\security
 * Parent class: [dependencies\BaseViews](../../dependencies/BaseViews.md)
 
 
@@ -15,12 +15,9 @@
 
 ## Class index
 
-**Properties**
-* [`protected mixed $default_permission`](#property-default_permission)
-* [`protected mixed $permissions`](#property-permissions)
 
 **Methods**
-* [`protected mixed text($options)`](#method-text)
+* [`protected mixed settings_security()`](#method-settings_security)
 
 
 ## Inheritance index
@@ -28,6 +25,8 @@
 **Properties**
 * [`protected static mixed $reserved`](#property-reserved)
 * [`protected mixed $component`](#property-component)
+* [`protected mixed $default_permission`](#property-default_permission)
+* [`protected mixed $permissions`](#property-permissions)
 
 **Methods**
 * [`public mixed __construct()`](#method-__construct)
@@ -48,7 +47,7 @@
 
 
 ## Property `$reserved`
-In class: [components\text\Views](#top)
+In class: [components\security\Views](#top)
 
 ```
 protected mixed $reserved = array('__construct', 'filter', 'module', 'section', 'view', 'table', 'get_html', 'call', 'template')
@@ -64,7 +63,7 @@ protected mixed $reserved = array('__construct', 'filter', 'module', 'section', 
 
 
 ## Property `$component`
-In class: [components\text\Views](#top)
+In class: [components\security\Views](#top)
 
 ```
 protected mixed $component
@@ -79,7 +78,7 @@ protected mixed $component
 
 
 ## Property `$default_permission`
-In class: [components\text\Views](#top)
+In class: [components\security\Views](#top)
 
 ```
 protected mixed $default_permission = 2
@@ -90,13 +89,14 @@ protected mixed $default_permission = 2
 
 
 * Visibility: **protected**
+* This property is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 
 ## Property `$permissions`
-In class: [components\text\Views](#top)
+In class: [components\security\Views](#top)
 
 ```
-protected mixed $permissions = array('text' => 0)
+protected mixed $permissions = array()
 ```
 
 
@@ -104,13 +104,14 @@ protected mixed $permissions = array('text' => 0)
 
 
 * Visibility: **protected**
+* This property is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 
 # Methods
 
 
 ## Method `__construct`
-In class: [components\text\Views](#top)
+In class: [components\security\Views](#top)
 
 ```
 mixed dependencies\BaseComponent::__construct()
@@ -129,7 +130,7 @@ mixed dependencies\BaseComponent::__construct()
 
 
 ## Method `_call`
-In class: [components\text\Views](#top)
+In class: [components\security\Views](#top)
 
 ```
 mixed dependencies\BaseComponent::_call($controller, array $args)
@@ -153,7 +154,7 @@ mixed dependencies\BaseComponent::_call($controller, array $args)
 
 
 ## Method `call`
-In class: [components\text\Views](#top)
+In class: [components\security\Views](#top)
 
 ```
 mixed dependencies\BaseComponent::call($controller, $data)
@@ -177,7 +178,7 @@ mixed dependencies\BaseComponent::call($controller, $data)
 
 
 ## Method `filters`
-In class: [components\text\Views](#top)
+In class: [components\security\Views](#top)
 
 ```
 mixed dependencies\BaseComponent::filters()
@@ -196,7 +197,7 @@ mixed dependencies\BaseComponent::filters()
 
 
 ## Method `get_html`
-In class: [components\text\Views](#top)
+In class: [components\security\Views](#top)
 
 ```
 mixed dependencies\BaseViews::get_html($view, $options)
@@ -220,7 +221,7 @@ mixed dependencies\BaseViews::get_html($view, $options)
 
 
 ## Method `helper`
-In class: [components\text\Views](#top)
+In class: [components\security\Views](#top)
 
 ```
 mixed dependencies\BaseComponent::helper($controller)
@@ -243,7 +244,7 @@ mixed dependencies\BaseComponent::helper($controller)
 
 
 ## Method `model`
-In class: [components\text\Views](#top)
+In class: [components\security\Views](#top)
 
 ```
 mixed dependencies\BaseComponent::model($model_name)
@@ -266,7 +267,7 @@ mixed dependencies\BaseComponent::model($model_name)
 
 
 ## Method `module`
-In class: [components\text\Views](#top)
+In class: [components\security\Views](#top)
 
 ```
 mixed dependencies\BaseComponent::module($module_name, $options)
@@ -290,7 +291,7 @@ mixed dependencies\BaseComponent::module($module_name, $options)
 
 
 ## Method `section`
-In class: [components\text\Views](#top)
+In class: [components\security\Views](#top)
 
 ```
 mixed dependencies\BaseComponent::section($section, $options)
@@ -314,7 +315,7 @@ mixed dependencies\BaseComponent::section($section, $options)
 
 
 ## Method `table`
-In class: [components\text\Views](#top)
+In class: [components\security\Views](#top)
 
 ```
 mixed dependencies\BaseComponent::table($model_name, $id)
@@ -338,7 +339,7 @@ mixed dependencies\BaseComponent::table($model_name, $id)
 
 
 ## Method `view`
-In class: [components\text\Views](#top)
+In class: [components\security\Views](#top)
 
 ```
 mixed dependencies\BaseComponent::view($module_name, $options)
@@ -361,11 +362,11 @@ mixed dependencies\BaseComponent::view($module_name, $options)
 
 
 
-## Method `text`
-In class: [components\text\Views](#top)
+## Method `settings_security`
+In class: [components\security\Views](#top)
 
 ```
-mixed components\text\Views::text($options)
+mixed components\security\Views::settings_security()
 ```
 
 
@@ -373,10 +374,6 @@ mixed components\text\Views::text($options)
 
 
 * Visibility: **protected**
-
-#### Arguments
-
-* $options **mixed**
 
 
 
