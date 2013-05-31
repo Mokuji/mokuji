@@ -42,8 +42,8 @@ class Sections extends \dependencies\BaseViews
     }
     
     $paths = array(
-      'theme' => URL_THEMES.'system/backend/',
-      'template' => URL_TEMPLATES.'system/backend/',
+      'theme' => URL_THEMES.'cms_backend/',
+      'template' => URL_TEMPLATES.'cms_backend/',
       'components' => URL_COMPONENTS,
       'component' => URL_COMPONENTS.$component.'/',
       'cms' => URL_SITE.'tx.cms/cms/'
