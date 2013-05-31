@@ -14,9 +14,15 @@
       <a class="edit-item operation-icon icon-pencil" href="#" data-entry="${data.id}"></a>
     </h2>
     
-    <p class="publish-date">
-      <?php __($component, 'Publish date') ?>:
-      <span class="dt-publish">${data.dt_publish}</span>
+    <p class="start-date">
+      <?php __($component, 'Starting date') ?>:
+      <span class="dt-start">${data.dt_start}</span>
+      {{if data.is_future}}<span class="future">(<?php __($component, 'In the future') ?>)</span>{{/if}}
+    </p>
+    
+    <p class="end-date">
+      <?php __($component, 'Ending date') ?>:
+      <span class="dt-end">${data.dt_end}</span>
       {{if data.is_future}}<span class="future">(<?php __($component, 'In the future') ?>)</span>{{/if}}
     </p>
     
