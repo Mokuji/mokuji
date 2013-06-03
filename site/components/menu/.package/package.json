@@ -5,6 +5,12 @@
   "dbUpdates": true,
   "versions": [
     {
+      "version": "0.3.0-beta",
+      "date": "2013-06-03",
+      "description": "De 'as_hoptions' optie toegevoegd aan menu module.",
+      "changes": []
+    },
+    {
       "version": "0.2.0-beta",
       "date": "2013-05-30",
       "description": "Naar nieuwe versie systeem overgeschakeld.",
