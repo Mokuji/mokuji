@@ -326,7 +326,8 @@ class Resultset extends Data
             $skip++;
             $skipTarget--;
             
-            if($model->{$rgt}->get('int') <= current($models)[$lft]){
+            $target_model = current($models);//PHP 5.3 compatibility
+            if($model->{$rgt}->get('int') <= $target_model[$lft]){
               prev($models);
               $skip--;
               break;

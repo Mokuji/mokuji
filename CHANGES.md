@@ -1,3 +1,8 @@
+#### [Version 0.20.1 Beta](https://github.com/Tuxion/mokuji/tree/0.20.1-beta)
+_3-Jun-2013_
+
+* Bugfix / Improved backwards compatibility in dependencies\Resultset.
+
 #### [Version 0.20.0 Beta](https://github.com/Tuxion/mokuji/tree/0.20.0-beta)
 _3-Jun-2013_
 

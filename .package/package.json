@@ -5,6 +5,12 @@
   "dbUpdates": true,
   "versions": [
     {
+      "version": "0.6.1-beta",
+      "date": "2013-06-03",
+      "description": "Bugfix / Improved backwards compatibility in dependencies\\Resultset.",
+      "changes": []
+    },
+    {
       "version": "0.6.0-beta",
       "date": "2013-06-03",
       "description": "Bugfix in 'hwalk' functie en 'as_hoptions' functie toegevoegd aan Resultset class.",
