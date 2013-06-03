@@ -58,7 +58,7 @@ class Resultset extends Data
   // hwalk this resultset to create a list
   public function as_hlist()
   {
-
+    
     $id = null;
     if(func_num_args() == 1){
       if(is_string(func_get_arg(0))){
@@ -86,9 +86,9 @@ class Resultset extends Data
     
     $list = '<ul'.(is_string($classes) ? ' class="'.$classes.'"' : '').(is_string($id) ? ' id="'.$id.'"' : '').'>'."\n";
     $indent = 2;
-
+    
     $this->hwalk(function($val, $key, $delta)use(&$indent, &$list, $data){
-
+      
       // $properties = array('rel' => $val->ai());
       $properties = array('rel' => $val->id);
       
@@ -104,10 +104,11 @@ class Resultset extends Data
       );
       
       $list .= str_repeat(' ', $indent);
-
+      
       if ($delta >= 0) {
         $list .= '<li'.(count($properties) > 0 ? ' '.implode_keys('" ', '="', $properties).'"' : '').'>'.$content;
       }
+      
       if ($delta == 0) {
         $list .= '</li>' . "\n";
       }
@@ -120,9 +121,77 @@ class Resultset extends Data
         $list .= '</ul></li>'."\n";
       }
       
+      
     });
     
     $list .= '</ul>'."\n";
+    
+    return $list;
+    
+  }
+  
+  // hwalk this resultset to create a select field
+  public function as_hoptions()
+  {
+    
+    $id = null;
+    if(func_num_args() == 1){
+      if(is_string(func_get_arg(0))){
+        $classes = func_get_arg(0);
+        $data = null;
+      }else{
+        $classes = null;
+        $data = func_get_arg(0);
+      }
+    }
+    elseif(func_num_args() == 2){
+      if(is_array(func_get_arg(0))){
+        $options = func_get_arg(0);
+        $classes = $options['classes'];
+        $id = $options['id'];
+      }else{
+        $classes = func_get_arg(0);
+      }
+      $data = func_get_arg(1);
+    }
+    else{
+      $classes = null;
+      $data = null;
+    }
+    
+    $list = '<select'.(is_string($classes) ? ' class="'.$classes.'"' : '').(is_string($id) ? ' id="'.$id.'"' : '').($options['value-location'] === true ? ' onchange="window.location=this.value"' : '').'>'."\n";
+    $indent = 0;
+    
+    $this->hwalk(function($val, $key, $delta)use(&$indent, &$list, $data){
+      
+      // $properties = array('rel' => $val->ai());
+      $properties = array('rel' => $val->id);
+      
+      $content = (is_null($data)
+        ? ($delta > 0
+          ? $key
+          : $val
+        )
+        : (is_callable($data)
+          ? $data($val, $key, $delta, $properties)
+          : $val->extract($data)
+        )
+      );
+      
+      if ($delta >= 0) {
+        $list .= '<option'.(count($properties) > 0 ? ' '.implode_keys('" ', '="', $properties).'"' : '').'>'.str_repeat('&nbsp;', $indent).$content.'</option>'."\n";
+      }
+      
+      if ($delta > 0) {
+        $indent += 2;
+      }
+      elseif ($delta < 0) {
+        $indent -= 2;
+      }
+      
+    });
+    
+    $list .= '</select>'."\n";
     
     return $list;
     
@@ -245,8 +314,31 @@ class Resultset extends Data
         
         if($has_subnodes == true)
         {
-          $skip = floor($gap/2);
-
+          $skipTarget = floor($gap/2);
+          $skip = 0;
+          
+          //Verify this skip is correct, by checking the left does not go out of bounds.
+          do{
+            
+            if(next($models) === false)
+              break;
+            
+            $skip++;
+            $skipTarget--;
+            
+            $target_model = current($models);//PHP 5.3 compatibility
+            if($model->{$rgt}->get('int') <= $target_model[$lft]){
+              prev($models);
+              $skip--;
+              break;
+            }
+            
+          }while($skipTarget > 0);
+          
+          //Unwind the array for as much as we wound it up.
+          for($j=0; $j < $skip; $j++)
+            prev($models);
+          
           // array_slices doesn't reset the array pointer(!) -> feedback php.net
           $walker(array_slice($models, ($i+1), $skip));
 

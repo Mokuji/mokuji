@@ -85,7 +85,8 @@ class Modules extends \dependencies\BaseViews
           $classes = '_menu'.($options->classes->is_set() ? ' '.$options->classes->get() : '');
           
           //Show a normal menu.
-          return $items->as_hlist($classes, function($item, $key, $delta, &$properties)use(&$active_depth, $selected_items, $options){
+          $method = $options->as_hoptions->is_true() ? 'as_hoptions' : 'as_hlist';
+          return $items->{$method}(array('id'=>null, 'classes'=>$classes, 'value-location'=>$options->as_hoptions->is_true()), function($item, $key, $delta, &$properties)use(&$active_depth, $selected_items, $options){
             
             //Test if we are allowed to view this item.
             if(1
@@ -107,6 +108,8 @@ class Modules extends \dependencies\BaseViews
                 && $selected_items->any(function($v)use($item){ return ($item->menu_id->get() == $v->menu_id->get() && ($item->lft->get() <= $v->lft->get() && $item->rgt->get() >= $v->rgt->get())); })
               ){
                 $properties['class'] .= ' selected';
+                if($options->as_hoptions->is_true())
+                  $properties['selected'] = 'selected';
               }
               
               if($delta < 0 && $item->depth->get('int') == $active_depth -1 || $item->depth->get('int') - $active_depth >= 1){
@@ -115,10 +118,16 @@ class Modules extends \dependencies\BaseViews
               
               $properties['class'] = trim($properties['class']);
               
-              return
-                '<a href="'.
-                  url('pid='.$item->page_id.($options->keep_menu->get() == false ? '&menu='.$item->id : '&menu=KEEP'), true).
-                '">'.$item->title.'</a>';
+              if($options->as_hoptions->is_true()){
+                $properties['value'] = (string)url('pid='.$item->page_id.($options->keep_menu->get() == false ? '&menu='.$item->id : '&menu=KEEP'), true);
+                return $item->depth->get() <= $options->max_depth->get() ? $item->title->get() : false;
+              } else {
+                return $item->depth->get() > $options->max_depth->get() ? false :
+                  '<a href="'.
+                    url('pid='.$item->page_id.($options->keep_menu->get() == false ? '&menu='.$item->id : '&menu=KEEP'), true).
+                  '">'.$item->title.'</a>';
+              }
+              
 
             }
             

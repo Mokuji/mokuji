@@ -1,3 +1,14 @@
+#### [Version 0.20.1 Beta](https://github.com/Tuxion/mokuji/tree/0.20.1-beta)
+_3-Jun-2013_
+
+* Bugfix / Improved backwards compatibility in dependencies\Resultset.
+
+#### [Version 0.20.0 Beta](https://github.com/Tuxion/mokuji/tree/0.20.0-beta)
+_3-Jun-2013_
+
+* Added the `as_hoptions` function to `\dependencies\Resultset` and `menu` module in the `menu` component.
+* Fixed bug with hwalk where it would grab too many sub-items if the lft-rgt structure is not complete.
+
 #### [Version 0.19.1 Beta](https://github.com/Tuxion/mokuji/tree/0.19.1-beta)
 _31-May-2013_
 
