@@ -1,6 +1,53 @@
-#### Development
+#### [Version 0.19.1 Beta](https://github.com/Tuxion/mokuji/tree/0.19.1-beta)
+_31-May-2013_
 
-#### [Version 1.2.0 Beta](https://github.com/Tuxion/tuxion.cms/tree/v1.2.0-beta1)
+* Removed old version tags and removed references to them in `CHANGES.md`.
+
+#### [Version 0.19.0 Beta](https://github.com/Tuxion/mokuji/tree/0.19.0-beta)
+_31-May-2013_
+
+* From now on this CMS is called Mokuji (目次).
+* New version naming system and release cycle.
+* `security` component has been added.
+* Underduck theme and template have been added.
+* Added image uploading to `timeline` component.
+* Password reset function added.
+* Sessions can now be closed by the core to improve performance.
+* Log in form uses AJAX to be faster and more user friendly.
+* Module created for `timeline` component to display entries based on page settings.
+* `timeline` component has better date-time formatting options.
+* `timeline` component now has an option to hide entries in the past.
+* CKEditor now has template options.
+* The `ensure_pagetypes` helper now has an option to delete.
+* Themes and templates no longer are split into a `system` and `custom` folder.
+* Option to extend URL keys has been implemented by CMS entrypoint.
+  - Pagetypes need to make use of this information for it to do anything.
+* New settings manager.
+  - Includes website information
+  - Includes CMS configuration
+  - Includes security settings
+* Security changes:
+  - Default permission requirements for new controllers is set to administrator.
+  - Added .htaccess files to protect sensitive folders.
+  - Fixed SQL injection vulnerability.
+  - Improved TLS support (using `security` component).
+  - Added a `without()` function to `\dependencies\Data` to filter sensitive information.
+  - Created a CAPTCHA helper. [Read more](http://development.mokuji.org/31/captcha?menu=32)
+  - Removed several unused functions.
+* Bug fixes:
+  - Fixed many translations in nl-NL (using [SDK component](https://github.com/Tuxion/mokuji-sdk)).
+  - Fixed highlighting menu items.
+  - Fixed ORM model caching problems in `update` component.
+  - Fixed findability tab layout bugs.
+  - Fixed bug where `timeline` titles would submit multiple times.
+  - Used workaround for PHP bug where multiple instances at the same time bugs some static variables.
+  - Pretty URL's now have menu item ID's so menu modules and breadcrumbs switching on this don't break.
+  - Shimmed the `string.trim()` function for IE8.
+  - Fixed bug that didn't allow `tx-require-admin` to submit an empty `url_path` to `init.php`.
+  - Fixed bug that caused `ENUM` datatype in ORM to be split incorrectly.
+  - Staying idle in the backend no longer logs you out.
+
+#### Version 1.2.0 Beta (Old versioning system)
 _11-Apr-2013_
 
 * Timeline component (enabling blogs) now added to the base components.
@@ -35,7 +82,7 @@ _11-Apr-2013_
   - String based primary keys no longer breaks the `BaseModel->save` function.
   - Detach page has been fixed.
 
-#### [Version 1.1.0 Beta 2](https://github.com/Tuxion/tuxion.cms/tree/v1.1.0-beta2)
+#### Version 1.1.0 Beta 2 (Old versioning system)
 _21-Mar-2013_
 
 * Important updates
@@ -45,7 +92,7 @@ _21-Mar-2013_
 * Critical security update
   - elFinder remote code execution exploit.
 
-#### [Version 1.1.0 Beta 1](https://github.com/Tuxion/tuxion.cms/tree/v1.1.0-beta1)
+#### Version 1.1.0 Beta 1  (Old versioning system)
 _5-Mar-2013_
 
 * Base components are now fully driven on the PageTypes architecture.
@@ -96,7 +143,7 @@ _5-Mar-2013_
   - The `New versions loaded!` string displays properly again when updating.
   - Added first language title to install script.
 
-#### [Version 1.0.1 Beta 1](https://github.com/Tuxion/tuxion.cms/tree/v1.0.1-beta1)
+#### Version 1.0.1 Beta 1 (Old versioning system)
 _17-Jan-2013_
 
 * Automatically generated forms give much better feedback to the user submitting them.
@@ -115,6 +162,6 @@ _17-Jan-2013_
   - Pages now are properly named, instead of always being called "New Page".
   - Saving menu items, pages and texts should now cause no more trouble.
 
-#### [Version 1.0.0](https://github.com/Tuxion/tuxion.cms/tree/v1.0.0)
+#### Version 1.0.0 (Old versioning system)
 
 * The first stable version to be recorded as a version.

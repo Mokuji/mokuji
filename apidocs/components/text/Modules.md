@@ -15,10 +15,11 @@
 
 ## Class index
 
+**Properties**
+* [`protected mixed $default_permission`](#property-default_permission)
+* [`protected mixed $permissions`](#property-permissions)
 
 **Methods**
-* [`protected mixed latest_news($options)`](#method-latest_news)
-* [`protected mixed search_bar()`](#method-search_bar)
 * [`protected mixed text($options)`](#method-text)
 
 
@@ -27,8 +28,6 @@
 **Properties**
 * [`protected static mixed $reserved`](#property-reserved)
 * [`protected mixed $component`](#property-component)
-* [`protected mixed $default_permission`](#property-default_permission)
-* [`protected mixed $permissions`](#property-permissions)
 
 **Methods**
 * [`public mixed __construct()`](#method-__construct)
@@ -83,7 +82,7 @@ protected mixed $component
 In class: [components\text\Modules](#top)
 
 ```
-protected mixed $default_permission
+protected mixed $default_permission = 2
 ```
 
 
@@ -91,14 +90,13 @@ protected mixed $default_permission
 
 
 * Visibility: **protected**
-* This property is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 
 ## Property `$permissions`
 In class: [components\text\Modules](#top)
 
 ```
-protected mixed $permissions = array()
+protected mixed $permissions = array('text' => 0)
 ```
 
 
@@ -106,7 +104,6 @@ protected mixed $permissions = array()
 
 
 * Visibility: **protected**
-* This property is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 
 # Methods
@@ -358,46 +355,6 @@ mixed dependencies\BaseComponent::view($module_name, $options)
 
 * $module_name **mixed**
 * $options **mixed**
-
-
-
-
-
-
-## Method `latest_news`
-In class: [components\text\Modules](#top)
-
-```
-mixed components\text\Modules::latest_news($options)
-```
-
-
-
-
-
-* Visibility: **protected**
-
-#### Arguments
-
-* $options **mixed**
-
-
-
-
-
-
-## Method `search_bar`
-In class: [components\text\Modules](#top)
-
-```
-mixed components\text\Modules::search_bar()
-```
-
-
-
-
-
-* Visibility: **protected**
 
 
 

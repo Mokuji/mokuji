@@ -21,7 +21,9 @@
 
 **Methods**
 * [`public mixed install_1_2($dummydata, $forced)`](#method-install_1_2)
+* [`public mixed install_1_3($dummydata, $forced)`](#method-install_1_3)
 * [`public mixed update_to_1_3($current_version, $forced)`](#method-update_to_1_3)
+* [`public mixed update_to_1_4($current_version, $forced)`](#method-update_to_1_4)
 
 
 ## Inheritance index
@@ -37,6 +39,7 @@
 * [`public static mixed init_statics()`](#method-init_statics)
 * [`public static mixed package_data($type, $name)`](#method-package_data)
 * [`public static mixed process_queue()`](#method-process_queue)
+* [`private static mixed vtfn($version)`](#method-vtfn)
 * [`public mixed __construct()`](#method-__construct)
 * [`public mixed clear_cache()`](#method-clear_cache)
 * [`public mixed current_version()`](#method-current_version)
@@ -119,7 +122,7 @@ protected mixed $theme
 In class: [components\account\DBUpdates](#top)
 
 ```
-protected mixed $updates = array('1.2' => '1.3')
+protected mixed $updates = array('1.2' => '1.3', '1.3' => '1.4', '1.4' => '0.2.0-beta')
 ```
 
 
@@ -242,6 +245,30 @@ mixed components\update\classes\BaseDBUpdates::process_queue()
 
 
 
+## Method `vtfn`
+In class: [components\account\DBUpdates](#top)
+
+```
+mixed components\update\classes\BaseDBUpdates::vtfn($version)
+```
+
+
+
+
+
+* Visibility: **private**
+* This method is **static**.
+* This method is defined by [components\update\classes\BaseDBUpdates](../../components/update/classes/BaseDBUpdates.md)
+
+#### Arguments
+
+* $version **mixed**
+
+
+
+
+
+
 ## Method `__construct`
 In class: [components\account\DBUpdates](#top)
 
@@ -347,6 +374,29 @@ mixed components\account\DBUpdates::install_1_2($dummydata, $forced)
 
 
 
+## Method `install_1_3`
+In class: [components\account\DBUpdates](#top)
+
+```
+mixed components\account\DBUpdates::install_1_3($dummydata, $forced)
+```
+
+
+
+
+
+* Visibility: **public**
+
+#### Arguments
+
+* $dummydata **mixed**
+* $forced **mixed**
+
+
+
+
+
+
 ## Method `latest_version`
 In class: [components\account\DBUpdates](#top)
 
@@ -418,6 +468,29 @@ In class: [components\account\DBUpdates](#top)
 
 ```
 mixed components\account\DBUpdates::update_to_1_3($current_version, $forced)
+```
+
+
+
+
+
+* Visibility: **public**
+
+#### Arguments
+
+* $current_version **mixed**
+* $forced **mixed**
+
+
+
+
+
+
+## Method `update_to_1_4`
+In class: [components\account\DBUpdates](#top)
+
+```
+mixed components\account\DBUpdates::update_to_1_4($current_version, $forced)
 ```
 
 

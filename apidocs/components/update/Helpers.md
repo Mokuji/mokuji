@@ -15,9 +15,14 @@
 
 ## Class index
 
+**Properties**
+* [`private static mixed $package_cache`](#property-package_cache)
+* [`protected mixed $default_permission`](#property-default_permission)
+* [`protected mixed $permissions`](#property-permissions)
 
 **Methods**
 * [`public mixed get_component_package($component)`](#method-get_component_package)
+* [`public void rename_component_package(array $data)`](#method-rename_component_package)
 * [`protected mixed check_updates($options)`](#method-check_updates)
 * [`private mixed check_folder($folder, $namespace, $silent, $force)`](#method-check_folder)
 * [`private mixed sync_manual_package($package, $folder, $namespace, $silent, $force)`](#method-sync_manual_package)
@@ -28,8 +33,6 @@
 **Properties**
 * [`protected static mixed $reserved`](#property-reserved)
 * [`protected mixed $component`](#property-component)
-* [`protected mixed $default_permission`](#property-default_permission)
-* [`protected mixed $permissions`](#property-permissions)
 
 **Methods**
 * [`public mixed __construct()`](#method-__construct)
@@ -64,6 +67,21 @@ protected mixed $reserved = array('__construct', 'filter', 'module', 'section', 
 * This property is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 
+## Property `$package_cache`
+In class: [components\update\Helpers](#top)
+
+```
+private mixed $package_cache = array()
+```
+
+
+
+
+
+* Visibility: **private**
+* This property is **static**.
+
+
 ## Property `$component`
 In class: [components\update\Helpers](#top)
 
@@ -83,7 +101,7 @@ protected mixed $component
 In class: [components\update\Helpers](#top)
 
 ```
-protected mixed $default_permission
+protected mixed $default_permission = 2
 ```
 
 
@@ -91,14 +109,13 @@ protected mixed $default_permission
 
 
 * Visibility: **protected**
-* This property is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 
 ## Property `$permissions`
 In class: [components\update\Helpers](#top)
 
 ```
-protected mixed $permissions = array()
+protected mixed $permissions = array('get_component_package' => 0)
 ```
 
 
@@ -106,7 +123,6 @@ protected mixed $permissions = array()
 
 
 * Visibility: **protected**
-* This property is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 
 # Methods
@@ -284,6 +300,28 @@ mixed dependencies\BaseComponent::module($module_name, $options)
 
 * $module_name **mixed**
 * $options **mixed**
+
+
+
+
+
+
+## Method `rename_component_package`
+In class: [components\update\Helpers](#top)
+
+```
+void components\update\Helpers::rename_component_package(array $data)
+```
+
+Lets you rename a component package that's already installed.
+
+
+
+* Visibility: **public**
+
+#### Arguments
+
+* $data **array** - A string array with keys &#039;component&#039; and &#039;old_title&#039;, guess what they do.
 
 
 

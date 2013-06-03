@@ -13,6 +13,7 @@
         * **components\account\models**
             * [Accounts](components/account/models/Accounts.md)
             * [AccountsToUserGroups](components/account/models/AccountsToUserGroups.md)
+            * [PasswordResetTokens](components/account/models/PasswordResetTokens.md)
             * [TargetUserGroups](components/account/models/TargetUserGroups.md)
             * [UserGroups](components/account/models/UserGroups.md)
             * [UserInfo](components/account/models/UserInfo.md)
@@ -60,6 +61,14 @@
             * [MenuItemInfo](components/menu/models/MenuItemInfo.md)
             * [MenuItems](components/menu/models/MenuItems.md)
             * [Menus](components/menu/models/Menus.md)
+    * **components\security**
+        * [Actions](components/security/Actions.md)
+        * [DBUpdates](components/security/DBUpdates.md)
+        * [Helpers](components/security/Helpers.md)
+        * [Json](components/security/Json.md)
+        * [Modules](components/security/Modules.md)
+        * [Sections](components/security/Sections.md)
+        * [Views](components/security/Views.md)
     * **components\text**
         * [Actions](components/text/Actions.md)
         * [DBUpdates](components/text/DBUpdates.md)

@@ -15,6 +15,9 @@
 
 ## Class index
 
+**Properties**
+* [`protected mixed $default_permission`](#property-default_permission)
+* [`protected mixed $permissions`](#property-permissions)
 
 **Methods**
 * [`public \components\account\models\Accounts create_user($data)`](#method-create_user)
@@ -34,8 +37,6 @@
 **Properties**
 * [`protected static mixed $reserved`](#property-reserved)
 * [`protected mixed $component`](#property-component)
-* [`protected mixed $default_permission`](#property-default_permission)
-* [`protected mixed $permissions`](#property-permissions)
 
 **Methods**
 * [`public mixed __construct()`](#method-__construct)
@@ -89,7 +90,7 @@ protected mixed $component
 In class: [components\account\Helpers](#top)
 
 ```
-protected mixed $default_permission
+protected mixed $default_permission = 2
 ```
 
 
@@ -97,14 +98,13 @@ protected mixed $default_permission
 
 
 * Visibility: **protected**
-* This property is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 
 ## Property `$permissions`
 In class: [components\account\Helpers](#top)
 
 ```
-protected mixed $permissions = array()
+protected mixed $permissions = array('table__hcheck_permissions' => 0, 'table__check_permissions' => 0, 'should_claim' => 0)
 ```
 
 
@@ -112,7 +112,6 @@ protected mixed $permissions = array()
 
 
 * Visibility: **protected**
-* This property is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 
 # Methods

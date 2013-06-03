@@ -15,11 +15,14 @@
 
 ## Class index
 
+**Properties**
+* [`protected mixed $default_permission`](#property-default_permission)
+* [`protected mixed $permissions`](#property-permissions)
 
 **Methods**
 * [`protected mixed admin_toolbar()`](#method-admin_toolbar)
 * [`protected mixed app($view)`](#method-app)
-* [`protected mixed config_app()`](#method-config_app)
+* [`protected mixed config_app($options)`](#method-config_app)
 * [`protected mixed configbar()`](#method-configbar)
 * [`protected mixed context_menus()`](#method-context_menus)
 * [`protected mixed edit_menu_item($data)`](#method-edit_menu_item)
@@ -40,6 +43,7 @@
 * [`protected mixed setting_edit($data)`](#method-setting_edit)
 * [`protected mixed setting_edit_simple()`](#method-setting_edit_simple)
 * [`protected mixed setting_list()`](#method-setting_list)
+* [`protected mixed settings_page($options)`](#method-settings_page)
 * [`protected mixed site_list($options)`](#method-site_list)
 * [`protected mixed template_list()`](#method-template_list)
 * [`protected mixed theme_list()`](#method-theme_list)
@@ -50,8 +54,6 @@
 **Properties**
 * [`protected static mixed $reserved`](#property-reserved)
 * [`protected mixed $component`](#property-component)
-* [`protected mixed $default_permission`](#property-default_permission)
-* [`protected mixed $permissions`](#property-permissions)
 
 **Methods**
 * [`public mixed __construct()`](#method-__construct)
@@ -106,7 +108,7 @@ protected mixed $component
 In class: [components\cms\Sections](#top)
 
 ```
-protected mixed $default_permission
+protected mixed $default_permission = 2
 ```
 
 
@@ -114,14 +116,13 @@ protected mixed $default_permission
 
 
 * Visibility: **protected**
-* This property is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 
 ## Property `$permissions`
 In class: [components\cms\Sections](#top)
 
 ```
-protected mixed $permissions = array()
+protected mixed $permissions = array('admin_toolbar' => 0, 'login_form' => 0)
 ```
 
 
@@ -129,7 +130,6 @@ protected mixed $permissions = array()
 
 
 * Visibility: **protected**
-* This property is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 
 # Methods
@@ -431,7 +431,7 @@ mixed components\cms\Sections::app($view)
 In class: [components\cms\Sections](#top)
 
 ```
-mixed components\cms\Sections::config_app()
+mixed components\cms\Sections::config_app($options)
 ```
 
 
@@ -439,6 +439,10 @@ mixed components\cms\Sections::config_app()
 
 
 * Visibility: **protected**
+
+#### Arguments
+
+* $options **mixed**
 
 
 
@@ -839,6 +843,28 @@ mixed components\cms\Sections::setting_list()
 
 
 * Visibility: **protected**
+
+
+
+
+
+
+## Method `settings_page`
+In class: [components\cms\Sections](#top)
+
+```
+mixed components\cms\Sections::settings_page($options)
+```
+
+
+
+
+
+* Visibility: **protected**
+
+#### Arguments
+
+* $options **mixed**
 
 
 

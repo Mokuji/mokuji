@@ -2,5 +2,6 @@
   "IN_LANGUAGE_NAME": "in",
   "LOGIN_VERB": "Login",
   "SEARCH_VERB": "Search",
-  "CREATE_VERB": "Create"
+  "CREATE_VERB": "Create",
+  "ID": "ID"
 }

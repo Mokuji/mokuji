@@ -15,6 +15,9 @@
 
 ## Class index
 
+**Properties**
+* [`protected mixed $default_permission`](#property-default_permission)
+* [`protected mixed $permissions`](#property-permissions)
 
 **Methods**
 * [`protected mixed app($view)`](#method-app)
@@ -24,7 +27,9 @@
 * [`protected mixed modules()`](#method-modules)
 * [`protected mixed page()`](#method-page)
 * [`protected mixed pages()`](#method-pages)
-* [`protected mixed settings()`](#method-settings)
+* [`protected mixed settings($options)`](#method-settings)
+* [`protected mixed settings_cms_configuration()`](#method-settings_cms_configuration)
+* [`protected mixed settings_website_information()`](#method-settings_website_information)
 * [`protected mixed sites()`](#method-sites)
 
 
@@ -33,8 +38,6 @@
 **Properties**
 * [`protected static mixed $reserved`](#property-reserved)
 * [`protected mixed $component`](#property-component)
-* [`protected mixed $default_permission`](#property-default_permission)
-* [`protected mixed $permissions`](#property-permissions)
 
 **Methods**
 * [`public mixed __construct()`](#method-__construct)
@@ -89,7 +92,7 @@ protected mixed $component
 In class: [components\cms\Views](#top)
 
 ```
-protected mixed $default_permission
+protected mixed $default_permission = 2
 ```
 
 
@@ -97,14 +100,13 @@ protected mixed $default_permission
 
 
 * Visibility: **protected**
-* This property is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 
 ## Property `$permissions`
 In class: [components\cms\Views](#top)
 
 ```
-protected mixed $permissions = array()
+protected mixed $permissions = array('page' => 0, 'modules' => 0)
 ```
 
 
@@ -112,7 +114,6 @@ protected mixed $permissions = array()
 
 
 * Visibility: **protected**
-* This property is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 
 # Methods
@@ -508,7 +509,47 @@ mixed components\cms\Views::pages()
 In class: [components\cms\Views](#top)
 
 ```
-mixed components\cms\Views::settings()
+mixed components\cms\Views::settings($options)
+```
+
+
+
+
+
+* Visibility: **protected**
+
+#### Arguments
+
+* $options **mixed**
+
+
+
+
+
+
+## Method `settings_cms_configuration`
+In class: [components\cms\Views](#top)
+
+```
+mixed components\cms\Views::settings_cms_configuration()
+```
+
+
+
+
+
+* Visibility: **protected**
+
+
+
+
+
+
+## Method `settings_website_information`
+In class: [components\cms\Views](#top)
+
+```
+mixed components\cms\Views::settings_website_information()
 ```
 
 

@@ -9,7 +9,9 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
   
   protected
     $theme = 'minimal',
-    $updates = array();
+    $updates = array(
+      '1.0' => '0.1.1-beta'
+    );
   
   public function install_1_0($dummydata, $forced)
   {

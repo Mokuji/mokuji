@@ -2,8 +2,14 @@
   "title": "CMS backend template",
   "description": "Verzorgt de structuur van de backend van het CMS component.",
   "type": "manual",
-  "dbUpdates": true,
+  "dbUpdates": false,
   "versions": [
+    {
+      "version": "0.1.1-beta",
+      "date": "2013-05-31",
+      "description": "Omgeschakeld naar het nieuwe versienummeringssysteem.",
+      "changes": []
+    },
     {
       "version": "1.0",
       "date": "2012-10-02",

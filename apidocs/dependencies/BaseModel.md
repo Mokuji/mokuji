@@ -28,6 +28,7 @@
 * [`private mixed $model`](#property-model)
 
 **Methods**
+* [`public static mixed clear_table_data_cache()`](#method-clear_table_data_cache)
 * [`public static mixed get_related_model($name)`](#method-get_related_model)
 * [`public static mixed model_data($get)`](#method-model_data)
 * [`public static mixed table_data($get, $set)`](#method-table_data)
@@ -147,6 +148,7 @@
 * [`public mixed validate($name, array $rules, $translate)`](#method-validate)
 * [`public mixed validation_errors($names)`](#method-validation_errors)
 * [`public mixed walk($callback)`](#method-walk)
+* [`public mixed without()`](#method-without)
 * [`private mixed _do_check($check)`](#method-_do_check)
 
 
@@ -287,6 +289,25 @@ private mixed $model
 
 
 # Methods
+
+
+## Method `clear_table_data_cache`
+In class: [dependencies\BaseModel](#top)
+
+```
+mixed dependencies\BaseModel::clear_table_data_cache()
+```
+
+
+
+
+
+* Visibility: **public**
+* This method is **static**.
+
+
+
+
 
 
 ## Method `get_related_model`
@@ -2642,6 +2663,25 @@ mixed dependencies\Data::walk($callback)
 #### Arguments
 
 * $callback **mixed**
+
+
+
+
+
+
+## Method `without`
+In class: [dependencies\BaseModel](#top)
+
+```
+mixed dependencies\Data::without()
+```
+
+
+
+
+
+* Visibility: **public**
+* This method is defined by [dependencies\Data](../dependencies/Data.md)
 
 
 

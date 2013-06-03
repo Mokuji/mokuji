@@ -16,6 +16,7 @@
 ## Class index
 
 **Properties**
+* [`protected mixed $default_permission`](#property-default_permission)
 * [`protected mixed $permissions`](#property-permissions)
 
 **Methods**
@@ -47,7 +48,6 @@
 **Properties**
 * [`protected static mixed $reserved`](#property-reserved)
 * [`protected mixed $component`](#property-component)
-* [`protected mixed $default_permission`](#property-default_permission)
 
 **Methods**
 * [`public mixed __construct()`](#method-__construct)
@@ -101,7 +101,7 @@ protected mixed $component
 In class: [components\cms\Actions](#top)
 
 ```
-protected mixed $default_permission
+protected mixed $default_permission = 2
 ```
 
 
@@ -109,14 +109,13 @@ protected mixed $default_permission
 
 
 * Visibility: **protected**
-* This property is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 
 ## Property `$permissions`
 In class: [components\cms\Actions](#top)
 
 ```
-protected mixed $permissions = array('select_menu' => 2, 'new_page' => 2, 'edit_page' => 2, 'logout' => 1, 'editable' => 2)
+protected mixed $permissions = array('login' => 0, 'register' => 0, 'language' => 0, 'pause_redirects' => 0, 'play_redirects' => 0, 'send_feedback' => 0, 'logout' => 1, 'editable' => 1)
 ```
 
 

@@ -75,7 +75,7 @@ protected mixed $component
 In class: [dependencies\BaseComponent](#top)
 
 ```
-protected mixed $default_permission
+protected mixed $default_permission = 2
 ```
 
 

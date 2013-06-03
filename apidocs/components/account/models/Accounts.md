@@ -18,15 +18,14 @@
 **Properties**
 * [`protected static mixed $relations`](#property-relations)
 * [`protected static mixed $table_name`](#property-table_name)
+* [`protected static mixed $title_field`](#property-title_field)
 * [`protected static mixed $validate`](#property-validate)
 
 **Methods**
-* [`public mixed get_avatar()`](#method-get_avatar)
 * [`public mixed get_groups()`](#method-get_groups)
 * [`public mixed get_is_administrator()`](#method-get_is_administrator)
 * [`public mixed get_last_login()`](#method-get_last_login)
 * [`public mixed get_logins()`](#method-get_logins)
-* [`public mixed get_title()`](#method-get_title)
 * [`public mixed get_user_info()`](#method-get_user_info)
 
 
@@ -39,6 +38,7 @@
 * [`protected static mixed $relations_by_column`](#property-relations_by_column)
 
 **Methods**
+* [`public static mixed clear_table_data_cache()`](#method-clear_table_data_cache)
 * [`public static mixed get_related_model($name)`](#method-get_related_model)
 * [`public static mixed model_data($get)`](#method-model_data)
 * [`public static mixed table_data($get, $set)`](#method-table_data)
@@ -149,6 +149,7 @@
 * [`public mixed validate_model($options)`](#method-validate_model)
 * [`public mixed validation_errors($names)`](#method-validation_errors)
 * [`public mixed walk($callback)`](#method-walk)
+* [`public mixed without()`](#method-without)
 * [`protected mixed refresh_labels()`](#method-refresh_labels)
 * [`private mixed _do_check($check)`](#method-_do_check)
 * [`private mixed get_save_data($insert, $data)`](#method-get_save_data)
@@ -211,7 +212,7 @@ protected mixed $relation_preferences = array()
 In class: [components\account\models\Accounts](#top)
 
 ```
-protected mixed $relations = array('UserInfo' => array('id' => 'UserInfo.user_id'), 'AccountsToUserGroups' => array('id' => 'AccountsToUserGroups.user_id'))
+protected mixed $relations = array('UserInfo' => array('id' => 'UserInfo.user_id'), 'AccountsToUserGroups' => array('id' => 'AccountsToUserGroups.user_id'), 'UserGroups' => array('id' => 'AccountsToUserGroups.user_id'))
 ```
 
 
@@ -253,6 +254,21 @@ protected mixed $table_name = 'core_users'
 * This property is **static**.
 
 
+## Property `$title_field`
+In class: [components\account\models\Accounts](#top)
+
+```
+protected mixed $title_field = 'email'
+```
+
+
+
+
+
+* Visibility: **protected**
+* This property is **static**.
+
+
 ## Property `$validate`
 In class: [components\account\models\Accounts](#top)
 
@@ -269,6 +285,26 @@ protected mixed $validate = array('email' => array('required', 'email'), 'userna
 
 
 # Methods
+
+
+## Method `clear_table_data_cache`
+In class: [components\account\models\Accounts](#top)
+
+```
+mixed dependencies\BaseModel::clear_table_data_cache()
+```
+
+
+
+
+
+* Visibility: **public**
+* This method is **static**.
+* This method is defined by [dependencies\BaseModel](../../../dependencies/BaseModel.md)
+
+
+
+
 
 
 ## Method `get_related_model`
@@ -1308,24 +1344,6 @@ mixed dependencies\Data::getIterator()
 
 
 
-## Method `get_avatar`
-In class: [components\account\models\Accounts](#top)
-
-```
-mixed components\account\models\Accounts::get_avatar()
-```
-
-
-
-
-
-* Visibility: **public**
-
-
-
-
-
-
 ## Method `get_groups`
 In class: [components\account\models\Accounts](#top)
 
@@ -1385,24 +1403,6 @@ In class: [components\account\models\Accounts](#top)
 
 ```
 mixed components\account\models\Accounts::get_logins()
-```
-
-
-
-
-
-* Visibility: **public**
-
-
-
-
-
-
-## Method `get_title`
-In class: [components\account\models\Accounts](#top)
-
-```
-mixed components\account\models\Accounts::get_title()
 ```
 
 
@@ -2773,6 +2773,25 @@ mixed dependencies\Data::walk($callback)
 #### Arguments
 
 * $callback **mixed**
+
+
+
+
+
+
+## Method `without`
+In class: [components\account\models\Accounts](#top)
+
+```
+mixed dependencies\Data::without()
+```
+
+
+
+
+
+* Visibility: **public**
+* This method is defined by [dependencies\Data](../../../dependencies/Data.md)
 
 
 

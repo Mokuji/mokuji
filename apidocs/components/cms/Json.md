@@ -15,12 +15,16 @@
 
 ## Class index
 
+**Properties**
+* [`protected mixed $default_permission`](#property-default_permission)
+* [`protected mixed $permissions`](#property-permissions)
 
 **Methods**
 * [`protected mixed delete_page($options, $params)`](#method-delete_page)
 * [`protected mixed get_config_app($data, $params)`](#method-get_config_app)
 * [`protected mixed get_configbar_items($data, $params)`](#method-get_configbar_items)
 * [`protected mixed get_detach_page($data, $params)`](#method-get_detach_page)
+* [`protected mixed get_keep_alive($data, $params)`](#method-get_keep_alive)
 * [`protected mixed get_link_page($data, $params)`](#method-get_link_page)
 * [`protected mixed get_menu_item_info($options, $params)`](#method-get_menu_item_info)
 * [`protected mixed get_menus($data)`](#method-get_menus)
@@ -37,8 +41,6 @@
 **Properties**
 * [`protected static mixed $reserved`](#property-reserved)
 * [`protected mixed $component`](#property-component)
-* [`protected mixed $default_permission`](#property-default_permission)
-* [`protected mixed $permissions`](#property-permissions)
 
 **Methods**
 * [`public mixed __construct()`](#method-__construct)
@@ -92,7 +94,7 @@ protected mixed $component
 In class: [components\cms\Json](#top)
 
 ```
-protected mixed $default_permission
+protected mixed $default_permission = 2
 ```
 
 
@@ -100,14 +102,13 @@ protected mixed $default_permission
 
 
 * Visibility: **protected**
-* This property is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 
 ## Property `$permissions`
 In class: [components\cms\Json](#top)
 
 ```
-protected mixed $permissions = array()
+protected mixed $permissions = array('keep_alive' => 0)
 ```
 
 
@@ -115,7 +116,6 @@ protected mixed $permissions = array()
 
 
 * Visibility: **protected**
-* This property is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 
 # Methods
@@ -423,6 +423,29 @@ In class: [components\cms\Json](#top)
 
 ```
 mixed components\cms\Json::get_detach_page($data, $params)
+```
+
+
+
+
+
+* Visibility: **protected**
+
+#### Arguments
+
+* $data **mixed**
+* $params **mixed**
+
+
+
+
+
+
+## Method `get_keep_alive`
+In class: [components\cms\Json](#top)
+
+```
+mixed components\cms\Json::get_keep_alive($data, $params)
 ```
 
 

@@ -35,6 +35,7 @@
 * [`protected mixed send_mail($data)`](#method-send_mail)
 * [`protected mixed set_user_status($data)`](#method-set_user_status)
 * [`protected mixed update_user_groups($data)`](#method-update_user_groups)
+* [`protected mixed use_password_reset_token($data)`](#method-use_password_reset_token)
 
 
 ## Inheritance index
@@ -109,7 +110,7 @@ protected mixed $default_permission = 2
 In class: [components\account\Actions](#top)
 
 ```
-protected mixed $permissions = array('login' => 0, 'logout' => 1, 'register' => 0, 'edit_profile' => 1, 'claim_account' => 0, 'save_avatar' => 1, 'set_password' => 1)
+protected mixed $permissions = array('login' => 0, 'register' => 0, 'claim_account' => 0, 'use_password_reset_token' => 0, 'logout' => 1, 'save_avatar' => 1, 'edit_profile' => 1)
 ```
 
 
@@ -659,6 +660,28 @@ In class: [components\account\Actions](#top)
 
 ```
 mixed components\account\Actions::update_user_groups($data)
+```
+
+
+
+
+
+* Visibility: **protected**
+
+#### Arguments
+
+* $data **mixed**
+
+
+
+
+
+
+## Method `use_password_reset_token`
+In class: [components\account\Actions](#top)
+
+```
+mixed components\account\Actions::use_password_reset_token($data)
 ```
 
 

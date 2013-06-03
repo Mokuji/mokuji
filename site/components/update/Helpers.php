@@ -126,7 +126,7 @@ class Helpers extends \dependencies\BaseComponent
     }
     
     //Look through all templates.
-    $templates = glob(PATH_TEMPLATES.DS.'custom'.DS.'*');
+    $templates = glob(PATH_TEMPLATES.DS.'*');
     foreach($templates as $template){
       if(is_dir($template.DS.'.package')){
         $template_path_parts = explode(DS, $template);
@@ -136,7 +136,7 @@ class Helpers extends \dependencies\BaseComponent
     }
     
     //Look through all themes.
-    $themes = glob(PATH_THEMES.DS.'custom'.DS.'*');
+    $themes = glob(PATH_THEMES.DS.'*');
     foreach($themes as $theme){
       if(is_dir($theme.DS.'.package')){
         $theme_path_parts = explode(DS, $theme);

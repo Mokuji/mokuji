@@ -15,11 +15,17 @@
 
 ## Class index
 
+**Properties**
+* [`protected mixed $default_permission`](#property-default_permission)
+* [`protected mixed $permissions`](#property-permissions)
 
 **Methods**
 * [`public mixed create_user($data, $parameters)`](#method-create_user)
 * [`public mixed update_user($data, $parameters)`](#method-update_user)
 * [`protected mixed create_mail($data, $parameters)`](#method-create_mail)
+* [`protected mixed create_password_reset_finalization($data, $params)`](#method-create_password_reset_finalization)
+* [`protected mixed create_password_reset_request($data, $params)`](#method-create_password_reset_request)
+* [`protected array create_user_session(\dependencies\Data $data, \dependencies\Data $params)`](#method-create_user_session)
 * [`protected mixed get_mail_autocomplete($data, $parameters)`](#method-get_mail_autocomplete)
 * [`protected mixed update_password($data, $parameters)`](#method-update_password)
 
@@ -29,8 +35,6 @@
 **Properties**
 * [`protected static mixed $reserved`](#property-reserved)
 * [`protected mixed $component`](#property-component)
-* [`protected mixed $default_permission`](#property-default_permission)
-* [`protected mixed $permissions`](#property-permissions)
 
 **Methods**
 * [`public mixed __construct()`](#method-__construct)
@@ -84,7 +88,7 @@ protected mixed $component
 In class: [components\account\Json](#top)
 
 ```
-protected mixed $default_permission
+protected mixed $default_permission = 2
 ```
 
 
@@ -92,14 +96,13 @@ protected mixed $default_permission
 
 
 * Visibility: **protected**
-* This property is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 
 ## Property `$permissions`
 In class: [components\account\Json](#top)
 
 ```
-protected mixed $permissions = array()
+protected mixed $permissions = array('create_password_reset_request' => 0, 'create_password_reset_finalization' => 0, 'create_user_session' => 0, 'update_password' => 1)
 ```
 
 
@@ -107,7 +110,6 @@ protected mixed $permissions = array()
 
 
 * Visibility: **protected**
-* This property is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
 
 
 # Methods
@@ -404,6 +406,81 @@ mixed components\account\Json::create_mail($data, $parameters)
 
 * $data **mixed**
 * $parameters **mixed**
+
+
+
+
+
+
+## Method `create_password_reset_finalization`
+In class: [components\account\Json](#top)
+
+```
+mixed components\account\Json::create_password_reset_finalization($data, $params)
+```
+
+
+
+
+
+* Visibility: **protected**
+
+#### Arguments
+
+* $data **mixed**
+* $params **mixed**
+
+
+
+
+
+
+## Method `create_password_reset_request`
+In class: [components\account\Json](#top)
+
+```
+mixed components\account\Json::create_password_reset_request($data, $params)
+```
+
+
+
+
+
+* Visibility: **protected**
+
+#### Arguments
+
+* $data **mixed**
+* $params **mixed**
+
+
+
+
+
+
+## Method `create_user_session`
+In class: [components\account\Json](#top)
+
+```
+array components\account\Json::create_user_session(\dependencies\Data $data, \dependencies\Data $params)
+```
+
+Attempt to log in the user.
+
+
+
+* Visibility: **protected**
+
+#### Arguments
+
+* $data **[dependencies\Data](../../dependencies/Data.md)** - Array containing &#039;username&#039; and &#039;password&#039; keys.
+* $params **[dependencies\Data](../../dependencies/Data.md)** - Empty array.
+
+
+#### Return value
+
+**array** - Array with &#039;success&#039; boolean and &#039;target_url&#039; to suggest a redirect.
+
 
 
 

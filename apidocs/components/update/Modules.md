@@ -79,7 +79,7 @@ protected mixed $component
 In class: [components\update\Modules](#top)
 
 ```
-protected mixed $default_permission
+protected mixed $default_permission = 2
 ```
 
 
