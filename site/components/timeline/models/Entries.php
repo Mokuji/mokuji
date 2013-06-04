@@ -142,7 +142,8 @@ class Entries extends \dependencies\BaseModel
       'url' => (string)$image->generate_url(array(
           $resizeType.'_width' => $resizeWidth,
           $resizeType.'_height' => $resizeHeight
-        ), array('allow_growth'))
+        ), array('allow_growth')),
+      'image' => $image
     );
     
   }
