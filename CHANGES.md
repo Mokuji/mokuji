@@ -1,3 +1,8 @@
+#### [Version 0.20.2 Beta](https://github.com/Tuxion/mokuji/tree/0.20.2-beta)
+_6-Jun-2013_
+
+* Changed documenting tool to use phar file.
+
 #### [Version 0.20.1 Beta](https://github.com/Tuxion/mokuji/tree/0.20.1-beta)
 _3-Jun-2013_
 
