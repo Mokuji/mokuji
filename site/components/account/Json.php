@@ -6,12 +6,65 @@ class Json extends \dependencies\BaseComponent
   protected
     $default_permission = 2,
     $permissions = array(
+      'create_new_account' => 0,
       'create_password_reset_request' => 0,
       'create_password_reset_finalization' => 0,
       'create_user_session' => 0,
       'update_password' => 1
     );
   
+  //Allows user to register.
+  protected function create_new_account($data, $params)
+  {
+    
+    #TODO: Add username and account info support.
+    
+    //Check Captcha.
+    if(!tx('Component')->helpers('security')->call('validate_captcha', array('form_data'=>$data))){
+      $vex = new \exception\Validation(__($this->component, 'The security code is invalid', true));
+      $vex->key('captcha_section');
+      $vex->errors(array(__($this->component, 'The security code is invalid', true)));
+      throw $vex;
+    }
+    
+    //Check basic formatting.
+    $data = Data($data)->having('email', 'password1', 'password2')
+      ->email->validate('E-mail', array('required', 'string', 'not_empty', 'email'))->back()
+      ->password1->validate('New password', array('required', 'string', 'not_empty', 'password'))->back()
+      ->password2->validate('Confirm new password', array('required', 'string', 'not_empty'))->back();
+    
+    //Check if the email already exists.
+    if(
+      mk('Sql')
+        ->table('account', 'Accounts')
+        ->where('email', $data->email)
+        ->count()->get('int') > 0
+      ){
+      $vex = new \exception\Validation(__($this->component, 'An account with this e-mail address already exists', true));
+      $vex->key('email');
+      $vex->errors(array(__($this->component, 'An account with this e-mail address already exists', true)));
+      throw $vex;
+    }
+    
+    //Check passwords match.
+    if($data->password1->get() !== $data->password2->get()){
+      $vex = new \exception\Validation(__($this->component, 'The passwords do not match', true));
+      $vex->key('password1');
+      $vex->errors(array(__($this->component, 'The passwords do not match', true)));
+      throw $vex;
+    }
+    
+    $success = tx('Account')->register($data->email, null, $data->password1);
+    
+    if($success === true)
+      tx('Account')->login($data->email, $data->password1);
+    
+    return array(
+      'success' => $success
+    );
+    
+  }
+
   protected function create_password_reset_finalization($data, $params)
   {
     
