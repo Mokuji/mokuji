@@ -1,3 +1,8 @@
+#### [Version 0.20.3 Beta](https://github.com/Tuxion/mokuji/tree/0.20.3-beta)
+_7-Jun-2013_
+
+* Fixed installing bug in Underduck template.
+
 #### [Version 0.20.2 Beta](https://github.com/Tuxion/mokuji/tree/0.20.2-beta)
 _6-Jun-2013_
 

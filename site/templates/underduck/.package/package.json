@@ -2,8 +2,14 @@
   "title": "Underduck template",
   "description": "Het standaard template voor nieuwe websites.",
   "type": "manual",
-  "dbUpdates": false,
+  "dbUpdates": true,
   "versions": [
+    {
+      "version": "0.1.2-beta",
+      "date": "2013-06-07",
+      "description": "Bug in de package.json. Nieuwe installaties kregen het template niet.",
+      "changes": []
+    },
     {
       "version": "0.1.1-beta",
       "date": "2013-05-31",

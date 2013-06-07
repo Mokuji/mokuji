@@ -10,7 +10,8 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
   protected
     $template = 'underduck',
     $updates = array(
-      '1.0' => '0.1.1-beta'
+      '1.0' => '0.1.1-beta',
+      '0.1.1-beta' => '0.1.2-beta' //No DB updates.
     );
   
   public function install_1_0($dummydata, $forced)
