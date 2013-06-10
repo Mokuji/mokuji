@@ -88,22 +88,6 @@ CKEDITOR.on( 'instanceCreated', function( event ) {
     });
   }
 
-  // var savedData, newData;
-  // function saveEditorData(){
-  //   setTimeout(function(){
-
-  //     newData = editor.getData();
-
-  //     if(newData !== savedData){
-  //       savedData = newData;
-  //       //Do AJAX call and save data.
-  //     }
-
-  //     saveEditorData();
-  //   }, 1500);
-  // };
-
-  // // Start observing the data.
-  // saveEditorData();
+  //TODO: Autosave data.
 
 });

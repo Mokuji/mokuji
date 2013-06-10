@@ -31,7 +31,7 @@
 
   <?php if( ! HIDE_LOGO_IN_BACKEND){ ?>
   <!-- LOGO -->
-  <h1 id="logo"><a href="<?php echo url('', true); ?>">mokuji.cms</a></h1>
+  <h1 id="logo"><a href="<?php echo url('', true); ?>">Mokuji</a></h1>
   <!-- /LOGO -->
   <?php } ?>
 

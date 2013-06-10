@@ -126,7 +126,7 @@ class Entries extends \dependencies\BaseModel
     
     if(!tx('Component')->available('media'))
       return false;
-    
+
     $image = tx('Sql')
       ->table('media', 'Images')
       ->pk($this->thumbnail_image_id)
@@ -144,7 +144,8 @@ class Entries extends \dependencies\BaseModel
       'url' => (string)$image->generate_url(array(
           $resizeType.'_width' => $resizeWidth,
           $resizeType.'_height' => $resizeHeight
-        ), array('allow_growth'))
+        ), array('allow_growth')),
+      'image' => $image
     );
     
   }

@@ -12,4 +12,7 @@ define('br', "<br />\n");
 define('n', "\n");
 define('t', "  ");
 
+/**
+ * Hide Mokuji logo in backend?
+ */
 define('HIDE_LOGO_IN_BACKEND', false);

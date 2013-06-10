@@ -56,6 +56,12 @@
   "Title": "Titel",
   
   "Update entry": "Update bericht",
-  "Untitled in this language": "Geen titel in deze taal"
+  "Untitled in this language": "Geen titel in deze taal",
+  
+  "EVENTS_VIEW_TITLE": "Evenementen-pagina",
+  "There are no entries yet": "Er zijn nog geen berichten",
+  "Events title": "Evenement-titel",
+  "Starting date": "Startdatum",
+  "Ending date": "Einddatum"
   
 }
