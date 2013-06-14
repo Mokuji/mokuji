@@ -12,8 +12,8 @@ function error_handler($errno, $errstr='', $errfile='', $errline='', $context=ar
 
 function exception_handler($e){
   
-  tx('Logging')->log('Debug', 'Uncaught exception', $e->getMessage());
-  tx('Controller')->load_error_template($e);
+  mk('Logging')->log('Debug', 'Uncaught exception', $e->getMessage());
+  mk('Controller')->load_error_template($e);
   
 }
 
@@ -22,9 +22,9 @@ function exception_handler_image($e){
   try
   {
     
-    $text = (DEBUG ? $e->getMessage() : __('Image could not be loaded.', TX));
+    $text = (DEBUG ? $e->getMessage() : __('Image could not be loaded.', MK));
     
-    tx('File')->image()
+    mk('File')->image()
       ->create(300, 300, 'black')
       ->text($text, 'white', 4, 10)
       ->output();

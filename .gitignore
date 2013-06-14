@@ -3,3 +3,4 @@ sftp-config.json
 .htaccess.*
 /structure.xml
 todos
+.completed-install

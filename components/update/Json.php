@@ -180,8 +180,8 @@ class Json extends \dependencies\BaseViews
     );
     
     //Check language code valid is.
-    if(!file_exists(PATH_SITE.DS.'i18n'.DS.$data->lang_code->get('string').'.json')){
-      $ex = new \exception\Validation('No translation files found for '.PATH_SITE.DS.'i18n'.DS.$data->lang_code->get('string').'.json');
+    if(!file_exists(PATH_SYSTEM.DS.'i18n'.DS.$data->lang_code->get('string').'.json')){
+      $ex = new \exception\Validation('No translation files found for '.PATH_SYSTEM.DS.'i18n'.DS.$data->lang_code->get('string').'.json');
       $ex->key('lang_code');
       $ex->errors(array('No translation files found for this language code'));
       throw $ex;

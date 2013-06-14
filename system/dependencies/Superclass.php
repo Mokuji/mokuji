@@ -1,7 +1,7 @@
-<?php if(!defined('TX')) die('No direct access.');
+<?php namespace dependencies; if(!defined('TX')) die('No direct access.');
 
 /**
- * The Superclass that allows for the tx() notation of loading core classes. Your main gateway of expression in the Tuxion CMS.
+ * The Superclass that allows for the mk() notation of loading core classes. Your main gateway of expression in the Tuxion CMS.
  */
 class Superclass
 {
@@ -70,58 +70,4 @@ class Superclass
     
 	}
 	
-}
-
-//backwards compatible alias
-function tx()
-{
-  
-  
-  if(func_num_args() == 0 || is_null(func_get_arg(0))){
-    return Superclass::get_instance();
-  }
-  
-  elseif(func_num_args() == 2 && is_string(func_get_arg(0)) && (func_get_arg(1) instanceof \Closure)){
-    return new \dependencies\UserFunction(func_get_arg(0), func_get_arg(1));
-  }
-  
-  elseif(func_num_args() == 1 && (func_get_arg(0) instanceof \Closure)){
-    return new \dependencies\UserFunction(null, func_get_arg(0));
-  }
-  
-  else{
-    $args = func_get_args();
-    $class = array_shift($args);
-    return Superclass::get_instance()->load_class($class, $args);
-  }
-  
-  return false;
-  
-}
-
-//return superobject or class within superobject
-function mk()
-{
-  
-  
-  if(func_num_args() == 0 || is_null(func_get_arg(0))){
-    return Superclass::get_instance();
-  }
-  
-  elseif(func_num_args() == 2 && is_string(func_get_arg(0)) && (func_get_arg(1) instanceof \Closure)){
-    return new \dependencies\UserFunction(func_get_arg(0), func_get_arg(1));
-  }
-  
-  elseif(func_num_args() == 1 && (func_get_arg(0) instanceof \Closure)){
-    return new \dependencies\UserFunction(null, func_get_arg(0));
-  }
-  
-  else{
-    $args = func_get_args();
-    $class = array_shift($args);
-    return Superclass::get_instance()->load_class($class, $args);
-  }
-  
-  return false;
-  
 }

@@ -146,7 +146,7 @@ class Language
     if(!$this->caching || !array_key_exists($language_code, $this->translations) || !array_key_exists($component ? $component : DS, $this->translations[$language_code])){
       
       //Load json file.
-      $lang_file = ($component ? PATH_COMPONENTS.DS.$component : PATH_SITE).DS.'i18n'.DS.$language_code.'.json';
+      $lang_file = ($component ? PATH_COMPONENTS.DS.$component : PATH_SYSTEM).DS.'i18n'.DS.$language_code.'.json';
       
       //Parse file.
       $parsed_it = false;
