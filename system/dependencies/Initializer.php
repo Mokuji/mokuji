@@ -256,6 +256,29 @@ class Initializer
       
       case Initializer::ENV_BACKEND:
         $this->http_fixes();
+                
+        mk('Session');    //start session
+        mk('Url');        //initiate url class
+        
+        //enter a pageload log line
+        mk('Logging')->log('Core', 'Backend Pageload', mk('Url')->url->input, true);
+        
+        mk('Account');    //check account details and progress user activity
+        mk('Data');       //start filtering data
+        mk('Language');   //set language
+        mk('Editable');   //check if the website is editable
+        mk('Component');  //component singleton
+        
+        //config
+        mk('Config')->system('backend', true);
+        mk('Config')->system('component', 'cms');
+        
+        //start doing stuff
+        mk('Router')->start();
+        
+        //enter a pageload log line
+        mk('Logging')->log('Core', 'Backend Pageload', 'SUCCEEDED');
+        
         break;
       
     }

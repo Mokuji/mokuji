@@ -6,7 +6,7 @@
   
   function loadPageType(baseUrl, component, pageType, deferred){
     
-    var pageTypeFolder = baseUrl + 'site/components/' + component + '/pagetypes/' + pageType + '/';
+    var pageTypeFolder = baseUrl + 'components/' + component + '/pagetypes/' + pageType + '/';
     
     //First get the json descriptor file.
     var getDefinition = $.ajax({

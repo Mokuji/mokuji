@@ -45,8 +45,7 @@ class Sections extends \dependencies\BaseViews
       'theme' => URL_THEMES.'cms_backend/',
       'template' => URL_TEMPLATES.'cms_backend/',
       'components' => URL_COMPONENTS,
-      'component' => URL_COMPONENTS.$component.'/',
-      'cms' => URL_SITE.'tx.cms/cms/'
+      'component' => URL_COMPONENTS.$component.'/'
     );
     
     if(is_array($options))
