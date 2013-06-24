@@ -1,3 +1,9 @@
+#### [Version 0.21.0 Beta](https://github.com/Tuxion/mokuji/tree/0.21.0-beta)
+_24-Jun-2013_
+
+* Added option for configuring the CKEditor toolbar.
+* Increased size for value fields in core configuration tables.
+
 #### [Version 0.20.3 Beta](https://github.com/Tuxion/mokuji/tree/0.20.3-beta)
 _7-Jun-2013_
 

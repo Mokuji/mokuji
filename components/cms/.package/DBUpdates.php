@@ -18,7 +18,8 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
       '2.1' => '3.0',
       
       '3.0' => '0.4.0', //No DB changes.
-      '0.4.0' => '0.4.1-beta' //No DB changes.
+      '0.4.0' => '0.4.1-beta', //No DB changes.
+      '0.4.1-beta' => '0.5.0-beta' //No DB changes.
     );
   
   public function update_to_3_0($current_version, $forced)

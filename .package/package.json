@@ -5,6 +5,12 @@
   "dbUpdates": true,
   "versions": [
     {
+      "version": "0.7.0-beta",
+      "date": "2013-06-24",
+      "description": "Configuratie velden hebben nu grotere opslagruimte.",
+      "changes": []
+    },
+    {
       "version": "0.6.1-beta",
       "date": "2013-06-03",
       "description": "Bugfix / Improved backwards compatibility in dependencies\\Resultset.",

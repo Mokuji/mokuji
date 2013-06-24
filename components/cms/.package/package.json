@@ -5,6 +5,12 @@
   "dbUpdates": true,
   "versions": [
     {
+      "version": "0.5.0-beta",
+      "date": "2013-06-24",
+      "description": "Mogelijkheid toegevoegd om de CKEditor toolbar in te stellen.",
+      "changes": []
+    },
+    {
       "version": "0.4.1-beta",
       "date": "2013-05-30",
       "description": "Fout in versie. Nu met -beta teken.",

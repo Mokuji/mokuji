@@ -17,9 +17,31 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
       
       '3.3.3' => '0.5.0-beta', //No DB changes.
       '0.5.0-beta' => '0.6.0-beta', //No DB changes.
-      '0.6.0-beta' => '0.6.1-beta' //No DB changes.
+      '0.6.0-beta' => '0.6.1-beta', //No DB changes.
+      
+      '0.6.1-beta' => '0.7.0-beta'
       
     );
+  
+  public function update_to_0_7_0_beta($current_version, $forced)
+  {
+    
+    try{
+      
+      //Increase size for config values.
+      tx('Sql')->query("
+        ALTER TABLE `#__core_config`
+          CHANGE COLUMN `value` `value` TEXT NULL DEFAULT NULL AFTER `key`;
+      ");
+      
+    }catch(\exception\Sql $ex){
+      //When it's not forced, this is a problem.
+      //But when forcing, ignore this.
+      if(!$forced) throw $ex;
+    }
+    
+    
+  }
   
   public function update_to_3_3_3($current_version, $forced)
   {
