@@ -6,16 +6,15 @@
       config: {
         skin: 'tx',
         height: '320px',
-        toolbar:
-        [
-          { name: 'basicstyles',  items : [ 'Bold','Italic','Underline','Strike','-','RemoveFormat' ] },
-          { name: 'paragraph',  items : [ 'NumberedList','BulletedList','-','Outdent','Indent','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock' ] },
-          { name: 'colors',   items : [ 'TextColor','BGColor' ] },
-          { name: 'styles',   items : [ 'Format' ] },
-          { name: 'insert',   items : [ '-', 'Templates', 'Image', 'MediaEmbed', 'Flash' ] },
-          { name: 'links',    items : [ 'Link','Unlink' ] },
-          { name: 'clipboard',  items : [ 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ] },
-          { name: 'document',   items : [ 'Find','Replace','-','Source','-','Maximize' ] }
+        toolbar: [
+          { "name": "basicstyles",  "items" : [ "Bold","Italic","Underline","Strike","-","RemoveFormat" ] },
+          { "name": "paragraph",  "items" : [ "NumberedList","BulletedList","-","Outdent","Indent","-","JustifyLeft","JustifyCenter","JustifyRight","JustifyBlock" ] },
+          { "name": "colors",   "items" : [ "TextColor","BGColor" ] },
+          { "name": "styles",   "items" : [ "Format" ] },
+          { "name": "insert",   "items" : [ "-", "Templates", "Image", "MediaEmbed", "Flash" ] },
+          { "name": "links",    "items" : [ "Link","Unlink" ] },
+          { "name": "clipboard",  "items" : [ "Cut","Copy","Paste","PasteText","PasteFromWord","-","Undo","Redo" ] },
+          { "name": "document",   "items" : [ "Find","Replace","-","Source","-","Maximize" ] }
         ],
         templates_files: [ '../config/ckeditor_templates.js' ]
       }
@@ -25,7 +24,11 @@
   $.extend(TxEditor, {
     options: null
   });
-
+  
+  TxEditor.setDefaultToolbar = function(toolbar){
+    defaults.config.toolbar = toolbar;
+  }
+  
   //public init(o)
   TxEditor.init = function(o){
     

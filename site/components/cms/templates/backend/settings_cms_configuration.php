@@ -8,8 +8,13 @@
     
     <div class="ctrlHolder">
       <label for="l_value_<?php echo $name; ?>"><?php __($names->component, $data->titles->{$name}); ?></label>
-      <input type="text" class="big large" id="l_value_<?php echo $name; ?>"
-        name="<?php echo $name."[default]"; ?>" value="<?php echo $setting->value_default; ?>" />
+      <?php if($name == 'tx_editor_toolbar') { ?> 
+        <textarea class="big large" id="l_value_<?php echo $name; ?>"
+          name="<?php echo $name."[default]"; ?>"><?php echo $setting->value_default; ?></textarea>
+      <?php } else { ?>
+        <input type="text" class="big large" id="l_value_<?php echo $name; ?>"
+          name="<?php echo $name."[default]"; ?>" value="<?php echo $setting->value_default; ?>" />
+      <?php } ?>
     </div>
     
   <?php endforeach; ?>

@@ -227,7 +227,8 @@ class Views extends \dependencies\BaseViews
       'forced_template_id' => 'Forced template',
       'theme_id' => 'Default theme',
       'forced_theme_id' => 'Forced theme',
-      'default_language' => 'Default language'
+      'default_language' => 'Default language',
+      'tx_editor_toolbar' => 'CKEditor toolbar layout'
     );
     
     foreach($settings as $key => $title){
@@ -235,9 +236,6 @@ class Views extends \dependencies\BaseViews
     }
     
     return array(
-      'languages' => Data()
-        ->merge(array('default'=>array('id'=>'default', 'title'=>'Default')))
-        ->merge(tx('Language')->get_languages()),
       'settings' => $result,
       'titles' => $settings
     );
