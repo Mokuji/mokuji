@@ -214,9 +214,8 @@ class Json extends \dependencies\BaseComponent
     //Set the page as homepage?
     if($data->homepage->get('int') == 1){
       $this->update_settings(Data(array(
-        'key' => 'homepage',
-        'value' => array(
-          'NULL' => "?pid=$pid"
+        'homepage' => array(
+          'default' => "?pid=$pid"
         )
       )), null);
     }
