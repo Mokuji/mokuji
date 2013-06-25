@@ -17,7 +17,7 @@
       $published = false;
     }
     
-    if($published || EDITABLE || tx('Config')->system()->check('backend')){
+    if($published || $data->check('editable') || tx('Config')->system()->check('backend')){
       echo "\n".'<li><a href="'.$href.'">'.$item->title.'</a></li>';
     }
     

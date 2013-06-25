@@ -28,9 +28,6 @@ tx('Data');
 //set language
 tx('Language');
 
-//define if the website is editable
-define('EDITABLE', false);
-
 //component singleton
 tx('Component');
 

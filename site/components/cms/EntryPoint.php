@@ -304,8 +304,8 @@ class EntryPoint extends \dependencies\BaseEntryPoint
             load_plugin('jquery')
           );
           
-          //If EDITABLE: load ckeditor & elfinder.
-          if(EDITABLE){
+          //If we're in editable mode, load ckeditor & elfinder.
+          if($this->helper('is_website_editable')){
             $plugins = array_merge($plugins, array(
               load_plugin('ckeditor'),
               load_plugin('elfinder'),

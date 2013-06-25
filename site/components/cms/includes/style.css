@@ -82,9 +82,6 @@
 }
 #topbar_menu li.advanced-edit{
 }
-#topbar_menu li.website-edit{
-  display:none;
-}
 #topbar_menu li.profile{
   background:url('img/icons/topbar/button-wide.png') center top no-repeat;
   width:79px;

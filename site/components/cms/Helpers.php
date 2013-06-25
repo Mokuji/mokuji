@@ -352,5 +352,24 @@ class Helpers extends \dependencies\BaseComponent
     }
     
   }
+  
+  //Returns true if the website can be displayed in editable mode.
+  public function is_website_editable()
+  {
+    
+    //The back-end is never editable.
+    if(tx('Config')->system('backend')){
+      return false;
+    }
+    
+    //The user must be logged in as an administrator.
+    if(!tx('Account')->check_level(2)){
+      return false;
+    }
+    
+    //Return the session variable.
+    return tx('Data')->session->tx->editable->otherwise(false)->get();
+    
+  }
 
 }

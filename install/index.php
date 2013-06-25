@@ -26,9 +26,6 @@ tx('Logging')->log('Core', 'Install Pageload', tx('Url')->url->input, true);
 //start filtering data
 tx('Data');
 
-//check if the website is editable
-tx('Editable');
-
 //component singleton
 tx('Component');
 
