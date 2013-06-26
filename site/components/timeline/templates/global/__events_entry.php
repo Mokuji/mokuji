@@ -22,13 +22,13 @@ switch($data->type->get('string')){
       <p class="start-date">
         <span class="label"><?php __($names->component, 'Starting date') ?>:</span>
         <?php /* #TODO: add timezone to site config and integrate it in <time>-fields */ ?>
-        <time class="dt-start" datetime="<?php echo str_replace(' ', 'T', $data->dt_start->get()); ?> Z"><?php echo $data->formatted_dt_start->otherwise($data->dt_start); ?></time>
+        <time class="dt-start" datetime="<?php echo str_replace(' ', 'T', $data->dt_start->get()); ?>"><?php echo $data->formatted_dt_start->otherwise($data->dt_start); ?></time>
       </p>
       
       <p class="end-date">
         <span class="label"><?php __($names->component, 'Ending date') ?>:</span>
         <?php /* #TODO: add timezone to site config and integrate it in <time>-fields */ ?>
-        <time class="dt-end" datetime="<?php echo str_replace(' ', 'T', $data->dt_end->get()); ?> Z"><?php echo $data->formatted_dt_end->otherwise($data->dt_end); ?></time>
+        <time class="dt-end" datetime="<?php echo str_replace(' ', 'T', $data->dt_end->get()); ?>"><?php echo $data->formatted_dt_end->otherwise($data->dt_end); ?></time>
       </p>
       
       <div class="thumbnail">

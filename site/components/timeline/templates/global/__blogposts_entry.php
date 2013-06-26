@@ -22,7 +22,7 @@ switch($data->type->get('string')){
       <p class="publishgit-date">
         <span class="label"><?php __($names->component, 'Publish date') ?>:</span>
         <?php /* #TODO: add timezone to site config and integrate it in <time>-fields */ ?>
-        <time class="dt-publish" datetime="<?php echo str_replace(' ', 'T', $data->dt_publish->get()); ?> Z"><?php echo $data->formatted_dt_publish->otherwise($data->dt_publish); ?></time>
+        <time class="dt-publish" datetime="<?php echo str_replace(' ', 'T', $data->dt_publish->get()); ?>"><?php echo $data->formatted_dt_publish->otherwise($data->dt_publish); ?></time>
       </p>
       
       <div class="thumbnail">
