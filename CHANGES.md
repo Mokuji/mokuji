@@ -1,3 +1,8 @@
+#### [Version 0.21.2 Beta](https://github.com/Tuxion/mokuji/tree/0.21.2-beta)
+_26-Jun-2013_
+
+* Fixed a bug that occurred when setting a page as home-page via the configuration tab.
+
 #### [Version 0.21.1 Beta](https://github.com/Tuxion/mokuji/tree/0.21.1-beta)
 _26-Jun-2013_
 
