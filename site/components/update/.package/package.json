@@ -5,6 +5,12 @@
   "dbUpdates": true,
   "versions": [
     {
+      "version": "0.2.2-beta",
+      "date": "2013-06-24",
+      "description": "Scoping bug gefixed in BaseDBUpdates.",
+      "changes": []
+    },
+    {
       "version": "0.2.1-beta",
       "date": "2013-05-31",
       "description": "Kleine fixes om gebruik te maken van de nieuwe mapstructuur in de thema en templates mappen.",

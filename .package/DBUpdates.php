@@ -19,7 +19,9 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
       '0.5.0-beta' => '0.6.0-beta', //No DB changes.
       '0.6.0-beta' => '0.6.1-beta', //No DB changes.
       
-      '0.6.1-beta' => '0.7.0-beta'
+      '0.6.1-beta' => '0.7.0-beta',
+      
+      '0.7.0-beta' => '0.7.1-beta' //No DB changes.
       
     );
   

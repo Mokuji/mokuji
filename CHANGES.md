@@ -1,3 +1,9 @@
+#### [Version 0.21.3 Beta](https://github.com/Tuxion/mokuji/tree/0.21.3-beta)
+_26-Jun-2013_
+
+* Fixed a scoping problem with older PHP version in BaseDBUpdates.
+* Moved private helper function BaseDBUpdates::vtfn($version) to system helpers.
+
 #### [Version 0.21.2 Beta](https://github.com/Tuxion/mokuji/tree/0.21.2-beta)
 _26-Jun-2013_
 

@@ -5,6 +5,12 @@
   "dbUpdates": true,
   "versions": [
     {
+      "version": "0.7.1-beta",
+      "date": "2013-06-26",
+      "description": "Helper functie vtfn($version) overgenomen van het update component.",
+      "changes": []
+    },
+    {
       "version": "0.7.0-beta",
       "date": "2013-06-24",
       "description": "Configuratie velden hebben nu grotere opslagruimte.",
