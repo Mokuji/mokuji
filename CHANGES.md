@@ -1,3 +1,8 @@
+#### [Version 0.21.1 Beta](https://github.com/Tuxion/mokuji/tree/0.21.1-beta)
+_26-Jun-2013_
+
+* Updated CKEditor to 4.1.2 (10 Jun 2013)
+
 #### [Version 0.21.0 Beta](https://github.com/Tuxion/mokuji/tree/0.21.0-beta)
 _24-Jun-2013_
 

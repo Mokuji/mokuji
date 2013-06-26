@@ -15,7 +15,7 @@ body
 	/* Remove the background color to make it transparent */
 	background-color: #fff;
 
-	margin: 10px;
+	margin: 20px;
 }
 
 .cke_editable
@@ -96,4 +96,8 @@ pre
 {
 	white-space: pre-wrap; /* CSS 2.1 */
 	word-wrap: break-word; /* IE7 */
+}
+
+.marker {
+    background-color: Yellow;
 }
