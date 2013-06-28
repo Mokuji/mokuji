@@ -335,15 +335,6 @@ class Sections extends \dependencies\BaseViews
 
   protected function admin_toolbar()
   {
-   
-    trace(mk('Url')->url->dump());
-    
-    trace(array(
-      'website_url'=>url(URL_BASE.'?menu=KEEP&pid=KEEP', true)->dump(),
-      'edit_url'=>url(URL_BASE.'?action=cms/editable', true)->dump(),
-      'advanced_url'=>url(URL_BASE.'admin/?menu=KEEP&pid=KEEP', true)->dump(),
-      'admin_url'=>url(URL_BASE.'admin/?project_id=KEEP', true)->dump()
-    ));
     
     return array(
       'website_url'=>url(URL_BASE.'?menu=KEEP&pid=KEEP', true),
@@ -351,7 +342,7 @@ class Sections extends \dependencies\BaseViews
       'advanced_url'=>url(URL_BASE.'admin/?menu=KEEP&pid=KEEP', true),
       'admin_url'=>url(URL_BASE.'admin/?project_id=KEEP', true)
     );
-
+    
   }
 
   protected function setting_list()

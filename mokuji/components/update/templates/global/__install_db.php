@@ -12,7 +12,7 @@
       Note 2: While passwords for MySQL users are optional, Mokuji requires you to set a password for security reasons.
     </p>
     
-    <form method="post" action="#" data-action="<?php echo url('?rest=update/db_installation', true); ?>" data-test-action="<?php echo url('?rest=update/db_test', true); ?>" class="form db-install-form">
+    <form method="post" action="#" data-action="<?php echo url('/install/?rest=update/db_installation', true); ?>" data-test-action="<?php echo url('/install/?rest=update/db_test', true); ?>" class="form db-install-form">
       
       <div class="ctrlHolder">
         <label for="l_host" accesskey="h">Database host</label>

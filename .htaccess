@@ -6,16 +6,14 @@ RewriteEngine On
 
 ###
 # Reserved words for root level URL keys:
-# 
+###
 # admin
 # install
-# debug
 # mokuji
-# 
 ###
 
 # Rewrite for the different environments.
-RewriteRule ^/?(admin|install|debug)(/(.+))? $3?%{QUERY_STRING} [E=MK_ENV:$1]
+RewriteRule ^/?(admin|install)(/(.+))? $3?%{QUERY_STRING} [E=MK_ENV:$1]
 
 #Pages format: /<pid>/<pkey>
 RewriteRule ^/?mokuji - [S=1]
@@ -24,19 +22,6 @@ RewriteRule ^/?(\d+)/?([a-zA-Z0-9-_]*)(\.html|/)?$ index.php?pid=$1&pkey=$2&%{QU
 #Pages format: /<pid>/<pkey>/<page_key_extensions>
 RewriteRule ^/?mokuji - [S=1]
 RewriteRule ^/?(\d+)/?([a-zA-Z0-9-_]+)/([a-zA-Z0-9-_/]+)(\.html)?$ index.php?pid=$1&pkey=$2&pkey_ext=$3&%{QUERY_STRING}
-
-
-# RewriteRule ^install - [S=5]
-# RewriteRule ^admin - [S=4]
-# RewriteRule ^files - [S=3]
-# RewriteRule ^plugins - [S=2]
-# RewriteRule ^site - [S=1]
-
-# #Pages format: /<pid>/<pkey>
-# RewriteRule ^/?(\d+)/?([a-zA-Z0-9-_]*)(\.html|/)?$ index.php?pid=$1&pkey=$2&%{QUERY_STRING}
-
-# #Pages format: /<pid>/<pkey>/<page_key_extensions>
-# RewriteRule ^/?(\d+)/?([a-zA-Z0-9-_]+)/([a-zA-Z0-9-_/]+)(\.html)?$ index.php?pid=$1&pkey=$2&pkey_ext=$3&%{QUERY_STRING}
 
 
 # ----------------------------------------------------------------------

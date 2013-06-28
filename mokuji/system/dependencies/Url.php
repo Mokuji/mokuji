@@ -14,6 +14,7 @@ class Url extends \dependencies\Data
     
     if(is_array($url)){
       $this->set($url);
+      $this->rebuild_output();
     }
     elseif(is_string($url)){
       $this->input->set($url);
@@ -107,10 +108,39 @@ class Url extends \dependencies\Data
       else
       {
         
-        $prefix = ((substr($segments['path'], 0, 1) === '/')
-          ? (URL_PATH != '' && (substr($segments['path'], 1, strlen(URL_PATH)) !== URL_PATH || is_dir(PATH_BASE.DS.URL_PATH)) ? '/'.URL_PATH : '') 
-          : $old_url->segments->path->get()
-        );
+        //Because we would want to be able to link to a subfolder with a name equal to our URL_PATH, build a prefix.
+        //But only when we didn't make this URL absolute by providing a domain as well.
+        if(array_key_exists('domain', $segments))
+          $prefix = '';
+        else {
+          
+          $prefix = ((substr($segments['path'], 0, 1) === '/')
+            
+            //Absolute paths
+            ? (
+              
+              //Empty URL_PATH means we don't have to prefix.
+              URL_PATH != ''
+              
+              && (
+                
+                //If the path we provide is the same as the URL_PATH we don't have to prefix.
+                substr($segments['path'], 1, strlen(URL_PATH)) !== URL_PATH
+                
+                //Otherwise if this folder actually exists, allow linking to it.
+                || is_dir(PATH_BASE.DS.URL_PATH)
+                
+              )
+              
+              ? '/'.URL_PATH : ''
+            )
+            
+            //Relative paths
+            : $old_url->segments->path->get()
+            
+          );
+          
+        }
         
         $this->segments->path->set($prefix.$segments['path']);
         

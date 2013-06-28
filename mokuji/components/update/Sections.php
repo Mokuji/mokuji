@@ -52,8 +52,8 @@ class Sections extends \dependencies\BaseViews
       throw new \exception\Authorisation('The CMS is not in install mode.');
     
     //Include database config file if there is one and we don't have it included yet.
-    if(file_exists(PATH_BASE.DS.'config'.DS.'database'.EXT))
-      require_once(PATH_BASE.DS.'config'.DS.'database'.EXT);
+    if(file_exists(PATH_FRAMEWORK.DS.'config'.DS.'database'.EXT))
+      require_once(PATH_FRAMEWORK.DS.'config'.DS.'database'.EXT);
     
     return array();
     
@@ -66,8 +66,8 @@ class Sections extends \dependencies\BaseViews
       throw new \exception\Authorisation('The CMS is not in install mode.');
     
     //Include email config file if there is one and we don't have it included yet.
-    if(file_exists(PATH_BASE.DS.'config'.DS.'email'.EXT))
-      require_once(PATH_BASE.DS.'config'.DS.'email'.EXT);
+    if(file_exists(PATH_FRAMEWORK.DS.'config'.DS.'email'.EXT))
+      require_once(PATH_FRAMEWORK.DS.'config'.DS.'email'.EXT);
     return array();
     
   }

@@ -8,7 +8,7 @@
   <div class="body clearfix">
     <p>Finally we create the first administrator account.</p>
     
-    <form method="post" action="#" data-action="<?php echo url('?rest=update/admin_installation', true); ?>" class="form admin-create-form">
+    <form method="post" action="#" data-action="<?php echo url('/install/?rest=update/admin_installation', true); ?>" class="form admin-create-form">
       
       <div class="ctrlHolder">
         <label for="l_email" accesskey="e">Email address</label>
