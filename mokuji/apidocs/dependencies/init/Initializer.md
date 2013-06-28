@@ -21,7 +21,7 @@ A singleton class that allows you to initialize a Mokuji runtime.
 * [`ENV_SHELL`](#constant-env_shell)
 
 **Properties**
-* [`private static \dependencies\Initializer $instance`](#property-instance)
+* [`private static \dependencies\init\Initializer $instance`](#property-instance)
 * [`protected boolean $debugging`](#property-debugging)
 * [`protected integer $environment`](#property-environment)
 * [`protected boolean $is_installed`](#property-is_installed)
@@ -31,16 +31,16 @@ A singleton class that allows you to initialize a Mokuji runtime.
 * [`protected boolean $use_multisite`](#property-use_multisite)
 
 **Methods**
-* [`public static \dependencies\Initializer get_instance()`](#method-get_instance)
-* [`public \dependencies\Initializer enable_database(boolean $value)`](#method-enable_database)
-* [`public \dependencies\Initializer enable_debugging(boolean $value)`](#method-enable_debugging)
-* [`public \dependencies\Initializer enable_multisite(boolean $value)`](#method-enable_multisite)
+* [`public static \dependencies\init\Initializer get_instance()`](#method-get_instance)
+* [`public \dependencies\init\Initializer enable_database(boolean $value)`](#method-enable_database)
+* [`public \dependencies\init\Initializer enable_debugging(boolean $value)`](#method-enable_debugging)
+* [`public \dependencies\init\Initializer enable_multisite(boolean $value)`](#method-enable_multisite)
 * [`public string get_url_path()`](#method-get_url_path)
 * [`public boolean is_installed()`](#method-is_installed)
 * [`public void run_environment()`](#method-run_environment)
-* [`public \dependencies\Initializer set_environment(integer $environment)`](#method-set_environment)
-* [`public \dependencies\Initializer set_root(string $value)`](#method-set_root)
-* [`public \dependencies\Initializer set_url_path(string $value)`](#method-set_url_path)
+* [`public \dependencies\init\Initializer set_environment(integer $environment)`](#method-set_environment)
+* [`public \dependencies\init\Initializer set_root(string $value)`](#method-set_root)
+* [`public \dependencies\init\Initializer set_url_path(string $value)`](#method-set_url_path)
 * [`private mixed __construct()`](#method-__construct)
 
 
@@ -112,7 +112,7 @@ const ENV_SHELL = 0
 In class: [dependencies\init\Initializer](#top)
 
 ```
-private \dependencies\Initializer $instance
+private \dependencies\init\Initializer $instance
 ```
 
 The instance of this class.
@@ -228,7 +228,7 @@ Whether multi-site detection should be used in this run.
 In class: [dependencies\init\Initializer](#top)
 
 ```
-\dependencies\Initializer dependencies\init\Initializer::get_instance()
+\dependencies\init\Initializer dependencies\init\Initializer::get_instance()
 ```
 
 Gets the instance of this class.
@@ -241,7 +241,7 @@ Gets the instance of this class.
 
 #### Return value
 
-**dependencies\Initializer** - The instance of this class.
+**[dependencies\init\Initializer](../../dependencies/init/Initializer.md)** - The instance of this class.
 
 
 
@@ -253,7 +253,7 @@ Gets the instance of this class.
 In class: [dependencies\init\Initializer](#top)
 
 ```
-\dependencies\Initializer dependencies\init\Initializer::enable_database(boolean $value)
+\dependencies\init\Initializer dependencies\init\Initializer::enable_database(boolean $value)
 ```
 
 Allows you to set whether the database should be enabled or not.
@@ -269,7 +269,7 @@ Allows you to set whether the database should be enabled or not.
 
 #### Return value
 
-**dependencies\Initializer** - This instance, for chaining.
+**[dependencies\init\Initializer](../../dependencies/init/Initializer.md)** - This instance, for chaining.
 
 
 
@@ -281,7 +281,7 @@ Allows you to set whether the database should be enabled or not.
 In class: [dependencies\init\Initializer](#top)
 
 ```
-\dependencies\Initializer dependencies\init\Initializer::enable_debugging(boolean $value)
+\dependencies\init\Initializer dependencies\init\Initializer::enable_debugging(boolean $value)
 ```
 
 Allows you to set whether debugging should be enabled or not.
@@ -297,7 +297,7 @@ Allows you to set whether debugging should be enabled or not.
 
 #### Return value
 
-**dependencies\Initializer** - This instance, for chaining.
+**[dependencies\init\Initializer](../../dependencies/init/Initializer.md)** - This instance, for chaining.
 
 
 
@@ -309,7 +309,7 @@ Allows you to set whether debugging should be enabled or not.
 In class: [dependencies\init\Initializer](#top)
 
 ```
-\dependencies\Initializer dependencies\init\Initializer::enable_multisite(boolean $value)
+\dependencies\init\Initializer dependencies\init\Initializer::enable_multisite(boolean $value)
 ```
 
 Allows you to set whether multi-site support should be enabled or not.
@@ -325,7 +325,7 @@ Allows you to set whether multi-site support should be enabled or not.
 
 #### Return value
 
-**dependencies\Initializer** - This instance, for chaining.
+**[dependencies\init\Initializer](../../dependencies/init/Initializer.md)** - This instance, for chaining.
 
 
 
@@ -403,7 +403,7 @@ Runs the selected environment with the current settings.
 In class: [dependencies\init\Initializer](#top)
 
 ```
-\dependencies\Initializer dependencies\init\Initializer::set_environment(integer $environment)
+\dependencies\init\Initializer dependencies\init\Initializer::set_environment(integer $environment)
 ```
 
 Allows you to set the desired environment type.
@@ -419,7 +419,7 @@ Allows you to set the desired environment type.
 
 #### Return value
 
-**dependencies\Initializer** - This instance, for chaining.
+**[dependencies\init\Initializer](../../dependencies/init/Initializer.md)** - This instance, for chaining.
 
 
 
@@ -431,7 +431,7 @@ Allows you to set the desired environment type.
 In class: [dependencies\init\Initializer](#top)
 
 ```
-\dependencies\Initializer dependencies\init\Initializer::set_root(string $value)
+\dependencies\init\Initializer dependencies\init\Initializer::set_root(string $value)
 ```
 
 Allows you to set the root of the environment.
@@ -447,7 +447,7 @@ Allows you to set the root of the environment.
 
 #### Return value
 
-**dependencies\Initializer** - This instance, for chaining.
+**[dependencies\init\Initializer](../../dependencies/init/Initializer.md)** - This instance, for chaining.
 
 
 
@@ -459,7 +459,7 @@ Allows you to set the root of the environment.
 In class: [dependencies\init\Initializer](#top)
 
 ```
-\dependencies\Initializer dependencies\init\Initializer::set_url_path(string $value)
+\dependencies\init\Initializer dependencies\init\Initializer::set_url_path(string $value)
 ```
 
 Allows you to set the url_path if it is not the default.
@@ -475,7 +475,7 @@ Allows you to set the url_path if it is not the default.
 
 #### Return value
 
-**dependencies\Initializer** - This instance, for chaining.
+**[dependencies\init\Initializer](../../dependencies/init/Initializer.md)** - This instance, for chaining.
 
 
 

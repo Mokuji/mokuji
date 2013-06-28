@@ -37,13 +37,13 @@ class Initializer
   
   /**
    * The instance of this class.
-   * @var \dependencies\Initializer
+   * @var \dependencies\init\Initializer
    */
   private static $instance;
   
   /**
    * Gets the instance of this class.
-   * @return \dependencies\Initializer The instance of this class.
+   * @return \dependencies\init\Initializer The instance of this class.
    */
   public static function get_instance()
   {
@@ -117,7 +117,7 @@ class Initializer
   /**
    * Allows you to set the root of the environment.
    * @param string $value The path to the root of the environment.
-   * @return \dependencies\Initializer This instance, for chaining.
+   * @return \dependencies\init\Initializer This instance, for chaining.
    */
   public function set_root($value='')
   {
@@ -131,7 +131,7 @@ class Initializer
   /**
    * Allows you to set the desired environment type.
    * @param integer $environment The environment to set.
-   * @return \dependencies\Initializer This instance, for chaining.
+   * @return \dependencies\init\Initializer This instance, for chaining.
    */
   public function set_environment($environment)
   {
@@ -149,7 +149,7 @@ class Initializer
   /**
    * Allows you to set the url_path if it is not the default.
    * @param string $value The url_path to assume of the environment.
-   * @return \dependencies\Initializer This instance, for chaining.
+   * @return \dependencies\init\Initializer This instance, for chaining.
    */
   public function set_url_path($value)
   {
@@ -167,7 +167,7 @@ class Initializer
   /**
    * Allows you to set whether the database should be enabled or not.
    * @param boolean $value Whether or not to enable the database. Default: true
-   * @return \dependencies\Initializer This instance, for chaining.
+   * @return \dependencies\init\Initializer This instance, for chaining.
    */
   public function enable_database($value = true)
   {
@@ -181,7 +181,7 @@ class Initializer
   /**
    * Allows you to set whether multi-site support should be enabled or not.
    * @param boolean $value Whether or not to enable multi-site support. Default: true
-   * @return \dependencies\Initializer This instance, for chaining.
+   * @return \dependencies\init\Initializer This instance, for chaining.
    */
   public function enable_multisite($value = true)
   {
@@ -195,7 +195,7 @@ class Initializer
   /**
    * Allows you to set whether debugging should be enabled or not.
    * @param boolean $value Whether or not to enable debugging. Default: true
-   * @return \dependencies\Initializer This instance, for chaining.
+   * @return \dependencies\init\Initializer This instance, for chaining.
    */
   public function enable_debugging($value = true)
   {
