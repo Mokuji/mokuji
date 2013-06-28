@@ -21,6 +21,7 @@
 **Methods**
 * [`public mixed __construct($result, $model)`](#method-__construct)
 * [`public mixed as_hlist()`](#method-as_hlist)
+* [`public mixed as_hoptions()`](#method-as_hoptions)
 * [`public mixed as_option_set($key)`](#method-as_option_set)
 * [`public mixed find()`](#method-find)
 * [`public mixed hdata()`](#method-hdata)
@@ -516,6 +517,24 @@ In class: [dependencies\Resultset](#top)
 
 ```
 mixed dependencies\Resultset::as_hlist()
+```
+
+
+
+
+
+* Visibility: **public**
+
+
+
+
+
+
+## Method `as_hoptions`
+In class: [dependencies\Resultset](#top)
+
+```
+mixed dependencies\Resultset::as_hoptions()
 ```
 
 

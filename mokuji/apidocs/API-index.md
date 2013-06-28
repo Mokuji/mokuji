@@ -1,6 +1,5 @@
 # API Index
 
-* [Superclass](Superclass.md)
 * **components**
     * **components\account**
         * [Actions](components/account/Actions.md)
@@ -144,6 +143,7 @@
     * [RelationType](dependencies/RelationType.md)
     * [Resultset](dependencies/Resultset.md)
     * [Successable](dependencies/Successable.md)
+    * [Superclass](dependencies/Superclass.md)
     * [Table](dependencies/Table.md)
     * [Url](dependencies/Url.md)
     * [UserFunction](dependencies/UserFunction.md)
@@ -161,6 +161,11 @@
         * [SelectField](dependencies/forms/SelectField.md)
         * [TextAreaField](dependencies/forms/TextAreaField.md)
         * [TextField](dependencies/forms/TextField.md)
+    * **dependencies\init**
+        * [Defines](dependencies/init/Defines.md)
+        * [Environments](dependencies/init/Environments.md)
+        * [Initializer](dependencies/init/Initializer.md)
+        * [Tasks](dependencies/init/Tasks.md)
 * **exception**
     * [Authorisation](exception/Authorisation.md)
     * [Connection](exception/Connection.md)
