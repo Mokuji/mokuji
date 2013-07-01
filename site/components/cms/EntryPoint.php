@@ -107,6 +107,7 @@ class EntryPoint extends \dependencies\BaseEntryPoint
           load_plugin('idtabs3')
         ),
         'scripts' => array(
+          'cms_cms' => t.t.'<script type="text/javascript" src="'.URL_COMPONENTS.'cms/includes/cms.js"></script>',
           'cms_backend' => t.t.'<script type="text/javascript" src="'.URL_COMPONENTS.'cms/includes/backend.js"></script>',
           'cms_backend_pagetype' => t.t.'<script type="text/javascript" src="'.URL_COMPONENTS.'cms/includes/PageType.js"></script>',
           'i18nSetup' => t.t.'<script type="text/javascript">i18nSetup("'.tx('Language')->code.'", "'.URL_BASE.'");</script>'
@@ -304,13 +305,23 @@ class EntryPoint extends \dependencies\BaseEntryPoint
             load_plugin('jquery')
           );
           
-          //If we're in editable mode, load ckeditor & elfinder.
-          if($this->helper('is_website_editable')){
+          //If we're in editable mode, load editing plug-ins and scripts.
+          if($this->helper('is_website_editable'))
+          {
+            
+            //CKEditor, ELFinder and jQuery Postpone.
             $plugins = array_merge($plugins, array(
               load_plugin('ckeditor'),
               load_plugin('elfinder'),
-              load_plugin('jquery_postpone')
+              load_plugin('jquery_postpone'),
+              load_plugin('jsFramework'),
+              load_plugin('underscore')
             ));
+            
+            //Our own editable scrips.
+            tx('Ob')->add('<script src="'.URL_COMPONENTS.'cms/includes/cms.js"></script>', 'script', 'cms_editable_cms');
+            tx('Ob')->add('<script src="'.URL_COMPONENTS.'cms/includes/editable.js"></script>', 'script', 'cms_editable_editable');
+            
           }
           
           $output = $that->template($pi->template, $pi->theme, array(

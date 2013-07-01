@@ -358,7 +358,7 @@ class Helpers extends \dependencies\BaseComponent
   {
     
     //The back-end is never editable.
-    if(tx('Config')->system('backend')){
+    if(tx('Config')->system()->check('backend')){
       return false;
     }
     
