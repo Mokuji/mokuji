@@ -1,8 +1,14 @@
-#### [Version 0.21.3 Beta](https://github.com/Tuxion/mokuji/tree/0.21.3-beta)
-_26-Jun-2013_
+#### [Version 0.21.4 Beta](https://github.com/Tuxion/mokuji/tree/0.21.4-beta)
+_1-Jul-2013_
 
 * Fixed a scoping problem with older PHP version in BaseDBUpdates.
 * Moved private helper function BaseDBUpdates::vtfn($version) to system helpers.
+
+#### [Version 0.21.3 Beta](https://github.com/Tuxion/mokuji/tree/0.21.3-beta)
+_1-Jul-2013_
+
+* Added more entropy to the generation of random table aliases. Fixes #59.
+* Added DocBlocks and better code comments here and there.
 
 #### [Version 0.21.2 Beta](https://github.com/Tuxion/mokuji/tree/0.21.2-beta)
 _26-Jun-2013_
