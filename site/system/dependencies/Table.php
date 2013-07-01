@@ -123,67 +123,138 @@ class Table extends Successable
     
   }
 
-  // filter by parent primary key based on hierarchy
+  /**
+   * Filter by parent' primary key assuming a hierarchical table structure.
+   * 
+   * @param boolean $include_parent Whether to include the parent node that matches the
+   *                                given primary key(s). This parameter can be omitted
+   *                                and will default to false.
+   * 
+   * @param integer|array $value The value for the primary key to match against, or array
+   *                             of primary keys to match against shared primary key.
+   * 
+   * @param integer ... The above parameter can be repeated indefinitely in order to
+   *                    achieve providing values for every primary key in case of shared
+   *                    primary keys.
+   *
+   * @return self Chaining enabled.
+   */
   public function parent_pk()
   {
-
+    
+    //We start by assuming that every given argument is a primary key.
     $values = array_flatten(func_get_args());
+    
+    //If the first given value is a boolean, steal it for the include_parent option.
     $include_parent = (count($values) > 0 && is_bool($values[0]) ? array_shift($values) : false);
+    
+    //Make sure we've got hierarchy enabled.
     $this->add_hierarchy();
+    
+    //Get info about the model that serves as parent for the hierarchy.
     $parent_model = $this->models[$this->hierarchy[$this->working_model]['parent']];
+    
+    //Get the name of the class.
     $model = $parent_model['path'];
+    
+    //Get primary keys from this model.
     $pk_fields = $model::table_data()->primary_keys->as_array();
-
+    
+    //Make sure the amount of primary keys matches the given amount.
     if(count($values) !== count($pk_fields)){
-      throw new \exception\InvalidArgument('The number of values given does not match the amount of primary key fields. The primary key fields are: %s. You gave %s values.', implode(', ', $pk_fields), func_num_args());
+      throw new \exception\InvalidArgument(
+        'The number of values given does not match the amount of primary key fields. '.
+        'The primary key fields are: %s. You gave %s values.',
+        implode(', ', $pk_fields), func_num_args()
+      );
     }
-
-    foreach($pk_fields as $pk){
+    
+    //Iterate the primary keys.
+    foreach($pk_fields as $pk)
+    {
+      
+      //The model' primary key must be equal to its respective given value.
       $this->where("{$parent_model['id']}.$pk", current($values));
-      if(!$include_parent) $this->where("{$this->working_model}.$pk", '!', current($values));
+      
+      //If we don't include the parent, we add another rule:
+      //The primary key of the main model can not be one the given value.
+      if(!$include_parent){
+        $this->where("{$this->working_model}.$pk", '!', current($values));
+      }
+      
+      //Add primary key information to the hierarchy data.
       $this->hierarchy[$this->working_model]['root_pks'][$pk] = current($values);
+      
+      //Move the cursor.
       next($values);
+      
     }
-
+    
+    //The root of the hierarchy will now be equal to the parent of the hierarchy.
     $this->hierarchy[$this->working_model]['root'] = $this->hierarchy[$this->working_model]['parent'];
-
+    
+    //Enable chaining.
     return $this;
 
   }
 
-  // Add stuff to the query needed to use a hierarchy based on hierarchy information available in the working model
+  /**
+   * Make this query hierarchical.
+   * 
+   * Adds stuff to the query needed to use a hierarchy based on hierarchy information
+   * available in the working model.
+   * 
+   * @return self Chaining enabled.
+   */
   public function add_hierarchy()
   {
-
+    
+    //Get the ID of the working model.
     $id = $this->working_model;
-
+    
+    //Do nothing if this ID is already used for a hierarchy.
     if(array_key_exists($id, $this->hierarchy)){
       return $this;
     }
-
+    
+    //Get the class name of the working model.
     $model = $this->models[$id]['path'];
-
+    
+    //Make sure the model has hierarchy fields defined.
     if(!(array_key_exists('left', $model::model_data('hierarchy')) && array_key_exists('right', $model::model_data('hierarchy')))){
       throw new \exception\NotFound("Not all hierarchy fields (left and right) have been defined in %s.", $model);
     }
-
+    
+    //Store hierarchy info in the hierarchy data for the working model.
     $this->hierarchy[$id] = $model::model_data('hierarchy');
+    
+    //Add the working model to the FROM clause a second time to use as a parent node.
     $this->from($this->models[$id]['name'], $parent);
+    
+    //Store the parent node in the hierarchy data.
     $this->hierarchy[$id]['parent'] = $parent;
-
+    
+    //Create the filters that make this a hierarchical query.
     $this->where(tx('Sql')->conditions()
-      ->add('left', array($this->hierarchy[$id]['left'], '>=', "$parent.{$this->hierarchy[$id]['left']}"))
-      ->add('right', array($this->hierarchy[$id]['right'], '<=', "$parent.{$this->hierarchy[$id]['right']}"))
-      ->combine('h', array('left', 'right'))
-      ->utilize('h'));
-
+    ->add('left', array($this->hierarchy[$id]['left'], '>=', "$parent.{$this->hierarchy[$id]['left']}"))
+    ->add('right', array($this->hierarchy[$id]['right'], '<=', "$parent.{$this->hierarchy[$id]['right']}"))
+    ->combine('h', array('left', 'right'))
+    ->utilize('h'));
+    
+    //Get the name of the main model.
     $pmodel = $this->models[$this->model]['path'];
-
-    $this->workwith($this->model)->group($pmodel::table_data()->primary_keys->as_array())->workwith($id);
+    
+    //Group the main model by primary keys.
+    $this->workwith($this->model)
+    ->group($pmodel::table_data()->primary_keys->as_array())
+    ->workwith($id);
+    
+    //Order the results by hierarchical structure.
     $this->order($this->hierarchy[$id]['left']);
-
+    
+    //Enable chaining.
     return $this;
-
+    
   }
 
   // add a depth field based on hierarchy
@@ -1226,7 +1297,7 @@ class Table extends Successable
       $info['path'] = $model;
       $info['table'] = $model::model_data('table_name');
       $info['relations'] = $model::model_data('relations');
-      $info['id'] = uniqid($info['name']);
+      $info['id'] = str_replace('.', '_', uniqid($info['name'], true));
 
     }
 
