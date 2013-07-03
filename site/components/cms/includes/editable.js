@@ -25,6 +25,7 @@
     this.name = name;
     this.fresh = fresh||false;
     this.id = id || guid();
+    this.data = {};
   }
   
   //Model members.
@@ -33,7 +34,16 @@
     name: null,
     id: null,
     fresh: true,
-    data: {},
+    data: null,
+    
+    get: function(key){
+      return this.data[key];
+    },
+    
+    set: function(key, value){
+      this.data[key] = value;
+      return this;
+    },
     
     /**
      * Fetch the resource from the server.
@@ -81,23 +91,23 @@
   // Controllers //
   /////////////////
   
-  var EditableController = Controller.sub({
+  /**
+   * Construct an EditableController.
+   *
+   * @param {EditableModel} model The model this controller will work with.
+   * @param {HTMLElement} element The HTML element to work with.
+   */
+  function EditableController(model, element){
+    this.model = model;
+    this.element = element;
+    this.fields = {};
+  }
+  
+  EditableController.prototype = {
     
     model: null,
-    fields: {},
-    
-    /**
-     * Construct an EditableController.
-     *
-     * @param {EditableModel} model The model this controller will work with.
-     * @param {HTMLElement} element The HTML element to work with.
-     */
-    init: function(model, element){
-      this.model = model;
-      this.namespace = model.name;
-      this.el = element;
-      this.previous();
-    },
+    element: null,
+    fields: null,
     
     /**
      * Set up the controller.
@@ -106,7 +116,7 @@
      */
     setup: function(){
       
-      if($(this.el).is('[data-template]')){
+      if($(this.element).is('[data-template]')){
         return this.setupTemplate();
       }
       
@@ -125,7 +135,7 @@
       
       var self = this;
       
-      $(this.el).find('[data-field]').each(function(){
+      $(this.element).find('[data-field]').each(function(){
         
         //Create the Field instance.
         var field = new Field(this);
@@ -139,48 +149,76 @@
           }
         });
         
+        //Create the data inserter.
+        field.setInserter(function(value){
+          switch(this.getType()){
+            case 'line': return $(this.element).text(value);
+            case 'text': return $(this.element).html(value);
+            default: return $(this.element).attr('data-value', value);
+          }
+        });
+        
         //Create the FieldController.
         var controller = new FieldController(self, field);
         
         //Store it as one of our fields.
         self.fields[$(this).attr('data-field')] = controller;
         
+        //Store the data in the model.
+        self.model.set(field.getKey(), field.getData());
+        
         //Create the template.
         switch(field.getType()){
-          case 'line':
-          case 'text':
-            $(field.getElement()).prop('contenteditable', true);
-          break;
+          case 'line': controller.setTemplate(new LineTemplate); break;
+          case 'text': $(field.getElement()).prop('contenteditable', true); break;
+          default: console.log('WARNING: No template for type: ' + field.getType());
         }
+        
+        //Create the change handler.
+        field.subscribe('change', function(){
+          self.model.set(field.getKey(), field.getData());
+          self.setChanged();
+        });
         
       });
       
       return this;
       
+    },
+    
+    setChanged: function(){
+      console.log('changed');
+      console.dir(this.model);
     }
     
-  });
+  };
   
-  //FieldController.
-  var FieldController = Controller.sub({
+  /**
+   * Construct a FieldController.
+   *
+   * @param {EditableController} controller The parent controller.
+   * @param {Field} field The instance of Field.
+   */
+  function FieldController(controller, field){
+    
+    //Set up properties.
+    this.controller = controller;
+    this.namespace = controller.model.name;
+    this.field = field;
+    var self = this;
+    
+    //Bind events.
+    field.subscribe('focus', function(){
+      self.replace();
+    });
+    
+  }
+  
+  FieldController.prototype = {
     
     controller: null,
     field: null,
     template: null,
-    
-    /**
-     * Construct a FieldController.
-     *
-     * @param {EditableController} controller The parent controller.
-     * @param {Field} field The instance of Field.
-     */
-    init: function(controller, field){
-      this.controller = controller;
-      this.namespace = controller.model.name;
-      this.el = field.getElement();
-      this.field = field;
-      this.previous();
-    },
     
     /**
      * Set the template.
@@ -190,8 +228,16 @@
      * @return {this} Chaining enabled.
      */
     setTemplate: function(template){
+      
       this.template = template;
+      var self = this;
+      
+      template.subscribe('blur', function(){
+        self.restore();
+      });
+      
       return this;
+      
     },
     
     //Replace the element with its editable template.
@@ -208,11 +254,13 @@
       //Replace the field element with the template element.
       return this.template.getElement().done(function(element){
         $(self.field.getElement()).replaceWith(element);
+        self.template.setData(self.field.getData());
+        self.template.placed();
       });
       
     },
     
-    //Restore the element to the original form.
+    //Restore the element to its original form.
     restore: function(){
       
       //No template? Abort.
@@ -226,24 +274,29 @@
       //Replace the template element with the field element.
       return this.template.getElement().done(function(element){
         $(element).replaceWith(self.field.getElement());
+        self.field.setData(self.template.getData());
+        self.field.placed();
       });
       
     }
     
-  });
+  };
   
-  ///////////
-  // Field //
-  ///////////
+  //////////////////////
+  // Element Wrappers //
+  //////////////////////
   
-  function Field(element){
+  //Construct an Element.
+  function Element(element){
     this.element = element;
   }
   
-  Field.prototype = {
+  //Implement the PubSub trait.
+  Element.prototype = $.extend({}, PubSub, {
     
     element: null,
-    extractor: null,
+    extractor: function(){return $(this.element).attr('data-value')},
+    inserter: function(v){return $(this.element).attr('data-value', v)},
     
     getElement: function(){
       return this.element;
@@ -253,16 +306,37 @@
       this.extractor = $.proxy(extractor, this);
     },
     
-    extractor: function(){
-      return $(this.element).attr('data-value');
+    setInserter: function(inserter){
+      this.inserter = $.proxy(inserter, this);
     },
+    
+    getData: function(){
+      return this.extractor();
+    },
+    
+    setData: function(value){
+      this.publish('change');
+      return this.inserter(value);
+    },
+    
+    placed: function(){}
+    
+  });
+  
+  //Field extends Element.
+  Field = function(){
+    Element.apply(this, arguments);
+    this.bindDetector();
+  }
+  
+  Field.prototype = $.extend(Object.create(Element.prototype), {
     
     getType: function(){
       return $(this.element).attr('data-type');
     },
     
-    getData: function(){
-      return this.extractor();
+    getKey: function(){
+      return $(this.element).attr('data-field');
     },
     
     //Get the ID of the element. Creates one automatically if the element doesn't have one.
@@ -285,17 +359,87 @@
       //Return the ID.
       return id;
       
+    },
+    
+    placed: function(){
+      this.bindDetector();
+    },
+    
+    bindDetector: function(){
+      
+      var self = this;
+      
+      $(this.element)
+      
+      .on('click', function(){
+        self.publish('focus');
+      })
+      
+      .on('blur', function(){
+        self.publish('change');
+      });
+      
     }
     
-  };
+  });
   
-  //////////////
-  // Template //
-  //////////////
+  ///////////////
+  // Templates //
+  ///////////////
   
-  //Template constructor.
-  function Template(element){
-    this.element = element;
+  //Template extends Element.
+  function Template(){
+    Element.apply(this, arguments);
+  }
+  
+  Template.prototype = $.extend(Object.create(Element.prototype), {
+    
+    getElement: function(){
+      return $.Deferred().resolve(this.element).promise();
+    }
+    
+  });
+  
+  //InputTemplate extends Template, but does not use its constructor.
+  function InputTemplate(){
+    this.element = $('<input>');
+  }
+  
+  InputTemplate.prototype = $.extend(Object.create(Template.prototype), {
+    
+    element: null,
+    
+    extractor: function(){
+      return $(this.element).val();
+    },
+    
+    inserter: function(value){
+      return $(this.element).val(value)
+    },
+    
+    placed: function(){
+      $(this.element).focus();
+      this.bindDetector();
+    },
+    
+    bindDetector: function(){
+      var self = this;
+      $(this.element).on('blur', function(){
+        self.publish('blur');
+      });
+    }
+    
+  });
+  
+  function LineTemplate(){
+    this.element = $('<input>', {type:'text'});
+  }
+  
+  LineTemplate.prototype = $.extend(Object.create(InputTemplate.prototype), {});
+  
+  //A template for externally loaded templates.
+  function TemplateTemplate(){
+    
   }
   
   ////////////////
