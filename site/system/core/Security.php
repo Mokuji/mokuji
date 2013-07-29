@@ -66,37 +66,23 @@ class Security
    * @param String $password The password to get the strength of.
    * @return int Returns an integer indicating the password strength. See the constants of this class.
    */
-  public function get_password_strength($password)
-  {
-  
-    $password = Data(data_of($password))
-      ->validate('Password', array('string')); //Must be a string.
-    
-    $strength = 0; 
-    $patterns = array('#[a-z]#','#[A-Z]#','#[0-9]#','/[Ã‚Â¬!"Ã‚Â£$%^&*()`{}\[\]:@~;\'#<>?,.\/\\-=_+\|]/'); 
-    foreach($patterns as $pattern) 
-    {
-      if(preg_match($pattern,$password,$matches))
-        $strength++;
-    }
-    
-    return $strength;
-    
+  public function get_password_strength($password){
+    throw new \exception\Deprecated("No longer supported. Use the Validator class for password checks and the jQuery plugin for client side tips.");
   }
   
   /**
-   * Gets the prefered hashing algorithm for a certain amount of bits worth of entropy.
+   * Gets the preferred hashing algorithm for a certain amount of bits worth of entropy.
    *
    * When setting inclusive = false that means:
-   *  The prefered algorithm that is used to it's optimum with the given entropy.
+   *  The preferred algorithm that is used to it's optimum with the given entropy.
    *  For instance: given 230 bits of entropy the best 224 bits algorithm is picked.
    *
    * When setting inclusive = true that means:
-   *  The prefered algorithm that is able to contain the full entropy available.
+   *  The preferred algorithm that is able to contain the full entropy available.
    *  For instance: given 230 bits of entropy the best 256 bits algorithm is picked.
    *
-   * @param int $bits Amount of bits of entropy.
-   * @param bool $inclusive Whether or not to use the full entropy.
+   * @param integer $bits Amount of bits of entropy.
+   * @param boolean $inclusive Whether or not to use the full entropy.
    * @return string Hashing algorithm.
    */
   public function pref_hash_algo($bits=null, $inclusive=false, &$result_bits=null)
@@ -147,7 +133,7 @@ class Security
   }
   
   /**
-   * Generates a hash using php's hash() function.
+   * Generates a hash using PHP's hash() function.
    * 
    * @param string $input The input string to hash.
    * @param string $algorithm The algorithm to use for hashing.
