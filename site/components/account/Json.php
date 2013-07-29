@@ -563,6 +563,9 @@ class Json extends \dependencies\BaseComponent
     //In case it was given.
     ->success(function()use(&$data){
       
+      //Validate it.
+      $data->password->validate('Password', array('string', 'password'));
+      
       //Get salt and algorithm.
       $data->salt = tx('Security')->random_string();
       $data->hashing_algorithm = tx('Security')->pref_hash_algo();

@@ -10,7 +10,7 @@
   
   //The tips per password strength and bias.
   tip_none:             "Onthoud dat je wachtwoorden niet moet hergebruiken. Wachtwoordbeheerders kunnen daarbij helpen.",
-  tip_very_weak:        "Het wachtwoord is te kort. Langere wachtwoorden zijn veiliger, probeer om willekeurige woorden toe te voegen.",
+  tip_very_weak:        "Het wachtwoord is te kort. Langere wachtwoorden zijn veiliger, probeer willekeurige woorden toe te voegen.",
   tip_biased_weak:      "Langere wachtwoorden zijn veiliger, probeer om willekeurige woorden in hoofdletters en kleine letters toe te voegen.",
   tip_biased_decent:    "Maar je kan vast nog beter! Probeer het nog langer te maken of symbolen er in te mengen.",
   tip_biased_strong:    "Je doet duidelijk goed je best! Als je de best mogelijke wachtwoorden wilt hebben, probeer dan een wachtwoordbeheersysteem om unieke wachtwoorden te genereren voor iedere dienst.",

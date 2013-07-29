@@ -255,6 +255,11 @@
       
     });
     
+    //Strange bug: sometimes the field resizes later on.
+    setTimeout(function(){
+      $container.css('width', $this.outerWidth()+'px');
+    }, 50);
+    
     return $this;
     
   };
