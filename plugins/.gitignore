@@ -5,6 +5,7 @@
 !jquery
 !jquery_comboselect
 !jquery_datatables
+!jquery_password_strength
 !jquery_postpone
 !jquery_rest
 !jquery_tmpl
