@@ -34,11 +34,6 @@
   background:center center no-repeat;
   opacity:0.5;
 }
-#topbar_menu li.website-edit{
-  display:none;
-}
-#topbar_menu li.user-menu a{
-}
 #topbar_menu li.website a{
   background-image:url('../../themes/custom/cms_backend/img/icons/topbar/website.png');
 }

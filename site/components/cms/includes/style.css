@@ -1,3 +1,20 @@
+
+/* Editable *\
+\************/
+
+.editing, .editable:hover{
+  border:dotted 1px red;
+  margin:-1px;
+  cursor:pointer;
+}
+
+.editing{
+  cursor:auto !important;
+}
+
+
+
+
 .clear{
   clear:both;
 }
@@ -81,9 +98,6 @@
   opacity:0.5;
 }
 #topbar_menu li.advanced-edit{
-}
-#topbar_menu li.website-edit{
-  display:none;
 }
 #topbar_menu li.profile{
   background:url('img/icons/topbar/button-wide.png') center top no-repeat;

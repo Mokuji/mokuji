@@ -629,17 +629,28 @@ class Actions extends \dependencies\BaseComponent
     });
 
   }
-
-  public function editable($data)
+  
+  //Enables "editable" mode by setting a session variable.
+  public function enable_editable($data)
   {
-    if(tx('Data')->session->tx->editable->get() == true){
-      tx('Data')->session->tx->editable->set(false);
-    }else{
+    
+    //Enable editable if the user is logged in.
+    if(tx('Account')->check_level(2)){
       tx('Data')->session->tx->editable->set(true);
     }
-
+    
+    //Redirect.
     tx('Url')->redirect(url(''));
-
+    
+  }
+  
+  //Disables editable mode by removing the session variable.
+  public function disable_editable($data)
+  {
+    
+    unset(tx('Data')->session->tx->editable);
+    tx('Url')->redirect(url(''));
+    
   }
 
 }
