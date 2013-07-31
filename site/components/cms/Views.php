@@ -12,17 +12,11 @@ class Views extends \dependencies\BaseViews
   
   protected function page()
   {
-
-    /* ? *\
-
-      Handle page restrictions and
-      throw an \exception\Authorisation
-      in case necessary
-
-    \* ¿ */
-
+    
+    #TODO: Handle page restrictions and throw an \exception\Authorisation in case necessary.
+    
+    //Get page information and options from the database.
     $page_info = $this->helper('get_page_info', tx('Data')->get->pid);
-    $part=null;
     $options = $this->helper('get_page_options', $page_info->id);
     
     //Parse additional keys.
@@ -33,54 +27,70 @@ class Views extends \dependencies\BaseViews
         $options->page_key_extensions->push($pkey_ext_part);
     }
     
+    //We're going to query the Layouts table.
     tx('Sql')->table('cms', 'Layouts')
-      ->parent_pk(true, (!is_null($part) ? $part : $page_info->layout_id))
-      ->execute()
-      ->not('empty')
-      ->success(function($layout)use(&$return, $page_info, $options){
+    
+    //Get the required layout node and its child-nodes.
+    ->parent_pk(true, $page_info->layout_id)
+    
+    //Get the result of the query.
+    ->execute()
+    
+    //If it's not empty..
+    ->not('empty')->success(function($layout)use(&$return, $page_info, $options){
+      
+      //Walk hierarchically over the fetched nodes.
+      $layout->hwalk(function($node, $key, $delta)use(&$return, $page_info, $options){
         
-        $layout->hwalk(function($node, $key, $delta)use(&$return, $page_info, $options){
-          
-          if($delta == 0){
-            switch($node->content_type->get())
-            {
-              
-              case 'm'://odule
-                $return .=
-                  '<div class="tx-layout-part tx-module-wrapper" rel="'.$node->id.'">'."\n".
-                    '(((a list of modules to be loaded)))'."\n".
-                  '</div>'."\n";
-                break;
-
-              case 'c'://omponent
-                $return .=
-                '<div class="tx-layout-part tx-component-wrapper" rel="'.$node->id.'">'."\n".
-                  tx('Component')->views($page_info->component)->get_html($page_info->view_name, $options)."\n".
+        //If we stayed on the same depth, we've got a module or a component place-holder.
+        if($delta == 0){
+          switch($node->content_type->get())
+          {
+            
+            //Load modules. #TODO: Actually load modules.
+            case 'm':
+              $return .=
+                '<div class="tx-layout-part tx-module-wrapper" rel="'.$node->id.'">'."\n".
+                  '(((a list of modules to be loaded)))'."\n".
                 '</div>'."\n";
-                break;
-
-              default: break;
-
-            }
+              break;
+            
+            //Load a component.
+            case 'c':
+              $return .=
+              '<div class="tx-layout-part tx-component-wrapper" rel="'.$node->id.'">'."\n".
+                tx('Component')->views($page_info->component)->get_html($page_info->view_name, $options)."\n".
+              '</div>'."\n";
+              break;
+            
+            //Nothing if the content type is unrecognised.
+            default: break;
+            
           }
-
-          elseif($delta > 0){
-            $return .= '<div class="tx-layout-part tx-layout-split-'.$node->split.'" rel="'.$node->id.'">'."\n";
-          }
-
-          elseif($delta < 0){
-            $return .= '</div>'."\n";
-          }
-
-        });
-
-      })
-      ->failure(function()use(&$return, $page_info, $options){
-        $return = tx('Component')->views($page_info->component)->get_html($page_info->view_name, $options)."\n";
+        }
+        
+        //If we went to a sub-node, create the opening wrapper tag.
+        elseif($delta > 0){
+          $return .= '<div class="tx-layout-part tx-layout-split-'.$node->split.'" rel="'.$node->id.'">'."\n";
+        }
+        
+        //If we when back to a parent node, close the wrapper tag.
+        elseif($delta < 0){
+          $return .= '</div>'."\n";
+        }
+        
       });
-
+      
+    })
+    
+    //When we did not get a layout from our query, we'll just load the component.
+    ->failure(function()use(&$return, $page_info, $options){
+      $return = tx('Component')->views($page_info->component)->get_html($page_info->view_name, $options)."\n";
+    });
+    
+    //Return the HTML.
     return $return;
-
+    
   }
   
   protected function mod()
