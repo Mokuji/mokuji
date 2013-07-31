@@ -2,10 +2,11 @@
 
 <?php $text->items->each(function($item){ ?>
   
-  <div data-model="text/page_text">
-  <h1 data-field="title" data-type="line"><?php echo $item->title; ?></h1>
-  <!--<p><?php echo $item->dt_created; ?></p>-->
-  <div data-field="text" data-type="text"><?php echo $item->text; ?></div>
+  <div data-model="text/text_info" data-data="id=<?php echo $item->info_id; ?>">
+    
+    <h1 data-field="title" data-type="line"><?php echo $item->title; ?></h1>
+    <div data-field="text" data-type="text"><?php echo $item->text; ?></div>
+    
   </div>
   
 <?php }); ?>

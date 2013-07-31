@@ -320,6 +320,8 @@ class EntryPoint extends \dependencies\BaseEntryPoint
             
             //Our own editable scrips.
             tx('Ob')->add('<script src="'.URL_COMPONENTS.'cms/includes/cms.js"></script>', 'script', 'cms_editable_cms');
+            tx('Ob')->add('<script src="'.URL_COMPONENTS.'cms/includes/jslite.min.js"></script>', 'script', 'cms_editable_jslite');
+            tx('Ob')->add('<script src="'.URL_COMPONENTS.'cms/includes/ejs.js"></script>', 'script', 'cms_editable_ejs');
             tx('Ob')->add('<script src="'.URL_COMPONENTS.'cms/includes/editable.js"></script>', 'script', 'cms_editable_editable');
             
           }

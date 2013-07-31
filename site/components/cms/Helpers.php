@@ -10,6 +10,7 @@ class Helpers extends \dependencies\BaseComponent
       'check_page_authorisation' => 0,
       'get_page_info' => 0,
       'get_page_options' => 0,
+      'is_website_editable' => 0,
       'get_page_permissions' => 0
     );
   

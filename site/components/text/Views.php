@@ -19,6 +19,7 @@ class Views extends \dependencies\BaseViews
       'items' =>
         $this->table('Items')
         ->join('ItemInfo', $ii)
+        ->select("$ii.id", 'info_id')
         ->select("$ii.title", 'title')
         ->select("$ii.description", 'description')
         ->select("$ii.text", 'text')

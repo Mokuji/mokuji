@@ -1,3 +1,20 @@
+
+/* Editable *\
+\************/
+
+.editing, .editable:hover{
+  border:dotted 1px red;
+  margin:-1px;
+  cursor:pointer;
+}
+
+.editing{
+  cursor:auto !important;
+}
+
+
+
+
 .clear{
   clear:both;
 }
