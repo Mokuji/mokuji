@@ -26,7 +26,6 @@ ini_set('display_errors', (int)DEBUG);
 error_reporting(E_ALL|E_STRICT);
 
 header('P3P:CP="IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT"');/* http://adamyoung.net/IE-Blocking-iFrame-Cookies */
-
 //load config files
 if(INSTALLING !== true){
   require_once('config'.DS.'database'.EXT);
@@ -52,7 +51,8 @@ if(INSTALLING !== true)
     }
   }
 
-  $mysqlConnection = @mysql_connect(DB_HOST, DB_USER, DB_PASS);
+  $mysqlConnection = mysql_connect(DB_HOST, DB_USER, DB_PASS) or die("MySQL Connection failed to establish");
+  
   mysql_select_db(DB_NAME, $mysqlConnection);
   $result = mysql_query(
     "SELECT s.*, d.`domain`".
