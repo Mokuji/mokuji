@@ -25,8 +25,8 @@ use \Closure;
  *         
  * @method {self} where2() where2(Conditions $conditions)
  *         
- *         Adds to the WHERE clause by providing a conditions object. {@see Conditions} to
- *         find out how it can be used.
+ *         Adds to the WHERE clause by providing a conditions object. See
+ *         {@link Conditions} to find out how it can be used.
  *         
  */
 class Table extends Successable
@@ -165,7 +165,7 @@ class Table extends Successable
    * @param string $component The name of the component to look for the model in.
    * @param string $model The name of the model to find.
    * @param string $id An out-parameter that will receive the internal ID that was assigned to the model.
-   * @param array $models A reference to an array like {@see self::$models} to use instead of own models.
+   * @param array $models A reference to an array like {@link self::$models} to use instead of own models.
    * 
    * @api
    */
@@ -189,7 +189,7 @@ class Table extends Successable
    * Invoke this class like a function to attain the internal ID of the main model.
    * 
    * This is useful when the Table was constructed elsewhere and the internal ID can no
-   * longer be obtained via {@see self::__construct()}.
+   * longer be obtained via {@link self::__construct()}.
    *
    * @param string $id An out-parameter receiving the internal ID of the main model.
    * 
@@ -264,7 +264,7 @@ class Table extends Successable
    * The amount of primary keys given must be exactly equal to the amount of primary keys
    * in the table. This method adds a statement to the WHERE clause for each primary key.
    * Settings this will therefore result in a single result in most cases, and works well
-   * together with {@see self::execute_single()}
+   * together with {@link self::execute_single()}
    * 
    * @param mixed primary_key The first value for the first primary key, or array of
    *                          values for the first x primary keys.
@@ -313,7 +313,7 @@ class Table extends Successable
   /**
    * filter by secondary keys.
    * 
-   * This works the same as {@see self::pk()}, except it adds filters for the secondary
+   * This works the same as {@link self::pk()}, except it adds filters for the secondary
    * keys defined in the model. Secondary keys are not unique, and therefore filtering by
    * them does not imply a single result like primary key filtering does.
    *
@@ -573,7 +573,7 @@ class Table extends Successable
    * 
    * The depth field added by this method contains will contain the depth _relative to the
    * parent node_, therefore this method requires you to appoint a parent node first. This
-   * can be done using {@see self::parent_pk()}.
+   * can be done using {@link self::parent_pk()}.
    *
    * @param string $as The field name that the relative depth variable will become
    *                   available under. Defaults to `rel_depth`.
@@ -648,8 +648,8 @@ class Table extends Successable
    * Exclude all nodes with a depth greater than given value.
    *
    * "Depth" in this method refers to either the relative depth or absolute depth fields
-   * added by the respective methods; {@see self::add_absolute_depth()} or
-   * {@see self::add_relative_depth()}. When both fields are present, relative depth will
+   * added by the respective methods; {@link self::add_absolute_depth()} or
+   * {@link self::add_relative_depth()}. When both fields are present, relative depth will
    * be used.
    *
    * @param integer $gt The number of maximum depth.
@@ -800,7 +800,7 @@ class Table extends Successable
    * 
    * This adds a model to the FROM clause, and makes it the new working right away.
    *
-   * @param mixed $model {@see self::get_model_info() to see what can be given}
+   * @param mixed $model See {@link self::get_model_info()} to find out what can be given.
    * @param string $id This is an out-parameter that will receive the internal ID assigned to the new model.
    * 
    * @return self Chaining enabled.
@@ -841,7 +841,7 @@ class Table extends Successable
   /**
    * Adds a column to the SELECT clause.
    *
-   * @param mixed $content {@see self::prepare() to see what can be given here}
+   * @param mixed $content See {@link self::prepare()} to find out what can be given here.
    * @param string $as An optional alias to select this content by.
    * 
    * @throws \exception\Restriction If The given alias is already in use.
@@ -876,7 +876,7 @@ class Table extends Successable
   /**
    * Add a model to the FROM clause.
    *
-   * @param mixed $model {@see self::get_model_info() to see what can be given here}
+   * @param mixed $model See {@link self::get_model_info()} to see what can be given here.
    * @param string $id An out-parameter which will receive the internal ID of the model.
    *
    * @return self Chaining enabled.
@@ -949,8 +949,8 @@ class Table extends Successable
    *                                  the ON clause and will receive the following
    *                                  arguments: The internal ID of the local model, the
    *                                  internal ID of the foreign model, and the Conditions
-   *                                  object. {@see Conditions} to find out how the object
-   *                                  can be modified.
+   *                                  object. See {@link Conditions} to find out how the
+   *                                  object can be modified.
    *
    * @return self Chaining enabled.
    * 
@@ -1535,7 +1535,7 @@ class Table extends Successable
    * Used to convert given arguments to a WHERE or HAVING string.
    *
    * @param string $column The name of the column to compare against.
-   * @param string $comparator The type of comparison to make. Can be omitted. {@see self::where()}
+   * @param string $comparator The type of comparison to make. Can be omitted.
    * @param mixed $value The value to compare against.
    *
    * @return string The finished comparison-string.
