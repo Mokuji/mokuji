@@ -1,3 +1,10 @@
+#### [Version 0.22.0 Beta](https://github.com/Tuxion/mokuji/tree/0.22.0-beta)
+_5-Aug-2013_
+
+* Updated core to work with PDO:MySql
+* Updated installation script to work with PDO:MySql
+* Fixed a bug in text component using a mysql function directly.
+
 #### [Version 0.21.4 Beta](https://github.com/Tuxion/mokuji/tree/0.21.4-beta)
 _1-Jul-2013_
 

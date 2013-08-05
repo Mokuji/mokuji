@@ -5,6 +5,12 @@
   "dbUpdates": true,
   "versions": [
     {
+      "version": "0.2.1-beta",
+      "date": "2013-08-05",
+      "description": "Gebruik van een mysql functie vervangen door de juiste core functie.",
+      "changes": []
+    },
+    {
       "version": "0.2.0-beta",
       "date": "2013-05-30",
       "description": "Naar nieuwe versie systeem overgeschakeld.",

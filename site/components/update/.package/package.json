@@ -5,6 +5,12 @@
   "dbUpdates": true,
   "versions": [
     {
+      "version": "0.2.3-beta",
+      "date": "2013-08-05",
+      "description": "Installatiescript omgeschreven voor PDO:MySql.",
+      "changes": []
+    },
+    {
       "version": "0.2.2-beta",
       "date": "2013-06-24",
       "description": "Scoping bug gefixed in BaseDBUpdates.",
