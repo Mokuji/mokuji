@@ -9,7 +9,7 @@ cd $dname/../
 
 echo "Parsing code... "
 # Parse the code.
-php phpDocumentor.phar parse >> /dev/null
+php tools/phpDocumentor.phar parse >> /dev/null
 echo "Done!"
 
 echo "Generating markdown files... "

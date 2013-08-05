@@ -1,7 +1,7 @@
 # dependencies\Table
 [API index](../API-index.md)
 
-
+The Table class, Mokuji&#039;s query-builder.
 
 
 
@@ -16,68 +16,68 @@
 ## Class index
 
 **Properties**
-* [`private mixed $applied_sks`](#property-applied_sks)
-* [`private mixed $component`](#property-component)
-* [`private mixed $distinct`](#property-distinct)
-* [`private mixed $from`](#property-from)
-* [`private mixed $group`](#property-group)
-* [`private mixed $having`](#property-having)
-* [`private mixed $hierarchy`](#property-hierarchy)
-* [`private mixed $joins`](#property-joins)
-* [`private mixed $limit`](#property-limit)
-* [`private mixed $model`](#property-model)
-* [`private mixed $models`](#property-models)
-* [`private mixed $order`](#property-order)
-* [`private mixed $select`](#property-select)
-* [`private mixed $where`](#property-where)
-* [`private mixed $working_model`](#property-working_model)
+* [`private array $applied_sks`](#property-applied_sks)
+* [`private string $component`](#property-component)
+* [`private boolean $distinct`](#property-distinct)
+* [`private array $from`](#property-from)
+* [`private array $group`](#property-group)
+* [`private string $having`](#property-having)
+* [`private array $hierarchy`](#property-hierarchy)
+* [`private array $joins`](#property-joins)
+* [`private string $limit`](#property-limit)
+* [`private string $model`](#property-model)
+* [`private array $models`](#property-models)
+* [`private array $order`](#property-order)
+* [`private array $select`](#property-select)
+* [`private string $where`](#property-where)
+* [`private string $working_model`](#property-working_model)
 
 **Methods**
-* [`public mixed __construct($component, $model, $id, $models)`](#method-__construct)
-* [`public mixed __invoke($id)`](#method-__invoke)
-* [`public mixed _get_model_subquery()`](#method-_get_model_subquery)
-* [`public mixed add($model, $id)`](#method-add)
-* [`public mixed add_absolute_depth($as)`](#method-add_absolute_depth)
-* [`public mixed add_hierarchy()`](#method-add_hierarchy)
-* [`public mixed add_relative_depth($as)`](#method-add_relative_depth)
-* [`public mixed count()`](#method-count)
-* [`public mixed delete($model_name)`](#method-delete)
-* [`public mixed distinct($value)`](#method-distinct)
-* [`public mixed execute($as)`](#method-execute)
-* [`public mixed execute_single($as)`](#method-execute_single)
-* [`public mixed filter()`](#method-filter)
-* [`public mixed from($model, $id)`](#method-from)
-* [`public mixed group($column, $direction)`](#method-group)
-* [`public mixed having()`](#method-having)
-* [`public mixed helper($component, $name)`](#method-helper)
-* [`public mixed inner()`](#method-inner)
-* [`public mixed join($model_name, $id, $join_conditions)`](#method-join)
-* [`public mixed left()`](#method-left)
-* [`public mixed limit($rowcount, $offset)`](#method-limit)
-* [`public mixed max_depth($gt)`](#method-max_depth)
-* [`public mixed order($column, $direction)`](#method-order)
-* [`public mixed parent_pk()`](#method-parent_pk)
-* [`public mixed pk()`](#method-pk)
-* [`public mixed query($all)`](#method-query)
-* [`public mixed right()`](#method-right)
-* [`public mixed select($content, $as)`](#method-select)
-* [`public mixed set_jointype($type)`](#method-set_jointype)
-* [`public mixed sk()`](#method-sk)
-* [`public mixed subquery($q)`](#method-subquery)
-* [`public mixed where()`](#method-where)
-* [`public mixed workwith($id)`](#method-workwith)
-* [`public mixed write($as)`](#method-write)
-* [`private mixed _get_subquery()`](#method-_get_subquery)
-* [`private mixed arguments_to_comparisons()`](#method-arguments_to_comparisons)
-* [`private mixed compose_condition(array $condition)`](#method-compose_condition)
-* [`private mixed conditions_to_comparisons(\dependencies\Conditions $conditions)`](#method-conditions_to_comparisons)
-* [`private mixed get_column_info($input)`](#method-get_column_info)
-* [`private mixed get_model_info($input)`](#method-get_model_info)
-* [`private mixed grourder($c, $d)`](#method-grourder)
-* [`private mixed prepare($input)`](#method-prepare)
-* [`private mixed prepare_column($column)`](#method-prepare_column)
-* [`private mixed prepare_text($text)`](#method-prepare_text)
-* [`private mixed whaving()`](#method-whaving)
+* [`public mixed __construct(string $component, string $model, string $id, array $models)`](#method-__construct)
+* [`public self __invoke(string $id)`](#method-__invoke)
+* [`public array _get_model_subquery()`](#method-_get_model_subquery)
+* [`public self add(mixed $model, string $id)`](#method-add)
+* [`public self add_absolute_depth(string $as)`](#method-add_absolute_depth)
+* [`public self add_hierarchy()`](#method-add_hierarchy)
+* [`public self add_relative_depth(string $as)`](#method-add_relative_depth)
+* [`public \dependencies\Data count()`](#method-count)
+* [`public self distinct(boolean $value)`](#method-distinct)
+* [`public \dependencies\Resultset execute(string $as)`](#method-execute)
+* [`public \dependencies\BaseModel execute_single(string $as)`](#method-execute_single)
+* [`public self filter()`](#method-filter)
+* [`public self from(mixed $model, string $id)`](#method-from)
+* [`public string getQuery(string $as, array $model)`](#method-getQuery)
+* [`public self group(string $column, string|false $direction)`](#method-group)
+* [`public self having()`](#method-having)
+* [`public self helper(string $component, string $name)`](#method-helper)
+* [`public self inner()`](#method-inner)
+* [`public self join(string $model_name, string $id, \Closure $join_conditions)`](#method-join)
+* [`public self left()`](#method-left)
+* [`public self limit(integer $rowcount, integer $offset)`](#method-limit)
+* [`public self max_depth(integer $gt)`](#method-max_depth)
+* [`public self order(string $column, string|false $direction)`](#method-order)
+* [`public self parent_pk()`](#method-parent_pk)
+* [`public self pk()`](#method-pk)
+* [`public string query(string $all)`](#method-query)
+* [`public self right()`](#method-right)
+* [`public self select(mixed $content, string $as)`](#method-select)
+* [`public self set_jointype(string $type)`](#method-set_jointype)
+* [`public self sk()`](#method-sk)
+* [`public self subquery(self $q)`](#method-subquery)
+* [`public self where()`](#method-where)
+* [`public self workwith(string $id)`](#method-workwith)
+* [`public self write(string $as)`](#method-write)
+* [`private string _get_subquery()`](#method-_get_subquery)
+* [`private string arguments_to_comparisons()`](#method-arguments_to_comparisons)
+* [`private string compose_condition(array $condition)`](#method-compose_condition)
+* [`private string conditions_to_comparisons(\dependencies\Conditions $conditions)`](#method-conditions_to_comparisons)
+* [`private array get_column_info(string $input)`](#method-get_column_info)
+* [`private array get_model_info(\dependencies\Table|string $input)`](#method-get_model_info)
+* [`private string grourder(string $c, string $d)`](#method-grourder)
+* [`private string prepare(\dependencies\Table|array|string|integer $input)`](#method-prepare)
+* [`private string prepare_column(string|array $column)`](#method-prepare_column)
+* [`private string prepare_text(string $text)`](#method-prepare_text)
+* [`private string whaving()`](#method-whaving)
 
 
 ## Inheritance index
@@ -102,10 +102,10 @@
 In class: [dependencies\Table](#top)
 
 ```
-private mixed $applied_sks = array()
+private array $applied_sks = array()
 ```
 
-
+Contains the array of secondary keys on which the query results are filtered.
 
 
 
@@ -116,10 +116,10 @@ private mixed $applied_sks = array()
 In class: [dependencies\Table](#top)
 
 ```
-private mixed $component = false
+private string $component
 ```
 
-
+Contains the component name after construction.
 
 
 
@@ -130,10 +130,10 @@ private mixed $component = false
 In class: [dependencies\Table](#top)
 
 ```
-private mixed $distinct = false
+private boolean $distinct = false
 ```
 
-
+Contains whether the SELECT clause will be DISTINCT.
 
 
 
@@ -144,10 +144,10 @@ private mixed $distinct = false
 In class: [dependencies\Table](#top)
 
 ```
-private mixed $from = array()
+private array $from = array()
 ```
 
-
+Contains unprocessed information for building the FROM clause.
 
 
 
@@ -158,10 +158,10 @@ private mixed $from = array()
 In class: [dependencies\Table](#top)
 
 ```
-private mixed $group = array()
+private array $group = array()
 ```
 
-
+Contains unprocessed information for building the GROUP BY clause.
 
 
 
@@ -172,10 +172,10 @@ private mixed $group = array()
 In class: [dependencies\Table](#top)
 
 ```
-private mixed $having = ''
+private string $having = ''
 ```
 
-
+Contains the preprocessed HAVING clause.
 
 
 
@@ -186,10 +186,10 @@ private mixed $having = ''
 In class: [dependencies\Table](#top)
 
 ```
-private mixed $hierarchy = array()
+private array $hierarchy = array()
 ```
 
-
+Contains unprocessed information to build the SQL statements that make the results hierarchical.
 
 
 
@@ -200,10 +200,10 @@ private mixed $hierarchy = array()
 In class: [dependencies\Table](#top)
 
 ```
-private mixed $joins = array()
+private array $joins = array()
 ```
 
-
+Contains unprocessed information for building the JOIN clause.
 
 
 
@@ -214,10 +214,10 @@ private mixed $joins = array()
 In class: [dependencies\Table](#top)
 
 ```
-private mixed $limit
+private string $limit
 ```
 
-
+Contains the preprocessed LIMIT clause.
 
 
 
@@ -228,10 +228,10 @@ private mixed $limit
 In class: [dependencies\Table](#top)
 
 ```
-private mixed $model = false
+private string $model = false
 ```
 
-
+Contains the internal ID of the main model this instance was constructed with.
 
 
 
@@ -242,10 +242,10 @@ private mixed $model = false
 In class: [dependencies\Table](#top)
 
 ```
-private mixed $models = array()
+private array $models = array()
 ```
 
-
+Contains an associative array with model information using the models internal ID's as keys.
 
 
 
@@ -256,10 +256,10 @@ private mixed $models = array()
 In class: [dependencies\Table](#top)
 
 ```
-private mixed $order = array()
+private array $order = array()
 ```
 
-
+Contains unprocessed information for building the ORDER BY clause.
 
 
 
@@ -270,10 +270,10 @@ private mixed $order = array()
 In class: [dependencies\Table](#top)
 
 ```
-private mixed $select = array()
+private array $select = array()
 ```
 
-
+Contains unprocessed information for building the SELECT clause.
 
 
 
@@ -284,10 +284,10 @@ private mixed $select = array()
 In class: [dependencies\Table](#top)
 
 ```
-private mixed $where = ''
+private string $where = ''
 ```
 
-
+Contains the preprocessed WHERE clause.
 
 
 
@@ -298,10 +298,10 @@ private mixed $where = ''
 In class: [dependencies\Table](#top)
 
 ```
-private mixed $working_model
+private string $working_model
 ```
 
-
+Contains the internal ID of the model that operations will be applied to.
 
 
 
@@ -315,10 +315,10 @@ private mixed $working_model
 In class: [dependencies\Table](#top)
 
 ```
-mixed dependencies\Table::__construct($component, $model, $id, $models)
+mixed dependencies\Table::__construct(string $component, string $model, string $id, array $models)
 ```
 
-
+Constructs a Table object.
 
 
 
@@ -326,10 +326,10 @@ mixed dependencies\Table::__construct($component, $model, $id, $models)
 
 #### Arguments
 
-* $component **mixed**
-* $model **mixed**
-* $id **mixed**
-* $models **mixed**
+* $component **string** - The name of the component to look for the model in.
+* $model **string** - The name of the model to find.
+* $id **string** - An out-parameter that will receive the internal ID that was assigned to the model.
+* $models **array** - A reference to an array like {@link self::$models} to use instead of own models.
 
 
 
@@ -340,18 +340,25 @@ mixed dependencies\Table::__construct($component, $model, $id, $models)
 In class: [dependencies\Table](#top)
 
 ```
-mixed dependencies\Table::__invoke($id)
+self dependencies\Table::__invoke(string $id)
 ```
 
+Invoke this class like a function to attain the internal ID of the main model.
 
-
-
+This is useful when the Table was constructed elsewhere and the internal ID can no
+longer be obtained via {@link self::__construct()}.
 
 * Visibility: **public**
 
 #### Arguments
 
-* $id **mixed**
+* $id **string** - An out-parameter receiving the internal ID of the main model.
+
+
+#### Return value
+
+**self** - Chaining enabled.
+
 
 
 
@@ -362,10 +369,10 @@ mixed dependencies\Table::__invoke($id)
 In class: [dependencies\Table](#top)
 
 ```
-mixed dependencies\Table::_get_model_subquery()
+array dependencies\Table::_get_model_subquery()
 ```
 
-
+Returns the query inside a `model_info` array, so it can be used as if it's a model.
 
 
 
@@ -399,19 +406,25 @@ mixed dependencies\Successable::_success()
 In class: [dependencies\Table](#top)
 
 ```
-mixed dependencies\Table::add($model, $id)
+self dependencies\Table::add(mixed $model, string $id)
 ```
 
+Add a model and make it the working model.
 
-
-
+This adds a model to the FROM clause, and makes it the new working right away.
 
 * Visibility: **public**
 
 #### Arguments
 
-* $model **mixed**
-* $id **mixed**
+* $model **mixed** - See {@link self::get_model_info()} to find out what can be given.
+* $id **string** - This is an out-parameter that will receive the internal ID assigned to the new model.
+
+
+#### Return value
+
+**self** - Chaining enabled.
+
 
 
 
@@ -422,18 +435,26 @@ mixed dependencies\Table::add($model, $id)
 In class: [dependencies\Table](#top)
 
 ```
-mixed dependencies\Table::add_absolute_depth($as)
+self dependencies\Table::add_absolute_depth(string $as)
 ```
 
+Add a depth field based on hierarchy.
 
-
-
+The depth field added by this method contains will contain the depth &lt;em&gt;relative to the
+root node&lt;/em&gt;, therefore making it "absolute".
 
 * Visibility: **public**
 
 #### Arguments
 
-* $as **mixed**
+* $as **string** - The field name that the absolute depth variable will become
+                  available under. Defaults to `abs_depth`.
+
+
+#### Return value
+
+**self** - Chaining enabled.
+
 
 
 
@@ -444,14 +465,23 @@ mixed dependencies\Table::add_absolute_depth($as)
 In class: [dependencies\Table](#top)
 
 ```
-mixed dependencies\Table::add_hierarchy()
+self dependencies\Table::add_hierarchy()
 ```
 
+Make this query hierarchical.
 
+Adds stuff to the query needed to use a hierarchy based on hierarchy information
+defined in the current working model.
 
-
+This method is mostly used internally by all the methods that depend on the hierarchical structure.
 
 * Visibility: **public**
+
+
+#### Return value
+
+**self** - Chaining enabled.
+
 
 
 
@@ -462,20 +492,33 @@ mixed dependencies\Table::add_hierarchy()
 In class: [dependencies\Table](#top)
 
 ```
-mixed dependencies\Table::add_relative_depth($as)
+self dependencies\Table::add_relative_depth(string $as)
 ```
 
+Add a depth field based on hierarchy.
 
-
-
+The depth field added by this method contains will contain the depth &lt;em&gt;relative to the
+parent node&lt;/em&gt;, therefore this method requires you to appoint a parent node first. This
+can be done using {@link self::parent_pk()}.
 
 * Visibility: **public**
 
 #### Arguments
 
-* $as **mixed**
+* $as **string** - The field name that the relative depth variable will become
+                  available under. Defaults to `rel_depth`.
 
 
+#### Return value
+
+**self** - Chaining Enabled.
+
+
+
+
+#### Throws exceptions
+
+* **[exception\Restriction](../exception/Restriction.md)** - If No parent node was appointed beforehand.
 
 
 
@@ -531,36 +574,20 @@ mixed dependencies\Successable::and_not($check)
 In class: [dependencies\Table](#top)
 
 ```
-mixed dependencies\Table::count()
+\dependencies\Data dependencies\Table::count()
 ```
 
-
+Execute the query, returning the amount of rows affected.
 
 
 
 * Visibility: **public**
 
 
+#### Return value
 
+**[dependencies\Data](../dependencies/Data.md)** - An instance of Data wrapping an integer containing the amount of rows.
 
-
-
-## Method `delete`
-In class: [dependencies\Table](#top)
-
-```
-mixed dependencies\Table::delete($model_name)
-```
-
-
-
-
-
-* Visibility: **public**
-
-#### Arguments
-
-* $model_name **mixed**
 
 
 
@@ -571,10 +598,10 @@ mixed dependencies\Table::delete($model_name)
 In class: [dependencies\Table](#top)
 
 ```
-mixed dependencies\Table::distinct($value)
+self dependencies\Table::distinct(boolean $value)
 ```
 
-
+Make the SELECT clause a DISTINCT select clause.
 
 
 
@@ -582,7 +609,13 @@ mixed dependencies\Table::distinct($value)
 
 #### Arguments
 
-* $value **mixed**
+* $value **boolean** - Can be set to false to disable distinct select.
+
+
+#### Return value
+
+**self** - Chaining enabled.
+
 
 
 
@@ -593,10 +626,10 @@ mixed dependencies\Table::distinct($value)
 In class: [dependencies\Table](#top)
 
 ```
-mixed dependencies\Table::execute($as)
+\dependencies\Resultset dependencies\Table::execute(string $as)
 ```
 
-
+Execute the query.
 
 
 
@@ -604,9 +637,20 @@ mixed dependencies\Table::execute($as)
 
 #### Arguments
 
-* $as **mixed**
+* $as **string** - An optional model ID in which the results will be returned.
 
 
+#### Return value
+
+**[dependencies\Resultset](../dependencies/Resultset.md)** - The wrapper with the result of the query.
+
+
+
+
+#### Throws exceptions
+
+* **[exception\NotFound](../exception/NotFound.md)** - If the given model ID does not point to a known model.
+* **[exception\Sql](../exception/Sql.md)** - If an SQL error occurs.
 
 
 
@@ -615,20 +659,31 @@ mixed dependencies\Table::execute($as)
 In class: [dependencies\Table](#top)
 
 ```
-mixed dependencies\Table::execute_single($as)
+\dependencies\BaseModel dependencies\Table::execute_single(string $as)
 ```
 
+Execute and return the first result directly.
 
-
-
+This method also automatically adds a limit of 1.
 
 * Visibility: **public**
 
 #### Arguments
 
-* $as **mixed**
+* $as **string** - An optional model ID in which the results will be returned.
 
 
+#### Return value
+
+**[dependencies\BaseModel](../dependencies/BaseModel.md)** - The model that contains the first row.
+
+
+
+
+#### Throws exceptions
+
+* **[exception\NotFound](../exception/NotFound.md)** - If the given model ID does not point to a known model.
+* **[exception\Sql](../exception/Sql.md)** - If an SQL error occurs.
 
 
 
@@ -660,16 +715,27 @@ mixed dependencies\Successable::failure($callback)
 In class: [dependencies\Table](#top)
 
 ```
-mixed dependencies\Table::filter()
+self dependencies\Table::filter()
 ```
 
+Add statements to the WHERE clause automatically for given component filters.
 
-
-
+Components filters are current GET parameters, merged with the filters set in the
+session for the component.
 
 * Visibility: **public**
 
 
+#### Return value
+
+**self** - Chaining enabled.
+
+
+
+
+#### Throws exceptions
+
+* **[exception\InvalidArgument](../exception/InvalidArgument.md)** - If the arguments have an unexpected format.
 
 
 
@@ -678,10 +744,10 @@ mixed dependencies\Table::filter()
 In class: [dependencies\Table](#top)
 
 ```
-mixed dependencies\Table::from($model, $id)
+self dependencies\Table::from(mixed $model, string $id)
 ```
 
-
+Add a model to the FROM clause.
 
 
 
@@ -689,10 +755,50 @@ mixed dependencies\Table::from($model, $id)
 
 #### Arguments
 
-* $model **mixed**
-* $id **mixed**
+* $model **mixed** - See {@link self::get_model_info()} to see what can be given here.
+* $id **string** - An out-parameter which will receive the internal ID of the model.
 
 
+#### Return value
+
+**self** - Chaining enabled.
+
+
+
+
+
+
+
+## Method `getQuery`
+In class: [dependencies\Table](#top)
+
+```
+string dependencies\Table::getQuery(string $as, array $model)
+```
+
+Generate and return the query as a string.
+
+
+
+* Visibility: **public**
+
+#### Arguments
+
+* $as **string** - An optional model ID in which the results will be returned.
+* $model **array** - An out-parameter that receives model meta-data.
+
+
+#### Return value
+
+**string** - The query.
+
+
+
+
+#### Throws exceptions
+
+* **[exception\NotFound](../exception/NotFound.md)** - If the given model ID does not point to a known model.
+* **[exception\Sql](../exception/Sql.md)** - If an SQL error occurs.
 
 
 
@@ -701,10 +807,10 @@ mixed dependencies\Table::from($model, $id)
 In class: [dependencies\Table](#top)
 
 ```
-mixed dependencies\Table::group($column, $direction)
+self dependencies\Table::group(string $column, string|false $direction)
 ```
 
-
+Group by the given column in the working model.
 
 
 
@@ -712,8 +818,14 @@ mixed dependencies\Table::group($column, $direction)
 
 #### Arguments
 
-* $column **mixed**
-* $direction **mixed**
+* $column **string** - The column identifier.
+* $direction **string|false** - Optional direction; `&quot;ASC&quot;` or `&quot;DESC&quot;`.
+
+
+#### Return value
+
+**self** - Chaining enabled.
+
 
 
 
@@ -724,14 +836,21 @@ mixed dependencies\Table::group($column, $direction)
 In class: [dependencies\Table](#top)
 
 ```
-mixed dependencies\Table::having()
+self dependencies\Table::having()
 ```
 
+Add to the HAVING clause.
 
-
-
+Adds to the HAVING clause in the exact same way that &lt;code&gt;$this-&gt;where()&lt;/code&gt; adds to there
+WHERE clause. Please refer to the &lt;code&gt;where()&lt;/code&gt; documentation for use of this method.
 
 * Visibility: **public**
+
+
+#### Return value
+
+**self** - Chaining enabled.
+
 
 
 
@@ -742,10 +861,10 @@ mixed dependencies\Table::having()
 In class: [dependencies\Table](#top)
 
 ```
-mixed dependencies\Table::helper($component, $name)
+self dependencies\Table::helper(string $component, string $name)
 ```
 
-
+Call a helper function to do complex table operations.
 
 
 
@@ -753,8 +872,16 @@ mixed dependencies\Table::helper($component, $name)
 
 #### Arguments
 
-* $component **mixed**
-* $name **mixed**
+* $component **string** - The name of the component that has the helper function.
+* $name **string** - The name of the helper function to call. Note that this is the
+                    name _without_ the `table__` prefix that it must have in the
+                    component&#039;s Helpers class.
+
+
+#### Return value
+
+**self** - Chaining enabled.
+
 
 
 
@@ -765,14 +892,20 @@ mixed dependencies\Table::helper($component, $name)
 In class: [dependencies\Table](#top)
 
 ```
-mixed dependencies\Table::inner()
+self dependencies\Table::inner()
 ```
 
+Sets join type of the last join to "INNER".
 
-
-
+This is an alias for &lt;code&gt;$this-&gt;set_jointype('INNER')&lt;/code&gt;.
 
 * Visibility: **public**
+
+
+#### Return value
+
+**self** - Chaining enabled.
+
 
 
 
@@ -807,20 +940,62 @@ mixed dependencies\Successable::is($check, $callback)
 In class: [dependencies\Table](#top)
 
 ```
-mixed dependencies\Table::join($model_name, $id, $join_conditions)
+self dependencies\Table::join(string $model_name, string $id, \Closure $join_conditions)
 ```
 
+Join a foreign model onto the working model.
 
+This method uses the &lt;code&gt;relations&lt;/code&gt; information available on the local model or foreign
+model classes to determine which tables to join on which keys in order to join the
+model of the given name.
 
+You can define these relations in your model by setting the static &lt;code&gt;$relations&lt;/code&gt;
+property in the model class to an array, formatted as follows:
 
+&lt;code&gt;php
+static $relations = array(
+  "&lt;foreign_model_name&gt;" =&gt; array(
+    "&lt;local_column_name&gt;" =&gt; "&lt;join_model_name&gt;.&lt;join_column_name&gt;"[,
+    "&lt;join_type&gt;"]
+  )
+);&lt;/code&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;&lt;foreign_model_name&gt;&lt;/code&gt;: The model that can be joined.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&lt;local_column_name&gt;&lt;/code&gt;: The column name in this model that the join column will be linked to.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&lt;join_model_name&gt;&lt;/code&gt;: The first model to join in order to get to the foreign model.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&lt;join_column_name&gt;&lt;/code&gt;: The name of the column that links to the local column.&lt;/li&gt;
+&lt;/ul&gt;
+
+In most cases, the &lt;code&gt;&lt;join_model_name&gt;&lt;/code&gt; will be equal to the &lt;code&gt;&lt;foreign_model_name&gt;&lt;/code&gt;
+for a direct join path. They can however differ to create a longer path of joins, in
+this case, the &lt;code&gt;&lt;join_model_name&gt;&lt;/code&gt; will be joined at first and &lt;code&gt;join()&lt;/code&gt; will look
+into that model for further relations with the eventual &lt;code&gt;&lt;foreign_model_name&gt;&lt;/code&gt;. This
+is useful for joining a foreign model through a link table that has 2 foreign keys.
 
 * Visibility: **public**
 
 #### Arguments
 
-* $model_name **mixed**
-* $id **mixed**
-* $join_conditions **mixed**
+* $model_name **string** - The name of the foreign model. Can be set to
+                          `&quot;__CURRENT__&quot;` in order to use the current working model
+                          when `$join_conditions` is provided.
+* $id **string** - The out-parameter which will receive the internal ID that gets
+                  assigned to the model.
+* $join_conditions **Closure** - An optional closure which can modify the Conditions
+                                 object in order to change the &quot;ON&quot; clause of this
+                                 join. This closure is executed once when generating
+                                 the ON clause and will receive the following
+                                 arguments: The internal ID of the local model, the
+                                 internal ID of the foreign model, and the Conditions
+                                 object. See {@link Conditions} to find out how the
+                                 object can be modified.
+
+
+#### Return value
+
+**self** - Chaining enabled.
+
 
 
 
@@ -831,14 +1006,20 @@ mixed dependencies\Table::join($model_name, $id, $join_conditions)
 In class: [dependencies\Table](#top)
 
 ```
-mixed dependencies\Table::left()
+self dependencies\Table::left()
 ```
 
+Sets join type of the last join to "LEFT".
 
-
-
+This is an alias for &lt;code&gt;$this-&gt;set_jointype('LEFT')&lt;/code&gt;.
 
 * Visibility: **public**
+
+
+#### Return value
+
+**self** - Chaining enabled.
+
 
 
 
@@ -849,10 +1030,10 @@ mixed dependencies\Table::left()
 In class: [dependencies\Table](#top)
 
 ```
-mixed dependencies\Table::limit($rowcount, $offset)
+self dependencies\Table::limit(integer $rowcount, integer $offset)
 ```
 
-
+Limit the amount of rows returned.
 
 
 
@@ -860,8 +1041,14 @@ mixed dependencies\Table::limit($rowcount, $offset)
 
 #### Arguments
 
-* $rowcount **mixed**
-* $offset **mixed**
+* $rowcount **integer** - The maximum amount of rows allowed.
+* $offset **integer** - An optional offset. Rows before the offset will not be included.
+
+
+#### Return value
+
+**self** - Chaining enabled.
+
 
 
 
@@ -872,18 +1059,27 @@ mixed dependencies\Table::limit($rowcount, $offset)
 In class: [dependencies\Table](#top)
 
 ```
-mixed dependencies\Table::max_depth($gt)
+self dependencies\Table::max_depth(integer $gt)
 ```
 
+Exclude all nodes with a depth greater than given value.
 
-
-
+"Depth" in this method refers to either the relative depth or absolute depth fields
+added by the respective methods; {@link self::add_absolute_depth()} or
+{@link self::add_relative_depth()}. When both fields are present, relative depth will
+be used.
 
 * Visibility: **public**
 
 #### Arguments
 
-* $gt **mixed**
+* $gt **integer** - The number of maximum depth.
+
+
+#### Return value
+
+**self** - Chaining enabled.
+
 
 
 
@@ -918,10 +1114,10 @@ mixed dependencies\Successable::not($check, $callback)
 In class: [dependencies\Table](#top)
 
 ```
-mixed dependencies\Table::order($column, $direction)
+self dependencies\Table::order(string $column, string|false $direction)
 ```
 
-
+Order by the given column in the working model.
 
 
 
@@ -929,8 +1125,14 @@ mixed dependencies\Table::order($column, $direction)
 
 #### Arguments
 
-* $column **mixed**
-* $direction **mixed**
+* $column **string** - The column identifier.
+* $direction **string|false** - Optional direction; `&quot;ASC&quot;` or `&quot;DESC&quot;`.
+
+
+#### Return value
+
+**self** - Chaining enabled.
+
 
 
 
@@ -941,14 +1143,20 @@ mixed dependencies\Table::order($column, $direction)
 In class: [dependencies\Table](#top)
 
 ```
-mixed dependencies\Table::parent_pk()
+self dependencies\Table::parent_pk()
 ```
 
-
+Filter by parent' primary key assuming a hierarchical table structure.
 
 
 
 * Visibility: **public**
+
+
+#### Return value
+
+**self** - Chaining enabled.
+
 
 
 
@@ -959,16 +1167,30 @@ mixed dependencies\Table::parent_pk()
 In class: [dependencies\Table](#top)
 
 ```
-mixed dependencies\Table::pk()
+self dependencies\Table::pk()
 ```
 
+Filter by primary keys.
 
-
-
+The amount of primary keys given must be exactly equal to the amount of primary keys
+in the table. This method adds a statement to the WHERE clause for each primary key.
+Settings this will therefore result in a single result in most cases, and works well
+together with {@link self::execute_single()}
 
 * Visibility: **public**
 
 
+#### Return value
+
+**self** - Chaining enabled.
+
+
+
+
+#### Throws exceptions
+
+* **[exception\InvalidArgument](../exception/InvalidArgument.md)** - If The number of given keys doesn&#039;t match the
+                                   amount of primary keys defined in the model.
 
 
 
@@ -977,10 +1199,10 @@ mixed dependencies\Table::pk()
 In class: [dependencies\Table](#top)
 
 ```
-mixed dependencies\Table::query($all)
+string dependencies\Table::query(string $all)
 ```
 
-
+Builds the query
 
 
 
@@ -988,7 +1210,13 @@ mixed dependencies\Table::query($all)
 
 #### Arguments
 
-* $all **mixed**
+* $all **string** - Column to select.
+
+
+#### Return value
+
+**string** - The query.
+
 
 
 
@@ -999,14 +1227,20 @@ mixed dependencies\Table::query($all)
 In class: [dependencies\Table](#top)
 
 ```
-mixed dependencies\Table::right()
+self dependencies\Table::right()
 ```
 
+Sets join type of the last join to "RIGHT".
 
-
-
+This is an alias for &lt;code&gt;$this-&gt;set_jointype('RIGHT')&lt;/code&gt;.
 
 * Visibility: **public**
+
+
+#### Return value
+
+**self** - Chaining enabled.
+
 
 
 
@@ -1017,10 +1251,10 @@ mixed dependencies\Table::right()
 In class: [dependencies\Table](#top)
 
 ```
-mixed dependencies\Table::select($content, $as)
+self dependencies\Table::select(mixed $content, string $as)
 ```
 
-
+Adds a column to the SELECT clause.
 
 
 
@@ -1028,10 +1262,20 @@ mixed dependencies\Table::select($content, $as)
 
 #### Arguments
 
-* $content **mixed**
-* $as **mixed**
+* $content **mixed** - See {@link self::prepare()} to find out what can be given here.
+* $as **string** - An optional alias to select this content by.
 
 
+#### Return value
+
+**self** - Chaining enabled.
+
+
+
+
+#### Throws exceptions
+
+* **[exception\Restriction](../exception/Restriction.md)** - If The given alias is already in use.
 
 
 
@@ -1040,10 +1284,10 @@ mixed dependencies\Table::select($content, $as)
 In class: [dependencies\Table](#top)
 
 ```
-mixed dependencies\Table::set_jointype($type)
+self dependencies\Table::set_jointype(string $type)
 ```
 
-
+Sets join type for the latest JOIN.
 
 
 
@@ -1051,7 +1295,13 @@ mixed dependencies\Table::set_jointype($type)
 
 #### Arguments
 
-* $type **mixed**
+* $type **string** - Any of the following: `&quot;LEFT&quot;`, `&quot;RIGHT&quot;`, `&quot;INNER&quot;`.
+
+
+#### Return value
+
+**self** - Chaining enabled.
+
 
 
 
@@ -1062,16 +1312,29 @@ mixed dependencies\Table::set_jointype($type)
 In class: [dependencies\Table](#top)
 
 ```
-mixed dependencies\Table::sk()
+self dependencies\Table::sk()
 ```
 
+filter by secondary keys.
 
-
-
+This works the same as {@link self::pk()}, except it adds filters for the secondary
+keys defined in the model. Secondary keys are not unique, and therefore filtering by
+them does not imply a single result like primary key filtering does.
 
 * Visibility: **public**
 
 
+#### Return value
+
+**self** - Chaining enabled.
+
+
+
+
+#### Throws exceptions
+
+* **[exception\InvalidArgument](../exception/InvalidArgument.md)** - If The number of given keys doesn&#039;t match the
+                                   amount of secondary keys defined in the model.
 
 
 
@@ -1080,10 +1343,10 @@ mixed dependencies\Table::sk()
 In class: [dependencies\Table](#top)
 
 ```
-mixed dependencies\Table::subquery($q)
+self dependencies\Table::subquery(self $q)
 ```
 
-
+Creates a new query in the context of this one.
 
 
 
@@ -1091,7 +1354,13 @@ mixed dependencies\Table::subquery($q)
 
 #### Arguments
 
-* $q **mixed**
+* $q **self** - An out-parameter which will receive the Table object that represents the sub-query.
+
+
+#### Return value
+
+**self** - Chaining enabled.
+
 
 
 
@@ -1125,14 +1394,20 @@ mixed dependencies\Successable::success($callback)
 In class: [dependencies\Table](#top)
 
 ```
-mixed dependencies\Table::where()
+self dependencies\Table::where()
 ```
 
+Add to the WHERE clause.
 
-
-
+This method can be used in 2 different ways. Please refer to &lt;code&gt;where1&lt;/code&gt; and &lt;code&gt;where2&lt;/code&gt; for the documentation.
 
 * Visibility: **public**
+
+
+#### Return value
+
+**self** - Chaining enabled.
+
 
 
 
@@ -1143,10 +1418,10 @@ mixed dependencies\Table::where()
 In class: [dependencies\Table](#top)
 
 ```
-mixed dependencies\Table::workwith($id)
+self dependencies\Table::workwith(string $id)
 ```
 
-
+Set the working model.
 
 
 
@@ -1154,7 +1429,13 @@ mixed dependencies\Table::workwith($id)
 
 #### Arguments
 
-* $id **mixed**
+* $id **string** - The internal ID of the model to set as working model.
+
+
+#### Return value
+
+**self** - Chaining enabled.
+
 
 
 
@@ -1165,20 +1446,32 @@ mixed dependencies\Table::workwith($id)
 In class: [dependencies\Table](#top)
 
 ```
-mixed dependencies\Table::write($as)
+self dependencies\Table::write(string $as)
 ```
 
+Print the query to the output.
 
-
-
+&lt;strong&gt;This method may be used for debugging purposed and it is not recommended to have it
+in any final code.&lt;/strong&gt;
 
 * Visibility: **public**
 
 #### Arguments
 
-* $as **mixed**
+* $as **string** - An optional model ID in which the results will be returned.
 
 
+#### Return value
+
+**self** - Chaining enabled.
+
+
+
+
+#### Throws exceptions
+
+* **[exception\NotFound](../exception/NotFound.md)** - If the given model ID does not point to a known model.
+* **[exception\Sql](../exception/Sql.md)** - If an SQL error occurs.
 
 
 
@@ -1210,10 +1503,10 @@ mixed dependencies\Successable::_do_check($check)
 In class: [dependencies\Table](#top)
 
 ```
-mixed dependencies\Table::_get_subquery()
+string dependencies\Table::_get_subquery()
 ```
 
-
+Build the query and return it for use as a sub-query.
 
 
 
@@ -1228,14 +1521,20 @@ mixed dependencies\Table::_get_subquery()
 In class: [dependencies\Table](#top)
 
 ```
-mixed dependencies\Table::arguments_to_comparisons()
+string dependencies\Table::arguments_to_comparisons()
 ```
 
-
+Used to convert given arguments to a WHERE or HAVING string.
 
 
 
 * Visibility: **private**
+
+
+#### Return value
+
+**string** - The finished comparison-string.
+
 
 
 
@@ -1246,18 +1545,25 @@ mixed dependencies\Table::arguments_to_comparisons()
 In class: [dependencies\Table](#top)
 
 ```
-mixed dependencies\Table::compose_condition(array $condition)
+string dependencies\Table::compose_condition(array $condition)
 ```
 
+Converts an array to a comparison-string.
 
-
-
+Used by &lt;code&gt;conditions_to_comparisons&lt;/code&gt; in order to convert Condition formatted arrays to
+comparison formatted strings.
 
 * Visibility: **private**
 
 #### Arguments
 
 * $condition **array**
+
+
+#### Return value
+
+**string** - Comparison.
+
 
 
 
@@ -1268,10 +1574,10 @@ mixed dependencies\Table::compose_condition(array $condition)
 In class: [dependencies\Table](#top)
 
 ```
-mixed dependencies\Table::conditions_to_comparisons(\dependencies\Conditions $conditions)
+string dependencies\Table::conditions_to_comparisons(\dependencies\Conditions $conditions)
 ```
 
-
+Used to convert a given Conditions object to a WHERE or HAVING string.
 
 
 
@@ -1279,7 +1585,13 @@ mixed dependencies\Table::conditions_to_comparisons(\dependencies\Conditions $co
 
 #### Arguments
 
-* $conditions **[dependencies\Conditions](../dependencies/Conditions.md)**
+* $conditions **[dependencies\Conditions](../dependencies/Conditions.md)** - The Conditions object to use.
+
+
+#### Return value
+
+**string** - The resulting comparison-string.
+
 
 
 
@@ -1290,10 +1602,10 @@ mixed dependencies\Table::conditions_to_comparisons(\dependencies\Conditions $co
 In class: [dependencies\Table](#top)
 
 ```
-mixed dependencies\Table::get_column_info($input)
+array dependencies\Table::get_column_info(string $input)
 ```
 
-
+Normalizes a string representing a column into an array of meta-data.
 
 
 
@@ -1301,7 +1613,24 @@ mixed dependencies\Table::get_column_info($input)
 
 #### Arguments
 
-* $input **mixed**
+* $input **string** - Columns have the following format:
+                     `&quot;[[&lt;component_name&gt;.]&lt;model_name&gt;.]&lt;column_name&gt;&quot;`.
+                     * `&lt;column_name&gt;`: The name of the column. This has to be present in the string.
+                     * `&lt;model_name&gt;`: An optional alternative model may be prepended
+                       to the column-name using a `.` as separator. This has to be
+                       an internal model ID!
+                     * `&lt;component_name&gt;`: If the model name was given, an optional
+                       component name may be prepended to that using a `.`, in which
+                       case this component will be used to look for the model in.
+
+
+#### Return value
+
+**array** - An associative array with the following keys:
+              * `component`: The name of the component.
+              * `model`: The internal ID of the model.
+              * `name`: The name of the column.
+
 
 
 
@@ -1312,10 +1641,10 @@ mixed dependencies\Table::get_column_info($input)
 In class: [dependencies\Table](#top)
 
 ```
-mixed dependencies\Table::get_model_info($input)
+array dependencies\Table::get_model_info(\dependencies\Table|string $input)
 ```
 
-
+Normalizes several different inputs that represent a model to an array of meta-data.
 
 
 
@@ -1323,7 +1652,25 @@ mixed dependencies\Table::get_model_info($input)
 
 #### Arguments
 
-* $input **mixed**
+* $input **[dependencies\Table](../dependencies/Table.md)|string** - When given input is a table, its
+                           `_get_model_subquery`-method will be used to attain the
+                           array of meta-data. When it is a string, it must have the
+                           following format: `&quot;[&lt;component_name&gt;.]&lt;model_name&gt;&quot;`.
+                           * `&lt;component_name&gt;`: The name of the component that houses
+                             the model.
+                           * `&lt;model_name&gt;`: The name of the model (class name).
+
+
+#### Return value
+
+**array** - An array with the following keys:
+              * `component`: The name of the component that houses the model.
+              * `name`: The name of the model.
+              * `path`: The full class-name of the model.
+              * `table`: The table name corresponding to the model.
+              * `relations`: Cached inter-tabular relations defined in the model.
+              * `id`: The internal ID assigned to the model.
+
 
 
 
@@ -1334,10 +1681,10 @@ mixed dependencies\Table::get_model_info($input)
 In class: [dependencies\Table](#top)
 
 ```
-mixed dependencies\Table::grourder($c, $d)
+string dependencies\Table::grourder(string $c, string $d)
 ```
 
-
+Combine group and order because they are similar in syntax.
 
 
 
@@ -1345,8 +1692,14 @@ mixed dependencies\Table::grourder($c, $d)
 
 #### Arguments
 
-* $c **mixed**
-* $d **mixed**
+* $c **string** - Column name.
+* $d **string** - Direction.
+
+
+#### Return value
+
+**string** - The resulting MySQL.
+
 
 
 
@@ -1357,10 +1710,10 @@ mixed dependencies\Table::grourder($c, $d)
 In class: [dependencies\Table](#top)
 
 ```
-mixed dependencies\Table::prepare($input)
+string dependencies\Table::prepare(\dependencies\Table|array|string|integer $input)
 ```
 
-
+Detect what input could be, and prepare it for insertion into the query.
 
 
 
@@ -1368,7 +1721,20 @@ mixed dependencies\Table::prepare($input)
 
 #### Arguments
 
-* $input **mixed**
+* $input **[dependencies\Table](../dependencies/Table.md)|array|string|integer** - * `Table`: Will be used as a sub-query.
+       * `array`: Will be converted to a comma-separated list of values.
+       * `&quot;NULL&quot;`: Will become `NULL`.
+       * `integer`: And numeric strings will be used as numbers.
+       * `string`: Words with periods and text between (\`)-marks will be used as a
+         column-identifier, and parsed by `self::get_column_info()`. Text between
+         quotation-marks, or with spaces or special characters will be interpreted as
+         plain-text, and sanitized by `self::prepare_text()`.
+
+
+#### Return value
+
+**string** - The prepared value.
+
 
 
 
@@ -1379,10 +1745,10 @@ mixed dependencies\Table::prepare($input)
 In class: [dependencies\Table](#top)
 
 ```
-mixed dependencies\Table::prepare_column($column)
+string dependencies\Table::prepare_column(string|array $column)
 ```
 
-
+Normalizes several different inputs which represent a column into a string.
 
 
 
@@ -1390,7 +1756,7 @@ mixed dependencies\Table::prepare_column($column)
 
 #### Arguments
 
-* $column **mixed**
+* $column **string|array**
 
 
 
@@ -1401,10 +1767,10 @@ mixed dependencies\Table::prepare_column($column)
 In class: [dependencies\Table](#top)
 
 ```
-mixed dependencies\Table::prepare_text($text)
+string dependencies\Table::prepare_text(string $text)
 ```
 
-
+Sanitizes and normalizes text-input.
 
 
 
@@ -1412,7 +1778,7 @@ mixed dependencies\Table::prepare_text($text)
 
 #### Arguments
 
-* $text **mixed**
+* $text **string**
 
 
 
@@ -1423,14 +1789,20 @@ mixed dependencies\Table::prepare_text($text)
 In class: [dependencies\Table](#top)
 
 ```
-mixed dependencies\Table::whaving()
+string dependencies\Table::whaving()
 ```
 
-
+Combine where and having because they are similar in syntax.
 
 
 
 * Visibility: **private**
+
+
+#### Return value
+
+**string** - The resulting MySQL.
+
 
 
 
