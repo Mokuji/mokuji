@@ -1353,11 +1353,12 @@ class Table extends Successable
 
       //maybe its text containing column names or simple text
       elseif((substr_count($input, '`') > 0) || (substr_count($input, '\'') > 0) || (substr_count($input, '*') > 0)){
-        $input = preg_replace(
-          array('~\'([^\']*)(?<!\\\)\'~ie',    '~(?!\')`(.*?)`(?!\')~ie'),
-          array("\$this->prepare_text('\\1')", "\$this->prepare_column('\\1')"),
-          $input
-        );
+        $input = preg_replace_callback('~\'([^\']*)(?<!\\\)\'~i', function($matches){
+          return $this->prepare_text($matches[1]);
+        }, $input);
+        $input = preg_replace_callback('~(?!\')`(.*?)`(?!\')~i', function($matches){
+          return $this->prepare_column($matches[1]);
+        }, $input);
       }
 
       //its probably just plain text without any bells or whistles :(

@@ -378,7 +378,7 @@ class Account
     {
       
       tx('Sql')->execute_non_query(
-        "INSERT INTO #__account_user_info (user_id, status) VALUES (".abs(mysql_insert_id()).", 1)"
+        "INSERT INTO #__account_user_info (user_id, status) VALUES (".abs(mk('Sql')->get_insert_id()).", 1)"
       );
       
     }

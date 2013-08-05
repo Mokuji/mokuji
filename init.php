@@ -51,27 +51,30 @@ if(INSTALLING !== true)
       $url_path = substr($url_path, 1);
     }
   }
-
-  $mysqlConnection = @mysql_connect(DB_HOST, DB_USER, DB_PASS);
-  mysql_select_db(DB_NAME, $mysqlConnection);
-  $result = mysql_query(
+  
+  $pdo = new \PDO('mysql:host='.DB_HOST.';dbname='.DB_NAME,DB_USER, DB_PASS);
+  
+  $result = $pdo->query(
     "SELECT s.*, d.`domain`".
     "FROM `".DB_PREFIX."core_sites` s ".
       "JOIN `".DB_PREFIX."core_site_domains` d ON s.id = d.site_id ".
     "WHERE (d.`domain`='{$_SERVER['HTTP_HOST']}' OR d.`domain`='*') ".
       "AND s.`url_path`='$url_path' ".
     "ORDER BY `domain` DESC ".
-    "LIMIT 1",
-    $mysqlConnection);
-
-  if($result === false)
-    die('Failed to load website settings.'.n.@mysql_error($mysqlConnection));
-
-  if(mysql_num_rows($result) === 0)
-    die('No site settings found for domain "'.$_SERVER['HTTP_HOST'].'" and url_path "'.$url_path.'".'.n.@mysql_error($mysqlConnection));
+    "LIMIT 1");
   
-  $site = mysql_fetch_object($result);
-  mysql_close($mysqlConnection);
+  if($result === false){
+    $error = $pdo->errorInfo();
+    die('Failed to load website settings.'.n.$error[2]);
+  }
+  
+  if($result->rowCount() === 0){
+    $error = $pdo->errorInfo();
+    die('No site settings found for domain "'.$_SERVER['HTTP_HOST'].'" and url_path "'.$url_path.'".'.n.$error[2]);
+  }
+  
+  $site = $result->fetch(\PDO::FETCH_OBJ);
+  $pdo = null; //destruct == close connection
   
 }
 

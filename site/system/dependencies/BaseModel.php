@@ -41,6 +41,7 @@ abstract class BaseModel extends Data
     $this->set(self::table_data()->fields->map(function($val, $key)use(&$database_row){
       
       //Workaround for byte strings from mysql_fetch_assoc.
+      #TODO: is this still needed with PDO?
       if($val->type->get() === 'bit' && $val->arguments->{0}->get('int') === 1 && gettype($database_row[$key]) === 'string'){
         $database_row[$key] = $database_row[$key] === "\x01";
       }
