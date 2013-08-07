@@ -1,17 +1,20 @@
 <?php namespace dependencies; if(!defined('TX')) die('No direct access.');
 
+use \PDO;
+use \PDOStatement;
+
 class Resultset extends Data
 {
   
   private $model;
   
   // Constructor fills the rows with instances of given model
-  public function __construct($result, $model='\\dependencies\\Data')
+  public function __construct(PDOStatement $result, $model='\\dependencies\\Data')
   {
     
     $rows = array();
     $i = 0;
-    while($row = mysql_fetch_assoc($result)){
+    while($row = $result->fetch(PDO::FETCH_ASSOC)){
       $rows[] = new $model($row, $this, $i);
       $i++;
     }

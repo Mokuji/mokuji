@@ -23,7 +23,7 @@ class Actions extends \dependencies\BaseComponent
       $item = tx('Sql')->table('text', 'Items')->pk($data->id->get('int'))->execute_single()->is('empty')
         ->success(function()use($data, $user_id, &$item_id){
           tx('Sql')->model('text', 'Items')->merge($data->having('page_id', 'order_nr'))->merge(array('dt_created' => date("Y-m-d H:i:s")))->merge(array('user_id' => $user_id))->save();
-          $item_id = mysql_insert_id();
+          $item_id = mk('Sql')->get_insert_id();
         })
         ->failure(function($item)use($data, $user_id, &$item_id){
           $item->merge($data->having('page_id', 'order_nr', 'dt_created'))->merge(array('user_id' => $user_id))->save();

@@ -9,7 +9,8 @@ CKEDITOR.editorConfig = function( config )
   config.language = 'nl';
   // config.plugins += ',autologin,docprops'
   // config.plugins += ',autologin,mediaembed'
-  config.plugins += ',autologin'
+  config.plugins += ',autologin,youtube';
+  config.allowedContent = true;
   //config.basePath: '/plugins/ckeditor/'
   //config.skin = 'tx';
   //config.uiColor = '#AADC6E';

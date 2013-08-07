@@ -70,33 +70,34 @@ abstract class Tasks
         throw new \Exception('Using multi-site support requires the database to be enabled.');
       
       //Create a temporary connection to find the site information.
-      $mysqlConnection = @mysql_connect(DB_HOST, DB_USER, DB_PASS);
+      $pdo = new \PDO('mysql:host='.DB_HOST.';dbname='.DB_NAME, DB_USER, DB_PASS);
       
-      if(!$mysqlConnection)
+      if(!$pdo)
         throw new \Exception('Unable to connect to database to find site information.');
       
-      if(!mysql_select_db(DB_NAME, $mysqlConnection))
-        throw new \Exception('Unable to select database to find site information.');
-      
       //Fetch the site settings.
-      $result = mysql_query(
+      $result = $pdo->query(
         "SELECT s.*, d.`domain`".
         "FROM `".DB_PREFIX."core_sites` s ".
           "JOIN `".DB_PREFIX."core_site_domains` d ON s.id = d.site_id ".
         "WHERE (d.`domain`='{$_SERVER['HTTP_HOST']}' OR d.`domain`='*') ".
           "AND s.`url_path`='$url_path' ".
         "ORDER BY `domain` DESC ".
-        "LIMIT 1",
-        $mysqlConnection);
+        "LIMIT 1"
+      );
       
-      if($result === false)
-        throw new \Exception('Failed to load website properties: '.@mysql_error($mysqlConnection));
+      if($result === false){
+        $error = $pdo->errorInfo();
+        throw new \Exception('Failed to load website properties: '.$error[2]);
+      }
       
-      if(mysql_num_rows($result) === 0)
-        throw new \Exception('No site properties found for domain "'.$_SERVER['HTTP_HOST'].'" and url_path "'.$url_path.'". '.@mysql_error($mysqlConnection));
+      if($result->rowCount() === 0){
+        $error = $pdo->errorInfo();
+        throw new \Exception('No site properties found for domain "'.$_SERVER['HTTP_HOST'].'" and url_path "'.$url_path.'". '.$error[2]);
+      }
       
-      $site = mysql_fetch_object($result);
-      mysql_close($mysqlConnection);
+      $site = $result->fetch(\PDO::FETCH_OBJ);
+      $pdo = null; //destruct == close connection
       
       return $site;
       

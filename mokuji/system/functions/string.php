@@ -86,3 +86,18 @@ function cond_print($check, $string)
   }
   
 }
+
+/**
+ * Converts a version string to a valid function name.
+ * 
+ * Example: '1.2.2-beta' => '1_2_2_beta'
+ * 
+ * @see http://development.mokuji.org/40/versioning?menu=43
+ * @param  string $version Version string.
+ * @return string Function name variation of the version.
+ */
+function vtfn($version)
+{
+  raw($version);
+  return str_replace('.', '_', str_replace('-', '_', $version));
+}

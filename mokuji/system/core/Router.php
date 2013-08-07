@@ -52,7 +52,9 @@ class Router
       $methodname = array_shift($parameters);
       
       //Finish the description by serializing the method name.
-      $description .= ' ' . preg_replace('~(?:_([a-z])|([A-Z]))~e', '" ".strtolower("\\1")', $methodname) . '.';
+      $description .= ' ' . preg_replace_callback('~(?:_([a-z])|([A-Z]))~', function($matches){
+        return ' '.strtolower($matches[1]);
+      }, $methodname).'.';
       
       //Call the method. It should return a \dependencies\UserFunction.
       $userfunc = tx($description, function()use($component, $methodtype, $methodname, $data, $parameters){

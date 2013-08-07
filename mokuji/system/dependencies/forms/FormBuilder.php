@@ -7,11 +7,9 @@ class FormBuilder
 {
   
   protected
-    $options;
-  
-  private
     $id,
     $model,
+    $options,
     $relations=array(),
     $fields=array();
   
@@ -60,7 +58,7 @@ class FormBuilder
   public function render(array $options)
   {
     
-    //TODO: Add field ordering option.
+    #TODO: Add field ordering option.
     
     if(isset($options['action'])){
       $action = url($options['action'], 1);
@@ -250,7 +248,7 @@ class FormBuilder
       
       //Get the table information of this field.
       $field = $table->fields[$column_name];
-            
+      
       //First check that this field really exists.
       if(!$field->is_set())
       {

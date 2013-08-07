@@ -5,6 +5,24 @@
   "dbUpdates": true,
   "versions": [
     {
+      "version": "0.8.1-beta",
+      "date": "2013-08-07",
+      "description": "FormBuilder class is nu makkelijker uit te breiden.",
+      "changes": []
+    },
+    {
+      "version": "0.8.0-beta",
+      "date": "2013-08-05",
+      "description": "Core functies herschreven om met PDO:MySql te werken.",
+      "changes": []
+    },
+    {
+      "version": "0.7.1-beta",
+      "date": "2013-06-26",
+      "description": "Helper functie vtfn($version) overgenomen van het update component.",
+      "changes": []
+    },
+    {
       "version": "0.7.0-beta",
       "date": "2013-06-24",
       "description": "Configuratie velden hebben nu grotere opslagruimte.",

@@ -1,5 +1,7 @@
 <?php namespace components\update; if(!defined('TX')) die('No direct access.');
 
+use \PDO;
+
 class Json extends \dependencies\BaseViews
 {
   
@@ -42,13 +44,16 @@ class Json extends \dependencies\BaseViews
     ;
 
     //Attempt to connect.
-    $connection = @mysql_connect($data->host->get(), $data->username->get(), $data->password->get());
+    try{
+      $connection = new PDO(
+        'mysql:host='.$data->host->get().';dbname='.$data->name->get(),
+        $data->username->get(), $data->password->get()
+      );
+    }
     
-    //If unable to connect, find out why.
-    if(!$connection){
+    catch(\PDOException $pdoex){
       
-      $errno = mysql_errno();
-      switch($errno){
+      switch($pdoex->errorInfo[1]){
         
         //Access denied.
         case 1045:
@@ -64,24 +69,21 @@ class Json extends \dependencies\BaseViews
           $ex->errors(array('Unknown MySQL server host'));
           throw $ex;
         
+        //Database access denied.
+        case 1044:
+          $ex = new \exception\Validation('Access denied for database');
+          $ex->key('name');
+          $ex->errors(array('Access denied, database name may be incorrect'));
+          throw $ex;
+        
         //We don't know o.0"
         default:
           $ex = new \exception\Validation('Unknown MySQL error code');
           $ex->key('host');
-          $ex->errors(array('['.$errno.'] '.mysql_error()));
+          $ex->errors(array('['.$pdoex->errorInfo[1].'] '.$pdoex->errorInfo[2]));
           throw $ex;
         
       }
-      
-    }
-    
-    //Check if we can connect to the proper database.
-    if(!@mysql_select_db($data->name->get(), $connection)){
-      
-      $ex = new \exception\Validation('Access denied for database');
-      $ex->key('name');
-      $ex->errors(array('Access denied, database name may be incorrect'));
-      throw $ex;
       
     }
     

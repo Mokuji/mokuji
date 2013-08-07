@@ -1,5 +1,7 @@
 <?php namespace core; if(!defined('TX')) die('No direct access.');
 
+use \PDO;
+
 class Sql
 {
   private 
@@ -13,24 +15,16 @@ class Sql
   public function __construct()
   {
     if(INSTALLING !== true){
-      $this->connection = mysql_connect(DB_HOST, DB_USER, DB_PASS);
-      mysql_select_db(DB_NAME, $this->connection);
+      $this->connection = new PDO('mysql:host='.DB_HOST.';dbname='.DB_NAME, DB_USER, DB_PASS);
       $this->prefix = DB_PREFIX;
     }
-  }
-  
-  // Close database connection.
-  public function __destruct()
-  {
-    mysql_close($this->connection);
   }
   
   public function set_connection_data($host, $user, $pass, $name, $prefix)
   {
     
     if(INSTALLING === true && !isset($this->connection)){
-      $this->connection = mysql_connect($host, $user, $pass) or die('Could not connect to database.');
-      mysql_select_db($name, $this->connection);
+      $this->connection = new PDO('mysql:host='.DB_HOST.';dbname='.DB_NAME, DB_USER, DB_PASS);
       $this->prefix = $prefix;
     } else {
       throw new \exception\Programmer('Connection data has already been set by the config files.');
@@ -67,7 +61,7 @@ class Sql
   // Gets the last inserted auto_increment id.
   public function get_insert_id()
   {
-    return mysql_insert_id($this->connection);
+    return $this->connection->lastInsertId();
   }
   
   // Creates a new table object based on given model.
@@ -92,10 +86,11 @@ class Sql
   {
 
     $query = str_replace('#__', $this->prefix, $query);
-    $result = mysql_query($query, $this->connection);
+    $result = $this->connection->query($query);
     
     if($result === false){
-      throw new \exception\Sql("%s in query: <b>%s</b>", @mysql_error($this->connection), $query);
+      $error = $this->connection->errorInfo();
+      throw new \exception\Sql("%s in query: <b>%s</b>", $error[2], $query);
       return false;
     }
     
@@ -149,8 +144,9 @@ class Sql
       }
       
     }
+    
     switch(strtolower(gettype($value))){
-      case 'string': $value = (($value == 'NULL') ? 'NULL' : "'".mysql_real_escape_string($value)."'"); break;
+      case 'string': $value = (($value == 'NULL') ? 'NULL' : $this->connection->quote($value)); break;
       case 'integer': case 'double': break;
       case 'boolean': $value = (($value == true) ? 1 : 0); break;
       case 'null': $value = 'NULL'; break;

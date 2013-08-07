@@ -1,3 +1,37 @@
+#### [Version 0.22.1 Beta](https://github.com/Tuxion/mokuji/tree/0.22.1-beta)
+_7-Aug-2013_
+
+* Allowed FormBuilder class to be extended, switching private variables to protected.
+
+#### [Version 0.22.0 Beta](https://github.com/Tuxion/mokuji/tree/0.22.0-beta)
+_5-Aug-2013_
+
+* Updated core to work with PDO:MySql
+* Updated installation script to work with PDO:MySql
+* Fixed a bug in text component using a mysql function directly.
+
+#### [Version 0.21.4 Beta](https://github.com/Tuxion/mokuji/tree/0.21.4-beta)
+_1-Jul-2013_
+
+* Fixed a scoping problem with older PHP version in BaseDBUpdates.
+* Moved private helper function BaseDBUpdates::vtfn($version) to system helpers.
+
+#### [Version 0.21.3 Beta](https://github.com/Tuxion/mokuji/tree/0.21.3-beta)
+_1-Jul-2013_
+
+* Added more entropy to the generation of random table aliases. Fixes #59.
+* Added DocBlocks and better code comments here and there.
+
+#### [Version 0.21.2 Beta](https://github.com/Tuxion/mokuji/tree/0.21.2-beta)
+_26-Jun-2013_
+
+* Fixed a bug that occurred when setting a page as home-page via the configuration tab.
+
+#### [Version 0.21.1 Beta](https://github.com/Tuxion/mokuji/tree/0.21.1-beta)
+_26-Jun-2013_
+
+* Updated CKEditor to 4.1.2 (10 Jun 2013)
+
 #### [Version 0.21.0 Beta](https://github.com/Tuxion/mokuji/tree/0.21.0-beta)
 _24-Jun-2013_
 

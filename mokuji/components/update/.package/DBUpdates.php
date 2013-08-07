@@ -11,7 +11,9 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
     $updates = array(
       '1.1' => '1.2',
       '1.2' => '0.2.0-beta', //No DB changes.
-      '0.2.0-beta' => '0.2.1-beta' //No DB changes.
+      '0.2.0-beta' => '0.2.1-beta', //No DB changes.
+      '0.2.1-beta' => '0.2.2-beta', //No DB changes.
+      '0.2.2-beta' => '0.2.3-beta' //No DB changes.
     );
   
   //Replacing installer for new page view tables.

@@ -24,7 +24,30 @@ class Sections extends \dependencies\BaseViews
       define('PHP_VERSION_ID', ($version[0] * 10000 + $version[1] * 100 + $version[2]));
     }
     
-    $mySqlVersion = function_exists('mysql_get_client_info') ? explode('.', mysql_get_client_info()) : false;
+    $pdo_available = class_exists('\\PDO') &&
+      in_array('mysql', \PDO::getAvailableDrivers());
+    
+    //Try using mysqli and mysql calls for client version.
+    $mySqlVersion =
+      function_exists('mysqli_get_client_info') ? explode('.', mysqli_get_client_info()) :
+      function_exists('mysql_get_client_info') ? explode('.', @mysql_get_client_info()) :
+      false;
+    
+    //If those fail but PDO + mysql is available, try using the default socket to get the client version.
+    if($mySqlVersion === false && $pdo_available)
+    {
+      
+      try{
+        $pdo = new \PDO('mysql:');
+        $mySqlVersion = explode('.', $pdo->getAttribute(PDO::ATTR_CLIENT_VERSION));
+        $pdo = null;
+      }
+      
+      catch (\Exception $ex){
+        //Best effort, I guess we don't have a proper setup here.
+      }
+      
+    }
     
     return array(
       'requirements' => array(
@@ -34,7 +57,12 @@ class Sections extends \dependencies\BaseViews
           'passed' => PHP_VERSION_ID >= 50308
         ),
         
-        'MySQL 5.x' => array(
+        'PDO with MySQL driver' => array(
+          'component' => 'Mokuji Core',
+          'passed' => $pdo_available
+        ),
+        
+        'MySQL 5.x client API' => array(
           'component' => 'Mokuji Core',
           'passed' => $mySqlVersion &&
             $mySqlVersion[0] >= 5
