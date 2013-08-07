@@ -20,7 +20,6 @@
 
 **Methods**
 * [`public mixed __construct()`](#method-__construct)
-* [`public mixed __destruct()`](#method-__destruct)
 * [`public mixed conditions($c)`](#method-conditions)
 * [`public mixed escape($value)`](#method-escape)
 * [`public mixed execute_non_query($query)`](#method-execute_non_query)
@@ -81,24 +80,6 @@ In class: [core\Sql](#top)
 
 ```
 mixed core\Sql::__construct()
-```
-
-
-
-
-
-* Visibility: **public**
-
-
-
-
-
-
-## Method `__destruct`
-In class: [core\Sql](#top)
-
-```
-mixed core\Sql::__destruct()
 ```
 
 

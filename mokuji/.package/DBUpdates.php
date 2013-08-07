@@ -2,7 +2,6 @@
 
 //Make sure we have the things we need for this class.
 tx('Component')->check('update');
-tx('Component')->load('update', 'classes\\BaseDBUpdates', false);
 
 class DBUpdates extends \components\update\classes\BaseDBUpdates
 {

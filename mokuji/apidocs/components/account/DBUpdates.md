@@ -39,7 +39,6 @@
 * [`public static mixed init_statics()`](#method-init_statics)
 * [`public static mixed package_data($type, $name)`](#method-package_data)
 * [`public static mixed process_queue()`](#method-process_queue)
-* [`private static mixed vtfn($version)`](#method-vtfn)
 * [`public mixed __construct()`](#method-__construct)
 * [`public mixed clear_cache()`](#method-clear_cache)
 * [`public mixed current_version()`](#method-current_version)
@@ -239,30 +238,6 @@ mixed components\update\classes\BaseDBUpdates::process_queue()
 * Visibility: **public**
 * This method is **static**.
 * This method is defined by [components\update\classes\BaseDBUpdates](../../components/update/classes/BaseDBUpdates.md)
-
-
-
-
-
-
-## Method `vtfn`
-In class: [components\account\DBUpdates](#top)
-
-```
-mixed components\update\classes\BaseDBUpdates::vtfn($version)
-```
-
-
-
-
-
-* Visibility: **private**
-* This method is **static**.
-* This method is defined by [components\update\classes\BaseDBUpdates](../../components/update/classes/BaseDBUpdates.md)
-
-#### Arguments
-
-* $version **mixed**
 
 
 

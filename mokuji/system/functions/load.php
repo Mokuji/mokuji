@@ -26,6 +26,16 @@ function __autoload($class)
       require_once(PATH_SYSTEM_DEPENDENCIES.DS.$sub_path.EXT);
       break;
     
+    case 'components':
+      array_shift($class_array);
+      $sub_path = implode(DS, $class_array);
+      if(!is_file(PATH_COMPONENTS.DS.$sub_path.EXT)){
+        throw new \exception\FileMissing('Component class \'%s\' does not exist', $class);
+        return;
+      }
+      require_once(PATH_COMPONENTS.DS.$sub_path.EXT);
+      break;
+    
     case 'exception':
       if(!is_file(PATH_SYSTEM_EXCEPTIONS.DS.$class_array[1].EXT)){
         throw new \exception\FileMissing('Exception \'%s\' does not exist', $class);
@@ -35,7 +45,7 @@ function __autoload($class)
       break;
       
     default:
-      die("Failed to autoload '$class'; autoloading is restricted to only exception classes or dependency classes.<pre>".callstack().'</pre>');
+      die("Failed to autoload '$class'; autoloading is restricted to exceptions, dependency classes and component classes.<pre>".callstack().'</pre>');
       return;
       
   }

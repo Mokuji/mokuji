@@ -19,7 +19,7 @@
 * [`private mixed $model`](#property-model)
 
 **Methods**
-* [`public mixed __construct($result, $model)`](#method-__construct)
+* [`public mixed __construct(\PDOStatement $result, $model)`](#method-__construct)
 * [`public mixed as_hlist()`](#method-as_hlist)
 * [`public mixed as_hoptions()`](#method-as_hoptions)
 * [`public mixed as_option_set($key)`](#method-as_option_set)
@@ -169,7 +169,7 @@ mixed dependencies\Data::__clone()
 In class: [dependencies\Resultset](#top)
 
 ```
-mixed dependencies\Resultset::__construct($result, $model)
+mixed dependencies\Resultset::__construct(\PDOStatement $result, $model)
 ```
 
 
@@ -180,7 +180,7 @@ mixed dependencies\Resultset::__construct($result, $model)
 
 #### Arguments
 
-* $result **mixed**
+* $result **PDOStatement**
 * $model **mixed**
 
 

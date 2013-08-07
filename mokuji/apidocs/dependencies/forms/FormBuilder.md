@@ -15,11 +15,11 @@
 ## Class index
 
 **Properties**
+* [`protected mixed $fields`](#property-fields)
+* [`protected mixed $id`](#property-id)
+* [`protected mixed $model`](#property-model)
 * [`protected mixed $options`](#property-options)
-* [`private mixed $fields`](#property-fields)
-* [`private mixed $id`](#property-id)
-* [`private mixed $model`](#property-model)
-* [`private mixed $relations`](#property-relations)
+* [`protected mixed $relations`](#property-relations)
 
 **Methods**
 * [`public mixed __construct(\dependencies\BaseModel $model, array $options)`](#method-__construct)
@@ -40,6 +40,48 @@
 # Properties
 
 
+## Property `$fields`
+In class: [dependencies\forms\FormBuilder](#top)
+
+```
+protected mixed $fields = array()
+```
+
+
+
+
+
+* Visibility: **protected**
+
+
+## Property `$id`
+In class: [dependencies\forms\FormBuilder](#top)
+
+```
+protected mixed $id
+```
+
+
+
+
+
+* Visibility: **protected**
+
+
+## Property `$model`
+In class: [dependencies\forms\FormBuilder](#top)
+
+```
+protected mixed $model
+```
+
+
+
+
+
+* Visibility: **protected**
+
+
 ## Property `$options`
 In class: [dependencies\forms\FormBuilder](#top)
 
@@ -54,60 +96,18 @@ protected mixed $options
 * Visibility: **protected**
 
 
-## Property `$fields`
-In class: [dependencies\forms\FormBuilder](#top)
-
-```
-private mixed $fields = array()
-```
-
-
-
-
-
-* Visibility: **private**
-
-
-## Property `$id`
-In class: [dependencies\forms\FormBuilder](#top)
-
-```
-private mixed $id
-```
-
-
-
-
-
-* Visibility: **private**
-
-
-## Property `$model`
-In class: [dependencies\forms\FormBuilder](#top)
-
-```
-private mixed $model
-```
-
-
-
-
-
-* Visibility: **private**
-
-
 ## Property `$relations`
 In class: [dependencies\forms\FormBuilder](#top)
 
 ```
-private mixed $relations = array()
+protected mixed $relations = array()
 ```
 
 
 
 
 
-* Visibility: **private**
+* Visibility: **protected**
 
 
 # Methods

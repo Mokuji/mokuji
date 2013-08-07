@@ -38,7 +38,7 @@
 * [`public mixed _get_model_subquery()`](#method-_get_model_subquery)
 * [`public mixed add($model, $id)`](#method-add)
 * [`public mixed add_absolute_depth($as)`](#method-add_absolute_depth)
-* [`public mixed add_hierarchy()`](#method-add_hierarchy)
+* [`public self add_hierarchy()`](#method-add_hierarchy)
 * [`public mixed add_relative_depth($as)`](#method-add_relative_depth)
 * [`public mixed count()`](#method-count)
 * [`public mixed delete($model_name)`](#method-delete)
@@ -56,7 +56,7 @@
 * [`public mixed limit($rowcount, $offset)`](#method-limit)
 * [`public mixed max_depth($gt)`](#method-max_depth)
 * [`public mixed order($column, $direction)`](#method-order)
-* [`public mixed parent_pk()`](#method-parent_pk)
+* [`public self parent_pk()`](#method-parent_pk)
 * [`public mixed pk()`](#method-pk)
 * [`public mixed query($all)`](#method-query)
 * [`public mixed right()`](#method-right)
@@ -444,14 +444,21 @@ mixed dependencies\Table::add_absolute_depth($as)
 In class: [dependencies\Table](#top)
 
 ```
-mixed dependencies\Table::add_hierarchy()
+self dependencies\Table::add_hierarchy()
 ```
 
+Make this query hierarchical.
 
-
-
+Adds stuff to the query needed to use a hierarchy based on hierarchy information
+available in the working model.
 
 * Visibility: **public**
+
+
+#### Return value
+
+**self** - Chaining enabled.
+
 
 
 
@@ -941,14 +948,20 @@ mixed dependencies\Table::order($column, $direction)
 In class: [dependencies\Table](#top)
 
 ```
-mixed dependencies\Table::parent_pk()
+self dependencies\Table::parent_pk()
 ```
 
-
+Filter by parent' primary key assuming a hierarchical table structure.
 
 
 
 * Visibility: **public**
+
+
+#### Return value
+
+**self** - Chaining enabled.
+
 
 
 

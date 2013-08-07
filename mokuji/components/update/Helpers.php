@@ -146,7 +146,6 @@ class Helpers extends \dependencies\BaseComponent
     }
     
     //When everything is done, see if we need to process any queued operations.
-    tx('Component')->load('update', 'classes\\BaseDBUpdates', false);
     \components\update\classes\BaseDBUpdates::process_queue();
     
     if(!$silent){
