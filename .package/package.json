@@ -5,6 +5,12 @@
   "dbUpdates": true,
   "versions": [
     {
+      "version": "0.8.1-beta",
+      "date": "2013-08-07",
+      "description": "FormBuilder class is nu makkelijker uit te breiden.",
+      "changes": []
+    },
+    {
       "version": "0.8.0-beta",
       "date": "2013-08-05",
       "description": "Core functies herschreven om met PDO:MySql te werken.",

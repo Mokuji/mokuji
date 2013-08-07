@@ -1,3 +1,8 @@
+#### [Version 0.22.1 Beta](https://github.com/Tuxion/mokuji/tree/0.22.1-beta)
+_7-Aug-2013_
+
+* Allowed FormBuilder class to be extended, switching private variables to protected.
+
 #### [Version 0.22.0 Beta](https://github.com/Tuxion/mokuji/tree/0.22.0-beta)
 _5-Aug-2013_
 
