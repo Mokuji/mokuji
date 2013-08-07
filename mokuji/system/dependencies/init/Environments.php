@@ -77,7 +77,7 @@ abstract class Environments
       //Initiate URL class.
       mk('Url');
       
-      //Check if we are going to the installed when Mokuji is already installed.
+      //Check if we are going to the installer when Mokuji is already installed.
       if($environment === Initializer::ENV_INSTALL && $init->is_installed()){
         mk('Url')->redirect('/admin/');
         mk('Router')->start();
@@ -85,7 +85,7 @@ abstract class Environments
       }
       
       //Also make sure we're not going to anywhere else HTTP(S) based when Mokuji is not installed.
-      elseif(!$init->is_installed()) {
+      elseif($environment !== Initializer::ENV_INSTALL && !$init->is_installed()) {
         mk('Url')->redirect('/install/');
         mk('Router')->start();
         return;

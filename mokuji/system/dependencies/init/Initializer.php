@@ -226,7 +226,7 @@ class Initializer
       $this->get_url_path(),
       $this->is_installed(),
       $this->use_database,
-      $this->debugging
+      $this->use_multisite
     );
     
     //Whether we're using HTTPS this run or not.

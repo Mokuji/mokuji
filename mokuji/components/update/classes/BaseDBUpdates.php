@@ -70,7 +70,7 @@ abstract class BaseDBUpdates
     switch($type){
       
       case 'core':
-        return PATH_BASE;
+        return PATH_FRAMEWORK;
       
       case 'component':
         return PATH_COMPONENTS.DS.$name;

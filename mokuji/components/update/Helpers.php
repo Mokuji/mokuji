@@ -22,7 +22,7 @@ class Helpers extends \dependencies\BaseComponent
   {
     
     if($data->component->get() === '/')
-      $packageFile = PATH_BASE.DS.'.package'.DS.'package.json';
+      $packageFile = PATH_FRAMEWORK.DS.'.package'.DS.'package.json';
     else
       $packageFile = PATH_COMPONENTS.DS.$data->component.DS.'.package'.DS.'package.json';
     
@@ -57,7 +57,7 @@ class Helpers extends \dependencies\BaseComponent
       return self::$package_cache[$component ? $component : '/'];
     
     if(empty($component))
-      $packageFile = PATH_BASE.DS.'.package'.DS.'package.json';
+      $packageFile = PATH_FRAMEWORK.DS.'.package'.DS.'package.json';
     else
       $packageFile = PATH_COMPONENTS.DS.$component.DS.'.package'.DS.'package.json';
     
@@ -112,8 +112,8 @@ class Helpers extends \dependencies\BaseComponent
       '<a class="back button grey back-to-summary" href="?view=update/summary">'.__($this->component, 'Back to summary', 1).'</a>'.br.n;
     
     //Look through root dir.
-    if(is_dir(PATH_BASE.DS.'.package'))
-      $this->check_folder(PATH_BASE, '\\core\\', $silent, $force);
+    if(is_dir(PATH_FRAMEWORK.DS.'.package'))
+      $this->check_folder(PATH_FRAMEWORK, '\\core\\', $silent, $force);
     
     //Look through all components.
     $components = glob(PATH_COMPONENTS.DS.'*');
@@ -163,7 +163,7 @@ class Helpers extends \dependencies\BaseComponent
     
     $packageFile = $folder.DS.'.package'.DS.'package.json';
     
-    if(!$silent) echo br.n.__($this->component, 'Scanning', 1).': <strong class="path package">'.str_replace(PATH_BASE.DS, '../', $folder).'</strong>'.br.n;
+    if(!$silent) echo br.n.__($this->component, 'Scanning', 1).': <strong class="path package">'.str_replace(PATH_FRAMEWORK.DS, '../', $folder).'</strong>'.br.n;
     
     //Make sure the package file is there.
     if(!is_file($packageFile)){

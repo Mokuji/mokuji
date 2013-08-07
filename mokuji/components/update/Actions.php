@@ -23,7 +23,7 @@ class Actions extends \dependencies\BaseComponent
       throw new \exception\Authorisation('The CMS is not in install mode.');
     
     //Mark the fact the installation is done.
-    file_put_contents(PATH_BASE.DS.'install'.DS.'.completed', '');
+    file_put_contents(PATH_FRAMEWORK.DS.'.completed-install', '');
     
     tx('Url')->redirect('/admin/');
     
