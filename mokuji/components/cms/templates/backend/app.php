@@ -29,11 +29,9 @@
 
 <div id="page-topbar">
 
-  <?php if( ! HIDE_LOGO_IN_BACKEND){ ?>
   <!-- LOGO -->
-  <h1 id="logo"><a href="<?php echo url('', true); ?>">mokuji.cms</a></h1>
+  <h1 id="logo"><a href="<?php echo url('', true); ?>"><?php echo !HIDE_LOGO_IN_BACKEND ? 'Mokuji' : ''; ?></a></h1>
   <!-- /LOGO -->
-  <?php } ?>
 
   <?php echo $app->topbar; ?>
 
