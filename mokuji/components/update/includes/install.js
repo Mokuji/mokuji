@@ -15,6 +15,7 @@
   
   //Functions for progressing steps.
   var currentStep = -1;
+  var reloadStep = function(){ loadStep(currentStep); };
   var nextStep = function(){ loadStep(++currentStep); };
   var loadStep = function(step){
     $.ajax('?section='+installSteps[step].section).done(function(result){
@@ -26,6 +27,19 @@
     });
   };
   
+  //Page specific functions.
+  var rescanFiles = function(){
+    $('#app .actions a.scan-files').trigger('click');
+  };
+  var getFileRow = function(i, file){
+    return '<tr>'+
+      '<td><input type="checkbox" name="file['+i+'][execute]" value="1" checked="checked" /></td>'+
+      '<td><input type="hidden" name="file['+i+'][source]" value="'+file.source+'" />'+file.source+'</td>'+
+      '<td><input type="hidden" name="file['+i+'][target]" value="'+file.target+'" />'+file.target+'</td>'+
+      '<td><input type="hidden" name="file['+i+'][action]" value="'+file.action+'" /><abbr title="'+file.details+'">'+file.action+'</abbr></td>'+
+    '</tr>';
+  };
+  
   //Bind event handlers.
   $('#app')
     
@@ -33,6 +47,38 @@
     .on('click', '.actions a.next-step', function(e){
       e.preventDefault();
       nextStep();
+    })
+    
+    /* ---------- Rescan button ---------- */
+    .on('click', '.actions a.scan-files', function(e){
+      
+      e.preventDefault();
+      
+      var form = $(e.target).closest('form.form');
+      $.rest('post', form.attr('data-scan-action'), {})
+        .done(function(result){
+          $(form).find('.validation-error').remove();
+          $('#files-list').empty();
+          if(result.success === true){
+            for(var i in result.files){
+              $('#files-list').append($(getFileRow(i, result.files[i])));
+              i++;
+            }
+          }
+        })
+        .error(function(xhr, state, message){
+          $(form).find('.validation-error').remove();
+          $('#files-list').empty();
+          var errorMeta = JSON.parse(xhr.responseText);
+          for(var name in errorMeta){
+            $(form).find('[name='+name+']')
+              .focus()
+              .parent().append(
+                $('<span>').addClass('validation-error').text(errorMeta[name])
+              );
+          }
+        });
+      
     })
     
     /* ---------- Test settings button ---------- */
@@ -174,7 +220,9 @@
   
   //Make public class.
   window.Installer = {
-    nextStep: nextStep
+    nextStep: nextStep,
+    reloadStep: reloadStep,
+    rescanFiles: rescanFiles
   };
   
 });

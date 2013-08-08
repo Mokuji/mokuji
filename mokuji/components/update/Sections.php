@@ -1,22 +1,75 @@
 <?php namespace components\update; if(!defined('TX')) die('No direct access.');
 
+use components\update\tasks\CoreUpdates;
+
 class Sections extends \dependencies\BaseViews
 {
   
   protected
     $default_permission = 2,
     $permissions = array(
-      'install_db' => 0,    //Uses INSTALLING constant for authorization
-      'install_site' => 0,  //Uses INSTALLING constant for authorization
-      'install_intro' => 0, //Uses INSTALLING constant for authorization
-      'install_admin' => 0  //Uses INSTALLING constant for authorization
+      //Uses INSTALLING constant for authorization
+      'upgrade_intro' => 0,
+      'upgrade_config' => 0,
+      'upgrade_files' => 0,
+      'upgrade_packages' => 0,
+      'install_db' => 0,
+      'install_site' => 0,
+      'install_intro' => 0,
+      'install_admin' => 0
     );
+  
+  protected function upgrade_intro($data){
+    return $this->install_intro($data);
+  }
+  
+  protected function upgrade_config($data)
+  {
+    
+    if(INSTALLING !== true)
+      throw new \exception\Authorisation('Mokuji is not in install mode.');
+    
+    $cores = CoreUpdates::detect_cores();
+    
+    //Include database config file from the new core, in case it's there.
+    if(file_exists(PATH_FRAMEWORK.DS.'config'.DS.'database'.EXT))
+      require_once(PATH_FRAMEWORK.DS.'config'.DS.'database'.EXT);
+    
+    //Otherwise fall back on the previous release.
+    elseif(
+      array_key_exists(CoreUpdates::CORE_ADEPT_ALBATROSS, $cores) &&
+      file_exists(PATH_BASE.DS.'config'.DS.'database'.EXT)
+    ) require_once(PATH_BASE.DS.'config'.DS.'database'.EXT);
+    
+    //Include email config file from the new core, in case it's there.
+    if(file_exists(PATH_FRAMEWORK.DS.'config'.DS.'email'.EXT))
+      require_once(PATH_FRAMEWORK.DS.'config'.DS.'email'.EXT);
+    
+    //Otherwise fall back on the previous release.
+    elseif(
+      array_key_exists(CoreUpdates::CORE_ADEPT_ALBATROSS, $cores) &&
+      file_exists(PATH_BASE.DS.'config'.DS.'email'.EXT)
+    ) require_once(PATH_BASE.DS.'config'.DS.'email'.EXT);
+    
+    return array();
+    
+  }
+  
+  protected function upgrade_files($data)
+  {
+    
+    if(INSTALLING !== true)
+      throw new \exception\Authorisation('Mokuji is not in install mode.');
+    
+    return array();
+    
+  }
   
   protected function install_intro($data)
   {
     
     if(INSTALLING !== true)
-      throw new \exception\Authorisation('The CMS is not in install mode.');
+      throw new \exception\Authorisation('Mokuji is not in install mode.');
     
     //PHP_VERSION_ID is available as of PHP 5.2.7, if our version is lower than that, emulate it.
     if (!defined('PHP_VERSION_ID')) {
@@ -77,7 +130,7 @@ class Sections extends \dependencies\BaseViews
   {
     
     if(INSTALLING !== true)
-      throw new \exception\Authorisation('The CMS is not in install mode.');
+      throw new \exception\Authorisation('Mokuji is not in install mode.');
     
     //Include database config file if there is one and we don't have it included yet.
     if(file_exists(PATH_FRAMEWORK.DS.'config'.DS.'database'.EXT))
@@ -91,11 +144,12 @@ class Sections extends \dependencies\BaseViews
   {
     
     if(INSTALLING !== true)
-      throw new \exception\Authorisation('The CMS is not in install mode.');
+      throw new \exception\Authorisation('Mokuji is not in install mode.');
     
     //Include email config file if there is one and we don't have it included yet.
     if(file_exists(PATH_FRAMEWORK.DS.'config'.DS.'email'.EXT))
       require_once(PATH_FRAMEWORK.DS.'config'.DS.'email'.EXT);
+    
     return array();
     
   }
@@ -104,7 +158,7 @@ class Sections extends \dependencies\BaseViews
   {
     
     if(INSTALLING !== true)
-      throw new \exception\Authorisation('The CMS is not in install mode.');
+      throw new \exception\Authorisation('Mokuji is not in install mode.');
     
     return array();
     

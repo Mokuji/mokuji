@@ -6,10 +6,14 @@
     <h2>Introduction</h2>
   </div>
   <div class="body clearfix">
-    <p>Welcome to the Mokuji installation process.</p>
+    <p>Welcome to the Mokuji upgrade process.</p>
     <p>
+      This allows you to upgrade your existing Mokuji installation to the latest core: <b>Ballistic Badger</b>.
       Before moving on, the requirements for the Mokuji core are checked below.
       While any failed checks do not prevent you from attempting an installation, we recommend making sure the requirements are met.
+    </p>
+    <p>
+      Note: <strong>We strongly recommend that you make a backup of your files and database before proceeding.</strong>
     </p>
     <div class="requirements">
       <?php echo $data->requirements->as_table(array(

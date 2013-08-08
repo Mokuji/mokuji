@@ -1,5 +1,7 @@
 <?php namespace components\update; if(!defined('TX')) die('No direct access.');
 
+use components\update\tasks\CoreUpdates;
+
 class Views extends \dependencies\BaseViews
 {
   
@@ -48,24 +50,43 @@ class Views extends \dependencies\BaseViews
       throw new \exception\Authorisation('The CMS is not in install mode.');
     
     return array(
-      'steps' => array(
+      'install_steps' => CoreUpdates::need_core_upgrade() ?
         array(
-          'title' => 'Introduction',
-          'section' => 'update/install_intro'
-        ),
+          array(
+            'title' => 'Introduction',
+            'section' => 'update/upgrade_intro'
+          ),
+          array(
+            'title' => 'Transfer configuration',
+            'section' => 'update/upgrade_config'
+          ),
+          array(
+            'title' => 'Transfer files',
+            'section' => 'update/upgrade_files'
+          ),
+          array(
+            'title' => 'Upgrade packages',
+            'section' => 'update/upgrade_packages'
+          )
+        ) :
         array(
-          'title' => 'Database configuration',
-          'section' => 'update/install_db'
-        ),
-        array(
-          'title' => 'Site configuration',
-          'section' => 'update/install_site'
-        ),
-        array(
-          'title' => 'Creating admin user',
-          'section' => 'update/install_admin'
+          array(
+            'title' => 'Introduction',
+            'section' => 'update/install_intro'
+          ),
+          array(
+            'title' => 'Database configuration',
+            'section' => 'update/install_db'
+          ),
+          array(
+            'title' => 'Site configuration',
+            'section' => 'update/install_site'
+          ),
+          array(
+            'title' => 'Creating admin user',
+            'section' => 'update/install_admin'
+          )
         )
-      )
     );
     
   }

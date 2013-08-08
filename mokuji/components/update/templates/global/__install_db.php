@@ -36,7 +36,7 @@
       
       <div class="ctrlHolder">
         <label for="l_prefix" accesskey="p">Table prefix</label>
-        <input class="big large" type="text" id="l_prefix" name="prefix" value="<?php echo defined('DB_PREFIX') ? DB_PREFIX : 'tx__'; ?>" required />
+        <input class="big large" type="text" id="l_prefix" name="prefix" value="<?php echo defined('DB_PREFIX') ? DB_PREFIX : 'mk__'; ?>" required />
       </div>
       
       <p class="actions">

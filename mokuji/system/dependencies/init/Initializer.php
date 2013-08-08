@@ -219,7 +219,7 @@ class Initializer
     //Do this for any environment.
     Defines::persistent_defines();
     Tasks::apply_debugging($this->debugging);
-    Tasks::load_configuration_files($this->root, $this->debugging, $this->use_database);
+    Tasks::load_configuration_files($this->root, $this->is_installed, $this->use_database);
     
     //Get the site properties.
     $site = Tasks::get_site_properties(

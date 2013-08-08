@@ -24,7 +24,7 @@ class Sql
   {
     
     if(INSTALLING === true && !isset($this->connection)){
-      $this->connection = new PDO('mysql:host='.DB_HOST.';dbname='.DB_NAME, DB_USER, DB_PASS);
+      $this->connection = new PDO('mysql:host='.$host.';dbname='.$name, $user, $pass);
       $this->prefix = $prefix;
     } else {
       throw new \exception\Programmer('Connection data has already been set by the config files.');
