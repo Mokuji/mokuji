@@ -33,10 +33,10 @@
   };
   var getFileRow = function(i, file){
     return '<tr>'+
-      '<td><input type="checkbox" name="file['+i+'][execute]" value="1" checked="checked" /></td>'+
-      '<td><input type="hidden" name="file['+i+'][source]" value="'+file.source+'" />'+file.source+'</td>'+
-      '<td><input type="hidden" name="file['+i+'][target]" value="'+file.target+'" />'+file.target+'</td>'+
-      '<td><input type="hidden" name="file['+i+'][action]" value="'+file.action+'" /><abbr title="'+file.details+'">'+file.action+'</abbr></td>'+
+      '<td><input type="checkbox" name="files['+i+'][execute]" value="1" checked="checked" /></td>'+
+      '<td>'+file.source+'<input type="hidden" name="files['+i+'][source]" value="'+file.source+'" /></td>'+
+      '<td>'+file.target+'<input type="hidden" name="files['+i+'][target]" value="'+file.target+'" /></td>'+
+      '<td><abbr title="'+file.details+'">'+file.action+'</abbr><input type="hidden" name="files['+i+'][action]" value="'+file.action+'" /></td>'+
     '</tr>';
   };
   
@@ -49,15 +49,17 @@
       nextStep();
     })
     
-    /* ---------- Rescan button ---------- */
-    .on('click', '.actions a.scan-files', function(e){
+    
+    
+    /* ---------- Execute (file transfers) button ---------- */
+    .on('click', '.actions a.transfer-files', function(e){
       
       e.preventDefault();
       
       var form = $(e.target).closest('form.form');
-      $.rest('post', form.attr('data-scan-action'), {})
+      $.rest('post', form.attr('data-transfer-action'), form.formToObject())
         .done(function(result){
-          $(form).find('.validation-error').remove();
+          form.find('.validation-error').remove();
           $('#files-list').empty();
           if(result.success === true){
             for(var i in result.files){
@@ -67,11 +69,43 @@
           }
         })
         .error(function(xhr, state, message){
-          $(form).find('.validation-error').remove();
+          form.find('.validation-error').remove();
+          // Installer.rescanFiles();
+          var errorMeta = JSON.parse(xhr.responseText);
+          for(var name in errorMeta){
+            form.find('[name="'+name+'"]')
+              .focus()
+              .parent().append(
+                $('<div>').addClass('validation-error').text(errorMeta[name])
+              );
+          }
+        });
+      
+    })
+    
+    /* ---------- Rescan button ---------- */
+    .on('click', '.actions a.scan-files', function(e){
+      
+      e.preventDefault();
+      
+      var form = $(e.target).closest('form.form');
+      $.rest('post', form.attr('data-scan-action'), {})
+        .done(function(result){
+          form.find('.validation-error').remove();
+          $('#files-list').empty();
+          if(result.success === true){
+            for(var i in result.files){
+              $('#files-list').append($(getFileRow(i, result.files[i])));
+              i++;
+            }
+          }
+        })
+        .error(function(xhr, state, message){
+          form.find('.validation-error').remove();
           $('#files-list').empty();
           var errorMeta = JSON.parse(xhr.responseText);
           for(var name in errorMeta){
-            $(form).find('[name='+name+']')
+            form.find('[name="'+name+'"]')
               .focus()
               .parent().append(
                 $('<span>').addClass('validation-error').text(errorMeta[name])
@@ -89,7 +123,7 @@
       var form = $(e.target).closest('form.form');
       $.rest('post', form.attr('data-test-action'), form.formToObject())
         .done(function(result){
-          $(form).find('.validation-error').remove();
+          form.find('.validation-error').remove();
           if(result.success === true){
             $('#install-db-message').html(result.message);
           }else{
@@ -97,11 +131,11 @@
           }
         })
         .error(function(xhr, state, message){
-          $(form).find('.validation-error').remove();
+          form.find('.validation-error').remove();
           $('#install-db-message').html('');
           var errorMeta = JSON.parse(xhr.responseText);
           for(var name in errorMeta){
-            $(form).find('[name='+name+']')
+            form.find('[name="'+name+'"]')
               .focus()
               .parent().append(
                 $('<span>').addClass('validation-error').text(errorMeta[name])
@@ -119,7 +153,7 @@
       var form = $(e.target).closest('form.form');
       $.rest('post', form.attr('data-action'), form.formToObject())
         .done(function(result){
-          $(form).find('.validation-error').remove();
+          form.find('.validation-error').remove();
           if(result.success === true){
             nextStep();
           }else{
@@ -127,11 +161,11 @@
           }
         })
         .error(function(xhr, state, message){
-          $(form).find('.validation-error').remove();
+          form.find('.validation-error').remove();
           $('#install-db-message').html('');
           var errorMeta = JSON.parse(xhr.responseText);
           for(var name in errorMeta){
-            $(form).find('[name='+name+']')
+            form.find('[name="'+name+'"]')
               .focus()
               .parent().append(
                 $('<span>').addClass('validation-error').text(errorMeta[name])
@@ -160,7 +194,7 @@
       var form = $(e.target).closest('form.form');
       $.rest('post', form.attr('data-action'), form.formToObject())
         .done(function(result){
-          $(form).find('.validation-error').remove();
+          form.find('.validation-error').remove();
           if(result.success === true){
             nextStep();
           }else{
@@ -168,11 +202,11 @@
           }
         })
         .error(function(xhr, state, message){
-          $(form).find('.validation-error').remove();
+          form.find('.validation-error').remove();
           $('#install-site-message').html('');
           var errorMeta = JSON.parse(xhr.responseText);
           for(var name in errorMeta){
-            $(form).find('[name='+name+']')
+            form.find('[name="'+name+'"]')
               .focus()
               .parent().append(
                 $('<span>').addClass('validation-error').text(errorMeta[name])
@@ -190,7 +224,7 @@
       var form = $(e.target).closest('form.form');
       $.rest('post', form.attr('data-action'), form.formToObject())
         .done(function(result){
-          $(form).find('.validation-error').remove();
+          form.find('.validation-error').remove();
           if(result.success === true){
             $('#create-admin-message').html(result.message);
             $(e.target).replaceWith('<a href="?action=update/finalize_install" class="button black finalize-install">Finalize installation</a>').focus();
@@ -199,11 +233,11 @@
           }
         })
         .error(function(xhr, state, message){
-          $(form).find('.validation-error').remove();
+          form.find('.validation-error').remove();
           $('#install-site-message').html('');
           var errorMeta = JSON.parse(xhr.responseText);
           for(var name in errorMeta){
-            $(form).find('[name='+name+']')
+            form.find('[name="'+name+'"]')
               .focus()
               .parent().append(
                 $('<span>').addClass('validation-error').text(errorMeta[name])

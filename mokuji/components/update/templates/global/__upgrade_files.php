@@ -15,7 +15,7 @@
       Actions will be suggested to resolve any file issues, which you can execute.
       If manual action is required you can perform them and press "Rescan" when ready.
     </p>
-    <form class="form transfer-files-form" data-scan-action="<?php echo url('/install/?rest=update/files_scan', true); ?>">
+    <form class="form transfer-files-form" data-scan-action="<?php echo url('/install/?rest=update/files_scan', true); ?>" data-transfer-action="<?php echo url('/install/?rest=update/files_transfer', true); ?>">
       <div class="requirements">
         <table class="tx-table">
           <thead class="tx-table-head"><tr>

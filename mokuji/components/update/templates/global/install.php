@@ -22,6 +22,6 @@
 </div>
 
 <div id="page-topbar">
-  <h1 id="logo"><a href="<?php echo url('', true); ?>"></a></h1>
+  <h1 id="logo"><a href="<?php echo url('/install/', true); ?>"></a></h1>
   <div class="clear"></div>
 </div>

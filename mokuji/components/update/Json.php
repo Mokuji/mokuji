@@ -99,6 +99,19 @@ class Json extends \dependencies\BaseViews
     
   }
   
+  protected function create_files_transfer($data, $params)
+  {
+    
+    if(INSTALLING !== true)
+      throw new \exception\Authorisation('Mokuji is not in install mode.');
+    
+    return array(
+      'success' => true,
+      'completed' => CoreUpdates::execute_file_transfer_actions($data->files)
+    );
+    
+  }
+  
   protected function create_db_test($data, $params)
   {
     
