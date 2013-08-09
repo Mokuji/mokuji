@@ -5,6 +5,12 @@
   "dbUpdates": true,
   "versions": [
     {
+      "version": "0.8.2-beta",
+      "date": "2013-08-09",
+      "description": "Bug opgelost met installatie, na de PDO update.",
+      "changes": []
+    },
+    {
       "version": "0.8.1-beta",
       "date": "2013-08-07",
       "description": "FormBuilder class is nu makkelijker uit te breiden.",

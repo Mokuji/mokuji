@@ -1,3 +1,9 @@
+#### [Version 0.22.2 Beta](https://github.com/Tuxion/mokuji/tree/0.22.2-beta)
+_9-Aug-2013_
+
+* Fixed a bug when installing with the new PDO setup.
+* Removed some Tuxion CMS references.
+
 #### [Version 0.22.1 Beta](https://github.com/Tuxion/mokuji/tree/0.22.1-beta)
 _7-Aug-2013_
 
