@@ -6,9 +6,9 @@
     <h2>Introduction</h2>
   </div>
   <div class="body clearfix">
-    <p>Welcome to the Tuxion CMS installation process.</p>
+    <p>Welcome to the Mokuji installation process.</p>
     <p>
-      Before moving on, the requirements for the Tuxion CMS core are checked below.
+      Before moving on, the requirements for the Mokuji core are checked below.
       While any failed checks do not prevent you from attempting an installation, we recommend making sure the requirements are met.
     </p>
     <div class="requirements">

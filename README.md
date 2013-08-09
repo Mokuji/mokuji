@@ -1,4 +1,4 @@
-#Mokuji (目次) - Version 0.22.1 Beta
+#Mokuji (目次) - Version 0.22.2 Beta
 
 * [http://mokuji.net/](http://mokuji.net/)
 * [Twitter](http://twitter.com/mokujidev)
@@ -50,12 +50,12 @@ The change-log can be found in `CHANGES.md` in this directory.
 
 [Explanation of the versioning system](http://development.mokuji.org/40/versioning?menu=43)
 
-* __framework__ : 0.8.1-beta
+* __framework__ : 0.8.2-beta
 * __account__   : 0.3.0-beta
 * __cms__       : 0.5.0-beta
 * __menu__      : 0.3.0-beta
 * __text__      : 0.2.1-beta
-* __update__    : 0.2.3-beta
+* __update__    : 0.2.4-beta
 * __security__  : 0.1.0-beta
 * __timeline__  : 0.1.0-beta
 

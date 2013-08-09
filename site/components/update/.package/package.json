@@ -5,6 +5,12 @@
   "dbUpdates": true,
   "versions": [
     {
+      "version": "0.2.4-beta",
+      "date": "2013-08-09",
+      "description": "Een paar Tuxion CMS verwijzingen weggehaald.",
+      "changes": []
+    },
+    {
       "version": "0.2.3-beta",
       "date": "2013-08-05",
       "description": "Installatiescript omgeschreven voor PDO:MySql.",
@@ -40,7 +46,7 @@
       "description": "Automatische installatie mogelijk gemaakt.",
       "changes": [
         {
-          "title": "Automtische installatie",
+          "title": "Automatische installatie",
           "description": "Sinds deze update is het mogelijk om het update component zichzelf te laten installeren."
         }
       ]
