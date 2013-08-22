@@ -4,14 +4,14 @@ use \Closure;
 
 /**
  * The Table class, Mokuji's query-builder.
- * 
+ *
  * @method {self} where1() where1(string $column, string $comparator, string $value)
- *         
+ *
  *         Adds to the WHERE clause by providing a column in the format of
  *         `"[<model_id>.]<column_name>"`. The comparator may be omitted in which case
  *         `"="` is implied and `$value` takes its place in the argument order. Possible
  *         comparators are:
- *         
+ *
  *         * `"="`: Equals
  *         * `">"`: More than
  *         * `"<"`: Less than
@@ -20,14 +20,14 @@ use \Closure;
  *         * `"!"`: Doesn't equal
  *         * `"|"`: Contains
  *         * `"!|"`: Doesn't contain
- *         
+ *
  *         `$value` Contains the value to compare to.
- *         
+ *
  * @method {self} where2() where2(Conditions $conditions)
- *         
+ *
  *         Adds to the WHERE clause by providing a conditions object. See
  *         {@link Conditions} to find out how it can be used.
- *         
+ *
  */
 class Table extends Successable
 {
@@ -107,7 +107,7 @@ class Table extends Successable
   private $joins=array();
   
   /**
-   * Contains the preprocessed WHERE clause. 
+   * Contains the preprocessed WHERE clause.
    * @see self::where()
    * @see self::pk()
    * @see self::sk()
@@ -125,7 +125,7 @@ class Table extends Successable
   private $group=array();
   
   /**
-   * Contains the preprocessed HAVING clause. 
+   * Contains the preprocessed HAVING clause.
    * @see self::having()
    * @see self::where()
    * @var string
@@ -140,7 +140,7 @@ class Table extends Successable
   private $order=array();
   
   /**
-   * Contains the preprocessed LIMIT clause. 
+   * Contains the preprocessed LIMIT clause.
    * @see self::limit()
    * @see self::execute_single()
    * @var string
@@ -166,7 +166,7 @@ class Table extends Successable
    * @param string $model The name of the model to find.
    * @param string $id An out-parameter that will receive the internal ID that was assigned to the model.
    * @param array $models A reference to an array like {@link self::$models} to use instead of own models.
-   * 
+   *
    * @api
    */
   public function __construct($component, $model, &$id=null, &$models=null)
@@ -187,14 +187,14 @@ class Table extends Successable
   
   /**
    * Invoke this class like a function to attain the internal ID of the main model.
-   * 
+   *
    * This is useful when the Table was constructed elsewhere and the internal ID can no
    * longer be obtained via {@link self::__construct()}.
    *
    * @param string $id An out-parameter receiving the internal ID of the main model.
-   * 
+   *
    * @return self Chaining enabled.
-   * 
+   *
    * @api
    */
   public function __invoke(&$id=null)
@@ -211,14 +211,14 @@ class Table extends Successable
   
   /**
    * Call a helper function to do complex table operations.
-   * 
+   *
    * @param string $component The name of the component that has the helper function.
    * @param string $name The name of the helper function to call. Note that this is the
    *                     name _without_ the `table__` prefix that it must have in the
    *                     component's Helpers class.
    *
    * @param mixed argument An argument to pass to the helper function.
-   * 
+   *
    * @param mixed ... The previous argument can be repeated indefinitely to add more
    *                  arguments for the helper function.
    *
@@ -248,7 +248,7 @@ class Table extends Successable
    * @param boolean $value Can be set to false to disable distinct select.
    *
    * @return self Chaining enabled.
-   * 
+   *
    * @see self::select()
    * @api
    */
@@ -260,23 +260,23 @@ class Table extends Successable
   
   /**
    * Filter by primary keys.
-   * 
+   *
    * The amount of primary keys given must be exactly equal to the amount of primary keys
    * in the table. This method adds a statement to the WHERE clause for each primary key.
    * Settings this will therefore result in a single result in most cases, and works well
    * together with {@link self::execute_single()}
-   * 
+   *
    * @param mixed primary_key The first value for the first primary key, or array of
    *                          values for the first x primary keys.
-   * 
+   *
    * @param mixed ... The previous argument can be repeated indefinitely to add more
    *                  primary keys.
-   * 
+   *
    * @throws \exception\InvalidArgument If The number of given keys doesn't match the
    *                                    amount of primary keys defined in the model.
-   * 
+   *
    * @return self Chaining enabled.
-   * 
+   *
    * @see self::sk() Filter by secondary key.
    * @see self::where() Filter by anything.
    * @see self::execute_single() Executes the query and returns the first result.
@@ -311,23 +311,23 @@ class Table extends Successable
   }
   
   /**
-   * filter by secondary keys.
-   * 
+   * Filter by secondary keys.
+   *
    * This works the same as {@link self::pk()}, except it adds filters for the secondary
    * keys defined in the model. Secondary keys are not unique, and therefore filtering by
    * them does not imply a single result like primary key filtering does.
    *
    * @param mixed secondary_key The first value for the first secondary key, or array of
    *                            values for the first x secondary keys.
-   * 
+   *
    * @param mixed ... The previous argument can be repeated indefinitely to add more
    *                  secondary keys.
-   * 
+   *
    * @throws \exception\InvalidArgument If The number of given keys doesn't match the
    *                                    amount of secondary keys defined in the model.
-   * 
+   *
    * @return self Chaining enabled.
-   * 
+   *
    * @see self::pk() Filter by primary key.
    * @see self::where() Filter by anything.
    * @api
@@ -363,20 +363,20 @@ class Table extends Successable
   
   /**
    * Filter by parent' primary key assuming a hierarchical table structure.
-   * 
+   *
    * @param boolean $include_parent Whether to include the parent node that matches the
    *                                given primary key(s). This parameter can be omitted
    *                                and will default to false.
-   * 
+   *
    * @param integer|array $value The value for the primary key to match against, or array
    *                             of primary keys to match against shared primary key.
-   * 
+   *
    * @param integer ... The previous parameter can be repeated indefinitely in order to
    *                    achieve providing values for every primary key in case of shared
    *                    primary keys.
    *
    * @return self Chaining enabled.
-   * 
+   *
    * @see self::pk() Filter by normal primary key.
    * @see self::add_hierarchy() Add hierarchy to the query.
    * @api
@@ -442,12 +442,12 @@ class Table extends Successable
   
   /**
    * Make this query hierarchical.
-   * 
+   *
    * Adds stuff to the query needed to use a hierarchy based on hierarchy information
    * defined in the current working model.
-   * 
+   *
    * This method is mostly used internally by all the methods that depend on the hierarchical structure.
-   * 
+   *
    * @return self Chaining enabled.
    */
   public function add_hierarchy()
@@ -503,7 +503,7 @@ class Table extends Successable
   
   /**
    * Add a depth field based on hierarchy.
-   * 
+   *
    * The depth field added by this method contains will contain the depth _relative to the
    * root node_, therefore making it "absolute".
    *
@@ -511,7 +511,7 @@ class Table extends Successable
    *                   available under. Defaults to `abs_depth`.
    *
    * @return self Chaining enabled.
-   * 
+   *
    * @see self::add_relative_depth() Adds a depth field relative the the parent node.
    * @api
    */
@@ -570,7 +570,7 @@ class Table extends Successable
   
   /**
    * Add a depth field based on hierarchy.
-   * 
+   *
    * The depth field added by this method contains will contain the depth _relative to the
    * parent node_, therefore this method requires you to appoint a parent node first. This
    * can be done using {@link self::parent_pk()}.
@@ -579,9 +579,9 @@ class Table extends Successable
    *                   available under. Defaults to `rel_depth`.
    *
    * @throws \exception\Restriction If No parent node was appointed beforehand.
-   * 
+   *
    * @return self Chaining Enabled.
-   * 
+   *
    * @see self::add_absolute_depth() Adds a depth field relative to the root node.
    * @see self::parent_pk() Appoints a parent node by providing its primary key(s).
    * @api
@@ -655,7 +655,7 @@ class Table extends Successable
    * @param integer $gt The number of maximum depth.
    *
    * @return self Chaining enabled.
-   * 
+   *
    * @see self::add_absolute_depth() Adds a depth field relative to the root node.
    * @see self::add_relative_depth() Adds a depth field relative to the parent node.
    * @api
@@ -685,11 +685,11 @@ class Table extends Successable
   
   /**
    * Sets join type of the last join to "INNER".
-   * 
+   *
    * This is an alias for `$this->set_jointype('INNER')`.
    *
    * @return self Chaining enabled.
-   * 
+   *
    * @see self::left() Set join type to "LEFT".
    * @see self::right() Set join type to "RIGHT".
    * @api
@@ -701,11 +701,11 @@ class Table extends Successable
 
   /**
    * Sets join type of the last join to "LEFT".
-   * 
+   *
    * This is an alias for `$this->set_jointype('LEFT')`.
    *
    * @return self Chaining enabled.
-   * 
+   *
    * @see self::inner() Set join type to "INNER".
    * @see self::right() Set join type to "RIGHT".
    * @api
@@ -717,11 +717,11 @@ class Table extends Successable
   
   /**
    * Sets join type of the last join to "RIGHT".
-   * 
+   *
    * This is an alias for `$this->set_jointype('RIGHT')`.
    *
    * @return self Chaining enabled.
-   * 
+   *
    * @see self::inner() Set join type to "INNER".
    * @see self::left() Set join type to "LEFT".
    * @api
@@ -733,10 +733,10 @@ class Table extends Successable
   
   /**
    * Add statements to the WHERE clause automatically for given component filters.
-   * 
+   *
    * Components filters are current GET parameters, merged with the filters set in the
    * session for the component.
-   * 
+   *
    * @param array|string filter_name The name of the filter variable, alternatively this
    *                                 can be an array containing filter_name's as keys and
    *                                 column_names as values.
@@ -747,7 +747,7 @@ class Table extends Successable
    * @throws \exception\InvalidArgument If the arguments have an unexpected format.
    *
    * @return self Chaining enabled.
-   * 
+   *
    * @see \core\Data::filter() for more information on what the filter variables are.
    * @see self::where() Add to the where clause directly.
    * @api
@@ -797,14 +797,14 @@ class Table extends Successable
   
   /**
    * Add a model and make it the working model.
-   * 
+   *
    * This adds a model to the FROM clause, and makes it the new working right away.
    *
    * @param mixed $model See {@link self::get_model_info()} to find out what can be given.
    * @param string $id This is an out-parameter that will receive the internal ID assigned to the new model.
-   * 
+   *
    * @return self Chaining enabled.
-   * 
+   *
    * @see self::select() Add something to the SELECT clause.
    * @see self::workwith() Set a model as the working model.
    * @api
@@ -822,7 +822,7 @@ class Table extends Successable
    * @param string $id The internal ID of the model to set as working model.
    *
    * @return self Chaining enabled.
-   * 
+   *
    * @see self::add() Add a model.
    */
   public function workwith($id)
@@ -843,11 +843,11 @@ class Table extends Successable
    *
    * @param mixed $content See {@link self::prepare()} to find out what can be given here.
    * @param string $as An optional alias to select this content by.
-   * 
+   *
    * @throws \exception\Restriction If The given alias is already in use.
    *
    * @return self Chaining enabled.
-   * 
+   *
    * @see self::from() Where do you select from?
    * @see self::prepare() How given content is prepared.
    * @api
@@ -880,7 +880,7 @@ class Table extends Successable
    * @param string $id An out-parameter which will receive the internal ID of the model.
    *
    * @return self Chaining enabled.
-   * 
+   *
    * @see self::select() Select something from the model.
    * @see self::add() Add a new model to a FROM clause and make it the working model.
    * @api
@@ -908,14 +908,14 @@ class Table extends Successable
   
   /**
    * Join a foreign model onto the working model.
-   * 
+   *
    * This method uses the `relations` information available on the local model or foreign
    * model classes to determine which tables to join on which keys in order to join the
    * model of the given name.
-   * 
+   *
    * You can define these relations in your model by setting the static `$relations`
    * property in the model class to an array, formatted as follows:
-   * 
+   *
    * ```php
    * static $relations = array(
    *   "<foreign_model_name>" => array(
@@ -924,12 +924,12 @@ class Table extends Successable
    *   )
    * );
    * ```
-   * 
+   *
    * - `<foreign_model_name>`: The model that can be joined.
    * - `<local_column_name>`: The column name in this model that the join column will be linked to.
    * - `<join_model_name>`: The first model to join in order to get to the foreign model.
    * - `<join_column_name>`: The name of the column that links to the local column.
-   * 
+   *
    * In most cases, the `<join_model_name>` will be equal to the `<foreign_model_name>`
    * for a direct join path. They can however differ to create a longer path of joins, in
    * this case, the `<join_model_name>` will be joined at first and `join()` will look
@@ -953,7 +953,7 @@ class Table extends Successable
    *                                  object can be modified.
    *
    * @return self Chaining enabled.
-   * 
+   *
    * @see Conditions The Conditions class used to create the ON clause and modifiable by `$join_conditions`.
    * @see self::workwith() Change the working model.
    * @api
@@ -1082,9 +1082,9 @@ class Table extends Successable
    * Sets join type for the latest JOIN.
    *
    * @param string $type Any of the following: `"LEFT"`, `"RIGHT"`, `"INNER"`.
-   * 
+   *
    * @return self Chaining enabled.
-   * 
+   *
    * @see self::left() Short for `join("LEFT")`.
    * @see self::right() Short for `join("RIGHT")`.
    * @see self::inner() Short for `join("INNER")`.
@@ -1116,11 +1116,11 @@ class Table extends Successable
   
   /**
    * Add to the WHERE clause.
-   * 
+   *
    * This method can be used in 2 different ways. Please refer to `where1` and `where2` for the documentation.
-   * 
+   *
    * @return self Chaining enabled.
-   * 
+   *
    * @see self::where1() Add a single statement to the WHERE clause by providing filters.
    * @see self::where2() Add a complex statement to the WHERE clause by providing a Conditions object.
    * @see self::filter() Add statements to the WHERE clause automatically for given filters.
@@ -1143,7 +1143,7 @@ class Table extends Successable
    * @param string|false $direction Optional direction; `"ASC"` or `"DESC"`.
    *
    * @return self Chaining enabled.
-   * 
+   *
    * @see self::workwith() Change the working model.
    * @api
    */
@@ -1156,12 +1156,12 @@ class Table extends Successable
   
   /**
    * Add to the HAVING clause.
-   * 
-   * Adds to the HAVING clause in the exact same way that `$this->where()` adds to there 
+   *
+   * Adds to the HAVING clause in the exact same way that `$this->where()` adds to there
    * WHERE clause. Please refer to the `where()` documentation for use of this method.
    *
    * @return self Chaining enabled.
-   * 
+   *
    * @see self::where() More documentation on the use of the `where` and `having` methods.
    * @api
    */
@@ -1182,7 +1182,7 @@ class Table extends Successable
    * @param string|false $direction Optional direction; `"ASC"` or `"DESC"`.
    *
    * @return self Chaining enabled.
-   * 
+   *
    * @see self::workwith() Change the working model.
    * @api
    */
@@ -1200,7 +1200,7 @@ class Table extends Successable
    * @param integer $offset An optional offset. Rows before the offset will not be included.
    *
    * @return self Chaining enabled.
-   * 
+   *
    * @see self::execute_single() Automatically limit to a single row and execute.
    * @api
    */
@@ -1223,12 +1223,12 @@ class Table extends Successable
    * Execute the query.
    *
    * @param string $as An optional model ID in which the results will be returned.
-   * 
+   *
    * @throws \exception\NotFound If the given model ID does not point to a known model.
    * @throws \exception\Sql If an SQL error occurs.
    *
    * @return Resultset The wrapper with the result of the query.
-   * 
+   *
    * @see self::execute_single() Execute and return the first result directly.
    * @see self::count() Execute the query, returning the amount of rows affected.
    * @api
@@ -1259,16 +1259,16 @@ class Table extends Successable
   
   /**
    * Execute and return the first result directly.
-   * 
+   *
    * This method also automatically adds a limit of 1.
    *
    * @param string $as An optional model ID in which the results will be returned.
-   * 
+   *
    * @throws \exception\NotFound If the given model ID does not point to a known model.
    * @throws \exception\Sql If an SQL error occurs.
    *
    * @return BaseModel The model that contains the first row.
-   * 
+   *
    * @see self::execute() Execute normally.
    * @api
    */
@@ -1283,12 +1283,12 @@ class Table extends Successable
   
   /**
    * Print the query to the output.
-   * 
+   *
    * **This method may be used for debugging purposed and it is not recommended to have it
    * in any final code.**
    *
    * @param string $as An optional model ID in which the results will be returned.
-   * 
+   *
    * @throws \exception\NotFound If the given model ID does not point to a known model.
    * @throws \exception\Sql If an SQL error occurs.
    *
@@ -1307,7 +1307,7 @@ class Table extends Successable
    *
    * @param string $as An optional model ID in which the results will be returned.
    * @param array $model An out-parameter that receives model meta-data.
-   * 
+   *
    * @throws \exception\NotFound If the given model ID does not point to a known model.
    * @throws \exception\Sql If an SQL error occurs.
    *
@@ -1338,20 +1338,20 @@ class Table extends Successable
    * Creates a new query in the context of this one.
    *
    * @param self $q An out-parameter which will receive the Table object that represents the sub-query.
-   * 
+   *
    * @param string $component The name of the component in which to look for the model.
    *                          This parameter can be omitted, in which case it defaults to
    *                          the component used by this Table.
-   * 
+   *
    * @param string $model The name of the model that the sub-query will use.
-   * 
+   *
    * @param \Closure $builder An optional Closure which will be called with the Table
    *                          (sub-query) object as a parameter, allowing for the
    *                          sub-query to be built right away.
    *
    * @return self Chaining enabled.
-   * 
-   * @see self::__construct() Internally `subquery()` passes on the parameters to the constructor.
+   *
+   * @see self::__construct() Internally, `subquery()` passes on its parameters to the constructor.
    * @api
    */
   public function subquery(&$q)
@@ -1498,6 +1498,8 @@ class Table extends Successable
   /**
    * Build the query and return it for use as a sub-query.
    *
+   * @throws \exception\Programmer If no columns have been explicitly selected in the query.
+   *
    * @return string
    */
   private function _get_subquery()
@@ -1505,7 +1507,6 @@ class Table extends Successable
 
     if(count($this->select) !== 1){
       throw new \exception\Programmer('You must choose a field to ->select() when applying this query as subquery.');
-      return "'<error>'";
     }
 
     return '('.$this->query().')';
@@ -1539,48 +1540,56 @@ class Table extends Successable
    * @param mixed $value The value to compare against.
    *
    * @return string The finished comparison-string.
-   * 
+   *
    * @see self::where()
    * @see self::having()
    */
   private function arguments_to_comparisons()
   {
     
+    //Ensure we have two arguments.
     if(func_num_args() < 2){
-      throw new \exception\Programmer('Single argument not implemented yet.');
-      return;
+      throw new \exception\InvalidArgument('Need at least two arguments.');
     }
-
+    
+    //Fail if the first argument is non-set data.
     if(is_data(func_get_arg(0)) && !func_get_arg(0)->is_set()){
       return false;
     }
-
+    
+    //Prepare arguments.
     $column = $this->prepare(func_get_arg(0));
     $compare = (func_num_args() > 2 ? func_get_arg(1) : '=');
-    $value = func_get_arg(func_num_args()-1);
+    $value = get_data(func_get_arg(func_num_args()-1));
     
     if(!in_array($compare, array('=', '>', '<', '>=', '<=', '!', '|', '!|', ''))){
+    //The comparator must be one of the following.
       throw new \exception\InvalidArgument("Invalid comparison type given (%s).", $compare);
-      return;
     }
     
-    raw($value);
-    
-    //if the given value is an array
-    if(is_array($value)){
+    //Convert comparator to work with array-values.
+    if(is_array($value))
+    {
+      
+      //Empty arrays will be interpreted as 0.
       if(empty($value)){
         $compare = '=';
         $value = 0;
-      }else{
+      }
+      
+      //Filled arrays will become lists, so the comparator will become IN.
+      else{
         $compare = ($compare === '!' ? 'NOT ' : '').'IN';
       }
+      
     }
 
-    //if the value is NULL
+    //Convert comparator to work with NULL.
     elseif($value === 'NULL' || is_null($value)){
       $compare = 'IS'.($compare === '!' ? ' NOT' : '');
     }
-
+    
+    //Convert custom syntax.
     switch($compare){
       case '!':
         $compare = '!=';
@@ -1593,8 +1602,10 @@ class Table extends Successable
         break;
     }
     
+    //Prepare the value.
     $value = $this->prepare($value);
     
+    //Build and return the comparison.
     return "($column $compare $value)";
 
   }
@@ -1605,7 +1616,7 @@ class Table extends Successable
    * @param Conditions $conditions The Conditions object to use.
    *
    * @return string The resulting comparison-string.
-   * 
+   *
    * @see Conditions
    * @see self::where()
    * @see self::having()
@@ -1627,14 +1638,14 @@ class Table extends Successable
 
   /**
    * Converts an array to a comparison-string.
-   * 
+   *
    * Used by `conditions_to_comparisons` in order to convert Condition formatted arrays to
    * comparison formatted strings.
    *
    * @param array $condition
    *
    * @return string Comparison.
-   * 
+   *
    * @see self::conditions_to_comparisons() The master method.
    */
   private function compose_condition(array $condition)
@@ -1670,7 +1681,7 @@ class Table extends Successable
    * Combine where and having because they are similar in syntax.
    *
    * @return string The resulting MySQL.
-   * 
+   *
    * @see self::where()
    * @see self::having()
    */
@@ -1705,7 +1716,7 @@ class Table extends Successable
    * @param string $d Direction.
    *
    * @return string The resulting MySQL.
-   * 
+   *
    * @see self::group()
    * @see self::order()
    */
@@ -1787,7 +1798,7 @@ class Table extends Successable
    *
    * @param string $input Columns have the following format:
    *                      `"[[<component_name>.]<model_name>.]<column_name>"`.
-   *                      
+   *
    *                      * `<column_name>`: The name of the column. This has to be present in the string.
    *                      * `<model_name>`: An optional alternative model may be prepended
    *                        to the column-name using a `.` as separator. This has to be
@@ -1797,7 +1808,7 @@ class Table extends Successable
    *                        case this component will be used to look for the model in.
    *
    * @return array An associative array with the following keys:
-   *               
+   *
    *               * `component`: The name of the component.
    *               * `model`: The internal ID of the model.
    *               * `name`: The name of the column.
@@ -1861,7 +1872,7 @@ class Table extends Successable
    * @param string|array $column
    *
    * @return string
-   * 
+   *
    * @see self::prepare() The master method.
    */
   private function prepare_column($column)
@@ -1873,17 +1884,17 @@ class Table extends Successable
   /**
    * Normalizes several different inputs that represent a model to an array of meta-data.
    *
-   * @param Table|string $input When given input is a table, its 
+   * @param Table|string $input When given input is a table, its
    *                            `_get_model_subquery`-method will be used to attain the
    *                            array of meta-data. When it is a string, it must have the
    *                            following format: `"[<component_name>.]<model_name>"`.
-   *                            
+   *
    *                            * `<component_name>`: The name of the component that houses
    *                              the model.
    *                            * `<model_name>`: The name of the model (class name).
    *
    * @return array An array with the following keys:
-   *               
+   *
    *               * `component`: The name of the component that houses the model.
    *               * `name`: The name of the model.
    *               * `path`: The full class-name of the model.
@@ -1976,7 +1987,7 @@ class Table extends Successable
     $input = data_of($input);
 
     //if this is a Table object, we are going to get the subquery from it
-    if(is_object($input) && $input instanceof Table){
+    if($input instanceof Table){
       $input = $input->_get_subquery();
     }
 
