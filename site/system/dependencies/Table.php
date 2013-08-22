@@ -20,6 +20,8 @@ use \Closure;
  *         * `"!"`: Doesn't equal
  *         * `"|"`: Contains
  *         * `"!|"`: Doesn't contain
+ *         * `"IN"`: List contains
+ *         * `"NOT IN"`: List doesn't contain
  *
  *         `$value` Contains the value to compare to.
  *
@@ -1562,8 +1564,8 @@ class Table extends Successable
     $compare = (func_num_args() > 2 ? func_get_arg(1) : '=');
     $value = get_data(func_get_arg(func_num_args()-1));
     
-    if(!in_array($compare, array('=', '>', '<', '>=', '<=', '!', '|', '!|', ''))){
     //The comparator must be one of the following.
+    if(!in_array($compare, array('=', '>', '<', '>=', '<=', '!', '|', '!|', '', 'IN', 'NOT IN'))){
       throw new \exception\InvalidArgument("Invalid comparison type given (%s).", $compare);
     }
     
@@ -1936,7 +1938,10 @@ class Table extends Successable
           break;
 
         default:
-          throw new \exception\InvalidArgument('Expecting $input to consist of no more that 2 parts, a component and a model separated by a dot. %s Parts given.', substr_count($input, '.')+1);
+          throw new \exception\InvalidArgument(
+            'Expecting $input to consist of no more that 2 parts, a component and a model '.
+            'separated by a dot. %s Parts given.', substr_count($input, '.')+1
+          );
 
       }
 
