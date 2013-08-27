@@ -5,6 +5,17 @@
   "dbUpdates": true,
   "versions": [
     {
+      "version": "0.9.0-beta",
+      "date": "2013-08-27",
+      "description": "Verbeterd inlog systeem.",
+      "changes": [
+        {
+          "title": "Onthoud mij",
+          "description": "Het systeem staat inlog formulieren toe om een onthoud mij knop toe te voegen."
+        }
+      ]
+    },
+    {
       "version": "0.8.2-beta",
       "date": "2013-08-09",
       "description": "Bug opgelost met installatie, na de PDO update.",

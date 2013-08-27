@@ -24,9 +24,30 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
       '0.7.0-beta' => '0.8.2-beta', //No DB changes.
       '0.7.1-beta' => '0.8.2-beta', //No DB changes.
       '0.8.0-beta' => '0.8.2-beta', //No DB changes.
-      '0.8.1-beta' => '0.8.2-beta' //No DB changes.
-      
+      '0.8.1-beta' => '0.8.2-beta', //No DB changes.
+      '0.8.2-beta' => '0.9.0-beta'
     );
+  
+  public function update_to_0_9_0_beta($current_version, $forced)
+  {
+    
+    //Remove new tables when forcing.
+    if($forced){
+      tx('Sql')->query("DROP TABLE `#__core_user_persistent_authentication_tokens`");
+    }
+    
+    tx('Sql')->query("
+      CREATE TABLE `#__core_user_persistent_authentication_tokens` (
+        `user_id` INT(10) UNSIGNED NOT NULL,
+        `access_token` VARCHAR(24) NOT NULL,
+        `series_token` VARCHAR(24) NOT NULL,
+        PRIMARY KEY (`user_id`, `access_token`, `series_token`)
+      )
+      COLLATE='latin1_swedish_ci'
+      ENGINE=MyISAM;
+    ");
+    
+  }
   
   public function update_to_0_7_0_beta($current_version, $forced)
   {
