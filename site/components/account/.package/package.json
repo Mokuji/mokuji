@@ -5,6 +5,12 @@
   "dbUpdates": true,
   "versions": [
     {
+      "version": "0.2.1-beta",
+      "date": "2013-08-27",
+      "description": "Onthoud mij knopje toegevoegt aan het inlog formulier.",
+      "changes": []
+    },
+    {
       "version": "0.2.0-beta",
       "date": "2013-05-30",
       "description": "Naar nieuwe versie systeem overgeschakeld.",

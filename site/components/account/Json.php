@@ -250,7 +250,7 @@ class Json extends \dependencies\BaseComponent
       ->password->validate('Password', array('required', 'not_empty', 'between'=>array(3, 30)));
     
     //Perform login attempt.
-    tx('Account')->login($data->email, $data->password);
+    tx('Account')->login($data->email, $data->password, null, ($data->persistent->get('string') === '1'));
     
     //Exception would have been thrown if it failed, return as successful.
     return array(

@@ -4,7 +4,7 @@
 $user =& tx('Data')->session->user;
 
 //validate login
-if(!$user->check('login')){
+if(!$user->check('login')):
 
 ?>
 
@@ -24,6 +24,12 @@ if(!$user->check('login')){
     <div class="ctrlHolder clearfix">
       <label for="l_password"><?php __('Password'); ?></label>
       <input id="l_password" type="password" name="password" value="" placeholder="<?php __('Password'); ?>" />
+    </div>
+    
+    <div class="ctrlHolder clearfix">
+      <input id="l_remember" type="checkbox" name="persistent" value="1" />
+      <!-- #TODO: In-line style attribute. :( -->
+      <label for="l_remember" style="display:inline-block"><?php __('Remember me'); ?></label>
     </div>
     
     <div class="ctrlHolder clearfix">
@@ -57,7 +63,12 @@ if(!$user->check('login')){
   
 </form>
 
-<?php }else{ ?>
+<?php 
+
+//If the user is not logged in.
+else:
+
+?>
 
 <script type="text/javascript">
 window.location = '<?php echo url(URL_BASE.'?'.tx('Config')->user('homepage'), true); ?>';
@@ -68,4 +79,6 @@ window.location = '<?php echo url(URL_BASE.'?'.tx('Config')->user('homepage'), t
   <a href="<?php echo url(URL_BASE.'?'.tx('Config')->user('homepage'), true); ?>"><?php __($names->component, 'Go to the homepage.'); ?></a>
 </p>
 
-<?php } ?>
+<?php
+
+endif;
