@@ -258,8 +258,11 @@ class Account
   public function login_cookie()
   {
     
+    //Get the SQL singleton.
+    $sql = tx('Sql');
+    
     //Is our database even able to handle persistent log-in stuff?
-    if(!$sql->execute_single("SHOW TABLES LIKE '#__core_user_persistent_authentication_tokens'")->is_empty()){
+    if($sql->execute_single("SHOW TABLES LIKE '#__core_user_persistent_authentication_tokens'")->is_empty()){
       return false;
     }
     
@@ -277,9 +280,6 @@ class Account
       'access_token' => 1,
       'series_token' => 2
     ));
-    
-    //Get the SQL singleton.
-    $sql = tx('Sql');
     
     //Find the token row by serial number.
     $token = $sql->execute_single($sql->make_query(''
@@ -619,9 +619,6 @@ class Account
    */
   private function _set_logged_in($user, $expiry_date = null, $persistent = false, $series_token = null)
   {
-    
-    #TEMP:
-    $persistent = true;
     
     //Regenerate the session ID.
     tx('Session')->regenerate();
