@@ -1,3 +1,11 @@
+#### [Version 0.23.0 Beta](https://github.com/Tuxion/mokuji/tree/0.23.0-beta)
+_27-Aug-2013_
+
+* Core
+  - Allow persistent login.
+* Account
+  - Added "remember me" button to login form.
+
 #### [Version 0.22.2 Beta](https://github.com/Tuxion/mokuji/tree/0.22.2-beta)
 _9-Aug-2013_
 

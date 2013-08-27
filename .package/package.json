@@ -12,6 +12,10 @@
         {
           "title": "Onthoud mij",
           "description": "Het systeem staat inlog formulieren toe om een onthoud mij knop toe te voegen."
+        },
+        {
+          "title": "Nieuwe versie van het Account component.",
+          "description": "Het account component is ook direct geupdate."
         }
       ]
     },
