@@ -57,7 +57,7 @@ abstract class CoreUpdates
     $cores = array();
     
     //Detect: Adept Albatross
-    if(file_exists(PATH_BASE.DS.'init.php'))
+    if(file_exists(PATH_BASE.DS.'init.php') || file_exists(PATH_BASE.DS.'config'.DS.'database.php'))
       $cores[self::CORE_ADEPT_ALBATROSS] = file_exists(PATH_BASE.DS.'install'.DS.'.completed');
     
     //Detect: Ballistic Badger
