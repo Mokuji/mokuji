@@ -37,10 +37,10 @@ abstract class CoreUpdates
       this class has been coded for a newer core than is currently running.
       Most likely this is due to an incomplete upload of the new core files.
     */
-  throw new \exception\Programmer(
-    'The CoreUpdates tasks are written for the Ballistic Badger core, but this core was not detected. '.
-    'This could indicate some files were incorrectly uploaded.'
-  );
+    throw new \exception\Programmer(
+      'The CoreUpdates tasks are written for the Ballistic Badger core, but this core was not detected. '.
+      'This could indicate some files were incorrectly uploaded.'
+    );
     
   }
   
@@ -131,8 +131,8 @@ abstract class CoreUpdates
       PATH_BASE.DS.'config',
       PATH_BASE.DS.'install',
       PATH_BASE.DS.'tools',
-      PATH_BASE.DS.'init.php',
-      PATH_BASE.DS.'phpdoc.dist.xml'
+      PATH_BASE.DS.'phpdoc.dist.xml',
+      PATH_BASE.DS.'init.php' //Do this last, so the core detection works longer.
     )));
     
     #Stuff that should only be deleted when no other messages related to this are left
@@ -150,7 +150,9 @@ abstract class CoreUpdates
   public static function execute_file_transfer_actions(\dependencies\Data $files)
   {
     
-    $files->each(function($file, $index){
+    $post_deletes = Data();
+    
+    $files->each(function($file, $index)use($post_deletes){
       
       //Skip the ones that don't have the execute flag.
       if(!$file->execute->validate('Execute', array('boolean'))->is_true())
@@ -184,6 +186,14 @@ abstract class CoreUpdates
               throw new \Exception("Deleting failed.");
             break;
           
+          //Postpone these to process them last.
+          case 'POST-DELETE':
+            mk('Logging')->log('CoreUpdates', 'POST-DELETE', $file->source.' (queued)');
+            $post_deletes->merge(array(
+              $index => $file
+            ));
+            break;
+          
           default:
             throw new \Exception("This action is not implemented");
             break;
@@ -198,6 +208,52 @@ abstract class CoreUpdates
       }
       
     });
+    
+    //Check for post-deletes.
+    if($post_deletes->size() > 0){
+      
+      //For each post-delete...
+      $post_deletes->each(function($file, $index){
+        
+        //Map the remaining suggestions.
+        $suggestions = self::suggest_file_transfer_actions();
+        
+        try{
+          
+          //Detect if it conflicts with the suggestions.
+          $conflict_string = $file->source->get('string');
+          $len = strlen($conflict_string);
+          
+          foreach($suggestions as $suggestion){
+            
+            //If the start of the string matches, it seems like a conflict.
+            if(substr($suggestion['source'], 0, $len) == $conflict_string){
+              
+              //Except when it's an exact match and the action is POST-DELETE. Then we found the current action.
+              if($suggestion['action'] != 'POST-DELETE' && $suggestion['source'] != $conflict_string){
+                mk('Logging')->log('CoreUpdates', 'POST-DELETE', 'Suggestion match. '.$suggestion['source'].' => '.$conflict_string);
+                throw new \exception\Exception('Suggestions still remaining for this location');
+              }
+              
+            }
+            
+          }
+          
+          //Since no conflict have thrown an exception, proceed with deleting.
+          mk('Logging')->log('CoreUpdates', 'POST-DELETE', $file->source);
+          if(!recursive_delete(self::add_base($file->source)))
+            throw new \Exception("Deleting of POST-DELETE failed.");
+          
+        } catch(\Exception $ex) {
+          $vex = new \exception\Validation("Action failed.");
+          $vex->key("files[$index][source]");
+          $vex->errors(array($ex->getMessage()));
+          throw $vex;
+        }
+        
+      });
+      
+    }
     
     return true;
     

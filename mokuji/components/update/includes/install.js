@@ -49,7 +49,26 @@
       nextStep();
     })
     
-    
+    /* ---------- Execute (package upgrades) button ---------- */
+    .on('click', '.actions a.upgrade-packages', function(e){
+      
+      e.preventDefault();
+      
+      var form = $(e.target).closest('form.form');
+      $.rest('post', form.attr('data-upgrade-action'))
+        .done(function(result){
+          if(result.success === true){
+            $('#upgrade-packages-message').html(result.message);
+            $(e.target).replaceWith('<a href="?action=update/finalize_install" class="button black finalize-install">Finalize upgrade</a>').focus();
+          }else{
+            $('#upgrade-packages-message').html('');
+          }
+        })
+        .error(function(xhr, state, message){
+          $('#upgrade-packages-message').html(message);
+        });
+      
+    })
     
     /* ---------- Execute (file transfers) button ---------- */
     .on('click', '.actions a.transfer-files', function(e){
@@ -62,9 +81,13 @@
           form.find('.validation-error').remove();
           $('#files-list').empty();
           if(result.success === true){
-            for(var i in result.files){
-              $('#files-list').append($(getFileRow(i, result.files[i])));
-              i++;
+            if(result.completed === true)
+              nextStep();
+            else{
+              for(var i in result.files){
+                $('#files-list').append($(getFileRow(i, result.files[i])));
+                i++;
+              }
             }
           }
         })

@@ -105,10 +105,44 @@ class Json extends \dependencies\BaseViews
     if(INSTALLING !== true)
       throw new \exception\Authorisation('Mokuji is not in install mode.');
     
-    return array(
-      'success' => true,
-      'completed' => CoreUpdates::execute_file_transfer_actions($data->files)
+    $result = array(
+      'success' => CoreUpdates::execute_file_transfer_actions($data->files),
     );
+    
+    //Check if we are done.
+    $suggestions = CoreUpdates::suggest_file_transfer_actions();
+    
+    if(count($suggestions) == 0){
+      $result['completed'] = true;
+    }
+    
+    else{
+      $result['completed'] = false;
+      $result['files'] = $suggestions;
+    }
+    
+    return $result;
+    
+  }
+  
+  protected function create_package_upgrade($data, $params)
+  {
+    
+    if(INSTALLING !== true)
+      throw new \exception\Authorisation('Mokuji is not in install mode.');
+    
+    //Connect to the database.
+    require_once(PATH_FRAMEWORK.DS.'config'.DS.'database'.EXT);
+    mk('Sql')->set_connection_data(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PREFIX);
+    
+    try{
+      return array(
+        'success' => $this->helper('check_updates', array('silent'=>true, 'force'=>true)),
+        'message' => 'Package upgrades completed, you can now finalize the upgrade.'
+      );
+    } catch(\Exception $ex) {
+      throw new \exception\User($ex->getMessage());
+    }
     
   }
   
