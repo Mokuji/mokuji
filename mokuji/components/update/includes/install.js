@@ -83,7 +83,7 @@
         })
         .error(function(xhr, state, message){
           form.find('.actions').append(
-            $('<div>').addClass('validation-error').text(errorMeta[name])
+            $('<div>').addClass('validation-error').text(message)
           );
         });
       
