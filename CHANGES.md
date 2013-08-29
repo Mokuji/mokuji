@@ -1,3 +1,16 @@
+#### [Version 0.23.0 Beta](https://github.com/Tuxion/mokuji/tree/0.23.0-beta)
+_29-Aug-2013_
+
+* [Major core rework](http://development.mokuji.org/60/core-codenames?menu=62&action=language%2Fset_language&language_id=1).
+    - Moved files to a better folder structure.
+    - Created an Initializer class to replace the init.php script and improve 3rd party integration.
+    - Reduced reserved words for folders in the root. They are now `/admin`, `/install` and `/mokuji`.
+    - Extended the class autoloader to include component classes.
+    - Created an upgrade script to assist in upgrading to the new Ballistic Badger core.
+* Added new global I/O functions `recursive_move` and `recursive_delete`.
+* Fixed a bug in the Url class, you can now refer to sub-folders that have the same name as the `URL_PATH`.
+* Fixed a bug in the Sql class, setting DB connection data during installation now works again after PDO upgrade.
+
 #### [Version 0.22.2 Beta](https://github.com/Tuxion/mokuji/tree/0.22.2-beta)
 _9-Aug-2013_
 

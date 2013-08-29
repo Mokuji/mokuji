@@ -110,6 +110,8 @@
             * [PackageVersions](components/update/models/PackageVersions.md)
             * [Packages](components/update/models/Packages.md)
             * [UserLastReads](components/update/models/UserLastReads.md)
+        * **components\update\tasks**
+            * [CoreUpdates](components/update/tasks/CoreUpdates.md)
 * **core**
     * [Account](core/Account.md)
     * [Component](core/Component.md)

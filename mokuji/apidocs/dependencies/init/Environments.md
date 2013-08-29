@@ -14,6 +14,12 @@ A static class that helps you to initialize Mokuji environments.
 
 
 ## Class index
+**Constants**
+* [`BACKEND`](#constant-backend)
+* [`FRONTEND`](#constant-frontend)
+* [`INSTALL`](#constant-install)
+* [`MINIMAL`](#constant-minimal)
+* [`SHELL`](#constant-shell)
 
 
 **Methods**
@@ -21,6 +27,62 @@ A static class that helps you to initialize Mokuji environments.
 * [`public static void on_set(\dependencies\init\Initializer $init, integer $environment)`](#method-on_set)
 
 
+
+
+
+# Constants
+
+
+## Constant `BACKEND`
+In class: [dependencies\init\Environments](#top)
+
+```
+const BACKEND = 2
+```
+
+
+
+
+
+## Constant `FRONTEND`
+In class: [dependencies\init\Environments](#top)
+
+```
+const FRONTEND = 1
+```
+
+
+
+
+
+## Constant `INSTALL`
+In class: [dependencies\init\Environments](#top)
+
+```
+const INSTALL = 3
+```
+
+
+
+
+
+## Constant `MINIMAL`
+In class: [dependencies\init\Environments](#top)
+
+```
+const MINIMAL = 4
+```
+
+
+
+
+
+## Constant `SHELL`
+In class: [dependencies\init\Environments](#top)
+
+```
+const SHELL = 0
+```
 
 
 

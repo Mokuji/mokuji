@@ -5,6 +5,12 @@
   "dbUpdates": true,
   "versions": [
     {
+      "version": "0.9.0-beta",
+      "date": "2013-08-29",
+      "description": "De core is herschreven volgens een nieuw ontwerp, met codenaam Ballistic Badger.",
+      "changes": []
+    },
+    {
       "version": "0.8.2-beta",
       "date": "2013-08-09",
       "description": "Bug opgelost met installatie, na de PDO update.",

@@ -24,6 +24,11 @@
 * [`protected mixed install_db($data)`](#method-install_db)
 * [`protected mixed install_intro($data)`](#method-install_intro)
 * [`protected mixed install_site($data)`](#method-install_site)
+* [`protected mixed upgrade_config($data)`](#method-upgrade_config)
+* [`protected mixed upgrade_file_references($data)`](#method-upgrade_file_references)
+* [`protected mixed upgrade_files($data)`](#method-upgrade_files)
+* [`protected mixed upgrade_intro($data)`](#method-upgrade_intro)
+* [`protected mixed upgrade_packages($data)`](#method-upgrade_packages)
 
 
 ## Inheritance index
@@ -99,7 +104,7 @@ protected mixed $default_permission = 2
 In class: [components\update\Sections](#top)
 
 ```
-protected mixed $permissions = array('install_db' => 0, 'install_site' => 0, 'install_intro' => 0, 'install_admin' => 0)
+protected mixed $permissions = array('upgrade_intro' => 0, 'upgrade_config' => 0, 'upgrade_files' => 0, 'upgrade_packages' => 0, 'install_db' => 0, 'install_site' => 0, 'install_intro' => 0, 'install_admin' => 0)
 ```
 
 
@@ -435,6 +440,116 @@ In class: [components\update\Sections](#top)
 
 ```
 mixed components\update\Sections::install_site($data)
+```
+
+
+
+
+
+* Visibility: **protected**
+
+#### Arguments
+
+* $data **mixed**
+
+
+
+
+
+
+## Method `upgrade_config`
+In class: [components\update\Sections](#top)
+
+```
+mixed components\update\Sections::upgrade_config($data)
+```
+
+
+
+
+
+* Visibility: **protected**
+
+#### Arguments
+
+* $data **mixed**
+
+
+
+
+
+
+## Method `upgrade_file_references`
+In class: [components\update\Sections](#top)
+
+```
+mixed components\update\Sections::upgrade_file_references($data)
+```
+
+
+
+
+
+* Visibility: **protected**
+
+#### Arguments
+
+* $data **mixed**
+
+
+
+
+
+
+## Method `upgrade_files`
+In class: [components\update\Sections](#top)
+
+```
+mixed components\update\Sections::upgrade_files($data)
+```
+
+
+
+
+
+* Visibility: **protected**
+
+#### Arguments
+
+* $data **mixed**
+
+
+
+
+
+
+## Method `upgrade_intro`
+In class: [components\update\Sections](#top)
+
+```
+mixed components\update\Sections::upgrade_intro($data)
+```
+
+
+
+
+
+* Visibility: **protected**
+
+#### Arguments
+
+* $data **mixed**
+
+
+
+
+
+
+## Method `upgrade_packages`
+In class: [components\update\Sections](#top)
+
+```
+mixed components\update\Sections::upgrade_packages($data)
 ```
 
 

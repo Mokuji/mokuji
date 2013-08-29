@@ -13,12 +13,6 @@ A singleton class that allows you to initialize a Mokuji runtime.
 
 
 ## Class index
-**Constants**
-* [`ENV_BACKEND`](#constant-env_backend)
-* [`ENV_FRONTEND`](#constant-env_frontend)
-* [`ENV_INSTALL`](#constant-env_install)
-* [`ENV_MINIMAL`](#constant-env_minimal)
-* [`ENV_SHELL`](#constant-env_shell)
 
 **Properties**
 * [`private static \dependencies\init\Initializer $instance`](#property-instance)
@@ -44,62 +38,6 @@ A singleton class that allows you to initialize a Mokuji runtime.
 * [`private mixed __construct()`](#method-__construct)
 
 
-
-
-
-# Constants
-
-
-## Constant `ENV_BACKEND`
-In class: [dependencies\init\Initializer](#top)
-
-```
-const ENV_BACKEND = 2
-```
-
-
-
-
-
-## Constant `ENV_FRONTEND`
-In class: [dependencies\init\Initializer](#top)
-
-```
-const ENV_FRONTEND = 1
-```
-
-
-
-
-
-## Constant `ENV_INSTALL`
-In class: [dependencies\init\Initializer](#top)
-
-```
-const ENV_INSTALL = 3
-```
-
-
-
-
-
-## Constant `ENV_MINIMAL`
-In class: [dependencies\init\Initializer](#top)
-
-```
-const ENV_MINIMAL = 4
-```
-
-
-
-
-
-## Constant `ENV_SHELL`
-In class: [dependencies\init\Initializer](#top)
-
-```
-const ENV_SHELL = 0
-```
 
 
 

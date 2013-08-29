@@ -18,10 +18,14 @@
 
 **Methods**
 * [`protected mixed create_admin_installation($data, $params)`](#method-create_admin_installation)
+* [`protected mixed create_config_upgrade($data, $params)`](#method-create_config_upgrade)
 * [`protected mixed create_db_installation($data, $params)`](#method-create_db_installation)
 * [`protected mixed create_db_test($data, $params)`](#method-create_db_test)
+* [`protected mixed create_files_scan($data, $params)`](#method-create_files_scan)
+* [`protected mixed create_files_transfer($data, $params)`](#method-create_files_transfer)
+* [`protected mixed create_package_upgrade($data, $params)`](#method-create_package_upgrade)
 * [`protected mixed create_site_installation($data, $params)`](#method-create_site_installation)
-* [`protected mixed get_db_test()`](#method-get_db_test)
+* [`protected mixed create_upgrade_file_references($data, $params)`](#method-create_upgrade_file_references)
 * [`protected mixed get_update_count($options, $params)`](#method-get_update_count)
 
 
@@ -390,6 +394,29 @@ mixed components\update\Json::create_admin_installation($data, $params)
 
 
 
+## Method `create_config_upgrade`
+In class: [components\update\Json](#top)
+
+```
+mixed components\update\Json::create_config_upgrade($data, $params)
+```
+
+
+
+
+
+* Visibility: **protected**
+
+#### Arguments
+
+* $data **mixed**
+* $params **mixed**
+
+
+
+
+
+
 ## Method `create_db_installation`
 In class: [components\update\Json](#top)
 
@@ -436,6 +463,75 @@ mixed components\update\Json::create_db_test($data, $params)
 
 
 
+## Method `create_files_scan`
+In class: [components\update\Json](#top)
+
+```
+mixed components\update\Json::create_files_scan($data, $params)
+```
+
+
+
+
+
+* Visibility: **protected**
+
+#### Arguments
+
+* $data **mixed**
+* $params **mixed**
+
+
+
+
+
+
+## Method `create_files_transfer`
+In class: [components\update\Json](#top)
+
+```
+mixed components\update\Json::create_files_transfer($data, $params)
+```
+
+
+
+
+
+* Visibility: **protected**
+
+#### Arguments
+
+* $data **mixed**
+* $params **mixed**
+
+
+
+
+
+
+## Method `create_package_upgrade`
+In class: [components\update\Json](#top)
+
+```
+mixed components\update\Json::create_package_upgrade($data, $params)
+```
+
+
+
+
+
+* Visibility: **protected**
+
+#### Arguments
+
+* $data **mixed**
+* $params **mixed**
+
+
+
+
+
+
 ## Method `create_site_installation`
 In class: [components\update\Json](#top)
 
@@ -459,11 +555,11 @@ mixed components\update\Json::create_site_installation($data, $params)
 
 
 
-## Method `get_db_test`
+## Method `create_upgrade_file_references`
 In class: [components\update\Json](#top)
 
 ```
-mixed components\update\Json::get_db_test()
+mixed components\update\Json::create_upgrade_file_references($data, $params)
 ```
 
 
@@ -471,6 +567,11 @@ mixed components\update\Json::get_db_test()
 
 
 * Visibility: **protected**
+
+#### Arguments
+
+* $data **mixed**
+* $params **mixed**
 
 
 

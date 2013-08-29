@@ -120,7 +120,7 @@ protected mixed $theme
 In class: [components\update\DBUpdates](#top)
 
 ```
-protected mixed $updates = array('1.1' => '1.2', '1.2' => '0.2.0-beta', '0.2.0-beta' => '0.2.1-beta', '0.2.1-beta' => '0.2.2-beta', '0.2.2-beta' => '0.2.3-beta')
+protected mixed $updates = array('1.1' => '1.2', '1.2' => '0.3.0-beta', '0.2.0-beta' => '0.3.0-beta', '0.2.1-beta' => '0.3.0-beta', '0.2.2-beta' => '0.3.0-beta', '0.2.3-beta' => '0.3.0-beta', '0.2.4-beta' => '0.3.0-beta')
 ```
 
 

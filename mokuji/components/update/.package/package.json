@@ -5,6 +5,12 @@
   "dbUpdates": true,
   "versions": [
     {
+      "version": "0.3.0-beta",
+      "date": "2013-08-29",
+      "description": "Upgrade mogelijkheden gemaakt voor de nieuwe core versie: Ballistic Badger.",
+      "changes": []
+    },
+    {
       "version": "0.2.4-beta",
       "date": "2013-08-09",
       "description": "Een paar Tuxion CMS verwijzingen weggehaald.",
