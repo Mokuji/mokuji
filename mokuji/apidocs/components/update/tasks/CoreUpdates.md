@@ -43,8 +43,10 @@
 In class: [components\update\tasks\CoreUpdates](#top)
 
 ```
-const CORE_ADEPT_ALBATROSS = 1
+const mixed CORE_ADEPT_ALBATROSS = 1
 ```
+
+
 
 
 
@@ -54,8 +56,10 @@ const CORE_ADEPT_ALBATROSS = 1
 In class: [components\update\tasks\CoreUpdates](#top)
 
 ```
-const CORE_BALLISTIC_BADGER = 2
+const mixed CORE_BALLISTIC_BADGER = 2
 ```
+
+
 
 
 

@@ -5,7 +5,14 @@
  */
 class Account
 {
-
+  
+  /**
+   * The duration in seconds a "remember-me" cookie may be valid for.
+   * Value: 7 days.
+   * @var int
+   */
+  const PERSISTENT_COOKIE_DURATION = 604800;
+  
   /**
    * The basic user information for the current session.
    */
@@ -680,7 +687,7 @@ class Account
         $token = $this->_generate_authentication_token($user->id, $series_token, $data);
         
         //Set the cookie.
-        setcookie('persistent_auth', $token, (time()+60*60*24*7), '/'.URL_PATH.'/');
+        setcookie('persistent_auth', $token, (time()+self::PERSISTENT_COOKIE_DURATION), '/'.URL_PATH.'/');
         
         //Create a new series in the database?
         if(is_null($series_token)){

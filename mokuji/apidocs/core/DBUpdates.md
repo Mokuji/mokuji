@@ -21,6 +21,7 @@
 
 **Methods**
 * [`public mixed install_3_2_0($dummydata, $forced)`](#method-install_3_2_0)
+* [`public mixed update_to_0_10_0_beta($current_version, $forced)`](#method-update_to_0_10_0_beta)
 * [`public mixed update_to_0_7_0_beta($current_version, $forced)`](#method-update_to_0_7_0_beta)
 * [`public mixed update_to_3_3_1($current_version, $forced)`](#method-update_to_3_3_1)
 * [`public mixed update_to_3_3_2($current_version, $forced)`](#method-update_to_3_3_2)
@@ -122,7 +123,7 @@ protected mixed $theme
 In class: [core\DBUpdates](#top)
 
 ```
-protected mixed $updates = array('3.2.0' => '3.3.0', '3.3.0' => '3.3.1', '3.3.1' => '3.3.2', '3.3.2' => '3.3.3', '3.3.3' => '0.6.1-beta', '0.5.0-beta' => '0.6.1-beta', '0.6.0-beta' => '0.6.1-beta', '0.6.1-beta' => '0.7.0-beta', '0.7.0-beta' => '0.9.0-beta', '0.7.1-beta' => '0.9.0-beta', '0.8.0-beta' => '0.9.0-beta', '0.8.1-beta' => '0.9.0-beta', '0.8.2-beta' => '0.9.0-beta')
+protected mixed $updates = array('3.2.0' => '3.3.0', '3.3.0' => '3.3.1', '3.3.1' => '3.3.2', '3.3.2' => '3.3.3', '3.3.3' => '0.6.1-beta', '0.5.0-beta' => '0.6.1-beta', '0.6.0-beta' => '0.6.1-beta', '0.6.1-beta' => '0.7.0-beta', '0.7.0-beta' => '0.9.0-beta', '0.7.1-beta' => '0.9.0-beta', '0.8.0-beta' => '0.9.0-beta', '0.8.1-beta' => '0.9.0-beta', '0.8.2-beta' => '0.9.0-beta', '0.9.0-beta' => '0.10.0-beta')
 ```
 
 
@@ -410,6 +411,29 @@ mixed components\update\classes\BaseDBUpdates::update($forced, $maybe_install)
 
 * $forced **mixed**
 * $maybe_install **mixed**
+
+
+
+
+
+
+## Method `update_to_0_10_0_beta`
+In class: [core\DBUpdates](#top)
+
+```
+mixed core\DBUpdates::update_to_0_10_0_beta($current_version, $forced)
+```
+
+
+
+
+
+* Visibility: **public**
+
+#### Arguments
+
+* $current_version **mixed**
+* $forced **mixed**
 
 
 

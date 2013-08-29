@@ -45,8 +45,10 @@
 In class: [dependencies\Rectangle](#top)
 
 ```
-const AUTO = 3
+const mixed AUTO = 3
 ```
+
+
 
 
 
@@ -56,8 +58,10 @@ const AUTO = 3
 In class: [dependencies\Rectangle](#top)
 
 ```
-const DOWN = 2
+const mixed DOWN = 2
 ```
+
+
 
 
 
@@ -67,8 +71,10 @@ const DOWN = 2
 In class: [dependencies\Rectangle](#top)
 
 ```
-const INSIDE = 2
+const mixed INSIDE = 2
 ```
+
+
 
 
 
@@ -78,8 +84,10 @@ const INSIDE = 2
 In class: [dependencies\Rectangle](#top)
 
 ```
-const OUTSIDE = 1
+const mixed OUTSIDE = 1
 ```
+
+
 
 
 
@@ -89,8 +97,10 @@ const OUTSIDE = 1
 In class: [dependencies\Rectangle](#top)
 
 ```
-const UP = 1
+const mixed UP = 1
 ```
+
+
 
 
 

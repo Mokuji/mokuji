@@ -37,8 +37,10 @@ A static class that helps you to initialize Mokuji environments.
 In class: [dependencies\init\Environments](#top)
 
 ```
-const BACKEND = 2
+const mixed BACKEND = 2
 ```
+
+Backend environment.
 
 
 
@@ -48,8 +50,10 @@ const BACKEND = 2
 In class: [dependencies\init\Environments](#top)
 
 ```
-const FRONTEND = 1
+const mixed FRONTEND = 1
 ```
+
+Frontend environment.
 
 
 
@@ -59,8 +63,10 @@ const FRONTEND = 1
 In class: [dependencies\init\Environments](#top)
 
 ```
-const INSTALL = 3
+const mixed INSTALL = 3
 ```
+
+Install environment.
 
 
 
@@ -70,8 +76,10 @@ const INSTALL = 3
 In class: [dependencies\init\Environments](#top)
 
 ```
-const MINIMAL = 4
+const mixed MINIMAL = 4
 ```
+
+Minimal environment.
 
 
 
@@ -81,8 +89,10 @@ const MINIMAL = 4
 In class: [dependencies\init\Environments](#top)
 
 ```
-const SHELL = 0
+const mixed SHELL = 0
 ```
+
+Shell environment.
 
 
 

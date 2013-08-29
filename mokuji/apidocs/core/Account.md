@@ -13,6 +13,8 @@ Handles the basic account operations and manages the users session.
 
 
 ## Class index
+**Constants**
+* [`PERSISTENT_COOKIE_DURATION`](#constant-persistent_cookie_duration)
 
 **Properties**
 * [`public mixed $user`](#property-user)
@@ -21,14 +23,31 @@ Handles the basic account operations and manages the users session.
 * [`public boolean check_level(int $level, boolean $exact)`](#method-check_level)
 * [`public void init()`](#method-init)
 * [`public boolean is_login()`](#method-is_login)
-* [`public \core\Account login(String $email, String $pass, $expiry_date)`](#method-login)
-* [`public \core\Account logout()`](#method-logout)
+* [`public self login(String $email, String $pass, $expiry_date, $persistent)`](#method-login)
+* [`public boolean login_cookie()`](#method-login_cookie)
+* [`public self logout()`](#method-logout)
 * [`public void page_authorisation(int $level, boolean $exact)`](#method-page_authorisation)
 * [`public boolean register(String $email, String $username, String $password, int $level)`](#method-register)
+* [`private string _generate_authentication_token(integer $user_id, string $series_token, array $data)`](#method-_generate_authentication_token)
+* [`private self _set_logged_in(\depednecies\Data $user, $expiry_date, $persistent, $series_token)`](#method-_set_logged_in)
 
 
 
 
+
+# Constants
+
+
+## Constant `PERSISTENT_COOKIE_DURATION`
+In class: [core\Account](#top)
+
+```
+const int PERSISTENT_COOKIE_DURATION = 604800
+```
+
+The duration in seconds a "remember-me" cookie may be valid for.
+
+Value: 7 days.
 
 
 
@@ -124,7 +143,7 @@ Short for $this-&gt;user-&gt;check('login').
 In class: [core\Account](#top)
 
 ```
-\core\Account core\Account::login(String $email, String $pass, $expiry_date)
+self core\Account::login(String $email, String $pass, $expiry_date, $persistent)
 ```
 
 Performs a login attempt for the current session.
@@ -135,14 +154,15 @@ Performs a login attempt for the current session.
 
 #### Arguments
 
-* $email **String** - The email or username of the user to log in with.
-* $pass **String** - The plaintext password to log in with.
+* $email **String** - The email or user-name of the user to log in with.
+* $pass **String** - The plain text password to log in with.
 * $expiry_date **mixed**
+* $persistent **mixed**
 
 
 #### Return value
 
-**[core\Account](../core/Account.md)** - Returns $this for chaining.
+**self** - Returns $this for chaining.
 
 
 
@@ -156,11 +176,35 @@ Performs a login attempt for the current session.
 
 
 
+## Method `login_cookie`
+In class: [core\Account](#top)
+
+```
+boolean core\Account::login_cookie()
+```
+
+Looks for a login cookie, and if present, attempts to log the user in with it.
+
+
+
+* Visibility: **public**
+
+
+#### Return value
+
+**boolean** - Whether the user was logged in.
+
+
+
+
+
+
+
 ## Method `logout`
 In class: [core\Account](#top)
 
 ```
-\core\Account core\Account::logout()
+self core\Account::logout()
 ```
 
 Logs out the current user.
@@ -172,7 +216,7 @@ Logs out the current user.
 
 #### Return value
 
-**[core\Account](../core/Account.md)** - Returns $this for chaining.
+**self** - Returns $this for chaining.
 
 
 
@@ -231,6 +275,70 @@ Registers a new user account.
 #### Return value
 
 **boolean** - Whether registering the user was successful.
+
+
+
+
+
+
+
+## Method `_generate_authentication_token`
+In class: [core\Account](#top)
+
+```
+string core\Account::_generate_authentication_token(integer $user_id, string $series_token, array $data)
+```
+
+Return a persistent authentication token with the given user ID.
+
+
+
+* Visibility: **private**
+
+#### Arguments
+
+* $user_id **integer** - The ID of the user to include in the token.
+* $series_token **string** - An optional series token to include. Will be generated when null is given.
+* $data **array** - An out-parameter that will be filled with an array of the different components:
+                   * `user_id`: The given user ID.
+                   * `access_token`: The generated access token.
+                   * `series_token`: The given or generated series token.
+
+
+#### Return value
+
+**string** - The full token.
+
+
+
+
+
+
+
+## Method `_set_logged_in`
+In class: [core\Account](#top)
+
+```
+self core\Account::_set_logged_in(\depednecies\Data $user, $expiry_date, $persistent, $series_token)
+```
+
+Sets the log-in session for a given user object.
+
+
+
+* Visibility: **private**
+
+#### Arguments
+
+* $user **depednecies\Data** - A row from the users table.
+* $expiry_date **mixed**
+* $persistent **mixed**
+* $series_token **mixed**
+
+
+#### Return value
+
+**self** - Chaining enabled.
 
 
 

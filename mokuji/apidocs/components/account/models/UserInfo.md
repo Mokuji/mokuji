@@ -165,8 +165,10 @@
 In class: [components\account\models\UserInfo](#top)
 
 ```
-const STATUS_ACTIVATED = 1
+const mixed STATUS_ACTIVATED = 1
 ```
+
+
 
 
 
@@ -176,8 +178,10 @@ const STATUS_ACTIVATED = 1
 In class: [components\account\models\UserInfo](#top)
 
 ```
-const STATUS_BANNED = 2
+const mixed STATUS_BANNED = 2
 ```
+
+
 
 
 
@@ -187,8 +191,10 @@ const STATUS_BANNED = 2
 In class: [components\account\models\UserInfo](#top)
 
 ```
-const STATUS_CLAIMABLE = 4
+const mixed STATUS_CLAIMABLE = 4
 ```
+
+
 
 
 

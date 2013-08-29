@@ -36,8 +36,10 @@
 In class: [dependencies\RelationType](#top)
 
 ```
-const ForeignKey = 1
+const mixed ForeignKey = 1
 ```
+
+
 
 
 
@@ -47,8 +49,10 @@ const ForeignKey = 1
 In class: [dependencies\RelationType](#top)
 
 ```
-const LinkTable = 4
+const mixed LinkTable = 4
 ```
+
+
 
 
 
@@ -58,8 +62,10 @@ const LinkTable = 4
 In class: [dependencies\RelationType](#top)
 
 ```
-const NestedSets = 5
+const mixed NestedSets = 5
 ```
+
+
 
 
 
@@ -69,8 +75,10 @@ const NestedSets = 5
 In class: [dependencies\RelationType](#top)
 
 ```
-const Reference = 2
+const mixed Reference = 2
 ```
+
+
 
 
 
@@ -80,8 +88,10 @@ const Reference = 2
 In class: [dependencies\RelationType](#top)
 
 ```
-const SelfReference = 3
+const mixed SelfReference = 3
 ```
+
+
 
 
 

@@ -285,13 +285,20 @@ class Parser
 
         foreach($class->constant as $xConstant) {
 
+            $type = 'mixed';
+            $xVar = $xConstant->xpath('docblock/tag[@name="var"]');
+            if (count($xVar)) {
+                $type = $xVar[0]->type;
+            }
+            
             $name = (string)$xConstant->name;
             $value = (string)$xConstant->value;
 
-            $signature = 'const ' . $name . ' = ' . $value;
+            $signature = 'const ' . $type . ' ' . $name . ' = ' . $value;
 
             $constants[$name] = array(
                 'name' => $name,
+                'type' => $type,
                 'key' => 'constant-'.strtolower($name),
                 'description' => (string)$xConstant->docblock->description . "\n\n" . $this->stripp((string)$xConstant->docblock->{"long-description"}),
                 'signature' => $signature,

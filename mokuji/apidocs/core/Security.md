@@ -47,8 +47,10 @@
 In class: [core\Security](#top)
 
 ```
-const OUTPUT_BASE64 = 2
+const mixed OUTPUT_BASE64 = 2
 ```
+
+
 
 
 
@@ -58,8 +60,10 @@ const OUTPUT_BASE64 = 2
 In class: [core\Security](#top)
 
 ```
-const OUTPUT_BINARY = 0
+const mixed OUTPUT_BINARY = 0
 ```
+
+
 
 
 
@@ -69,8 +73,10 @@ const OUTPUT_BINARY = 0
 In class: [core\Security](#top)
 
 ```
-const OUTPUT_DECIMAL = 3
+const mixed OUTPUT_DECIMAL = 3
 ```
+
+
 
 
 
@@ -80,8 +86,10 @@ const OUTPUT_DECIMAL = 3
 In class: [core\Security](#top)
 
 ```
-const OUTPUT_HEX = 1
+const mixed OUTPUT_HEX = 1
 ```
+
+
 
 
 
@@ -91,8 +99,10 @@ const OUTPUT_HEX = 1
 In class: [core\Security](#top)
 
 ```
-const PASSWORD_STRENGTH_ACCEPTABLE = 3
+const mixed PASSWORD_STRENGTH_ACCEPTABLE = 3
 ```
+
+
 
 
 
@@ -102,8 +112,10 @@ const PASSWORD_STRENGTH_ACCEPTABLE = 3
 In class: [core\Security](#top)
 
 ```
-const PASSWORD_STRENGTH_STRONG = 4
+const mixed PASSWORD_STRENGTH_STRONG = 4
 ```
+
+
 
 
 
@@ -113,8 +125,10 @@ const PASSWORD_STRENGTH_STRONG = 4
 In class: [core\Security](#top)
 
 ```
-const PASSWORD_STRENGTH_VERY_WEAK = 1
+const mixed PASSWORD_STRENGTH_VERY_WEAK = 1
 ```
+
+
 
 
 
@@ -124,8 +138,10 @@ const PASSWORD_STRENGTH_VERY_WEAK = 1
 In class: [core\Security](#top)
 
 ```
-const PASSWORD_STRENGTH_WEAK = 2
+const mixed PASSWORD_STRENGTH_WEAK = 2
 ```
+
+
 
 
 

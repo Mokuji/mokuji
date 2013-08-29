@@ -47,8 +47,10 @@
 In class: [core\Url](#top)
 
 ```
-const ALL = 0
+const mixed ALL = 0
 ```
+
+
 
 
 
@@ -58,8 +60,10 @@ const ALL = 0
 In class: [core\Url](#top)
 
 ```
-const ANCHOR = 32
+const mixed ANCHOR = 32
 ```
+
+
 
 
 
@@ -69,8 +73,10 @@ const ANCHOR = 32
 In class: [core\Url](#top)
 
 ```
-const DOMAIN = 2
+const mixed DOMAIN = 2
 ```
+
+
 
 
 
@@ -80,8 +86,10 @@ const DOMAIN = 2
 In class: [core\Url](#top)
 
 ```
-const FILE = 8
+const mixed FILE = 8
 ```
+
+
 
 
 
@@ -91,8 +99,10 @@ const FILE = 8
 In class: [core\Url](#top)
 
 ```
-const PATH = 4
+const mixed PATH = 4
 ```
+
+
 
 
 
@@ -102,8 +112,10 @@ const PATH = 4
 In class: [core\Url](#top)
 
 ```
-const QUERY = 16
+const mixed QUERY = 16
 ```
+
+
 
 
 
@@ -113,8 +125,10 @@ const QUERY = 16
 In class: [core\Url](#top)
 
 ```
-const SCHEME = 1
+const mixed SCHEME = 1
 ```
+
+
 
 
 
