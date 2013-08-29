@@ -29,7 +29,7 @@ try{
 	  ->enable_debugging(true)
 	  ->set_root('../../../../')
 	  ->set_url_path($url_path)
-	  ->set_environment(\dependencies\init\Initializer::ENV_MINIMAL)
+	  ->set_environment(\dependencies\init\Environments::MINIMAL)
 	  ->run_environment();
 	
 	//check account details and progress user activity
