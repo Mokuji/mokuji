@@ -14,7 +14,7 @@ class File
     tx('Data')->files->copyto($this->uploads);
 
     //add the paths defined in the appropriate .ini file to the allowed paths
-    $this->paths = Data(parse_ini_file(PATH_BASE.DS.'config'.DS.'file_handling_dirs.ini'))->map(function($v){
+    $this->paths = Data(parse_ini_file(PATH_FRAMEWORK.DS.'config'.DS.'file_handling_dirs.ini'))->map(function($v){
       return (substr($v, 0, 1) === DS ? $v : PATH_BASE.DS.$v);
     });
 
