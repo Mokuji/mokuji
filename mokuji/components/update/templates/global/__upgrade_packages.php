@@ -7,7 +7,7 @@
   </div>
   <div class="body clearfix">
     <p>
-      Finally we will check for package upgrades.
+      Next we will check for package upgrades.
       This will make sure the database structure is up-to-date and matches the requirements of the currently installed packages.
     </p>
     <form class="form upgrade-packages-form" data-upgrade-action="<?php echo url('/install/?rest=update/package_upgrade', true); ?>">

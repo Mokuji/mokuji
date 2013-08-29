@@ -67,6 +67,10 @@ class Views extends \dependencies\BaseViews
           array(
             'title' => 'Upgrade packages',
             'section' => 'update/upgrade_packages'
+          ),
+          array(
+            'title' => 'Check file references',
+            'section' => 'update/upgrade_file_references'
           )
         ) :
         array(

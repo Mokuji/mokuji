@@ -2,6 +2,7 @@
 
 require_once('mokuji/system/dependencies/init/Initializer.php');
 use \dependencies\init\Initializer;
+use \dependencies\init\Environments;
 $init = Initializer::get_instance();
 
 //Comment on live sites.
@@ -13,11 +14,11 @@ $env = isset($_SERVER['REDIRECT_MK_ENV']) ? $_SERVER['REDIRECT_MK_ENV'] : null;
 switch($env){
   
   case 'admin':
-    $init->set_environment(Initializer::ENV_BACKEND);
+    $init->set_environment(Environments::BACKEND);
     break;
   
   case 'install':
-    $init->set_environment(Initializer::ENV_INSTALL);
+    $init->set_environment(Environments::INSTALL);
     break;
   
   /*
@@ -25,7 +26,7 @@ switch($env){
     This means you should not try to use it for a minimal environment.
   */
   default:
-    $init->set_environment(Initializer::ENV_FRONTEND);
+    $init->set_environment(Environments::FRONTEND);
     break;
   
 }

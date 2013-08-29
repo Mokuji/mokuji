@@ -75,6 +75,16 @@ class Sections extends \dependencies\BaseViews
     
   }
   
+  protected function upgrade_file_references($data)
+  {
+    
+    if(INSTALLING !== true)
+      throw new \exception\Authorisation('Mokuji is not in install mode.');
+    
+    return array();
+    
+  }
+  
   protected function install_intro($data)
   {
     

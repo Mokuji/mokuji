@@ -260,6 +260,29 @@ abstract class CoreUpdates
   }
   
   #TODO
+  public static function replace_file_references($input, &$matched)
+  {
+    
+    raw($input);
+    
+    $old_url = URL_BASE.'files/';
+    $new_url = URL_FRAMEWORK.'files/';
+    
+    $output = preg_replace_callback(
+      '~(src|href)="'.$old_url.'([^"]+)"~',
+      function($matches)use($new_url){
+        return $matches[1].'="'.$new_url.$matches[2].'"';
+      },
+      $input,
+      -1, //No limit.
+      $matched
+    );
+    
+    return $output;
+    
+  }
+  
+  #TODO
   #Returns true if clean.
   protected static function detect_clean_moves($source_format, $target_format, $fallback)
   {

@@ -137,9 +137,62 @@ class Json extends \dependencies\BaseViews
     
     try{
       return array(
-        'success' => $this->helper('check_updates', array('silent'=>true, 'force'=>true)),
-        'message' => 'Package upgrades completed, you can now finalize the upgrade.'
+        'success' => $this->helper('check_updates', array('silent'=>true, 'force'=>true))
       );
+    } catch(\Exception $ex) {
+      throw new \exception\User($ex->getMessage());
+    }
+    
+  }
+  
+  protected function create_upgrade_file_references($data, $params)
+  {
+    
+    if(INSTALLING !== true)
+      throw new \exception\Authorisation('Mokuji is not in install mode.');
+    
+    //Connect to the database.
+    require_once(PATH_FRAMEWORK.DS.'config'.DS.'database'.EXT);
+    mk('Sql')->set_connection_data(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PREFIX);
+    
+    try{
+      
+      mk('Sql')
+        ->table('text', 'ItemInfo')
+        ->execute()
+        ->each(function($item){
+          
+          $item->merge(array(
+            'description' => CoreUpdates::replace_file_references($item->description, $matched1),
+            'text' => CoreUpdates::replace_file_references($item->text, $matched2)
+          ));
+          
+          if($matched1 > 0 || $matched2 > 0){
+            mk('Logging')->log('CoreUpdates', 'File references', 'Updated text-item '.$item->item_id);
+            $item->save();
+          }
+          
+        });
+      
+      mk('Sql')
+        ->table('timeline', 'EntryInfo')
+        ->execute()
+        ->each(function($entry){
+          
+          $entry->merge(array(
+            'summary' => CoreUpdates::replace_file_references($entry->summary, $matched1),
+            'content' => CoreUpdates::replace_file_references($entry->content, $matched2)
+          ));
+          
+          if($matched1 > 0 || $matched2 > 0){
+            mk('Logging')->log('CoreUpdates', 'File references', 'Updated timeline-entry '.$item->entry_id);
+            $entry->save();
+          }
+          
+        });
+      
+      return array('success' => true);
+      
     } catch(\Exception $ex) {
       throw new \exception\User($ex->getMessage());
     }

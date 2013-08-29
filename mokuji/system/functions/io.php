@@ -16,7 +16,7 @@ function recursive_move($source, $target, $conflict=null)
     //Ensure the target folder exists.
     $target_dir = dirname($target);
     if(!is_dir($target_dir))
-      mkdir($target_dir, 0, true);
+      mkdir($target_dir, 0777, true);
     
     //Conflict protection.
     if(is_file($target)){

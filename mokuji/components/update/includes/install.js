@@ -1,8 +1,7 @@
 ;jQuery(function($){
   
-  //REST
+  //Simple REST
   $.rest = function(type, path, data){
-    
     return $.ajax({
       url: path,
       type: type,
@@ -10,7 +9,6 @@
       dataType: 'json',
       processData: false
     });
-    
   };
   
   //Functions for progressing steps.
@@ -49,6 +47,28 @@
       nextStep();
     })
     
+    /* ---------- Execute (file references) button ---------- */
+    .on('click', '.actions a.upgrade-file-references', function(e){
+      
+      e.preventDefault();
+      
+      var form = $(e.target).closest('form.form');
+      $.rest('post', form.attr('data-upgrade-action'))
+        .done(function(result){
+          form.find('.validation-error').remove();
+          if(result.success === true){
+            $(e.target).remove();
+            form.find('.actions a.finalize-install').replaceWith('<a href="?action=update/finalize_install" class="button black finalize-install">Finalize upgrade</a>').focus();
+          }
+        })
+        .error(function(xhr, state, message){
+          form.find('.actions').append(
+            $('<div>').addClass('validation-error').text(message)
+          );
+        });
+      
+    })
+    
     /* ---------- Execute (package upgrades) button ---------- */
     .on('click', '.actions a.upgrade-packages', function(e){
       
@@ -57,15 +77,14 @@
       var form = $(e.target).closest('form.form');
       $.rest('post', form.attr('data-upgrade-action'))
         .done(function(result){
-          if(result.success === true){
-            $('#upgrade-packages-message').html(result.message);
-            $(e.target).replaceWith('<a href="?action=update/finalize_install" class="button black finalize-install">Finalize upgrade</a>').focus();
-          }else{
-            $('#upgrade-packages-message').html('');
-          }
+          form.find('.validation-error').remove();
+          if(result.success === true)
+            nextStep();
         })
         .error(function(xhr, state, message){
-          $('#upgrade-packages-message').html(message);
+          form.find('.actions').append(
+            $('<div>').addClass('validation-error').text(errorMeta[name])
+          );
         });
       
     })

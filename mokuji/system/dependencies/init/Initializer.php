@@ -10,30 +10,30 @@ require_once('Tasks.php');
 class Initializer
 {
   
-  /**
-   * Shell environment.
-   */
-  const ENV_SHELL = 0;
+  // /**
+  //  * Shell environment.
+  //  */
+  // const ENV_SHELL = 0;
   
-  /**
-   * Frontend environment.
-   */
-  const ENV_FRONTEND = 1;
+  // /**
+  //  * Frontend environment.
+  //  */
+  // const ENV_FRONTEND = 1;
   
-  /**
-   * Backend environment.
-   */
-  const ENV_BACKEND = 2;
+  // *
+  //  * Backend environment.
+   
+  // const ENV_BACKEND = 2;
   
-  /**
-   * Install environment.
-   */
-  const ENV_INSTALL = 3;
+  // /**
+  //  * Install environment.
+  //  */
+  // const ENV_INSTALL = 3;
   
-  /**
-   * Minimal environment.
-   */
-  const ENV_MINIMAL = 4;
+  // /**
+  //  * Minimal environment.
+  //  */
+  // const ENV_MINIMAL = 4;
   
   /**
    * The instance of this class.
@@ -219,6 +219,13 @@ class Initializer
     //Do this for any environment.
     Defines::persistent_defines();
     Tasks::apply_debugging($this->debugging);
+    
+    //Check if the selected environment is available.
+    if(!$this->is_installed() && $this->environment != Environments::INSTALL){
+      header('Location:http://'.$_SERVER['HTTP_HOST'].'/'.($this->get_url_path() ? $this->get_url_path().'/' : '').'install/');
+      return;
+    }
+    
     Tasks::load_configuration_files($this->root, $this->is_installed(), $this->use_database);
     
     //Get the site properties.
