@@ -136,7 +136,6 @@ abstract class Environments
         mk('Account');    //check account details and progress user activity
         mk('Data');       //start filtering data
         mk('Language');   //set language
-        mk('Editable');   //check if the website is editable
         mk('Component');  //component singleton
         
         //start doing stuff
@@ -153,7 +152,6 @@ abstract class Environments
         mk('Logging')->log('Core', 'Install Pageload', mk('Url')->url->input, true);
         
         mk('Data');       //start filtering data
-        mk('Editable');   //check if the website is editable
         mk('Component');  //component singleton
         
         //start doing stuff
