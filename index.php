@@ -1,42 +1,35 @@
 <?php
 
-//set variables
-$error_handler      = 'error_handler';
-$exception_handler  = 'exception_handler';
+require_once('mokuji/system/dependencies/init/Initializer.php');
+use \dependencies\init\Initializer;
+use \dependencies\init\Environments;
+$init = Initializer::get_instance();
 
-//indicate we're not installing
-define('INSTALLING', false);
+//Comment on live sites.
+$init->enable_debugging(true);
 
-//initiate
-require_once('init.php');
+//Get the environment definition from any rewrite rules.
+$env = isset($_SERVER['REDIRECT_MK_ENV']) ? $_SERVER['REDIRECT_MK_ENV'] : null;
 
-//start session
-tx('Session');
+switch($env){
+  
+  case 'admin':
+    $init->set_environment(Environments::BACKEND);
+    break;
+  
+  case 'install':
+    $init->set_environment(Environments::INSTALL);
+    break;
+  
+  /*
+    Assume front-end by default, because this IS the Mokuji index.php.
+    This means you should not try to use it for a minimal environment.
+  */
+  default:
+    $init->set_environment(Environments::FRONTEND);
+    break;
+  
+}
 
-//initiate url class
-tx('Url');
-
-//enter a pageload log line
-tx('Logging')->log('Core', 'Frontend Pageload', tx('Url')->url->input, true);
-
-//check account details and progress user activity
-tx('Account');
-
-//start filtering data
-tx('Data');
-
-//set language
-tx('Language');
-
-//component singleton
-tx('Component');
-
-//config
-tx('Config')->system('backend', false);
-tx('Config')->system('component', 'cms');
-
-//start doing stuff
-tx('Router')->start();
-
-//enter a pageload log line
-tx('Logging')->log('Core', 'Frontend Pageload', 'SUCCEEDED');
+//Go for it!
+$init->run_environment();

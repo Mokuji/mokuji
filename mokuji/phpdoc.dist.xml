@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpdoc>
+  <title>Mokuji</title>
+  <parser>
+    <target>.</target>
+  </parser>
+  <files>
+    <directory>.package</directory>
+    <directory>config</directory>
+    <directory>system</directory>
+    <directory>components/account</directory>
+    <directory>components/cms</directory>
+    <directory>components/menu</directory>
+    <directory>components/security</directory>
+    <directory>components/text</directory>
+    <directory>components/timeline</directory>
+    <directory>components/update</directory>
+  </files>
+  <logging>
+    <level>quiet</level>
+  </logging>
+</phpdoc>
