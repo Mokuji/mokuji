@@ -97,7 +97,7 @@ abstract class Environments
       )));
       
       //Set our entrypoint.
-      mk('Config')->system('component', $environment === self::INSTALL ? 'update' : 'cms');
+      mk('Config')->system('component', $environment === self::INSTALL ? 'update' : 'webhistory');
       
       //Initiate URL class.
       mk('Url');

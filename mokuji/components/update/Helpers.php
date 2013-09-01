@@ -278,8 +278,8 @@ class Helpers extends \dependencies\BaseComponent
         }
         
         catch(\exception\Exception $ex){
-          if(!$silent) echo '<em class="error">'.__($this->component, 'Error while updating database', 1).'.'.br.n.$ex->getMessage().'</em>'.br.n;
-          else throw new \exception\Expected('Error while updating database. '.$ex->getMessage());
+          if(!$silent) echo '<em class="error">'.__($this->component, 'Error while updating database', 1).' ('.$folder.').'.br.n.$ex->getMessage().'</em>'.br.n;
+          else throw new \exception\Expected('Error while updating database ('.$folder.'). '.$ex->getMessage());
           return;
         }
         

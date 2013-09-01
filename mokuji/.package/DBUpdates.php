@@ -35,7 +35,9 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
     
     //Remove new tables when forcing.
     if($forced){
-      tx('Sql')->query("DROP TABLE `#__core_user_persistent_authentication_tokens`");
+      try{
+        tx('Sql')->query("DROP TABLE `#__core_user_persistent_authentication_tokens`");
+      }
     }
     
     tx('Sql')->query("
