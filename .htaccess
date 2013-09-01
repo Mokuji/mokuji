@@ -93,3 +93,6 @@ RewriteRule ^/?(\d+)/?([a-zA-Z0-9-_]+)/([a-zA-Z0-9-_/]+)(\.html)?$ index.php?pid
   Order allow,deny
   Allow from all
 </Limit>
+
+php_value post_max_size 100M
+php_value upload_max_filesize 100M
