@@ -1,5 +1,7 @@
 <?php namespace components\account; if(!defined('TX')) die('No direct access.');
 
+echo load_plugin('jquery_rest');
+
 //append user object for easy access
 $user =& tx('Data')->session->user;
 

@@ -340,8 +340,8 @@ class Sections extends \dependencies\BaseViews
     return array(
       'website_url'=>url(URL_BASE.'?menu=KEEP&pid=KEEP', true),
       'edit_url'=>url(URL_BASE.'?action=cms/editable', true),
-      'advanced_url'=>url(URL_BASE.'admin/?menu=KEEP&pid=KEEP', true),
-      'admin_url'=>url(URL_BASE.'admin/?project_id=KEEP', true)
+      'advanced_url'=>url(URL_BASE.'admin/index.php?menu=KEEP&pid=KEEP', true),
+      'admin_url'=>url(URL_BASE.'admin/index.php', true)
     );
 
   }

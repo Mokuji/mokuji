@@ -1249,7 +1249,7 @@ class Table extends Successable
   }
 
   // convert input to a proper column name
-  private function prepare_column($column)
+  public function prepare_column($column)
   {
     $info = is_array($column) ? $column : $this->get_column_info($column);
     return (array_key_exists('model', $info) ? "`{$info['model']}`." : '').($info['name'] === '*' ? '*' : "`{$info['name']}`");
@@ -1306,7 +1306,7 @@ class Table extends Successable
   }
 
   // convert text to proper, safe text
-  private function prepare_text($text)
+  public function prepare_text($text)
   {
     $text = trim($text, '\'');
     return "'$text'";
@@ -1316,6 +1316,7 @@ class Table extends Successable
   private function prepare($input)
   {
 
+    $that = $this;
     $input = data_of($input);
 
     //if this is a Table object, we are going to get the subquery from it
@@ -1353,11 +1354,11 @@ class Table extends Successable
 
       //maybe its text containing column names or simple text
       elseif((substr_count($input, '`') > 0) || (substr_count($input, '\'') > 0) || (substr_count($input, '*') > 0)){
-        $input = preg_replace_callback('~\'([^\']*)(?<!\\\)\'~i', function($matches){
-          return $this->prepare_text($matches[1]);
+        $input = preg_replace_callback('~\'([^\']*)(?<!\\\)\'~i', function($matches)use($that){
+          return $that->prepare_text($matches[1]);
         }, $input);
-        $input = preg_replace_callback('~(?!\')`(.*?)`(?!\')~i', function($matches){
-          return $this->prepare_column($matches[1]);
+        $input = preg_replace_callback('~(?!\')`(.*?)`(?!\')~i', function($matches)use($that){
+          return $that->prepare_column($matches[1]);
         }, $input);
       }
 

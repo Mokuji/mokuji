@@ -125,6 +125,8 @@ class Image extends File
   //resize the image, caching can be used
   public function resize($width=0, $height=0)
   {
+   
+    ini_set('memory_limit', -1);
     
     //Create a log entry.
     if($this->logging)log_msg('Image', 'Resize ['.$width.', '.$height.'].');
@@ -314,6 +316,8 @@ class Image extends File
   //create a new image based on a crop of the old one, caching can be used
   public function crop($x=0, $y=0, $width=0, $height=0)
   {
+
+    ini_set('memory_limit', -1);
 
     if($this->logging)log_msg('Image', 'Crop ['.$x.', '.$y.', '.$width.', '.$height.'].');
     if(empty($this->source)){

@@ -10,7 +10,7 @@ echo $page_list->as_table(array(
   },
   __($names->component, 'Page note', 1) => function($row){ return $row->notes->split("\n")->{0}->trim(); },
   __('Actions', 1) => function($page_list){return
-    '<a class="edit" href="#" data-id="'.$page_list->id.'">'.__('Edit', 1).'</a>'.
+    '<a class="edit" href="'.url('pid='.$page_list->id, true).'" data-id="'.$page_list->id.'">'.__('Edit', 1).'</a>'.
     '<a class="delete" href="#" data-id="'.$page_list->id.'">'.__('Delete', 1).'</a>';
   }
 ));

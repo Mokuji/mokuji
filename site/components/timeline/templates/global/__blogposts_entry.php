@@ -16,7 +16,7 @@ switch($data->type->get('string')){
     <div class="entry blogpost-entry tl-<?php echo implode(' tl-', $classes->get('array')); ?>">
       
       <h2 class="title">
-        <a href="<?php echo url('post='.$data->id.'&pid='.$data->pid.'&menu='.$data->menu); ?>"><?php echo $data->info->{$data->language}->title; ?></a>
+        <a href="<?php echo url('post='.$data->id.'&pid='.$data->pid.'&menu='.$data->menu); ?>" target="_top"><?php echo $data->info->{$data->language}->title; ?></a>
       </h2>
       
       <p class="publishgit-date">
@@ -38,7 +38,7 @@ switch($data->type->get('string')){
         <div class="summary">
           <?php echo $data->info->{$data->language}->summary; ?>
         </div>
-        <a href="<?php echo url('post='.$data->id.'&pid='.$data->pid.'&menu='.$data->menu); ?>" class="read-more"><?php __($names->component, 'Read more') ?></a>
+        <a href="<?php echo url('post='.$data->id.'&pid='.$data->pid.'&menu='.$data->menu); ?>" class="read-more" target="_top"><?php __($names->component, 'Read more') ?></a>
       <?php } else { ?>
         <div class="content"><?php echo $data->info->{$data->language}->content; ?></div>
       <?php } ?>
@@ -51,7 +51,7 @@ switch($data->type->get('string')){
       <?php } ?>
       
       <?php if(!$data->is_summary->is_true()){ ?>
-        <a href="<?php echo url('post=NULL&pid='.$data->pid.'&menu='.$data->menu); ?>" class="back-to-overview"><?php __($names->component, 'Back to overview'); ?></a>
+        <a href="<?php echo url('post=NULL&pid='.$data->pid.'&menu='.$data->menu); ?>" class="back-to-overview" target="_top"><?php __($names->component, 'Back to overview'); ?></a>
       <?php } ?>
       
     </div>

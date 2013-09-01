@@ -161,31 +161,20 @@ class Modules extends \dependencies\BaseViews
 
   protected function breadcrumbs($options)
   {
-    
-    // return;
-    // throw new \exception\Programmer('Breadcrumbs under construction.');
-    
-    // $options
-    //   ->page_id->validate('Page #ID', array('number', 'gt'=>0))->back()
-    //   ->menu_id->validate('Menu #ID', array('number', 'gt'=>0))->back();
-  
-    // //Get all active menu items.
-    // $active = tx('Sql')->table('menu', 'MenuItems')
-    //   ->where('page_id', $options->page_id)
-    //   ->where('menu_id', $options->menu_id)
-    //   ->execute();
-    
-    //OLD
-    
+   
     $menu_item_info =
       tx('Sql')
       ->table('menu', 'MenuItems')
       ->pk($options->menu_item_id)
       ->execute_single();
 
-    return tx('Sql')
+    return array(
 
-      ->table('menu', 'MenuItems', $mi)
+      'options' => $options,
+
+      'items' => tx('Sql')
+
+        ->table('menu', 'MenuItems', $mi)
 
         //filter menu
         ->sk($menu_item_info->menu_id)
@@ -206,7 +195,9 @@ class Modules extends \dependencies\BaseViews
         
         ->group('lft')
 
-      ->execute();
+      ->execute()
+
+    );
       
   }
   
