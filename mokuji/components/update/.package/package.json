@@ -5,6 +5,12 @@
   "dbUpdates": true,
   "versions": [
     {
+      "version": "0.4.0-beta",
+      "date": "2013-08-30",
+      "description": "Packages hebben nu een referentie ID, zodat hernoemen mogelijk wordt en packages geen unieke titels meer hoeven te hebben.",
+      "changes": []
+    },
+    {
       "version": "0.3.0-beta",
       "date": "2013-08-29",
       "description": "Upgrade mogelijkheden gemaakt voor de nieuwe core versie: Ballistic Badger.",
