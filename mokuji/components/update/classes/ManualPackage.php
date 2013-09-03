@@ -375,7 +375,7 @@ class ManualPackage extends AbstractPackage
     }
     
     //Perhaps we have a chance to create a reference now.
-    if(!file_exists($reference_file))
+    if(!$reference_support || !file_exists($reference_file))
     {
       
       //Get the package from the database.
