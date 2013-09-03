@@ -375,16 +375,24 @@ class ManualPackage extends AbstractPackage
     }
     
     //Perhaps we have a chance to create a reference now.
-    else
+    if(!file_exists($reference_file))
     {
       
       //Get the package from the database.
       //Use a try catch in case we're installing the update package and the tables don't exist.
       try{
+        $raw_data = $this->raw_data();
         $model = mk('Sql')
           ->table('update', 'Packages')
           ->where('title', "'".$this->raw_data()->title."'")
-          ->execute_single();
+          ->execute_single()
+          ->is('empty', function()use($raw_data){
+            if($raw_data->old_title->is_set())
+              return mk('Sql')
+                ->table('update', 'Packages')
+                ->where('title', "'".$raw_data->old_title."'")
+                ->execute_single();
+          });
       }
       
       //In case of a Sql exception we are self-installing.
