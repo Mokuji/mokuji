@@ -1,3 +1,10 @@
+#### [Version 0.25.0 Beta](https://github.com/Tuxion/mokuji/tree/0.25.0-beta)
+_3-Sept-2013_
+
+* Restructured the `update` component.
+    - New support for referencing packages by reference ID.
+    - New support for the `old_title` key in `package.json` files.
+
 #### [Version 0.24.0 Beta](https://github.com/Tuxion/mokuji/tree/0.24.0-beta)
 _29-Aug-2013_
 
