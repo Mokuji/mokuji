@@ -164,52 +164,6 @@
    */
   var EditableController = (new Class)
   
-  .statics({
-    
-    inputs: {
-      
-      line: function(el){
-        return $('<input>', {
-          type: "text",
-          value: "<%= "+$(el).data('field')+" %>",
-          'data-type': "line",
-          'data-field': $(el).data('field')
-        }).get(0); 
-      },
-      
-      text: function(el){
-        $(el).prop('contenteditable', true).html('<%= '+$(el).data('field')+' %>');
-        return el;
-      }
-      
-    },
-    
-    extract: {
-      
-      line: function(el){
-        return $(el).val();
-      },
-      
-      text: function(el){
-        return $(el).html();
-      }
-      
-    },
-    
-    extractor: function(el){
-      
-      var data = {};
-      
-      $('[data-field]', el).each(function(){
-        data[$(this).data('field')] = EditableController.extract[$(this).data('type')||'text'](this);
-      });
-      
-      return data;
-      
-    }
-    
-  })
-  
   /**
    * Construct an EditableController.
    *
@@ -241,19 +195,7 @@
     
     //Generate a custom template based on fields.
     else{
-      
-      //This will be the wrapper for the template.
-      var wrapper = $(element).clone();
-      
-      //Replace editable elements.
-      $('[data-field]', wrapper).each(function(){
-        var el = EditableController.inputs[$(this).data('type')||'text'](this);
-        el==this || $(this).replaceWith(el);
-      });
-      
-      //Create the template.
-      template = new Template(wrapper.get(0), EditableController.extractor);
-      
+      template = new AutoTemplate(this.element);
     }
     
     //Store the template.
@@ -265,7 +207,25 @@
     });
     
     $('body').on('keyup', function(e){
-      e.which == 27 && controller.editing() && controller.restore();
+      
+      //We might want to leave editable mode.
+      if(controller.editing()){
+        
+        if(e.which == 27){
+          controller.revert();
+        }
+        
+        else if(e.which == 13 && e.ctrlKey){
+          controller.restore();
+          if(e.shiftKey){
+            controller.model.save();
+          }else{
+            controller.addButtons();
+          }
+        }
+        
+      }
+      
     })
     
   })
@@ -291,7 +251,13 @@
       this.element.replace(this.template.getElement(), this.model.getData());
       $(this.element.getElement()).removeClass('editing');
       this.setEditing(false);
-      this.setChanged();
+    },
+    
+    revert: function(){
+      if(confirm("Are you sure you want to discard the changes?")){
+        this.element.replace(this.template.getElement());
+        this.setEditing(false);
+      }
     },
     
     setEditing: function(e){
@@ -303,7 +269,7 @@
       return !! this._editing;
     },
     
-    setChanged: function(){
+    addButtons: function(){
       
       var self = this;
       
@@ -396,7 +362,7 @@
       var id;
       
       //Return the ID of the element.
-      if(id = $(this.element).attr('id')){
+      if(id = $(this.getElement()).attr('id')){
         return id;
       }
       
@@ -433,10 +399,11 @@
      */
     extract: function(){
       
-      var data = {};
+      var data = {}
+        , self = this;
       
-      $('[data-field]', this.element).each(function(){
-        data[$(this).data('field')] = Element.extract[$(this).data('type') || 'text'](this);
+      $('[data-field]', this.getElement()).each(function(){
+        data[$(this).data('field')] = self._STATIC.extract[$(this).data('type') || 'text'](this);
       });
       
       return data;
@@ -450,8 +417,10 @@
      */
     inject: function(data){
       
-      $('[data-field]', this.element).each(function(){
-        Element.inject[$(this).data('type') || 'text'](this, data[$(this).data('field')]);
+      var self = this;
+      
+      $('[data-field]', this.getElement()).each(function(){
+        self._STATIC.inject[$(this).data('type') || 'text'](this, data[$(this).data('field')]);
       });
       
       return this;
@@ -503,6 +472,7 @@
     
     this.extractor = extractor;
     this.input = element;
+    this.settings = {};
     
     if(element instanceof HTMLElement){
       this.settings.element = $('<div>').append(element).get(0);
@@ -593,6 +563,104 @@
   .finalize();
   
   
+  /**
+   * The AutoTemplate class.
+   * 
+   * Uses in-line meta data available from the HTML tags of the original element to
+   * create a template with its data on the fly.
+   */
+  var AutoTemplate = (new Class).extend(Element)
+  
+  .statics({
+    
+    generators: {
+      
+      line: function(el, data){
+        return $('<input>', {
+          type: "text",
+          value: data,
+          'data-type': "line",
+          'data-field': $(el).data('field')
+        }).get(0)
+        
+      },
+      
+      text: function(el, data){
+        return $(el).prop('contenteditable', true).html(data).get(0);
+      }
+      
+    },
+    
+    extract: {
+      
+      line: function(el){
+        return $(el).val();
+      },
+      
+      text: function(el){
+        var ck = _(CKEDITOR.instances).find(function(ck){return ck.element.$ == el});
+        ck && ck.destroy();
+        return $(el).html();
+      }
+      
+    },
+    
+    inject: {
+      
+      line: function(el, data){
+        $(el).val(data);
+      },
+      
+      text: function(el, data){
+        $(el).html(data);
+      }
+      
+    }
+    
+  })
+  
+  /**
+   * Constructor.
+   *
+   * @param {Element} The original Element object.
+   */
+  .construct(function(element){
+    this.originalElement = element;
+    this.wrapper = $(element.getElement()).clone();
+  })
+  
+  .members({
+    
+    element:null,
+    wrapper: null,
+    originalElement: null,
+    
+    getElement: function(data){
+      return (!data && this.element) || (this.element = this.generateTemplate(data));
+    },
+    
+    generateTemplate: function(data){
+      
+      //A clone of the original element will function as the template.
+      var wrapper = this.wrapper.clone()
+        , self = this;
+      
+      //Replace editable elements.
+      $('[data-field]', wrapper).each(function(){
+        var type = $(this).data('type')||'text'
+          , data = self.originalElement._STATIC.extract[type](this)
+          , el = self._STATIC.generators[type](this, data);
+        el==this || $(this).replaceWith(el);
+      });
+      
+      //Return the template.
+      return wrapper;
+      
+    }
+    
+  })
+  
+  .finalize();
   
   //////////////
   // Editable //
