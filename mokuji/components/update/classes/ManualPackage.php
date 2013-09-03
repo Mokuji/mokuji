@@ -352,6 +352,7 @@ class ManualPackage extends AbstractPackage
     //See if we have a reference for this package.
     $reference_file = $this->directory().DS.'.package'.DS.'reference-id';
     $reference_support = static::reference_support();
+    $reference = 'NULL';
     if(file_exists($reference_file) && $reference_support)
     {
       
@@ -400,6 +401,7 @@ class ManualPackage extends AbstractPackage
       catch(\exception\Sql $ex){
         //Create an empty placeholder.
         $model = Data();
+        mk('Logging')->log('Update', 'Query error', 'Seems like a self-install. '.$ex->getMessage());
       }
       
       if($reference_support){
@@ -419,9 +421,14 @@ class ManualPackage extends AbstractPackage
           } while($matches->get('int') > 0);
           
           //Update the package with this reference key.
-          $model->merge(array(
-            'reference_id' => $reference
-          ))->save();
+          if(!$model->is_empty())
+          {
+            
+            $model->merge(array(
+              'reference_id' => $reference
+            ))->save();
+            
+          }
           
           //Save the reference to the file.
           file_put_contents($reference_file, $reference);
@@ -432,8 +439,6 @@ class ManualPackage extends AbstractPackage
         catch(\exception\Sql $ex){
           mk('Logging')->log('ManualPackage', 'Referencing', 'Unable to create new reference-id. '.$ex->getMessage());
         }
-      } else {
-        $reference = 'NULL';
       }
       
     }
@@ -443,7 +448,8 @@ class ManualPackage extends AbstractPackage
       return mk('Sql')->model('update', 'Packages')->set(array(
         'title' => $this->raw_data()->title,
         'description' => $this->raw_data()->description,
-        'type' => 0
+        'type' => 0,
+        'reference_id' => $reference
       ));
     }
     

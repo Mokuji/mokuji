@@ -1,3 +1,9 @@
+#### [Version 0.25.1 Beta](https://github.com/Tuxion/mokuji/tree/0.25.1-beta)
+_3-Sept-2013_
+
+* Bugfixes in `update` component.
+    - Fixed update bug for inserting new components.
+
 #### [Version 0.25.0 Beta](https://github.com/Tuxion/mokuji/tree/0.25.0-beta)
 _3-Sept-2013_
 
