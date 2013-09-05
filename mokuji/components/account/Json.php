@@ -18,22 +18,31 @@ class Json extends \dependencies\BaseComponent
   {
     
     #TODO: Add username and account info support.
+    //Check basic formatting.
+    $raw_data = $data;
+    $data = Data($data)->having('email', 'password1', 'password2')
+      ->email->validate('E-mail', array('required', 'string', 'not_empty', 'email'))->back()
+      ->password1->validate('Password', array('required', 'string', 'not_empty', 'password'))->back()
+      ->password2->validate('Confirm password', array('required', 'string', 'not_empty'))->back();
+    
+    //Check passwords match.
+    if($data->password1->get() !== $data->password2->get()){
+      $vex = new \exception\Validation(__($this->component, 'The passwords do not match', true));
+      $vex->key('password1');
+      $vex->errors(array(__($this->component, 'The passwords do not match', true)));
+      throw $vex;
+    }
     
     //Check Captcha.
-    if(!tx('Component')->helpers('security')->call('validate_captcha', array('form_data'=>$data))){
+    if(!tx('Component')->helpers('security')->call('validate_captcha', array('form_data'=>$raw_data))){
       $vex = new \exception\Validation(__($this->component, 'The security code is invalid', true));
       $vex->key('captcha_section');
       $vex->errors(array(__($this->component, 'The security code is invalid', true)));
       throw $vex;
     }
     
-    //Check basic formatting.
-    $data = Data($data)->having('email', 'password1', 'password2')
-      ->email->validate('E-mail', array('required', 'string', 'not_empty', 'email'))->back()
-      ->password1->validate('New password', array('required', 'string', 'not_empty', 'password'))->back()
-      ->password2->validate('Confirm new password', array('required', 'string', 'not_empty'))->back();
-    
     //Check if the email already exists.
+    //Note: Captcha should be done first, otherwise we can automatically scan for existing e-mail addresses.
     if(
       mk('Sql')
         ->table('account', 'Accounts')
@@ -43,14 +52,6 @@ class Json extends \dependencies\BaseComponent
       $vex = new \exception\Validation(__($this->component, 'An account with this e-mail address already exists', true));
       $vex->key('email');
       $vex->errors(array(__($this->component, 'An account with this e-mail address already exists', true)));
-      throw $vex;
-    }
-    
-    //Check passwords match.
-    if($data->password1->get() !== $data->password2->get()){
-      $vex = new \exception\Validation(__($this->component, 'The passwords do not match', true));
-      $vex->key('password1');
-      $vex->errors(array(__($this->component, 'The passwords do not match', true)));
       throw $vex;
     }
     
