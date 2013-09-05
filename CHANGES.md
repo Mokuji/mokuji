@@ -1,3 +1,83 @@
+#### [Version 0.25.1 Beta](https://github.com/Tuxion/mokuji/tree/0.25.1-beta)
+_3-Sept-2013_
+
+* Bugfixes in `update` component.
+    - Fixed update bug for inserting new components.
+
+#### [Version 0.25.0 Beta](https://github.com/Tuxion/mokuji/tree/0.25.0-beta)
+_3-Sept-2013_
+
+* Restructured the `update` component.
+    - New support for referencing packages by reference ID.
+    - New support for the `old_title` key in `package.json` files.
+
+#### [Version 0.24.0 Beta](https://github.com/Tuxion/mokuji/tree/0.24.0-beta)
+_29-Aug-2013_
+
+* Core
+  - Allow persistent login.
+* Account
+  - Added "remember me" button to login form.
+
+#### [Version 0.23.0 Beta](https://github.com/Tuxion/mokuji/tree/0.23.0-beta)
+_29-Aug-2013_
+
+* [Major core rework](http://development.mokuji.org/60/core-codenames?menu=62&action=language%2Fset_language&language_id=1).
+    - Moved files to a better folder structure.
+    - Created an Initializer class to replace the init.php script and improve 3rd party integration.
+    - Reduced reserved words for folders in the root. They are now `/admin`, `/install` and `/mokuji`.
+    - Extended the class autoloader to include component classes.
+    - Created an upgrade script to assist in upgrading to the new Ballistic Badger core.
+* Added new global I/O functions `recursive_move` and `recursive_delete`.
+* Fixed a bug in the Url class, you can now refer to sub-folders that have the same name as the `URL_PATH`.
+* Fixed a bug in the Sql class, setting DB connection data during installation now works again after PDO upgrade.
+
+#### [Version 0.22.2 Beta](https://github.com/Tuxion/mokuji/tree/0.22.2-beta)
+_9-Aug-2013_
+
+* Fixed a bug when installing with the new PDO setup.
+* Removed some Tuxion CMS references.
+
+#### [Version 0.22.1 Beta](https://github.com/Tuxion/mokuji/tree/0.22.1-beta)
+_7-Aug-2013_
+
+* Allowed FormBuilder class to be extended, switching private variables to protected.
+
+#### [Version 0.22.0 Beta](https://github.com/Tuxion/mokuji/tree/0.22.0-beta)
+_5-Aug-2013_
+
+* Updated core to work with PDO:MySql
+* Updated installation script to work with PDO:MySql
+* Fixed a bug in text component using a mysql function directly.
+
+#### [Version 0.21.4 Beta](https://github.com/Tuxion/mokuji/tree/0.21.4-beta)
+_1-Jul-2013_
+
+* Fixed a scoping problem with older PHP version in BaseDBUpdates.
+* Moved private helper function BaseDBUpdates::vtfn($version) to system helpers.
+
+#### [Version 0.21.3 Beta](https://github.com/Tuxion/mokuji/tree/0.21.3-beta)
+_1-Jul-2013_
+
+* Added more entropy to the generation of random table aliases. Fixes #59.
+* Added DocBlocks and better code comments here and there.
+
+#### [Version 0.21.2 Beta](https://github.com/Tuxion/mokuji/tree/0.21.2-beta)
+_26-Jun-2013_
+
+* Fixed a bug that occurred when setting a page as home-page via the configuration tab.
+
+#### [Version 0.21.1 Beta](https://github.com/Tuxion/mokuji/tree/0.21.1-beta)
+_26-Jun-2013_
+
+* Updated CKEditor to 4.1.2 (10 Jun 2013)
+
+#### [Version 0.21.0 Beta](https://github.com/Tuxion/mokuji/tree/0.21.0-beta)
+_24-Jun-2013_
+
+* Added option for configuring the CKEditor toolbar.
+* Increased size for value fields in core configuration tables.
+
 #### [Version 0.20.3 Beta](https://github.com/Tuxion/mokuji/tree/0.20.3-beta)
 _7-Jun-2013_
 

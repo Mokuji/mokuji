@@ -1,0 +1,101 @@
+{
+  "title": "CMS component",
+  "description": "Verzorgt de basis CMS taken als paginabeheer, multi-site functionaliteit en koppelt dit met andere componenten die het CMS uitbreiden.",
+  "type": "manual",
+  "dbUpdates": true,
+  "versions": [
+    {
+      "version": "0.5.0-beta",
+      "date": "2013-06-24",
+      "description": "Mogelijkheid toegevoegd om de CKEditor toolbar in te stellen.",
+      "changes": []
+    },
+    {
+      "version": "0.4.1-beta",
+      "date": "2013-05-30",
+      "description": "Fout in versie. Nu met -beta teken.",
+      "changes": []
+    },
+    {
+      "version": "0.4.0",
+      "date": "2013-05-28",
+      "description": "Naar nieuwe versie systeem overgeschakeld. En ensure_pagetypes helper heeft een delete mogelijkheid gekrekgen.",
+      "changes": []
+    },
+    {
+      "version": "3.0",
+      "date": "2013-04-11",
+      "description": "Herontwerp dashboard en website configuratie.",
+      "changes": []
+    },
+    {
+      "version": "2.1",
+      "date": "2013-04-05",
+      "description": "PageTypes kunnen een titel voor findability aanraden.",
+      "changes": []
+    },
+    {
+      "version": "2.0",
+      "date": "2012-12-13",
+      "description": "De beheeromgeving heeft een nieuwe look en een beter systeem.",
+      "changes": [
+        {
+          "title": "Pagina tabs",
+          "description": "Bij het bewerken van een pagina zijn er nu tabs. Deze groeperen verschillende functies op een overzichtelijke manier. Voor speciale pagina types kunnen er ook extra tabs bij komen om geavanceerde functies voor dat paginatype onder te brengen."
+        },
+        {
+          "title": "Meertaligheid",
+          "description": "Naast tabs voor de verschillende pagina functies, zijn er ook tabs toegevoegd om op een gebruikersvriendelijke manier meertaligheid te ondersteunen."
+        },
+        {
+          "title": "Vindbaarheid",
+          "description": "Er is een vindbaarheid tab toegevoegd aan het pagina bewerk scherm. Hier zijn talloze nieuwe opties om pagina's beter vindbaar te maken door zoekmachines en social media."
+        },
+        {
+          "title": "PageType-systeem",
+          "description": "In het nieuwe systeem dat de backend aanstuurt is er voor programmeurs een mogelijkheid toegevoegd om paginatypes op een andere manier te ontwikkelen. Dit heeft vele voordelen ten opzichte van het bestaande systeem.\n<ul><li>Pagina's die gebruik maken van deze ontwikkelmethode laden veel sneller.</li>\n<li>De code voor het bewerken is overzichtelijker en beter onderhoudbaar.</li>\n<li>Meertaligheid en het opslaan van bewerkingen is gemakkelijker te implementeren.</li>\n<li>Het plaatsen van plug-ins -zoals een bestand-uploader of een tekstverwerker- gaat effici&euml;nter; plugins hoeven nog maar één keer ingeladen te worden.</li></ul>\nKlik op onderstaande link voor de technische documentatie van het nieuwe PageType-systeem.",
+          "url": "https://github.com/Tuxion/tuxion.cms/wiki/Page-type-handling"
+        }
+      ]
+    },
+    {
+      "version": "1.4",
+      "date": "2012-10-25",
+      "description": "Vertaalbestanden aangepast aan nieuw vertaal systeem.",
+      "changes": []
+    },
+    {
+      "version": "1.3",
+      "date": "2012-10-08",
+      "description": "Pagina opties werkend gemaakt.",
+      "changes": [
+        {
+          "title": "Pagina opties",
+          "description": "Het concept voor pagina opties was reeds in grote lijnen uitgewerkt maar nooit gebruikt. Voor het Wizard component is dit voor het eerst ingezet en daarvoor zijn de laatste wijzigingen gedaan om deze pagina opties te laten functioneren."
+        }
+      ]
+    },
+    {
+      "version": "1.2",
+      "date": "2012-10-01",
+      "description": "Aanpassing module en view installaties.",
+      "changes": [
+        {
+          "title": "Module en view installaties",
+          "description": "De structuur waarin pagina types, configuratie opties en modules kunnen worden geïnstalleerd is veranderd waardoor het voor andere componenten makkelijker is deze automatisch toe te voegen bij een installatie of update."
+        }
+      ]
+    },
+    {
+      "version": "1.1",
+      "date": "2012-09-27",
+      "description": "Automatische installatie mogelijk gemaakt.",
+      "changes": [
+        {
+          "title": "Automatische installatie",
+          "description": "Sinds deze update is het mogelijk om het CMS component zichzelf te laten installeren via het update component."
+        }
+      ]
+    }
+  ]
+}
