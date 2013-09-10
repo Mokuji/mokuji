@@ -104,7 +104,7 @@ function plugin_available($name)
 function load_plugin($name, $___once=true)
 {
   
-  return load_html(PATH_PLUGINS.DS.$name.DS.'plugin'.EXT, array('plugin'=>URL_PLUGINS.$name.'/'), $___once);
+  return load_html(PATH_PLUGINS.DS.$name.DS.'plugin'.EXT, array('plugin'=>URL_PLUGINS.$name.'/', 'path'=>PATH_PLUGINS.DS.$name), $___once);
   
 }
 
