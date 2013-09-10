@@ -87,9 +87,45 @@ class FormBuilder
       <form id="<?php echo $this->id(); ?>" class="<?php echo $classes; ?>" action="<?php echo $action; ?>" method="<?php echo $method; ?>">
     <?php
     
-    foreach($this->fields as $field){
-      $field->render($options);
+    //Using the fieldsets option.
+    if(array_key_exists('fieldsets', $options))
+    {
+      
+      $field_pool = $this->fields;
+      $sets = $options['fieldsets'];
+      
+      foreach($sets as $label => $fields)
+      {
+        
+        ?>
+        <fieldset><legend><?php echo $label; ?></legend>
+          <?php
+          
+          foreach($fields as $field){
+            $field_pool[$field]->render($options);
+            unset($field_pool[$field]);
+          }
+          
+          ?>
+        </fieldset>
+        <?php
+        
+      }
+      
+      foreach($field_pool as $field)
+        $field->render($options);
+      
     }
+    
+    //Without fieldsets option.
+    else
+    {
+      
+      foreach($this->fields as $field)
+        $field->render($options);
+      
+    }
+    
     
     ?>
       <div class="ctrlHolder">
@@ -298,7 +334,7 @@ class FormBuilder
       $override['form_id'] = $this->id();
       
       //Create the field.
-      $fields[] = new $field_class(
+      $fields[$column_name] = new $field_class(
         $column_name,
         isset($override['title']) ? $override['title'] : $title,
         $this->model,
