@@ -2,14 +2,27 @@
 /* Editable *\
 \************/
 
-.editing, .editable:hover{
+.editable.editing, .editable:hover{
   border:dotted 1px red;
   margin:-1px;
   cursor:pointer;
 }
 
-.editing{
+.editable.editing{
   cursor:auto !important;
+}
+
+.editable-toolbar-button{
+  margin-right:10px;
+  cursor:pointer;
+}
+
+.editable.preview .editable-toolbar{
+  display: none;
+}
+
+.editable.preview:hover .editable-toolbar{
+  display: block;
 }
 
 
