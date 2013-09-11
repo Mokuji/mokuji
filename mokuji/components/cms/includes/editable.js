@@ -222,9 +222,7 @@
           this.saveToModel().restore().setMode(this.model.isClean() ? null : 'preview');
         })
         .addButton('Save', function(){
-          this.saveToModel().restore();
-          this.model.isClean() || this.saveToServer();
-          this.setMode(null);
+          this.saveToModel().restore().saveToServer().setMode(null);
         })
       
     };
@@ -255,11 +253,11 @@
             this.saveToModel().restore();
             
             //If the SHIFT key was pressed too, save to the server.
-            if(e.shiftKey && !this.model.isClean()){
+            if(e.shiftKey){
               this.saveToServer().setMode(null);
             }
             
-            //Otherwise just show the preview.
+            //Otherwise just set the mode.
             else{
               this.setMode(this.model.isClean() ? null : 'preview');
             }
@@ -290,7 +288,7 @@
     },
     
     saveToServer: function(){
-      this.model.save();
+      this.model.isClean() || this.model.save();
       return this;
     },
     
