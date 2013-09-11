@@ -5,6 +5,12 @@
   "dbUpdates": true,
   "versions": [
     {
+      "version": "0.3.0-beta",
+      "date": "2013-09-11",
+      "description": "Account registratie functie uitgewerkt, inclusief een registratieformulier module.",
+      "changes": []
+    },
+    {
       "version": "0.2.1-beta",
       "date": "2013-08-27",
       "description": "Onthoud mij knopje toegevoegt aan het inlog formulier.",

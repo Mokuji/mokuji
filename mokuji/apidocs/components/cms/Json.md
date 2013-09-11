@@ -108,7 +108,7 @@ protected mixed $default_permission = 2
 In class: [components\cms\Json](#top)
 
 ```
-protected mixed $permissions = array('keep_alive' => 0)
+protected mixed $permissions = array('get_keep_alive' => 0)
 ```
 
 
