@@ -222,7 +222,9 @@
           this.saveToModel().restore().setMode(this.model.isClean() ? null : 'preview');
         })
         .addButton('Save', function(){
-          this.saveToModel().restore().saveToServer().setMode(null);
+          this.saveToModel().restore();
+          this.model.isClean() || this.saveToServer();
+          this.setMode(null);
         })
       
     };
