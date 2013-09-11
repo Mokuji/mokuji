@@ -185,7 +185,7 @@ class Json extends \dependencies\BaseViews
           ));
           
           if($matched1 > 0 || $matched2 > 0){
-            mk('Logging')->log('CoreUpdates', 'File references', 'Updated timeline-entry '.$item->entry_id);
+            mk('Logging')->log('CoreUpdates', 'File references', 'Updated timeline-entry '.$entry->entry_id);
             $entry->save();
           }
           
