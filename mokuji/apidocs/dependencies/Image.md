@@ -18,9 +18,9 @@
 **Properties**
 * [`private mixed $allow_growth`](#property-allow_growth)
 * [`private mixed $allow_shrink`](#property-allow_shrink)
+* [`private mixed $diverted`](#property-diverted)
 * [`private mixed $image`](#property-image)
 * [`private mixed $jpeg_quality`](#property-jpeg_quality)
-* [`private mixed $logging`](#property-logging)
 * [`private mixed $original`](#property-original)
 * [`private mixed $sharpen_after_resize`](#property-sharpen_after_resize)
 * [`private mixed $use_cache`](#property-use_cache)
@@ -37,6 +37,7 @@
 * [`public mixed from_file($source)`](#method-from_file)
 * [`public mixed get_height()`](#method-get_height)
 * [`public mixed get_width()`](#method-get_width)
+* [`public mixed has_diverted()`](#method-has_diverted)
 * [`public mixed jpeg_quality($set)`](#method-jpeg_quality)
 * [`public mixed output($options)`](#method-output)
 * [`public mixed resize($width, $height)`](#method-resize)
@@ -44,6 +45,7 @@
 * [`public mixed sharpening($set)`](#method-sharpening)
 * [`public mixed text($text, $color, $font, $x, $y, $line_spacing)`](#method-text)
 * [`public mixed use_cache($set)`](#method-use_cache)
+* [`protected mixed divert()`](#method-divert)
 * [`private mixed cache_dir($subfolder)`](#method-cache_dir)
 * [`private mixed color($color)`](#method-color)
 * [`private mixed info($source)`](#method-info)
@@ -174,6 +176,20 @@ private mixed $allow_shrink = true
 * Visibility: **private**
 
 
+## Property `$diverted`
+In class: [dependencies\Image](#top)
+
+```
+private mixed $diverted = false
+```
+
+
+
+
+
+* Visibility: **private**
+
+
 ## Property `$image`
 In class: [dependencies\Image](#top)
 
@@ -193,20 +209,6 @@ In class: [dependencies\Image](#top)
 
 ```
 private mixed $jpeg_quality = 100
-```
-
-
-
-
-
-* Visibility: **private**
-
-
-## Property `$logging`
-In class: [dependencies\Image](#top)
-
-```
-private mixed $logging = false
 ```
 
 
@@ -564,6 +566,24 @@ mixed dependencies\Image::get_width()
 
 
 
+## Method `has_diverted`
+In class: [dependencies\Image](#top)
+
+```
+mixed dependencies\Image::has_diverted()
+```
+
+
+
+
+
+* Visibility: **public**
+
+
+
+
+
+
 ## Method `jpeg_quality`
 In class: [dependencies\Image](#top)
 
@@ -737,6 +757,24 @@ mixed dependencies\File::create_output_headers()
 
 * Visibility: **protected**
 * This method is defined by [dependencies\File](../dependencies/File.md)
+
+
+
+
+
+
+## Method `divert`
+In class: [dependencies\Image](#top)
+
+```
+mixed dependencies\Image::divert()
+```
+
+
+
+
+
+* Visibility: **protected**
 
 
 

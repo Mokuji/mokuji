@@ -114,11 +114,13 @@ class File
     
     // Getting headers sent by the client.
     $headers = apache_request_headers();
-
+    $can_skip_output = false;
+    
     // Checking if the client is validating his cache and if it is current.
     if(array_key_exists('If-Modified-Since', $headers) && (strtotime($headers['If-Modified-Since']) == filemtime($this->source))){
       set_status_header(304);
       header('Last-Modified: '.gmdate('D, d M Y H:i:s', filemtime($this->source)).' GMT');
+      $can_skip_output = true;
     }
     
     else{
@@ -131,11 +133,13 @@ class File
     }
     
     if($this->cache_time > 0){
-      header("Cache-Control: public, max-age=".$this->cache_time);
+      header("Cache-Control: max-age=".$this->cache_time.", public");
       header('Expires: '.gmdate('D, d M Y H:i:s', time()+$this->cache_time).' GMT');
     }
     
     header("Content-type: ".$this->info['mime']);
+    
+    if($can_skip_output) exit;
     
   }
   

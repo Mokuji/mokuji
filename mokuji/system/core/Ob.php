@@ -39,7 +39,7 @@ class Ob
     }
     
     if(in_array('meta', $this->retrieved)){
-      throw new \exception\Rescriction('Meta data was already retrieved.');
+      throw new \exception\Restriction('Meta data was already retrieved.');
     }
     
     $this->buffers[] = array(
@@ -61,7 +61,7 @@ class Ob
     }
     
     if(in_array('link', $this->retrieved)){
-      throw new \exception\Rescriction('Links were already retrieved.');
+      throw new \exception\Restriction('Links were already retrieved.');
     }
     
     $this->buffers[] = array(
@@ -83,7 +83,7 @@ class Ob
     }
     
     if(in_array('style', $this->retrieved)){
-      throw new \exception\Rescriction('Style was already retrieved.');
+      throw new \exception\Restriction('Style was already retrieved.');
     }
     
     $this->buffers[] = array(
@@ -105,7 +105,7 @@ class Ob
     }
     
     if(in_array('script', $this->retrieved)){
-      throw new \exception\Rescriction('scripts were already retrieved.');
+      throw new \exception\Restriction('scripts were already retrieved.');
     }
     
     $this->buffers[] = array(

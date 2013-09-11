@@ -20,6 +20,7 @@
 * [`protected mixed $permissions`](#property-permissions)
 
 **Methods**
+* [`protected mixed register($options)`](#method-register)
 * [`protected mixed user_profile($options)`](#method-user_profile)
 * [`protected mixed welcome_user()`](#method-welcome_user)
 
@@ -97,7 +98,7 @@ protected mixed $default_permission = 2
 In class: [components\account\Modules](#top)
 
 ```
-protected mixed $permissions = array('welcome_user' => 0, 'user_profile' => 1)
+protected mixed $permissions = array('register' => 0, 'welcome_user' => 0, 'user_profile' => 1)
 ```
 
 
@@ -355,6 +356,28 @@ mixed dependencies\BaseComponent::view($module_name, $options)
 #### Arguments
 
 * $module_name **mixed**
+* $options **mixed**
+
+
+
+
+
+
+## Method `register`
+In class: [components\account\Modules](#top)
+
+```
+mixed components\account\Modules::register($options)
+```
+
+
+
+
+
+* Visibility: **protected**
+
+#### Arguments
+
 * $options **mixed**
 
 

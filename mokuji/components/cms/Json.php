@@ -6,7 +6,7 @@ class Json extends \dependencies\BaseComponent
   protected
     $default_permission = 2,
     $permissions = array(
-      'keep_alive' => 0
+      'get_keep_alive' => 0
     );
   
   protected function get_keep_alive($data, $params)
