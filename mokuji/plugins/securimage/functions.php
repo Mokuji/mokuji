@@ -1,7 +1,7 @@
 <?php namespace plugins\securimage; if(!TX) die('No direct access.');
 
 function generate_url(){
-  return url('/plugins/securimage/src/securimage_show.php', true);
+  return URL_FRAMEWORK.'plugins/securimage/src/securimage_show.php';
 }
 
 function validate_response($response)

@@ -12,8 +12,29 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
       '0.2.1-beta' => '0.3.0-beta', //No DB changes.
       '0.2.2-beta' => '0.3.0-beta', //No DB changes.
       '0.2.3-beta' => '0.3.0-beta', //No DB changes.
-      '0.2.4-beta' => '0.3.0-beta' //No DB changes.
+      '0.2.4-beta' => '0.3.0-beta', //No DB changes.
+      '0.3.0-beta' => '0.4.0-beta',
+      '0.4.0-beta' => '0.4.1-beta' //No DB changes.
     );
+  
+  public function update_to_0_4_0_beta($current_version, $forced)
+  {
+    
+    try{
+      
+      mk('Sql')->query('
+        ALTER TABLE `#__update_packages`
+          ADD `reference_id` varchar(255) NULL DEFAULT NULL after `id`,
+          ADD UNIQUE KEY `reference_id` (`reference_id`)
+      ');
+      
+    }
+    catch(\Exception $ex){
+      //This is a problem when it's not forced.
+      if(!$forced) throw $ex;
+    }
+    
+  }
   
   //Replacing installer for new page view tables.
   public function install_1_2($dummydata, $forced)

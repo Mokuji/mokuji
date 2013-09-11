@@ -9,6 +9,7 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
   protected
     $is_core = true,
     $updates = array(
+      
       '3.2.0' => '3.3.0',
       '3.3.0' => '3.3.1',
       '3.3.1' => '3.3.2',
@@ -26,7 +27,9 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
       '0.8.1-beta' => '0.9.0-beta', //No DB changes.
       '0.8.2-beta' => '0.9.0-beta', //No DB changes.
       
-      '0.9.0-beta' => '0.10.0-beta'
+      '0.9.0-beta' => '0.10.0-beta',
+      
+      '0.10.0-beta' => '0.11.0-beta' //No DB changes.
       
     );
   
@@ -35,7 +38,7 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
     
     //Remove new tables when forcing.
     if($forced){
-      tx('Sql')->query("DROP TABLE `#__core_user_persistent_authentication_tokens`");
+      tx('Sql')->query("DROP TABLE IF EXISTS `#__core_user_persistent_authentication_tokens`");
     }
     
     tx('Sql')->query("

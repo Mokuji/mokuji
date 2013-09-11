@@ -96,3 +96,61 @@
       text-decoration:none;
       text-shadow:none;
     }
+
+
+/* --------------------------- *\
+|  Account registration module  |
+\* --------------------------- */
+
+.account-registration{
+  width:320px;
+  margin:auto;
+}
+
+.account-registration .form input[type="text"],
+.account-registration .form input[type="password"]{
+  font-size:120%;
+  padding:0.5em;
+  width:100%;
+}
+
+.account-registration .form .restform-error-message{
+  display:none;
+}
+
+.account-registration .form .validation-error{
+  font-style:italic;
+  color:#f55;
+}
+
+.account-registration .form .ctrlHolder,
+.account-registration .form .buttonHolder {
+  clear:both;
+  margin:0;
+  padding:5px 0;
+}
+
+.account-registration .form label,
+.account-registration .form .label {
+  display:none;
+}
+
+.account-registration .form label,
+.account-registration .form button {
+  cursor:pointer;
+}
+
+.account-registration .form .buttonHolder {
+  padding:0.5em 1em;
+  text-align:right;
+}
+
+.account-registration .native-captcha{
+  padding:1.5em 0 1em 0;
+  text-align:center;
+}
+  .account-registration .native-captcha input[type="text"]{
+    font-size:110%;
+    width:220px;
+    padding:0.2em;
+  }

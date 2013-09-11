@@ -61,6 +61,7 @@
     this.fresh = fresh||false;
     this.id = id || guid();
     this.data = {};
+    this.serverData = {};
   })
   
   //Define EditableModel members.
@@ -108,12 +109,30 @@
     },
     
     /**
-     * Fetch the resource from the server.
+     * Set "initial" data. Assumes given data is equal to that on the server.
      *
-     * @return {jQuery.Deferred.Promise} The promise object handling the AJAX callbacks.
+     * @param {Object} map Data to set.
+     * 
+     * @chainable
      */
-    fetch: function(){
-      return request(GET, this.name);
+    setInitial: function(map){
+      $.extend(this.data, map);
+      $.extend(this.serverData, map);
+      return this;
+    },
+    
+    /**
+     * Revert local data back to server data.
+     *
+     * @chainable
+     */
+    revert: function(){
+      $.extend(this.data, this.serverData);
+      return this;
+    },
+    
+    isClean: function(){
+      return _.isEqual(this.data, this.serverData);
     },
     
     /**
@@ -124,19 +143,9 @@
     save: function(){
       return request((this.fresh ? POST : PUT), this.name, this.getData()).done(this.proxy(function(data){
         this.data = data;
+        this.serverData = $.extend({}, data);
         this.fresh = false;
       }));
-    },
-    
-    /**
-     * Returns the given function in a wrapper that will execute the function in the context of this object.
-     *
-     * @param {function} func The function to be wrapped.
-     *
-     * @return {function} The wrapped function.
-     */
-    proxy: function(func){
-      $.proxy(func, this);
     },
     
     /**
@@ -172,61 +181,96 @@
    */
   .construct(function(editable, model, element){
     
-    //Define variables.
-    var template
-      , controller = this;
-    
     //Set properties.
     this.model = model;
     this.editable = editable;
-    this.element = new Element(element);
+    this.element = this.active = new Element(element);
     
     //Set initial data in the model.
-    this.model.setAll(parseFormData($(element).data('data')));
-    this.model.setAll(this.element.extract());
+    this.model.setInitial(parseFormData($(element).data('data')));
+    this.model.setInitial(this.element.extract());
     
     //Make sure the editable class gets assigned.
     $(element).addClass('editable');
     
-    //Get the template from the data-template property.
-    if($(element).is('[data-template]')){
-      template = new Template($(element).data('template'));
-    }
-    
-    //Generate a custom template based on fields.
-    else{
-      template = new AutoTemplate(this.element);
-    }
+    //Create a type of Template instance based on whether the "template" data is available.
+    var template = ($(element).is('[data-template]')
+      ? new EJSTemplate($(element).data('template'))
+      : new AutoTemplate(this.element)
+    );
     
     //Store the template.
     this.template = template;
     
-    //Bind events.
-    $('body').on('click', '#' + this.element.id() , function(e){
-      controller.editing() || controller.replace();
-    });
+    //Create tool bars.
+    this.toolbars = {
+      
+      preview: (new Toolbar(this))
+        .addButton('Revert', function(){
+          this.canDiscard() && this.revertToServer().setMode(null);
+        })
+        .addButton('Save', function(){
+          this.saveToServer().setMode(null);
+        })
+      ,
+      
+      editing: (new Toolbar(this))
+        .addButton('Revert', function(){
+          this.canDiscard() && this.restore().setMode(null);
+        })
+        .addButton('Preview', function(){
+          this.saveToModel().restore().setMode(this.model.isClean() ? null : 'preview');
+        })
+        .addButton('Save', function(){
+          this.saveToModel().restore();
+          this.model.isClean() || this.saveToServer();
+          this.setMode(null);
+        })
+      
+    };
     
-    $('body').on('keyup', function(e){
+    //Bind events.
+    $('body').on('click', '#' + this.element.id(), this.proxy(function(){
+      this.isEditing() || this.replace().setMode('editing');
+    }));
+    
+    $('body').on('keyup', this.proxy(function(e){
       
       //We might want to leave editable mode.
-      if(controller.editing()){
+      if(this.isEditing() && this.template.hasFocus() && this.template.isIdle()){
         
-        if(e.which == 27){
-          controller.revert();
-        }
-        
-        else if(e.which == 13 && e.ctrlKey){
-          controller.restore();
-          if(e.shiftKey){
-            controller.model.save();
-          }else{
-            controller.addButtons();
+        //Why? Because CKEditor sets its own time-out after every key press...
+        setTimeout(this.proxy(function(){
+          
+          //If the escape key is pressed, discard changes if we can.
+          //#TEMP: Disabled because of conflicts with CKEDITOR.
+          if(false && e.which == 27){
+            this.canDiscard() && this.restore().setMode(null);
           }
-        }
+          
+          //If CTRL+ENTER is pressed.
+          else if(e.which == 13 && e.ctrlKey){
+            
+            //Save changes locally and restore.
+            this.saveToModel().restore();
+            
+            //If the SHIFT key was pressed too, save to the server.
+            if(e.shiftKey && !this.model.isClean()){
+              this.saveToServer().setMode(null);
+            }
+            
+            //Otherwise just show the preview.
+            else{
+              this.setMode(this.model.isClean() ? null : 'preview');
+            }
+            
+          }
+            
+        }), 50);
         
       }
       
-    })
+    }));
     
   })
   
@@ -236,63 +280,188 @@
     model: null,
     element: null,
     template: null,
+    active: null,
     save_btn: null,
-    _editing: false,
+    _mode: null,
     
-    replace: function(){
-      this.template.replace(this.element.getElement(), this.model.getData());
-      $(this.template.getElement()).addClass('editing');
-      CKEDITOR.inlineAll();
-      this.setEditing();
-    },
-    
-    restore: function(){
-      this.model.setAll(this.template.extract());
-      this.element.replace(this.template.getElement(), this.model.getData());
-      $(this.element.getElement()).removeClass('editing');
-      this.setEditing(false);
-    },
-    
-    revert: function(){
-      if(confirm("Are you sure you want to discard the changes?")){
-        this.element.replace(this.template.getElement());
-        this.setEditing(false);
-      }
-    },
-    
-    setEditing: function(e){
-      this._editing = (e==undefined?true:e);
+    saveToModel: function(){
+      this.model.setAll(this.active.extract());
       return this;
     },
     
-    editing: function(){
-      return !! this._editing;
+    saveToServer: function(){
+      this.model.save();
+      return this;
     },
     
-    addButtons: function(){
+    revertToServer: function(){
+      this.model.revert();
+      this.active.inject(this.model.getData());
+      return this;
+    },
+    
+    replace: function(){
+      this.hideToolbar();
+      this.active = this.template.replace(this.element, this.model.getData()).focus();
+      return this;
+    },
+    
+    restore: function(){
+      this.hideToolbar();
+      this.active = this.element.replace(this.template, this.model.getData());
+      return this;
+    },
+    
+    setMode: function(mode){
+      var $el = $(this.active.getElement());
       
-      var self = this;
+      if(_.isString(mode)){
+        this._mode && $el.removeClass(this._mode.toLowerCase());
+        $el.addClass(mode.toLowerCase());
+        this._mode = mode.toUpperCase();
+        this.showToolbar(mode);
+      }
       
-      $(this.save_btn).remove();
+      else{
+        $el.removeClass(this._mode.toLowerCase());
+        this._mode = null;
+        this.hideToolbar();
+      }
       
-      this.save_btn = $('<button>', {
-        text: 'Save'
-      });
+      return this;
       
-      this.save_btn.appendTo(this.element.getElement());
-      
-      this.save_btn.on('click', function(){
-        self.save_btn.remove();
-        self.model.save();
-      });
-      
+    },
+    
+    isEditing: function(){
+      return this._mode == 'EDITING';
+    },
+    
+    canDiscard: function(){
+      return (this.model.isClean() && this.active.isClean())
+        || confirm("Are you sure you want to discard the changes?");
+    },
+    
+    showToolbar: function(name){
+      this.toolbars[name].showAt(this.active.getElement());
+      return this;
+    },
+    
+    hideToolbar: function(){
+      _(this.toolbars).invoke('hide');
+      return this;
     }
     
   })
   
   //Finalize the EditableController class.
   .finalize();
-
+  
+  
+  
+  //////////////
+  // Tool Bar //
+  //////////////
+  
+  var Toolbar = (new Class)
+  
+  .statics({
+    
+    blueprints: {
+      
+      //Define a tool-bar blueprint which the different tool-bar instances will make clones of.
+      wrapper: $('<div>', {
+        "class": "editable-toolbar",
+        "html": $('<div>', {
+          "class": "inner"
+        })
+      }),
+      
+      //Define a button blueprint
+      button: $('<span>', {
+        "class": "editable-toolbar-button",
+        "text": "Button"
+      })
+      
+    }
+    
+  })
+  
+  /**
+   * Constructs a new tool bar.
+   *
+   * @param {EditableController} controller The instance for which the tool bar will function.
+   */
+  .construct(function(controller){
+    this.toolbar = this._STATIC.blueprints.wrapper.clone().get(0);
+    this.controller = controller;
+    this.buttons = {};
+  })
+  
+  .members({
+    
+    /**
+     * @chainable
+     */
+    hide: function(){
+      $(this.toolbar).detach();
+      return this;
+    },
+    
+    showAt: function(element){
+      $(this.toolbar).appendTo(element);
+      return this;
+    },
+    
+    /**
+     * Return the tool-bar HTML element.
+     *
+     * @return {HTMLElement} The internally created HTMLElement of the tool-bar.
+     */
+    getElement: function(){
+      return this.toolbar;
+    },
+    
+    /**
+     * Add a button to the toolbar.
+     *
+     * @param {string} name The text that will appear on the button and generate the class name.
+     * @param {function} action The callback which will be used for the buttons click event.
+     * 
+     * @return {HTMLElement} The button.
+     */
+    addButton: function(name, action){
+      
+      var btn = this.buttons[name] = 
+        this._STATIC.blueprints.button.clone()
+        .addClass(name.replace(/[\W_]/g, "-").toLowerCase())
+        .text(name)
+        .on('click', this.proxy(function(e){
+          e.preventDefault();
+          e.stopPropagation();
+          action.apply(this.controller, arguments);
+        }))
+        .appendTo($(this.toolbar).find('.inner'))
+        .get(0);
+      
+      return this;
+      
+    },
+    
+    /**
+     * Return a previously added buttons HTML element.
+     *
+     * @param {string} name The earlier given name of the button.
+     *
+     * @return {HTMLElement} The internally created HTML element of the button.
+     */
+    getButton: function(name){
+      return this.buttons[name];
+    }
+    
+  })
+  
+  .finalize();
+  
   
   
   /////////////
@@ -342,7 +511,7 @@
     /**
      * Returns the element, with optional new data.
      *
-     * @param {[type]} data Optional new data to inject.
+     * @param {Object} data Optional new data to inject.
      *
      * @return {HTMLElement}
      */
@@ -380,14 +549,16 @@
     /**
      * Replace an object in the DOM with this template rendered using the given data.
      *
-     * @param {HTMLElement} element The DOM-element to replace.
-     * @param {object} data The data to inject into the template.
+     * @param {Element} replace The Element to replace.
+     * @param {object} data The data to inject into the new element.
      *
      * @chainable
      */
-    replace: function(element, data){
+    replace: function(replace, data){
       var el = this.getElement(data);
-      $(element).replaceWith(el);
+      replace.publish('beforeRemove');
+      $(replace.getElement()).replaceWith(el);
+      replace.publish('afterRemove');
       this.publish('placed', el);
       return this;
     },
@@ -433,9 +604,14 @@
      * @chainable
      */
     detach: function(){
+      this.publish('beforeRemove');
       $(this.getElement()).detach();
-      this.publish('removed');
+      this.publish('afterRemove');
       return this;
+    },
+    
+    isClean: function(){
+      return true;
     }
     
   })
@@ -449,15 +625,103 @@
   //////////////
   
   /**
+   * Generic template class. Mostly used as a parent.
+   * @type {Class}
+   */
+  var Template = (new Class).extend(Element)
+  
+  .members({
+    
+    element: null,
+    
+    /**
+     * Returns the already existing element, or one with new data if data is given.
+     *
+     * @param {Object} data
+     *
+     * @return {HTMLElement}
+     */
+    getElement: function(data){
+      return (!data && this.element) || (this.setElement(this.generateTemplate(data)));
+    },
+    
+    /**
+     * Dummy method which should be implemented by extending template classes.
+     *
+     * @param {object} data Data to inject during template generation.
+     *
+     * @return {HTMLElement}
+     */
+    generateTemplate: function(data){
+      return $('<div>', {text: 'Template generator not implemented.'}).get(0);
+    },
+    
+    /**
+     * Set the element and return it.
+     *
+     * @param {HTMLElement} element
+     *
+     * @return {HTMLElement}
+     */
+    setElement: function(element){
+      element = $(element).get(0);
+      $(this.element).replaceWith(element);
+      this.element = element;
+      return element;
+    },
+    
+    /**
+     * Focus on the first focusable element in the template.
+     *
+     * @chainable
+     */
+    focus: function(){
+      var $el = $(':focusable:eq(0), [contenteditable]', this.getElement()).eq(0).focus();
+      setTimeout(function(){
+        $el.val($el.val());
+      }, 500);
+      return this;
+    },
+    
+    /**
+     * Returns true if an element within the template has focus.
+     *
+     * @return {Boolean}
+     */
+    hasFocus: function(){
+      return ($(':focus', this.getElement()).size() > 0);
+    },
+    
+    /**
+     * Returns true if the template is currently "idle".
+     * 
+     * Idle means that currently no actions are being processed, like open pop-ups or
+     * invalidated date-fields etcetera. Implementations may vary with different templates
+     * but using this method templates can tell third-party classes not to take control.
+     *
+     * @return {Boolean}
+     */
+    isIdle: function(){
+      return true;
+    }
+    
+  })
+  
+  .finalize();
+  
+  
+  /**
    * Template class
    *
    * This class wraps information required to acquire a template and allows others to
    * retrieve the DOMElement. It also keeps the extractor for the template.
+   * 
+   * @type {Class}
    */
-  var Template = (new Class).extend(Element)
+  var EJSTemplate = (new Class).extend(Template)
   
   /**
-   * Construct a Template.
+   * Construct a EJSTemplate.
    *
    * @param {HTMLElement|string} element Where to find the element. Can be either of the following:
    *                                     - HTMLElement: The already abstracted template.
@@ -466,7 +730,7 @@
    *                                     
    * @param {function} extractor The function that can extract the data from the template.
    *
-   * @return {Template}
+   * @return {EJSTemplate}
    */
   .construct(function(element, extractor){
     
@@ -505,28 +769,16 @@
     },
     
     /**
-     * Returns the already existing element, or one with new data if data is given.
+     * Implementation of template generator.
      *
-     * @param {[type]} data [description]
+     * Uses EJS to generate the template using the options set in the constructor.
      *
-     * @return {[type]} [description]
-     */
-    getElement: function(data){
-      return (!data && this.element) || (this.setElement(this.getEJS().render(data||{})));
-    },
-    
-    /**
-     * Set the element and return it.
-     *
-     * @param {HTMLElement} element
+     * @param {object} data
      *
      * @return {HTMLElement}
      */
-    setElement: function(element){
-      element = $(element).get(0);
-      $(this.element).replaceWith(element);
-      this.element = element;
-      return element;
+    generateTemplate: function(data){
+      return this.getEJS().render(data||{});
     },
     
     /**
@@ -568,8 +820,10 @@
    * 
    * Uses in-line meta data available from the HTML tags of the original element to
    * create a template with its data on the fly.
+   * 
+   * @type {Class}
    */
-  var AutoTemplate = (new Class).extend(Element)
+  var AutoTemplate = (new Class).extend(Template)
   
   .statics({
     
@@ -626,23 +880,21 @@
    */
   .construct(function(element){
     this.originalElement = element;
-    this.wrapper = $(element.getElement()).clone();
+    this.ckInstances = [];
   })
   
   .members({
     
     element:null,
-    wrapper: null,
     originalElement: null,
     
-    getElement: function(data){
-      return (!data && this.element) || (this.element = this.generateTemplate(data));
-    },
+    //CKEDITOR Implementation.
+    ckInstances: null,
     
     generateTemplate: function(data){
       
       //A clone of the original element will function as the template.
-      var wrapper = this.wrapper.clone()
+      var wrapper = $(this.originalElement.getElement()).clone()
         , self = this;
       
       //Replace editable elements.
@@ -653,9 +905,36 @@
         el==this || $(this).replaceWith(el);
       });
       
+      //When a CKEditor instance is created within this template, push it to our collection.
+      var onInstanceReady = function(e){
+        var ck = e.editor;
+        if($(ck.container.$, wrapper).size() > 0){
+          self.ckInstances.push(ck);
+        }
+      };
+      
+      //CKEDITOR Implementation.
+      CKEDITOR.on('instanceReady', onInstanceReady);
+      
+      //When this template is removed from the DOM, destroy all CKEditor instances we created.
+      self.subscribe('beforeRemove', function(){
+        CKEDITOR.removeListener('instanceReady', onInstanceReady);
+        _(self.ckInstances).invoke('destroy');
+      });
+      
       //Return the template.
       return wrapper;
       
+    },
+    
+    replace: function(){
+      var r = Element.prototype.replace.apply(this, arguments);
+      CKEDITOR.inlineAll();
+      return r;
+    },
+    
+    isClean: function(){
+      return _.isEqual(this.extract(), this.originalElement.extract());
     }
     
   })
@@ -670,6 +949,31 @@
    * The main class and API.
    */
   var Editable = (new Class)
+  
+  .statics({
+    
+    instances: [],
+    
+    /**
+     * Returns true if there are no unsaved changes in any of the Editable instances.
+     *
+     * @return {Boolean}
+     */
+    allClean: function(){
+      
+      return _(this.instances).every(function(instance){
+        
+        return _(instance.controllers).every(function(controller){
+          
+          return controller.model.isClean() && controller.active.isClean();
+          
+        });
+        
+      });
+      
+    }
+    
+  })
   
   /**
    * Construct the Editable class.
@@ -686,9 +990,12 @@
     //Initiate variables.
     var editable = this;
     
+    //Save.
+    this._STATIC.instances.push(this);
+    
     //Set properties.
     this.templates = [];
-    this.controllers = {};
+    this.controllers = [];
     this.settings = _(settings||{}).defaults({});
     this.context = context||document.body;
     
@@ -706,6 +1013,7 @@
       var controller = new EditableController(editable, model, this);
       
       //Register the template with the pool, so that third party scripts can add extractors.
+      editable.controllers.push(controller);
       editable.registerTemplate(controller.template);
       
     });
@@ -742,6 +1050,23 @@
   })
   
   .finalize();
+  
+  
+  
+  
+  ///////////////////
+  // Global events //
+  ///////////////////
+  
+  $(window).on('beforeunload', function(){
+    
+    if(Editable.allClean()){
+      return void(0);
+    }
+    
+    return "You are about to discard the unsaved changes on the page.";
+    
+  });
   
   
   

@@ -403,6 +403,13 @@ class Data extends Successable implements \Serializable, \IteratorAggregate, \Ar
         throw new \exception\InvalidArgument('$title is of invalid datatype '.ucfirst(gettype($title)).'. String or Callable expected.');
       }
       
+      //See if we need to apply indenting.
+      if($options->indent_field->is_set()){
+        $indent_field = $options->indent_field->get('string');
+        $depth = max(0, $row->__get($indent_field)->get('int') - 1);
+        $title_str = str_repeat('&nbsp;|-&nbsp;', $depth) . $title_str;
+      }
+      
       //resolve value
       if(is_string($value)){
         $value_str = data_of($row->__get($value));

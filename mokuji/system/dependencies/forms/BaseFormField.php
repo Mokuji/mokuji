@@ -25,10 +25,21 @@ abstract class BaseFormField
   {
     
     $this->model = $model;
-    $this->value = $model[$column_name];
     $this->column_name = $column_name;
     $this->title = $title;
     $this->form_id = $options['form_id'];
+    
+    //Detect array indexes.
+    $column_parts = str_replace(']', '', $column_name);
+    $column_parts = explode('[', $column_parts);
+    
+    //Now expand on it.
+    $this->value = $model;
+    foreach($column_parts as $part){
+      $this->value = $this->value[$part];
+    }
+    
+    // $this->value = $model[$column_name];
     
   }
   

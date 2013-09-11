@@ -87,13 +87,49 @@ class FormBuilder
       <form id="<?php echo $this->id(); ?>" class="<?php echo $classes; ?>" action="<?php echo $action; ?>" method="<?php echo $method; ?>">
     <?php
     
-    foreach($this->fields as $field){
-      $field->render($options);
+    //Using the fieldsets option.
+    if(array_key_exists('fieldsets', $options))
+    {
+      
+      $field_pool = $this->fields;
+      $sets = $options['fieldsets'];
+      
+      foreach($sets as $label => $fields)
+      {
+        
+        ?>
+        <fieldset><legend><?php __($this->model->component(), $label); ?></legend>
+          <?php
+          
+          foreach($fields as $field){
+            $field_pool[$field]->render($options);
+            unset($field_pool[$field]);
+          }
+          
+          ?>
+        </fieldset>
+        <?php
+        
+      }
+      
+      foreach($field_pool as $field)
+        $field->render($options);
+      
     }
     
+    //Without fieldsets option.
+    else
+    {
+      
+      foreach($this->fields as $field)
+        $field->render($options);
+      
+    }
+    
+    
     ?>
-      <div class="ctrlHolder">
-        <input type="submit" value="<?php __('Save'); ?>" />
+      <div class="ctrlHolder buttonHolder">
+        <input type="submit" class="button primaryAction" value="<?php __('Save'); ?>" />
       </div>
     </form>
     <?php
@@ -242,23 +278,29 @@ class FormBuilder
     $table = $this->model->table_data();
     $fields = array();
     
+    //Find and merge the bonus fields into the model fields.
+    if(array_key_exists('fields', $this->options))
+    {
+      
+      $bonus_fields = $this->options['fields'];
+      
+      //Filter out the ones that are already present.
+      foreach($bonus_fields as $column_name => $field)
+        if(array_key_exists($column_name, $table->fields))
+          unset($bonus_fields[$column_name]);
+      
+      //Now title-ify the column names and merge them with the existing labels.
+      foreach($bonus_fields as $column_name => $field)
+        $labels[$column_name] = ucfirst(str_replace('_', ' ', $column_name));
+      
+    }
+    
     //For each of the fields.
     foreach($labels as $column_name => $title)
     {
       
       //Get the table information of this field.
       $field = $table->fields[$column_name];
-      
-      //First check that this field really exists.
-      if(!$field->is_set())
-      {
-        throw new \exception\Programmer(
-          'Tried to define form field for column name \'%s\' that does not exist in table for \'%s\\%s\'.',
-          $column_name,
-          $this->model->component(),
-          $this->model->model()
-        );
-      }
       
       //Find out if this field has overrides.
       $override = array();
@@ -298,7 +340,7 @@ class FormBuilder
       $override['form_id'] = $this->id();
       
       //Create the field.
-      $fields[] = new $field_class(
+      $fields[$column_name] = new $field_class(
         $column_name,
         isset($override['title']) ? $override['title'] : $title,
         $this->model,
@@ -327,19 +369,37 @@ class FormBuilder
     
     #TODO: Detect if the model specified a specific override. Such as 'ImageUploadField'.
     
+    $ns = '\\dependencies\\forms\\';
+    
     //Maybe override the type.
     if(isset($override['type'])){
-      $type = $override['type'];
+      
+      //If the first character of the type is not a \ we manually implement relative namespacing.
+      if($override['type'][0] != '\\')
+        $type = $ns.$override['type'];
+      else
+        $type = $override['type'];
+      
     }
     
     //If there was an override, don't do the normal detection. Save some CPU, save the rainforest!.
     if(!isset($type))
     {
       
+      //First check that this field really exists.
+      if(!$field->is_set())
+      {
+        throw new \exception\Programmer(
+          'Tried to detect form field for column name \'%s\' that does not exist in table for \'%s\\%s\'.',
+          $column_name,
+          $this->model->component(),
+          $this->model->model()
+        );
+      }
+      
       $model = $this->model;
       
       //Map the MySql data types to the most basic defaults.
-      $ns = '\\dependencies\\forms\\';
       $field_types = array(
         $ns.'TextField' => array('char', 'varchar', 'tinytext'),
         $ns.'NumberField' => array('int', 'tinyint', 'smallint', 'mediumint', 'bigint'),

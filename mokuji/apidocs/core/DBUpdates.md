@@ -32,8 +32,10 @@
 
 **Properties**
 * [`protected mixed $component`](#property-component)
+* [`protected mixed $name`](#property-name)
 * [`protected mixed $template`](#property-template)
 * [`protected mixed $theme`](#property-theme)
+* [`protected mixed $type`](#property-type)
 
 **Methods**
 * [`public static mixed base_dir($type, $name)`](#method-base_dir)
@@ -46,14 +48,14 @@
 * [`public mixed current_version()`](#method-current_version)
 * [`public mixed install($dummydata, $forced, $update_to_latest)`](#method-install)
 * [`public mixed latest_version()`](#method-latest_version)
+* [`public mixed next_version($version)`](#method-next_version)
 * [`public mixed uninstall($forced)`](#method-uninstall)
 * [`public mixed update($forced, $maybe_install)`](#method-update)
 * [`protected mixed get_base_dir()`](#method-get_base_dir)
 * [`protected mixed get_package_data()`](#method-get_package_data)
-* [`protected mixed next_version($version)`](#method-next_version)
 * [`protected mixed package()`](#method-package)
 * [`protected mixed queue($data, \Closure $operation)`](#method-queue)
-* [`private mixed version_bump($version)`](#method-version_bump)
+* [`private mixed version_bump($version, $is_install)`](#method-version_bump)
 
 
 
@@ -89,6 +91,21 @@ protected mixed $is_core = true
 * Visibility: **protected**
 
 
+## Property `$name`
+In class: [core\DBUpdates](#top)
+
+```
+protected mixed $name
+```
+
+
+
+
+
+* Visibility: **protected**
+* This property is defined by [components\update\classes\BaseDBUpdates](../components/update/classes/BaseDBUpdates.md)
+
+
 ## Property `$template`
 In class: [core\DBUpdates](#top)
 
@@ -119,11 +136,26 @@ protected mixed $theme
 * This property is defined by [components\update\classes\BaseDBUpdates](../components/update/classes/BaseDBUpdates.md)
 
 
+## Property `$type`
+In class: [core\DBUpdates](#top)
+
+```
+protected mixed $type
+```
+
+
+
+
+
+* Visibility: **protected**
+* This property is defined by [components\update\classes\BaseDBUpdates](../components/update/classes/BaseDBUpdates.md)
+
+
 ## Property `$updates`
 In class: [core\DBUpdates](#top)
 
 ```
-protected mixed $updates = array('3.2.0' => '3.3.0', '3.3.0' => '3.3.1', '3.3.1' => '3.3.2', '3.3.2' => '3.3.3', '3.3.3' => '0.6.1-beta', '0.5.0-beta' => '0.6.1-beta', '0.6.0-beta' => '0.6.1-beta', '0.6.1-beta' => '0.7.0-beta', '0.7.0-beta' => '0.9.0-beta', '0.7.1-beta' => '0.9.0-beta', '0.8.0-beta' => '0.9.0-beta', '0.8.1-beta' => '0.9.0-beta', '0.8.2-beta' => '0.9.0-beta', '0.9.0-beta' => '0.10.0-beta')
+protected mixed $updates = array('3.2.0' => '3.3.0', '3.3.0' => '3.3.1', '3.3.1' => '3.3.2', '3.3.2' => '3.3.3', '3.3.3' => '0.6.1-beta', '0.5.0-beta' => '0.6.1-beta', '0.6.0-beta' => '0.6.1-beta', '0.6.1-beta' => '0.7.0-beta', '0.7.0-beta' => '0.9.0-beta', '0.7.1-beta' => '0.9.0-beta', '0.8.0-beta' => '0.9.0-beta', '0.8.1-beta' => '0.9.0-beta', '0.8.2-beta' => '0.9.0-beta', '0.9.0-beta' => '0.10.0-beta', '0.10.0-beta' => '0.11.0-beta')
 ```
 
 
@@ -370,6 +402,29 @@ mixed components\update\classes\BaseDBUpdates::latest_version()
 
 
 
+## Method `next_version`
+In class: [core\DBUpdates](#top)
+
+```
+mixed components\update\classes\BaseDBUpdates::next_version($version)
+```
+
+
+
+
+
+* Visibility: **public**
+* This method is defined by [components\update\classes\BaseDBUpdates](../components/update/classes/BaseDBUpdates.md)
+
+#### Arguments
+
+* $version **mixed**
+
+
+
+
+
+
 ## Method `uninstall`
 In class: [core\DBUpdates](#top)
 
@@ -570,29 +625,6 @@ mixed components\update\classes\BaseDBUpdates::get_package_data()
 
 
 
-## Method `next_version`
-In class: [core\DBUpdates](#top)
-
-```
-mixed components\update\classes\BaseDBUpdates::next_version($version)
-```
-
-
-
-
-
-* Visibility: **protected**
-* This method is defined by [components\update\classes\BaseDBUpdates](../components/update/classes/BaseDBUpdates.md)
-
-#### Arguments
-
-* $version **mixed**
-
-
-
-
-
-
 ## Method `package`
 In class: [core\DBUpdates](#top)
 
@@ -640,7 +672,7 @@ mixed components\update\classes\BaseDBUpdates::queue($data, \Closure $operation)
 In class: [core\DBUpdates](#top)
 
 ```
-mixed components\update\classes\BaseDBUpdates::version_bump($version)
+mixed components\update\classes\BaseDBUpdates::version_bump($version, $is_install)
 ```
 
 
@@ -653,6 +685,7 @@ mixed components\update\classes\BaseDBUpdates::version_bump($version)
 #### Arguments
 
 * $version **mixed**
+* $is_install **mixed**
 
 
 

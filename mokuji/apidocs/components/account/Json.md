@@ -23,6 +23,7 @@
 * [`public mixed create_user($data, $parameters)`](#method-create_user)
 * [`public mixed update_user($data, $parameters)`](#method-update_user)
 * [`protected mixed create_mail($data, $parameters)`](#method-create_mail)
+* [`protected mixed create_new_account($data, $params)`](#method-create_new_account)
 * [`protected mixed create_password_reset_finalization($data, $params)`](#method-create_password_reset_finalization)
 * [`protected mixed create_password_reset_request($data, $params)`](#method-create_password_reset_request)
 * [`protected array create_user_session(\dependencies\Data $data, \dependencies\Data $params)`](#method-create_user_session)
@@ -102,7 +103,7 @@ protected mixed $default_permission = 2
 In class: [components\account\Json](#top)
 
 ```
-protected mixed $permissions = array('create_password_reset_request' => 0, 'create_password_reset_finalization' => 0, 'create_user_session' => 0, 'update_password' => 1)
+protected mixed $permissions = array('create_new_account' => 0, 'create_password_reset_request' => 0, 'create_password_reset_finalization' => 0, 'create_user_session' => 0, 'update_password' => 1)
 ```
 
 
@@ -406,6 +407,29 @@ mixed components\account\Json::create_mail($data, $parameters)
 
 * $data **mixed**
 * $parameters **mixed**
+
+
+
+
+
+
+## Method `create_new_account`
+In class: [components\account\Json](#top)
+
+```
+mixed components\account\Json::create_new_account($data, $params)
+```
+
+
+
+
+
+* Visibility: **protected**
+
+#### Arguments
+
+* $data **mixed**
+* $params **mixed**
 
 
 

@@ -34,7 +34,7 @@ class Accounts extends \dependencies\BaseModel
   public function get_user_info()
   {
     
-    return $this->table('UserInfo')->where('user_id', $this->__get('id'))->execute_single();
+    return tx('Sql')->table('account', 'UserInfo')->where('user_id', $this->__get('id'))->execute_single();
     
   }
   
