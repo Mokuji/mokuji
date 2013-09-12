@@ -69,7 +69,7 @@ function str_max($input, $max, $append='')
 {
   $max = (int)$max;
   if(strlen($input) > $max + strlen($append))
-    return substr($input, 0, $max).$append;
+    return trim(substr($input, 0, $max)).$append;
   return $input;
 }
   

@@ -1,5 +1,8 @@
 <?php namespace components\update; if(!defined('TX')) die('No direct access.');
 
+use \components\update\enums\PackageType;
+use components\update\classes\PackageFactory;
+
 class Helpers extends \dependencies\BaseComponent
 {
   
@@ -33,13 +36,17 @@ class Helpers extends \dependencies\BaseComponent
     //Get package info.
     $package = Data(json_decode(file_get_contents($packageFile), true));
     
-    mk('Sql')
+    $model = mk('Sql')
       ->table('update', 'Packages')
       ->where('title', "'{$data->old_title}'")
-      ->execute_single()
-      ->is('empty', function()use($data){
-        throw new \exception\NotFound('Package with old title "%s" does not exist.', $data->old_title);
-      })
+      ->execute_single();
+    
+    if($model->is_empty()){
+      mk('Logging')->log('Update', 'Rename package', sprintf('Package with old title "%s" does not exist.', $data->old_title));
+      return;
+    }
+    
+    $model
       ->merge($package->having('title', 'description'))
       ->save();
     
@@ -53,30 +60,10 @@ class Helpers extends \dependencies\BaseComponent
     
     raw($component);
     
-    if(isset(self::$package_cache[$component ? $component : '/']))
-      return self::$package_cache[$component ? $component : '/'];
-    
     if(empty($component))
-      $packageFile = PATH_FRAMEWORK.DS.'.package'.DS.'package.json';
+      return PackageFactory::get(PackageType::CORE)->model();
     else
-      $packageFile = PATH_COMPONENTS.DS.$component.DS.'.package'.DS.'package.json';
-    
-    //Check the file is there.
-    if(!is_file($packageFile))
-      return Data(null);
-    
-    //Get package info.
-    $package = Data(json_decode(file_get_contents($packageFile), true));
-    
-    //Find the package.
-    $packageModel = tx('Sql')
-      ->table('update', 'Packages')
-      ->where('title', "'{$package->title}'")
-      ->execute_single();
-    
-    self::$package_cache[$component ? $component : '/'] = $packageModel;
-    
-    return $packageModel;
+      return PackageFactory::get(PackageType::COMPONENT, $component)->model();
     
   }
   
@@ -111,17 +98,29 @@ class Helpers extends \dependencies\BaseComponent
       '<h1>'.__($this->component, 'Update logs', 1).'</h1>'.n.
       '<a class="back button grey back-to-summary" href="?view=update/summary">'.__($this->component, 'Back to summary', 1).'</a>'.br.n;
     
-    //Look through root dir.
-    if(is_dir(PATH_FRAMEWORK.DS.'.package'))
-      $this->check_folder(PATH_FRAMEWORK, '\\core\\', $silent, $force);
+    $scanning = function($path)use($silent){
+      if(!$silent) echo br.n.__('update', 'Scanning', 1).': <strong class="path package">'.str_replace(PATH_FRAMEWORK.DS, '../', $path).'</strong>'.br.n;
+    };
+    
+    $updating = function($new_versions)use($silent){
+      if(!$silent && $new_versions) echo '<span class="new-version-loaded">'. __('update', 'New versions loaded', 1) .'!</span>'.br.n;
+      else if(!$silent) echo __('update', 'No new updates', 1).'.'.br.n;
+    };
+    
+    //Sync core.
+    $scanning(PackageFactory::directory(PackageType::CORE));
+    $updating(
+      PackageFactory::get(PackageType::CORE)->update($force, true)
+    );
     
     //Look through all components.
-    $components = glob(PATH_COMPONENTS.DS.'*');
+    $components = glob(PackageFactory::directory(PackageType::COMPONENT, '*'));
     foreach($components as $component){
       if(is_dir($component.DS.'.package')){
-        $component_path_parts = explode(DS, $component);
-        $namespace = '\\components\\'.end($component_path_parts).'\\';
-        $this->check_folder($component, $namespace, $silent, $force);
+        $scanning($component);
+        $updating(
+          PackageFactory::get(PackageType::COMPONENT, basename($component))->update($force, true)
+        );
       }
     }
     
@@ -129,9 +128,10 @@ class Helpers extends \dependencies\BaseComponent
     $templates = glob(PATH_TEMPLATES.DS.'*');
     foreach($templates as $template){
       if(is_dir($template.DS.'.package')){
-        $template_path_parts = explode(DS, $template);
-        $namespace = '\\templates\\'.end($template_path_parts).'\\';
-        $this->check_folder($template, $namespace, $silent, $force);
+        $scanning($template);
+        $updating(
+          PackageFactory::get(PackageType::TEMPLATE, basename($template))->update($force, true)
+        );
       }
     }
     
@@ -139,9 +139,10 @@ class Helpers extends \dependencies\BaseComponent
     $themes = glob(PATH_THEMES.DS.'*');
     foreach($themes as $theme){
       if(is_dir($theme.DS.'.package')){
-        $theme_path_parts = explode(DS, $theme);
-        $namespace = '\\themes\\'.end($theme_path_parts).'\\';
-        $this->check_folder($theme, $namespace, $silent, $force);
+        $scanning($theme);
+        $updating(
+          PackageFactory::get(PackageType::THEME, basename($theme))->update($force, true)
+        );
       }
     }
     
@@ -299,5 +300,6 @@ class Helpers extends \dependencies\BaseComponent
     else if(!$silent) echo __($this->component, 'No new updates', 1).'.'.br.n;
     
   }
-  
+
+
 }

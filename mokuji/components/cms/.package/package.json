@@ -5,6 +5,12 @@
   "dbUpdates": true,
   "versions": [
     {
+      "version": "0.6.0-beta",
+      "date": "2013-09-11",
+      "description": "De PageType functionaliteit is uitgebreid met een `template(key, data)` javascript functie.",
+      "changes": []
+    },
+    {
       "version": "0.5.0-beta",
       "date": "2013-06-24",
       "description": "Mogelijkheid toegevoegd om de CKEditor toolbar in te stellen.",
