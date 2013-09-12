@@ -10,7 +10,7 @@ $init->enable_debugging(true);
 
 //Get the environment definition from any rewrite rules.
 $env =  isset($_SERVER['REDIRECT_MK_ENV']) ? $_SERVER['REDIRECT_MK_ENV'] :
-        isset($_GET['cgi_env']) ? $_GET['cgi_env'] : null;
+        (isset($_GET['cgi_env']) ? $_GET['cgi_env'] : null);
 
 switch($env){
   
