@@ -266,12 +266,27 @@ abstract class CoreUpdates
     raw($input);
     
     $old_url = URL_BASE.'files/';
+    
+    //Detect additional www..
+    $old_url = str_replace(
+      '://'.mk('Data')->server->HTTP_HOST->get('string'),
+      '://(www\.)?'.mk('Data')->server->HTTP_HOST->get('string'),
+      $old_url
+    );
+    
+    //Detect both http:// and https://.
+    $old_url = str_replace(array('http://', 'https://'), 'http(s?)://', $old_url);
+    
+    
     $new_url = URL_FRAMEWORK.'files/';
+    
+    //Ability to insert the http:// vs https:// state.
+    $new_url = str_replace(array('http://', 'https://'), 'http%s://', $new_url);
     
     $output = preg_replace_callback(
       '~(src|href)="'.$old_url.'([^"]+)"~',
       function($matches)use($new_url){
-        return $matches[1].'="'.$new_url.$matches[2].'"';
+        return $matches[1].'="'.sprintf($new_url, $matches[2]).$matches[4].'"';
       },
       $input,
       -1, //No limit.

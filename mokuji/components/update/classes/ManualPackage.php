@@ -213,7 +213,7 @@ class ManualPackage extends AbstractPackage
     
     //Make sure the package file is there.
     if(!is_file($package_file))
-      throw new \exception\FileMissing('Package does not contain a package.json file');
+      throw new \exception\FileMissing('Package does not contain a package.json file at %s', $package_file);
     
     //Get the package data.
     $this->raw_data = Data(json_decode(file_get_contents($package_file), true));
