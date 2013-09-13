@@ -306,10 +306,16 @@ class Json extends \dependencies\BaseComponent
     //Perform login attempt.
     tx('Account')->login($data->email, $data->password, null, ($data->persistent->get('string') === '1'));
     
+    //If a target_url is set, go there.
+    //Otherwise, '/admin/' for admins, the homepage for normal users or '/' if there is no homepage.
+    $target_url = (string)url($data->target_url->otherwise(
+      mk('Account')->check_level(2) ? '/admin/' : mk('Config')->user('homepage')->otherwise('/')
+    ), true);
+    
     //Exception would have been thrown if it failed, return as successful.
     return array(
       'success' => true,
-      'target_url' => (string)url(tx('Account')->check_level(2) ? '/admin/' : tx('Config')->user('homepage')->otherwise('/'), true)
+      'target_url' => $target_url
     );
     
   }

@@ -16,6 +16,8 @@ if(!$user->check('login')):
   
   <section>
     
+    <input type="hidden" name="target_url" value="<?php echo $options->target_url; ?>" />
+    
     <div class="ctrlHolder clearfix">
       <label for="l_username"><?php __('Username'); ?></label>
       <input id="l_username" type="text" name="email" value="<?php echo tx('Data')->post->email->otherwise(tx('Data')->get->email); ?>" placeholder="<?php __('Username'); ?>" />
