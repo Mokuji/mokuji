@@ -60,6 +60,10 @@ if(!$user->check('login')):
         
       });
       
+      <?php if($options->autofocus->is_true()): ?>
+        $('#login_form').find('#l_username').focus();
+      <?php endif; ?>
+      
     });
   </script>
   
