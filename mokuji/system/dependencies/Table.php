@@ -745,6 +745,28 @@ class Table extends Successable
     return $result->idx(0);
 
   }
+  
+  /**
+   * Works the same as execute_single, except that it will create an empty model if there was no result.
+   *
+   * @param string $as
+   *
+   * @return BaseModel A model.
+   */
+  public function execute_model($as=null)
+  {
+    
+    $result = $this->execute_single($as);
+    
+    if($result->is_empty()){
+      $minfo = $this->models[(is_string($as) ? $as : $this->model)];
+      $model = load_model($minfo['component'], $minfo['name']);
+      return new $model;
+    }
+    
+    return $result;
+    
+  }
 
   // print the query like it would be when executed (for debugging purposes)
   public function write($as=null)

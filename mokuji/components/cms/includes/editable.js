@@ -38,6 +38,28 @@
     
   }
   
+  ///////////////////
+  // Object access //
+  ///////////////////
+  function access(object, prop, create){
+    
+    var create = create||false
+      , props = prop.split('.');
+      
+    do{
+      prop = props.shift();
+      if(!object.hasOwnProperty(prop) && create){
+        object[prop] = (props.length ? {} : create);
+      }
+      object = object[prop];
+    }
+    
+    while(props.length && object);
+    
+    return object;
+    
+  }
+  
   
   
   ///////////
@@ -288,7 +310,9 @@
     },
     
     saveToServer: function(){
-      this.model.isClean() || this.model.save();
+      this.model.isClean() || this.model.save().fail(this.proxy(function(){
+        alert('Failed to save.');
+      }));
       return this;
     },
     
@@ -390,7 +414,7 @@
    * @param {EditableController} controller The instance for which the tool bar will function.
    */
   .construct(function(controller){
-    this.toolbar = this._STATIC.blueprints.wrapper.clone().get(0);
+    this.toolbar = this.getStatic('blueprints').wrapper.clone().get(0);
     this.controller = controller;
     this.buttons = {};
   })
@@ -430,7 +454,7 @@
     addButton: function(name, action){
       
       var btn = this.buttons[name] = 
-        this._STATIC.blueprints.button.clone()
+        this.getStatic('blueprints').button.clone()
         .addClass(name.replace(/[\W_]/g, "-").toLowerCase())
         .text(name)
         .on('click', this.proxy(function(e){
@@ -572,7 +596,7 @@
         , self = this;
       
       $('[data-field]', this.getElement()).each(function(){
-        data[$(this).data('field')] = self._STATIC.extract[$(this).data('type') || 'text'](this);
+        access(data, $(this).data('field'), self.getStatic('extract')[$(this).data('type') || 'text'](this));
       });
       
       return data;
@@ -589,7 +613,7 @@
       var self = this;
       
       $('[data-field]', this.getElement()).each(function(){
-        self._STATIC.inject[$(this).data('type') || 'text'](this, data[$(this).data('field')]);
+        self.getStatic('inject')[$(this).data('type') || 'text'](this, access(data, $(this).data('field')));
       });
       
       return this;
@@ -818,8 +842,6 @@
    * 
    * Uses in-line meta data available from the HTML tags of the original element to
    * create a template with its data on the fly.
-   * 
-   * @type {Class}
    */
   var AutoTemplate = (new Class).extend(Template)
   
@@ -838,7 +860,9 @@
       },
       
       text: function(el, data){
-        return $(el).prop('contenteditable', true).html(data).get(0);
+        $(el).prop('contenteditable', true).html(data);
+        try{CKEDITOR.inline(el)}catch(e){}
+        return el;
       }
       
     },
@@ -898,8 +922,8 @@
       //Replace editable elements.
       $('[data-field]', wrapper).each(function(){
         var type = $(this).data('type')||'text'
-          , data = self.originalElement._STATIC.extract[type](this)
-          , el = self._STATIC.generators[type](this, data);
+          , data = self.originalElement.getStatic('extract')[type](this)
+          , el = self.getStatic('generators')[type](this, data);
         el==this || $(this).replaceWith(el);
       });
       
@@ -923,12 +947,6 @@
       //Return the template.
       return wrapper;
       
-    },
-    
-    replace: function(){
-      var r = Element.prototype.replace.apply(this, arguments);
-      CKEDITOR.inlineAll();
-      return r;
     },
     
     isClean: function(){
@@ -1055,6 +1073,8 @@
   ///////////////////
   // Global events //
   ///////////////////
+  
+  CKEDITOR.disableAutoInline = true;
   
   $(window).on('beforeunload', function(){
     
