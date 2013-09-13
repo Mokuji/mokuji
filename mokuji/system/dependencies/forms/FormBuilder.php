@@ -98,7 +98,7 @@ class FormBuilder
       {
         
         ?>
-        <fieldset><legend><?php __($this->model->component(), $label); ?></legend>
+        <fieldset class="fieldset_<?php echo $this->css_prepare_title($label); ?>"><legend><?php __($this->model->component(), $label); ?></legend>
           <?php
           
           foreach($fields as $field){
@@ -558,6 +558,22 @@ class FormBuilder
     }
     
     return $relation;
+    
+  }
+  
+  protected function css_prepare_title($input)
+  {
+    
+    //Lowercase only.
+    $input = strtolower($input);
+    
+    //Replace every excess character.
+    $input = preg_replace('~[^a-z0-9-_ ]~', '', $input);
+    
+    //Replace spaces.
+    $input = str_replace(' ', '_', $input);
+    
+    return $input;
     
   }
   
