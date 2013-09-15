@@ -87,7 +87,8 @@ class Helpers extends \dependencies\BaseComponent
           }
           
           else{
-            
+
+            #TODO #BUG
             mail(
               $user->email,
               __('Invitation for', 1).': '.$data->for_title,

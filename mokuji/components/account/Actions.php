@@ -350,8 +350,8 @@ class Actions extends \dependencies\BaseComponent
         'notification' => $info->get_user_message()
       ));
     });
-    
-    tx('Url')->redirect('id=NULL');
+   
+    exit;
     
   }
   
