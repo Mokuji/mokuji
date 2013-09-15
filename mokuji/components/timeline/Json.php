@@ -92,24 +92,30 @@ class Json extends \dependencies\BaseComponent
       $infos = $infos->having($data->force_language->get('string'));
     }
     
-    $entry = tx('Sql')
-      ->model('timeline', 'Entries')
-      ->set(array('id' => $params->{0}))
-      ->merge($data)
-      ->validate_model(array(
-        'nullify' => true
-      ))
-      ->save();
+    //Create the entry model.
+    $data->id = $params->{0}->otherwise($data->id)->get('int');
+    $entry = tx('Sql')->table('timeline', 'Entries')->pk($data->id)->execute_model()
+    ->merge($data)
+    ->validate_model(array(
+      'nullify' => true
+    ))
+    ->save();
     
-    //Store if something is stored in the 'NEW' meta-timeline.
+    // Store if something is stored in the 'NEW' meta-timeline.
     if($timelines->NEW->validate('Timeline checkbox', array('boolean'))->is_true()){
       tx('Data')->session->timeline->new_page_items->{$data->page_id}->push($entry->id);
       $timelines->NEW->un_set();
     }
     
+    //Update language specific entry info.
     tx('Component')->helpers('timeline')->_call('update_entry_info', array($entry, $infos));
-    tx('Component')->helpers('timeline')->_call('update_entry_timelines', array($entry, $timelines));
     
+    //Update which time-lines this entry will be attached to, only if info is given.
+    if($timelines->is_leafnode()){
+      tx('Component')->helpers('timeline')->_call('update_entry_timelines', array($entry, $timelines));
+    }
+    
+    //Return the entry.
     return $entry;
     
   }
