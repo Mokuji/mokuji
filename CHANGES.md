@@ -1,3 +1,13 @@
+#### [Version 0.26.2 Beta](https://github.com/Tuxion/mokuji/tree/0.26.2-beta)
+_16-Sept-2013_
+
+Papercuts:
+* Made accounts/Accounts model better extendable.
+* Made formToObject JS work in Internet Explorer 8-.
+* Made Entrypoint Component adjustable.
+* Translations.
+* Small modifications.
+
 #### [Version 0.26.1 Beta](https://github.com/Tuxion/mokuji/tree/0.26.1-beta)
 _12-Sept-2013_
 
