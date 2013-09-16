@@ -1,3 +1,12 @@
+#### [Version 0.26.1 Beta](https://github.com/Tuxion/mokuji/tree/0.26.1-beta)
+_12-Sept-2013_
+
+* Bugfixes
+    - Added a .htaccess-cgi file to fix a CGI problem.
+    - Added the `old_title` key again to the core `package.json`.
+    - The `CoreUpdate` class now properly detects file references with HTTP vs HTTPS and including www or without.
+    - The `File` class leaves capitalization of file extensions alone now.
+
 #### [Version 0.26.0 Beta](https://github.com/Tuxion/mokuji/tree/0.26.0-beta)
 _11-Sept-2013_
 
