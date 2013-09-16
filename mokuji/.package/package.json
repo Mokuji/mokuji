@@ -1,21 +1,44 @@
 {
-  "title": "Tuxion CMS core",
+  "title": "Mokuji core",
   "description": "De core van Mokuji.",
   "type": "manual",
   "dbUpdates": true,
   "versions": [
     {
+      "version": "0.11.0-beta",
+      "date": "2013-09-11",
+      "description": "Diverse verbeteringen aan interne functies.",
+      "changes": [
+        {
+          "title": "Indenting toegevoegd aan de as_options functie.",
+          "description": "Hierdoor kan gemakkelijk een hiërarchische lijst worden getoond."
+        },
+        {
+          "title": "$path aangemaakt binnen plugins.",
+          "description": "Hiermee kan een plugin verwijzen naar z'n eigen pad op de server."
+        },
+        {
+          "title": "str_max trimt nu bij het afknippen.",
+          "description": "Zodat er geen witruimte wordt geplaatst tussen de afgeknipte tekst en de ellipsis."
+        },
+        {
+          "title": "render_form heeft bonusveld en fieldset mogelijkheden.",
+          "description": "Hiermee kunnen extra velden worden verwerkt op de server die niet in de tabel staan en kunnen velden worden gegroepeerd."
+        }
+      ]
+    },
+    {
       "version": "0.10.0-beta",
       "date": "2013-08-29",
-      "description": "Verbeterd inlog systeem.",
+      "description": "Verbeterd inlogsysteem.",
       "changes": [
         {
           "title": "Onthoud mij",
-          "description": "Het systeem staat inlog formulieren toe om een onthoud mij knop toe te voegen."
+          "description": "Het systeem staat inlogformulieren toe om een onthoud mij knop toe te voegen."
         },
         {
           "title": "Nieuwe versie van het Account component.",
-          "description": "Het account component is ook direct geupdate."
+          "description": "Het account component is ook direct geupdated."
         }
       ]
     },

@@ -140,8 +140,14 @@
           page_id: page.data.page.id,
           data: data,
           languages: page.Languages.data.languages,
-          templates: definition.templates
+          templates: definition.templates,
+          template: function(key, data){
+            var templateData = $.extend({}, fullData, {data:data});
+            return $(self.definition.templates[key].tmpl(templateData)).wrapAll('<div>').parent().html();
+          }
         };
+        
+        self.renderTemplate = fullData.template;
         
         //Add the tab contents.
         for(var key in self.tabs){

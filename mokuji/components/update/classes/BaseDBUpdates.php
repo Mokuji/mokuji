@@ -1,5 +1,8 @@
 <?php namespace components\update\classes; if(!defined('TX')) die('No direct access.');
 
+use \components\update\enums\PackageType;
+use \components\update\classes\PackageFactory;
+
 abstract class BaseDBUpdates
 {
   
@@ -57,35 +60,21 @@ abstract class BaseDBUpdates
     $is_core,
     $template,
     $theme,
-    $updates;
+    $updates,
+    $type,
+    $name;
   
   private
     $package;
   
   /* ---------- Static ---------- */
   
-  static function base_dir($type = 'core', $name = null)
-  {
-    
-    switch($type){
-      
-      case 'core':
-        return PATH_FRAMEWORK;
-      
-      case 'component':
-        return PATH_COMPONENTS.DS.$name;
-      
-      case 'template':
-        return PATH_TEMPLATES.DS.$name;
-      
-      case 'theme':
-        return PATH_THEMES.DS.$name;
-      
-      default:
-        return false;
-      
-    }
-    
+  static function base_dir($type = PackageType::CORE, $name = null){
+    return PackageFactory::directory($type, $name);
+  }
+  
+  static function package_data($type = PackageType::CORE, $name = null){
+    return PackageFactory::get($type, $name)->raw_data();
   }
   
   static function clear_global_cache()
@@ -106,78 +95,6 @@ abstract class BaseDBUpdates
     
   }
   
-  static function package_data($type = 'core', $name = null)
-  {
-    
-    switch($type){
-      
-      case 'core':
-        if(isset(self::$core_package_data))
-          return self::$core_package_data;
-        break;
-      
-      case 'component':
-        if(isset(self::$component_package_data) && self::$component_package_data->{$name}->is_set())
-          return self::$component_package_data->{$name};
-        break;
-      
-      case 'template':
-        if(isset(self::$template_package_data) && self::$template_package_data->{$name}->is_set())
-          return self::$template_package_data->{$name};
-        break;
-      
-      case 'theme':
-        if(isset(self::$theme_package_data) && self::$theme_package_data->{$name}->is_set())
-          return self::$theme_package_data->{$name};
-        break;
-      
-      default:
-        throw new \exception\Exception('Uh oh, '.$type);
-        return false;
-      
-    }
-    
-    //Where the package at?
-    $packageFile = self::base_dir($type, $name).DS.'.package'.DS.'package.json';
-    
-    //Make sure the package file is there.
-    if(!is_file($packageFile))
-      throw new \exception\FileMissing('Package folder does not contain package.json file');
-    
-    //Get package data.
-    $data = Data(json_decode(file_get_contents($packageFile), true));
-    
-    //Cache the data.
-    switch($type){
-      
-      case 'core':
-        self::$core_package_data = $data;
-        break;
-      
-      case 'component':
-        if(!isset(self::$component_package_data))
-          self::$component_package_data = Data();
-        self::$component_package_data->{$name}->become($data);
-        break;
-      
-      case 'template':
-        if(!isset(self::$template_package_data))
-          self::$template_package_data = Data();
-        self::$template_package_data->{$name}->become($data);
-        break;
-      
-      case 'theme':
-        if(!isset(self::$theme_package_data))
-          self::$theme_package_data = Data();
-        self::$theme_package_data->{$name}->become($data);
-        break;
-      
-    }
-    
-    return $data;
-    
-  }
-  
   static function process_queue()
   {
     
@@ -190,11 +107,8 @@ abstract class BaseDBUpdates
     {
       
       //Find out what this component is.
-      $package = self::package_data('component', $operation_data['component']);
-      $package_db = tx('Sql')
-        ->table('update', 'Packages')
-        ->where('title', "'{$package->title}'")
-        ->execute_single()
+      $package = self::package_data(PackageType::COMPONENT, $operation_data['component']);
+      $package_db = PackageFactory::get(PackageType::COMPONENT, $operation_data['component'])->model()
         
         //In case it's not found.
         ->is('empty', function(){
@@ -202,11 +116,10 @@ abstract class BaseDBUpdates
         });
       
       //Get the version we're talking about.
-      $version = tx('Sql')
+      $version = mk('Sql')
         ->table('update', 'PackageVersions')
         ->where('package_id', $package_db->id)
         ->where('version', "'{$operation_data['min_version']}'")
-        ->limit(1)
         ->execute_single()
         
         //In case it's not found.
@@ -220,7 +133,7 @@ abstract class BaseDBUpdates
       
       //Uh oh!
       if($current < $min)
-        throw new \exception\Expected('The installed version is lower than the minimum version for this operation');
+        throw new \exception\Expected('The installed version (%s) is lower than the minimum version (%s) for this operation on component %s', $current, $min, $operation_data['component']);
       
       //Otherwise, execute the operation.
       $operation_data['operation']($package_db->installed_version->get());
@@ -242,19 +155,40 @@ abstract class BaseDBUpdates
   public function __construct()
   {
     
-    //Check we set a base_dir.
-    $this->get_base_dir();
+    //Find out our type.
+    if(!isset($this->type))
+    {
+      
+      if($this->is_core === true)
+        $this->type = PackageType::CORE;
+      
+      elseif(isset($this->component)){
+        $this->type = PackageType::COMPONENT;
+        $this->name = $this->component;
+      }
+      
+      elseif(isset($this->template)){
+        $this->type = PackageType::TEMPLATE;
+        $this->name = $this->template;
+      }
+      
+      elseif(isset($this->theme)){
+        $this->type = PackageType::THEME;
+        $this->name = $this->theme;
+      }
+      
+      else
+        throw new \exception\Programmer('Type has not been defined for the DBUpdates instance, use protected attribute $type for this');
+      
+    }
     
     //We are lazy and prefer to set an array on the implementation classes.
     $this->updates = Data($this->updates);
     
   }
   
-  public function current_version()
-  {
-    
-    return $this->package()->installed_version->get();
-    
+  public function current_version(){
+    return PackageFactory::get($this->type, $this->name)->current_version();
   }
   
   public function install($dummydata=false, $forced=false, $update_to_latest=true)
@@ -289,31 +223,15 @@ abstract class BaseDBUpdates
     $method = 'install_'.vtfn($latest->version);
     tx('Logging')->log('Update', 'Installing DB', 'Calling '.$method.' for package '.$this->package()->title.' from version '.$this->current_version());
     call_user_func_array(array($this, $method), array($dummydata, $forced));
-    $this->version_bump($latest->version);
+    $this->version_bump($latest->version, true);
     
     if($update_to_latest === true) $this->update($forced);
     return true;
     
   }
   
-  public function latest_version()
-  {
-    
-    //Save the latest version.
-    $latest = Data();
-    
-    //Go over each version.
-    $this->get_package_data()->versions->each(function($version)use(&$latest){
-      
-      //Bump latest version if needed.
-      $version->timestamp->set(strtotime($version->date->get()));
-      if($version->timestamp->get() > $latest->timestamp->get())
-        $latest = $version;
-      
-    });
-    
-    return $latest->version->get();
-    
+  public function latest_version(){
+    return PackageFactory::get($this->type, $this->name)->latest_version();
   }
   
   public function uninstall($forced=false)
@@ -377,89 +295,7 @@ abstract class BaseDBUpdates
     
   }
   
-  /* ---------- Protected ---------- */
-  
-  protected function get_base_dir()
-  {
-    
-    if($this->is_core === true)
-      return self::base_dir('core');
-    
-    elseif(isset($this->component))
-      return self::base_dir('component', $this->component);
-    
-    elseif(isset($this->template))
-      return self::base_dir('template', $this->template);
-    
-    elseif(isset($this->theme))
-      return self::base_dir('theme', $this->theme);
-    
-    throw new \exception\Programmer('Type has not been defined for the DBUpdates instance, use protected attributes $is_core, $component, $template or $theme for this');
-    
-  }
-  
-  protected function get_package_data()
-  {
-    
-    if($this->is_core === true)
-      return self::package_data('core');
-    
-    elseif(isset($this->component))
-      return self::package_data('component', $this->component);
-    
-    elseif(isset($this->template))
-      return self::package_data('template', $this->template);
-    
-    elseif(isset($this->theme))
-      return self::package_data('theme', $this->theme);
-    
-    throw new \exception\Programmer('Type has not been defined for the DBUpdates instance, use protected attributes $is_core, $component, $template or $theme for this');
-    
-  }
-  
-  protected function package()
-  {
-    
-    //Do some caching.
-    if($this->package) return $this->package;
-    
-    //We can only do manual types.
-    if($this->get_package_data()->type->get() !== 'manual')
-      throw new \exception\Exception('Package type other than manual has not been implemented yet.');
-    
-    //Reference this instance.
-    $that = $this;
-    
-    //Get the package from the database.
-    //Use a try catch in case we're installing the update package and the tables don't exist.
-    try{
-      $package = tx('Sql')
-        ->table('update', 'Packages')
-        ->where('title', "'".$this->get_package_data()->title."'")
-        ->execute_single();
-    }
-    
-    //In case of a Sql exception we are self-installing.
-    //Return an empty data object.
-    catch(\exception\Sql $ex){
-      return Data();
-    }
-    
-    //Don't cache and return a new model if the package was not in the database.
-    if($package->is_empty()){
-      return tx('Sql')->model('update', 'Packages')->set(array(
-        'title' => $this->get_package_data()->title,
-        'description' => $this->get_package_data()->description,
-        'type' => 0
-      ));
-    }
-    
-    $this->package = $package;
-    return $package;
-    
-  }
-  
-  protected function next_version($version=null)
+  public function next_version($version=null)
   {
     
     //Raw data.
@@ -474,6 +310,20 @@ abstract class BaseDBUpdates
       return $version->get();
     return false;
     
+  }
+  
+  /* ---------- Protected ---------- */
+  
+  protected function get_base_dir(){
+    return self::base_dir($this->type, $this->name);
+  }
+  
+  protected function get_package_data(){
+    return PackageFactory::get($this->type, $this->name)->raw_data();
+  }
+  
+  protected function package(){
+    return PackageFactory::get($this->type, $this->name)->model();
   }
   
   protected function queue($data, \Closure $operation)
@@ -503,86 +353,15 @@ abstract class BaseDBUpdates
     
   }
   
-  private function version_bump($version)
-  {
+  private function version_bump($version, $is_install=false){
     
-    raw($version);
+    //Allow sync when installing update component.
+    $allow_sync =
+      $is_install &&
+      $this->type === PackageType::COMPONENT &&
+      $this->name === 'update';
     
-    //We need to clear this cache regularly, because otherwise this may mess up the ORM during install.
-    \dependencies\BaseModel::clear_table_data_cache();
-    
-    //In case of a self-install the package will not be inserted yet.
-    if(!$this->package()->id->is_set() && $this->component === 'update'){
-      
-      //Get the version data from the package.json.
-      foreach($this->get_package_data()->versions as $packageVersion){
-        if($packageVersion->version->get('string') === $version){
-          $version = $packageVersion;
-          break;
-        }
-      }
-      
-      //Insert it into the database.
-      $dbPackage = $this->package()->merge(array(
-        'installed_version' => $version->version,
-        'installed_version_date' => $version->date
-      ))->save();
-      
-      //Make sure the rest of the version data is also inserted.
-      $this->get_package_data()->versions->each(function($version)use($dbPackage){
-        
-        //Try find this version.
-        $dbVersion = tx('Sql')
-          ->table('update', 'PackageVersions')
-          ->where('package_id', $dbPackage->id)
-          ->where('version', "'{$version->version}'")
-          ->execute_single()
-          
-          //If it doesn't exist, create it now.
-          ->is('empty', function()use($version, $dbPackage){
-            
-            $dbVersion = tx('Sql')
-              ->model('update', 'PackageVersions')
-              ->set($version->having('version', 'date', 'description'))
-              ->package_id->set($dbPackage->id)->back()
-              ->save();
-            
-            //Insert the changes of this version.
-            $version->changes->each(function($change)use($dbVersion){
-              
-              tx('Sql')
-                ->model('update', 'PackageVersionChanges')
-                ->set($change->having('title', 'description', 'url'))
-                ->url->is('empty', function($url){ $url->set('NULL'); })->back()
-                ->package_version_id->set($dbVersion->id)->back()
-                ->save();
-              
-            });
-            
-          })//end - is empty
-        ;
-        
-      });
-      
-    }
-    
-    //Normal version bump.
-    else{
-      $version = tx('Sql')
-        ->table('update', 'PackageVersions')
-        ->where('package_id', $this->package()->id)
-        ->where('version', "'{$version}'")
-        ->execute_single()
-        ->is('empty', function()use($version){
-          throw new \exception\NotFound('Version '.$version.' is not defined for package '.$this->package()->title);
-        });
-      
-      //Do the bump.
-      $this->package()->merge(array(
-        'installed_version' => $version->version,
-        'installed_version_date' => $version->date
-      ))->save();
-    }
+    PackageFactory::get($this->type, $this->name)->version_bump($version, $allow_sync);
     
   }
   

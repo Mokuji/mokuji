@@ -33,7 +33,7 @@
       if(hasFeedback) app.Feedback.working('Saving data');
       
       //Pre-process data.
-      callbacks.beforeSubmit.apply(this, [data]);
+      callbacks.beforeSubmit.apply(this, [data, form]);
       
       $.rest($(form).attr('method'), form.action, data)
         
@@ -46,7 +46,7 @@
           if(hasFeedback) app.Feedback.success('Done');
           
           //Run the success callback.
-          callbacks.success.apply(this, arguments);
+          callbacks.success.apply(this, [arguments[0], form]);
           
         })
         
@@ -107,7 +107,8 @@
             
           }
           
-          callbacks.error.apply(this, arguments);
+          callbacks.error.apply(this, [xhr, state, message, form]);
+          
         });
       
       return false;

@@ -11,8 +11,19 @@ class Image extends File
     $allow_shrink=true,
     $allow_growth=false,
     $original=null,
-    $logging=false;
-
+    $diverted=false;
+  
+  public function has_diverted()
+  {
+    return !!$this->diverted;
+  }
+  
+  protected function divert()
+  {
+    $this->diverted = true;
+    mk('Logging')->log('Image', 'Diverted');
+  }
+  
   public function get_width(){
     return $this->info['width'];
   }
@@ -25,7 +36,7 @@ class Image extends File
   public function __construct($file=null)
   {
 
-    if($this->logging)log_msg('Image', 'Constructor ['.$file.'].');
+    mk('Logging')->log('Image', 'Constructor ['.$file.'].');
     $this->original = Data();
     parent::__construct($file);
 
@@ -35,7 +46,7 @@ class Image extends File
   public function __destruct()
   {
 
-    if($this->logging)log_msg('Image', 'Destructor.');
+    mk('Logging')->log('Image', 'Destructor.');
     if(is_resource($this->image)){
       imagedestroy($this->image);
     }
@@ -45,7 +56,7 @@ class Image extends File
   //enable the usage of cache for the changes made in this image
   public function use_cache($set=true)
   {
-    if($this->logging)log_msg('Image', 'Use cache = '.$set.'.');
+    mk('Logging')->log('Image', 'Use cache = '.$set.'.');
     $this->use_cache = (bool) $set;
     return $this;
   }
@@ -53,7 +64,7 @@ class Image extends File
   //set jpeg quality
   public function jpeg_quality($set=100)
   {
-    if($this->logging)log_msg('Image', 'JPEG quality = '.$set.'.');
+    mk('Logging')->log('Image', 'JPEG quality = '.$set.'.');
     $this->jpeg_quality = (int) ($set > 100 ? 100 : ($set < 0 ? 0 : $set));
     return $this;
   }
@@ -61,7 +72,7 @@ class Image extends File
   //turn sharpening on or off
   public function sharpening($set=true)
   {
-    if($this->logging)log_msg('Image', 'Sharpening = '.$set.'.');
+    mk('Logging')->log('Image', 'Sharpening = '.$set.'.');
     $this->sharpen_after_resize = (bool) $set;
     return $this;
   }
@@ -69,7 +80,7 @@ class Image extends File
   //set the allowance of "shrinking" the image, if set to false, any action that will make the image smaller in dimensions will be canceled
   public function allow_shrink($set=true)
   {
-    if($this->logging)log_msg('Image', 'Allow shrink = '.$set.'.');
+    mk('Logging')->log('Image', 'Allow shrink = '.$set.'.');
     $this->allow_shrink = (bool) $set;
     return $this;
   }
@@ -77,7 +88,7 @@ class Image extends File
   //set the allowance of "growing" the image, if set to false, any action that will make the image larger in dimensions will be canceled
   public function allow_growth($set=true)
   {
-    if($this->logging)log_msg('Image', 'Allow growth = '.$set.'.');
+    mk('Logging')->log('Image', 'Allow growth = '.$set.'.');
     $this->allow_growth = (bool) $set;
     return $this;
   }
@@ -86,7 +97,7 @@ class Image extends File
   public function from_file($source)
   {
 
-    if($this->logging)log_msg('Image', 'From file ['.$source.'].');
+    mk('Logging')->log('Image', 'From file ['.$source.'].');
     parent::from_file($source);
     $this->image = null;
     $this->info($source);
@@ -99,7 +110,7 @@ class Image extends File
   public function create($width, $height, $color=null, $type='jpeg')
   {
 
-    if($this->logging)log_msg('Image', 'Create ['.$width.', '.$height.', '.$color.', '.$type.'].');
+    mk('Logging')->log('Image', 'Create ['.$width.', '.$height.', '.$color.', '.$type.'].');
     $this->image = imagecreatetruecolor((int)$width, (int)$height);
     imagefill($this->image, 0, 0, $this->color($color));
     // header('Content-type: image/jpeg');
@@ -129,7 +140,7 @@ class Image extends File
     ini_set('memory_limit', -1);
     
     //Create a log entry.
-    if($this->logging)log_msg('Image', 'Resize ['.$width.', '.$height.'].');
+    mk('Logging')->log('Image', 'Resize ['.$width.', '.$height.'].');
     
     //Check if we have something to work with.
     if(empty($this->source)){
@@ -163,11 +174,15 @@ class Image extends File
     
     // did it grow and is that allowed?
     if($this->allow_growth === false && ($width > $this->info['width'] || $height > $this->info['height'])){
+      mk('Logging')->log('Image', 'Resize', 'Tried to grow when not allowed.');
+      $this->divert();
       return $this;
     }
 
     // did it shrink and is that allowed?
     if($this->allow_shrink === false && ($width < $this->info['width'] || $height < $this->info['height'])){
+      mk('Logging')->log('Image', 'Resize', 'Tried to shrink when not allowed.');
+      $this->divert();
       return $this;
     }
 
@@ -198,7 +213,9 @@ class Image extends File
         $this->info(null);
         $this->from_file($cache_file);
         $this->original = Data($original_data);
-
+        
+        mk('Logging')->log('Image', 'Resize', 'Re-using cached file.');
+        
         return $this;
       }
 
@@ -243,7 +260,9 @@ class Image extends File
         $this->info(null);
         $this->from_file($best['src']);
         $this->original = Data($original_data);
-
+        
+        mk('Logging')->log('Image', 'Resize', 'Found a close match ['.$best['w'].', '.$best['h'].']');
+        
       }
 
     }
@@ -282,7 +301,7 @@ class Image extends File
       'height'=>$height,
       'size'=>null
     ));
-
+    
     //Save to the cache?
     if($this->use_cache === true)
     {
@@ -303,10 +322,13 @@ class Image extends File
           'info'    => $this->info
         );
       }
-
+      
+      
       $this->save($cache_file);
       $this->original = Data($original_data);
 
+      mk('Logging')->log('Image', 'Resize', 'Saved to cache'.$cache_file);
+      
     }
 
     return $this;
@@ -319,7 +341,8 @@ class Image extends File
 
     ini_set('memory_limit', -1);
 
-    if($this->logging)log_msg('Image', 'Crop ['.$x.', '.$y.', '.$width.', '.$height.'].');
+    mk('Logging')->log('Image', 'Crop ['.$x.', '.$y.', '.$width.', '.$height.'].');
+
     if(empty($this->source)){
       throw new \exception\InputMissing('No image selected. ->save() first.');
     }
@@ -331,7 +354,7 @@ class Image extends File
 
     //If nothing is set, we don't need to do anything.
     if($width == 0 && $height == 0 && $x == 0 && $y == 0){
-      if($this->logging)log_msg('Image', 'No crop applied (no parameters).');
+      mk('Logging')->log('Image', 'No crop applied (no parameters).');
       return $this;
     }
 
@@ -341,7 +364,8 @@ class Image extends File
         ($x < 0 || $y < 0 || $width + $x > $this->info['width'] || $height + $y > $this->info['height']))
     {
 
-      if($this->logging)log_msg('Image', 'No crop applied (growing where not allowed).');
+      mk('Logging')->log('Image', 'No crop applied (growing where not allowed).');
+      $this->divert();
       return $this;
 
     }
@@ -352,7 +376,8 @@ class Image extends File
         ($x > 0 || $y > 0 || $width < $this->info['width'] || $height < $this->info['height']))
     {
       
-      if($this->logging)log_msg('Image', 'No crop applied (shrinking where not allowed).');
+      mk('Logging')->log('Image', 'No crop applied (shrinking where not allowed).');
+      $this->divert();
       return $this;
       
     }
@@ -458,7 +483,7 @@ class Image extends File
   public function text($text, $color=null, $font=4, $x=2, $y=null, $line_spacing=3)
   {
 
-    if($this->logging)log_msg('Image', 'Text ['.$text.', '.$color.', '.$font.', '.$x.', '.$y.', '.$line_spacing.'].');
+    mk('Logging')->log('Image', 'Text ['.$text.', '.$color.', '.$font.', '.$x.', '.$y.', '.$line_spacing.'].');
     $text = (array) $text;
 
     //calculate if a string needs to be split
@@ -514,7 +539,7 @@ class Image extends File
   public function save($save)
   {
 
-    if($this->logging)log_msg('Image', 'Save ['.$save.'].');
+    mk('Logging')->log('Image', 'Save ['.$save.'].');
     if(!is_resource($this->image)){
       return parent::save($save);
     }
@@ -549,16 +574,16 @@ class Image extends File
   public function output($options = null)
   {
     
-    if($this->logging)log_msg('Image', 'Output.');
+    mk('Logging')->log('Image', 'Output.');
     //if the image is unmodified
     if(!is_resource($this->image)){
       tx('Logging')->log('Image', 'Output', 'From unchanged file.');
-      if($this->logging)log_msg('Image', 'From unchanged file. '.$this->source);
+      mk('Logging')->log('Image', 'From unchanged file. '.$this->source);
       header("Accept-Ranges:bytes");
       parent::output();
     }
     
-    if($this->logging)log_msg('Image', 'From changed file.');
+    mk('Logging')->log('Image', 'From changed file.');
     
     header("Accept-Ranges:bytes");
     $this->create_output_headers();
@@ -627,7 +652,7 @@ class Image extends File
   private function cache_dir($subfolder=null)
   {
 
-    if($this->logging)log_msg('Image', 'Cache dir = '.$subfolder.'.');
+    mk('Logging')->log('Image', 'Cache dir = '.$subfolder.'.');
     //If we're already in the cache folder, return current folder.
     if($this->original->is_set() && $this->original->dir.'cache'.DS == $this->dir){
       return $this->dir;
@@ -663,7 +688,7 @@ class Image extends File
   private function prepare_sourcefile()
   {
 
-    if($this->logging)log_msg('Image', 'Prepare sourcefile.');
+    mk('Logging')->log('Image', 'Prepare sourcefile.');
     if(is_resource($this->image)){
       return $this;
     }
@@ -685,7 +710,7 @@ class Image extends File
   private function sharpen(&$image, $intOrig, $intFinal)
   {
 
-    if($this->logging)log_msg('Image', 'Sharpen ['.$image.', '.$intOrig.', '.$intFinal.'].');
+    mk('Logging')->log('Image', 'Sharpen ['.$image.', '.$intOrig.', '.$intFinal.'].');
     $intFinal = $intFinal * (750.0 / $intOrig);
     $intA     = 52;
     $intB     = -0.27810650887573124;
@@ -708,7 +733,7 @@ class Image extends File
   private function color($color)
   {
 
-    if($this->logging)log_msg('Image', 'Color ['.$color.'].');
+    mk('Logging')->log('Image', 'Color ['.$color.'].');
     if(!is_array($color))
     {
 
@@ -731,8 +756,7 @@ class Image extends File
   //sets info from an image resource, a path to a file or an array with info
   private function info($source)
   {
-
-    if($this->logging)log_msg('Image', 'Info ['.$source.'].');
+    
     $source = data_of($source);
 
     if(is_resource($source))

@@ -6,9 +6,23 @@ class Modules extends \dependencies\BaseViews
   protected
     $default_permission = 2,
     $permissions = array(
+      'register' => 0,
       'welcome_user' => 0,
       'user_profile' => 1
     );
+  
+  protected function register($options)
+  {
+    
+    return array(
+      'logged_in' => mk('Account')->is_login(),
+      'model' => mk('Sql')->model('account', 'Accounts'),
+      'target_url' => $options->target_url->otherwise(url('pid=KEEP&menu=KEEP',true)->output),
+      'captcha' => mk('Account')->is_login() ? '' : mk('Component')->helpers('security')->call('generate_captcha'),
+      'captcha_reload' => mk('Account')->is_login() ? '' : mk('Component')->helpers('security')->call('reload_captcha_js')
+    );
+    
+  }
   
   protected function welcome_user()
   {

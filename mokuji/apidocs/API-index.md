@@ -104,7 +104,12 @@
         * [Sections](components/update/Sections.md)
         * [Views](components/update/Views.md)
         * **components\update\classes**
+            * [AbstractPackage](components/update/classes/AbstractPackage.md)
             * [BaseDBUpdates](components/update/classes/BaseDBUpdates.md)
+            * [ManualPackage](components/update/classes/ManualPackage.md)
+            * [PackageFactory](components/update/classes/PackageFactory.md)
+        * **components\update\enums**
+            * [PackageType](components/update/enums/PackageType.md)
         * **components\update\models**
             * [PackageVersionChanges](components/update/models/PackageVersionChanges.md)
             * [PackageVersions](components/update/models/PackageVersions.md)

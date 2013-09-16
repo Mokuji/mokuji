@@ -1,3 +1,38 @@
+#### [Version 0.26.0 Beta](https://github.com/Tuxion/mokuji/tree/0.26.0-beta)
+_11-Sept-2013_
+
+* Added account registration functionality.
+* Implemented a module to display a registration form.
+* Improved `$.restForm` by returning a form reference to callback functions.
+* Improved the PageType system with a `template(key, data)` javascript function.
+* Added `indenting_field` option with `Data()->as_options()`.
+* Added `$path` variable inside plugins.
+* Improved `str_max` which now trims whitespace.
+* Added fieldsets to `render_form`.
+* Improved `render_form` by allowing "bonus fields".
+* Improved `Image` class to detect diversions from the requested operations.
+* Bugfixes
+    - Fixed permission problem with the `keep_alive` call.
+    - Securimage now works with the new core structure.
+    - Restored the `.clearfix` class to `globals.css`.
+    - Outputbuffer core class had some typo's.
+    - Fixed a query in the core's `update_to_0_10_0_beta` function.
+    - Fixed a bug with the `create_file_reference_update` step of the core update script.
+    - Missed an update path in `update` component.
+
+#### [Version 0.25.1 Beta](https://github.com/Tuxion/mokuji/tree/0.25.1-beta)
+_3-Sept-2013_
+
+* Bugfixes in `update` component.
+    - Fixed update bug for inserting new components.
+
+#### [Version 0.25.0 Beta](https://github.com/Tuxion/mokuji/tree/0.25.0-beta)
+_3-Sept-2013_
+
+* Restructured the `update` component.
+    - New support for referencing packages by reference ID.
+    - New support for the `old_title` key in `package.json` files.
+
 #### [Version 0.24.0 Beta](https://github.com/Tuxion/mokuji/tree/0.24.0-beta)
 _29-Aug-2013_
 
