@@ -25,6 +25,7 @@
 * [`public mixed __construct(\dependencies\BaseModel $model, array $options)`](#method-__construct)
 * [`public string id()`](#method-id)
 * [`public mixed render(array $options)`](#method-render)
+* [`protected mixed css_prepare_title($input)`](#method-css_prepare_title)
 * [`protected string detect_optimal_field(string $column_name, \dependencies\forms\Data $field, array $override)`](#method-detect_optimal_field)
 * [`protected string detect_optimal_relation_field(string $column_name, \dependencies\forms\Data $relation)`](#method-detect_optimal_relation_field)
 * [`protected mixed find_additional_relation_data(array $relation)`](#method-find_additional_relation_data)
@@ -180,6 +181,28 @@ Outputs the form to the output stream.
    string $translate_component The component name from which to use component specific translations.
    string/Url $action The action URL to use.
      Default: generate one in the format &quot;action=&lt;component&gt;/&lt;insert|update&gt;_&lt;model_name&gt;&quot;.
+
+
+
+
+
+
+## Method `css_prepare_title`
+In class: [dependencies\forms\FormBuilder](#top)
+
+```
+mixed dependencies\forms\FormBuilder::css_prepare_title($input)
+```
+
+
+
+
+
+* Visibility: **protected**
+
+#### Arguments
+
+* $input **mixed**
 
 
 

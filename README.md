@@ -1,4 +1,4 @@
-#Mokuji (目次) - Version 0.26.2 Beta
+#Mokuji (目次) - Version 0.26.3 Beta
 
 * [http://mokuji.net/](http://mokuji.net/)
 * [Twitter](http://twitter.com/mokujidev)

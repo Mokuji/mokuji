@@ -3,7 +3,6 @@
 # ----------------------------------------------------------------------
 
 RewriteEngine On
-RewriteBase /
 
 ###
 # Reserved words for root level URL keys:
