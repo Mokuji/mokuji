@@ -1,5 +1,7 @@
 <?php namespace components\account; if(!defined('TX')) die('No direct access.');
 
+echo load_plugin('jquery_rest');
+
 //append user object for easy access
 $user =& tx('Data')->session->user;
 
@@ -31,7 +33,7 @@ if(!$user->check('login')):
     <div class="ctrlHolder clearfix">
       <input id="l_remember" type="checkbox" name="persistent" value="1" />
       <!-- #TODO: In-line style attribute. :( -->
-      <label for="l_remember" style="display:inline-block"><?php __('Remember me'); ?></label>
+      <label for="l_remember" style="display:inline-block"><?php __('account', 'Remember me'); ?></label>
     </div>
     
     <div class="ctrlHolder clearfix">

@@ -3,6 +3,7 @@
 # ----------------------------------------------------------------------
 
 RewriteEngine On
+RewriteBase /
 
 ###
 # Reserved words for root level URL keys:
@@ -101,3 +102,6 @@ RewriteRule ^/?(\d+)/?([\w-]+)/([\w/-/]+)(\.html)?$ index.php?pid=$1&pkey=$2&pke
   Order allow,deny
   Allow from all
 </Limit>
+
+php_value post_max_size 100M
+php_value upload_max_filesize 100M

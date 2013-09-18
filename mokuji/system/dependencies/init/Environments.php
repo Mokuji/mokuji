@@ -97,8 +97,23 @@ abstract class Environments
       )));
       
       //Set our entrypoint.
-      mk('Config')->system('component', $environment === self::INSTALL ? 'update' : 'cms');
-      
+      switch($environment)
+      {
+        case self::INSTALL:
+          $entrypoint = 'update';
+          break;
+        case self::FRONTEND:
+          $entrypoint = ENTRYPOINT_FRONTEND;
+          break;
+        case self::BACKEND:
+          $entrypoint = ENTRYPOINT_FRONTEND;
+          break;
+        default:
+          $entrypoint = 'cms';
+          break;
+      }
+      mk('Config')->system('component', $entrypoint);
+
       //Initiate URL class.
       mk('Url');
       

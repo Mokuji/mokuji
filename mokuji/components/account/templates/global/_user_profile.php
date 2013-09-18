@@ -18,8 +18,8 @@ echo $user_profile->image_uploader;
         <?php if($data->has_media->is_true()): ?>
           <div class="avatar_holder">
             <input type="hidden" id="avatar_image_id" name="avatar_image_id" value="<?php $user_profile->user->avatar_image_id->get('int'); ?>" />
-            <?php if($data->user->avatar != false){ ?>
-            <img src="<?php echo $data->user->avatar; ?>" />
+            <?php if($data->user->user_info->avatar != false){ ?>
+            <img src="<?php echo $data->user->user_info->avatar->generate_url(array('resize_width' => 146)); ?>" />
             <?php } ?>
           </div>
 
@@ -108,8 +108,12 @@ window.plupload_avatar_image_id_report = function(up, ids, file_id)
     }
   })
   .done(function(data){
-    //Show thumbnail of uploaded icon
-    $("#edit-profile-form .avatar_holder").html("<img src=\"<?php echo url('section=media/image'); ?>&id="+file_id+"&resize=200/0\" width=\"200\" />");
+
+    $.rest('GET', '?rest=media/generate_url/'+file_id, {filters:{resize_width:146}})
+      .done(function(result){
+         $("#edit-profile-form .avatar_holder").html('<img src="'+result.url+'" width="146" />');
+      });
+
   })
   .fail(function(){
     console.log("Failed to save avatar.");

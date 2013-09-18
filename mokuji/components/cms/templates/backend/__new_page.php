@@ -17,7 +17,7 @@
     ?>
   </ul>
 
-  <h2><?php __($names->component, 'Select an existing page'); ?></h2><br />
+  <h2><?php __($names->component, 'Or select an existing page'); ?></h2><br />
   
   <select name="pages" id="page-link">
     <option value=""><?php __($names->component, 'Select a page'); ?></option>

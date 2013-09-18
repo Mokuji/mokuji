@@ -42,9 +42,10 @@ class Actions extends \dependencies\BaseComponent
 
     ->failure(function($info){
 
-      tx('Controller')->message(array(
-        'error' => $info->get_user_message()
-      ));
+      throw $info->exception;
+      // tx('Controller')->message(array(
+      //   'error' => $info->get_user_message()
+      // ));
 
     });
 
@@ -349,8 +350,8 @@ class Actions extends \dependencies\BaseComponent
         'notification' => $info->get_user_message()
       ));
     });
-    
-    tx('Url')->redirect('id=NULL');
+   
+    exit;
     
   }
   
@@ -408,16 +409,26 @@ class Actions extends \dependencies\BaseComponent
       $account = $user->account;
       
       //Insert this login session in the database.
-      $user_login = tx('Sql')->model('account', 'UserLogins')
-        ->set(array(
-          'user_id' => $account->id,
-          'session_id' => tx('Session')->id,
-          'dt_expiry' => date('Y-m-d H:i:s', time() + (2 * 3600)), //2 hours to set your password.
-          'IPv4' => tx('Data')->server->REMOTE_ADDR,
-          'user_agent' => tx('Data')->server->HTTP_USER_AGENT,
-          'date' => time()
-        ))
-        ->save();
+      tx('Sql')
+        ->table('account', 'UserLogins')
+        ->where('session_id', "'".tx('Session')->id."'")
+        ->execute_single()
+        ->is('empty', function()use($account, &$user_login){
+
+          $user_login = tx('Sql')->model('account', 'UserLogins')
+            ->set(array(
+              'user_id' => $account->id,
+              'session_id' => tx('Session')->id,
+              'dt_expiry' => date('Y-m-d H:i:s', time() + (2 * 3600)), //2 hours to set your password.
+              'IPv4' => tx('Data')->server->REMOTE_ADDR,
+              'user_agent' => tx('Data')->server->HTTP_USER_AGENT,
+              'date' => time()
+            ))
+            ->save();
+
+        })->failure(function($row)use(&$user_login){
+          $user_login = $row;
+        });
       
       tx('Logging')->log('LEDATE', $user_login->dt_expiry, date('Y-m-d H:i:s', time() + (2 * 3600)));
       
