@@ -13,15 +13,15 @@ RewriteEngine On
 ###
 
 # Rewrite for the different environments.
-RewriteRule ^/?(admin|install)(/(.+))? $3?%{QUERY_STRING} [E=MK_ENV:$1]
+RewriteRule ^/?(admin|install)(/(.+))? $3 [E=MK_ENV:$1,QSA]
 
 #Pages format: /<pid>/<pkey>
 RewriteRule ^/?mokuji - [S=1]
-RewriteRule ^/?(\d+)/?([a-zA-Z0-9-_]*)(\.html|/)?$ index.php?pid=$1&pkey=$2&%{QUERY_STRING}
+RewriteRule ^/?(\d+)/?([\w-]*)(\.html|/)?$ index.php?pid=$1&pkey=$2 [L,QSA]
 
 #Pages format: /<pid>/<pkey>/<page_key_extensions>
 RewriteRule ^/?mokuji - [S=1]
-RewriteRule ^/?(\d+)/?([a-zA-Z0-9-_]+)/([a-zA-Z0-9-_/]+)(\.html)?$ index.php?pid=$1&pkey=$2&pkey_ext=$3&%{QUERY_STRING}
+RewriteRule ^/?(\d+)/?([\w-]+)/([\w/-/]+)(\.html)?$ index.php?pid=$1&pkey=$2&pkey_ext=$3 [L,QSA]
 
 
 # ----------------------------------------------------------------------
