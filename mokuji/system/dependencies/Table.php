@@ -1562,8 +1562,8 @@ class Table extends Successable
     //Prepare arguments.
     $column = $this->prepare(func_get_arg(0));
     $compare = (func_num_args() > 2 ? func_get_arg(1) : '=');
-    $value = get_data(func_get_arg(func_num_args()-1));
-    
+    $value = func_get_arg(func_num_args()-1);
+
     //The comparator must be one of the following.
     if(!in_array($compare, array('=', '>', '<', '>=', '<=', '!', '|', '!|', '', 'IN', 'NOT IN'))){
       throw new \exception\InvalidArgument("Invalid comparison type given (%s).", $compare);
