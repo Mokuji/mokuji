@@ -1,3 +1,9 @@
+#### [Version 0.26.4 Beta](https://github.com/Tuxion/mokuji/tree/0.26.4-beta)
+_21-Sept-2013_
+
+* Added DocBlocks to the Table class.
+* Added documentation: Using the Mokuji ORM.
+
 #### [Version 0.26.3 Beta](https://github.com/Tuxion/mokuji/tree/0.26.3-beta)
 _18-Sept-2013_
 
