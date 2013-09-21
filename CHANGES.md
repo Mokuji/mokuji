@@ -1,3 +1,9 @@
+#### [Version 0.26.5 Beta](https://github.com/Tuxion/mokuji/tree/0.26.5-beta)
+_21-Sept-2013_
+
+* Bugfix.
+* Fixed hyperlinks in docs/ORM.md.
+
 #### [Version 0.26.4 Beta](https://github.com/Tuxion/mokuji/tree/0.26.4-beta)
 _21-Sept-2013_
 
