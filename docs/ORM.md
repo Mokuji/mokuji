@@ -9,9 +9,9 @@ internal objects. Those objects can then be modified using the class methods ava
 it, and synchronised back with the external database afterwards.
 
 In Mokuji, when we use the query builder class
-([Table<sup>API</sup>](https://github.com/Tuxion/mokuji/blob/master/apidocs/dependencies/Table.md))
+([Table<sup>API</sup>](https://github.com/Tuxion/mokuji/blob/master/mokuji/apidocs/dependencies/Table.md))
 to access the database, results will be mapped to
-[Resultset<sup>API</sup>](https://github.com/Tuxion/mokuji/blob/master/apidocs/dependencies/Resultset.md)
+[Resultset<sup>API</sup>](https://github.com/Tuxion/mokuji/blob/master/mokuji/apidocs/dependencies/Resultset.md)
 objects, in which every row is mapped to a model.
 
 In this guide we will learn to use the Table class to easily and efficiently write MySQL
