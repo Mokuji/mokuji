@@ -95,7 +95,7 @@ generate the required MySQL for the clauses in the eventual MySQL query.
 #### Fetching all rows
 
 Simply
-[`execute()`<sup>API</sup>](https://github.com/Tuxion/mokuji/blob/improved-docblocks/apidocs/dependencies/Table.md#method-execute):
+[`execute()`<sup>API</sup>](https://github.com/Tuxion/mokuji/blob/master/mokuji/apidocs/dependencies/Table.md#method-execute):
 the query straight away:
 
 ```php
@@ -105,7 +105,7 @@ $rows = $this->table('MenuItems')->execute();
 #### Filtering the query
 
 We can use the
-[`filter()`-method<sup>API</sup>](https://github.com/Tuxion/mokuji/blob/improved-docblocks/apidocs/dependencies/Table.md#method-filter)
+[`filter()`-method<sup>API</sup>](https://github.com/Tuxion/mokuji/blob/master/mokuji/apidocs/dependencies/Table.md#method-filter)
 to add filters directly from the GET parameters.
 
 ```php
@@ -127,7 +127,7 @@ $rows = $this->table('MenuItemInfo')->filter('menu_item_id', 'item_id')->execute
 If a filter key is available in both GET and SESSION, the GET filter will be used.
 
 To create direct filters (not using the parameters in GET or SESSION) we can use the
-[`where()`-method<sup>API</sup>](https://github.com/Tuxion/mokuji/blob/improved-docblocks/apidocs/dependencies/Table.md#method-where).
+[`where()`-method<sup>API</sup>](https://github.com/Tuxion/mokuji/blob/master/mokuji/apidocs/dependencies/Table.md#method-where).
 
 ```
 //Fetch all MenuItemInfo that has an "item_id" equal to 1.
@@ -151,9 +151,9 @@ page in the section about [accessing the results<sup>#</sup>](#accessing-the-res
 #### Fetching a single row by primary key
 
 The
-[`pk()`-method<sup>API</sup>](https://github.com/Tuxion/mokuji/blob/improved-docblocks/apidocs/dependencies/Table.md#method-pk)
+[`pk()`-method<sup>API</sup>](https://github.com/Tuxion/mokuji/blob/master/mokuji/apidocs/dependencies/Table.md#method-pk)
 can be used for this in combination with
-[`execute_single()`<sup>API</sup>](https://github.com/Tuxion/mokuji/blob/improved-docblocks/apidocs/dependencies/Table.md#method-execute-single):
+[`execute_single()`<sup>API</sup>](https://github.com/Tuxion/mokuji/blob/master/mokuji/apidocs/dependencies/Table.md#method-execute-single):
 
 ```php
 //Select the MenuItem with "id" 3.
@@ -196,7 +196,7 @@ be found further down the page.
 By default, a Table instance uses one model (the one provided on instantiation) and
 performs all operations with this model. This model is therefore called the "working
 model". It is, however, very easy to add more models. The easiest way is to use the
-[`add()`-method<sup>API</sup>](https://github.com/Tuxion/mokuji/blob/improved-docblocks/apidocs/dependencies/Table.md#method-add).
+[`add()`-method<sup>API</sup>](https://github.com/Tuxion/mokuji/blob/master/mokuji/apidocs/dependencies/Table.md#method-add).
 This method adds the model of the given name to the FROM clause, and makes it the new
 working model:
 
@@ -227,7 +227,7 @@ useful it is! Basically the working model is the model that is used every time a
 needs a table name for the query, for instance when [accessing a column<sup>#</sup>](#accessing-columns).
 
 Another way to add models is by joining them using the
-[`join`-method<sup>API</sup>](https://github.com/Tuxion/mokuji/blob/improved-docblocks/apidocs/dependencies/Table.md#method-join).
+[`join`-method<sup>API</sup>](https://github.com/Tuxion/mokuji/blob/master/mokuji/apidocs/dependencies/Table.md#method-join).
 This opens up so many features that it has its [own section<sup>#</sup>](#joining-models).
 
 #### Accessing columns
@@ -262,7 +262,7 @@ This allows for very quick access to a column on a model different from the work
 
 Joining a model is basically the advanced way to
 [add a model<sup>#</sup>](#adding-models-mysql-tables) to the query. It is done using the
-[`join()`-method<sup>API</sup>](https://github.com/Tuxion/mokuji/blob/improved-docblocks/apidocs/dependencies/Table.md#method-join)
+[`join()`-method<sup>API</sup>](https://github.com/Tuxion/mokuji/blob/master/mokuji/apidocs/dependencies/Table.md#method-join)
 and it allows for filters to be created that restrict which rows of the foreign model will
 be added to each row of the local model. The easiest way to join a model is by letting the
 system generate these filters using the "relations" data
@@ -301,7 +301,7 @@ a Conditions object. With these parameters we can create our own set of conditio
 #### Creating sub-queries
 
 Any Table object can function as a sub-query, as long as a has
-[explicitly selected<sup>API</sup>](https://github.com/Tuxion/mokuji/blob/improved-docblocks/apidocs/dependencies/Table.md#method-select)
+[explicitly selected<sup>API</sup>](https://github.com/Tuxion/mokuji/blob/master/mokuji/apidocs/dependencies/Table.md#method-select)
 the columns. It can be used in the query as a sub-query by passing it anywhere one might
 want it to go:
 
@@ -316,7 +316,7 @@ $this->table('MenuItems')->where('id', 'IN', $sub);
 In this example, the sub-query is pre-defined and completely separate from the main query
 before it was inserted into it. A better way to create a Table instance that will function
 as a sub-query is by calling the
-[`subquery()`-method<sup>API</sup>](https://github.com/Tuxion/mokuji/blob/improved-docblocks/apidocs/dependencies/Table.md#method-subquery)
+[`subquery()`-method<sup>API</sup>](https://github.com/Tuxion/mokuji/blob/master/mokuji/apidocs/dependencies/Table.md#method-subquery)
 on the main Table instance. This will do two things for us:
 
 1. It makes the two queries share their models. This has no side-effects on its own, but
@@ -348,7 +348,7 @@ structured tables. A full guide on this can be found [here<sup>guide</sup>](#).
 
 For adding any of the SQL clauses, that weren't covered in this guide, to the query please
 refer to the
-[API documentation](https://github.com/Tuxion/mokuji/blob/improved-docblocks/apidocs/dependencies/Table.md).
+[API documentation](https://github.com/Tuxion/mokuji/blob/master/mokuji/apidocs/dependencies/Table.md).
 
 ### Executing the query
 
@@ -357,11 +357,11 @@ hierarchies we wanted to add. How do we proceed?
 
 By executing the query! There are two methods that do this for us:
 
-- [`execute()`<sup>API</sup>](https://github.com/Tuxion/mokuji/blob/improved-docblocks/apidocs/dependencies/Table.md#method-execute)
+- [`execute()`<sup>API</sup>](https://github.com/Tuxion/mokuji/blob/master/mokuji/apidocs/dependencies/Table.md#method-execute)
   Will query the server and return the results in a
   [Resultset<sup>#</sup>](#accessing-the-results) object.
 
-- [`execute_single()`<sup>API</sup>](https://github.com/Tuxion/mokuji/blob/improved-docblocks/apidocs/dependencies/Table.md#method-execute-single)
+- [`execute_single()`<sup>API</sup>](https://github.com/Tuxion/mokuji/blob/master/mokuji/apidocs/dependencies/Table.md#method-execute-single)
   Will limit the result-set to a single result, query the server and return the first model
   from the result-set straight away.
 
