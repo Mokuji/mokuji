@@ -6,7 +6,7 @@
 [Object Relational Mapping<sup>wiki</sup>](https://en.wikipedia.org/wiki/Object_relational_mapping).
 In short; an ORM is a technique in which software will map rows of an external database to
 internal objects. Those objects can then be modified using the class methods available on
-it, and synchronised back with the external database afterwards.
+it, and synchronized back with the external database afterwards.
 
 In Mokuji, when we use the query builder class
 ([Table<sup>API</sup>](https://github.com/Tuxion/mokuji/blob/master/mokuji/apidocs/dependencies/Table.md))
@@ -180,7 +180,7 @@ $row->merge(array(
   'description' => 'A link to the home-page'
 ));
 
-//After we're done, we save the model to synchronise it back with the database.
+//After we're done, we save the model to synchronize it back with the database.
 $row->save();
 ```
 

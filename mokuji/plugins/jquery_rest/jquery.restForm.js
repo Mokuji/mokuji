@@ -3,7 +3,7 @@
   $.fn.restForm = function(callbacks){
     
     callbacks = $.extend({
-      beforeSubmit: function(data){},
+      beforeSubmit: function(){},
       success: function(){},
       error: function(){}
     }, callbacks);
