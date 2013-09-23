@@ -400,8 +400,8 @@ class ManualPackage extends AbstractPackage
       //Return an empty data object.
       catch(\exception\Sql $ex){
         //Create an empty placeholder.
-        $model = Data();
         mk('Logging')->log('Update', 'Query error', 'Seems like a self-install. '.$ex->getMessage());
+        return Data();
       }
       
       if($reference_support){
@@ -445,12 +445,14 @@ class ManualPackage extends AbstractPackage
     
     //Don't cache and return a new model if the package was not in the database.
     if($model->is_empty()){
+      
       return mk('Sql')->model('update', 'Packages')->set(array(
         'title' => $this->raw_data()->title,
         'description' => $this->raw_data()->description,
         'type' => 0,
         'reference_id' => $reference
       ));
+      
     }
     
     $this->model = $model;
