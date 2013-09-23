@@ -1254,7 +1254,7 @@ class Table extends Successable
   public function count()
   {
     
-    return tx('Sql')->execute_scalar("SELECT COUNT(*) FROM (".$this->query("`{$this->model}`.*").")")
+    return tx('Sql')->execute_scalar("SELECT COUNT(*) FROM (".$this->query("`{$this->model}`.*").") as WouldYouBeSoKindAsToCountMyRecords")
       ->is('empty', function(){return 0;});
     
   }

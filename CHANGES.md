@@ -1,3 +1,8 @@
+#### [Version 0.26.6 Beta](https://github.com/Tuxion/mokuji/tree/0.26.6-beta)
+_23-Sept-2013_
+
+* Fixed Table::count() bug.
+
 #### [Version 0.26.5 Beta](https://github.com/Tuxion/mokuji/tree/0.26.5-beta)
 _21-Sept-2013_
 
