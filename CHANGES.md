@@ -1,3 +1,12 @@
+#### [Version 0.26.7 Beta](https://github.com/Tuxion/mokuji/tree/0.26.7-beta)
+_25-Sept-2013_
+
+* Security update: Improved random bits sources. Fixing several problems with weak or no random data.
+* Bugfixes:
+    - Corrected a typo in the update component.
+    - Setting config values using mk('Config') now checks if it needs to insert.
+    - The REST interface now properly implements UTF-8.
+
 #### [Version 0.26.6 Beta](https://github.com/Tuxion/mokuji/tree/0.26.6-beta)
 _23-Sept-2013_
 
