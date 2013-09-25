@@ -1,7 +1,7 @@
 <?php namespace components\update; if(!defined('TX')) die('No direct access.');
 
 use \components\update\enums\PackageType;
-use components\update\classes\PackageFactory;
+use \components\update\classes\PackageFactory;
 
 class Helpers extends \dependencies\BaseComponent
 {
