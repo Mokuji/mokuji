@@ -25,6 +25,11 @@ class Actions extends \dependencies\BaseComponent
     
   }
   
+  protected function become_user($data)
+  {
+    mk('Account')->become_user($data->user_id);
+  }
+  
   protected function login($data)
   {
 
