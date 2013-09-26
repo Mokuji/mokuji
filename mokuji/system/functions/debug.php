@@ -28,7 +28,7 @@ function rest_exception_handler($e)
   
   //This body is just for developers debugging their code.
   //Not to be used for production environments.
-  if(!!DEBUG) echo json_encode(array(
+  if(DEBUG) echo json_encode(array(
     'error' => array(
       'type' => 'Uncaught exception',
       'message' => $e->getMessage(),

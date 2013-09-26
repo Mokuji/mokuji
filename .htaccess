@@ -7,7 +7,7 @@ RewriteEngine On
 ###
 # Reserved words for root level URL keys:
 ###
-# rest (optional)
+# rest
 # admin
 # install
 # mokuji
