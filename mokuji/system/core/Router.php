@@ -123,7 +123,7 @@ class Router
       
       //Return content as JSON.
       header('Content-type: application/json; charset=utf8');
-      $contents = Data($userfunc->return_value)->as_json(JSON_FORCE_OBJECT|JSON_UNESCAPED_UNICODE);
+      $contents = Data($userfunc->return_value)->as_json(JSON_FORCE_OBJECT);
       
     }
     

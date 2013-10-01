@@ -1965,7 +1965,7 @@ class Table extends Successable
    *
    * @return string
    */
-  private function prepare_text($text)
+  public function prepare_text($text)
   {
     $text = trim($text, '\'');
     return "'$text'";
