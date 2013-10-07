@@ -1,3 +1,9 @@
+#### [Version 0.26.8 Beta](https://github.com/Tuxion/mokuji/tree/0.26.8-beta)
+_7-Okt-2013_
+
+* Added functionality to log in as a specific user based on user ID, by using become_user().
+* Fixed a bugs in installation and update script.
+
 #### [Version 0.26.7 Beta](https://github.com/Tuxion/mokuji/tree/0.26.7-beta)
 _25-Sept-2013_
 
