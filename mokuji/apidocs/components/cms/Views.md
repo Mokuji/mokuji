@@ -21,7 +21,6 @@
 
 **Methods**
 * [`protected mixed app($view)`](#method-app)
-* [`protected mixed instructions()`](#method-instructions)
 * [`protected mixed menus($options)`](#method-menus)
 * [`protected mixed mod()`](#method-mod)
 * [`protected mixed modules()`](#method-modules)
@@ -418,24 +417,6 @@ mixed components\cms\Views::app($view)
 #### Arguments
 
 * $view **mixed**
-
-
-
-
-
-
-## Method `instructions`
-In class: [components\cms\Views](#top)
-
-```
-mixed components\cms\Views::instructions()
-```
-
-
-
-
-
-* Visibility: **protected**
 
 
 

@@ -22,12 +22,12 @@
 * [`protected static mixed $cores`](#property-cores)
 
 **Methods**
+* [`public static mixed add_base($input)`](#method-add_base)
 * [`public static array detect_cores()`](#method-detect_cores)
 * [`public static mixed execute_file_transfer_actions(\dependencies\Data $files)`](#method-execute_file_transfer_actions)
 * [`public static boolean need_core_upgrade()`](#method-need_core_upgrade)
 * [`public static mixed replace_file_references($input, $matched)`](#method-replace_file_references)
 * [`public static mixed suggest_file_transfer_actions()`](#method-suggest_file_transfer_actions)
-* [`protected static mixed add_base($input)`](#method-add_base)
 * [`protected static mixed detect_clean_moves($source_format, $target_format, $fallback)`](#method-detect_clean_moves)
 * [`protected static mixed detect_deletables(array $locations, $post_delete)`](#method-detect_deletables)
 * [`protected static mixed strip_base($input)`](#method-strip_base)
@@ -84,6 +84,29 @@ protected mixed $cores
 
 
 # Methods
+
+
+## Method `add_base`
+In class: [components\update\tasks\CoreUpdates](#top)
+
+```
+mixed components\update\tasks\CoreUpdates::add_base($input)
+```
+
+
+
+
+
+* Visibility: **public**
+* This method is **static**.
+
+#### Arguments
+
+* $input **mixed**
+
+
+
+
 
 
 ## Method `detect_cores`
@@ -190,29 +213,6 @@ mixed components\update\tasks\CoreUpdates::suggest_file_transfer_actions()
 
 * Visibility: **public**
 * This method is **static**.
-
-
-
-
-
-
-## Method `add_base`
-In class: [components\update\tasks\CoreUpdates](#top)
-
-```
-mixed components\update\tasks\CoreUpdates::add_base($input)
-```
-
-
-
-
-
-* Visibility: **protected**
-* This method is **static**.
-
-#### Arguments
-
-* $input **mixed**
 
 
 
