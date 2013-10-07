@@ -93,7 +93,7 @@ abstract class Environments
     ))){
       
       //Handle errors and HTTP fixes.
-      Tasks::register_error_handlers();
+      Tasks::register_error_handlers($environment);
       Tasks::http_fixes();
       
       //Mention when we are in the backend(s).

@@ -7,10 +7,15 @@ RewriteEngine On
 ###
 # Reserved words for root level URL keys:
 ###
+# rest
 # admin
 # install
 # mokuji
 ###
+
+# Rewrite for REST access.
+# Uncomment to enable.
+RewriteRule ^/?rest/(.+)$ index.php?_RESTROUTE=$1&cgi_env=rest [E=MK_ENV:rest,L,QSA]
 
 # Rewrite for the different environments.
 RewriteRule ^/?(admin|install)(/(.+))? $3?%{QUERY_STRING}&cgi_env=$1 [E=MK_ENV:$1]
@@ -97,7 +102,7 @@ RewriteRule ^/?(\d+)/?([\w-]+)/([\w/-/]+)(\.html)?$ index.php?pid=$1&pkey=$2&pke
 # Accept REST calls
 # ----------------------------------------------------------------------
 
-<Limit POST PUT DELETE>
+<Limit POST PUT PATCH DELETE>
   Order allow,deny
   Allow from all
 </Limit>

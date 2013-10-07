@@ -101,7 +101,7 @@ RewriteRule ^/?(\d+)/?([\w-]+)/([\w/-/]+)(\.html)?$ index.php?pid=$1&pkey=$2&pke
 # Accept REST calls
 # ----------------------------------------------------------------------
 
-<Limit POST PUT DELETE>
+<Limit POST PUT PATCH DELETE>
   Order allow,deny
   Allow from all
 </Limit>
