@@ -1877,7 +1877,7 @@ class Table extends Successable
    *
    * @see self::prepare() The master method.
    */
-  private function prepare_column($column)
+  public function prepare_column($column)
   {
     $info = is_array($column) ? $column : $this->get_column_info($column);
     return (array_key_exists('model', $info) ? "`{$info['model']}`." : '').($info['name'] === '*' ? '*' : "`{$info['name']}`");
