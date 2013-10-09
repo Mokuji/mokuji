@@ -1,3 +1,8 @@
+#### [Version 0.26.9 Beta](https://github.com/Tuxion/mokuji/tree/0.26.9-beta)
+_9-Okt-2013_
+
+* Made some performance optimizations in the Data and BaseModel classes.
+
 #### [Version 0.26.8 Beta](https://github.com/Tuxion/mokuji/tree/0.26.8-beta)
 _7-Okt-2013_
 
