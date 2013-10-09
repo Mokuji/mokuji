@@ -171,7 +171,8 @@ class Data extends Successable implements \Serializable, \IteratorAggregate, \Ar
     }
     
     // extract raw data from the given $key
-    $key = data_of($key);
+    if(!is_string($key) && !is_int($key))
+      $key = data_of($key);
     
     // allow auto-increament by giving null or empty
     if(is_null($key) || is_bool($key) || $key === ''){
@@ -252,7 +253,7 @@ class Data extends Successable implements \Serializable, \IteratorAggregate, \Ar
   // returns the actual value of a node, accepts offset and length to cut strings or arrays
   public function get($as=null)
   {
-  
+    
     if(is_null($as)){
       return $this->data;
     }
@@ -276,8 +277,7 @@ class Data extends Successable implements \Serializable, \IteratorAggregate, \Ar
       default:
         return $this->data;
     }
-    
-  
+      
   }
   
   // if this object is treated like a string, it's value will be used instead
