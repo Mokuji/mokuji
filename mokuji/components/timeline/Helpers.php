@@ -12,6 +12,8 @@ class Helpers extends \dependencies\BaseComponent
   public function get_entries($filters, $page = 0)
   {
     
+    $filters = Data($filters);
+
     raw($page);
     
     if($page < 1)

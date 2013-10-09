@@ -166,23 +166,23 @@ abstract class CoreUpdates
           case 'MOVE':
             mk('Logging')->log('CoreUpdates', 'MOVE', $file->source.' => '.$file->target);
             if(!rename(
-              self::add_base($file->source),
-              self::add_base($file->target)
+              CoreUpdates::add_base($file->source),
+              CoreUpdates::add_base($file->target)
             )) throw new \Exception("Moving failed.");
             break;
           
           case 'MERGE':
             mk('Logging')->log('CoreUpdates', 'MERGE', $file->source.' => '.$file->target);
             if(!recursive_move(
-              self::add_base($file->source),
-              self::add_base($file->target),
+              CoreUpdates::add_base($file->source),
+              CoreUpdates::add_base($file->target),
               'target' //Preserve files in target, because we assume the new core is always more important.
             )) throw new \Exception("Merge failed.");
             break;
           
           case 'DELETE':
             mk('Logging')->log('CoreUpdates', 'DELETE', $file->source);
-            if(!recursive_delete(self::add_base($file->source)))
+            if(!recursive_delete(CoreUpdates::add_base($file->source)))
               throw new \Exception("Deleting failed.");
             break;
           
@@ -216,7 +216,7 @@ abstract class CoreUpdates
       $post_deletes->each(function($file, $index){
         
         //Map the remaining suggestions.
-        $suggestions = self::suggest_file_transfer_actions();
+        $suggestions = CoreUpdates::suggest_file_transfer_actions();
         
         try{
           
@@ -241,7 +241,7 @@ abstract class CoreUpdates
           
           //Since no conflict have thrown an exception, proceed with deleting.
           mk('Logging')->log('CoreUpdates', 'POST-DELETE', $file->source);
-          if(!recursive_delete(self::add_base($file->source)))
+          if(!recursive_delete(CoreUpdates::add_base($file->source)))
             throw new \Exception("Deleting of POST-DELETE failed.");
           
         } catch(\Exception $ex) {
@@ -366,7 +366,7 @@ abstract class CoreUpdates
   }
   
   #TODO
-  protected static function add_base($input){
+  public static function add_base($input){
     raw($input);
     if(substr($input, 0, 2) === './')
       return PATH_BASE.DS.substr($input, 2);

@@ -167,11 +167,6 @@ class Views extends \dependencies\BaseViews
 
   }
   
-  protected function instructions()
-  {
-    return null;
-  }
-  
   protected function settings($options)
   {
     

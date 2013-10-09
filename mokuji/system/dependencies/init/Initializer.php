@@ -60,6 +60,9 @@ class Initializer
    */
   private function __construct()
   {
+
+    //Set charset -> UTF-8.
+    header('Content-type: text/html; charset=utf-8');
     
     //Default timezone.
     date_default_timezone_set('Europe/Amsterdam');

@@ -172,24 +172,8 @@ class Account
     
     tx('Logging')->log('Core', 'Login attempt', 'Starting for email/username "'.$email.'"');
     
-    //Get the client IP address.
-    $ipa = tx('Data')->server->REMOTE_ADDR->get();
-    
-    //Get IP permissions.
-    $ipinfo = tx('Sql')->execute_single(
-      "SELECT * FROM #__core_ip_addresses WHERE address = ".tx('Sql')->escape($ipa)
-    )
-      
-    //If no specific entry is available, get the global settings.
-    ->is('empty', function(){
-      return tx('Sql')->execute_single("SELECT * FROM #__core_ip_addresses WHERE address = '*'");
-    });
-    
-    //Check if login is allowed. Throw an exception if it's not.
-    $ipinfo->login_level->eq(0, function(){
-      tx('Logging')->log('Core', 'Login attempt', 'FAILED: IP address '.$ipa.' is blacklisted.');
-      throw new \exception\Validation('IP address blacklisted.');
-    });
+    //Check if login is allowed, based on the IP permissions.
+    $ipinfo = $this->_check_ip_permissions();
     
     //Let's be optimistic.
     $failed = false;
@@ -402,7 +386,42 @@ class Account
     return true;
     
   }
-  
+
+  /**
+   * Logins a login attempt for the current session.
+   * @param Integer $user_id The user ID of the user to log in with.
+   * @return self Returns $this for chaining.
+   * @throws \exception\Validation If the IP address of the remote connection is blacklisted.
+   * @throws \exception\EmptyResult If the user account is not found.
+   */
+  public function become_user($user_id, $persistent = false)
+  {
+
+    //Extract raw data.
+    raw($user_id, $pass, $expiry_date);
+    
+    tx('Logging')->log('Core', 'Become user attempt', 'Starting for user ID "'.$user_id.'"');
+    
+    //Check if login is allowed, based on the IP permissions.
+    $ipinfo = $this->_check_ip_permissions();
+    
+    //Get the user record based on the given email address or user name.
+    $user = tx('Sql')->execute_single("SELECT * FROM #__core_users WHERE id = ".tx('Sql')->escape($user_id))
+    
+    //If the user record wasn't found, fail the login attempt.
+    ->is('empty', function(){
+      tx('Logging')->log('Core', 'Become user attempt', 'FAILED: User account not found.');
+    });
+    
+    //Log a successful login attempt.
+    tx('Logging')->log('Core', 'Become user attempt', 'SUCCESS: Logged in as user ID '.$user->id);
+    
+    //Log the user in.
+    $user->level->set(min($user->level->get(), $ipinfo->login_level->get()));
+    $this->_set_logged_in($user, $expiry_date, $persistent);
+    
+  }
+
   /**
    * Logs out the current user.
    * @return self Returns $this for chaining.
@@ -590,7 +609,38 @@ class Account
     tx('Url')->redirect($redirect);
 
   }
-  
+
+  /**
+   * Check if a user is allowed to login based on IP.
+   * @throws \exception\Validation If the IP address of the remote connection is blacklisted.
+   * @return Object $ipinfo.
+   */
+  private function _check_ip_permissions()
+  {
+
+    //Get the client IP address.
+    $ipa = tx('Data')->server->REMOTE_ADDR->get();
+    
+    //Get IP permissions.
+    $ipinfo = tx('Sql')->execute_single(
+      "SELECT * FROM #__core_ip_addresses WHERE address = ".tx('Sql')->escape($ipa)
+    )
+      
+    //If no specific entry is available, get the global settings.
+    ->is('empty', function(){
+      return tx('Sql')->execute_single("SELECT * FROM #__core_ip_addresses WHERE address = '*'");
+    });
+    
+    //Check if login is allowed. Throw an exception if it's not.
+    $ipinfo->login_level->eq(0, function(){
+      tx('Logging')->log('Core', 'Login attempt', 'FAILED: IP address '.$ipa.' is blacklisted.');
+      throw new \exception\Validation('IP address blacklisted.');
+    });
+
+    return $ipinfo;
+
+  }
+
   /**
    * Return a persistent authentication token with the given user ID.
    *
@@ -624,7 +674,7 @@ class Account
   /**
    * Sets the log-in session for a given user object.
    *
-   * @param \depednecies\Data $user A row from the users table.
+   * @param \dependencies\Data $user A row from the users table.
    * 
    * @return self Chaining enabled.
    */

@@ -58,6 +58,8 @@ The Table class, Mokuji&#039;s query-builder.
 * [`public self order(string $column, string|false $direction)`](#method-order)
 * [`public self parent_pk()`](#method-parent_pk)
 * [`public self pk()`](#method-pk)
+* [`public string prepare_column(string|array $column)`](#method-prepare_column)
+* [`public string prepare_text(string $text)`](#method-prepare_text)
 * [`public string query(string $all)`](#method-query)
 * [`public self right()`](#method-right)
 * [`public self select(mixed $content, string $as)`](#method-select)
@@ -75,8 +77,6 @@ The Table class, Mokuji&#039;s query-builder.
 * [`private array get_model_info(\dependencies\Table|string $input)`](#method-get_model_info)
 * [`private string grourder(string $c, string $d)`](#method-grourder)
 * [`private string prepare(\dependencies\Table|array|string|integer $input)`](#method-prepare)
-* [`private string prepare_column(string|array $column)`](#method-prepare_column)
-* [`private string prepare_text(string $text)`](#method-prepare_text)
 * [`private string whaving()`](#method-whaving)
 
 
@@ -1195,6 +1195,50 @@ together with {@link self::execute_single()}
 
 
 
+## Method `prepare_column`
+In class: [dependencies\Table](#top)
+
+```
+string dependencies\Table::prepare_column(string|array $column)
+```
+
+Normalizes several different inputs which represent a column into a string.
+
+
+
+* Visibility: **public**
+
+#### Arguments
+
+* $column **string|array**
+
+
+
+
+
+
+## Method `prepare_text`
+In class: [dependencies\Table](#top)
+
+```
+string dependencies\Table::prepare_text(string $text)
+```
+
+Sanitizes and normalizes text-input.
+
+
+
+* Visibility: **public**
+
+#### Arguments
+
+* $text **string**
+
+
+
+
+
+
 ## Method `query`
 In class: [dependencies\Table](#top)
 
@@ -1739,50 +1783,6 @@ Detect what input could be, and prepare it for insertion into the query.
 
 **string** - The prepared value.
 
-
-
-
-
-
-
-## Method `prepare_column`
-In class: [dependencies\Table](#top)
-
-```
-string dependencies\Table::prepare_column(string|array $column)
-```
-
-Normalizes several different inputs which represent a column into a string.
-
-
-
-* Visibility: **private**
-
-#### Arguments
-
-* $column **string|array**
-
-
-
-
-
-
-## Method `prepare_text`
-In class: [dependencies\Table](#top)
-
-```
-string dependencies\Table::prepare_text(string $text)
-```
-
-Sanitizes and normalizes text-input.
-
-
-
-* Visibility: **private**
-
-#### Arguments
-
-* $text **string**
 
 
 
