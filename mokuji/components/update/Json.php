@@ -376,7 +376,7 @@ class Json extends \dependencies\BaseViews
     mk('Sql')->query("INSERT INTO `#__core_sites` (`title`, `path_base`, `url_path`) VALUES ('{$data->site_title}', '{$data->paths_base}', '{$data->paths_url}')");
     $site_id = mk('Sql')->get_insert_id();
     mk('Sql')->query("INSERT INTO `#__core_site_domains` (`site_id`, `domain`) VALUES ({$site_id}, '*')");
-    mk('Sql')->query("INSERT INTO `#__menu_menus` (`site_id`, `template_key`, `title`) VALUES ('{$site_id}', 'main_menu', '".___('main menu', 'ucfirst')."')");
+    mk('Sql')->query("INSERT INTO `#__menu_menus` (`site_id`, `template_key`, `title`) VALUES ('{$site_id}', 'main_menu', '".___('Main menu', 'ucfirst')."')");
     
     //Also add a whitelist for all ip addresses. This is a bit too advanced a setting to include into the install script,
     // but needs to be done or nobody can log in from any location.
