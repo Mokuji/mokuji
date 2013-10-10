@@ -6,6 +6,7 @@ class Language
   private
     $language_id,
     $language_code,
+    $language_shortcode,
     $caching,
     $translations,
     $translating_started;
@@ -13,6 +14,7 @@ class Language
   //Getters for read_only properties.
   public function get_language_id(){ return $this->language_id; }
   public function get_language_code(){ return $this->language_code; }
+  public function get_language_shortcode(){ return $this->language_shortcode; }
   
   //Short notation for some getters.
   public function __get($key)
@@ -20,6 +22,7 @@ class Language
     switch($key){
       case 'id': return $this->get_language_id();
       case 'code': return $this->get_language_code();
+      case 'shortcode': return $this->get_language_shortcode();
     }
   }
   
@@ -33,15 +36,18 @@ class Language
     if($this->translating_started)
       throw new \exception\Programmer('Can\'t set language, translating has already started');
     
-    tx('Validating language.', function()use($id, &$language_code){
+    tx('Validating language.', function()use($id, &$language_code, &$language_shortcode){
       $id->validate('Language', array('number'=>'integer'));
-      $language_code = tx('Sql')->execute_scalar('SELECT code FROM #__core_languages WHERE id = '.$id)->get();
+      $res = tx('Sql')->execute_single('SELECT code, shortcode FROM #__core_languages WHERE id = '.$id);
+      $language_shortcode = $res->shortcode->get();
+      $language_code = $res->code->get();
     })
     
     ->success(function($info)use($id, &$language_id){
       $language_id = $id->get();
     });
 
+    $this->language_shortcode = $language_shortcode;
     $this->language_code = $language_code;
     $this->language_id = $language_id;
     
@@ -108,7 +114,10 @@ class Language
     //define('LANGUAGE_CODE', tx('Sql')->execute_scalar('SELECT code FROM #__core_languages WHERE id = '.$lang->get()));
     
     $this->language_id = $lang->get();
-    $this->language_code = tx('Sql')->execute_scalar('SELECT code FROM #__core_languages WHERE id = '.$lang->get())->get();
+
+    $res = tx('Sql')->execute_single('SELECT code, shortcode FROM #__core_languages WHERE id = '.$lang->get());
+    $this->language_shortcode = $res->shortcode->get();
+    $this->language_code = $res->code->get();
     
   }
   

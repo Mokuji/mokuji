@@ -25,6 +25,10 @@
     options: null
   });
   
+  TxEditor.setDefaultLanguage = function(language){
+    defaults.config.language = language;
+  }
+
   TxEditor.setDefaultToolbar = function(toolbar){
     defaults.config.toolbar = toolbar;
   }
