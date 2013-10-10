@@ -19,7 +19,7 @@
 * [`protected mixed $permissions`](#property-permissions)
 
 **Methods**
-* [`protected mixed blog($options)`](#method-blog)
+* [`protected object blog(array $options)`](#method-blog)
 
 
 ## Inheritance index
@@ -397,18 +397,27 @@ mixed dependencies\BaseComponent::view($module_name, $options)
 In class: [components\timeline\Modules](#top)
 
 ```
-mixed components\timeline\Modules::blog($options)
+object components\timeline\Modules::blog(array $options)
 ```
 
+Show blogposts.
 
-
-
+&lt;h1&gt;TODO description&lt;/h1&gt;
 
 * Visibility: **protected**
 
 #### Arguments
 
-* $options **mixed**
+* $options **array** - An array with options
+   @param int    $pid       The page ID of the timeline page we want to load items from.
+   @param int    $menu_id   (optional) Menu ID to use in the URLs.
+   @param string $dt_format (optional) Date/Time format.
+
+
+#### Return value
+
+**object** - The requested timeline entries.
+
 
 
 

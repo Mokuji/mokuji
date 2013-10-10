@@ -151,7 +151,14 @@ class Config
         $key = tx('Sql')->escape(func_get_arg(0));
         $lid = func_get_arg(2) ? tx('Sql')->escape(func_get_arg(2)) : null;
         $lidWhere = '`language_id` ' . ($lid ? "= '$lid'" : 'IS NULL');
-        tx('Sql')->execute_non_query("UPDATE #__core_config SET `value` = '$val' WHERE `site_id` = '".tx('Site')->id."' AND `key` = '$key' AND $lidWhere");
+        $lidIns = ($lid ? "'$lid'" : 'NULL');
+        
+        $exists = tx('Sql')->execute_scalar("SELECT count(*) FROM #__core_config WHERE `site_id` = '".tx('Site')->id."' AND `key` = $key AND $lidWhere");
+        if($exists->get('int') > 0)
+          tx('Sql')->execute_non_query("UPDATE #__core_config SET `value` = $val WHERE `site_id` = '".tx('Site')->id."' AND `key` = $key AND $lidWhere");
+        else
+          tx('Sql')->execute_non_query("INSERT INTO #__core_config(`key`, `value`, `site_id`, `language_id`, `autoload`) VALUES ($key, $val, '".tx('Site')->id."', $lidIns, '1')");
+        
       case 2: return $this->user[func_get_arg(0)]->set(func_get_arg(1));
     }
     

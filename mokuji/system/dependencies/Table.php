@@ -1254,7 +1254,7 @@ class Table extends Successable
   public function count()
   {
     
-    return tx('Sql')->execute_scalar("SELECT COUNT(*) FROM (".$this->query("`{$this->model}`.*").")")
+    return tx('Sql')->execute_scalar("SELECT COUNT(*) FROM (".$this->query("`{$this->model}`.*").") as WouldYouBeSoKindAsToCountMyRecords")
       ->is('empty', function(){return 0;});
     
   }
@@ -1877,7 +1877,7 @@ class Table extends Successable
    *
    * @see self::prepare() The master method.
    */
-  private function prepare_column($column)
+  public function prepare_column($column)
   {
     $info = is_array($column) ? $column : $this->get_column_info($column);
     return (array_key_exists('model', $info) ? "`{$info['model']}`." : '').($info['name'] === '*' ? '*' : "`{$info['name']}`");
@@ -1965,7 +1965,7 @@ class Table extends Successable
    *
    * @return string
    */
-  private function prepare_text($text)
+  public function prepare_text($text)
   {
     $text = trim($text, '\'');
     return "'$text'";

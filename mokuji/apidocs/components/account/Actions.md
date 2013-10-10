@@ -20,6 +20,7 @@
 * [`protected mixed $permissions`](#property-permissions)
 
 **Methods**
+* [`protected mixed become_user($data)`](#method-become_user)
 * [`protected mixed cancel_import_users()`](#method-cancel_import_users)
 * [`protected mixed claim_account($data)`](#method-claim_account)
 * [`protected mixed deactivate_user($data)`](#method-deactivate_user)
@@ -376,6 +377,28 @@ mixed dependencies\BaseComponent::view($module_name, $options)
 
 * $module_name **mixed**
 * $options **mixed**
+
+
+
+
+
+
+## Method `become_user`
+In class: [components\account\Actions](#top)
+
+```
+mixed components\account\Actions::become_user($data)
+```
+
+
+
+
+
+* Visibility: **protected**
+
+#### Arguments
+
+* $data **mixed**
 
 
 

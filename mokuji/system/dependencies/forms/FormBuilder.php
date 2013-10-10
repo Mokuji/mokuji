@@ -279,7 +279,7 @@ class FormBuilder
     $fields = array();
     
     //Find and merge the bonus fields into the model fields.
-    if(array_key_exists('fields', $this->options))
+    if(array_key_exists('fields', $this->options) && is_array($this->options['fields']))
     {
       
       $bonus_fields = $this->options['fields'];

@@ -1,3 +1,24 @@
+#### [Version 0.26.8 Beta](https://github.com/Tuxion/mokuji/tree/0.26.8-beta)
+_7-Okt-2013_
+
+* Added functionality to log in as a specific user based on user ID, by using become_user().
+* Fixed a bugs in installation and update script.
+
+#### [Version 0.26.7 Beta](https://github.com/Tuxion/mokuji/tree/0.26.7-beta)
+_25-Sept-2013_
+
+* Security update: Improved random bits sources. Fixing several problems with weak or no random data.
+* Bugfixes:
+    - Corrected a typo in the update component.
+    - Setting config values using mk('Config') now checks if it needs to insert.
+    - The REST interface now properly implements UTF-8.
+
+#### [Version 0.26.6 Beta](https://github.com/Tuxion/mokuji/tree/0.26.6-beta)
+_23-Sept-2013_
+
+* Fixed Table::count() bug.
+* Fixed install bug when tables are not overwritten.
+
 #### [Version 0.26.5 Beta](https://github.com/Tuxion/mokuji/tree/0.26.5-beta)
 _21-Sept-2013_
 

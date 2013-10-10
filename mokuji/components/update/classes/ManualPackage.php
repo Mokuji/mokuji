@@ -274,6 +274,8 @@ class ManualPackage extends AbstractPackage
   public function version_bump($version, $allow_sync=false)
   {
     
+    $self = $this;
+
     raw($version);
     
     //We need to clear this cache regularly, because otherwise this may mess up the ORM during install.
@@ -295,8 +297,8 @@ class ManualPackage extends AbstractPackage
       ->where('package_id', $this->model()->id)
       ->where('version', "'{$version}'")
       ->execute_single()
-      ->is('empty', function()use($version){
-        throw new \exception\NotFound('Version '.$version.' is not defined for package '.$this->model()->title);
+      ->is('empty', function()use($self, $version){
+        throw new \exception\NotFound('Version '.$version.' is not defined for package '.$self->model()->title);
       });
     
     //Do the bump.
@@ -339,6 +341,8 @@ class ManualPackage extends AbstractPackage
   public function model()
   {
     
+    $self = $this;
+
     //Do some caching.
     if($this->model) return $this->model;
     
@@ -362,8 +366,8 @@ class ManualPackage extends AbstractPackage
           ->table('update', 'Packages')
           ->where('reference_id', "'$reference'")
           ->execute_single()
-          ->is('empty', function()use($reference_file){
-            mk('Logging')->log('ManualPackage', 'Referencing', 'Invalid reference found for '.$this->raw_data()->title.', deleting.');
+          ->is('empty', function()use($self, $reference_file){
+            mk('Logging')->log('ManualPackage', 'Referencing', 'Invalid reference found for '.$self->raw_data()->title.', deleting.');
             unlink($reference_file);
           });
       }
@@ -400,8 +404,8 @@ class ManualPackage extends AbstractPackage
       //Return an empty data object.
       catch(\exception\Sql $ex){
         //Create an empty placeholder.
-        $model = Data();
         mk('Logging')->log('Update', 'Query error', 'Seems like a self-install. '.$ex->getMessage());
+        return Data();
       }
       
       if($reference_support){
@@ -445,12 +449,14 @@ class ManualPackage extends AbstractPackage
     
     //Don't cache and return a new model if the package was not in the database.
     if($model->is_empty()){
+      
       return mk('Sql')->model('update', 'Packages')->set(array(
         'title' => $this->raw_data()->title,
         'description' => $this->raw_data()->description,
         'type' => 0,
         'reference_id' => $reference
       ));
+      
     }
     
     $this->model = $model;

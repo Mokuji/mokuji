@@ -257,7 +257,7 @@ class Json extends \dependencies\BaseViews
           $ex = new \exception\Validation('Unknown MySQL error code');
           $ex->key('host');
           $ex->errors(
-            $errorInfo === null ?
+            $pdoex->errorInfo === null ?
               array($pdoex->getMessage()) :
               array('['.$errorInfo[1].'] '.$errorInfo[2])
           );
