@@ -1,7 +1,13 @@
+#### [Version 0.27.0 Beta](https://github.com/Tuxion/mokuji/tree/0.27.0-beta)
+_14-Okt-2013_
+
+* Added a new REST interface at /rest/<path> (?rest=<path> still exists).
+
 #### [Version 0.26.9 Beta](https://github.com/Tuxion/mokuji/tree/0.26.9-beta)
 _9-Okt-2013_
 
 * Made some performance optimizations in the Data and BaseModel classes.
+* Fixed jQuery tmpl encoding problems, causing malformed data in most editors.
 
 #### [Version 0.26.8 Beta](https://github.com/Tuxion/mokuji/tree/0.26.8-beta)
 _7-Okt-2013_
