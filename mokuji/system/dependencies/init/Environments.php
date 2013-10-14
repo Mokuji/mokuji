@@ -35,6 +35,11 @@ abstract class Environments
   const MINIMAL = 4;
   
   /**
+   * REST environment.
+   */
+  const REST = 5;
+  
+  /**
    * Performs verifications and operations before setting an environment.
    * @param  Initializer $init The initializer calling this function.
    * @param  integer $environment The environment that has been set.
@@ -49,9 +54,10 @@ abstract class Environments
       case self::SHELL:
         throw new \Exception('The shell environment is not supported yet. If you have a usecase for it, please tell us.');
       
-      //Frontend and backend currently have no requirements.
+      //Environments without requirements.
       case self::FRONTEND:
       case self::BACKEND:
+      case self::REST:
         break;
       
       //Minimal and install implies no multi-site support by default.
@@ -87,7 +93,7 @@ abstract class Environments
     ))){
       
       //Handle errors and HTTP fixes.
-      Tasks::register_error_handlers();
+      Tasks::register_error_handlers($environment);
       Tasks::http_fixes();
       
       //Mention when we are in the backend(s).
@@ -140,12 +146,41 @@ abstract class Environments
         mk('Logging')->log('Core', 'Minimal environment', 'Initialized from: '. (defined('WHOAMI') ? WHOAMI : 'an unknown source'), true);
         break;
       
+      case self::REST:
+        
+        //Handle errors and HTTP fixes.
+        Tasks::register_error_handlers($environment);
+        Tasks::http_fixes();
+        
+        //Set that we're not in the backend, but we don't need to set an entrypoint.
+        mk('Config')->system('backend', false);
+        
+        //Initiate URL class.
+        mk('Url');
+        
+        //Log this call.
+        $query_string = http_build_query(mk('Data')->get->without('_RESTROUTE')->as_array());
+        $query_string = $query_string ? '?'.$query_string : '';
+        mk('Logging')->log('Core', 'REST call', mk('Data')->get->_RESTROUTE.$query_string, true);
+        
+        mk('Account');    //Check account details and progress user activity
+        mk('Language');   //Set language
+        mk('Component');  //Component singleton
+        
+        //Start doing stuff
+        mk('Router')->rest();
+        
+        //Log this call.
+        mk('Logging')->log('Core', 'REST call', 'SUCCEEDED');
+        
+        break;
+      
       case self::FRONTEND:
       case self::BACKEND:
         
         $title = $environment === self::BACKEND ? 'Backend' : 'Frontend';
         
-        //enter a pageload log line
+        //Enter a pageload log line
         mk('Logging')->log('Core', $title.' pageload', mk('Url')->url->input, true);
         
         mk('Account');    //check account details and progress user activity
@@ -157,14 +192,14 @@ abstract class Environments
         //start doing stuff
         mk('Router')->start();
         
-        //enter a pageload log line
+        //Enter a pageload log line
         mk('Logging')->log('Core', $title.' pageload', 'SUCCEEDED');
         
         break;
       
       case self::INSTALL:
         
-        //enter a pageload log line
+        //Enter a pageload log line
         mk('Logging')->log('Core', 'Install Pageload', mk('Url')->url->input, true);
         
         mk('Data');       //start filtering data
@@ -174,7 +209,7 @@ abstract class Environments
         //start doing stuff
         mk('Router')->start();
         
-        //enter a pageload log line
+        //Enter a pageload log line
         mk('Logging')->log('Core', 'Install pageload', 'SUCCEEDED');
         
         break;

@@ -3,24 +3,76 @@
 class Router
 {
   
+  public function rest()
+  {
+    
+    $this->check_connection_security();
+    
+    //Get our route.
+    $route = mk('Data')->get->_RESTROUTE;
+    $route_segments = explode('/', $route->get());
+    $component = array_shift($route_segments);
+    $model = array_shift($route_segments);
+    $route = Data($route_segments);
+    
+    //And our method and options.
+    $method = mk('Data')->server->REQUEST_METHOD->lowercase()->get();
+    $options = mk('Data')->get->without('_RESTROUTE');
+    
+    //Base the method we'll call the request method.
+    switch($method){
+      
+      //Methods that need to parse the HTTP body.
+      case 'put':
+      case 'post':
+      case 'patch':
+        
+        //Get us some data.
+        $data = Data(json_decode(file_get_contents("php://input"), true));
+        
+        //And find our output.
+        $output = mk('Component')->json($component)->_call(
+          "{$method}_{$model}", array($data, $route, $options)
+        );
+        break;
+      
+      case 'get':
+      case 'delete':
+        
+        //Just call the method already.
+        $output = mk('Component')->json($component)->_call(
+          "{$method}_{$model}", array($options, $route)
+        );
+        
+        break;
+      
+      default:
+        throw new \exception\Programmer('Method "%s" not supported.', mk('Data')->server->REQUEST_METHOD);
+      
+    }
+    
+    //After doing all that, check to see if we redirected somewhere during the process
+    if(mk('Url')->redirected){
+      mk('Logging')->log('Router', 'Redirect', mk('Url')->redirect_url);
+      header('Location: '.mk('Url')->redirect_url);
+      exit;
+    }
+    
+    //What's left?
+    //Output! :D
+    header('Content-type: application/json; charset=utf8');
+    echo Data($output)->as_json(JSON_UNESCAPED_UNICODE);
+    
+  }
+  
   public function start()
   {
     
+    $this->check_connection_security();
+    
     $contents = '';
     
-    //If needed, switch to secure protocol or back.
-    if(tx('Config')->user('tls_mode')->get() === 'always' && tx('Url')->url->segments->scheme->get() !== 'https')
-      tx('Url')->redirect(url('')->segments->merge(array('scheme' => 'https'))->back()->rebuild_output());
-    elseif(tx('Config')->user('tls_mode')->get() === 'never' && tx('Url')->url->segments->scheme->get() !== 'http')
-      tx('Url')->redirect(url('')->segments->merge(array('scheme' => 'http'))->back()->rebuild_output());
-    
-    //are we going to redirect
-    if(tx('Url')->redirected){
-      //yes we are, so we skip all the next elseif's
-    }
-    
-    //Quick and dirty implementation of REST.
-    elseif(tx('Data')->get->rest->is_set())
+    if(tx('Data')->get->rest->is_set())
     {
       
       //Get the "rest" path and method.
@@ -284,6 +336,25 @@ class Router
     }
     
     return array('component'=>$component, 'controller'=>$controller);
+    
+  }
+  
+  //If needed, switch to secure protocol or back.
+  private function check_connection_security()
+  {
+    
+    if(tx('Config')->user('tls_mode')->get() === 'always' && tx('Url')->url->segments->scheme->get() !== 'https')
+      tx('Url')->redirect(url('')->segments->merge(array('scheme' => 'https'))->back()->rebuild_output());
+    
+    elseif(tx('Config')->user('tls_mode')->get() === 'never' && tx('Url')->url->segments->scheme->get() !== 'http')
+      tx('Url')->redirect(url('')->segments->merge(array('scheme' => 'http'))->back()->rebuild_output());
+    
+    //In case this redirects us. Do it now.
+    if(mk('Url')->redirected){
+      mk('Logging')->log('Router', 'Redirect', mk('Url')->redirect_url);
+      header('Location: '.mk('Url')->redirect_url);
+      exit;
+    }
     
   }
   
