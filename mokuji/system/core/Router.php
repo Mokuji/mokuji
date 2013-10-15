@@ -31,18 +31,26 @@ class Router
         $data = Data(json_decode(file_get_contents("php://input"), true));
         
         //And find our output.
-        $output = mk('Component')->json($component)->_call(
-          "{$method}_{$model}", array($data, $route, $options)
-        );
+        try{
+          $output = mk('Component')->json($component)->_call(
+            "{$method}_{$model}", array($data, $route, $options)
+          );
+        }catch(\Exception $ex){
+          $this->process_rest_exception($ex);
+        }
         break;
       
       case 'get':
       case 'delete':
         
         //Just call the method already.
-        $output = mk('Component')->json($component)->_call(
-          "{$method}_{$model}", array($options, $route)
-        );
+        try{
+          $output = mk('Component')->json($component)->_call(
+            "{$method}_{$model}", array($options, $route)
+          );
+        }catch(\Exception $ex){
+          $this->process_rest_exception($ex);
+        }
         
         break;
       
@@ -355,6 +363,65 @@ class Router
       header('Location: '.mk('Url')->redirect_url);
       exit;
     }
+    
+  }
+  
+  //Customizes the response for errors during REST calls.
+  private function process_rest_exception($ex)
+  {
+    
+    $class = get_class($ex);
+    $ns = 'exception\\';
+    switch($class){
+      case $ns.'Authorisation': $code = 401; break;
+      case $ns.'EmptyResult': $code = 404; break;
+      
+      //Validation errors
+      case $ns.'Validation':
+      case $ns.'ModelValidation':
+        $code = 412; break;
+      
+      //By default, use the uncaught exception handler.
+      default: throw $ex;
+      
+    }
+    
+    set_status_header($code, $ex->getMessage());
+    
+    //Return field specific errors in JSON for Validation exceptions.
+    if($class === $ns.'Validation'){
+      $errors = $ex->errors();
+      for($i = 0, $total = count($errors), $sep = '', $msg = ''; $i < $total; $i++){
+        $msg .= $sep.strtolower(substr($errors[$i], 0, 1)).substr($errors[$i], 1);
+        $sep = ', ';
+        if($i == $total-2) $sep = " $AND ";
+      }
+      mk('Logging')->log('Core', 'REST call', 'Validation error. '.'{"'.$ex->key().'":"'.ucfirst($msg).'."}');
+      die('{"'.$ex->key().'":"'.ucfirst($msg).'."}');
+    }
+    
+    //Return field specific errors in JSON for ModelValidation exceptions.
+    if($class === $ns.'ModelValidation'){
+      
+      $errorData = Data();
+      
+      foreach ($ex->errors as $error){
+        $sep = '';
+        $msg = '';
+        $errors = $error->errors();
+        $total = count($errors);
+        for($i = 0; $i < $total; $i++){
+          $msg .= $sep.strtolower(substr($errors[$i], 0, 1)).substr($errors[$i], 1);
+          $sep = ', ';
+          if($i == $total-2) $sep = " $AND ";
+        }
+        $msg .= '.';
+        $errorData->{$error->key()}->set(ucfirst($msg));
+      }
+      mk('Logging')->log('Core', 'REST call', 'Model validation error. '.$errorData->as_json());
+      die($errorData->as_json());
+      
+    }//END - JSON for ModelValidation exceptions.
     
   }
   
