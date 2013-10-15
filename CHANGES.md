@@ -1,3 +1,8 @@
+#### [Version 0.27.1 Beta](https://github.com/Tuxion/mokuji/tree/0.27.1-beta)
+_15-Okt-2013_
+
+* The /rest/ interface now supports custom errors for (Model)Validation exceptions.
+
 #### [Version 0.27.0 Beta](https://github.com/Tuxion/mokuji/tree/0.27.0-beta)
 _14-Okt-2013_
 
