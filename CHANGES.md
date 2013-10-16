@@ -1,3 +1,8 @@
+#### [Version 0.27.2 Beta](https://github.com/Tuxion/mokuji/tree/0.27.2-beta)
+_16-Okt-2013_
+
+* Improved page title editing to be more user friendly and effective.
+
 #### [Version 0.27.1 Beta](https://github.com/Tuxion/mokuji/tree/0.27.1-beta)
 _15-Okt-2013_
 
