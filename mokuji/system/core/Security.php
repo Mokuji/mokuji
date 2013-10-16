@@ -48,7 +48,7 @@ class Security
      *
      */
     $HASH_PREFERENCES = array(
-      '128' => array('ripemd128', 'snefru'),
+      '128' => array('ripemd128', 'snefru', 'md5'),
       '160' => array('ripemd160', 'sha1'),
       '224' => array('sha224'),
       '256' => array('sha256'),
