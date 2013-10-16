@@ -76,7 +76,7 @@
       },
       
       //Let findability know we have a recommended default.
-      'blur on title': function(e){
+      'keyup on title': function(e){
         app.Page.Tabs.findabilityTab.recommendTitle(
           $(e.target).val(),
           this.force_language ?

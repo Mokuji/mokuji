@@ -976,15 +976,20 @@ function request(){
     recommendTitle: function(title, languageId){
       if(languageId === 'ALL'){
         this.view.find('.page-title-recommendation').val(title);
-        this.view.find('.page-title')
+        var $title = this.view
+          .find('.page-title')
           .attr('placeholder', title)
           .trigger('keyup');
+        app.Page.updateTitle($title.val() ? $title.val() : $title.attr('placeholder'));
       }else{
         $langSection = this.view.find('.multilingual-section[data-language-id='+languageId+']');
         $langSection.find('.page-title-recommendation').val(title);
-        $langSection.find('.page-title')
+        var $title = $langSection
+          .find('.page-title')
           .attr('placeholder', title)
           .trigger('keyup');
+        if(app.options.language_id == languageId)
+          app.Page.updateTitle($title.val() ? $title.val() : $title.attr('placeholder'));
       }
     },
     
@@ -1153,6 +1158,7 @@ function request(){
       btn_detach: '#detach-page',
       btn_save_page: '#save-page',
       select_pageLink: '#page-link',
+      title_text: '.title-bar.page-title .title',
       pageTypes: '#new-page-wrap .pagetypes-list li a'
     },
     
@@ -1397,6 +1403,10 @@ function request(){
       //Show the tabs.
       this.Tabs.renderTabs();
       
+    },
+    
+    updateTitle: function(title){
+      this.title_text.text(title);
     }
     
   });
