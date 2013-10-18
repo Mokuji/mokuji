@@ -129,7 +129,7 @@ class FormBuilder
     
     ?>
       <div class="ctrlHolder buttonHolder">
-        <input type="submit" class="button primaryAction" value="<?php __('Save'); ?>" />
+        <input type="submit" class="black button primaryAction" value="<?php __('Save'); ?>" />
       </div>
     </form>
     <?php

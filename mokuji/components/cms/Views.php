@@ -224,25 +224,35 @@ class Views extends \dependencies\BaseViews
   protected function settings_cms_configuration()
   {
     
-    $result = array();
+    $values = array();
     $settings = array(
-      'homepage' => 'Homepage',
-      'login_page' => 'Login page',
-      'template_id' => 'Default template',
-      'forced_template_id' => 'Forced template',
-      'theme_id' => 'Default theme',
-      'forced_theme_id' => 'Forced theme',
-      'default_language' => 'Default language',
-      'tx_editor_toolbar' => 'CKEditor toolbar layout'
+      'homepage',
+      'login_page',
+      'template_id',
+      'forced_template_id',
+      'theme_id',
+      'forced_theme_id',
+      'default_language',
+      'tx_editor_toolbar'
     );
     
-    foreach($settings as $key => $title){
-      $result[$key] = tx('Component')->helpers('cms')->_call('get_settings', array($key));
+    foreach($settings as $key){
+      $values[$key] = array(
+        'default' => tx('Component')->helpers('cms')->_call('get_settings', array($key))->value_default
+      );
     }
     
     return array(
-      'settings' => $result,
-      'titles' => $settings
+      'values' => $values,
+      'themes' => mk('Sql')->table('cms', 'Themes')
+        ->order('title', 'ASC')
+        ->execute(),
+      'templates' => mk('Sql')->table('cms', 'Templates')
+        ->order('title', 'ASC')
+        ->execute(),
+      'languages' => mk('Sql')->table('cms', 'Languages')
+        ->order('title', 'ASC')
+        ->execute()
     );
     
   }
