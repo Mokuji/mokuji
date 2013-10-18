@@ -111,7 +111,7 @@ class Views extends \dependencies\BaseViews
     tx('Sql')->table('cms', 'ComponentViews')->join('Components', $c)->select("$c.name", 'name')->execute()->each(function($c){
       tx('Component')->load($c->name);
     });
-
+    
     return array(
       'topbar' => $this->section('admin_toolbar'),
       'menus' => $this->view('menus', array('menu_id' => $mid, 'site_id' => $sid)),
@@ -120,14 +120,16 @@ class Views extends \dependencies\BaseViews
       'app' => $this->section('app', $view->get()),
       'sites' => tx('Sql')->table('cms', 'Sites')->execute()
     );
-
+    
   }
-
+  
   protected function pages()
   {
     return array(
-      'pages' => $this->section('page_list'),
-      'new_page' => $this->section('new_page')
+      'pages' => tx('Sql')->table('cms', 'Pages')
+        ->where('trashed', 0)
+        ->order('title')
+        ->execute()
     );
   }
   
