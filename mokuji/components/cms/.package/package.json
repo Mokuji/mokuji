@@ -5,6 +5,12 @@
   "dbUpdates": true,
   "versions": [
     {
+      "version": "0.7.0-beta",
+      "date": "2013-10-17",
+      "description": "Het CMS heeft nu een generieke notificaties mogelijkheid voor systeemmeldingen.",
+      "changes": []
+    },
+    {
       "version": "0.6.0-beta",
       "date": "2013-09-11",
       "description": "De PageType functionaliteit is uitgebreid met een `template(key, data)` javascript functie.",

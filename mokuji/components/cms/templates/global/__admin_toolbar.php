@@ -23,11 +23,47 @@ jQuery(function($){
   
   <ul id="topbar_menu">
     <li class="profile dropdown">
-      <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"><span title="<?php echo tx('Account')->user->username; ?>"><?php echo tx('Account')->user->username; ?></span></a>
+      <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"><span><?php echo tx('Account')->user->username; ?></span></a>
       <ul class="dropdown-menu" role="menu">
         <li><a tabindex="-1" href="<?php echo url('action=account/logout'); ?>"><?php __($names->component, 'Logout', 'ucfirst'); ?></a></li>
       </ul>
     </li>
+    <?php if($data->notifications->size() > 0){ ?>
+      <li class="notifications dropdown dropdown-right-align">
+        <?php if($data->new_notifications->get() > 0){ ?>
+        <a href="#" class="new <?php echo $data->notification_type; ?>" title="<?php __($names->component, 'Notifications') ?>">
+          <span><?php echo $data->new_notifications; ?></span>
+          <i class="icon-bell-alt no-pad"></i><i class="icon-sort-down tiny-arrow no-pad"></i>
+        </a>
+        <?php } else { ?>
+          <a href="#" class="icon-bell" title="<?php __($names->component, 'Notifications') ?>"></a>
+        <?php } ?>
+        <ul class="dropdown-menu" role="menu">
+          <?php
+            
+            $count = $data->notifications->size();
+            
+            for($i=0; $i<$count; $i++){
+              
+              $notif = $data->notifications->{$i};
+              $new = $i < $data->new_notifications->get();
+              $url = $notif->url->is_set();
+              
+              ?>
+                <li class="<?php if($new) echo 'new '; echo $notif->type_name; ?>">
+                  <a tabindex="-1" href="<?php echo $notif->url->otherwise('#'); ?>"><?php echo $notif->message; ?></a>
+                  <div class="dt-created"><?php echo $notif->dt_created; ?></div>
+                </li>
+              <?php
+              
+            }
+          ?>
+          <li class="read-all">
+            <a tabindex="-1" href="#"><?php __('cms', 'Read all notifications'); ?></a>
+          </li>
+        </ul>
+      </li>
+    <?php } ?>
     <li class="website"><a title="<?php __($names->component, 'Go back to the website'); ?>" href="<?php echo $admin_toolbar->website_url; ?>"><?php __('Website') ?></a></li>
 <!--
     <li class="website-edit"><a href="<?php echo $admin_toolbar->edit_url; ?>">Editable website</a></li>

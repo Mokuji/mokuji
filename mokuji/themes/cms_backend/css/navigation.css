@@ -9,7 +9,6 @@
   outline: 0;
 }
 
-
 .dropdown-menu {
   position: absolute;
   top: 100%;
@@ -18,6 +17,7 @@
   display: none;
   float: left;
   min-width: 160px;
+  max-width: 320px;
   padding: 5px 0;
   margin:0px 0 0;
   list-style: none;
@@ -34,6 +34,10 @@
   -moz-background-clip: padding;
   background-clip: padding-box;
 }
+.dropdown.dropdown-right-align .dropdown-menu{
+  left:auto;
+  right:0;
+}
 .dropdown:hover > .dropdown-menu{
   display: block;
 }
@@ -45,7 +49,6 @@
   font-weight: normal;
   line-height: 20px;
   color: #333;
-  white-space: nowrap;
 }
 
 .dropdown-menu .divider {

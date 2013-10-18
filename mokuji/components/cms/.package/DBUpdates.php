@@ -19,8 +19,45 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
       '3.0' => '0.6.0-beta', //No DB changes.
       '0.4.0' => '0.6.0-beta', //No DB changes.
       '0.4.1-beta' => '0.6.0-beta', //No DB changes.
-      '0.5.0-beta' => '0.6.0-beta' //No DB changes.
+      '0.5.0-beta' => '0.6.0-beta', //No DB changes.
+      
+      '0.6.0-beta' => '0.7.0-beta'
     );
+  
+  public function update_to_0_7_0_beta($current_version, $forced)
+  {
+    
+    if(!!$forced){
+      mk('Sql')->query("DROP TABLE IF EXISTS `#__cms_notifications`");
+      mk('Sql')->query("DROP TABLE IF EXISTS `#__cms_notification_last_reads`");
+    }
+    
+    mk('Sql')->query("
+      CREATE TABLE `#__cms_notifications` (
+        `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+        `user_id` int(10) unsigned NULL DEFAULT NULL,
+        `level` tinyint unsigned NOT NULL DEFAULT '0',
+        `type` tinyint unsigned NOT NULL DEFAULT '0',
+        `dt_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        `message` varchar(255) NOT NULL,
+        `url` varchar(255) NULL DEFAULT NULL,
+        PRIMARY KEY (`id`),
+        INDEX `user_id` (`user_id`),
+        INDEX `level` (`level`),
+        INDEX `dt_created` (`dt_created`)
+      ) ENGINE=MyISAM DEFAULT CHARSET=utf8
+    ");
+    
+    mk('Sql')->query("
+      CREATE TABLE `#__cms_notification_last_reads` (
+        `user_id` int(10) unsigned NOT NULL,
+        `level` tinyint unsigned NOT NULL,
+        `dt_last_read` timestamp NOT NULL,
+        PRIMARY KEY (`user_id`, `level`)
+      ) ENGINE=MyISAM DEFAULT CHARSET=utf8
+    ");
+    
+  }
   
   public function update_to_3_0($current_version, $forced)
   {

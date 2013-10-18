@@ -1,5 +1,7 @@
 <?php namespace components\cms; if(!defined('TX')) die('No direct access.');
 
+use \components\cms\classes\Notifications;
+
 class Sections extends \dependencies\BaseViews
 {
   
@@ -336,11 +338,27 @@ class Sections extends \dependencies\BaseViews
   protected function admin_toolbar()
   {
     
+    //See if there are notifications.
+    if(Notifications::is_supported()){
+      // Notifications::send("Hoe vind je die?", null, null, 2, 10);
+      $notifications = Notifications::get(2, $notification_type, $new_notifications);
+    }
+    
+    //Fake 0 notifications.
+    else {
+      $notifications = null;
+      $notification_type = 'none';
+      $new_notifications = 0;
+    }
+    
     return array(
       'website_url'=>url(URL_BASE.'?menu=KEEP&pid=KEEP', true),
       'edit_url'=>url(URL_BASE.'?action=cms/editable', true),
       'advanced_url'=>url(URL_BASE.'admin/index.php?menu=KEEP&pid=KEEP', true),
-      'admin_url'=>url(URL_BASE.'admin/index.php', true)
+      'admin_url'=>url(URL_BASE.'admin/index.php', true),
+      'notifications'=>$notifications,
+      'notification_type'=>$notification_type,
+      'new_notifications'=>$new_notifications
     );
     
   }
