@@ -1,3 +1,11 @@
+#### [Version 0.27.3 Beta](https://github.com/Tuxion/mokuji/tree/0.27.3-beta)
+_18-Okt-2013_
+
+* Cleaned the page manager somewhat.
+* Added placeholder to show default value in language specific website settings.
+* Now copying website title to site meta-information as well as multi-site information during install.
+* CMS settings now has select fields for themes, templates and languages.
+
 #### [Version 0.27.2 Beta](https://github.com/Tuxion/mokuji/tree/0.27.2-beta)
 _16-Okt-2013_
 
