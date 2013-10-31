@@ -69,7 +69,7 @@ class Router
     //What's left?
     //Output! :D
     header('Content-type: application/json; charset=utf8');
-    echo Data($output)->as_json(JSON_UNESCAPED_UNICODE);
+    echo Data($output)->as_json(JSON_UNESCAPED_UNICODE, \dependencies\Data::OPTION_UNSET_AS_NULL);
     
   }
   

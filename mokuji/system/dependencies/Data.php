@@ -3,6 +3,8 @@
 class Data extends Successable implements \Serializable, \IteratorAggregate, \ArrayAccess
 {
   
+  const OPTION_UNSET_AS_NULL = 1;
+  
   ###
   ###  PROPERTIES
   ###
@@ -304,11 +306,14 @@ class Data extends Successable implements \Serializable, \IteratorAggregate, \Ar
   }
   
   // Returns all content of this node (including its children) as an array
-  public function as_array($serialized=false)
+  public function as_array($serialized=false, $unset_as_null=false)
   {
     
     if($this->is_empty()){
-      return array();
+      if($unset_as_null === true)
+        return array(null);
+      else
+        return array();
     }
     
     if($this->is_leafnode()){
@@ -345,6 +350,11 @@ class Data extends Successable implements \Serializable, \IteratorAggregate, \Ar
           
         }
         
+      }
+      
+      //If this option is enabled, add NULL values for present, but unset nodes.
+      elseif($unset_as_null === true) {
+        $array[$key] = $val->get();
       }
       
     }
@@ -696,7 +706,10 @@ class Data extends Successable implements \Serializable, \IteratorAggregate, \Ar
   // Returns all content of this node (including its children) as JSON
   public function as_json($flags = JSON_FORCE_OBJECT, $options = 0)
   {
-    return json_encode($this->as_array(), $flags);
+    
+    $unset_as_null = ($options & self::OPTION_UNSET_AS_NULL) === self::OPTION_UNSET_AS_NULL;
+    return json_encode($this->as_array(false, $unset_as_null), $flags);
+    
   }
   
   // returns string representation of all this node's data
