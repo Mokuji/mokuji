@@ -137,7 +137,7 @@ class Language
     
     //Find the language we're looking for.
     if($lang_id->is_set()){
-      $language_code = tx('Sql')->execute_scalar('SELECT code FROM #__core_languages WHERE id = '.$lang_id);
+      $language_code = tx('Sql')->execute_scalar('SELECT code FROM #__core_languages WHERE id = '.$lang_id)->get();
     }else{
       $language_code = $this->language_code;
     }
