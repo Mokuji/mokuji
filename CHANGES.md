@@ -1,3 +1,9 @@
+#### [Version 0.27.4 Beta](https://github.com/Tuxion/mokuji/tree/0.27.4-beta)
+_31-Okt-2013_
+
+* The new REST interface now returns empty fields as NULL instead of letting the key disappear.
+* Fixed two translating bugs.
+
 #### [Version 0.27.3 Beta](https://github.com/Tuxion/mokuji/tree/0.27.3-beta)
 _18-Okt-2013_
 
