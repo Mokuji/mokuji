@@ -70,20 +70,26 @@ class Sections extends \dependencies\BaseViews
   protected function user_list()
   {
     
-    return $this
-      ->table('Accounts')
-      ->join('UserInfo', $ui)
-      ->select("$ui.status", 'status')
-      ->where(tx('Sql')->conditions()
-        ->add('1', array("(`$ui.status` & 1)", '1'))
-        ->add('2', array("(`$ui.status` & 4)", '4'))
-        ->combine('3', array('1', '2'), 'OR')
-        ->utilize('3')
-      )
-      ->order('level', 'DESC')
-      ->order('email')
-      ->execute();
-    
+    return array(
+      'users' => $this
+        ->table('Accounts')
+        ->join('UserInfo', $ui)
+        ->select("$ui.status", 'status')
+        ->where(tx('Sql')->conditions()
+          ->add('1', array("(`$ui.status` & 1)", '1'))
+          ->add('2', array("(`$ui.status` & 4)", '4'))
+          ->combine('3', array('1', '2'), 'OR')
+          ->utilize('3')
+        )
+        ->order('level', 'DESC')
+        ->order('email')
+        ->execute(),
+      'num_user_groups' => $this
+        ->table('UserGroups')
+        ->count()
+        ->get('int')
+    );
+
   }
   
   protected function group_list()
