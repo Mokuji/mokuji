@@ -10,7 +10,9 @@ class Json extends \dependencies\BaseComponent
       'create_password_reset_request' => 0,
       'create_password_reset_finalization' => 0,
       'create_user_session' => 0,
-      'update_password' => 1
+      'update_password' => 1,
+      'get_me' => 1,
+      'get_login_status' => 0
     );
   
   //Allows user to register.
@@ -317,6 +319,48 @@ class Json extends \dependencies\BaseComponent
       'success' => true,
       'target_url' => $target_url
     );
+    
+  }
+  
+  //#TODO: Description for the "delete_user_session"-method.
+  protected function delete_user_session($data, $params)
+  {
+    
+    #TODO: Body for the "delete_user_session"-method.
+    
+  }
+  
+  /**
+   * Return the user object of the currently logged in user.
+   * 
+   * Requires a user to be logged in.
+   * 
+   * @param \dependencies\Data $data Empty array.
+   * @param \dependencies\Data $params Empty array.
+   * @return \dependencies\Data Sort of like a user model but not really because this is Mokuji.
+   */
+  protected function get_me($data, $parameters)
+  {
+    
+    return tx('Account')->user;
+    
+  }
+  
+  /**
+   * Return the level of access the user has on the server.
+   * 
+   * `0` For not logged in.
+   * `1` For logged in.
+   * `2` For super-user.
+   * 
+   * @param \dependencies\Data $data Empty array.
+   * @param \dependencies\Data $params Empty array.
+   * @return integer
+   */
+  protected function get_login_status($data, $parameters)
+  {
+    
+    return tx('Account')->is_login() ? tx('Account')->user->level->get('int') : 0;
     
   }
   
