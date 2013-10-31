@@ -9,7 +9,8 @@ class Helpers extends \dependencies\BaseComponent
       'get_entries' => 0
     );
   
-  public function get_entries($filters, $page = 0)
+
+  public function get_entries($filters = null, $page = 0)
   {
     
     $filters = Data($filters);
