@@ -18,6 +18,7 @@ class Router
     //And our method and options.
     $method = mk('Data')->server->REQUEST_METHOD->lowercase()->get();
     $options = mk('Data')->get->without('_RESTROUTE');
+    $output = null;
     
     //Base the method we'll call the request method.
     switch($method){
@@ -387,6 +388,8 @@ class Router
     }
     
     set_status_header($code, $ex->getMessage());
+    
+    $AND = __('And', true, 'l');
     
     //Return field specific errors in JSON for Validation exceptions.
     if($class === $ns.'Validation'){

@@ -1,3 +1,10 @@
+#### [Version 0.27.5 Beta](https://github.com/Tuxion/mokuji/tree/0.27.5-beta)
+_13-Nov-2013_
+
+* The `url` validator rule now respects the `required` rule.
+* The `number` validator rule now validates float and double types appropriately.
+* Added two missing variables in the `/rest/` interface.
+
 #### [Version 0.27.4 Beta](https://github.com/Tuxion/mokuji/tree/0.27.4-beta)
 _31-Okt-2013_
 
