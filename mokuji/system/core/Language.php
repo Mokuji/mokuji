@@ -138,7 +138,7 @@ class Language
   
   public function translate($phrase, $component=null, $lang_id=null, $case = null, $is_fallback=false)
   {
-    
+
     $this->translating_started = true;
     
     raw($case, $phrase, $component);
@@ -146,11 +146,11 @@ class Language
     
     //Find the language we're looking for.
     if($lang_id->is_set()){
-      $language_code = tx('Sql')->execute_scalar('SELECT code FROM #__core_languages WHERE id = '.$lang_id);
+      $language_code = tx('Sql')->execute_scalar('SELECT code FROM #__core_languages WHERE id = '.$lang_id)->get();
     }else{
       $language_code = $this->language_code;
     }
-    
+
     //See if we need to load this from file.
     if(!$this->caching || !array_key_exists($language_code, $this->translations) || !array_key_exists($component ? $component : DS, $this->translations[$language_code])){
       

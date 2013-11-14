@@ -44,7 +44,7 @@ class Helpers extends \dependencies\BaseComponent
     if($options->select_from_root->is_set()){
       $options->parent_pk = $root_item;
     }
-    
+
     //Get menu items.
     $menu_items =
       

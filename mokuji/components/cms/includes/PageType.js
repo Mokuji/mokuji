@@ -31,7 +31,7 @@
         //Add new CSS links to the header.
         for(var i = 0; i < definition.css.length; i++){
           $('head').append('<link />', {
-            class: "pagetype-css",
+            "class": "pagetype-css",
             rel:  "stylesheet",
             type: "text/css",
             href: pageTypeFolder + definition.css[i]

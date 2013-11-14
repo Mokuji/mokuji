@@ -1875,15 +1875,18 @@ body.cursor_disabled{
 }
   .pagetypes-list li{
     display:inline-block;
+    background:none;
     margin-bottom:20px;
   }
     .pagetypes-list li a{
       display:block;
       text-align:center;
       border-radius:5px;
-      background-color:#fff;
+      background:#fff;
+      background:rgba(255, 255, 255, 0.4);
       padding:10px;
       border:solid #ccc 1px;
+      min-width:160px;
     }
     .pagetypes-list li a:hover{
       background-color:#2b3241;

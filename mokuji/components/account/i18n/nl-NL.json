@@ -6,7 +6,8 @@
   "PROFILE_VIEW_TITLE": "Profiel",
   "PROFILE_VIEW_DESCRIPTION": "Profiel pagina, geeft uw gebruikersinformatie weer",
   
-  
+  "LOGIN_FORM_VIEW_TITLE": "Login-pagina",
+  "LOGIN_FORM_VIEW_DESCRIPTION": "Creëer een loginpagina",
   
   "CLAIMING_ACCOUNT_SUCCEEDED" : "Je hebt je account succesvol geactiveerd. Je wordt binnen 3 seconden naar de home-pagina verwezen.",
   

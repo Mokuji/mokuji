@@ -40,7 +40,7 @@ class Sections extends \dependencies\BaseViews
         $view = $view_arr[1];
         break;
     }
-    
+
     $paths = array(
       'theme' => URL_THEMES.'cms_backend/',
       'template' => URL_TEMPLATES.'cms_backend/',
@@ -440,6 +440,13 @@ class Sections extends \dependencies\BaseViews
     
     return tx('Component')->views($view->component->name)->get_html($view->name);
       
+  }
+
+  protected function dashboard()
+  {
+
+    
+
   }
 
 }

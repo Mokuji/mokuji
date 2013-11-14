@@ -32,12 +32,13 @@ class Modules extends \dependencies\BaseViews
   {
 
     $menu_items = $this->helper('get_menu_items', $options);
-    
+
     #TEMP: Default options.
     $options = Data(array(
       'show_unlinked' => false,
       'show_unauthorised' => false
     ))->merge($options);
+
 
     //Create menu.
     $menu =
@@ -48,13 +49,13 @@ class Modules extends \dependencies\BaseViews
 
         //If menu items are found:
         ->success(function($items)use($options, $menu_items){
-          
+
           //Get the selected items.
           $selected_items = tx('Sql')
             ->table('menu', 'MenuItems')
             ->where('page_id', tx('Data')->get->pid->get('int'))
             ->execute();
-          
+
           //Show a 'select menu'.
           if($options->display_select_menu->get('bool') == true){
 
