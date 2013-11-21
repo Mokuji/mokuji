@@ -10,7 +10,7 @@ if(!$user->check('login')):
 
 ?>
 
-<form method="POST" action="<?php echo url('rest=account/user_session',1); ?>"  id="login_form" class="login-form">
+<form method="POST" action="<?php echo url('rest=account/user_session', 1); ?>"  id="login_form" class="login-form">
   
   <h1><?php __('LOGIN_VERB'); ?></h1>
   
