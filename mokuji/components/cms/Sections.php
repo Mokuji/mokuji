@@ -336,10 +336,12 @@ class Sections extends \dependencies\BaseViews
   protected function admin_toolbar()
   {
     
+    $url = mk('Config')->system('cms_url')->get();
+    
     return array(
-      'website_url'=>url(URL_BASE.'?menu=KEEP&pid=KEEP', true),
+      'website_url'=>url(URL_BASE.'?menu=KEEP&pid='.($url ? $url->getPageId() : 'KEEP'), true),
       'edit_url'=>url(URL_BASE.'?action=cms/editable', true),
-      'advanced_url'=>url(URL_BASE.'admin/index.php?menu=KEEP&pid=KEEP', true),
+      'advanced_url'=>url(URL_BASE.'admin/index.php?menu=KEEP&pid='.($url ? $url->getPageId() : 'KEEP'), true),
       'admin_url'=>url(URL_BASE.'admin/index.php', true)
     );
     

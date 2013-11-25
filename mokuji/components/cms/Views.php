@@ -15,8 +15,10 @@ class Views extends \dependencies\BaseViews
     
     #TODO: Handle page restrictions and throw an \exception\Authorisation in case necessary.
     
+    $url = mk('Config')->system('cms_url')->get();
+    
     //Get page information and options from the database.
-    $page_info = $this->helper('get_page_info', tx('Data')->get->pid);
+    $page_info = $this->helper('get_page_info', $url->getPageId());
     $options = $this->helper('get_page_options', $page_info->id);
     
     //Parse additional keys.
@@ -229,6 +231,7 @@ class Views extends \dependencies\BaseViews
     $values = array();
     $settings = array(
       'homepage',
+      'cms_url_format',
       'login_page',
       'template_id',
       'forced_template_id',

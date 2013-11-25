@@ -19,13 +19,9 @@ RewriteRule ^/?rest/(.+)$ index.php?_RESTROUTE=$1 [E=MK_ENV:rest,L,QSA]
 # Rewrite for the different environments.
 RewriteRule ^/?(admin|install)(/(.+))? $3 [E=MK_ENV:$1,QSA]
 
-#Pages format: /<pid>/<pkey>
+# Redirect to Mokuji index.
 RewriteRule ^/?mokuji - [S=1]
-RewriteRule ^/?(\d+)/?([\w-]*)(\.html|/)?$ index.php?pid=$1&pkey=$2 [L,QSA]
-
-#Pages format: /<pid>/<pkey>/<page_key_extensions>
-RewriteRule ^/?mokuji - [S=1]
-RewriteRule ^/?(\d+)/?([\w-]+)/([\w/-/]+)(\.html)?$ index.php?pid=$1&pkey=$2&pkey_ext=$3 [L,QSA]
+RewriteRule ^.*$ index.php [L,QSA]
 
 
 # ----------------------------------------------------------------------

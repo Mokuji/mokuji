@@ -23,6 +23,16 @@ mk('Sql')->model('cms', 'CmsConfig')->merge($data->values)
           'title' => 'Homepage',
           'type' => 'TextField'
         ),
+        'cms_url_format[default]' => array(
+          'title' => 'URL format',
+          'type' => 'SelectField',
+          'options' => array(
+            'LEGACY' => transf('cms', '{0} (Legacy)', '/?pid=1'),
+            'SIMPLE_KEYS' => transf('cms', '{0} (Simple keys)', '/about'),
+            'ID_BASED' => transf('cms', '{0} (ID based)', '/1/about'),
+            'LANGUAGE_AND_KEYS' => transf('cms', '{0} (Language and keys)', '/en/about')
+          )
+        ),
         'login_page[default]' => array(
           'title' => 'Login page',
           'type' => 'TextField'
