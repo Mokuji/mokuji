@@ -927,18 +927,36 @@ function request(){
       
       'keyup on urlKeys': function(e){
         
-        var $target = $(e.target)
-          , val = $target.val();
-          
-        if(val.length == 0)
-          val = $target.attr('placeholder');
+        var $target = $(e.target);
         
+        //First of all, keep the key valid.
+        $target.val(this.asUrlKey($target.val(), true));
+        
+        //Secondly, fall back on the recommendation if there's no value.
+        var val = $target.val() || $target.attr('placeholder');
+        
+        //Insert the URL-key into the example.
         $target.closest('.ctrlHolder').find('.key-section').text(val);
         
       },
       
+      'blur on urlKeys': function(e){
+        var $target = $(e.target);
+        var newVal = this.asUrlKey($target.val());
+        if($target.val() !== newVal){
+          $target.val(newVal);
+          $target.trigger('keyup');
+        }
+      },
+      
       'keyup on pageTitle': function(e){
         this.updateDefault(e.target, 'title');
+        var $what = $(e.target);
+        var val = $what.val() || $what.closest('.multilingual-section').find('.page-title-recommendation').val();
+        var lang = $what.closest('.multilingual-section').attr('data-language-id');
+        this.updateUrlKey(val, lang);
+        if(lang == app.options.language_id)
+          app.Page.updateTitle(val);
       },
       
       'keyup on pageDescription': function(e){
@@ -953,10 +971,41 @@ function request(){
     
     render: function(data){
       
+      var self = this;
       this.view
         .html($(this.template).tmpl(data))
         .find(this.form)
-        .restForm();
+        .restForm({
+          beforeSubmit:function(data){
+            
+            //For each language, check whether the URL-key should use it's recommendation.
+            //And while we're at it, do a final validation.
+            for(var langId in data.info){
+              
+              $target = self.view
+                .find('.multilingual-section[data-language-id='+langId+']')
+                .find('.page-key');
+              
+              data.info[langId].url_key = self.asUrlKey(
+                (!data.info[langId].url_key) ? $target.attr('placeholder') : $target.val()
+              );
+              
+            }
+            
+          }
+        });
+      
+      //For each language, check whether the URL-key is equal to the recommendation.
+      for(var langId in data.page.info){
+        var title = data.page.info[langId].title || data.page.info[langId].title_recommendation;
+        var areEqual = this.asUrlKey(title) === data.page.info[langId].url_key;
+         self.view
+          .find('.multilingual-section[data-language-id='+langId+']')
+          .find('.page-key')
+          //Set the URL-key on the placeholder besides the field contents.
+          .attr('placeholder', this.asUrlKey(title))
+          .val(areEqual ? '' : data.page.info[langId].url_key);
+      }
       
       this.refreshElements();
       this.pageTitle.trigger('keyup');
@@ -991,12 +1040,45 @@ function request(){
         if(app.options.language_id == languageId)
           app.Page.updateTitle($title.val() ? $title.val() : $title.attr('placeholder'));
       }
+      this.updateUrlKey(title, languageId);
     },
     
     updateDefault: function(which, what){
       var $which = $(which)
         , $targets = $which.closest('.multilingual-section').find('.defaults-to-'+what);
       $targets.attr('placeholder', $which.val() ? $which.val() : $which.attr('placeholder'));
+    },
+    
+    updateUrlKey: function(title, languageId){
+      
+      var urlKey = this.asUrlKey(title);
+      this.view.find('.page-key')
+      
+      if(languageId === 'ALL'){
+        this.view.find('.page-key').attr('placeholder', urlKey);
+      }else{
+        $langSection = this.view.find('.multilingual-section[data-language-id='+languageId+']');
+        $langSection.find('.page-key').attr('placeholder', urlKey);
+      }
+      
+    },
+    
+    asUrlKey: function(title, typing){
+      
+      var urlKey = (title || '').toLowerCase();
+      typing = !!typing;
+      
+      //Phase 1: Remove weird characters and replace some with dashes.
+      urlKey = urlKey.replace(/[\s_\.\-]+/g, '-').replace(/[^\w\-]+/g, '');
+      
+      //Phase 2: Trim start and end dashes.
+      urlKey = urlKey.replace(/^[-]+/, '');
+      
+      //End slashes should only be trimmed when not typing.
+      if(!typing)
+        urlKey = urlKey.replace(/[-]+$/, '');
+      
+      return urlKey;
     }
     
   });
