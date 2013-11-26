@@ -1,5 +1,12 @@
 # ----------------------------------------------------------------------
-# URL keys
+# Options
+# ----------------------------------------------------------------------
+# Don't index directories.
+Options -Indexes
+
+
+# ----------------------------------------------------------------------
+# URL routing
 # ----------------------------------------------------------------------
 
 RewriteEngine On
@@ -20,7 +27,7 @@ RewriteRule ^/?rest/(.+)$ index.php?_RESTROUTE=$1 [E=MK_ENV:rest,L,QSA]
 RewriteRule ^/?(admin|install)(/(.+))? $3 [E=MK_ENV:$1,QSA]
 
 # Redirect to Mokuji index.
-RewriteRule ^/?mokuji - [S=1]
+RewriteRule ^/?mokuji/ - [S=1]
 RewriteRule ^.*$ index.php [L,QSA]
 
 

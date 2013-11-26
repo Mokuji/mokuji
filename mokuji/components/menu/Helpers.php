@@ -22,7 +22,7 @@ class Helpers extends \dependencies\BaseComponent
     $menu = mk('Url')->url->data->menu;
     
     //Fallback is to find a unique link.
-    if($menu->is_empty()){
+    if($menu->is_empty() || $menu->get('string') === 'false'){
       
       return mk('Sql')->table('menu', 'MenuItems')
         ->where('page_id', mk('Url')->url->data->pid)

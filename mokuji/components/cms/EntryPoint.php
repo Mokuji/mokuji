@@ -330,14 +330,14 @@ class EntryPoint extends \dependencies\BaseEntryPoint
   {
     
     //First get a basic URL without query string.
-    $base_url = mk('Data')->server->REQUEST_URI->get('string');
+    $request_uri = mk('Data')->server->REQUEST_URI->get('string');
     
     //Strip the URL_PATH.
     if(URL_PATH)
-      $base_url = str_replace('/'.URL_PATH, '', $base_url);
+      $request_uri = str_replace('/'.URL_PATH, '', $request_uri);
     
     //Detect the URL format.
-    $url = UrlFormatFactory::format($base_url, $cast, $homepage);
+    $url = UrlFormatFactory::format($request_uri, $cast, $homepage);
     
     #TODO: Get rid of this by improving the core URL classes.
     //Implement a little hack, until the core classes are better.
@@ -353,7 +353,7 @@ class EntryPoint extends \dependencies\BaseEntryPoint
     }
     
     //If we should redirect, do that now.
-    if($cast)
+    if($cast && !$homepage)
     {
       
       //By the way, if a ?menu=1 optimization is in order, do that now as well.

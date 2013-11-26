@@ -1717,9 +1717,15 @@ function request(){
       //Grab the Home button.
       $('#topbar_menu .website a').on('click, mousedown', function(e){
         
-        var url = app.options.url_base +
-                  (app.Page.data.page ? '?pid=' + app.Page.data.page.id + '&' : '?') +
-                  (app.Item.data.item ? 'menu=' + app.Item.data.item.id : '');
+        var pid = app.Page.data.page ? 'pid=' + app.Page.data.page.id : null;
+        var menu = app.Item.data.item && app.Item.data.item.id ? 'menu=' + app.Item.data.item.id : null;
+        var url = app.options.url_base;
+        
+        if(pid)
+          url += '?'+pid;
+        
+        if(menu)
+          url += (pid ? '&' : '?')+menu;
         
         $(this).attr('href', url);
         
