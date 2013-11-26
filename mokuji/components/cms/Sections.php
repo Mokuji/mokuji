@@ -337,11 +337,12 @@ class Sections extends \dependencies\BaseViews
   {
     
     $url = mk('Config')->system('cms_url')->get();
+    $menu = mk('Component')->helpers('menu')->call('get_active_menu_item');
     
     return array(
-      'website_url'=>url(URL_BASE.'?menu=KEEP&pid='.($url ? $url->getPageId() : 'KEEP'), true),
+      'website_url'=>url(URL_BASE.'?menu='.$menu->id.'&pid='.($url ? $url->getPageId() : 'KEEP'), true),
       'edit_url'=>url(URL_BASE.'?action=cms/editable', true),
-      'advanced_url'=>url(URL_BASE.'admin/index.php?menu=KEEP&pid='.($url ? $url->getPageId() : 'KEEP'), true),
+      'advanced_url'=>url(URL_BASE.'admin/index.php?menu='.$menu->id.'&pid='.($url ? $url->getPageId() : 'KEEP'), true),
       'admin_url'=>url(URL_BASE.'admin/index.php', true)
     );
     

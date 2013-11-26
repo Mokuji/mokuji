@@ -86,7 +86,10 @@ class Modules extends \dependencies\BaseViews
           
           //Show a normal menu.
           $method = $options->as_hoptions->is_true() ? 'as_hoptions' : 'as_hlist';
-          return $items->{$method}(array('id'=>null, 'classes'=>$classes, 'value-location'=>$options->as_hoptions->is_true()), function($item, $key, $delta, &$properties)use(&$active_depth, $selected_items, $options){
+          return $items->{$method}(array('id'=>null, 'classes'=>$classes, 'value-location'=>$options->as_hoptions->is_true()), function($item, $key, $delta, &$properties)use(&$active_depth, $selected_items, $options, $items){
+            
+            //Workaround for conversion to Data (instead of preserving model).
+            $item = $items[$key];
             
             //Test if we are allowed to view this item.
             if(1
@@ -124,7 +127,7 @@ class Modules extends \dependencies\BaseViews
               } else {
                 return $item->depth->get() > $options->max_depth->get() ? false :
                   '<a href="'.
-                    url('pid='.$item->page_id.($options->keep_menu->get() == false ? '&menu='.$item->id : '&menu=KEEP'), true).
+                    url('pid='.$item->page_id.($options->keep_menu->get() == false ? '&menu='.($item->is_unique_link() ? 'NULL' : $item->id) : '&menu=KEEP'), true).
                   '">'.$item->title.'</a>';
               }
               

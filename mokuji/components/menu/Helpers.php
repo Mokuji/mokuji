@@ -7,8 +7,36 @@ class Helpers extends \dependencies\BaseComponent
     $default_permission = 2,
     $permissions = array(
       'get_menu_items' => 0,
-      'get_root_item' => 0
+      'get_root_item' => 0,
+      'get_active_menu' => 0
     );
+  
+  /**
+   * Finds the menu item that's currently active.
+   * @return \components\menu\models\MenuItem
+   */
+  public function get_active_menu_item()
+  {
+    
+    //Try the URL first.
+    $menu = mk('Url')->url->data->menu;
+    
+    //Fallback is to find a unique link.
+    if($menu->is_empty()){
+      
+      return mk('Sql')->table('menu', 'MenuItems')
+        ->where('page_id', mk('Url')->url->data->pid)
+        ->execute_single();
+      
+    } else {
+      
+      return mk('Sql')->table('menu', 'MenuItems')
+        ->pk($menu)
+        ->execute_single();
+      
+    }
+    
+  }
   
   /**
    * Returns a result set with the menu items you asked for.

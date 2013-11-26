@@ -348,13 +348,29 @@ class EntryPoint extends \dependencies\BaseEntryPoint
     mk('Url')->url->rebuild_output();
     
     //Change language?
-    if($url->getLanguageId())
+    if($url->getLanguageId()){
       mk('Data')->session->tx->language->set($url->getLanguageId());
+    }
     
     //If we should redirect, do that now.
-    if($cast){
+    if($cast)
+    {
+      
+      //By the way, if a ?menu=1 optimization is in order, do that now as well.
+      if(mk('Data')->get->menu->is_set())
+      {
+        
+        $menu = mk('Component')->helpers('menu')->call('get_active_menu_item');
+        
+        if($menu->is_unique_link()){
+          mk('Data')->get->menu->un_set();
+        }
+        
+      }
+      
       header('Location: '.$url->output(mk('Data')->get));
       exit;
+      
     }
     
     //If not, we might want to adjust our language right away.
