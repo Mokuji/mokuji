@@ -18,6 +18,7 @@
 * [`private mixed $caching`](#property-caching)
 * [`private mixed $language_code`](#property-language_code)
 * [`private mixed $language_id`](#property-language_id)
+* [`private mixed $language_shortcode`](#property-language_shortcode)
 * [`private mixed $translating_started`](#property-translating_started)
 * [`private mixed $translations`](#property-translations)
 
@@ -25,6 +26,7 @@
 * [`public mixed __get($key)`](#method-__get)
 * [`public mixed get_language_code()`](#method-get_language_code)
 * [`public mixed get_language_id()`](#method-get_language_id)
+* [`public mixed get_language_shortcode()`](#method-get_language_shortcode)
 * [`public mixed get_languages()`](#method-get_languages)
 * [`public mixed init()`](#method-init)
 * [`public mixed multilanguage(\Closure $closure)`](#method-multilanguage)
@@ -73,6 +75,20 @@ In class: [core\Language](#top)
 
 ```
 private mixed $language_id
+```
+
+
+
+
+
+* Visibility: **private**
+
+
+## Property `$language_shortcode`
+In class: [core\Language](#top)
+
+```
+private mixed $language_shortcode
 ```
 
 
@@ -158,6 +174,24 @@ In class: [core\Language](#top)
 
 ```
 mixed core\Language::get_language_id()
+```
+
+
+
+
+
+* Visibility: **public**
+
+
+
+
+
+
+## Method `get_language_shortcode`
+In class: [core\Language](#top)
+
+```
+mixed core\Language::get_language_shortcode()
 ```
 
 

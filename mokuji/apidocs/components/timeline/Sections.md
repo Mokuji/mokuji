@@ -21,6 +21,7 @@
 
 **Methods**
 * [`protected mixed blogposts_entry($options)`](#method-blogposts_entry)
+* [`protected mixed feed($options)`](#method-feed)
 
 
 ## Inheritance index
@@ -97,7 +98,7 @@ protected mixed $default_permission = 2
 In class: [components\timeline\Sections](#top)
 
 ```
-protected mixed $permissions = array('blogposts_entry' => 0)
+protected mixed $permissions = array('feed' => 0, 'blogposts_entry' => 0)
 ```
 
 
@@ -397,6 +398,28 @@ In class: [components\timeline\Sections](#top)
 
 ```
 mixed components\timeline\Sections::blogposts_entry($options)
+```
+
+
+
+
+
+* Visibility: **protected**
+
+#### Arguments
+
+* $options **mixed**
+
+
+
+
+
+
+## Method `feed`
+In class: [components\timeline\Sections](#top)
+
+```
+mixed components\timeline\Sections::feed($options)
 ```
 
 

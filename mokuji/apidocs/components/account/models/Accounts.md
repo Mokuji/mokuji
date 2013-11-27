@@ -212,7 +212,7 @@ protected mixed $relation_preferences = array()
 In class: [components\account\models\Accounts](#top)
 
 ```
-protected mixed $relations = array('UserInfo' => array('id' => 'UserInfo.user_id'), 'AccountsToUserGroups' => array('id' => 'AccountsToUserGroups.user_id'), 'UserGroups' => array('id' => 'AccountsToUserGroups.user_id'))
+protected mixed $relations = array('UserInfo' => array('id' => 'UserInfo.user_id'), 'AccountsToUserGroups' => array('id' => 'AccountsToUserGroups.user_id'), 'UserGroups' => array('id' => 'AccountsToUserGroups.user_id'), 'UserLogins' => array('id' => 'UserLogins.user_id'))
 ```
 
 
