@@ -1,3 +1,21 @@
+#### [Version 0.27.6 Beta](https://github.com/Tuxion/mokuji/tree/0.27.6-beta)
+_27-Okt-2013_
+
+Account:
+* `/account/me` To get the user object.
+* `/account/login_status` To get the users access level.
+* Created controller factory and base controller.
+* Created SessionController.
+* Migrated user session business from Actions and Json to SessionController.
+
+Misc:
+* Added Mokuji logo to installation wizard.
+* Minor improvements in backend UI.
+* Fixed bug, so you can set a different entrypoint for front- and backend.
+* Added md5 to the hash algoritms to choose from. See commit message.
+* Fixed bugs caused by core updates and IE9.
+* Added ATOM feed based on timeline entries.
+
 #### [Version 0.27.5 Beta](https://github.com/Tuxion/mokuji/tree/0.27.5-beta)
 _13-Nov-2013_
 
