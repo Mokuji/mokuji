@@ -69,7 +69,7 @@ class Router
     
     //What's left?
     //Output! :D
-    header('Content-type: application/json; charset=utf8');
+    header('Content-type: application/json; charset=utf-8');
     echo Data($output)->as_json(JSON_UNESCAPED_UNICODE, \dependencies\Data::OPTION_UNSET_AS_NULL);
     
   }
@@ -183,7 +183,7 @@ class Router
       }
       
       //Return content as JSON.
-      header('Content-type: application/json; charset=utf8');
+      header('Content-type: application/json; charset=utf-8');
       $contents = Data($userfunc->return_value)->as_json(JSON_FORCE_OBJECT);
       
     }

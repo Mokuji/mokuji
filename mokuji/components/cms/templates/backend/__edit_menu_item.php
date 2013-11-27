@@ -88,7 +88,7 @@
       
       <div class="footer">
         
-        <input type="submit" id="save-menu-item" value="<?php __('Save'); ?>" />
+        <input type="submit" id="save-menu-item" class="button black" value="<?php __('Save'); ?>" />
         
       </div>
     

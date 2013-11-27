@@ -27,6 +27,8 @@ RewriteRule ^/?(\d+)/?([\w-]*)(\.html|/)?$ index.php?pid=$1&pkey=$2 [L,QSA]
 RewriteRule ^/?mokuji - [S=1]
 RewriteRule ^/?(\d+)/?([\w-]+)/([\w/-/]+)(\.html)?$ index.php?pid=$1&pkey=$2&pkey_ext=$3 [L,QSA]
 
+#Rewrite atom.xml to latest text items
+RewriteRule ^atom.xml$ index.php?section=timeline/feed
 
 # ----------------------------------------------------------------------
 # Gzip compression

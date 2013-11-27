@@ -12,7 +12,8 @@ class Accounts extends \dependencies\BaseModel
     $relations = array(
       'UserInfo' => array('id' => 'UserInfo.user_id'),
       'AccountsToUserGroups' => array('id' => 'AccountsToUserGroups.user_id'),
-      'UserGroups' => array('id' => 'AccountsToUserGroups.user_id')
+      'UserGroups' => array('id' => 'AccountsToUserGroups.user_id'),
+      'UserLogins' => array('id' => 'UserLogins.user_id')
     ),
     
     $validate = array(
