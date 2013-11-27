@@ -3,7 +3,8 @@
 use \dependencies\BaseComponent;
 use \dependencies\BaseViews;
 use \dependencies\Data;
-use \exceptions\Validation as ValidationException;
+use \dependencies\Validator;
+use \exception\Validation as ValidationException;
 
 class Controller extends BaseComponent
 {
@@ -119,10 +120,10 @@ class Controller extends BaseComponent
       $message = ucfirst($msg).'.';
       
       //Create the validation exception.
-      $e = new \exception\Validation("'%s' has an invalid format: %s", ucfirst($name), $message);
-      $e->key($this->key());
-      $e->value($this->get());
-      $e->title($name);
+      $e = new ValidationException("'%s' has an invalid format: %s", ucfirst($title), $message);
+      $e->key('data');
+      $e->value($data);
+      $e->title($title);
       $e->errors($errors);
       
       //Throw it.

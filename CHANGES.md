@@ -1,3 +1,8 @@
+#### [Version 0.27.7 Beta](https://github.com/Tuxion/mokuji/tree/0.27.7-beta)
+_27-Okt-2013_
+
+* Fixed a bug which occurred when trying to log in. Ouch.
+
 #### [Version 0.27.6 Beta](https://github.com/Tuxion/mokuji/tree/0.27.6-beta)
 _27-Okt-2013_
 
