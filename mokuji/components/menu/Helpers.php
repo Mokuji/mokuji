@@ -8,7 +8,7 @@ class Helpers extends \dependencies\BaseComponent
     $permissions = array(
       'get_menu_items' => 0,
       'get_root_item' => 0,
-      'get_active_menu' => 0
+      'get_active_menu_item' => 0
     );
   
   /**
