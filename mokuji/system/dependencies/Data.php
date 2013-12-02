@@ -310,10 +310,7 @@ class Data extends Successable implements \Serializable, \IteratorAggregate, \Ar
   {
     
     if($this->is_empty()){
-      if($unset_as_null === true)
-        return array(null);
-      else
-        return array();
+      return array();
     }
     
     if($this->is_leafnode()){
