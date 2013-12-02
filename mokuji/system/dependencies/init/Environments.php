@@ -180,8 +180,17 @@ abstract class Environments
         
         $title = $environment === self::BACKEND ? 'Backend' : 'Frontend';
         
+        //First get a basic URL.
+        $request_uri = str_replace((URL_PATH ? '/'.URL_PATH : ''), '', mk('Data')->server->REQUEST_URI->get('string'));
+        
+        //Strip the starting slash.
+        if($request_uri[0] == '/')
+          $request_uri = substr($request_uri, 1);
+        
         //Enter a pageload log line
-        mk('Logging')->log('Core', $title.' pageload', mk('Url')->url->input, true);
+        $location = URL_BASE.$request_uri;
+        
+        mk('Logging')->log('Core', $title.' pageload', $location, true);
         
         mk('Account');    //check account details and progress user activity
         mk('Data');       //start filtering data
@@ -199,8 +208,18 @@ abstract class Environments
       
       case self::INSTALL:
         
+        //First get a basic URL.
+        $request_uri = str_replace((URL_PATH ? '/'.URL_PATH : ''), '', mk('Data')->server->REQUEST_URI->get('string'));
+        
+        //Strip the starting slash.
+        if($request_uri[0] == '/')
+          $request_uri = substr($request_uri, 1);
+        
         //Enter a pageload log line
-        mk('Logging')->log('Core', 'Install Pageload', mk('Url')->url->input, true);
+        $location = URL_BASE.$request_uri;
+        
+        //Enter a pageload log line
+        mk('Logging')->log('Core', 'Install Pageload', $location, true);
         
         mk('Data');       //start filtering data
         mk('Editable');   //check if the website is editable

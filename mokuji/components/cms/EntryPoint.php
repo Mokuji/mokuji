@@ -336,16 +336,28 @@ class EntryPoint extends \dependencies\BaseEntryPoint
     if(URL_PATH)
       $request_uri = str_replace('/'.URL_PATH, '', $request_uri);
     
-    //Detect the URL format.
-    $url = UrlFormatFactory::format($request_uri, $cast, $homepage);
+    try{
+      
+      //Detect the URL format.
+      $url = UrlFormatFactory::format($request_uri, $cast, $homepage);
+      
+      #TODO: Get rid of this by improving the core URL classes.
+      //Implement a little hack, until the core classes are better.
+      $QS = mk('Url')->url->data->merge(array(
+        'pid' => $url->getPageId()
+      ))->as_array();
+      mk('Url')->url->segments->query->set(http_build_query($QS, null, '&'));
+      mk('Url')->url->rebuild_output();
+      
+    }
     
-    #TODO: Get rid of this by improving the core URL classes.
-    //Implement a little hack, until the core classes are better.
-    $QS = mk('Url')->url->data->merge(array(
-      'pid' => $url->getPageId()
-    ))->as_array();
-    mk('Url')->url->segments->query->set(http_build_query($QS, null, '&'));
-    mk('Url')->url->rebuild_output();
+    catch(\exception\NotFound $nfex){
+      
+      //Improve 404 message.
+      throw new \exception\NotFound(transf('cms', 'The page you\'re looking for could not be found'));
+      
+    }
+    
     
     //Change language?
     if($url->getLanguageId()){
