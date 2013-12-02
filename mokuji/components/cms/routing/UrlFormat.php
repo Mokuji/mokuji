@@ -93,7 +93,13 @@ abstract class UrlFormat
   protected function useHomepage()
   {
     
-    //Try parse the homepage setting for the page information (regardless of it's format).
+    //That is, if we even have a homepage.
+    if(!mk('Config')->user('homepage')->is_set()){
+      #TODO: Notify admin.
+      throw new \exception\Expected('No homepage has been set.');
+    }
+    
+    //Try parse the homepage setting for the URL information (regardless of it's format).
     try{
       $homepage = UrlFormatFactory::detect(mk('Config')->user('homepage')->get());
       $this->fromUrlFormat($homepage);

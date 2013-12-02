@@ -25,9 +25,24 @@ class LanguageAndKeysUrlFormat extends UrlFormat
   public static function validate($url)
   {
     
-    //Instances of UrlFormat are always fine.
+    //Instances of UrlFormat are OK when they can produce a valid URL-key.
     if($url instanceof UrlFormat)
-      return true;
+    {
+      
+      try{
+        if(empty($url->getUrlKey())) return false;
+      }
+      
+      catch(\Exception $ex){
+        return false;
+      }
+      
+      $key = $url->getUrlKey();
+      
+      //Should be at least 3 characters and not an integer.
+      return strlen($key) >= 3 && ((string)intval($key) !== (string)$key);
+      
+    }
     
     //Loading the homepage is always fine.
     if($url === '/')
@@ -64,15 +79,15 @@ class LanguageAndKeysUrlFormat extends UrlFormat
   public function __construct($url)
   {
     
+    //Just to make sure.
+    if(!self::validate($url))
+      throw new \exception\InvalidArgument('The URL has an invalid format. Try detecting the format instead.');
+    
     //Instances of UrlFormat are an easy source.
     if($url instanceof UrlFormat){
       $this->fromUrlFormat($url);
       return;
     }
-    
-    //Just to make sure.
-    if(!self::validate($url))
-      throw new \exception\InvalidArgument('The URL has an invalid format. Try detecting the format instead.');
     
     //If this is the homepage, don't attempt to parse.
     if($url === '/'){

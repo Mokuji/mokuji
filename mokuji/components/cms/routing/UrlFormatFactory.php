@@ -26,7 +26,13 @@ abstract class UrlFormatFactory
     $formatClass = self::getPrefferedFormatClassName();
     $cast = get_class($format) !== $formatClass;
     if($cast){
-      $format = new $formatClass($format);
+      try{
+        $format = new $formatClass($format);
+      }
+      catch(\exception\InvalidArgument $iaex){
+        #TODO: Notify admin about this page not being able to change to the preferred format.
+        $cast = false;
+      }
     }
     
     return $format;
@@ -68,8 +74,13 @@ abstract class UrlFormatFactory
     
     //If we are loading the homepage, recurse.
     if($base_url === '/'){
-      $homepage = true;
-      return UrlFormatFactory::detect(mk('Config')->user('homepage')->get());
+      if(mk('Config')->user('homepage')->is_set()){
+        $homepage = true;
+        return UrlFormatFactory::detect(mk('Config')->user('homepage')->get());
+      }else{
+        #TODO: Notify admin.
+        throw new \exception\Expected('No homepage has been set.');
+      }
     }
     
     //Detect in order of likeliness that it is used.
