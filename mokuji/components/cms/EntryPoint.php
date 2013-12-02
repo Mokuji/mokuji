@@ -349,12 +349,16 @@ class EntryPoint extends \dependencies\BaseEntryPoint
       mk('Url')->url->segments->query->set(http_build_query($QS, null, '&'));
       mk('Url')->url->rebuild_output();
       
+      //To check for legacy / ID based pages.
+      $url->getUrlKey();
+      
     }
     
     catch(\exception\NotFound $nfex){
       
       //Improve 404 message.
-      throw new \exception\NotFound(transf('cms', 'The page you\'re looking for could not be found'));
+      set_status_header(404);
+      throw new \exception\NotFound(transf('cms', 'The page you\'re looking for could not be found.'));
       
     }
     
