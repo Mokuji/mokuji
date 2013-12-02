@@ -6,9 +6,10 @@
   "PROFILE_VIEW_TITLE": "Profiel",
   "PROFILE_VIEW_DESCRIPTION": "Profiel pagina, geeft uw gebruikersinformatie weer",
   
+  "LOGIN_FORM_VIEW_TITLE": "Login-pagina",
+  "LOGIN_FORM_VIEW_DESCRIPTION": "Creëer een loginpagina",
   
-  
-  "CLAIMING_ACCOUNT_SUCCEEDED" : "Je hebt je account succesvol geclaimed. Je wordt binnen 3 seconden naar de home-pagina verwezen.",
+  "CLAIMING_ACCOUNT_SUCCEEDED" : "Je hebt je account succesvol geactiveerd. Je wordt binnen 3 seconden naar de home-pagina verwezen.",
   
   "EXCEL_SAVE_AS_CSV": "In Excel: 'Bestand', 'Opslaan als...', Kies als type 'CSV (*.csv)'",
   
@@ -19,7 +20,7 @@
   "PASSWORD_FORGOTTEN_INTRO_P1": "Vul alsjeblieft het formulier in om een wachtwoord reset uit te voeren.",
   "PASSWORD_RECOVERY_TOKEN_INVALID_P1": "Het opgegeven beveilings kenmerk is ongeldig. Houd in de gaten dat kenmerken maximaal een uur bruikbaar zijn. Herstart alsjeblieft het wachtwoordherstelproces.",
   "PASSWORD_RECOVERED_SUCCESSFULLY_P1": "Je wachtwoord is succesvol aangepast. Vanaf nu kan je met je nieuwe wachtwoord inloggen.",
-  "PLEASE_CLAIM_ACCOUNT_P1": "Claim nu alsjeblieft je account door een account wachtwoord in te stellen.",
+  "PLEASE_CLAIM_ACCOUNT_P1": "Activeer nu je account door een account wachtwoord in te stellen.",
   
   
   

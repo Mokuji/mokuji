@@ -1,5 +1,6 @@
 {
   "title": "Mokuji core",
+  "old_title": "Tuxion CMS core",
   "description": "De core van Mokuji.",
   "type": "manual",
   "dbUpdates": true,

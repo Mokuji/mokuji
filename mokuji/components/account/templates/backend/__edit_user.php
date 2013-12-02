@@ -28,11 +28,6 @@ $uid = tx('Security')->random_string(20);
   </div>
   
   <div class="ctrlHolder">
-    <label for="l_preposition" accesskey="t"><?php __('Preposition'); ?></label>
-    <input class="big large" type="text" id="l_preposition" name="preposition" value="<?php echo $edit_user->preposition; ?>" />
-  </div>
-  
-  <div class="ctrlHolder">
     <label for="l_family_name" accesskey="l"><?php __('Last name'); ?></label>
     <input class="big large" type="text" id="l_family_name" name="family_name" value="<?php echo $edit_user->family_name; ?>" />
   </div>
@@ -61,29 +56,41 @@ $uid = tx('Security')->random_string(20);
     </div>
   <?php endif; ?>
   
+  <?php
+
+  $all_usergroups = tx('Sql')
+    ->table('account', 'UserGroups')
+    ->order('title')
+    ->execute();
+
+  //Show the usergroups, but only if there are any.
+  if($all_usergroups->size() > 0)
+  {
+    ?>
+
   <fieldset class="fieldset-user-groups">
     
     <legend><?php echo __($names->component, 'Member of groups'); ?></legend>
     
     <ul>
       <?php
-      
+
       $usersGroups = $data->groups->map(function($group){
         return $group->id->get('string');
       })->as_array();
       
-      tx('Sql')
-        ->table('account', 'UserGroups')
-        ->order('title')
-        ->execute()
-        ->each(function($group)use($usersGroups){
-          echo '<li><label><input type="checkbox" name="user_group['.$group->id.']" value="1"'.(in_array($group->id->get(), $usersGroups) ? ' CHECKED' : '').' /> '.$group->title.'</label></li>'.n;
-        });
-      
+      $all_usergroups->each(function($group)use($usersGroups){
+        echo '<li><label><input type="checkbox" name="user_group['.$group->id.']" value="1"'.(in_array($group->id->get(), $usersGroups) ? ' CHECKED' : '').' /> '.$group->title.'</label></li>'.n;
+      });
+     
       ?>
     </ul>
     
   </fieldset>
+
+    <?php
+  }
+  ?>
   
   <div class="buttonHolder">
     <input class="primaryAction button black" type="submit" value="<?php __('Save'); ?>" />
