@@ -21,7 +21,7 @@ function curl_call($url, $post=array())
     CURLOPT_TIMEOUT        => 60,
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_FOLLOWLOCATION => true,
-    CURLOPT_USERAGENT      => 'tx.cms-curl_call-1.0',
+    CURLOPT_USERAGENT      => 'mokuji-curl_call-1.0',
   );
   
   //Take the URL and post fields from arguments.
