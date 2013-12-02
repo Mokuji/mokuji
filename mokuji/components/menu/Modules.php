@@ -127,7 +127,10 @@ class Modules extends \dependencies\BaseViews
               } else {
                 return $item->depth->get() > $options->max_depth->get() ? false :
                   '<a href="'.
-                    url('pid='.$item->page_id.($options->keep_menu->get() == false ? '&menu='.($item->is_unique_link() ? 'NULL' : $item->id) : '&menu=KEEP'), true).
+                    \components\cms\routing\UrlFormatFactory::format('/?pid='.$item->page_id)
+                      ->output(array(
+                        'menu' => ($options->keep_menu->get() == false ? ($item->is_unique_link() ? null : $item->id) : mk('Url')->url->menu->get())
+                      )).
                   '">'.$item->title.'</a>';
               }
               

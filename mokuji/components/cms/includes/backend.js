@@ -938,6 +938,8 @@ function request(){
         //Insert the URL-key into the example.
         $target.closest('.ctrlHolder').find('.key-section').text(val);
         
+        this.detectUrlKeyProblems();
+        
       },
       
       'blur on urlKeys': function(e){
@@ -947,6 +949,7 @@ function request(){
           $target.val(newVal);
           $target.trigger('keyup');
         }
+        this.detectUrlKeyProblems();
       },
       
       'keyup on pageTitle': function(e){
@@ -1049,17 +1052,57 @@ function request(){
       $targets.attr('placeholder', $which.val() ? $which.val() : $which.attr('placeholder'));
     },
     
+    detectUrlKeyProblems: function(){
+      
+      var self = this;
+      
+      this.view.find('.page-key').each(function(){
+        
+        var $key = $(this);
+        var val = self.asUrlKey($key.val() ? $key.val() : $key.attr('placeholder'));
+        var error = null;
+        
+        if(val.length < 3 || val.length > 255)
+          error = transf('cms', 'Invalid URL-key, length must be between 3 and 255 characters.');
+        else if(parseInt(val, 10).toString() === val)
+          error = transf('cms', 'Invalid URL-key, value may not be a number.');
+        
+        var $ctrl = $key.closest('div');
+        $ctrl.find('.validation-error').remove();
+        if(error){
+          $ctrl.append($('<span>', {text:error, 'class':'validation-error'}));
+        }
+        
+      });
+      
+    },
+    
     updateUrlKey: function(title, languageId){
       
       var urlKey = this.asUrlKey(title);
-      this.view.find('.page-key')
       
       if(languageId === 'ALL'){
-        this.view.find('.page-key').attr('placeholder', urlKey);
-      }else{
-        $langSection = this.view.find('.multilingual-section[data-language-id='+languageId+']');
-        $langSection.find('.page-key').attr('placeholder', urlKey);
+        this.view
+          
+          //Update key.
+          .find('.page-key').attr('placeholder', urlKey)
+          
+          //Update preview.
+          .closest('.ctrlHolder').find('.key-section').text(urlKey);
+          
       }
+      
+      else{
+        
+        $langSection = this.view.find('.multilingual-section[data-language-id='+languageId+']');
+        
+        $langSection
+          .find('.page-key').attr('placeholder', urlKey)
+          .closest('.ctrlHolder').find('.key-section').text(urlKey);
+        
+      }
+      
+      this.detectUrlKeyProblems();
       
     },
     
