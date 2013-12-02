@@ -1,204 +1,49 @@
 <?php namespace dependencies; if(!defined('TX')) die('No direct access.');
 
-use \Closure;
-
-/**
- * The Table class, Mokuji's query-builder.
- *
- * @method {self} where1() where1(string $column, string $comparator, string $value)
- *
- *         Adds to the WHERE clause by providing a column in the format of
- *         `"[<model_id>.]<column_name>"`. The comparator may be omitted in which case
- *         `"="` is implied and `$value` takes its place in the argument order. Possible
- *         comparators are:
- *
- *         * `"="`: Equals
- *         * `">"`: More than
- *         * `"<"`: Less than
- *         * `">="`: More than or equals
- *         * `"<="`: Less than or equals
- *         * `"!"`: Doesn't equal
- *         * `"|"`: Contains
- *         * `"!|"`: Doesn't contain
- *         * `"IN"`: List contains
- *         * `"NOT IN"`: List doesn't contain
- *
- *         `$value` Contains the value to compare to.
- *
- * @method {self} where2() where2(Conditions $conditions)
- *
- *         Adds to the WHERE clause by providing a conditions object. See
- *         {@link Conditions} to find out how it can be used.
- *
- */
 class Table extends Successable
 {
-  
-  /**
-   * Contains the component name after construction.
-   * @see self::__construct()
-   * @var string
-   */
-  private $component;
-  
-  /**
-   * Contains the internal ID of the main model this instance was constructed with.
-   * @see self::__construct()
-   * @var string
-   */
-  private $model=false;
-  
-  /**
-   * Contains the internal ID of the model that operations will be applied to.
-   * @see self::workwith()
-   * @var string
-   */
-  private $working_model;
-  
-  /**
-   * Contains an associative array with model information using the models internal ID's as keys.
-   * @see self::add()
-   * @var array
-   */
-  private $models=array();
-  
-  /**
-   * Contains unprocessed information for building the SELECT clause.
-   * @see self::select()
-   * @see self::from()
-   * @see self::distinct()
-   * @var array
-   */
-  private $select=array();
-  
-  /**
-   * Contains whether the SELECT clause will be DISTINCT.
-   * @see self::distinct()
-   * @see self::select()
-   * @var boolean
-   */
-  private $distinct=false;
-  
-  /**
-   * Contains unprocessed information to build the SQL statements that make the results hierarchical.
-   * @see self::parent_pk()
-   * @see self::add_hierarchy()
-   * @see self::add_relative_depth()
-   * @see self::add_absolute_depth()
-   * @see self::max_depth()
-   * @var array
-   */
-  private $hierarchy=array();
-  
-  /**
-   * Contains unprocessed information for building the FROM clause.
-   * @see self::from()
-   * @see self::select()
-   * @var array
-   */
-  private $from=array();
-  
-  /**
-   * Contains unprocessed information for building the JOIN clause.
-   * @see self::join()
-   * @see self::inner()
-   * @see self::left()
-   * @see self::right()
-   * @var array
-   */
-  private $joins=array();
-  
-  /**
-   * Contains the preprocessed WHERE clause.
-   * @see self::where()
-   * @see self::pk()
-   * @see self::sk()
-   * @see self::parent_pk()
-   * @see self::filter()
-   * @var string
-   */
-  private $where = '';
-  
-  /**
-   * Contains unprocessed information for building the GROUP BY clause.
-   * @see self::group()
-   * @var array
-   */
-  private $group=array();
-  
-  /**
-   * Contains the preprocessed HAVING clause.
-   * @see self::having()
-   * @see self::where()
-   * @var string
-   */
-  private $having = '';
-  
-  /**
-   * Contains unprocessed information for building the ORDER BY clause.
-   * @see self::order()
-   * @var array
-   */
-  private $order=array();
-  
-  /**
-   * Contains the preprocessed LIMIT clause.
-   * @see self::limit()
-   * @see self::execute_single()
-   * @var string
-   */
-  private $limit;
-  
-  /**
-   * Contains the array of secondary keys on which the query results are filtered.
-   * @see self::sk()
-   * @var array
-   */
-  private $applied_sks=array();
+
+  private
+    $component=false,
+    $model=false,
+
+    $working_model,
+    $models=array(),
+
+    $select=array(),
+    $distinct=false,
+    $hierarchy=array(),
+    $from=array(),
+    $joins=array(),
+
+    $where = '',
+    $group=array(),
+    $having = '',
+    $order=array(),
+    $limit,
+    
+    $applied_sks=array();
 
 
   ###
   ###  SYSTEM
   ###
-  
-  /**
-   * Constructs a Table object.
-   *
-   * @param string $component The name of the component to look for the model in.
-   * @param string $model The name of the model to find.
-   * @param string $id An out-parameter that will receive the internal ID that was assigned to the model.
-   * @param array $models A reference to an array like {@link self::$models} to use instead of own models.
-   *
-   * @api
-   */
+
+  // Constructor setting the first model to use.
   public function __construct($component, $model, &$id=null, &$models=null)
   {
-    
-    //Set the component name.
+
     $this->component = $component;
-    
-    //Use external array of models?
+
     if(!is_null($models)){
       $this->models =& $models;
     }
-    
-    //Add the main model to the query.
+
     $this->add($model, $id);
-    
+
   }
-  
-  /**
-   * Invoke this class like a function to attain the internal ID of the main model.
-   *
-   * This is useful when the Table was constructed elsewhere and the internal ID can no
-   * longer be obtained via {@link self::__construct()}.
-   *
-   * @param string $id An out-parameter receiving the internal ID of the main model.
-   *
-   * @return self Chaining enabled.
-   *
-   * @api
-   */
+
+  // Fill the referenced variable with the name of the primary model for retrieval (mainly useful in subqueries)
   public function __invoke(&$id=null)
   {
     $id = $this->model;
@@ -211,177 +56,88 @@ class Table extends Successable
   ###  HIGH LEVEL PUBLIC FUNCTIONS
   ###
   
-  /**
-   * Call a helper function to do complex table operations.
-   *
-   * @param string $component The name of the component that has the helper function.
-   * @param string $name The name of the helper function to call. Note that this is the
-   *                     name _without_ the `table__` prefix that it must have in the
-   *                     component's Helpers class.
-   *
-   * @param mixed argument An argument to pass to the helper function.
-   *
-   * @param mixed ... The previous argument can be repeated indefinitely to add more
-   *                  arguments for the helper function.
-   *
-   * @return self Chaining enabled.
-   *
-   * @api
-   */
+  //Call a helper function to do complex table operations.
   public function helper($component, $name)
   {
     
-    //Shift the function arguments off the passing arguments.
     $args = func_get_args();
     $component = array_shift($args);
     $name = array_shift($args);
     
-    //Call the helper function, passing any arguments left on to it.
     tx('Component')->helpers($component)->_call('table__'.$name, array_merge(array($this), $args));
-    
-    //Enable chaining.
     return $this;
     
   }
   
-  /**
-   * Make the SELECT clause a DISTINCT select clause.
-   *
-   * @param boolean $value Can be set to false to disable distinct select.
-   *
-   * @return self Chaining enabled.
-   *
-   * @see self::select()
-   * @api
-   */
+  //Make a distinct select statement (if that's not already the case).
   public function distinct($value=true)
   {
     $this->distinct = $value !== false;
     return $this;
   }
   
-  /**
-   * Filter by primary keys.
-   *
-   * The amount of primary keys given must be exactly equal to the amount of primary keys
-   * in the table. This method adds a statement to the WHERE clause for each primary key.
-   * Settings this will therefore result in a single result in most cases, and works well
-   * together with {@link self::execute_single()}
-   *
-   * @param mixed primary_key The first value for the first primary key, or array of
-   *                          values for the first x primary keys.
-   *
-   * @param mixed ... The previous argument can be repeated indefinitely to add more
-   *                  primary keys.
-   *
-   * @throws \exception\InvalidArgument If The number of given keys doesn't match the
-   *                                    amount of primary keys defined in the model.
-   *
-   * @return self Chaining enabled.
-   *
-   * @see self::sk() Filter by secondary key.
-   * @see self::where() Filter by anything.
-   * @see self::execute_single() Executes the query and returns the first result.
-   * @api
-   */
+  // filter by primary keys
   public function pk()
   {
-    
-    //Prepare variables.
+
     $values = array_flatten(func_get_args());
     $working_model = $this->models[$this->working_model]['path'];
     $pk_fields = $working_model::table_data()->primary_keys->as_array();
-    
-    //Make sure the amount of keys given is correct.
+
+    //trace($pk_fields);
+
     if(count($values) !== count($pk_fields)){
-      throw new \exception\InvalidArgument(
-        'The number of values given does not match the amount of primary key fields. '.
-        'The primary key fields are: %s. You gave %s values.',
-        implode(', ', $pk_fields), func_num_args()
-      );
+      throw new \exception\InvalidArgument('The number of values given does not match the amount of primary key fields. The primary key fields are: %s. You gave %s values.', implode(', ', $pk_fields), func_num_args());
+      return $this;
     }
-    
-    //Iterate the primary keys in the model, adding filters for each of them to the WHERE clause.
+
     foreach($pk_fields as $pk){
       $this->where($pk, current($values));
       next($values);
     }
 
-    //Enable chaining.
     return $this;
 
   }
-  
-  /**
-   * Filter by secondary keys.
-   *
-   * This works the same as {@link self::pk()}, except it adds filters for the secondary
-   * keys defined in the model. Secondary keys are not unique, and therefore filtering by
-   * them does not imply a single result like primary key filtering does.
-   *
-   * @param mixed secondary_key The first value for the first secondary key, or array of
-   *                            values for the first x secondary keys.
-   *
-   * @param mixed ... The previous argument can be repeated indefinitely to add more
-   *                  secondary keys.
-   *
-   * @throws \exception\InvalidArgument If The number of given keys doesn't match the
-   *                                    amount of secondary keys defined in the model.
-   *
-   * @return self Chaining enabled.
-   *
-   * @see self::pk() Filter by primary key.
-   * @see self::where() Filter by anything.
-   * @api
-   */
+
+  //filter by secondary keys
   public function sk()
   {
     
-    //Prepare variables.
     $values = array_flatten(func_get_args());
     $working_model = $this->models[$this->working_model]['path'];
     $sk_fields = $working_model::model_data('secondary_keys');
     
-    //Make sure the amount of keys given is correct.
     if(count($values) !== count($sk_fields)){
-      throw new \exception\InvalidArgument(
-        'The number of values given does not match the amount of secondary key fields. '.
-        'The secondary key fields are: %s. You gave %s values.',
-        implode(', ', $sk_fields), func_num_args()
-      );
+      throw new \exception\InvalidArgument('The number of values given does not match the amount of primary key fields. The primary key fields are: %s. You gave %s values.', implode(', ', $pk_fields), func_num_args());
+      return $this;
     }
     
-    //Iterate the secondary keys in the model, adding filters for each of them to the WHERE clause.
     foreach($sk_fields as $sk){
       $this->applied_sks[$sk] = current($values);
       if(!is_null($sk)) $this->where($sk, current($values));
       next($values);
     }
     
-    //Enable chaining.
     return $this;
     
   }
-  
+
   /**
    * Filter by parent' primary key assuming a hierarchical table structure.
-   *
+   * 
    * @param boolean $include_parent Whether to include the parent node that matches the
    *                                given primary key(s). This parameter can be omitted
    *                                and will default to false.
-   *
+   * 
    * @param integer|array $value The value for the primary key to match against, or array
    *                             of primary keys to match against shared primary key.
-   *
-   * @param integer ... The previous parameter can be repeated indefinitely in order to
+   * 
+   * @param integer ... The above parameter can be repeated indefinitely in order to
    *                    achieve providing values for every primary key in case of shared
    *                    primary keys.
    *
    * @return self Chaining enabled.
-   *
-   * @see self::pk() Filter by normal primary key.
-   * @see self::add_hierarchy() Add hierarchy to the query.
-   * @api
    */
   public function parent_pk()
   {
@@ -441,15 +197,13 @@ class Table extends Successable
     return $this;
 
   }
-  
+
   /**
    * Make this query hierarchical.
-   *
+   * 
    * Adds stuff to the query needed to use a hierarchy based on hierarchy information
-   * defined in the current working model.
-   *
-   * This method is mostly used internally by all the methods that depend on the hierarchical structure.
-   *
+   * available in the working model.
+   * 
    * @return self Chaining enabled.
    */
   public function add_hierarchy()
@@ -502,166 +256,102 @@ class Table extends Successable
     return $this;
     
   }
-  
-  /**
-   * Add a depth field based on hierarchy.
-   *
-   * The depth field added by this method contains will contain the depth _relative to the
-   * root node_, therefore making it "absolute".
-   *
-   * @param string $as The field name that the absolute depth variable will become
-   *                   available under. Defaults to `abs_depth`.
-   *
-   * @return self Chaining enabled.
-   *
-   * @see self::add_relative_depth() Adds a depth field relative the the parent node.
-   * @api
-   */
+
+  // add a depth field based on hierarchy
   public function add_absolute_depth($as='abs_depth')
   {
     
-    //Make sure hierarchy is added.
     $this->add_hierarchy();
-    
-    //Prepare variables.
+
     $model_name = $this->models[$this->working_model]['name'];
     $model = $this->models[$this->working_model]['path'];
     $hierarchy = $model::model_data('hierarchy');
     $pks = $model::table_data()->primary_keys->as_array();
     $sks = $model::model_data('secondary_keys');
     
-    //Add a sub-query that we will use to track each rows hierarchical ancestors.
     $this->subquery($sq, $this->component, $model_name);
-    
-    //Make that sub-query.
+
     $sq($ancestors)
-    ->select("COUNT(*)", 'depth')
-    ->add($model_name, $leaf)
-    ->where("$ancestors.{$hierarchy['left']}", '<=', $hierarchy['left'])
-    ->where("$ancestors.{$hierarchy['right']}", '>=', $hierarchy['right']);
-    
-    //Iterate the working models primary keys to group by them, and select them as leaf-nodes.
+      ->select("COUNT(*)", 'depth')
+      ->add($model_name, $leaf)
+      ->where("$ancestors.{$hierarchy['left']}", '<=', $hierarchy['left'])
+      ->where("$ancestors.{$hierarchy['right']}", '>=', $hierarchy['right']);
+
     foreach($pks as $pk){
       $sq->group($pk);
       $sq->select($pk, 'leaf_'.$pk);
     }
-    
-    //Iterate over the secondary keys, and if they're applied, add filters for them to the ancestor-query.
-    foreach($sks as $sk){
+        
+    foreach($sks as $sk)
+    {
       if($this->applied_sks[$sk]){
         $sq->where("$ancestors.$sk", $this->applied_sks[$sk]);
       }
     }
-    
-    //Add the sub-query to the FROM clause, and select the depth from it.
+
     $this->from($sq, $id);
     $this->select("$id.depth", $as);
-    
-    //Set the primary keys in each row to the primary keys of the leafs.
+
     foreach($pks as $k => $pk){
       $this->pk("$id.leaf_$pk");
     }
     
-    //Add the absolute depth field to the hierarchy information array for later use.
     $this->hierarchy[$this->working_model]['abs_depth'] = $id;
-    
-    //Enable chaining.
+
     return $this;
 
   }
-  
-  /**
-   * Add a depth field based on hierarchy.
-   *
-   * The depth field added by this method contains will contain the depth _relative to the
-   * parent node_, therefore this method requires you to appoint a parent node first. This
-   * can be done using {@link self::parent_pk()}.
-   *
-   * @param string $as The field name that the relative depth variable will become
-   *                   available under. Defaults to `rel_depth`.
-   *
-   * @throws \exception\Restriction If No parent node was appointed beforehand.
-   *
-   * @return self Chaining Enabled.
-   *
-   * @see self::add_absolute_depth() Adds a depth field relative to the root node.
-   * @see self::parent_pk() Appoints a parent node by providing its primary key(s).
-   * @api
-   */
+
+  // add a depth field based on hierarchy
   public function add_relative_depth($as='rel_depth')
   {
-    
-    //Make sure hierarchy fields are available.
+
     $this->add_hierarchy();
-    
-    //Make sure a parent node was appointed.
+
     if(!array_key_exists('root', $this->hierarchy[$this->working_model])){
       throw new \exception\Restriction('Can only add a relative depth after a parent has been appointed as rootnode. Use ->parent_pk() to do this.');
     }
-    
-    //Prepare variables.
+
     $model_name = $this->models[$this->hierarchy[$this->working_model]['root']]['name'];
     $model = $this->models[$this->hierarchy[$this->working_model]['root']]['path'];
     $hierarchy = $model::model_data('hierarchy');
     $pks = $model::table_data()->primary_keys->as_array();
-    
-    //Create the sub-query that will keep track of each rows ancestors.
+
     $this->subquery($sq, $this->component, $model_name);
-    
-    //Build the ancestor query.
+
     $sq($ancestors)
-    ->select("COUNT(*)", 'depth')
-    ->add($model_name, $leaf)
-    ->where("$ancestors.{$hierarchy['left']}", '<=', $hierarchy['left'])
-    ->where("$ancestors.{$hierarchy['right']}", '>=', $hierarchy['right'])
-    ->add($model_name, $parent)
-    ->where("$ancestors.{$hierarchy['left']}", '>', $hierarchy['left'])
-    ->where("$ancestors.{$hierarchy['right']}", '<', $hierarchy['right']);
-    
-    //Add primary keys to the query.
+      ->select("COUNT(*)", 'depth')
+      ->add($model_name, $leaf)
+      ->where("$ancestors.{$hierarchy['left']}", '<=', $hierarchy['left'])
+      ->where("$ancestors.{$hierarchy['right']}", '>=', $hierarchy['right'])
+      ->add($model_name, $parent)
+      ->where("$ancestors.{$hierarchy['left']}", '>', $hierarchy['left'])
+      ->where("$ancestors.{$hierarchy['right']}", '<', $hierarchy['right']);
     foreach($this->hierarchy[$this->working_model]['root_pks'] as $pk=>$val){
       $sq->where($pk, $val);
     }
-    
-    //Add primary keys to the query.
+
     foreach($pks as $pk){
       $sq->group("$leaf.$pk");
       $sq->select("$leaf.$pk", "leaf_$pk");
+      //$sq->select("$parent.$pk", "parent_$pk");
     }
-    
-    //Add the sub-query to the FROM clause and select the depth field from it.
+
     $this->from($sq, $id);
     $this->select("$id.depth", $as);
-    
-    //Set the primary keys in each row to the primary keys of the leafs.
+
     foreach($pks as $k => $pk){
       $this->pk("$id.leaf_$pk");
+      //$this->pk("$id.parent_$pk");
     }
-    
-    //Add the absolute depth field to the hierarchy information array for later use.
+
     $this->hierarchy[$this->working_model]['rel_depth'] = $id;
-    
-    //Enable chaining.
+
     return $this;
 
   }
-  
-  /**
-   * Exclude all nodes with a depth greater than given value.
-   *
-   * "Depth" in this method refers to either the relative depth or absolute depth fields
-   * added by the respective methods; {@link self::add_absolute_depth()} or
-   * {@link self::add_relative_depth()}. When both fields are present, relative depth will
-   * be used.
-   *
-   * @param integer $gt The number of maximum depth.
-   *
-   * @return self Chaining enabled.
-   *
-   * @see self::add_absolute_depth() Adds a depth field relative to the root node.
-   * @see self::add_relative_depth() Adds a depth field relative to the parent node.
-   * @api
-   */
+
+  // exclude all nodes with a depth greater than given value
   public function max_depth($gt)
   {
 
@@ -684,149 +374,72 @@ class Table extends Successable
     return $this;
 
   }
-  
-  /**
-   * Sets join type of the last join to "INNER".
-   *
-   * This is an alias for `$this->set_jointype('INNER')`.
-   *
-   * @return self Chaining enabled.
-   *
-   * @see self::left() Set join type to "LEFT".
-   * @see self::right() Set join type to "RIGHT".
-   * @api
-   */
+
+  // Sets join type to INNER
   public function inner()
   {
     return $this->set_jointype('INNER');
   }
 
-  /**
-   * Sets join type of the last join to "LEFT".
-   *
-   * This is an alias for `$this->set_jointype('LEFT')`.
-   *
-   * @return self Chaining enabled.
-   *
-   * @see self::inner() Set join type to "INNER".
-   * @see self::right() Set join type to "RIGHT".
-   * @api
-   */
+  // Sets join type to LEFT
   public function left()
   {
     return $this->set_jointype('LEFT');
   }
-  
-  /**
-   * Sets join type of the last join to "RIGHT".
-   *
-   * This is an alias for `$this->set_jointype('RIGHT')`.
-   *
-   * @return self Chaining enabled.
-   *
-   * @see self::inner() Set join type to "INNER".
-   * @see self::left() Set join type to "LEFT".
-   * @api
-   */
+
+  // Sets join type to RIGHT
   public function right()
   {
     return $this->set_jointype('RIGHT');
   }
-  
-  /**
-   * Add statements to the WHERE clause automatically for given component filters.
-   *
-   * Components filters are current GET parameters, merged with the filters set in the
-   * session for the component.
-   *
-   * @param array|string filter_name The name of the filter variable, alternatively this
-   *                                 can be an array containing filter_name's as keys and
-   *                                 column_names as values.
-   *
-   * @param string column_name The column name that needs to make use of the filter. This
-   *                           is ignored when the first argument is an array.
-   *
-   * @throws \exception\InvalidArgument If the arguments have an unexpected format.
-   *
-   * @return self Chaining enabled.
-   *
-   * @see \core\Data::filter() for more information on what the filter variables are.
-   * @see self::where() Add to the where clause directly.
-   * @api
-   */
+
+  // give a names of filters that when set are added to the WHERE clause
   public function filter()
   {
-    
-    //Handle an array of filters by recursively calling this method.
-    if(func_num_args() == 1 && is_array(func_get_arg(0))){
+
+    if(func_num_args() == 1 && is_array(func_get_arg(0)))
+    {
+
       foreach(func_get_arg(0) as $filter => $column){
         call_user_func(array($this, 'filter'), $filter, $column);
       }
+
     }
-    
-    //Handle a key to key pair.
+
     elseif(func_num_args() == 2 && is_string(func_get_arg(0)))
     {
-      
-      //Reference the filter variable.
+
       $filter = tx('Data')->filter($this->component)->{func_get_arg(0)};
-      
-      //Add the filter to the WHERE clause if it is set.
+
       if($filter->is_set()){
         $this->where(func_get_arg(1), $filter);
       }
-      
+
     }
-    
-    //Invalid arguments.
+
     else{
-      throw new \exception\InvalidArgument(
-        'The ->filter() function accepts one or two arguments, an array containing '.
-        'filters or a filter name and matching column name.'
-      );
+      throw new \exception\InvalidArgument('The ->filter() function accepts one or two arguments, an array containing filters or a filter name and matching column name.');
     }
-    
-    //Enable chaining.
+
     return $this;
 
   }
-  
-  
-  
+
+
+
   ###
   ###  LOW LEVEL PUBLIC FUNCTIONS
   ###
-  
-  /**
-   * Add a model and make it the working model.
-   *
-   * This adds a model to the FROM clause, and makes it the new working right away.
-   *
-   * @param mixed $model See {@link self::get_model_info()} to find out what can be given.
-   * @param string $id This is an out-parameter that will receive the internal ID assigned to the new model.
-   *
-   * @return self Chaining enabled.
-   *
-   * @see self::select() Add something to the SELECT clause.
-   * @see self::workwith() Set a model as the working model.
-   * @api
-   */
+
+  // Add a model and make it the working model
   public function add($model, &$id=null)
   {
     $this->from($model, $id);
     $this->workwith($id);
     return $this;
   }
-  
-  /**
-   * Set the working model.
-   *
-   * @param string $id The internal ID of the model to set as working model.
-   *
-   * @return self Chaining enabled.
-   *
-   * @see self::add() Add a model.
-   */
+
+  // Set the working model
   public function workwith($id)
   {
 
@@ -839,131 +452,58 @@ class Table extends Successable
     return $this;
 
   }
-  
-  /**
-   * Adds a column to the SELECT clause.
-   *
-   * @param mixed $content See {@link self::prepare()} to find out what can be given here.
-   * @param string $as An optional alias to select this content by.
-   *
-   * @throws \exception\Restriction If The given alias is already in use.
-   *
-   * @return self Chaining enabled.
-   *
-   * @see self::from() Where do you select from?
-   * @see self::prepare() How given content is prepared.
-   * @api
-   */
+
+  // Adds a column to the SELECT clause
   public function select($content, $as=null)
   {
-    
-    //Use the content as an alias?
+
     if(is_null($as)){
-      $as = $content;
+      $this->select[$content] = $this->prepare($content);
     }
-    
-    //Make sure the alias is not yet in use.
-    if(array_key_exists($as, $this->select)){
-      throw new \exception\Restriction("Alias '%s' already in use.", $as);
+
+    else
+    {
+
+      if(array_key_exists($as, $this->select)){
+        throw new \exception\Restriction("Alias '%s' already in use.", $as);
+      }
+
+      $this->select[$as] = $this->prepare($content);
+
     }
-    
-    //Prepare the content and add it to the select array.
-    $this->select[$as] = $this->prepare($content);
-    
-    //Enable chaining.
+
     return $this;
-    
+
   }
-  
-  /**
-   * Add a model to the FROM clause.
-   *
-   * @param mixed $model See {@link self::get_model_info()} to see what can be given here.
-   * @param string $id An out-parameter which will receive the internal ID of the model.
-   *
-   * @return self Chaining enabled.
-   *
-   * @see self::select() Select something from the model.
-   * @see self::add() Add a new model to a FROM clause and make it the working model.
-   * @api
-   */
+
+  // Add a model to the FROM clause
   public function from($model, &$id=null)
   {
-    
-    //Prepare variables.
+
     $info = $this->get_model_info($model);
     $id = $info['id'];
 
-    //First added model becomes the primary model.
+    // set primary model
     if($this->model === false){
       $this->model = $id;
     }
-    
-    //Store the model in the FROM array.
+
     $this->models[$id] = $info;
     $this->from[] = array('model'=>$id);
-    
-    //Enable chaining.
     return $this;
 
   }
-  
-  /**
-   * Join a foreign model onto the working model.
-   *
-   * This method uses the `relations` information available on the local model or foreign
-   * model classes to determine which tables to join on which keys in order to join the
-   * model of the given name.
-   *
-   * You can define these relations in your model by setting the static `$relations`
-   * property in the model class to an array, formatted as follows:
-   *
-   * ```php
-   * static $relations = array(
-   *   "<foreign_model_name>" => array(
-   *     "<local_column_name>" => "<join_model_name>.<join_column_name>"[,
-   *     "<join_type>"]
-   *   )
-   * );
-   * ```
-   *
-   * - `<foreign_model_name>`: The model that can be joined.
-   * - `<local_column_name>`: The column name in this model that the join column will be linked to.
-   * - `<join_model_name>`: The first model to join in order to get to the foreign model.
-   * - `<join_column_name>`: The name of the column that links to the local column.
-   *
-   * In most cases, the `<join_model_name>` will be equal to the `<foreign_model_name>`
-   * for a direct join path. They can however differ to create a longer path of joins, in
-   * this case, the `<join_model_name>` will be joined at first and `join()` will look
-   * into that model for further relations with the eventual `<foreign_model_name>`. This
-   * is useful for joining a foreign model through a link table that has 2 foreign keys.
-   *
-   * @param string $model_name The name of the foreign model. Can be set to
-   *                           `"__CURRENT__"` in order to use the current working model
-   *                           when `$join_conditions` is provided.
-   *
-   * @param string $id The out-parameter which will receive the internal ID that gets
-   *                   assigned to the model.
-   *
-   * @param \Closure $join_conditions An optional closure which can modify the Conditions
-   *                                  object in order to change the "ON" clause of this
-   *                                  join. This closure is executed once when generating
-   *                                  the ON clause and will receive the following
-   *                                  arguments: The internal ID of the local model, the
-   *                                  internal ID of the foreign model, and the Conditions
-   *                                  object. See {@link Conditions} to find out how the
-   *                                  object can be modified.
-   *
-   * @return self Chaining enabled.
-   *
-   * @see Conditions The Conditions class used to create the ON clause and modifiable by `$join_conditions`.
-   * @see self::workwith() Change the working model.
-   * @api
-   */
-  public function join($model_name, &$id=null, Closure $join_conditions=null)
+
+  // Join a foreign model
+  public function join($model_name, &$id=null, $join_conditions=null)
   {
     
     raw($model_name);
+    
+    //Check for proper conditions.
+    if($join_conditions && !$join_conditions instanceof \Closure){
+      throw new \exception\InvalidArgument('The join conditions must be a Closure');
+    }
     
     // initial join is always on the working model
     $target = $this->models[$this->working_model];
@@ -1079,18 +619,8 @@ class Table extends Successable
     return $this;
 
   }
-  
-  /**
-   * Sets join type for the latest JOIN.
-   *
-   * @param string $type Any of the following: `"LEFT"`, `"RIGHT"`, `"INNER"`.
-   *
-   * @return self Chaining enabled.
-   *
-   * @see self::left() Short for `join("LEFT")`.
-   * @see self::right() Short for `join("RIGHT")`.
-   * @see self::inner() Short for `join("INNER")`.
-   */
+
+  // Sets join type for the latest join()
   public function set_jointype($type)
   {
 
@@ -1115,19 +645,8 @@ class Table extends Successable
     return $this;
 
   }
-  
-  /**
-   * Add to the WHERE clause.
-   *
-   * This method can be used in 2 different ways. Please refer to `where1` and `where2` for the documentation.
-   *
-   * @return self Chaining enabled.
-   *
-   * @see self::where1() Add a single statement to the WHERE clause by providing filters.
-   * @see self::where2() Add a complex statement to the WHERE clause by providing a Conditions object.
-   * @see self::filter() Add statements to the WHERE clause automatically for given filters.
-   * @api
-   */
+
+  // The where function filters data for us
   public function where()
   {
 
@@ -1137,36 +656,16 @@ class Table extends Successable
     return $this;
 
   }
-  
-  /**
-   * Group by the given column in the working model.
-   *
-   * @param string $column The column identifier.
-   * @param string|false $direction Optional direction; `"ASC"` or `"DESC"`.
-   *
-   * @return self Chaining enabled.
-   *
-   * @see self::workwith() Change the working model.
-   * @api
-   */
+
+  // Group by (column [, 'ASC'|'DESC'])
   public function group($column, $direction=false)
   {
     raw($column, $direction);
     $this->group = array_merge($this->group, $this->grourder($column, $direction));
     return $this;
   }
-  
-  /**
-   * Add to the HAVING clause.
-   *
-   * Adds to the HAVING clause in the exact same way that `$this->where()` adds to there
-   * WHERE clause. Please refer to the `where()` documentation for use of this method.
-   *
-   * @return self Chaining enabled.
-   *
-   * @see self::where() More documentation on the use of the `where` and `having` methods.
-   * @api
-   */
+
+  // Filters for groups. Only to be used in combination with a group function.
   public function having()
   {
 
@@ -1176,36 +675,16 @@ class Table extends Successable
     return $this;
 
   }
-  
-  /**
-   * Order by the given column in the working model.
-   *
-   * @param string $column The column identifier.
-   * @param string|false $direction Optional direction; `"ASC"` or `"DESC"`.
-   *
-   * @return self Chaining enabled.
-   *
-   * @see self::workwith() Change the working model.
-   * @api
-   */
+
+  // Order by (column [, 'ASC'|'DESC'])
   public function order($column, $direction=false)
   {
     raw($column, $direction);
     $this->order = array_merge($this->order, $this->grourder($column, $direction));
     return $this;
   }
-  
-  /**
-   * Limit the amount of rows returned.
-   *
-   * @param integer $rowcount The maximum amount of rows allowed.
-   * @param integer $offset An optional offset. Rows before the offset will not be included.
-   *
-   * @return self Chaining enabled.
-   *
-   * @see self::execute_single() Automatically limit to a single row and execute.
-   * @api
-   */
+
+  // Set limit (amount_of_rows [, offset])
   public function limit($rowcount, $offset=null)
   {
 
@@ -1220,37 +699,35 @@ class Table extends Successable
     return $this;
 
   }
-  
-  /**
-   * Execute the query.
-   *
-   * @param string $as An optional model ID in which the results will be returned.
-   *
-   * @throws \exception\NotFound If the given model ID does not point to a known model.
-   * @throws \exception\Sql If an SQL error occurs.
-   *
-   * @return Resultset The wrapper with the result of the query.
-   *
-   * @see self::execute_single() Execute and return the first result directly.
-   * @see self::count() Execute the query, returning the amount of rows affected.
-   * @api
-   */
+
+  // Execute gathered conditions as query and return resultset
   public function execute($as=null)
   {
-    
-    $result = tx('Sql')->query($this->getQuery($as, $model));
-    
-    //Return the result set.
+
+    if(is_string($as))
+    {
+
+      if(!array_key_exists($as, $this->models)){
+        throw new \exception\NotFound("Failed to execute as '%s'. No model with that identifier found.", $as);
+        return false;
+      }
+
+      $as = $this->models[$as];
+
+    }
+
+    else{
+      $as = $this->models[$this->model];
+    }
+
+    $result = tx('Sql')->query($this->query("`{$as['id']}`.*"));
+    $model = $as['path'];
+
     return new \dependencies\Resultset($result, $model);
-    
+
   }
-  
-  /**
-   * Execute the query, returning the amount of rows affected.
-   *
-   * @return Data An instance of Data wrapping an integer containing the amount of rows.
-   * @api
-   */
+
+  // Count the amount of rows that would be returned by the query
   public function count()
   {
     
@@ -1258,22 +735,8 @@ class Table extends Successable
       ->is('empty', function(){return 0;});
     
   }
-  
-  /**
-   * Execute and return the first result directly.
-   *
-   * This method also automatically adds a limit of 1.
-   *
-   * @param string $as An optional model ID in which the results will be returned.
-   *
-   * @throws \exception\NotFound If the given model ID does not point to a known model.
-   * @throws \exception\Sql If an SQL error occurs.
-   *
-   * @return BaseModel The model that contains the first row.
-   *
-   * @see self::execute() Execute normally.
-   * @api
-   */
+
+  // execute the query and return the first model in the resultset only
   public function execute_single($as=null)
   {
 
@@ -1284,78 +747,110 @@ class Table extends Successable
   }
   
   /**
-   * Print the query to the output.
+   * Works the same as execute_single, except that it will create an empty model if there was no result.
    *
-   * **This method may be used for debugging purposed and it is not recommended to have it
-   * in any final code.**
+   * @param string $as
    *
-   * @param string $as An optional model ID in which the results will be returned.
-   *
-   * @throws \exception\NotFound If the given model ID does not point to a known model.
-   * @throws \exception\Sql If an SQL error occurs.
-   *
-   * @return self Chaining enabled.
+   * @return BaseModel A model.
    */
+  public function execute_model($as=null)
+  {
+    
+    $result = $this->execute_single($as);
+    
+    if($result->is_empty()){
+      $minfo = $this->models[(is_string($as) ? $as : $this->model)];
+      $model = load_model($minfo['component'], $minfo['name']);
+      return new $model;
+    }
+    
+    return $result;
+    
+  }
+
+  // print the query like it would be when executed (for debugging purposes)
   public function write($as=null)
   {
     
-    echo $this->getQuery($as);
+    if(is_string($as))
+    {
+
+      if(!array_key_exists($as, $this->models)){
+        throw new \exception\NotFound("Failed to execute as '%s'. No model with that identifier found.", $as);
+        return false;
+      }
+
+      $as = $this->models[$as];
+
+    }
+
+    else{
+      $as = $this->models[$this->model];
+    }
+
+    echo $this->query("`{$as['id']}`.*");
     return $this;
 
   }
-  
-  /**
-   * Generate and return the query as a string.
-   *
-   * @param string $as An optional model ID in which the results will be returned.
-   * @param array $model An out-parameter that receives model meta-data.
-   *
-   * @throws \exception\NotFound If the given model ID does not point to a known model.
-   * @throws \exception\Sql If an SQL error occurs.
-   *
-   * @return string The query.
-   * @api
-   */
-  public function getQuery($as=null, &$model=null)
+
+  // deletes the matching rows from the database
+  public function delete($model_name = null)
   {
+
+    throw new \exception\Deprecated('Table::delete()');
+
+    $model_name = (empty($model_name) ? $this->models[$this->working_model]['name'] : $model_name);
     
-    //Use the working model?
-    $as = (is_null($as) ? $this->model : $as);
+    $from = 'FROM';
+    $d = ' ';
     
-    //Make sure the model exists.
-    if(!array_key_exists($as, $this->models)){
-      throw new \exception\NotFound("Failed to execute as '%s'. No model with that identifier found.", $as);
+    foreach($this->from as $val)
+    {
+      
+      $from .= $d.$this->models[$val['model']]['table'];
+      $join = $val['model'];
+      
+      while(array_key_exists($join, $this->joins))
+      {
+        
+        foreach($this->joins[$join] as $join_info)
+        {
+          
+          if(!array_key_exists('type', $join_info)){
+            $join_info['type'] = 'LEFT JOIN';
+          }
+          
+          $from .=
+            " {$join_info['type']} {$this->models[$join_info['model']]['table']} AS `{$this->models[$join_info['model']]['id']}`".
+            " ON {$join_info['local']} = {$join_info['foreign']}";
+          
+        }
+        
+        $join = $join_info['model'];
+        
+      }
+      
+      $d = ', ';
+      
     }
     
-    //Do the work.
-    $as = $this->models[$as];
-    $model = $as['path'];
-    
-    //Generate and return the result.
-    return $this->query("`{$as['id']}`.*");
-        
+    $query =
+      'DELETE '.$from.
+      ' WHERE 1'.$this->where;
+    // if(count($this->group) > 0) $query .=
+      // ' GROUP BY '.implode(', ', $this->group).
+      // ' HAVING 1'.$this->having;
+    // if(count($this->order) > 0) $query .=
+      // ' ORDER BY '.implode(', ', $this->order);
+    // if(!empty($this->limit)) $query .=
+      // ' LIMIT '.$this->limit;
+
+    echo $query;
+    tx('Sql')->execute_non_query($query);
+
   }
 
-  /**
-   * Creates a new query in the context of this one.
-   *
-   * @param self $q An out-parameter which will receive the Table object that represents the sub-query.
-   *
-   * @param string $component The name of the component in which to look for the model.
-   *                          This parameter can be omitted, in which case it defaults to
-   *                          the component used by this Table.
-   *
-   * @param string $model The name of the model that the sub-query will use.
-   *
-   * @param \Closure $builder An optional Closure which will be called with the Table
-   *                          (sub-query) object as a parameter, allowing for the
-   *                          sub-query to be built right away.
-   *
-   * @return self Chaining enabled.
-   *
-   * @see self::__construct() Internally, `subquery()` passes on its parameters to the constructor.
-   * @api
-   */
+  // creates a new query in the context of this one
   public function subquery(&$q)
   {
 
@@ -1412,13 +907,7 @@ class Table extends Successable
   ###  LOW LEVEL PRIVATE FUNCTIONS
   ###
 
-  /**
-   * Builds the query
-   *
-   * @param string $all Column to select.
-   *
-   * @return string The query.
-   */
+  // create the query
   public function query($all=null)
   {
 
@@ -1497,29 +986,20 @@ class Table extends Successable
 
   }
 
-  /**
-   * Build the query and return it for use as a sub-query.
-   *
-   * @throws \exception\Programmer If no columns have been explicitly selected in the query.
-   *
-   * @return string
-   */
+  // used internally to return the query as subquery
   private function _get_subquery()
   {
 
     if(count($this->select) !== 1){
       throw new \exception\Programmer('You must choose a field to ->select() when applying this query as subquery.');
+      return "'<error>'";
     }
 
     return '('.$this->query().')';
 
   }
 
-  /**
-   * Returns the query inside a `model_info` array, so it can be used as if it's a model.
-   *
-   * @return array
-   */
+  // used internally to return the query as subquery for use in the FROM clause
   public function _get_model_subquery()
   {
 
@@ -1534,64 +1014,45 @@ class Table extends Successable
 
   }
 
-  /**
-   * Used to convert given arguments to a WHERE or HAVING string.
-   *
-   * @param string $column The name of the column to compare against.
-   * @param string $comparator The type of comparison to make. Can be omitted.
-   * @param mixed $value The value to compare against.
-   *
-   * @return string The finished comparison-string.
-   *
-   * @see self::where()
-   * @see self::having()
-   */
+  // used to convert given arguments to a WHERE or HAVING string
   private function arguments_to_comparisons()
   {
     
-    //Ensure we have two arguments.
     if(func_num_args() < 2){
-      throw new \exception\InvalidArgument('Need at least two arguments.');
+      throw new \exception\Programmer('Single argument not implemented yet.');
+      return;
     }
-    
-    //Fail if the first argument is non-set data.
+
     if(is_data(func_get_arg(0)) && !func_get_arg(0)->is_set()){
       return false;
     }
-    
-    //Prepare arguments.
+
     $column = $this->prepare(func_get_arg(0));
     $compare = (func_num_args() > 2 ? func_get_arg(1) : '=');
     $value = func_get_arg(func_num_args()-1);
-
-    //The comparator must be one of the following.
-    if(!in_array($compare, array('=', '>', '<', '>=', '<=', '!', '|', '!|', '', 'IN', 'NOT IN'))){
+    
+    if(!in_array($compare, array('=', '>', '<', '>=', '<=', '!', '|', '!|', ''))){
       throw new \exception\InvalidArgument("Invalid comparison type given (%s).", $compare);
+      return;
     }
     
-    //Convert comparator to work with array-values.
-    if(is_array($value))
-    {
-      
-      //Empty arrays will be interpreted as 0.
+    raw($value);
+    
+    //if the given value is an array
+    if(is_array($value)){
       if(empty($value)){
         $compare = '=';
         $value = 0;
-      }
-      
-      //Filled arrays will become lists, so the comparator will become IN.
-      else{
+      }else{
         $compare = ($compare === '!' ? 'NOT ' : '').'IN';
       }
-      
     }
 
-    //Convert comparator to work with NULL.
+    //if the value is NULL
     elseif($value === 'NULL' || is_null($value)){
       $compare = 'IS'.($compare === '!' ? ' NOT' : '');
     }
-    
-    //Convert custom syntax.
+
     switch($compare){
       case '!':
         $compare = '!=';
@@ -1604,25 +1065,13 @@ class Table extends Successable
         break;
     }
     
-    //Prepare the value.
     $value = $this->prepare($value);
     
-    //Build and return the comparison.
     return "($column $compare $value)";
 
   }
 
-  /**
-   * Used to convert a given Conditions object to a WHERE or HAVING string.
-   *
-   * @param Conditions $conditions The Conditions object to use.
-   *
-   * @return string The resulting comparison-string.
-   *
-   * @see Conditions
-   * @see self::where()
-   * @see self::having()
-   */
+  // used to convert a given Conditions object to a WHERE or HAVING string
   private function conditions_to_comparisons(Conditions $conditions)
   {
 
@@ -1638,18 +1087,7 @@ class Table extends Successable
 
   }
 
-  /**
-   * Converts an array to a comparison-string.
-   *
-   * Used by `conditions_to_comparisons` in order to convert Condition formatted arrays to
-   * comparison formatted strings.
-   *
-   * @param array $condition
-   *
-   * @return string Comparison.
-   *
-   * @see self::conditions_to_comparisons() The master method.
-   */
+  // used to convert a given Conditions object to a WHERE or HAVING string
   private function compose_condition(array $condition)
   {
 
@@ -1679,18 +1117,11 @@ class Table extends Successable
 
   }
 
-  /**
-   * Combine where and having because they are similar in syntax.
-   *
-   * @return string The resulting MySQL.
-   *
-   * @see self::where()
-   * @see self::having()
-   */
+  // combine where and having because they are similar
   private function whaving()
   {
 
-    //Do the function arguments imply "quick syntax"?
+    //we check if function arguments insinuate "quick syntax"
     if(func_num_args() > 1){
       $whaving = call_user_func_array(array($this, 'arguments_to_comparisons'), func_get_args());
     }
@@ -1711,17 +1142,7 @@ class Table extends Successable
 
   }
 
-  /**
-   * Combine group and order because they are similar in syntax.
-   *
-   * @param string $c Column name.
-   * @param string $d Direction.
-   *
-   * @return string The resulting MySQL.
-   *
-   * @see self::group()
-   * @see self::order()
-   */
+  // combine group and order because they are similar
   private function grourder($c, $d)
   {
     //we create the return array
@@ -1795,26 +1216,7 @@ class Table extends Successable
   ###  INPUT CONVERTERS
   ###
 
-  /**
-   * Normalizes a string representing a column into an array of meta-data.
-   *
-   * @param string $input Columns have the following format:
-   *                      `"[[<component_name>.]<model_name>.]<column_name>"`.
-   *
-   *                      * `<column_name>`: The name of the column. This has to be present in the string.
-   *                      * `<model_name>`: An optional alternative model may be prepended
-   *                        to the column-name using a `.` as separator. This has to be
-   *                        an internal model ID!
-   *                      * `<component_name>`: If the model name was given, an optional
-   *                        component name may be prepended to that using a `.`, in which
-   *                        case this component will be used to look for the model in.
-   *
-   * @return array An associative array with the following keys:
-   *
-   *               * `component`: The name of the component.
-   *               * `model`: The internal ID of the model.
-   *               * `name`: The name of the column.
-   */
+  // get information about a column based on input
   private function get_column_info($input)
   {
 
@@ -1868,44 +1270,14 @@ class Table extends Successable
 
   }
 
-  /**
-   * Normalizes several different inputs which represent a column into a string.
-   *
-   * @param string|array $column
-   *
-   * @return string
-   *
-   * @see self::prepare() The master method.
-   */
-  public function prepare_column($column)
+  // convert input to a proper column name
+  private function prepare_column($column)
   {
     $info = is_array($column) ? $column : $this->get_column_info($column);
     return (array_key_exists('model', $info) ? "`{$info['model']}`." : '').($info['name'] === '*' ? '*' : "`{$info['name']}`");
   }
 
-  /**
-   * Normalizes several different inputs that represent a model to an array of meta-data.
-   *
-   * @param Table|string $input When given input is a table, its
-   *                            `_get_model_subquery`-method will be used to attain the
-   *                            array of meta-data. When it is a string, it must have the
-   *                            following format: `"[<component_name>.]<model_name>"`.
-   *
-   *                            * `<component_name>`: The name of the component that houses
-   *                              the model.
-   *                            * `<model_name>`: The name of the model (class name).
-   *
-   * @return array An array with the following keys:
-   *
-   *               * `component`: The name of the component that houses the model.
-   *               * `name`: The name of the model.
-   *               * `path`: The full class-name of the model.
-   *               * `table`: The table name corresponding to the model.
-   *               * `relations`: Cached inter-tabular relations defined in the model.
-   *               * `id`: The internal ID assigned to the model.
-   *
-   * @see self::_get_model_subquery() Get the same meta-data, using a sub-query as model.
-   */
+  // get information about a model
   private function get_model_info($input)
   {
 
@@ -1938,10 +1310,7 @@ class Table extends Successable
           break;
 
         default:
-          throw new \exception\InvalidArgument(
-            'Expecting $input to consist of no more that 2 parts, a component and a model '.
-            'separated by a dot. %s Parts given.', substr_count($input, '.')+1
-          );
+          throw new \exception\InvalidArgument('Expecting $input to consits of no more that 2 parts, a component and a model separated by a dot. %s Parts given.', substr_count($input, '.')+1);
 
       }
 
@@ -1958,42 +1327,21 @@ class Table extends Successable
 
   }
 
-  /**
-   * Sanitizes and normalizes text-input.
-   *
-   * @param string $text
-   *
-   * @return string
-   */
-  public function prepare_text($text)
+  // convert text to proper, safe text
+  private function prepare_text($text)
   {
     $text = trim($text, '\'');
     return "'$text'";
   }
 
-  /**
-   * Detect what input could be, and prepare it for insertion into the query.
-   *
-   * @param Table|array|string|integer $input
-   *        * `Table`: Will be used as a sub-query.
-   *        * `array`: Will be converted to a comma-separated list of values.
-   *        * `"NULL"`: Will become `NULL`.
-   *        * `integer`: And numeric strings will be used as numbers.
-   *        * `string`: Words with periods and text between (\`)-marks will be used as a
-   *          column-identifier, and parsed by `self::get_column_info()`. Text between
-   *          quotation-marks, or with spaces or special characters will be interpreted as
-   *          plain-text, and sanitized by `self::prepare_text()`.
-   *
-   * @return string The prepared value.
-   */
+  // detect what input could be, and prepare it for insertion into the query
   private function prepare($input)
   {
 
-    $that = $this;
     $input = data_of($input);
 
     //if this is a Table object, we are going to get the subquery from it
-    if($input instanceof Table){
+    if(is_object($input) && $input instanceof Table){
       $input = $input->_get_subquery();
     }
 
@@ -2027,11 +1375,11 @@ class Table extends Successable
 
       //maybe its text containing column names or simple text
       elseif((substr_count($input, '`') > 0) || (substr_count($input, '\'') > 0) || (substr_count($input, '*') > 0)){
-        $input = preg_replace_callback('~\'([^\']*)(?<!\\\)\'~i', function($matches)use($that){
-          return $that->prepare_text($matches[1]);
+        $input = preg_replace_callback('~\'([^\']*)(?<!\\\)\'~i', function($matches){
+          return $this->prepare_text($matches[1]);
         }, $input);
-        $input = preg_replace_callback('~(?!\')`(.*?)`(?!\')~i', function($matches)use($that){
-          return $that->prepare_column($matches[1]);
+        $input = preg_replace_callback('~(?!\')`(.*?)`(?!\')~i', function($matches){
+          return $this->prepare_column($matches[1]);
         }, $input);
       }
 

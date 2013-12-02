@@ -34,7 +34,6 @@ class Logging
         $event = null;
         $message = func_get_arg(0);
         $newline = false;
-        $multiline = false;
         break;
       
       case 2:
@@ -42,7 +41,6 @@ class Logging
         $event = null;
         $message = func_get_arg(1);
         $newline = false;
-        $multiline = false;
         break;
         
       case 3:
@@ -50,7 +48,6 @@ class Logging
         $event = func_get_arg(1);
         $message = func_get_arg(2);
         $newline = false;
-        $multiline = false;
         break;
       
       case 4:
@@ -58,15 +55,6 @@ class Logging
         $event = func_get_arg(1);
         $message = func_get_arg(2);
         $newline = func_get_arg(3);
-        $multiline = false;
-        break;
-      
-      case 5:
-        $key = func_get_arg(0);
-        $event = func_get_arg(1);
-        $message = func_get_arg(2);
-        $newline = func_get_arg(3);
-        $multiline = func_get_arg(4);
         break;
       
       default:
@@ -89,7 +77,7 @@ class Logging
       
       //No newlines for anything from the input.
       //Yes, this might not in all cases come out completely tidy, however it is only whitespace.
-      str_replace(array("\r", "\r\n", "\n", "  "), ($multiline ? "\n\t\t" : ''),
+      str_replace(array("\r", "\r\n", "\n", "  "), '',
         
         //Key prefix.
         ($key === null ? '' : '['.$key.'] ').
@@ -106,7 +94,7 @@ class Logging
       n;
     
     //Write it to file.
-    file_put_contents(PATH_LOGS.DS.date('Ymd').'.log', $data, FILE_APPEND);
+    file_put_contents(PATH_LOGS.DS.date('Ymd').'.txlog', $data, FILE_APPEND);
     
   }
   

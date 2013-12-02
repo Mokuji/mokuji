@@ -9,12 +9,6 @@
         * [Modules](components/account/Modules.md)
         * [Sections](components/account/Sections.md)
         * [Views](components/account/Views.md)
-        * **components\account\classes**
-            * [ControllerFactory](components/account/classes/ControllerFactory.md)
-        * **components\account\controllers**
-            * [SessionController](components/account/controllers/SessionController.md)
-            * **components\account\controllers\base**
-                * [Controller](components/account/controllers/base/Controller.md)
         * **components\account\models**
             * [Accounts](components/account/models/Accounts.md)
             * [AccountsToUserGroups](components/account/models/AccountsToUserGroups.md)

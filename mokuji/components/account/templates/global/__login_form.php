@@ -1,7 +1,5 @@
 <?php namespace components\account; if(!defined('TX')) die('No direct access.');
 
-echo load_plugin('jquery_rest');
-
 //append user object for easy access
 $user =& tx('Data')->session->user;
 
@@ -10,15 +8,13 @@ if(!$user->check('login')):
 
 ?>
 
-<form method="POST" action="<?php echo url('rest=account/user_session', 1); ?>"  id="login_form" class="login-form">
+<form method="POST" action="<?php echo url('rest=account/user_session',1); ?>"  id="login_form" class="login-form">
   
   <h1><?php __('LOGIN_VERB'); ?></h1>
   
   <?php echo $messages->error; ?>
   
   <section>
-    
-    <input type="hidden" name="target_url" value="<?php echo $options->target_url; ?>" />
     
     <div class="ctrlHolder clearfix">
       <label for="l_username"><?php __('Username'); ?></label>
@@ -33,7 +29,7 @@ if(!$user->check('login')):
     <div class="ctrlHolder clearfix">
       <input id="l_remember" type="checkbox" name="persistent" value="1" />
       <!-- #TODO: In-line style attribute. :( -->
-      <label for="l_remember" style="display:inline-block"><?php __('account', 'Remember me'); ?></label>
+      <label for="l_remember" style="display:inline-block"><?php __('Remember me'); ?></label>
     </div>
     
     <div class="ctrlHolder clearfix">
@@ -61,10 +57,6 @@ if(!$user->check('login')):
         }
         
       });
-      
-      <?php if($options->autofocus->is_true()): ?>
-        $('#login_form').find('#l_username').focus();
-      <?php endif; ?>
       
     });
   </script>

@@ -32,13 +32,12 @@ class Modules extends \dependencies\BaseViews
   {
 
     $menu_items = $this->helper('get_menu_items', $options);
-
+    
     #TEMP: Default options.
     $options = Data(array(
       'show_unlinked' => false,
       'show_unauthorised' => false
     ))->merge($options);
-
 
     //Create menu.
     $menu =
@@ -49,13 +48,13 @@ class Modules extends \dependencies\BaseViews
 
         //If menu items are found:
         ->success(function($items)use($options, $menu_items){
-
+          
           //Get the selected items.
           $selected_items = tx('Sql')
             ->table('menu', 'MenuItems')
             ->where('page_id', tx('Data')->get->pid->get('int'))
             ->execute();
-
+          
           //Show a 'select menu'.
           if($options->display_select_menu->get('bool') == true){
 
@@ -162,20 +161,31 @@ class Modules extends \dependencies\BaseViews
 
   protected function breadcrumbs($options)
   {
-   
+    
+    // return;
+    // throw new \exception\Programmer('Breadcrumbs under construction.');
+    
+    // $options
+    //   ->page_id->validate('Page #ID', array('number', 'gt'=>0))->back()
+    //   ->menu_id->validate('Menu #ID', array('number', 'gt'=>0))->back();
+  
+    // //Get all active menu items.
+    // $active = tx('Sql')->table('menu', 'MenuItems')
+    //   ->where('page_id', $options->page_id)
+    //   ->where('menu_id', $options->menu_id)
+    //   ->execute();
+    
+    //OLD
+    
     $menu_item_info =
       tx('Sql')
       ->table('menu', 'MenuItems')
       ->pk($options->menu_item_id)
       ->execute_single();
 
-    return array(
+    return tx('Sql')
 
-      'options' => $options,
-
-      'items' => tx('Sql')
-
-        ->table('menu', 'MenuItems', $mi)
+      ->table('menu', 'MenuItems', $mi)
 
         //filter menu
         ->sk($menu_item_info->menu_id)
@@ -196,9 +206,7 @@ class Modules extends \dependencies\BaseViews
         
         ->group('lft')
 
-      ->execute()
-
-    );
+      ->execute();
       
   }
   

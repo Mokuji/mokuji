@@ -25,25 +25,6 @@ abstract class BaseComponent
     return tx('Data')->filter($this->component);
   }
   
-  /**
-   * Creates a component specific filter in the session.
-   *
-   * @param string $key The key under which the value will be available.
-   * @param mixed $value The value for the filter.
-   *
-   * @return self Chaining enabled.
-   */
-  public function create_filter($key, $value)
-  {
-    
-    //Set the session variable.
-    tx('Data')->session->{$this->component}->{$key}->set($value);
-    
-    //Enable chaining.
-    return $this;
-    
-  }
-  
   // model loading helper function
   public function model($model_name)
   {

@@ -48,7 +48,7 @@ class Views extends \dependencies\BaseViews
         ->where('entry_id', $post)
         ->where('timeline_id', $page->timeline_id)
         ->count()->eq(1)
-        ->failure(function(){
+        ->failure(function()use($post){
           throw new \exception\NotFound('The post with ID "%s" was not found in this timeline.', $post);
         });
       
@@ -57,7 +57,7 @@ class Views extends \dependencies\BaseViews
         ->table('timeline', 'Entries')
         ->pk($post)
         ->execute_single()
-        ->is('empty', function(){
+        ->is('empty', function()use($post){
           throw new \exception\NotFound('The post with ID "%s" is missing.', $post);
         });
       

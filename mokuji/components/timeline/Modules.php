@@ -8,19 +8,7 @@ class Modules extends \dependencies\BaseViews
     $permissions = array(
       'blog' => 0
     );
-
-  /**
-   * Show blogposts.
-   * 
-   * #TODO description
-   * 
-   * @param array $options An array with options
-   *    @param int    $pid       The page ID of the timeline page we want to load items from.
-   *    @param int    $menu_id   (optional) Menu ID to use in the URLs.
-   *    @param string $dt_format (optional) Date/Time format.
-   *
-   * @return object The requested timeline entries.
-   */
+  
   protected function blog($options)
   {
     

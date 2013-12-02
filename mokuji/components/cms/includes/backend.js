@@ -1,3 +1,6 @@
+///////////////////
+// Notifications //
+///////////////////
 ;jQuery(function($){
   
   //Init notifications.
@@ -55,118 +58,10 @@
   
 });
 
-//Do an ajax request.
-var GET=1, POST=2, PUT=4, DELETE=8;
-function request(){
-  
-  //Predefine variables.
-  var method, model, data;
-  
-  //Handle arguments.
-  switch(arguments.length){
-    
-    //A get request to the given model name.
-    case 1:
-      method = GET;
-      model = arguments[0];
-      data = {};
-      break;
-    
-    //A custom request to the given model name, or a PUT request with the given data.
-    case 2:
-      if(_(arguments[0]).isNumber()){
-        method = arguments[0];
-        model = arguments[1];
-        data = {};
-      }else{
-        method = PUT;
-        model = arguments[0];
-        data = arguments[1];
-      }
-      break;
-    
-    //A custom request to given model name with given data.
-    case 3:
-      method = arguments[0];
-      model = arguments[1];
-      data = arguments[2];
-      break;
-    
-  }
-  
-  //Should data be processed by jQuery?
-  var process = (method == GET);
-  
-  //Stringify our JSON?
-  if(!process) data = JSON.stringify(data);
-  
-  //Convert method to string for use in the jQuery ajax API.
-  method = (method == GET && 'GET')
-        || (method == POST && 'POST')
-        || (method == PUT && 'PUT')
-        || (method == DELETE && 'DELETE')
-        || 'GET';
-  
-  //Build the url
-  var url = window.location.protocol + '//' + window.location.host + window.location.pathname + '?rest=' + model;
-  
-  //Do it, jQuery!
-  return $.ajax({
-    url: url,
-    type: method,
-    data: data,
-    dataType: 'json',
-    contentType: 'application/json',
-    processData: process,
-    headers: {
-      'X-Requested-With': 'XMLHttpRequest'
-    }
-  });
-  
-}
-
+/////////////////////
+// CMS Application //
+/////////////////////
 ;(function(root, $, _, undefined){
-  
-  //A template helper function.
-  function tmpl(id){
-    
-    return function(){
-      var tmpl;
-      if(!$.domReady){
-        throw "Can not generate templates before DOM is ready.";
-      }else{
-        tmpl = tmpl || _.template($('#'+id).html());
-        return $(tmpl.apply(this, arguments));
-      }
-    }
-    
-  }
-  
-  //A data-id extractor helper function.
-  $.fn.id = function(setter){
-    
-    if(setter){
-      return $(this).attr('data-id', setter);
-    }
-    
-    return parseInt( $(this).attr('data-id') , 10 );
-    
-  };
-  
-  //Mixin a logging functions into underscore.
-  _.mixin({
-    
-    log: function(object){
-      console.log(object);
-      return object;
-    },
-    
-    dir: function(object){
-      console.dir(object);
-      return object;
-    }
-    
-  });
   
   //The overall feedback object.
   var FeedbackController = Controller.sub({
@@ -976,20 +871,15 @@ function request(){
     recommendTitle: function(title, languageId){
       if(languageId === 'ALL'){
         this.view.find('.page-title-recommendation').val(title);
-        var $title = this.view
-          .find('.page-title')
+        this.view.find('.page-title')
           .attr('placeholder', title)
           .trigger('keyup');
-        app.Page.updateTitle($title.val() ? $title.val() : $title.attr('placeholder'));
       }else{
         $langSection = this.view.find('.multilingual-section[data-language-id='+languageId+']');
         $langSection.find('.page-title-recommendation').val(title);
-        var $title = $langSection
-          .find('.page-title')
+        $langSection.find('.page-title')
           .attr('placeholder', title)
           .trigger('keyup');
-        if(app.options.language_id == languageId)
-          app.Page.updateTitle($title.val() ? $title.val() : $title.attr('placeholder'));
       }
     },
     
@@ -1158,7 +1048,6 @@ function request(){
       btn_detach: '#detach-page',
       btn_save_page: '#save-page',
       select_pageLink: '#page-link',
-      title_text: '.title-bar.page-title .title',
       pageTypes: '#new-page-wrap .pagetypes-list li a'
     },
     
@@ -1298,28 +1187,6 @@ function request(){
 
     },
     
-    loadDashboard: function(){
-
-      var self = this;
-      
-      this.isEmpty = true;
-      this.unsubscribe();
-      
-      console.log('loadDashboard');
-
-      return $.ajax('?section=cms/dashboard')
-      
-      //Add a done callback.
-      .done(function(data){
-        self.data = {};
-        self.view.html(data);
-        self.Tabs = null;
-        self.Languages = null;
-        self.refreshElements();
-      });
-
-    },
-
     loadNewPage: function(){
       
       var self = this;
@@ -1344,9 +1211,8 @@ function request(){
       
       //Reference to this.
       var self = this;
-
-      if(!pid)
-        return this.loadNewPage();
+      
+      if(!pid) return this.loadNewPage();
       
       this.isEmpty = false;
       this.unsubscribe();
@@ -1426,10 +1292,6 @@ function request(){
       //Show the tabs.
       this.Tabs.renderTabs();
       
-    },
-    
-    updateTitle: function(title){
-      this.title_text.text(title);
     }
     
   });

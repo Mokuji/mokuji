@@ -111,7 +111,7 @@ class Views extends \dependencies\BaseViews
     tx('Sql')->table('cms', 'ComponentViews')->join('Components', $c)->select("$c.name", 'name')->execute()->each(function($c){
       tx('Component')->load($c->name);
     });
-    
+
     return array(
       'topbar' => $this->section('admin_toolbar'),
       'menus' => $this->view('menus', array('menu_id' => $mid, 'site_id' => $sid)),
@@ -120,16 +120,14 @@ class Views extends \dependencies\BaseViews
       'app' => $this->section('app', $view->get()),
       'sites' => tx('Sql')->table('cms', 'Sites')->execute()
     );
-    
+
   }
-  
+
   protected function pages()
   {
     return array(
-      'pages' => tx('Sql')->table('cms', 'Pages')
-        ->where('trashed', 0)
-        ->order('title')
-        ->execute()
+      'pages' => $this->section('page_list'),
+      'new_page' => $this->section('new_page')
     );
   }
   
@@ -167,6 +165,11 @@ class Views extends \dependencies\BaseViews
       'configbar' => $this->section('configbar')
     );
 
+  }
+  
+  protected function instructions()
+  {
+    return null;
   }
   
   protected function settings($options)
@@ -226,35 +229,25 @@ class Views extends \dependencies\BaseViews
   protected function settings_cms_configuration()
   {
     
-    $values = array();
+    $result = array();
     $settings = array(
-      'homepage',
-      'login_page',
-      'template_id',
-      'forced_template_id',
-      'theme_id',
-      'forced_theme_id',
-      'default_language',
-      'tx_editor_toolbar'
+      'homepage' => 'Homepage',
+      'login_page' => 'Login page',
+      'template_id' => 'Default template',
+      'forced_template_id' => 'Forced template',
+      'theme_id' => 'Default theme',
+      'forced_theme_id' => 'Forced theme',
+      'default_language' => 'Default language',
+      'tx_editor_toolbar' => 'CKEditor toolbar layout'
     );
     
-    foreach($settings as $key){
-      $values[$key] = array(
-        'default' => tx('Component')->helpers('cms')->_call('get_settings', array($key))->value_default
-      );
+    foreach($settings as $key => $title){
+      $result[$key] = tx('Component')->helpers('cms')->_call('get_settings', array($key));
     }
     
     return array(
-      'values' => $values,
-      'themes' => mk('Sql')->table('cms', 'Themes')
-        ->order('title', 'ASC')
-        ->execute(),
-      'templates' => mk('Sql')->table('cms', 'Templates')
-        ->order('title', 'ASC')
-        ->execute(),
-      'languages' => mk('Sql')->table('cms', 'Languages')
-        ->order('title', 'ASC')
-        ->execute()
+      'settings' => $result,
+      'titles' => $settings
     );
     
   }

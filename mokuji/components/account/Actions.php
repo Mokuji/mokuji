@@ -1,7 +1,5 @@
 <?php namespace components\account; if(!defined('TX')) die('No direct access.');
 
-use \components\account\classes\ControllerFactory as CF;
-
 class Actions extends \dependencies\BaseComponent
 {
   
@@ -27,64 +25,47 @@ class Actions extends \dependencies\BaseComponent
     
   }
   
-  protected function become_user($data)
+  protected function login($data)
   {
-    
-    $id = $data->user_id->get('int');
-    
-    tx('Attempting to become another user.', function()use($id){
-      CF::getInstance()->Session->becomeUser($id);
+
+    $data = $data->having('email', 'pass');
+
+    tx('Logging in.', function()use($data){
+
+      $data
+        -> email   ->validate('Email address', array())->back()
+        -> pass    ->validate('Password', array('required', 'not_empty', 'between'=>array(3, 30)));
+
+      tx('Account')->login($data->email, $data->pass);
+
     })
-    
+
     ->failure(function($info){
+
       tx('Controller')->message(array(
         'error' => $info->get_user_message()
       ));
-    });
-    
-  }
-  
-  protected function login($data)
-  {
-    
-    //Extract needed data.
-    $data = $data->having('email', 'pass');
-    
-    //Wrap in exception handler.
-    mk('Logging in.', function()use($data){
-      
-      //Use the Session controller to log the user in.
-      CF::getInstance()->Session->loginUser(
-        $data->email->get(),
-        $data->password->get(),
-        ($data->persistent->get('string') === '1')
-      );
 
-    })
-    
-    //Pass on the exception.
-    ->failure(function($info){
-      throw $info->exception;
     });
-    
-    //Build the URL and redirect.
-    $prev = mk('Url')->previous();
-    if($prev !== false) mk('Url')->redirect($prev);
-    mk('Url')->redirect(url('email=NULL&pass=NULL', false, ($prev !== false)));
+
+    $prev = tx('Url')->previous();
+
+    if($prev !== false){
+      tx('Url')->redirect($prev);
+    }
+
+    tx('Url')->redirect(url('email=NULL&pass=NULL', false, ($prev !== false)));
 
   }
 
   protected function logout($data)
   {
-    
-    tx('Logging out.', function(){
-      CF::getInstance()->Session->logoutUser();
-    })
-    
-    ->failure(function($info){
+
+    tx('Logging out.', function(){tx('Account')->logout();})->failure(function($info){
       tx('Controller')->message(array(
         'error' => $info->get_user_message()
       ));
+
     });
 
   }
@@ -368,8 +349,8 @@ class Actions extends \dependencies\BaseComponent
         'notification' => $info->get_user_message()
       ));
     });
-   
-    exit;
+    
+    tx('Url')->redirect('id=NULL');
     
   }
   
@@ -427,26 +408,16 @@ class Actions extends \dependencies\BaseComponent
       $account = $user->account;
       
       //Insert this login session in the database.
-      tx('Sql')
-        ->table('account', 'UserLogins')
-        ->where('session_id', "'".tx('Session')->id."'")
-        ->execute_single()
-        ->is('empty', function()use($account, &$user_login){
-
-          $user_login = tx('Sql')->model('account', 'UserLogins')
-            ->set(array(
-              'user_id' => $account->id,
-              'session_id' => tx('Session')->id,
-              'dt_expiry' => date('Y-m-d H:i:s', time() + (2 * 3600)), //2 hours to set your password.
-              'IPv4' => tx('Data')->server->REMOTE_ADDR,
-              'user_agent' => tx('Data')->server->HTTP_USER_AGENT,
-              'date' => time()
-            ))
-            ->save();
-
-        })->failure(function($row)use(&$user_login){
-          $user_login = $row;
-        });
+      $user_login = tx('Sql')->model('account', 'UserLogins')
+        ->set(array(
+          'user_id' => $account->id,
+          'session_id' => tx('Session')->id,
+          'dt_expiry' => date('Y-m-d H:i:s', time() + (2 * 3600)), //2 hours to set your password.
+          'IPv4' => tx('Data')->server->REMOTE_ADDR,
+          'user_agent' => tx('Data')->server->HTTP_USER_AGENT,
+          'date' => time()
+        ))
+        ->save();
       
       tx('Logging')->log('LEDATE', $user_login->dt_expiry, date('Y-m-d H:i:s', time() + (2 * 3600)));
       

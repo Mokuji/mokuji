@@ -56,7 +56,7 @@ class File
     $mime_info = new \finfo(FILEINFO_MIME_TYPE);
     
     $this->info['size'] = filesize($source);
-    $this->info['extension'] = pathinfo($f['file'], PATHINFO_EXTENSION);
+    $this->info['extension'] = strtolower(pathinfo($f['file'], PATHINFO_EXTENSION));
     $this->info['name'] = basename($f['file'], '.'.$this->info['extension']);
     $this->info['mime'] = $mime_info->file($source);
     

@@ -20,7 +20,6 @@ Handles the basic account operations and manages the users session.
 * [`public mixed $user`](#property-user)
 
 **Methods**
-* [`public self become_user(Integer $user_id, $persistent)`](#method-become_user)
 * [`public boolean check_level(int $level, boolean $exact)`](#method-check_level)
 * [`public void init()`](#method-init)
 * [`public boolean is_login()`](#method-is_login)
@@ -29,9 +28,8 @@ Handles the basic account operations and manages the users session.
 * [`public self logout()`](#method-logout)
 * [`public void page_authorisation(int $level, boolean $exact)`](#method-page_authorisation)
 * [`public boolean register(String $email, String $username, String $password, int $level)`](#method-register)
-* [`private Object _check_ip_permissions()`](#method-_check_ip_permissions)
 * [`private string _generate_authentication_token(integer $user_id, string $series_token, array $data)`](#method-_generate_authentication_token)
-* [`private self _set_logged_in(\dependencies\Data $user, $expiry_date, $persistent, $series_token)`](#method-_set_logged_in)
+* [`private self _set_logged_in(\depednecies\Data $user, $expiry_date, $persistent, $series_token)`](#method-_set_logged_in)
 
 
 
@@ -71,40 +69,6 @@ The basic user information for the current session.
 
 
 # Methods
-
-
-## Method `become_user`
-In class: [core\Account](#top)
-
-```
-self core\Account::become_user(Integer $user_id, $persistent)
-```
-
-Logins a login attempt for the current session.
-
-
-
-* Visibility: **public**
-
-#### Arguments
-
-* $user_id **Integer** - The user ID of the user to log in with.
-* $persistent **mixed**
-
-
-#### Return value
-
-**self** - Returns $this for chaining.
-
-
-
-
-#### Throws exceptions
-
-* **[exception\Validation](../exception/Validation.md)** - If the IP address of the remote connection is blacklisted.
-* **[exception\EmptyResult](../exception/EmptyResult.md)** - If the user account is not found.
-
-
 
 
 ## Method `check_level`
@@ -318,34 +282,6 @@ Registers a new user account.
 
 
 
-## Method `_check_ip_permissions`
-In class: [core\Account](#top)
-
-```
-Object core\Account::_check_ip_permissions()
-```
-
-Check if a user is allowed to login based on IP.
-
-
-
-* Visibility: **private**
-
-
-#### Return value
-
-**Object** - $ipinfo.
-
-
-
-
-#### Throws exceptions
-
-* **[exception\Validation](../exception/Validation.md)** - If the IP address of the remote connection is blacklisted.
-
-
-
-
 ## Method `_generate_authentication_token`
 In class: [core\Account](#top)
 
@@ -383,7 +319,7 @@ Return a persistent authentication token with the given user ID.
 In class: [core\Account](#top)
 
 ```
-self core\Account::_set_logged_in(\dependencies\Data $user, $expiry_date, $persistent, $series_token)
+self core\Account::_set_logged_in(\depednecies\Data $user, $expiry_date, $persistent, $series_token)
 ```
 
 Sets the log-in session for a given user object.
@@ -394,7 +330,7 @@ Sets the log-in session for a given user object.
 
 #### Arguments
 
-* $user **[dependencies\Data](../dependencies/Data.md)** - A row from the users table.
+* $user **depednecies\Data** - A row from the users table.
 * $expiry_date **mixed**
 * $persistent **mixed**
 * $series_token **mixed**

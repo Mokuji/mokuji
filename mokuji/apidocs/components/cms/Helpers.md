@@ -40,7 +40,6 @@
 * [`public mixed __construct()`](#method-__construct)
 * [`public mixed _call($controller, array $args)`](#method-_call)
 * [`public mixed call($controller, $data)`](#method-call)
-* [`public self create_filter(string $key, mixed $value)`](#method-create_filter)
 * [`public mixed filters()`](#method-filters)
 * [`public mixed helper($controller)`](#method-helper)
 * [`public mixed model($model_name)`](#method-model)
@@ -199,36 +198,6 @@ mixed components\cms\Helpers::check_page_authorisation($pid)
 #### Arguments
 
 * $pid **mixed**
-
-
-
-
-
-
-## Method `create_filter`
-In class: [components\cms\Helpers](#top)
-
-```
-self dependencies\BaseComponent::create_filter(string $key, mixed $value)
-```
-
-Creates a component specific filter in the session.
-
-
-
-* Visibility: **public**
-* This method is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
-
-#### Arguments
-
-* $key **string** - The key under which the value will be available.
-* $value **mixed** - The value for the filter.
-
-
-#### Return value
-
-**self** - Chaining enabled.
-
 
 
 

@@ -154,52 +154,24 @@ body {
   text-shadow:1px 1px 1px rgba(0, 0, 0, .65);
 }
   
-  /*
-    CC BY 2.0 
-    https://secure.flickr.com/photos/laffy4k/404321726/
-  */
   .tx-wrapper.bg-img.bg-1{ background-image:url('../img/crayons-laffy4k.jpg'); }
   .tx-wrapper.bg-1 .tx-bg-credits:before{ content: "Background by laffy4k"; }
   
-  /*
-    CC BY 2.0 
-    https://secure.flickr.com/photos/62301865@N00/225833750/
-  */
   .tx-wrapper.bg-img.bg-2{ background-image:url('../img/baloons-ishrona.jpg'); }
   .tx-wrapper.bg-2 .tx-bg-credits:before{ content: "Background by Ishrona"; }
   
-  /*
-    CC BY 2.0 
-    https://secure.flickr.com/photos/40645538@N00/4053524544/
-  */
   .tx-wrapper.bg-img.bg-3{ background-image:url('../img/autumn-toes-pink-sherbet-photography.jpg'); }
   .tx-wrapper.bg-3 .tx-bg-credits:before{ content: "Background by Pink Sherbet Photography"; }
   
-  /*
-    CC BY-ND 2.0 
-    https://secure.flickr.com/photos/53760536@N07/5474396208/
-  */
   .tx-wrapper.bg-img.bg-4{ background-image:url('../img/night-city-neil-kremer.jpg'); }
   .tx-wrapper.bg-4 .tx-bg-credits:before{ content: "Background by Neil Kremer"; }
   
-  /*
-    CC BY 2.0 
-    https://secure.flickr.com/photos/12836528@N00/4080412658/
-  */
   .tx-wrapper.bg-img.bg-5{ background-image:url('../img/tea-party-kevin-dooley.jpg'); }
   .tx-wrapper.bg-5 .tx-bg-credits:before{ content: "Background by Kevin Dooley"; }
   
-  /*
-    CC BY-ND 2.0 
-    https://secure.flickr.com/photos/27263572@N05/2746240513/
-  */
   .tx-wrapper.bg-img.bg-6{ background-image:url('../img/tilt-shift-city-marco.jpg'); }
   .tx-wrapper.bg-6 .tx-bg-credits:before{ content: "Background by Marco"; }
   
-  /*
-    CC BY 2.0 
-    https://secure.flickr.com/photos/nanagyei/5349900735/
-  */
   .tx-wrapper.bg-img.bg-7{ background-image:url('../img/zebra-illustration-nanagyei.jpg'); }
   .tx-wrapper.bg-7 .tx-bg-credits:before{ content: "Background by Nanagyei"; }
 

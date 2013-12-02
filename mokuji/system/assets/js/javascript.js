@@ -61,8 +61,8 @@ if(window.$) (function($){
         var isRoot = name === '/';
         
         $.ajax(i18n.baseUrl + (isRoot ?
-          'mokuji/system/i18n/'+i18n.locale :
-          'mokuji/components/'+name+'/i18n/'+i18n.locale
+          'system/i18n/'+i18n.locale :
+          'components/'+name+'/i18n/'+i18n.locale
         ) + '.json').done(function(translations){
           i18n.translations[name] = translations;
           i18n.components[name] = true;

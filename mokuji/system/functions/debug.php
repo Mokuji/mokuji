@@ -12,33 +12,8 @@ function error_handler($errno, $errstr='', $errfile='', $errline='', $context=ar
 
 function exception_handler($e){
   
-  mk('Logging')->log('Debug', 'Uncaught exception', n.$e->getMessage().n.'in '.$e->getFile().'('.$e->getLine().')'.n.$e->getTraceAsString(), false, true);
+  mk('Logging')->log('Debug', 'Uncaught exception', $e->getMessage());
   mk('Controller')->load_error_template($e);
-  
-}
-
-function rest_exception_handler($e)
-{
-  
-  mk('Logging')->log('Debug', 'Uncaught exception', n.$e->getMessage().n.'in '.$e->getFile().'('.$e->getLine().')'.n.$e->getTraceAsString(), false, true);
-  
-  //Use HTTP response code 500 Internal Server Error, because this exception is uncaught.
-  set_status_header(500);
-  header('Content-type: application/json; charset=utf8');
-  
-  //This body is just for developers debugging their code.
-  //Not to be used for production environments.
-  if(DEBUG) echo json_encode(array(
-    'error' => array(
-      'type' => 'Uncaught exception',
-      'message' => $e->getMessage(),
-      'file' => $e->getFile(),
-      'line' => $e->getLine(),
-      'trace' => $e->getTrace()
-    )
-  ), JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
-  
-  exit;
   
 }
 

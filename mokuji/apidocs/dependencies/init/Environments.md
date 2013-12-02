@@ -19,7 +19,6 @@ A static class that helps you to initialize Mokuji environments.
 * [`FRONTEND`](#constant-frontend)
 * [`INSTALL`](#constant-install)
 * [`MINIMAL`](#constant-minimal)
-* [`REST`](#constant-rest)
 * [`SHELL`](#constant-shell)
 
 
@@ -81,19 +80,6 @@ const mixed MINIMAL = 4
 ```
 
 Minimal environment.
-
-
-
-
-
-## Constant `REST`
-In class: [dependencies\init\Environments](#top)
-
-```
-const mixed REST = 5
-```
-
-REST environment.
 
 
 

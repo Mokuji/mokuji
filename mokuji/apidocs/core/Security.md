@@ -26,11 +26,8 @@
 **Properties**
 * [`public static mixed $HASH_DEFAULT`](#property-hash_default)
 * [`public static mixed $HASH_PREFERENCES`](#property-hash_preferences)
-* [`private string $internal_state`](#property-internal_state)
-* [`private string $last_random_source`](#property-last_random_source)
 
 **Methods**
-* [`public mixed __destruct()`](#method-__destruct)
 * [`public int get_password_strength(String $password)`](#method-get_password_strength)
 * [`public mixed hash(string $input, string $algorithm, int $output_type)`](#method-hash)
 * [`public string pref_hash_algo(int $bits, bool $inclusive, $result_bits)`](#method-pref_hash_algo)
@@ -172,7 +169,7 @@ public mixed $HASH_DEFAULT = 'sha256'
 In class: [core\Security](#top)
 
 ```
-public mixed $HASH_PREFERENCES = array('128' => array('ripemd128', 'snefru', 'md5'), '160' => array('ripemd160', 'sha1'), '224' => array('sha224'), '256' => array('sha256'), '384' => array('sha384'), '512' => array('sha512', 'whirlpool'))
+public mixed $HASH_PREFERENCES = array('128' => array('ripemd128', 'snefru'), '160' => array('ripemd160', 'sha1'), '224' => array('sha224'), '256' => array('sha256'), '384' => array('sha384'), '512' => array('sha512', 'whirlpool'))
 ```
 
 
@@ -183,53 +180,7 @@ public mixed $HASH_PREFERENCES = array('128' => array('ripemd128', 'snefru', 'md
 * This property is **static**.
 
 
-## Property `$internal_state`
-In class: [core\Security](#top)
-
-```
-private string $internal_state
-```
-
-Caches an internal state, which is stored in the database when this object destructs.
-
-Used as part of the final fallback option for a source of randomness.
-
-* Visibility: **private**
-
-
-## Property `$last_random_source`
-In class: [core\Security](#top)
-
-```
-private string $last_random_source
-```
-
-Stores which random source was used last.
-
-Cached in a variable because we don't want to write this to the database multiple times per request.
-
-* Visibility: **private**
-
-
 # Methods
-
-
-## Method `__destruct`
-In class: [core\Security](#top)
-
-```
-mixed core\Security::__destruct()
-```
-
-Takes care of some pending database operations.
-
-
-
-* Visibility: **public**
-
-
-
-
 
 
 ## Method `get_password_strength`

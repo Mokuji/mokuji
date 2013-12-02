@@ -84,8 +84,7 @@
         , nameParts = field.attr('name').split(splitName);
       
       //Since we end the last array with ']' we will have an excess empty value at the end of the array.
-      //Check on empty string, because Internet Explorer (8) filters semi-empty array nodes.
-      if(nameParts.length > 1 && nameParts[nameParts.length-1] == '') nameParts.pop();
+      if(nameParts.length > 1) nameParts.pop();
       
       //Go through each name part.
       for(var i = 0; i < nameParts.length; i++){

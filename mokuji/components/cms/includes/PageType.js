@@ -22,24 +22,6 @@
       
       var resources = [];
       
-      //All CSS resources.
-      if(definition.css){
-
-        //Remove CSS files of previous loaded pagetypes.
-        $('.pagetype-css').remove();
-
-        //Add new CSS links to the header.
-        for(var i = 0; i < definition.css.length; i++){
-          $('head').append('<link />', {
-            "class": "pagetype-css",
-            rel:  "stylesheet",
-            type: "text/css",
-            href: pageTypeFolder + definition.css[i]
-          });
-        }
-
-      }
-      
       //All JavaScript resources.
       if(definition.javascript)
       for(var i = 0; i < definition.javascript.length; i++)

@@ -87,8 +87,7 @@ class Helpers extends \dependencies\BaseComponent
           }
           
           else{
-
-            #TODO #BUG
+            
             mail(
               $user->email,
               __('Invitation for', 1).': '.$data->for_title,
@@ -126,7 +125,7 @@ class Helpers extends \dependencies\BaseComponent
         ->email->validate('Email', array('required', 'email'))->back()
         ->username->validate('Username', array('string', 'between' => array(0, 30), 'no_html'))->back()
         ->for_title->validate('For-title', array('required', 'string', 'no_html'))->back()
-        ->for_link->validate('For-link', array('required'))->back()
+        ->for_link->validate('For-link', array('required', 'url'))->back()
         ->name->validate('Name', array('string', 'between' => array(0, 30), 'no_html'))->back()
         ->preposition->validate('Preposition', array('string', 'between' => array(0, 30), 'no_html'))->back()
         ->family_name->validate('Family name', array('string', 'between' => array(0, 30), 'no_html'))->back()
@@ -142,8 +141,8 @@ class Helpers extends \dependencies\BaseComponent
       
       if($duplicates->count()->get('int') > 0){
         tx('Logging')->log('Duplicate invite for id '.$duplicates->execute_single()->id);
-        return $duplicates->execute_single();
-        throw new \exception\User('A user with this email address has already been created.');
+        return $duplicates->execute_single()->id;
+        // throw new \exception\User('A user with this email address has already been created.');
       }
       
       //Create the user in the core tables.
@@ -178,7 +177,7 @@ class Helpers extends \dependencies\BaseComponent
         tx('Component')->helpers('mail')->send_fleeting_mail(array(
           'to' => array('name'=>$data->username->otherwise(''), 'email'=>$user->email),
           'subject' => __('Invitation for', 1).': '.$data->for_title,
-          'html_message' => tx('Component')->views('account')->get_html('email_user_invited', $data->having('email', 'for_link', 'for_title', 'claim_link', 'unsubscribe_link'))
+          'html_message' => tx('Component')->views('account')->get_html('email_user_invited', $data->having('for_link', 'for_title', 'claim_link', 'unsubscribe_link'))
         ))
         
         ->failure(function($info){
@@ -197,7 +196,7 @@ class Helpers extends \dependencies\BaseComponent
         
       }
       
-      return $user;
+      return $user->id;
       
     });
     

@@ -5,12 +5,6 @@
   "dbUpdates": true,
   "versions": [
     {
-      "version": "0.3.1-beta",
-      "date": "2013-11-27",
-      "description": "Security updates and minor API features.",
-      "changes": []
-    },
-    {
       "version": "0.3.0-beta",
       "date": "2013-09-11",
       "description": "Account registratie functie uitgewerkt, inclusief een registratieformulier module.",

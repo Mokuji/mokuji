@@ -134,11 +134,6 @@
   "Website name": "Website naam",
   "Website settings": "Website instellingen",
   
-  "You're currently in the admin panel": "Je bent op dit moment in het beheerderspaneel",
-
-  "Failed to authorise while %s: %s": "Authorisatie is niet gelukt bij het %s: %s",
-  "Failed to validate while %s, because: %s": "Valideren is niet gelukt bij het %s, want: %s",
-  "Failed to load record needed for %s, because: %s": "Ophalen van informatie voor het %s is niet gelukt, want: %s",
-  "Something went wrong while %s, because: %s": "Iets ging fout bij het %s, want: %s"
+  "You are currently in the admin panel": "Je bent op dit moment in het beheerderspaneel"
   
 }

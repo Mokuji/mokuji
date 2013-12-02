@@ -1,51 +1,43 @@
-<?php namespace components\account; if(!defined('TX')) die('No direct access.'); ?>
+<?php namespace components\account; if(!defined('TX')) die('No direct access.'); tx('Account')->page_authorisation(2);
+
+// echo load_plugin('jquery_datatables');
+
+?>
 
 <div id="user-table">
-
-  <form class="form table-operations-container">
-    <div class="buttonHolder">
-      <select class="table-operations">
-        <option class="op-none" value="op-none">-- <?php __($names->component, 'Perform action on selection'); ?> --</option>
-        <option class="op-message" value="op-message"><?php __($names->component, 'Send email message to selection'); ?></option>
-        <option class="op-activate" value="op-activate"><?php __($names->component, 'Send activation email to selection'); ?></option>
-      </select>
-    </div>
-  </form>
+<form class="form table-operations-container">
+  <div class="buttonHolder">
+    <select class="table-operations">
+      <option class="op-none" value="op-none">-- <?php __($names->component, 'Perform action on selection'); ?> --</option>
+      <option class="op-message" value="op-message"><?php __($names->component, 'Send email message to selection'); ?></option>
+      <option class="op-activate" value="op-activate"><?php __($names->component, 'Send activation email to selection'); ?></option>
+    </select>
+  </div>
+</form>
 
 <?php
 
-//First columns.
-$cols = array(
+echo $user_list->as_table(array(
   '<input type="checkbox" class="select-all" />' => function($row){ return '<input type="checkbox" class="select-row" name="user_id[]" value="'.$row->id.'" />'; },
   __('Name', 1)                                  => function($row){ return $row->user_info->full_name->otherwise('-'); },
-  __('Email address', 1)                         => 'email'
-);
-
-//Only show column 'User groups' if there _are_ user groups.
-if($data->num_user_groups->get() > 0) $cols = array_merge($cols, array(
+  __('Email address', 1)                         => 'email',
   __($names->component, 'Groups', 1)             => function($row){
     
     return $row->groups->map(function($group){
       return $group->title;
     })->join(', ')->otherwise('-');
     
-  }
-));
-
-//Last columns.
-$cols = array_merge($cols, array(
+  },
   __('Administrator', 1)                         => function($row){ return $row->is_administrator->get('boolean') ? __('Yes', true) : __('No', true); },
   __($names->component, 'Last login', 1)         => function($row)use($names){
     return ($row->last_login != '' ? $row->last_login : __($names->component, 'Never logged in', 1));
   },
+  //__('Comments', 1) => function($row){ return $row->user_info->comments; },
   __('Actions', 1)                               => array(
     function($row){return '<a class="edit" href="'.url('section=account/edit_user&user_id='.$row->id).'">'.__('Edit', 1).'</a>';},
     function($row){return ($row->status->get('int') > 0 ? '<a class="delete" href="'.url('action=account/delete_user&user_id='.$row->id).'">'.__('Delete', 1).'</a>' : '');}
   )
 ));
-
-//Und jetzt: show le table.
-echo $data->users->as_table($cols);
 
 ?>
 
@@ -55,6 +47,8 @@ echo $data->users->as_table($cols);
 
   $(function(){
 
+    // $('#user-table table').dataTable();
+    
     //Bind the operations.
     $('#user-table ')
     
@@ -78,7 +72,6 @@ echo $data->users->as_table($cols);
       .clone()
       .toggleClass('operations-bottom')
       .appendTo($('#user-table'));
-
 
     $('.table-operations-container')
 

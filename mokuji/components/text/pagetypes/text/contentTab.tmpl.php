@@ -23,7 +23,8 @@
 
       <div class="toggle-wrapper description" style="margin:10px 0;">
         <a href="#" class="trigger">
-          <?php __('text', 'Click here to show/hide the additional text.'); ?>
+          Klik hier om <span class="toggle hidden">de </span>additionele tekst te
+          <span class="toggle">bewerken</span><span class="toggle hidden">verbergen</span>.
         </a>
         <div class="hidden wrapper description">
           <textarea id="l_description_${language.code}_" name="info[${language.id}][description]" class="description editor">

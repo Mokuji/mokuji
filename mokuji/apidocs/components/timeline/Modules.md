@@ -19,7 +19,7 @@
 * [`protected mixed $permissions`](#property-permissions)
 
 **Methods**
-* [`protected object blog(array $options)`](#method-blog)
+* [`protected mixed blog($options)`](#method-blog)
 
 
 ## Inheritance index
@@ -33,7 +33,6 @@
 * [`public mixed __construct()`](#method-__construct)
 * [`public mixed _call($controller, array $args)`](#method-_call)
 * [`public mixed call($controller, $data)`](#method-call)
-* [`public self create_filter(string $key, mixed $value)`](#method-create_filter)
 * [`public mixed filters()`](#method-filters)
 * [`public mixed get_html($view, $options)`](#method-get_html)
 * [`public mixed helper($controller)`](#method-helper)
@@ -172,36 +171,6 @@ mixed dependencies\BaseComponent::call($controller, $data)
 
 * $controller **mixed**
 * $data **mixed**
-
-
-
-
-
-
-## Method `create_filter`
-In class: [components\timeline\Modules](#top)
-
-```
-self dependencies\BaseComponent::create_filter(string $key, mixed $value)
-```
-
-Creates a component specific filter in the session.
-
-
-
-* Visibility: **public**
-* This method is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
-
-#### Arguments
-
-* $key **string** - The key under which the value will be available.
-* $value **mixed** - The value for the filter.
-
-
-#### Return value
-
-**self** - Chaining enabled.
-
 
 
 
@@ -397,27 +366,18 @@ mixed dependencies\BaseComponent::view($module_name, $options)
 In class: [components\timeline\Modules](#top)
 
 ```
-object components\timeline\Modules::blog(array $options)
+mixed components\timeline\Modules::blog($options)
 ```
 
-Show blogposts.
 
-&lt;h1&gt;TODO description&lt;/h1&gt;
+
+
 
 * Visibility: **protected**
 
 #### Arguments
 
-* $options **array** - An array with options
-   @param int    $pid       The page ID of the timeline page we want to load items from.
-   @param int    $menu_id   (optional) Menu ID to use in the URLs.
-   @param string $dt_format (optional) Date/Time format.
-
-
-#### Return value
-
-**object** - The requested timeline entries.
-
+* $options **mixed**
 
 
 

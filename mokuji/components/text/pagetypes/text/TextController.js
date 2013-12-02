@@ -20,7 +20,7 @@
     events:{
       
       //Let findability know we have a recommended default.
-      'keyup on title': function(e){
+      'blur on title': function(e){
         app.Page.Tabs.findabilityTab.recommendTitle(
           $(e.target).val(),
           $(e.target).closest('.multilingual-section').attr('data-language-id')

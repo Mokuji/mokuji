@@ -10,6 +10,7 @@ class Helpers extends \dependencies\BaseComponent
       'check_page_authorisation' => 0,
       'get_page_info' => 0,
       'get_page_options' => 0,
+      'is_website_editable' => 0,
       'get_page_permissions' => 0
     );
   
@@ -96,7 +97,7 @@ class Helpers extends \dependencies\BaseComponent
       //Find if we're a member of any of those.
       $howMany = tx('Sql')
         ->table('account', 'UserGroups', $UG)
-        ->where('id', 'IN', $allowedGroups)
+        ->pk($allowedGroups)
         ->join('AccountsToUserGroups', $ATUG)
           ->where("$ATUG.user_id", tx('Account')->user->id)
         ->count();
@@ -350,6 +351,25 @@ class Helpers extends \dependencies\BaseComponent
         });
       
     }
+    
+  }
+  
+  //Returns true if the website can be displayed in editable mode.
+  public function is_website_editable()
+  {
+    
+    //The back-end is never editable.
+    if(tx('Config')->system()->check('backend')){
+      return false;
+    }
+    
+    //The user must be logged in as an administrator.
+    if(!tx('Account')->check_level(2)){
+      return false;
+    }
+    
+    //Return the session variable.
+    return tx('Data')->session->tx->editable->otherwise(false)->get();
     
   }
 

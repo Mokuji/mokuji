@@ -45,9 +45,6 @@ echo load_plugin('jquery_rest');
             <?php echo $data->captcha_reload; ?>
           }
         });
-        <?php if($options->autofocus->is_true()): ?>
-          $('#register_form_<?php echo $uid; ?>').find('#l_email').focus();
-        <?php endif; ?>
       });
     </script>
     

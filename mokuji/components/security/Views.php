@@ -13,8 +13,7 @@ class Views extends \dependencies\BaseViews
         'tls_mode',
         'log_shared_login_sessions',
         'recaptcha_public_key',
-        'recaptcha_private_key',
-        'security_last_random_source'
+        'recaptcha_private_key'
       )
       
       ->merge(array(

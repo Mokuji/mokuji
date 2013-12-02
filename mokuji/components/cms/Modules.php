@@ -26,6 +26,7 @@ class Modules extends \dependencies\BaseViews
   {
 
     return array(
+      'editable' => $this->helper('is_website_editable'),
       'items' => tx('Sql')
       ->table('cms', 'MenuItems')
         ->sk(tx('Data')->filter('cms')->menu_id->is_set() ? tx('Data')->filter('cms')->menu_id : '1')

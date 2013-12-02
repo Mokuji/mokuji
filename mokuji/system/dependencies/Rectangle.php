@@ -63,7 +63,7 @@ class Rectangle
     }
     
     //Maintain aspect ratio.
-    $ratio = ($this->width > 0 ? $width / $this->width : 1);
+    $ratio = $width / $this->width;
     $this->width = $width;
     $this->height = ($this->height * $ratio);
     
@@ -86,7 +86,7 @@ class Rectangle
     }
     
     //Maintain aspect ratio.
-    $ratio = ($this->height > 0 ? $height / $this->height : 1);
+    $ratio = $height / $this->height;
     $this->height = $height;
     $this->width = ($this->width * $ratio);
     

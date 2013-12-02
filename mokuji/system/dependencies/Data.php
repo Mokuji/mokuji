@@ -3,8 +3,6 @@
 class Data extends Successable implements \Serializable, \IteratorAggregate, \ArrayAccess
 {
   
-  const OPTION_UNSET_AS_NULL = 1;
-  
   ###
   ###  PROPERTIES
   ###
@@ -173,8 +171,7 @@ class Data extends Successable implements \Serializable, \IteratorAggregate, \Ar
     }
     
     // extract raw data from the given $key
-    if(!is_string($key) && !is_int($key))
-      $key = data_of($key);
+    $key = data_of($key);
     
     // allow auto-increament by giving null or empty
     if(is_null($key) || is_bool($key) || $key === ''){
@@ -255,7 +252,7 @@ class Data extends Successable implements \Serializable, \IteratorAggregate, \Ar
   // returns the actual value of a node, accepts offset and length to cut strings or arrays
   public function get($as=null)
   {
-    
+  
     if(is_null($as)){
       return $this->data;
     }
@@ -279,7 +276,8 @@ class Data extends Successable implements \Serializable, \IteratorAggregate, \Ar
       default:
         return $this->data;
     }
-      
+    
+  
   }
   
   // if this object is treated like a string, it's value will be used instead
@@ -306,14 +304,11 @@ class Data extends Successable implements \Serializable, \IteratorAggregate, \Ar
   }
   
   // Returns all content of this node (including its children) as an array
-  public function as_array($serialized=false, $unset_as_null=false)
+  public function as_array($serialized=false)
   {
     
     if($this->is_empty()){
-      if($unset_as_null === true)
-        return array(null);
-      else
-        return array();
+      return array();
     }
     
     if($this->is_leafnode()){
@@ -350,11 +345,6 @@ class Data extends Successable implements \Serializable, \IteratorAggregate, \Ar
           
         }
         
-      }
-      
-      //If this option is enabled, add NULL values for present, but unset nodes.
-      elseif($unset_as_null === true) {
-        $array[$key] = $val->get();
       }
       
     }
@@ -706,10 +696,7 @@ class Data extends Successable implements \Serializable, \IteratorAggregate, \Ar
   // Returns all content of this node (including its children) as JSON
   public function as_json($flags = JSON_FORCE_OBJECT, $options = 0)
   {
-    
-    $unset_as_null = ($options & self::OPTION_UNSET_AS_NULL) === self::OPTION_UNSET_AS_NULL;
-    return json_encode($this->as_array(false, $unset_as_null), $flags);
-    
+    return json_encode($this->as_array(), $flags);
   }
   
   // returns string representation of all this node's data

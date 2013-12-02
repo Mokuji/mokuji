@@ -9,8 +9,7 @@ $init = Initializer::get_instance();
 $init->enable_debugging(true);
 
 //Get the environment definition from any rewrite rules.
-$env =  isset($_SERVER['REDIRECT_MK_ENV']) ? $_SERVER['REDIRECT_MK_ENV'] :
-        (isset($_GET['cgi_env']) ? $_GET['cgi_env'] : null);
+$env = isset($_SERVER['REDIRECT_MK_ENV']) ? $_SERVER['REDIRECT_MK_ENV'] : null;
 
 switch($env){
   
@@ -20,10 +19,6 @@ switch($env){
   
   case 'install':
     $init->set_environment(Environments::INSTALL);
-    break;
-  
-  case 'rest':
-    $init->set_environment(Environments::REST);
     break;
   
   /*

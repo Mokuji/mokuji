@@ -27,10 +27,7 @@
 * [`protected mixed create_password_reset_finalization($data, $params)`](#method-create_password_reset_finalization)
 * [`protected mixed create_password_reset_request($data, $params)`](#method-create_password_reset_request)
 * [`protected array create_user_session(\dependencies\Data $data, \dependencies\Data $params)`](#method-create_user_session)
-* [`protected void delete_user_session($data, $params)`](#method-delete_user_session)
-* [`protected integer get_login_status(\dependencies\Data $data, $parameters)`](#method-get_login_status)
 * [`protected mixed get_mail_autocomplete($data, $parameters)`](#method-get_mail_autocomplete)
-* [`protected \dependencies\Data get_me(\dependencies\Data $data, $parameters)`](#method-get_me)
 * [`protected mixed update_password($data, $parameters)`](#method-update_password)
 
 
@@ -44,7 +41,6 @@
 * [`public mixed __construct()`](#method-__construct)
 * [`public mixed _call($controller, array $args)`](#method-_call)
 * [`public mixed call($controller, $data)`](#method-call)
-* [`public self create_filter(string $key, mixed $value)`](#method-create_filter)
 * [`public mixed filters()`](#method-filters)
 * [`public mixed helper($controller)`](#method-helper)
 * [`public mixed model($model_name)`](#method-model)
@@ -107,7 +103,7 @@ protected mixed $default_permission = 2
 In class: [components\account\Json](#top)
 
 ```
-protected mixed $permissions = array('create_new_account' => 0, 'create_password_reset_request' => 0, 'create_password_reset_finalization' => 0, 'create_user_session' => 0, 'update_password' => 1, 'get_me' => 1, 'get_login_status' => 0)
+protected mixed $permissions = array('create_new_account' => 0, 'create_password_reset_request' => 0, 'create_password_reset_finalization' => 0, 'create_user_session' => 0, 'update_password' => 1)
 ```
 
 
@@ -181,36 +177,6 @@ mixed dependencies\BaseComponent::call($controller, $data)
 
 * $controller **mixed**
 * $data **mixed**
-
-
-
-
-
-
-## Method `create_filter`
-In class: [components\account\Json](#top)
-
-```
-self dependencies\BaseComponent::create_filter(string $key, mixed $value)
-```
-
-Creates a component specific filter in the session.
-
-
-
-* Visibility: **public**
-* This method is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
-
-#### Arguments
-
-* $key **string** - The key under which the value will be available.
-* $value **mixed** - The value for the filter.
-
-
-#### Return value
-
-**self** - Chaining enabled.
-
 
 
 
@@ -531,7 +497,7 @@ Attempt to log in the user.
 
 #### Arguments
 
-* $data **[dependencies\Data](../../dependencies/Data.md)** - Array containing &#039;email&#039; and &#039;password&#039; keys.
+* $data **[dependencies\Data](../../dependencies/Data.md)** - Array containing &#039;username&#039; and &#039;password&#039; keys.
 * $params **[dependencies\Data](../../dependencies/Data.md)** - Empty array.
 
 
@@ -539,54 +505,6 @@ Attempt to log in the user.
 
 **array** - Array with &#039;success&#039; boolean and &#039;target_url&#039; to suggest a redirect.
 
-
-
-
-
-
-
-## Method `delete_user_session`
-In class: [components\account\Json](#top)
-
-```
-void components\account\Json::delete_user_session($data, $params)
-```
-
-Logs the user out of the system.
-
-
-
-* Visibility: **protected**
-
-#### Arguments
-
-* $data **mixed**
-* $params **mixed**
-
-
-
-
-
-
-## Method `get_login_status`
-In class: [components\account\Json](#top)
-
-```
-integer components\account\Json::get_login_status(\dependencies\Data $data, $parameters)
-```
-
-Return the level of access the user has on the server.
-
-&lt;code&gt;0&lt;/code&gt; For not logged in.
-&lt;code&gt;1&lt;/code&gt; For logged in.
-&lt;code&gt;2&lt;/code&gt; For super-user.
-
-* Visibility: **protected**
-
-#### Arguments
-
-* $data **[dependencies\Data](../../dependencies/Data.md)** - Empty array.
-* $parameters **mixed**
 
 
 
@@ -610,35 +528,6 @@ mixed components\account\Json::get_mail_autocomplete($data, $parameters)
 
 * $data **mixed**
 * $parameters **mixed**
-
-
-
-
-
-
-## Method `get_me`
-In class: [components\account\Json](#top)
-
-```
-\dependencies\Data components\account\Json::get_me(\dependencies\Data $data, $parameters)
-```
-
-Return the user object of the currently logged in user.
-
-Requires a user to be logged in.
-
-* Visibility: **protected**
-
-#### Arguments
-
-* $data **[dependencies\Data](../../dependencies/Data.md)** - Empty array.
-* $parameters **mixed**
-
-
-#### Return value
-
-**[dependencies\Data](../../dependencies/Data.md)** - Sort of like a user model but not really because this is Mokuji.
-
 
 
 

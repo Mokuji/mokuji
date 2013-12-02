@@ -134,16 +134,12 @@ abstract class Tasks
    * Register error handlers for errors and exceptions.
    * @return void
    */
-  public static function register_error_handlers($environment=null)
+  public static function register_error_handlers()
   {
     
     #TODO: May want to make this configurable for ENV_SHELL and images.
     set_error_handler('error_handler');
-    
-    if($environment === Environments::REST)
-      set_exception_handler('rest_exception_handler');
-    else
-      set_exception_handler('exception_handler');
+    set_exception_handler('exception_handler');
     
   }
   

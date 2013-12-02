@@ -5,11 +5,6 @@
 <form id="edit_security_settings_form" class="form edit-security-settings-form" method="PUT" action="<?php echo url('rest=cms/settings', true); ?>">
   
   <div class="ctrlHolder">
-    <label>Last used random source</label>
-    <div class="description"><?php echo $data->security_last_random_source->otherwise('Unknown'); ?></div>
-  </div>
-  
-  <div class="ctrlHolder">
     
     <label for="l_captcha_type"><?php __($names->component, 'Captcha configuration'); ?></label>
     <select id="l_captcha_type" name="captcha_type[default]">

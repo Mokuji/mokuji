@@ -48,7 +48,7 @@ class Security
      *
      */
     $HASH_PREFERENCES = array(
-      '128' => array('ripemd128', 'snefru', 'md5'),
+      '128' => array('ripemd128', 'snefru'),
       '160' => array('ripemd160', 'sha1'),
       '224' => array('sha224'),
       '256' => array('sha256'),
@@ -60,44 +60,15 @@ class Security
     $HASH_DEFAULT = 'sha256';
   
   /**
-   * Caches an internal state, which is stored in the database when this object destructs.
-   * Used as part of the final fallback option for a source of randomness.
-   * @var string
-   */
-  private $internal_state;
-  
-  /**
-   * Stores which random source was used last.
-   * Cached in a variable because we don't want to write this to the database multiple times per request.
-   * @var string
-   */
-  private $last_random_source;
-  
-  /**
-   * Takes care of some pending database operations.
-   */
-  public function __destruct()
-  {
-    
-    //Should we update the internal state?
-    if(isset($this->internal_state))
-      mk('Config')->user('security_io_entropy', $this->internal_state, NULL);
-    
-    //Should register the random source?
-    if(isset($this->last_random_source))
-      mk('Config')->user('security_last_random_source', $this->last_random_source, NULL);
-    
-  }
-  
-  /**
    * Checks the password supplied is strong enough.
    *
+   * @author Beanow
    * @param String $password The password to get the strength of.
    * @return int Returns an integer indicating the password strength. See the constants of this class.
    */
   public function get_password_strength($password)
   {
-    
+  
     $password = Data(data_of($password))
       ->validate('Password', array('string')); //Must be a string.
     
@@ -245,122 +216,73 @@ class Security
    * @param bool $secure Use a cryptographically secure method of getting these random bits.
    * @param int $output_type The output type for the generated bits.
    * @return string A (pseudo) random string.
+   *
+   * @copyright: public domain
+   * @author Beanow
+   * @link http://tuxion.nl
+   * @note Don't try to improve this, you will likely just ruin it.
+   * @note I did it anyways. Regards ~Beanow
    */
   private function _random_bits($bits, $secure=true, $output_type=self::OUTPUT_HEX)
   {
     
-    $bytes = ceil($bits/8);
+    //Obviously *NIX is for pro's and so we should use it's generator if available.
+    //Ok the real reason is that it gives high entropy by gathering noise on an OS level.
+    //And falls back on a pseudo random generator that's simply a lot faster and more scrutinized.
+    //So using that makes this function a lot faster and more safe.
+    if (@is_readable('/dev/urandom')){
+      $f=fopen('/dev/urandom', 'rb');
+      $str=fread($f, ceil($bits/8));
+      fclose($f);
+      return $this->_convert_bin($str, $output_type);
+    }
     
-    //One of the faster and more safe options: urandom.
-    //Sometimes open_basedir obstructs the fopen method. Try using Mcrypt first.
-    if(function_exists('mcrypt_create_iv') && defined('MCRYPT_DEV_URANDOM'))
+    //If we don't have it we're going to make the best out of getting microtime() bits of randomness.
+    else
     {
       
-      $this->last_random_source = 'mcrypt-urandom';
+      //Generate more entropy starting state, to give it that extra bit of spunk. :D
+      $state = uniqid('', true);
+      $intermediate_bytes = '';
+      $random_bytes = '';
+      $hash_algorithm = $this->pref_hash_algo($bits, true, $intermediate_bits);
+      $intermediate_hashes = 0;
       
-      $str = mcrypt_create_iv($bytes, MCRYPT_DEV_URANDOM);
-      if($str !== false)
-        return $this->_convert_bin($str, $output_type);
-      
-    }
-    
-    //If Mcrypt is not available, try an fopen for /dev/urandom.
-    if (@is_readable('/dev/urandom')){
-      
-      $this->last_random_source = 'fopen-urandom';
-      
-      $f=fopen('/dev/urandom', 'rb');
-      
-      if(function_exists('stream_set_read_buffer'))
-        stream_set_read_buffer($f, 0);
-      
-      $str=fread($f, $bytes);
-      
-      fclose($f);
-      
-      return $this->_convert_bin($str, $output_type);
-      
-    }
-    
-    //Another good option is OpenSSL.
-    if(function_exists('openssl_random_pseudo_bytes')){
-      $this->last_random_source = 'openssl-random-pseudo-bytes';
-      return $this->_convert_bin(openssl_random_pseudo_bytes($bytes), $output_type);
-    }
-    
-    //Starting to get desperate.
-    //Windows machines may support this.
-    if(@class_exists('\\COM', true)){
-      // http://msdn.microsoft.com/en-us/library/aa388176(VS.85).aspx
-      try {
-          $CAPI_Util = new \COM('CAPICOM.Utilities.1');
-          $pr_bits = $CAPI_Util->GetRandom($bytes,0);
-          
-          // PHP doesn't like the binary data. Use hash to make it binary instead.
-          if($pr_bits){
-            
-            $this->last_random_source = 'capicom-utilities';
-            
-            $hash_algorithm = $this->pref_hash_algo($bits, true);
-            $pr_bits = $this->hash($pr_bits, $hash_algorithm, self::OUTPUT_BINARY);
-            $output_bin = substr($pr_bits, 0, $bytes);
-            
-            return $this->_convert_bin($output_bin, $output_type);
-            
-          }
-      }catch(Exception $ex){ /* It's a best effort thing */ }
-    }
-    
-    //Since there are no proper entropy sources available, we'll just have to come up with our own.
-    $this->last_random_source = 'mokuji-fallback';
-    
-    //Fetch the internal state first.
-    if(!isset($this->internal_state))
-      $this->internal_state = mk('Config')->user('security_io_entropy')->otherwise(microtime().mt_rand());
-    
-    //Mix in some request information as noise.
-    $this->internal_state = $this->hash(
-      
-      uniqid($this->internal_state, true).
-      mt_rand().
-      mk('Data')->server->REMOTE_ADDR->get().
-      mk('Data')->server->REMOTE_PORT->get().
-      mk('Data')->server->HTTP_USER_AGENT->get().
-      mk('Url')->url->input->get().
-      mk('Data')->post->dump().
-      mk('Data')->cookie->dump(),
-      
-      //Get the preferred hashing algorithm for 128 bits. As it should suffice for an entropy source.
-      $this->pref_hash_algo(128, true)
-      
-    );
-    
-    $str = '';
-    while(strlen($str) < $bytes){
-      
-      //Using uniqid here makes sure that the input will definitely differ from the internal state.
-      //If the hashing function does a proper job, it should be non-trivial to find the internal state.
-      $str .= $this->hash(
+      //Increment with 20, because microtime() generates 6 decimals which is almost 20 bits.
+      //The fraction of the last bit that isn't available from microtime() comes from mt_rand().
+      //However if $secure is set to false we don't care and take the size of the hash output instead.
+      //This will make the algorithm faster but will contain much less entropy.
+      //Note that the state hash and string appending hash are different and should be!
+      //It makes it impossible for the state to leak into the output stream.
+      for ($entropy = 0; $entropy <= $bits; $entropy += ($secure === true ? 20 : 52))
+      {
         
-        uniqid($this->internal_state, true).
-        mt_rand(),
+        //Whenever we have reached the max entropy we can cram into the hashing algorithm that was
+        //selected, hash it to the results. Or if we reached the total requested entropy, because
+        //this could not be an exact match for the hashing algo's output size. Use bytes here so
+        //we don't get pointless data in here, like padding signs for base64.
+        if($entropy > 0 && ($entropy >= ($intermediate_bits * ($intermediate_hashes+1)) || $entropy >= $bits)){
+          $random_bytes .= $this->hash($intermediate_bytes, $hash_algorithm, self::OUTPUT_BINARY);
+          $intermediate_hashes++;
+          $intermediate_bytes = '';
+          if($entropy >= $bits)
+            break;
+        }
         
-        //Get the preferred hashing algorithm for 128 bits. As it should suffice for an entropy source.
-        $this->pref_hash_algo(128, true),
+        //Create a new state hash.
+        $state = $this->hash(microtime().$state.mt_rand(), self::$HASH_PREFERENCES['128'][0]);
         
-        //Go for binary this time.
-        self::OUTPUT_BINARY
+        //Add new bits to the collection, using the state and another microtime.
+        $intermediate_bytes .=
+          $this->hash(microtime().$state, self::$HASH_PREFERENCES['128'][0], self::OUTPUT_BINARY);
         
-      );
+      }
+      
+      //Do final conversion of binary data.
+      return $this->_convert_bin($random_bytes, $output_type);
       
     }
-    
-    //Check the size is ok.
-    $str = substr($str, 0, $bytes);
-    
-    //Do final conversion of binary data.
-    return $this->_convert_bin($str, $output_type);
-    
+
   }
   
   /**

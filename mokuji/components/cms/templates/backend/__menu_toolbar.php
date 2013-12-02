@@ -38,7 +38,7 @@
       <?php
       
       //Menu select.
-      if($data->menus->size() > 1)
+      if(true || $data->menus->size() > 1)
       {
         
         echo $data->menus->as_options('menu_id', 'title', 'id', array(

@@ -9,12 +9,9 @@ class Helpers extends \dependencies\BaseComponent
       'get_entries' => 0
     );
   
-
-  public function get_entries($filters = null, $page = 0)
+  public function get_entries($filters, $page = 0)
   {
     
-    $filters = Data($filters);
-
     raw($page);
     
     if($page < 1)
@@ -186,44 +183,41 @@ class Helpers extends \dependencies\BaseComponent
     
     $timelines = Data($timelines);
     
-    tx('Sql')
-      ->table('timeline', 'Timelines')
-      ->execute()
-      ->each(function($timeline)use($entry, $timelines){
+    //Get all time lines in the database.
+    tx('Sql')->table('timeline', 'Timelines')->execute()
+    
+    //For each of the existing timelines.
+    ->each(function($timeline)use($entry, $timelines){
+      
+      //Query for the link between this time line and the given entry.
+      tx('Sql')->table('timeline', 'EntriesToTimelines')
+      ->where('entry_id', $entry->id)
+      ->where('timeline_id', $timeline->id)
+      ->execute_single()
         
-        //Get existing info (if any).
-        tx('Sql')
-          ->table('timeline', 'EntriesToTimelines')
-          ->where('entry_id', $entry->id)
-          ->where('timeline_id', $timeline->id)
-          ->execute_single()
-          
-          //If none, make an empty one.
-          ->is('empty', function()use($entry, $timeline){
-            return tx('Sql')
-              ->model('timeline', 'EntriesToTimelines')
-              ->set(array(
-                'entry_id' => $entry->id,
-                'timeline_id' => $timeline->id
-              ));
-          })
-          
-          // //Validate.
-          // ->validate_model(array(
-          //   'force_create' => $info->
-          // ))
-          
-          ->is($timelines->{$timeline->id}->validate('Timeline checkbox', array('boolean'))->is_true())
-            
-            ->success(function($ET){
-              $ET->save();
-            })
-            
-            ->failure(function($ET){
-              $ET->delete();
-            });
-        
-      }); //End - each timeline
+      //If there isn't a link, create a model which can store a new link for us.
+      ->is('empty', function()use($entry, $timeline){
+        return tx('Sql')->model('timeline', 'EntriesToTimelines')
+        ->set(array(
+          'entry_id' => $entry->id,
+          'timeline_id' => $timeline->id
+        ));
+      })
+      
+      //Check if the given entry wants to be part of this time line.
+      ->is($timelines->{$timeline->id}->validate('Timeline checkbox', array('boolean'))->is_true())
+      
+      //If it does, save the model.
+      ->success(function($ET){
+        $ET->save();
+      })
+      
+      //If it doesn't, remove the model.
+      ->failure(function($ET){
+        $ET->delete();
+      });
+      
+    }); //End - each timeline
     
   }
   

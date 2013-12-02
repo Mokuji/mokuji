@@ -54,7 +54,7 @@
 * [`public mixed and_is($check, $callback)`](#method-and_is)
 * [`public mixed and_not($check)`](#method-and_not)
 * [`public mixed any($callback)`](#method-any)
-* [`public mixed as_array($serialized, $unset_as_null)`](#method-as_array)
+* [`public mixed as_array($serialized)`](#method-as_array)
 * [`public mixed as_form($id)`](#method-as_form)
 * [`public mixed as_json($flags, $options)`](#method-as_json)
 * [`public mixed as_list()`](#method-as_list)
@@ -767,7 +767,7 @@ mixed dependencies\Data::any($callback)
 In class: [components\cms\models\Layouts](#top)
 
 ```
-mixed dependencies\Data::as_array($serialized, $unset_as_null)
+mixed dependencies\Data::as_array($serialized)
 ```
 
 
@@ -780,7 +780,6 @@ mixed dependencies\Data::as_array($serialized, $unset_as_null)
 #### Arguments
 
 * $serialized **mixed**
-* $unset_as_null **mixed**
 
 
 

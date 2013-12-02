@@ -40,7 +40,7 @@ class Sections extends \dependencies\BaseViews
         $view = $view_arr[1];
         break;
     }
-
+    
     $paths = array(
       'theme' => URL_THEMES.'cms_backend/',
       'template' => URL_TEMPLATES.'cms_backend/',
@@ -336,11 +336,15 @@ class Sections extends \dependencies\BaseViews
   protected function admin_toolbar()
   {
     
+    //We're going to use this a lot.
+    $e = $this->helper('is_website_editable');
+    
     return array(
-      'website_url'=>url(URL_BASE.'?menu=KEEP&pid=KEEP', true),
-      'edit_url'=>url(URL_BASE.'?action=cms/editable', true),
-      'advanced_url'=>url(URL_BASE.'admin/index.php?menu=KEEP&pid=KEEP', true),
-      'admin_url'=>url(URL_BASE.'admin/index.php', true)
+      'website_url'=>url(URL_BASE.'?menu=KEEP&pid=KEEP'.($e ? '&action=cms/disable_editable' : ''), true),
+      'edit_url'=>($e ? 'javascript:void(0)' : url(URL_BASE.'?action=cms/enable_editable')),
+      'advanced_url'=>url(URL_BASE.'admin/?menu=KEEP&pid=KEEP', true),
+      'admin_url'=>url(URL_BASE.'admin/?project_id=KEEP', true),
+      'editable'=>$e
     );
     
   }
@@ -440,13 +444,6 @@ class Sections extends \dependencies\BaseViews
     
     return tx('Component')->views($view->component->name)->get_html($view->name);
       
-  }
-
-  protected function dashboard()
-  {
-
-    
-
   }
 
 }

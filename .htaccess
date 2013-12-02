@@ -7,28 +7,22 @@ RewriteEngine On
 ###
 # Reserved words for root level URL keys:
 ###
-# rest
 # admin
 # install
 # mokuji
 ###
 
-# Rewrite for REST access.
-RewriteRule ^/?rest/(.+)$ index.php?_RESTROUTE=$1 [E=MK_ENV:rest,L,QSA]
-
 # Rewrite for the different environments.
-RewriteRule ^/?(admin|install)(/(.+))? $3 [E=MK_ENV:$1,QSA]
+RewriteRule ^/?(admin|install)(/(.+))? $3?%{QUERY_STRING} [E=MK_ENV:$1]
 
 #Pages format: /<pid>/<pkey>
 RewriteRule ^/?mokuji - [S=1]
-RewriteRule ^/?(\d+)/?([\w-]*)(\.html|/)?$ index.php?pid=$1&pkey=$2 [L,QSA]
+RewriteRule ^/?(\d+)/?([a-zA-Z0-9-_]*)(\.html|/)?$ index.php?pid=$1&pkey=$2&%{QUERY_STRING}
 
 #Pages format: /<pid>/<pkey>/<page_key_extensions>
 RewriteRule ^/?mokuji - [S=1]
-RewriteRule ^/?(\d+)/?([\w-]+)/([\w/-/]+)(\.html)?$ index.php?pid=$1&pkey=$2&pkey_ext=$3 [L,QSA]
+RewriteRule ^/?(\d+)/?([a-zA-Z0-9-_]+)/([a-zA-Z0-9-_/]+)(\.html)?$ index.php?pid=$1&pkey=$2&pkey_ext=$3&%{QUERY_STRING}
 
-#Rewrite atom.xml to latest text items
-RewriteRule ^atom.xml$ index.php?section=timeline/feed
 
 # ----------------------------------------------------------------------
 # Gzip compression
@@ -103,10 +97,7 @@ RewriteRule ^atom.xml$ index.php?section=timeline/feed
 # Accept REST calls
 # ----------------------------------------------------------------------
 
-<Limit POST PUT PATCH DELETE>
+<Limit POST PUT DELETE>
   Order allow,deny
   Allow from all
 </Limit>
-
-php_value post_max_size 100M
-php_value upload_max_filesize 100M
