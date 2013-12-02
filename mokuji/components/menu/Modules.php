@@ -52,7 +52,7 @@ class Modules extends \dependencies\BaseViews
           //Get the selected items.
           $selected_items = tx('Sql')
             ->table('menu', 'MenuItems')
-            ->where('page_id', tx('Data')->get->pid->get('int'))
+            ->where('page_id', tx('Url')->url->data->pid->get('int'))
             ->execute();
           
           //Show a 'select menu'.
@@ -76,7 +76,7 @@ class Modules extends \dependencies\BaseViews
             return $items->as_options('menu', 'title', 'id', array(
               'placeholder_text' => __('Select a season', 1),
               'rel' => 'page_id',
-              'default' => ($menu_items->root_item->otherwise(tx('Data')->get->menu))
+              'default' => ($menu_items->root_item->otherwise(tx('Component')->helpers('menu')->call('get_active_menu_item')))
             ));
 
           }
@@ -100,7 +100,7 @@ class Modules extends \dependencies\BaseViews
               $properties['class'] = '';
               
               //Add class 'active' if this is the active menu item.
-              if($options->no_active->get() != true && $item->page_id->get('int') === tx('Data')->get->pid->get('int')){
+              if($options->no_active->get() != true && $item->page_id->get('int') === tx('Url')->url->data->pid->get('int')){
                 $properties['class'] .= ' active';
                 $active_depth = $item->depth->get('int');
               }
@@ -161,7 +161,7 @@ class Modules extends \dependencies\BaseViews
     return
       tx('Sql')
       ->table('menu', 'MenuItems')
-      ->where('page_id', tx('Data')->get->pid->get('int'))
+      ->where('page_id', tx('Url')->url->data->pid->get('int'))
       ->execute_single();
   }
 
