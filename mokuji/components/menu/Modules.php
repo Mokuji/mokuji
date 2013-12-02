@@ -76,7 +76,7 @@ class Modules extends \dependencies\BaseViews
             return $items->as_options('menu', 'title', 'id', array(
               'placeholder_text' => __('Select a season', 1),
               'rel' => 'page_id',
-              'default' => ($menu_items->root_item->otherwise(tx('Component')->helpers('menu')->call('get_active_menu_item')))
+              'default' => ($menu_items->root_item->otherwise(tx('Component')->helpers('menu')->call('get_active_menu_item')->id))
             ));
 
           }
