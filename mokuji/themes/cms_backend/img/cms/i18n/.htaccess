@@ -1,0 +1,4 @@
+#Typically translations don't change too often.
+<IfModule mod_expires.c>
+  ExpiresByType application/json "access plus 1 week"
+</IfModule>

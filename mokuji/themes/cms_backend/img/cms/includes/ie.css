@@ -1,0 +1,9 @@
+.drag-here{
+  display:none;
+}
+.plupload-container .drop{
+  border:none !important;
+}
+.plupload-container .buttonHolder{
+  text-align:center !important;
+}

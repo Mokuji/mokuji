@@ -1,0 +1,19 @@
+{
+  "PAGES_VIEW_TITLE": "Pages",
+  "PAGES_VIEW_DESCRIPTION": "Page management, returns a list view of editable pages",
+  
+  "SETTINGS_VIEW_TITLE": "Settings manager",
+  "SETTINGS_VIEW_DESCRIPTION": "Settings manager",
+  
+  "SETTINGS_WEBSITE_INFORMATION_VIEW_TITLE": "Website information",
+  "SETTINGS_WEBSITE_INFORMATION_VIEW_DESCRIPTION": "Website information can be configured here.",
+  
+  "SETTINGS_CMS_CONFIGURATION_VIEW_TITLE": "CMS configuration",
+  "SETTINGS_CMS_CONFIGURATION_VIEW_DESCRIPTION": "The CMS can be configured here.",
+  
+  "FEEDBACK_INTRODUCTION": "What do you think of the website? Do you have comments or suggestions for improving the site? Let <a href=\"http://tuxion.nl\" target=\"_blank\">our development team</a> know. Thank you!",
+  "PAGE_DISPLAY": "Display",
+  
+  "SOCIAL_MEDIAL_OVERRIDE_VALUES_EXPLANATION": "Each field for the social media information has a default value. You're not required to fill them in to use social media optimizations. However they are available should you want to tailor them."
+  
+}
