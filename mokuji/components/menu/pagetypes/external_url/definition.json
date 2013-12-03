@@ -1,0 +1,13 @@
+{
+  
+  "javascript": [
+    "ExternalUrlController.js"
+  ],
+  
+  "templates":{
+    "contentTab": "contentTab.tmpl.php"
+  },
+  
+  "controller": "cmsBackend.menu.ExternalUrlController"
+  
+}
