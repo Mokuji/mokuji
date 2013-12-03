@@ -24,6 +24,7 @@
 **Methods**
 * [`public mixed get_image()`](#method-get_image)
 * [`public mixed get_info()`](#method-get_info)
+* [`public mixed is_unique_link()`](#method-is_unique_link)
 
 
 ## Inheritance index
@@ -1716,6 +1717,24 @@ mixed dependencies\Data::is_true()
 
 * Visibility: **public**
 * This method is defined by [dependencies\Data](../../../dependencies/Data.md)
+
+
+
+
+
+
+## Method `is_unique_link`
+In class: [components\menu\models\MenuItems](#top)
+
+```
+mixed components\menu\models\MenuItems::is_unique_link()
+```
+
+
+
+
+
+* Visibility: **public**
 
 
 

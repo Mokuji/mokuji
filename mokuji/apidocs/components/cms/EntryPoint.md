@@ -18,6 +18,7 @@
 
 **Methods**
 * [`public mixed entrance()`](#method-entrance)
+* [`protected mixed findPageUrl()`](#method-findPageUrl)
 
 
 ## Inheritance index
@@ -408,6 +409,24 @@ mixed dependencies\BaseComponent::view($module_name, $options)
 
 * $module_name **mixed**
 * $options **mixed**
+
+
+
+
+
+
+## Method `findPageUrl`
+In class: [components\cms\EntryPoint](#top)
+
+```
+mixed components\cms\EntryPoint::findPageUrl()
+```
+
+
+
+
+
+* Visibility: **protected**
 
 
 

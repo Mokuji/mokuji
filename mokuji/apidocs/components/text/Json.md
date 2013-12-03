@@ -22,6 +22,7 @@
 **Methods**
 * [`protected mixed get_items($filter, $params)`](#method-get_items)
 * [`protected mixed update_page_text($data, $params)`](#method-update_page_text)
+* [`protected mixed update_text_info(\dependencies\Data $data)`](#method-update_text_info)
 
 
 ## Inheritance index
@@ -408,6 +409,28 @@ mixed components\text\Json::update_page_text($data, $params)
 
 * $data **mixed**
 * $params **mixed**
+
+
+
+
+
+
+## Method `update_text_info`
+In class: [components\text\Json](#top)
+
+```
+mixed components\text\Json::update_text_info(\dependencies\Data $data)
+```
+
+Stores given text info to the database
+
+
+
+* Visibility: **protected**
+
+#### Arguments
+
+* $data **[dependencies\Data](../../dependencies/Data.md)** - The data to store to the database.
 
 
 

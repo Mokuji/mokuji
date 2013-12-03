@@ -20,7 +20,8 @@
 * [`protected mixed $permissions`](#property-permissions)
 
 **Methods**
-* [`public mixed editable($data)`](#method-editable)
+* [`public mixed disable_editable($data)`](#method-disable_editable)
+* [`public mixed enable_editable($data)`](#method-enable_editable)
 * [`protected mixed delete_page($data)`](#method-delete_page)
 * [`protected mixed detach_page($data)`](#method-detach_page)
 * [`protected mixed edit_page($data)`](#method-edit_page)
@@ -226,11 +227,33 @@ Creates a component specific filter in the session.
 
 
 
-## Method `editable`
+## Method `disable_editable`
 In class: [components\cms\Actions](#top)
 
 ```
-mixed components\cms\Actions::editable($data)
+mixed components\cms\Actions::disable_editable($data)
+```
+
+
+
+
+
+* Visibility: **public**
+
+#### Arguments
+
+* $data **mixed**
+
+
+
+
+
+
+## Method `enable_editable`
+In class: [components\cms\Actions](#top)
+
+```
+mixed components\cms\Actions::enable_editable($data)
 ```
 
 

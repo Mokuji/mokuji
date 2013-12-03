@@ -156,7 +156,7 @@ protected mixed $type
 In class: [components\cms\DBUpdates](#top)
 
 ```
-protected mixed $updates = array('1.1' => '1.2', '1.2' => '1.3', '1.3' => '1.4', '1.4' => '2.0', '2.0' => '2.1', '2.1' => '3.0', '3.0' => '0.6.0-beta', '0.4.0' => '0.6.0-beta', '0.4.1-beta' => '0.6.0-beta', '0.5.0-beta' => '0.6.0-beta')
+protected mixed $updates = array('1.1' => '1.2', '1.2' => '1.3', '1.3' => '1.4', '1.4' => '2.0', '2.0' => '2.1', '2.1' => '3.0', '3.0' => '0.7.0-beta', '0.4.0' => '0.7.0-beta', '0.4.1-beta' => '0.7.0-beta', '0.5.0-beta' => '0.7.0-beta', '0.6.0-beta' => '0.7.0-beta')
 ```
 
 

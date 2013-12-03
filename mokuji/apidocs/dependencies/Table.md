@@ -43,6 +43,7 @@ The Table class, Mokuji&#039;s query-builder.
 * [`public \dependencies\Data count()`](#method-count)
 * [`public self distinct(boolean $value)`](#method-distinct)
 * [`public \dependencies\Resultset execute(string $as)`](#method-execute)
+* [`public \dependencies\BaseModel execute_model(string $as)`](#method-execute_model)
 * [`public \dependencies\BaseModel execute_single(string $as)`](#method-execute_single)
 * [`public self filter()`](#method-filter)
 * [`public self from(mixed $model, string $id)`](#method-from)
@@ -651,6 +652,34 @@ Execute the query.
 
 * **[exception\NotFound](../exception/NotFound.md)** - If the given model ID does not point to a known model.
 * **[exception\Sql](../exception/Sql.md)** - If an SQL error occurs.
+
+
+
+
+## Method `execute_model`
+In class: [dependencies\Table](#top)
+
+```
+\dependencies\BaseModel dependencies\Table::execute_model(string $as)
+```
+
+Works the same as execute_single, except that it will create an empty model if there was no result.
+
+
+
+* Visibility: **public**
+
+#### Arguments
+
+* $as **string**
+
+
+#### Return value
+
+**[dependencies\BaseModel](../dependencies/BaseModel.md)** - A model.
+
+
+
 
 
 

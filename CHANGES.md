@@ -1,3 +1,23 @@
+#### [Version 0.28.0 Beta](https://github.com/Tuxion/mokuji/tree/0.28.0-beta)
+_3-Dec-2013_
+
+URL keys
+
+* Implemented URL format in CMS
+* Automatically generate URL keys for pages
+* Now no longer redirects for the homepage URL formatting (stays on root)
+* Throw 404 error if page doesn't exist.
+* Improved menu module, prettier LegacyUrlFormat and url_key validation in backend.
+
+First prototype of editable is working!
+
+* Added inline editing functionality (merge branch inline_editing).
+* Added LineTemplate and more.
+* Only save when there are changes, the proper way.
+* Made blog posts in-line editable.
+
+And many bugs and papercuts fixed.
+
 #### [Version 0.27.7 Beta](https://github.com/Tuxion/mokuji/tree/0.27.7-beta)
 _27-Okt-2013_
 

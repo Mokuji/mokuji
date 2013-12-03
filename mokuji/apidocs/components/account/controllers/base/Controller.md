@@ -487,7 +487,7 @@ Validate data.
 
 #### Throws exceptions
 
-* **exceptions\Validation** - If validation fails.
+* **[exception\Validation](../../../../exception/Validation.md)** - If validation fails.
 
 
 
