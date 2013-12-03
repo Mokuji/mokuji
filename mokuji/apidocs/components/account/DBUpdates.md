@@ -153,7 +153,7 @@ protected mixed $type
 In class: [components\account\DBUpdates](#top)
 
 ```
-protected mixed $updates = array('1.2' => '1.3', '1.3' => '1.4', '1.4' => '0.2.0-beta', '0.2.0-beta' => '0.3.0-beta', '0.2.1-beta' => '0.3.0-beta')
+protected mixed $updates = array('1.2' => '1.3', '1.3' => '1.4', '1.4' => '0.2.0-beta', '0.2.0-beta' => '0.3.0-beta', '0.2.1-beta' => '0.3.0-beta', '0.3.0-beta' => '0.3.1-beta')
 ```
 
 

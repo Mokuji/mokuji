@@ -287,10 +287,10 @@ class Validator extends Successable
         $this->data = $converted;
         return true;
       }
+
     }
     
-    
-    if(!$this->check_rule('required')){
+    if(empty(data_of($this->data)) && !$this->check_rule('required')){
       $this->data = null;
       return true;
     }

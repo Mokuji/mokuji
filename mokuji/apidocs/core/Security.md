@@ -172,7 +172,7 @@ public mixed $HASH_DEFAULT = 'sha256'
 In class: [core\Security](#top)
 
 ```
-public mixed $HASH_PREFERENCES = array('128' => array('ripemd128', 'snefru'), '160' => array('ripemd160', 'sha1'), '224' => array('sha224'), '256' => array('sha256'), '384' => array('sha384'), '512' => array('sha512', 'whirlpool'))
+public mixed $HASH_PREFERENCES = array('128' => array('ripemd128', 'snefru', 'md5'), '160' => array('ripemd160', 'sha1'), '224' => array('sha224'), '256' => array('sha256'), '384' => array('sha384'), '512' => array('sha512', 'whirlpool'))
 ```
 
 

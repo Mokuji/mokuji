@@ -1423,6 +1423,28 @@ function request(){
 
     },
     
+    loadDashboard: function(){
+
+      var self = this;
+      
+      this.isEmpty = true;
+      this.unsubscribe();
+      
+      console.log('loadDashboard');
+
+      return $.ajax('?section=cms/dashboard')
+      
+      //Add a done callback.
+      .done(function(data){
+        self.data = {};
+        self.view.html(data);
+        self.Tabs = null;
+        self.Languages = null;
+        self.refreshElements();
+      });
+
+    },
+
     loadNewPage: function(){
       
       var self = this;
@@ -1447,8 +1469,9 @@ function request(){
       
       //Reference to this.
       var self = this;
-      
-      if(!pid) return this.loadNewPage();
+
+      if(!pid)
+        return this.loadNewPage();
       
       this.isEmpty = false;
       this.unsubscribe();

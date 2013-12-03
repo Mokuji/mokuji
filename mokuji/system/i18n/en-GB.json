@@ -3,5 +3,6 @@
   "LOGIN_VERB": "Login",
   "SEARCH_VERB": "Search",
   "CREATE_VERB": "Create",
-  "ID": "ID"
+  "ID": "ID",
+  "URL": "URL"
 }

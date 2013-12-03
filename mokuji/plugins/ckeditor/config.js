@@ -5,13 +5,11 @@
 
 CKEDITOR.editorConfig = function( config )
 {
-  
+
   //Define changes to default configuration here
   config.language = 'nl';
   config.allowedContent = true;
   config.plugins += ',autologin,youtube';
-  
-  //config.basePath: '/plugins/ckeditor/'
   config.filebrowserBrowseUrl = '../mokuji/plugins/elfinder/cke-elfinder.html';
   
 };

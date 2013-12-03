@@ -67,7 +67,7 @@ mk('Sql')->model('cms', 'CmsConfig')->merge($data->values)
         ),
         
         'tx_editor_toolbar[default]' => array(
-          'title' => 'CKEditor toolbar layout',
+          'title' => 'CKEditor toolbar layout <a href="http://manual.mokuji.net/?pid=94&menu=78&action=language/set_language&language_id=2#ckeditor-toolbar-layout">(docs)</a>',
           'type' => 'TextAreaField'
         )
         

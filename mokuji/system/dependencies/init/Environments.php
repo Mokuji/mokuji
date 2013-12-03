@@ -112,7 +112,7 @@ abstract class Environments
           $entrypoint = ENTRYPOINT_FRONTEND;
           break;
         case self::BACKEND:
-          $entrypoint = ENTRYPOINT_FRONTEND;
+          $entrypoint = ENTRYPOINT_BACKEND;
           break;
         default:
           $entrypoint = 'cms';

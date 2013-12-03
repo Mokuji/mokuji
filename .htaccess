@@ -30,6 +30,8 @@ RewriteRule ^/?(admin|install)(/(.+))? $3 [E=MK_ENV:$1,QSA]
 RewriteRule ^/?mokuji/ - [S=1]
 RewriteRule ^.*$ index.php [L,QSA]
 
+#Rewrite atom.xml to latest text items
+RewriteRule ^atom.xml$ index.php?section=timeline/feed
 
 # ----------------------------------------------------------------------
 # Gzip compression

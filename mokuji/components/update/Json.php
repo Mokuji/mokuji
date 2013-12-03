@@ -396,7 +396,7 @@ class Json extends \dependencies\BaseViews
       'template_key' => 'main_menu',
       'title' => ___('main menu', 'ucfirst')
     ))->save();
-    
+
     //Also add a whitelist for all ip addresses. This is a bit too advanced a setting to include into the install script,
     // but needs to be done or nobody can log in from any location.
     mk('Sql')->model('cms', 'IpAddresses')->set(array(
