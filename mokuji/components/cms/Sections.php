@@ -342,12 +342,8 @@ class Sections extends \dependencies\BaseViews
     $url = mk('Config')->system('cms_url')->get();
     $menu = mk('Component')->helpers('menu')->call('get_active_menu_item');
     
-    $get = mk('Data')->get->without('action');
-    if($e)
-      $get->merge(array('action'=>'cms/disable_editable'));
-    
     return array(
-      'website_url'=>$url->output($get),
+      'website_url'=>url(URL_BASE.'?menu=KEEP&pid=KEEP'.($e ? '&action=cms/disable_editable' : ''), true),
       'edit_url'=>($e ? 'javascript:void(0)' : url(URL_BASE.'?action=cms/enable_editable')),
       'advanced_url'=>url(URL_BASE.'admin/index.php?menu='.$menu->id.'&pid='.($url ? $url->getPageId() : 'KEEP'), true),
       'admin_url'=>url(URL_BASE.'admin/index.php', true),
