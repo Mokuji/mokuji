@@ -6,7 +6,8 @@
   "PROFILE_VIEW_TITLE": "Profile",
   "PROFILE_VIEW_DESCRIPTION": "Profile page, displays your user information",
   
-  
+  "LOGIN_FORM_VIEW_TITLE": "Login page",
+  "LOGIN_FORM_VIEW_DESCRIPTION": "Create a login page",
   
   "CLAIMING_ACCOUNT_SUCCEEDED" : "You have successfully claimed your account. You will be redirected to the homepage in 3 seconds.",
   

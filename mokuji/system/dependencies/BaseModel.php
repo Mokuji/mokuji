@@ -70,10 +70,8 @@ abstract class BaseModel extends Data
   public static function table_data($get=false, $set=false)
   {
     
-    if(!is_data(self::$table_data) || self::$table_data[self::model_data('table_name')]->is_empty()){
-      self::create_table_data();
-    }
-    
+    //Has caching of it's own, so don't do the checks twice.
+    self::create_table_data();
     return self::$table_data[self::model_data('table_name')];
     
   }
@@ -829,74 +827,69 @@ abstract class BaseModel extends Data
   // Gets the required table information from the database.
   private static function create_table_data()
   {
-
-    if(!array_key_exists(self::model_data('table_name'), self::$table_data)){
-      self::$table_data[self::model_data('table_name')] = Data();
-    }
-
-    else{
+    
+    if(array_key_exists(self::model_data('table_name'), self::$table_data)){
       return;
     }
-
+    
+    $target = Data();
+    self::$table_data[self::model_data('table_name')] = $target;
+    
     $info = tx('Sql')->execute_query('SHOW COLUMNS FROM `'.self::model_data('table_name').'`');
-
+    
     foreach($info as $column)
     {
-
+      
       //Check if it's an auto_increment
       if($column->Extra->get() == 'auto_increment'){
-        self::$table_data[self::model_data('table_name')]->auto_increment->set($column->Field);
+        $target->auto_increment->set($column->Field);
       }
-
-      //Check if it's a primary key
-      if($column->Key->get() == 'PRI' && self::$table_data[self::model_data('table_name')]->primary_keys->keyof($column->Field->get()) === false){
-        self::$table_data[self::model_data('table_name')]->primary_keys->push($column->Field);
-      }
-
-      //Set some essential information per column
-      self::$table_data[self::model_data('table_name')]->fields[$column->Field]->set($column->having(array(
-        'value' =>        'Default',
-        'attributes' =>   'Type',
-        'null_allowed' => 'Null',
-        'extra' =>        'Extra',
-        'key' =>          'Key'
-      )))
-
-      //Set "null_allowed" to an actual boolean. Silly MySQL..
-      ->null_allowed->set(function($null_allowed){
-        switch($null_allowed->get()){
-          case 'YES': return true;
-          case 'NO': return false;
-        }
-      })->back()
-
-      //Parse attributes
-      ->merge(function($table_data){
       
-        return $table_data->attributes->parse('~'.
-          '(?:^(?P<type>\w+))'. //type
-          '(?:\((?P<arguments>[^\)]+)\))?'. //arguments
-          '(?:(?P<extra>(?:\s+\w+)*))'. //other attributes
-        '~')
-
-        ->having('type', 'arguments', 'extra')
-
-        ->merge(function($attr){
-          return $attr->extra->trim()->lowercase()->split(' ')->map(function($v){return array($v->get('string') => true);})->as_array();
-        })
-        
-        ->un_set('extra')
-        
-        ->arguments->set(function($arguments){
-          return $arguments->split("','")->trim(" '");
-        })
-        
-        ->back();
-
-      })
-
-      ->un_set('attributes');
-
+      //Check if it's a primary key
+      if($column->Key->get() == 'PRI' && $target->primary_keys->keyof($column->Field->get()) === false){
+        $target->primary_keys->push($column->Field);
+      }
+      
+      //Create a shortcut.
+      $fields = $target->fields[$column->Field];
+      
+      //Set "null_allowed" to an actual boolean. Silly MySQL..
+      switch($column->Null->get()){
+        case 'YES': $fields->null_allowed->set(true); break;
+        case 'NO': $fields->null_allowed->set(false); break;
+      }
+      
+      //Set some essential information per column
+      $fields->merge(array(
+        'value' =>  $column->Default->get(),
+        'extra' =>  $column->Extra->get(),
+        'key' =>    $column->Key->get()
+      ));
+      
+      //Parse attributes
+      preg_match('~'.
+        '(?:^(?P<type>\w+))'. //type
+        '(?:\((?P<arguments>[^\)]+)\))?'. //arguments
+        '(?:(?P<extra>(?:\s+\w+)*))'. //other attributes
+      '~', $column->Type->get(), $attr_matches);
+      
+      //Format the arguments.
+      $arguments = array();
+      $argument_parts = explode("','", $attr_matches['arguments']);
+      foreach($argument_parts as $ap)
+        $arguments[] = trim($ap, " '");
+      $fields->arguments->set($arguments);
+      
+      //Format the extras.
+      $extras = array();
+      $extra_parts = explode(' ', trim($attr_matches['extra']));
+      foreach($extra_parts as $ep)
+        $extras[$ep] = true;
+      $fields->merge($extras);
+      
+      //Add the basic type.
+      $fields->type->set($attr_matches['type']);
+      
     }
 
   }

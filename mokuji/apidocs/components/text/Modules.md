@@ -33,6 +33,7 @@
 * [`public mixed __construct()`](#method-__construct)
 * [`public mixed _call($controller, array $args)`](#method-_call)
 * [`public mixed call($controller, $data)`](#method-call)
+* [`public self create_filter(string $key, mixed $value)`](#method-create_filter)
 * [`public mixed filters()`](#method-filters)
 * [`public mixed get_html($view, $options)`](#method-get_html)
 * [`public mixed helper($controller)`](#method-helper)
@@ -170,6 +171,36 @@ mixed dependencies\BaseComponent::call($controller, $data)
 
 * $controller **mixed**
 * $data **mixed**
+
+
+
+
+
+
+## Method `create_filter`
+In class: [components\text\Modules](#top)
+
+```
+self dependencies\BaseComponent::create_filter(string $key, mixed $value)
+```
+
+Creates a component specific filter in the session.
+
+
+
+* Visibility: **public**
+* This method is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
+
+#### Arguments
+
+* $key **string** - The key under which the value will be available.
+* $value **mixed** - The value for the filter.
+
+
+#### Return value
+
+**self** - Chaining enabled.
+
 
 
 

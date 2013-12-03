@@ -1,5 +1,7 @@
 <?php namespace components\account; if(!defined('TX')) die('No direct access.');
 
+use components\account\classes\ControllerFactory as CF;
+
 class Json extends \dependencies\BaseComponent
 {
   
@@ -10,8 +12,93 @@ class Json extends \dependencies\BaseComponent
       'create_password_reset_request' => 0,
       'create_password_reset_finalization' => 0,
       'create_user_session' => 0,
-      'update_password' => 1
+      'update_password' => 1,
+      'get_me' => 1,
+      'get_login_status' => 0
     );
+  
+  ##
+  ## USER SESSIONS
+  ##
+  
+  /**
+   * Attempt to log in the user.
+   * @param \dependencies\Data $data Array containing 'email' and 'password' keys.
+   * @param \dependencies\Data $params Empty array.
+   * @return array Array with 'success' boolean and 'target_url' to suggest a redirect.
+   */
+  protected function create_user_session($data, $params)
+  {
+    
+    //Use the session controller to log the user in.
+    CF::getInstance()->Session->loginUser(
+      $data->email->get(),
+      $data->password->get(),
+      ($data->persistent->get('string') === '1')
+    );
+    
+    //If a target_url is set, go there.
+    //Otherwise, '/admin/' for admins, the homepage for normal users or '/' if there is no homepage.
+    $target_url = (string)url($data->target_url->otherwise(
+      mk('Account')->check_level(2) ? '/admin/' : mk('Config')->user('homepage')->otherwise('/')
+    ), true);
+    
+    //Exception would have been thrown if it failed, return as successful.
+    return array(
+      'success' => true,
+      'target_url' => $target_url
+    );
+    
+  }
+  
+  /**
+   * Logs the user out of the system.
+   * @return void
+   */
+  protected function delete_user_session($data, $params)
+  {
+    
+    CF::getInstance()->Session->logoutUser();
+    
+  }
+  
+  /**
+   * Return the user object of the currently logged in user.
+   * 
+   * Requires a user to be logged in.
+   * 
+   * @param \dependencies\Data $data Empty array.
+   * @param \dependencies\Data $params Empty array.
+   * @return \dependencies\Data Sort of like a user model but not really because this is Mokuji.
+   */
+  protected function get_me($data, $parameters)
+  {
+    
+    return CF::getInstance()->Session->getUserObject();
+    
+  }
+  
+  /**
+   * Return the level of access the user has on the server.
+   * 
+   * `0` For not logged in.
+   * `1` For logged in.
+   * `2` For super-user.
+   * 
+   * @param \dependencies\Data $data Empty array.
+   * @param \dependencies\Data $params Empty array.
+   * @return integer
+   */
+  protected function get_login_status($data, $parameters)
+  {
+    
+    return CF::getInstance()->Session->getLoginStatus();
+    
+  }
+  
+  ##
+  ## USER ACCOUNTS
+  ##
   
   //Allows user to register.
   protected function create_new_account($data, $params)
@@ -289,31 +376,6 @@ class Json extends \dependencies\BaseComponent
     
   }
   
-  /**
-   * Attempt to log in the user.
-   * @param \dependencies\Data $data Array containing 'username' and 'password' keys.
-   * @param \dependencies\Data $params Empty array.
-   * @return array Array with 'success' boolean and 'target_url' to suggest a redirect.
-   */
-  protected function create_user_session($data, $params)
-  {
-    
-    //Validate input.
-    $data
-      ->email->validate('Email address / username', array('required', 'not_empty', 'no_html'))->back()
-      ->password->validate('Password', array('required', 'not_empty', 'between'=>array(3, 30)));
-    
-    //Perform login attempt.
-    tx('Account')->login($data->email, $data->password, null, ($data->persistent->get('string') === '1'));
-    
-    //Exception would have been thrown if it failed, return as successful.
-    return array(
-      'success' => true,
-      'target_url' => (string)url(tx('Account')->check_level(2) ? '/admin/' : tx('Config')->user('homepage')->otherwise('/'), true)
-    );
-    
-  }
-  
   protected function update_password($data, $parameters)
   {
     
@@ -370,160 +432,6 @@ class Json extends \dependencies\BaseComponent
       });
     
     return $user->having('id', 'email', 'username', 'level');
-    
-  }
-  
-  protected function get_mail_autocomplete($data, $parameters)
-  {
-    
-    $resultset = Data();
-    
-    tx('Sql')
-      ->table('account', 'Accounts')
-      ->join('UserInfo', $ui)
-      ->where("(`$ui.status` & (1|4))", '>', 0)
-      ->where(tx('Sql')->conditions()
-        ->add('1', array('email', '|', "'%{$parameters->{0}}%'"))
-        ->add('2', array("$ui.name", '|', "'%{$parameters->{0}}%'"))
-        ->add('3', array("$ui.family_name", '|', "'%{$parameters->{0}}%'"))
-        ->combine('4', array('1', '2', '3'), 'OR')
-        ->utilize('4')
-      )
-      ->execute()
-      ->each(function($user)use($resultset){
-        $resultset->push(array(
-          'is_user' => true,
-          'id' => $user->id,
-          'label' => $user->user_info->full_name->not('empty', function($full_name)use($user){ return $full_name->get().' <'.$user->email->get().'>'; })->otherwise($user->email),
-          'value' => $user->email
-        ));
-      });
-    
-    tx('Sql')
-      ->table('account', 'UserGroups')
-      ->where('title', '|', "'%{$parameters->{0}}%'")
-      ->execute()
-      ->each(function($group)use($resultset){
-        $resultset->push(array(
-          'is_group' => true,
-          'id' => $group->id,
-          'label' => __('Group', 1).': '.$group->title->get().' ('.$group->users->size().')',
-          'value' => $group->title
-        ));
-      });
-    
-    return $resultset->as_array();
-    
-  }
-  
-  //Send mail might have been a better name. But that's the current REST convention for you.
-  //                                         ^ Stop your whining.
-  protected function create_mail($data, $parameters)
-  {
-    
-    $recievers = Data();
-    
-    //Add groups.
-    tx('Sql')
-      ->table('account', 'AccountsToUserGroups')
-      ->where('user_group_id', $data->group)
-      ->join('Accounts', $A)
-      ->workwith($A)
-      ->join('UserInfo', $UI)
-      ->where("(`$UI.status` & (1|4))", '>', 0)
-      ->execute($A)
-      ->each(function($node)use($recievers){
-        $recievers->merge(array($node->id->get() => $node->email));
-      });
-    
-    //Add individual users.
-    tx('Sql')
-      ->table('account', 'Accounts')
-      ->pk($data->user)
-      ->join('UserInfo', $UI)
-      ->where("(`$UI.status` & (1|4))", '>', 0)
-      ->execute()
-      ->each(function($node)use($recievers){
-        $recievers->merge(array($node->id->get() => $node->email));
-      });
-    
-    //Check if we have enough recievers.
-    if($recievers->is_empty()){
-      $ex = new \exception\Validation("You must provide at least one recipient.");
-      $ex->key('recievers_input');
-      $ex->errors(array('You must provide at least one recipient'));
-      throw $ex;
-    }
-    
-    //Mailers only validate, so store them for later.
-    $mailers = Data();
-    
-    //Itterate over recievers.
-    $recievers->each(function($reciever)use($data, $mailers){
-      
-      $message = $data->message->get();
-      
-      //If we have autologin component available.
-      if(tx('Component')->available('autologin')){
-        
-        //Find all autologin links.
-        preg_match_all('~<a[^>]+data-autologin="true"[^>]+>~', $data->message->get(), $autologinElements, PREG_SET_ORDER);
-        
-        //Go over each of them.
-        foreach($autologinElements as $autologinElement)
-        {
-          
-          //Gather autologin-link generation parameters.
-          $linkParams = Data(array(
-            'user_id' => $reciever->key(),
-            'link_admins' => true
-          ));
-          
-          //Find it's parameters.
-          preg_match_all('~data-(failure_url|success_url)="([^"]*)"~', $autologinElement[0], $dataParams, PREG_SET_ORDER);
-          
-          //Merge each parameter into the link parameters.
-          foreach($dataParams as $dataParam){
-            $linkParams->merge(array($dataParam[1] => html_entity_decode($dataParam[2]))); //use html_entity_decode because of CKEDITOR bug.
-          }
-          
-          //Replace the element with the resulting link.
-          $link = tx('Component')->helpers('autologin')->call('generate_autologin_link', $linkParams);
-          $message = str_replace($autologinElement[0], '<a class="autologin" data-autologin="true" href="'.$link->output.'">', $message);
-          
-        }
-        
-      }
-      
-      //Validate email through mail component.
-      tx('Component')->helpers('mail')->send_fleeting_mail(array(
-        'to' => $reciever,
-        'subject' => $data->subject->get(),
-        'html_message' => $message,
-        'validate_only' => true
-      ))
-      
-      ->failure(function($info){
-        throw $info->exception;
-      })
-      
-      //If it's ok, store the mailer.
-      ->success(function($info)use($mailers){
-        $mailers->push($info->return_value);
-      });
-      
-    });
-    
-    //After all mail was validated, send it.
-    $mailers->each(function($mailer){
-      try{
-        $mailer->get()->Send();
-      }catch(\Exception $e){
-        throw new \exception\Programmer('Fatal error sending email. Exception message: %s', $e->getMessage());
-      }
-    });
-    
-    tx('Logging')->log('Account', 'Mail sent', 'Sent '.$mailers->size().' email.');
     
   }
   
@@ -672,6 +580,162 @@ class Json extends \dependencies\BaseComponent
       'user_group' => $data->user_group,
       'user_id' => $user->id
     )));
+    
+  }
+  
+  ##
+  ## MAIL
+  ##
+  
+  protected function get_mail_autocomplete($data, $parameters)
+  {
+    
+    $resultset = Data();
+    
+    tx('Sql')
+      ->table('account', 'Accounts')
+      ->join('UserInfo', $ui)
+      ->where("(`$ui.status` & (1|4))", '>', 0)
+      ->where(tx('Sql')->conditions()
+        ->add('1', array('email', '|', "'%{$parameters->{0}}%'"))
+        ->add('2', array("$ui.name", '|', "'%{$parameters->{0}}%'"))
+        ->add('3', array("$ui.family_name", '|', "'%{$parameters->{0}}%'"))
+        ->combine('4', array('1', '2', '3'), 'OR')
+        ->utilize('4')
+      )
+      ->execute()
+      ->each(function($user)use($resultset){
+        $resultset->push(array(
+          'is_user' => true,
+          'id' => $user->id,
+          'label' => $user->user_info->full_name->not('empty', function($full_name)use($user){ return $full_name->get().' <'.$user->email->get().'>'; })->otherwise($user->email),
+          'value' => $user->email
+        ));
+      });
+    
+    tx('Sql')
+      ->table('account', 'UserGroups')
+      ->where('title', '|', "'%{$parameters->{0}}%'")
+      ->execute()
+      ->each(function($group)use($resultset){
+        $resultset->push(array(
+          'is_group' => true,
+          'id' => $group->id,
+          'label' => __('Group', 1).': '.$group->title->get().' ('.$group->users->size().')',
+          'value' => $group->title
+        ));
+      });
+    
+    return $resultset->as_array();
+    
+  }
+  
+  protected function create_mail($data, $parameters)
+  {
+    
+    $recievers = Data();
+    
+    //Add groups.
+    tx('Sql')
+      ->table('account', 'AccountsToUserGroups')
+      ->where('user_group_id', $data->group)
+      ->join('Accounts', $A)
+      ->workwith($A)
+      ->join('UserInfo', $UI)
+      ->where("(`$UI.status` & (1|4))", '>', 0)
+      ->execute($A)
+      ->each(function($node)use($recievers){
+        $recievers->merge(array($node->id->get() => $node->email));
+      });
+    
+    //Add individual users.
+    tx('Sql')
+      ->table('account', 'Accounts')
+      ->pk($data->user)
+      ->join('UserInfo', $UI)
+      ->where("(`$UI.status` & (1|4))", '>', 0)
+      ->execute()
+      ->each(function($node)use($recievers){
+        $recievers->merge(array($node->id->get() => $node->email));
+      });
+    
+    //Check if we have enough recievers.
+    if($recievers->is_empty()){
+      $ex = new \exception\Validation("You must provide at least one recipient.");
+      $ex->key('recievers_input');
+      $ex->errors(array('You must provide at least one recipient'));
+      throw $ex;
+    }
+    
+    //Mailers only validate, so store them for later.
+    $mailers = Data();
+    
+    //Itterate over recievers.
+    $recievers->each(function($reciever)use($data, $mailers){
+      
+      $message = $data->message->get();
+      
+      //If we have autologin component available.
+      if(tx('Component')->available('autologin')){
+        
+        //Find all autologin links.
+        preg_match_all('~<a[^>]+data-autologin="true"[^>]+>~', $data->message->get(), $autologinElements, PREG_SET_ORDER);
+        
+        //Go over each of them.
+        foreach($autologinElements as $autologinElement)
+        {
+          
+          //Gather autologin-link generation parameters.
+          $linkParams = Data(array(
+            'user_id' => $reciever->key(),
+            'link_admins' => true
+          ));
+          
+          //Find it's parameters.
+          preg_match_all('~data-(failure_url|success_url)="([^"]*)"~', $autologinElement[0], $dataParams, PREG_SET_ORDER);
+          
+          //Merge each parameter into the link parameters.
+          foreach($dataParams as $dataParam){
+            $linkParams->merge(array($dataParam[1] => html_entity_decode($dataParam[2]))); //use html_entity_decode because of CKEDITOR bug.
+          }
+          
+          //Replace the element with the resulting link.
+          $link = tx('Component')->helpers('autologin')->call('generate_autologin_link', $linkParams);
+          $message = str_replace($autologinElement[0], '<a class="autologin" data-autologin="true" href="'.$link->output.'">', $message);
+          
+        }
+        
+      }
+      
+      //Validate email through mail component.
+      tx('Component')->helpers('mail')->send_fleeting_mail(array(
+        'to' => $reciever,
+        'subject' => $data->subject->get(),
+        'html_message' => $message,
+        'validate_only' => true
+      ))
+      
+      ->failure(function($info){
+        throw $info->exception;
+      })
+      
+      //If it's ok, store the mailer.
+      ->success(function($info)use($mailers){
+        $mailers->push($info->return_value);
+      });
+      
+    });
+    
+    //After all mail was validated, send it.
+    $mailers->each(function($mailer){
+      try{
+        $mailer->get()->Send();
+      }catch(\Exception $e){
+        throw new \exception\Programmer('Fatal error sending email. Exception message: %s', $e->getMessage());
+      }
+    });
+    
+    tx('Logging')->log('Account', 'Mail sent', 'Sent '.$mailers->size().' email.');
     
   }
   

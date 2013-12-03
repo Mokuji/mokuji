@@ -4,9 +4,7 @@
 .form-inline-elements label{
   margin-right:20px;
 }
-.form-inline-elements input:not(:last-child){
-  margin-right:35px;
-}
+.form-inline-elements input:not(:last-child){}
 
 /* =Standardized the
 -------------------------------------------------------------- */

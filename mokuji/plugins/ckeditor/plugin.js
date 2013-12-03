@@ -16,7 +16,10 @@
           { "name": "clipboard",  "items" : [ "Cut","Copy","Paste","PasteText","PasteFromWord","-","Undo","Redo" ] },
           { "name": "document",   "items" : [ "Find","Replace","-","Source","-","Maximize" ] }
         ],
-        templates_files: [ '../config/ckeditor_templates.js' ]
+        templates_files: [ '../config/ckeditor_templates.js' ],
+        basicEntities : false,
+        entities : false,
+        forceSimpleAmpersand : true
       }
     }
 
@@ -25,6 +28,10 @@
     options: null
   });
   
+  TxEditor.setDefaultLanguage = function(language){
+    defaults.config.language = language;
+  }
+
   TxEditor.setDefaultToolbar = function(toolbar){
     defaults.config.toolbar = toolbar;
   }

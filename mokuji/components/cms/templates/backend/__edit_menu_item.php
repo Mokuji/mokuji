@@ -46,7 +46,7 @@
             {{/each}}
           </select>
           {{else}}
-          <input type="hidden" name="menu_id" value="${menus[0].id}" />
+          <input type="hidden" name="menu_id" value="${current_menu}" />
           {{/if}}
           
         </div>
@@ -88,7 +88,7 @@
       
       <div class="footer">
         
-        <input type="submit" id="save-menu-item" value="<?php __('Save'); ?>" />
+        <input type="submit" id="save-menu-item" class="button black" value="<?php __('Save'); ?>" />
         
       </div>
     

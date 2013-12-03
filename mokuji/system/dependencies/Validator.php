@@ -244,11 +244,14 @@ class Validator extends Successable
   private function _number($type='int')
   {
     
+    $estimate = true;
+    
     switch($type)
     {
       
       case 'int':
       case 'integer':
+        $estimate = false;
         $converted = (integer) $this->data;
         break;
       
@@ -265,12 +268,29 @@ class Validator extends Successable
       
     }
     
-    if(is_string($this->data) ? (string) $converted === $this->data : $converted === $this->data){
-      $this->data = $converted;
-      return true;
+    //When dealing with absolute values.
+    if(!$estimate){
+      
+      //Check either by string conversion or direct comparison.
+      if(is_string($this->data) ? (string) $converted === $this->data : $converted === $this->data){
+        $this->data = $converted;
+        return true;
+      }
+      
     }
     
-    if(!$this->check_rule('required')){
+    //When dealing with floating point values, we can't perform a string check, only a comparison when the types are the same.
+    else {
+      
+      //When the types match, we can compare, otherwise just skip checking.
+      if(gettype($converted) == gettype($this->data) ? $converted === $this->data : true){
+        $this->data = $converted;
+        return true;
+      }
+
+    }
+    
+    if(empty(data_of($this->data)) && !$this->check_rule('required')){
       $this->data = null;
       return true;
     }
@@ -461,7 +481,12 @@ class Validator extends Successable
   
   private function _url()
   {
-  
+    
+    if(empty(data_of($this->data)) && !$this->check_rule('required')){
+      $this->data = null;
+      return true;
+    }
+    
     try{
       
       $url = $this->data;

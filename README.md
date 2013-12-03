@@ -1,7 +1,7 @@
-#Mokuji (目次) - Version 0.26.0 Beta
+#Mokuji (目次) - Version 0.27.7 Beta
 
-* [http://mokuji.net/](http://mokuji.net/)
-* [Twitter](http://twitter.com/mokujidev)
+* [Main site](http://mokuji.net/)
+* [Forum](http://forum.mokuji.net/)
 
 
 ## Description
@@ -27,12 +27,11 @@ using the [development documentation](http://development.mokuji.org/), or you co
 
 ## Features
 
-* Fast
-* Flexible
+Ready to rock.
 
 ## Requirements
 
-* Modern browser.
+* Modern browser
 * PHP 5.3.8+
 * PDO with MySql driver
 * MySQL 5.x client API
@@ -40,7 +39,14 @@ using the [development documentation](http://development.mokuji.org/), or you co
 ## Documentation
 
 * [Users manual](http://manual.mokuji.net/)
-* [Development documentation](http://development.mokuji.org/)
+* [Development documentation](http://development.mokuji.net/)
+
+## Updates
+
+* [Blog](http://blog.mokuji.net/)
+* [Twitter](http://twitter.com/mokujidev)
+* [gPlus](https://plus.google.com/106280880423090880355/posts)
+
 
 ## Change log
 
@@ -51,7 +57,7 @@ The change-log can be found in `CHANGES.md` in this directory.
 [Explanation of the versioning system](http://development.mokuji.org/40/versioning?menu=43)
 
 * __framework__ : 0.11.0-beta
-* __account__   : 0.3.0-beta
+* __account__   : 0.3.1-beta
 * __cms__       : 0.6.0-beta
 * __menu__      : 0.3.0-beta
 * __text__      : 0.2.1-beta

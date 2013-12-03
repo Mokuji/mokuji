@@ -136,6 +136,8 @@ class Image extends File
   //resize the image, caching can be used
   public function resize($width=0, $height=0)
   {
+   
+    ini_set('memory_limit', -1);
     
     //Create a log entry.
     mk('Logging')->log('Image', 'Resize ['.$width.', '.$height.'].');
@@ -337,7 +339,10 @@ class Image extends File
   public function crop($x=0, $y=0, $width=0, $height=0)
   {
 
+    ini_set('memory_limit', -1);
+
     mk('Logging')->log('Image', 'Crop ['.$x.', '.$y.', '.$width.', '.$height.'].');
+
     if(empty($this->source)){
       throw new \exception\InputMissing('No image selected. ->save() first.');
     }

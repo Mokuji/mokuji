@@ -21,6 +21,7 @@
 
 **Methods**
 * [`protected mixed blogposts_entry($options)`](#method-blogposts_entry)
+* [`protected mixed feed($options)`](#method-feed)
 
 
 ## Inheritance index
@@ -33,6 +34,7 @@
 * [`public mixed __construct()`](#method-__construct)
 * [`public mixed _call($controller, array $args)`](#method-_call)
 * [`public mixed call($controller, $data)`](#method-call)
+* [`public self create_filter(string $key, mixed $value)`](#method-create_filter)
 * [`public mixed filters()`](#method-filters)
 * [`public mixed get_html($view, $options)`](#method-get_html)
 * [`public mixed helper($controller)`](#method-helper)
@@ -96,7 +98,7 @@ protected mixed $default_permission = 2
 In class: [components\timeline\Sections](#top)
 
 ```
-protected mixed $permissions = array('blogposts_entry' => 0)
+protected mixed $permissions = array('feed' => 0, 'blogposts_entry' => 0)
 ```
 
 
@@ -170,6 +172,36 @@ mixed dependencies\BaseComponent::call($controller, $data)
 
 * $controller **mixed**
 * $data **mixed**
+
+
+
+
+
+
+## Method `create_filter`
+In class: [components\timeline\Sections](#top)
+
+```
+self dependencies\BaseComponent::create_filter(string $key, mixed $value)
+```
+
+Creates a component specific filter in the session.
+
+
+
+* Visibility: **public**
+* This method is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
+
+#### Arguments
+
+* $key **string** - The key under which the value will be available.
+* $value **mixed** - The value for the filter.
+
+
+#### Return value
+
+**self** - Chaining enabled.
+
 
 
 
@@ -366,6 +398,28 @@ In class: [components\timeline\Sections](#top)
 
 ```
 mixed components\timeline\Sections::blogposts_entry($options)
+```
+
+
+
+
+
+* Visibility: **protected**
+
+#### Arguments
+
+* $options **mixed**
+
+
+
+
+
+
+## Method `feed`
+In class: [components\timeline\Sections](#top)
+
+```
+mixed components\timeline\Sections::feed($options)
 ```
 
 

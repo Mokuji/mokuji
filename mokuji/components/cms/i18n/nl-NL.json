@@ -113,6 +113,7 @@
   "SOCIAL_MEDIAL_OVERRIDE_VALUES_EXPLANATION": "Onderstaand vind je de instellingen die bepalen hoe jouw webpagina op social media verschijnt als de pagina gelinkt wordt. Het toepassen van social media optimalisatie is optioneel, maar als dit wilt is hier er de mogelijkheid voor.",
   
   "Theme": "Thema",
+  "The page you're looking for could not be found.": "De pagina die je zoekt kon niet gevonden worden.",
   "There was a problem loading the section": "Er was een probleem tijdens het laden van de sectie",
   "This page was deleted from the database. Unlink it from the menu item.": "Deze pagina is verwijderd van de database. Koppel het los van het menu-item.",
   "Title": "Titel",
@@ -134,6 +135,11 @@
   "Website name": "Website naam",
   "Website settings": "Website instellingen",
   
-  "You are currently in the admin panel": "Je bent op dit moment in het beheerderspaneel"
+  "You're currently in the admin panel": "Je bent op dit moment in het beheerderspaneel",
+
+  "Failed to authorise while %s: %s": "Authorisatie is niet gelukt bij het %s: %s",
+  "Failed to validate while %s, because: %s": "Valideren is niet gelukt bij het %s, want: %s",
+  "Failed to load record needed for %s, because: %s": "Ophalen van informatie voor het %s is niet gelukt, want: %s",
+  "Something went wrong while %s, because: %s": "Iets ging fout bij het %s, want: %s"
   
 }

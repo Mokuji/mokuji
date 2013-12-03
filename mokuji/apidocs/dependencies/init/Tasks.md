@@ -22,7 +22,7 @@ A static class that performs atomic tasks to initialize Mokuji.
 * [`public static void http_fixes()`](#method-http_fixes)
 * [`public static void load_configuration_files(string $root, boolean $is_installed, boolean $use_database)`](#method-load_configuration_files)
 * [`public static void load_functions()`](#method-load_functions)
-* [`public static void register_error_handlers()`](#method-register_error_handlers)
+* [`public static void register_error_handlers($environment)`](#method-register_error_handlers)
 
 
 
@@ -157,7 +157,7 @@ Loads all the system functions.
 In class: [dependencies\init\Tasks](#top)
 
 ```
-void dependencies\init\Tasks::register_error_handlers()
+void dependencies\init\Tasks::register_error_handlers($environment)
 ```
 
 Register error handlers for errors and exceptions.
@@ -166,6 +166,10 @@ Register error handlers for errors and exceptions.
 
 * Visibility: **public**
 * This method is **static**.
+
+#### Arguments
+
+* $environment **mixed**
 
 
 

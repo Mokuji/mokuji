@@ -257,7 +257,7 @@ class Json extends \dependencies\BaseViews
           $ex = new \exception\Validation('Unknown MySQL error code');
           $ex->key('host');
           $ex->errors(
-            $errorInfo === null ?
+            $pdoex->errorInfo === null ?
               array($pdoex->getMessage()) :
               array('['.$errorInfo[1].'] '.$errorInfo[2])
           );
@@ -348,6 +348,14 @@ class Json extends \dependencies\BaseViews
     ->paths_base->validate('Base path', array('required', 'string', 'not_empty'))->back()
     ->paths_url->validate('Url path', array('string'))->back();
     
+    //Check if language code is valid.
+    if(!file_exists(PATH_SYSTEM.DS.'i18n'.DS.$data->lang_code->get('string').'.json')){
+      $ex = new \exception\Validation('No translation files found for '.PATH_SYSTEM.DS.'i18n'.DS.$data->lang_code->get('string').'.json');
+      $ex->key('lang_code');
+      $ex->errors(array('No translation files found for this language code'));
+      throw $ex;
+    }
+    
     //Write email config file.
     $f = fopen(PATH_FRAMEWORK.DS.'config'.DS.'email'.EXT, 'w');
     fwrite($f,
@@ -361,26 +369,40 @@ class Json extends \dependencies\BaseViews
       'define("EMAIL_ADDRESS_AUTOMATED_MESSAGES","'.$data->email_automated.'");'
     );
     
-    //Check language code valid is.
-    if(!file_exists(PATH_SYSTEM.DS.'i18n'.DS.$data->lang_code->get('string').'.json')){
-      $ex = new \exception\Validation('No translation files found for '.PATH_SYSTEM.DS.'i18n'.DS.$data->lang_code->get('string').'.json');
-      $ex->key('lang_code');
-      $ex->errors(array('No translation files found for this language code'));
-      throw $ex;
-    }
-    
     //There's no viable way to validate base and url paths, that's why it's advanced.
     
     //Store this info.
-    mk('Sql')->query("INSERT INTO `#__core_languages` (`code`, `shortcode`, `title`) VALUES ('{$data->lang_code}', '{$data->lang_shortcode}', '{$data->lang_title}')");
-    mk('Sql')->query("INSERT INTO `#__core_sites` (`title`, `path_base`, `url_path`) VALUES ('{$data->site_title}', '{$data->paths_base}', '{$data->paths_url}')");
-    $site_id = mk('Sql')->get_insert_id();
-    mk('Sql')->query("INSERT INTO `#__core_site_domains` (`site_id`, `domain`) VALUES ({$site_id}, '*')");
-    mk('Sql')->query("INSERT INTO `#__menu_menus` (`site_id`, `template_key`, `title`) VALUES ('{$site_id}', 'main_menu', '".___('main menu', 'ucfirst')."')");
+    mk('Sql')->model('cms', 'Languages')->set(array(
+      'code' => $data->lang_code,
+      'shortcode' => $data->lang_shortcode,
+      'title' => $data->lang_title
+    ))->save();
     
+    $site = mk('Sql')->model('cms', 'Sites')->set(array(
+      'title' => $data->site_title,
+      'path_base' => $data->paths_base,
+      'url_path' => $data->paths_url
+    ))->save();
+    
+    mk('Config')->user('site_name', $data->site_title, null);
+    
+    mk('Sql')->model('cms', 'SiteDomains')->set(array(
+      'site_id' => $site->id,
+      'domain' => '*'
+    ))->save();
+    
+    mk('Sql')->model('menu', 'Menus')->set(array(
+      'site_id' => $site->id,
+      'template_key' => 'main_menu',
+      'title' => ___('main menu', 'ucfirst')
+    ))->save();
+
     //Also add a whitelist for all ip addresses. This is a bit too advanced a setting to include into the install script,
     // but needs to be done or nobody can log in from any location.
-    mk('Sql')->query("INSERT INTO `#__core_ip_addresses` (`address`, `login_level`) VALUES ('*', 2)");
+    mk('Sql')->model('cms', 'IpAddresses')->set(array(
+      'address' => '*',
+      'login_level' => 2
+    ))->save();
     
     return array(
       'success' => true,

@@ -6,7 +6,8 @@
     window.app = new Cms({
       menu_id: <?php echo $app->menu_id; ?>,
       site_id: <?php echo $app->site_id; ?>,
-      url_base: '<?php echo URL_BASE; ?>'
+      url_base: '<?php echo URL_BASE; ?>',
+      language_id: <?php echo mk('Language')->id; ?>
     });
   });
   </script>

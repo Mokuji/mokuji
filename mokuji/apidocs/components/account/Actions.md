@@ -20,6 +20,7 @@
 * [`protected mixed $permissions`](#property-permissions)
 
 **Methods**
+* [`protected mixed become_user($data)`](#method-become_user)
 * [`protected mixed cancel_import_users()`](#method-cancel_import_users)
 * [`protected mixed claim_account($data)`](#method-claim_account)
 * [`protected mixed deactivate_user($data)`](#method-deactivate_user)
@@ -48,6 +49,7 @@
 * [`public mixed __construct()`](#method-__construct)
 * [`public mixed _call($controller, array $args)`](#method-_call)
 * [`public mixed call($controller, $data)`](#method-call)
+* [`public self create_filter(string $key, mixed $value)`](#method-create_filter)
 * [`public mixed filters()`](#method-filters)
 * [`public mixed helper($controller)`](#method-helper)
 * [`public mixed model($model_name)`](#method-model)
@@ -184,6 +186,36 @@ mixed dependencies\BaseComponent::call($controller, $data)
 
 * $controller **mixed**
 * $data **mixed**
+
+
+
+
+
+
+## Method `create_filter`
+In class: [components\account\Actions](#top)
+
+```
+self dependencies\BaseComponent::create_filter(string $key, mixed $value)
+```
+
+Creates a component specific filter in the session.
+
+
+
+* Visibility: **public**
+* This method is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
+
+#### Arguments
+
+* $key **string** - The key under which the value will be available.
+* $value **mixed** - The value for the filter.
+
+
+#### Return value
+
+**self** - Chaining enabled.
+
 
 
 
@@ -345,6 +377,28 @@ mixed dependencies\BaseComponent::view($module_name, $options)
 
 * $module_name **mixed**
 * $options **mixed**
+
+
+
+
+
+
+## Method `become_user`
+In class: [components\account\Actions](#top)
+
+```
+mixed components\account\Actions::become_user($data)
+```
+
+
+
+
+
+* Visibility: **protected**
+
+#### Arguments
+
+* $data **mixed**
 
 
 

@@ -97,7 +97,7 @@ class Helpers extends \dependencies\BaseComponent
       //Find if we're a member of any of those.
       $howMany = tx('Sql')
         ->table('account', 'UserGroups', $UG)
-        ->pk($allowedGroups)
+        ->where('id', 'IN', $allowedGroups)
         ->join('AccountsToUserGroups', $ATUG)
           ->where("$ATUG.user_id", tx('Account')->user->id)
         ->count();

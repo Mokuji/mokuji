@@ -98,7 +98,7 @@ class FormBuilder
       {
         
         ?>
-        <fieldset><legend><?php __($this->model->component(), $label); ?></legend>
+        <fieldset class="fieldset_<?php echo $this->css_prepare_title($label); ?>"><legend><?php __($this->model->component(), $label); ?></legend>
           <?php
           
           foreach($fields as $field){
@@ -129,7 +129,7 @@ class FormBuilder
     
     ?>
       <div class="ctrlHolder buttonHolder">
-        <input type="submit" class="button primaryAction" value="<?php __('Save'); ?>" />
+        <input type="submit" class="black button primaryAction" value="<?php __('Save'); ?>" />
       </div>
     </form>
     <?php
@@ -279,7 +279,7 @@ class FormBuilder
     $fields = array();
     
     //Find and merge the bonus fields into the model fields.
-    if(array_key_exists('fields', $this->options))
+    if(array_key_exists('fields', $this->options) && is_array($this->options['fields']))
     {
       
       $bonus_fields = $this->options['fields'];
@@ -558,6 +558,22 @@ class FormBuilder
     }
     
     return $relation;
+    
+  }
+  
+  protected function css_prepare_title($input)
+  {
+    
+    //Lowercase only.
+    $input = strtolower($input);
+    
+    //Replace every excess character.
+    $input = preg_replace('~[^a-z0-9-_ ]~', '', $input);
+    
+    //Replace spaces.
+    $input = str_replace(' ', '_', $input);
+    
+    return $input;
     
   }
   

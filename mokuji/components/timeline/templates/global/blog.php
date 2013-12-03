@@ -12,19 +12,19 @@ $__pagination = function()use($data, $names){
     <label class="pagination-label"><?php __($names->component, 'Pages') ?></label>
     
     <?php if($data->page->get('int')-1 > 0){ ?>
-      <a href="<?php echo url('page='.($data->page->get('int')-1)); ?>"
+      <a href="<?php echo url('page='.($data->page->get('int')-1)); ?>" target="_top"
         data-page="<?php echo $data->page->get('int')-1; ?>" class="page prev-page">
         <?php __($names->component, 'PREVIOUS_PAGE_NOTATION') ?>
       </a>
     <?php } ?>
     
     <?php for($i = 1; $i <= $data->pages->get('int'); $i++){ ?>
-      <a href="<?php echo url('page='.$i); ?>" data-page="<?php echo $i; ?>"
+      <a href="<?php echo url('page='.$i); ?>" data-page="<?php echo $i; ?>" target="_top"
         class="page page-number<?php echo $data->page->get('int') === $i ? ' active' : ''; ?>"><?php echo $i; ?></a>
     <?php } ?>
     
     <?php if($data->page->get('int')+1 <= $data->pages->get('int')){ ?>
-      <a href="<?php echo url('page='.($data->page->get('int')+1)); ?>"
+      <a href="<?php echo url('page='.($data->page->get('int')+1)); ?>" target="_top"
         data-page="<?php echo $data->page->get('int')+1; ?>" class="page next-page">
         <?php __($names->component, 'NEXT_PAGE_NOTATION') ?>
       </a>

@@ -25,6 +25,7 @@
 * [`protected mixed config_app($options)`](#method-config_app)
 * [`protected mixed configbar()`](#method-configbar)
 * [`protected mixed context_menus()`](#method-context_menus)
+* [`protected mixed dashboard()`](#method-dashboard)
 * [`protected mixed edit_menu_item($data)`](#method-edit_menu_item)
 * [`protected mixed edit_page($options)`](#method-edit_page)
 * [`protected mixed edit_site($options)`](#method-edit_site)
@@ -59,6 +60,7 @@
 * [`public mixed __construct()`](#method-__construct)
 * [`public mixed _call($controller, array $args)`](#method-_call)
 * [`public mixed call($controller, $data)`](#method-call)
+* [`public self create_filter(string $key, mixed $value)`](#method-create_filter)
 * [`public mixed filters()`](#method-filters)
 * [`public mixed get_html($view, $options)`](#method-get_html)
 * [`public mixed helper($controller)`](#method-helper)
@@ -196,6 +198,36 @@ mixed dependencies\BaseComponent::call($controller, $data)
 
 * $controller **mixed**
 * $data **mixed**
+
+
+
+
+
+
+## Method `create_filter`
+In class: [components\cms\Sections](#top)
+
+```
+self dependencies\BaseComponent::create_filter(string $key, mixed $value)
+```
+
+Creates a component specific filter in the session.
+
+
+
+* Visibility: **public**
+* This method is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
+
+#### Arguments
+
+* $key **string** - The key under which the value will be available.
+* $value **mixed** - The value for the filter.
+
+
+#### Return value
+
+**self** - Chaining enabled.
+
 
 
 
@@ -472,6 +504,24 @@ In class: [components\cms\Sections](#top)
 
 ```
 mixed components\cms\Sections::context_menus()
+```
+
+
+
+
+
+* Visibility: **protected**
+
+
+
+
+
+
+## Method `dashboard`
+In class: [components\cms\Sections](#top)
+
+```
+mixed components\cms\Sections::dashboard()
 ```
 
 

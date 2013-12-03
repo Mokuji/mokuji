@@ -73,7 +73,19 @@
             <div>
               <label for="l_page_key_example_${language.code}" class="subtle-hint"><?php __($names->component, 'Example'); ?></label>
               <div id="l_page_key_example_${language.code}" class="subtle-hint page_key_example">
-                <?php echo URL_BASE; ?>${page.id}/<span class="key-section">${page.info && page.info[language.id] && page.info[language.id].url_key ? page.info[language.id].url_key : "<?php __($names->component, 'URL-key') ?>"}</span>
+                <?php
+                  
+                  $urlKeyTmpl = '<span class="key-section">${page.info && page.info[language.id] && page.info[language.id].url_key ? page.info[language.id].url_key : "'.__($names->component, 'URL-key', true).'"}</span>';
+                  
+                  switch(mk('Config')->user('cms_url_format')->get()){
+                    default:
+                    case 'SIMPLE_KEYS':       $formatTmpl = $urlKeyTmpl; break;
+                    case 'LANGUAGE_AND_KEYS': $formatTmpl = '${language.shortcode.toLowerCase()}/'.$urlKeyTmpl; break;
+                    case 'ID_BASED':          $formatTmpl = '${page.id}/'.$urlKeyTmpl; break;
+                    case 'LEGACY':            $formatTmpl = 'index.php?pid=${page.id}&pkey='.$urlKeyTmpl; break;
+                  }
+                ?>
+                <?php echo URL_BASE.$formatTmpl; ?>
               </div>
             </div>
           </div>

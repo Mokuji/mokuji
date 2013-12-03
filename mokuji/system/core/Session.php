@@ -42,11 +42,11 @@ class Session
   public function close()
   {
     
-    tx('Logging')->log('Session', 'Closed', 'Continuing in read-only mode for this pageload.');
-    
     //No need to do this more than once.
     if(!$this->opened)
       return;
+    
+    tx('Logging')->log('Session', 'Closed', 'Continuing in read-only mode for this pageload.');
     
     //Write session data and close it.
     tx('Data')->restore_session();
