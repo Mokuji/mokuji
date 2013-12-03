@@ -5,6 +5,12 @@
   "dbUpdates": true,
   "versions": [
     {
+      "version": "0.2.2-beta",
+      "date": "2013-12-03",
+      "description": "Made frontend inline editable.",
+      "changes": []
+    },
+    {
       "version": "0.2.1-beta",
       "date": "2013-08-05",
       "description": "Gebruik van een mysql functie vervangen door de juiste core functie.",

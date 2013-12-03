@@ -6,7 +6,8 @@ class Json extends \dependencies\BaseComponent
   protected
     $default_permission = 2,
     $permissions = array(
-      'get_link' => 0
+      'get_link' => 0,
+      'external_url' => 1
     );
   
   //TODO: get_menu
@@ -87,6 +88,20 @@ class Json extends \dependencies\BaseComponent
     
     return $item;
     
+  }
+
+  protected function create_external_url($data, $params)
+  {
+
+    return mk('Sql')
+      ->table('menu', 'MenuItems')
+      ->pk($data->menu_id->get('int'))
+      ->execute_single()
+      ->merge(array(
+        'link_url' => $data->link_url,
+        'link_target' => $data->link_target
+      ));
+
   }
   
   protected function update_menu_item($data, $params)

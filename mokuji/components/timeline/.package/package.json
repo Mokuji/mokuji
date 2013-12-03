@@ -5,6 +5,12 @@
   "dbUpdates": true,
   "versions": [
     {
+      "version": "0.1.1-beta",
+      "date": "2013-12-03",
+      "description": "Textual content on blog pages is now in-line editable.",
+      "changes": []
+    },
+    {
       "version": "0.1.0-beta",
       "date": "2013-05-31",
       "description": "Naar Beta status overgeschakeld.",

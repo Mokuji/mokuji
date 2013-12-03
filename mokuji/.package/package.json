@@ -6,6 +6,11 @@
   "dbUpdates": true,
   "versions": [
     {
+      "version": "0.12.0-beta",
+      "date": "2013-12-03",
+      "description": "Implemented URL formats in CMS."
+    },
+    {
       "version": "0.11.0-beta",
       "date": "2013-09-11",
       "description": "Diverse verbeteringen aan interne functies.",

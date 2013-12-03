@@ -461,7 +461,13 @@ class Validator extends Successable
   
   private function _url()
   {
-  
+    
+    $data = data_of($this->data);
+    if(empty($data) && !$this->check_rule('required')){
+      $this->data = null;
+      return true;
+    }
+    
     try{
       
       $url = $this->data;
