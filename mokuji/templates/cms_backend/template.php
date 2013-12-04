@@ -11,7 +11,7 @@
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
 
     <!-- seo -->
-    <meta name="description" content="Tuxion CMS" />
+    <meta name="description" content="Mokuji" />
     <meta name="author" content="Tuxion" />
     <meta name="robots" content="noindex, nofollow" />
     <meta name="revisit-after" content="15 days" />
