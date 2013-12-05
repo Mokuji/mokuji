@@ -2,7 +2,9 @@
   "MENU_LINK_VIEW_TITLE": "Menu koppeling",
   "MENU_LINK_VIEW_DESCRIPTION": "Menu koppeling, laat u verwijzen naar een ander menu-item",
   
-  
+  "EXTERNAL_URL_VIEW_TITLE": "Externe URL",
+  "EXTERNAL_URL_VIEW_DESCRIPTION": "Externe URL",
+    
   "Copy content": "Inhoud kopiëren",
   
   "Link action": "Koppelingsactie",

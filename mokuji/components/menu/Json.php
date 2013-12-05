@@ -6,7 +6,9 @@ class Json extends \dependencies\BaseComponent
   protected
     $default_permission = 2,
     $permissions = array(
-      'get_link' => 0
+      'get_link' => 0,
+      'get_external_url' => 2,
+      'create_external_url' => 2
     );
   
   //TODO: get_menu
@@ -205,5 +207,34 @@ class Json extends \dependencies\BaseComponent
       });
     
   }
+
+  protected function get_external_url($data, $params)
+  {
+    
+    //Validate input.
+    $params->{0}->validate('Page ID', array('required', 'number'=>'int', 'gt'=>0));
+    
+    //Get the item.
+    return tx('Sql')->table('menu', 'MenuItems')
+      ->where('page_id', $params->{0})
+      ->execute_single();
+    
+  }
   
+  protected function create_external_url($data, $params)
+  {
+
+    $data = tx('Data')->post->having('menu_item_id', 'link_url', 'link_target', 'page_id');
+
+    return mk('Sql')
+      ->table('menu', 'MenuItems')
+      ->pk($data->menu_item_id->get('int'))
+      ->execute_single()
+      ->merge(array(
+        'link_url' => $data->link_url,
+        'link_target' => $data->link_target
+      ))->save();
+
+  }
+
 }

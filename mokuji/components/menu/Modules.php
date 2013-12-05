@@ -119,19 +119,52 @@ class Modules extends \dependencies\BaseViews
               
               $properties['class'] = trim($properties['class']);
               
-              if($options->as_hoptions->is_true()){
+              //Select menu:
+              if($options->as_hoptions->is_true())
+              {
                 $properties['value'] = (string)url('pid='.$item->page_id.($options->keep_menu->get() == false ? '&menu='.$item->id : '&menu=KEEP'), true);
                 return $item->depth->get() <= $options->max_depth->get() ? $item->title->get() : false;
-              } else {
-                return $item->depth->get() > $options->max_depth->get() ? false :
-                  '<a href="'.
-                    \components\cms\routing\UrlFormatFactory::format('/?pid='.$item->page_id)
-                      ->output(array(
-                        'menu' => ($options->keep_menu->get() == false ? ($item->is_unique_link() ? null : $item->id) : mk('Url')->url->menu->get())
-                      )).
-                  '">'.$item->title.'</a>';
               }
               
+              //Normal menu:
+              else
+              {
+                
+                //If depth > max depth: return nothing.
+                if( $item->depth->get() > $options->max_depth->get() ){
+                  return false;
+                }
+
+                //Otherwise:
+                else
+                {
+
+                  //If an external URL is set: use link URL.
+                  if( $item->link_url->not('empty') ){
+                    $link_url = $item->link_url;
+                  }
+
+                  //Else: generate internal link.
+                  else
+                  {
+                    $link_url =
+                      \components\cms\routing\UrlFormatFactory::format('/?pid='.$item->page_id)->output(array(
+                        'menu' => ($options->keep_menu->get() == false ? ($item->is_unique_link() ? null : $item->id) : mk('Url')->url->menu->get())
+                      ));
+                  }
+
+                  return 
+                    //Link href.
+                    '<a href="'.$link_url.'"'.
+                    //Link target.
+                    ($item->link_target->not('empty') ? ' target="'.$item->link_target.'"' : '').'>'.
+                    //Link title.
+                    $item->title.
+                    '</a>';
+
+                }
+                  
+              }
 
             }
             

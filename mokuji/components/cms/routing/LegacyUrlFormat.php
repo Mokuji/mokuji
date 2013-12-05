@@ -83,10 +83,12 @@ class LegacyUrlFormat extends UrlFormat
     $QS = Data($getData)->without('pid', 'pkey', 'pkey_ext');
     $QS->merge(array('pid' => $this->pageId));
     
-    if(!empty($this->getUrlKey()))
+    $url_key = $this->getUrlKey();
+    if(!empty($url_key))
       $QS->merge(array('pkey' => $this->getUrlKey()));
     
-    if(!empty($this->urlExtensions))
+    $url_extensions = $this->urlExtensions;
+    if(!empty($url_extensions))
       $QS->merge(array('pkey_ext' => implode('/', $this->urlExtensions)));
     
     return URL_BASE."index.php?".http_build_query($QS->as_array(), null, '&');

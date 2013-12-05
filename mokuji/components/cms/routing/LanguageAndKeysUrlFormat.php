@@ -28,16 +28,16 @@ class LanguageAndKeysUrlFormat extends UrlFormat
     //Instances of UrlFormat are OK when they can produce a valid URL-key.
     if($url instanceof UrlFormat)
     {
+
+      $key = $url->getUrlKey();
       
       try{
-        if(empty($url->getUrlKey())) return false;
+        if(empty($key)) return false;
       }
       
       catch(\Exception $ex){
         return false;
       }
-      
-      $key = $url->getUrlKey();
       
       //Should be at least 3 characters and not an integer.
       return strlen($key) >= 3 && ((string)intval($key) !== (string)$key);

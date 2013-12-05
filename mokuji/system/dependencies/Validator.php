@@ -290,7 +290,8 @@ class Validator extends Successable
 
     }
     
-    if(empty(data_of($this->data)) && !$this->check_rule('required')){
+    $raw_data = data_of($this->data);
+    if(empty($raw_data) && !$this->check_rule('required')){
       $this->data = null;
       return true;
     }
@@ -482,7 +483,8 @@ class Validator extends Successable
   private function _url()
   {
     
-    if(empty(data_of($this->data)) && !$this->check_rule('required')){
+    $raw_data = data_of($this->data);
+    if(empty($raw_data) && !$this->check_rule('required')){
       $this->data = null;
       return true;
     }
