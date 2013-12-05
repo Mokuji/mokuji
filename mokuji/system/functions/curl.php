@@ -57,6 +57,7 @@ function curl_call($url, $post=array())
   
   //Otherwise, close and return.
   $return_data = array(
+    'status' => curl_getinfo($handle, CURLINFO_HTTP_CODE),
     'type' => curl_getinfo($handle, CURLINFO_CONTENT_TYPE),
     'size' => curl_getinfo($handle, CURLINFO_CONTENT_LENGTH_DOWNLOAD),
     'data' => $result
