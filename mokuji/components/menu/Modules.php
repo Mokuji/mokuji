@@ -140,7 +140,7 @@ class Modules extends \dependencies\BaseViews
                 {
 
                   //If an external URL is set: use link URL.
-                  if( $item->link_url->not('empty') ){
+                  if( !$item->link_url->is_empty() ){
                     $link_url = $item->link_url;
                   }
 
