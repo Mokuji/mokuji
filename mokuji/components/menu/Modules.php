@@ -89,9 +89,6 @@ class Modules extends \dependencies\BaseViews
           $method = $options->as_hoptions->is_true() ? 'as_hoptions' : 'as_hlist';
           return $items->{$method}(array('id'=>null, 'classes'=>$classes, 'value-location'=>$options->as_hoptions->is_true()), function($item, $key, $delta, &$properties)use(&$active_depth, $selected_items, $options, $items){
             
-            //Workaround for conversion to Data (instead of preserving model).
-            $item = $items[$key];
-            
             //Test if we are allowed to view this item.
             if(1
               && ($item->page_id->is_set() || $options->show_unlinked->get('bool') == true)
