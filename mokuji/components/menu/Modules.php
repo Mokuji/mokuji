@@ -199,11 +199,7 @@ class Modules extends \dependencies\BaseViews
   protected function breadcrumbs($options)
   {
    
-    $menu_item_info =
-      tx('Sql')
-      ->table('menu', 'MenuItems')
-      ->pk($options->menu_item_id)
-      ->execute_single();
+    $menu_item_info = $this->helper('get_active_menu_item');
 
     return array(
 
