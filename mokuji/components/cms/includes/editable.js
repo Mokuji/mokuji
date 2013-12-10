@@ -240,11 +240,11 @@
         .addButton('Revert', function(){
           this.canDiscard() && this.restore().setMode(null);
         })
-        .addButton('Preview', function(){
-          this.saveToModel().restore().setMode(this.model.isClean() ? null : 'preview');
-        })
         .addButton('Save', function(){
           this.saveToModel().restore().saveToServer().setMode(null);
+        })
+        .addButton('Preview', function(){
+          this.saveToModel().restore().setMode(this.model.isClean() ? null : 'preview');
         })
       
     };

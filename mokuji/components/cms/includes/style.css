@@ -3,19 +3,53 @@
 \************/
 
 .editable.editing, .editable:hover{
-  border:dotted 1px red;
+  border:solid 1px #ccc;
   margin:-1px;
   cursor:pointer;
+  background: #FFF;
+  padding: 10px;
+  margin: -11px;
+  position: relative;
 }
 
 .editable.editing{
   cursor:auto !important;
 }
 
+.editable-toolbar{
+  position: absolute;
+  top: -31px;
+  z-index: 99;
+  width: 100%;
+  left: -1px;
+}
+
 .editable-toolbar-button{
   margin-right:10px;
   cursor:pointer;
+  padding: 0 10px;
+	font-size: 0.750em;
+	line-height: 30px;
+	height: 30px;
+	-webkit-border-top-left-radius: 3px;
+  -webkit-border-top-right-radius: 3px;
+  -moz-border-radius-topleft: 3px;
+  -moz-border-radius-topright: 3px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+	color: #000000;
+	background: #FFFFFF;
+	text-transform: uppercase;
+	display: inline-block;
+	font-weight: 700;
+	border: 1px solid #ccc;
+  border-bottom: 0;
+	/*box-shadow: inset 0 1px 0 0; // Create more depth for the button. Change to lighter color of the background.
+	text-shadow: 0 1px #80c180;*/
 }
+  .editable-toolbar-button:hover {
+    box-shadow: inset 0 1px 0 0;
+  }
 
 .editable.preview .editable-toolbar{
   display: none;
@@ -25,6 +59,53 @@
   display: block;
 }
 
+.editable-toolbar-button.revert {
+  color: #888888;
+  left: -3px;
+}
+  .editable-toolbar-button.revert::before {
+   content:"\f0e2";
+   font-family: FontAwesome;
+   margin-right: 10px;
+   font-size: 14px; 
+  }
+  .editable-toolbar-button.revert:hover {
+    box-shadow: #888888;
+    border-top: 1px solid #888888;
+  }
+
+.editable-toolbar-button.preview {
+  /*background: #3FA6DD;*/
+  float: right;
+  color: #3FA6DD;
+}
+  .editable-toolbar-button.preview::before {
+    content:"\f06e";
+    font-family: FontAwesome;
+    margin-right: 10px;
+    font-size: 14px;
+  }
+  .editable-toolbar-button.preview:hover {
+    box-shadow: #3FA6DD;
+    border-top: 1px solid #3FA6DD;
+  }
+
+.editable-toolbar-button.save {
+  /*background: #8ABA56;*/
+  float: right;
+  color: #8ABA56;
+  margin-right: -2px;
+}
+  .editable-toolbar-button.save::before {
+   content:"\f00c";
+   font-family: FontAwesome;
+   margin-right: 10px;
+   font-size: 14px; 
+  }
+  .editable-toolbar-button.save:hover {
+    box-shadow: #8ABA56;
+    border-top: 1px solid #8ABA56;
+  }
 
 
 
