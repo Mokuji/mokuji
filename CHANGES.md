@@ -1,3 +1,8 @@
+#### [Version 0.28.2 Beta](https://github.com/Tuxion/mokuji/tree/0.28.2-beta)
+_10-Dec-2013_
+
+* Updated underscore JavaScript plugin.
+
 #### [Version 0.28.1 Beta](https://github.com/Tuxion/mokuji/tree/0.28.1-beta)
 _5-Dec-2013_
 
