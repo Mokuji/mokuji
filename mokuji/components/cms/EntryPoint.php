@@ -241,7 +241,12 @@ class EntryPoint extends \dependencies\BaseEntryPoint
           if(tx('Config')->user('forced_theme_id')->get() > 0){
             $pi->theme->set($that->table('Themes')->pk(tx('Config')->user('forced_theme_id'))->execute_single()->name);
           }
-
+          
+          //If forced template is set: re-set template id.
+          if(tx('Config')->user('forced_template_id')->get() > 0){
+            $pi->template->set($that->table('Templates')->pk(tx('Config')->user('forced_template_id'))->execute_single()->name);
+          }
+          
           /* ------- Set all the headers! ------- */
           
           //TODO: improve some of the default site-wide settings

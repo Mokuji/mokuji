@@ -89,9 +89,6 @@ class Modules extends \dependencies\BaseViews
           $method = $options->as_hoptions->is_true() ? 'as_hoptions' : 'as_hlist';
           return $items->{$method}(array('id'=>null, 'classes'=>$classes, 'value-location'=>$options->as_hoptions->is_true()), function($item, $key, $delta, &$properties)use(&$active_depth, $selected_items, $options, $items){
             
-            //Workaround for conversion to Data (instead of preserving model).
-            $item = $items[$key];
-            
             //Test if we are allowed to view this item.
             if(1
               && ($item->page_id->is_set() || $options->show_unlinked->get('bool') == true)
@@ -143,7 +140,7 @@ class Modules extends \dependencies\BaseViews
                 {
 
                   //If an external URL is set: use link URL.
-                  if( $item->link_url->not('empty') ){
+                  if( !$item->link_url->is_empty() ){
                     $link_url = $item->link_url;
                   }
 
@@ -202,11 +199,7 @@ class Modules extends \dependencies\BaseViews
   protected function breadcrumbs($options)
   {
    
-    $menu_item_info =
-      tx('Sql')
-      ->table('menu', 'MenuItems')
-      ->pk($options->menu_item_id)
-      ->execute_single();
+    $menu_item_info = $this->helper('get_active_menu_item');
 
     return array(
 

@@ -1,3 +1,18 @@
+#### [Version 0.28.2 Beta](https://github.com/Tuxion/mokuji/tree/0.28.2-beta)
+_10-Dec-2013_
+
+* Updated underscore JavaScript plugin.
+
+#### [Version 0.28.1 Beta](https://github.com/Tuxion/mokuji/tree/0.28.1-beta)
+_5-Dec-2013_
+
+* Added external URL pagetype.
+* Added forced_template_id code to CMS.
+* Added status to curl function.
+* Fixed menu problems, by returning proper model instances with Resultset::hwalk.
+* Fixed 5.3.x compatibility bugs.
+* Removed a Tuxion CMS reference.
+
 #### [Version 0.28.0 Beta](https://github.com/Tuxion/mokuji/tree/0.28.0-beta)
 _3-Dec-2013_
 
