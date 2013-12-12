@@ -5,6 +5,12 @@
   "dbUpdates": true,
   "versions": [
     {
+      "version": "0.7.1-beta",
+      "date": "2013-12-12",
+      "description": "Added style to frontend editing.",
+      "changes": []
+    },
+    {
       "version": "0.7.0-beta",
       "date": "2013-12-03",
       "description": "Nieuwe URL-key functies en frontend-editing.",

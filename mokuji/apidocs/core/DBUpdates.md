@@ -155,7 +155,7 @@ protected mixed $type
 In class: [core\DBUpdates](#top)
 
 ```
-protected mixed $updates = array('3.2.0' => '3.3.0', '3.3.0' => '3.3.1', '3.3.1' => '3.3.2', '3.3.2' => '3.3.3', '3.3.3' => '0.6.1-beta', '0.5.0-beta' => '0.6.1-beta', '0.6.0-beta' => '0.6.1-beta', '0.6.1-beta' => '0.7.0-beta', '0.7.0-beta' => '0.9.0-beta', '0.7.1-beta' => '0.9.0-beta', '0.8.0-beta' => '0.9.0-beta', '0.8.1-beta' => '0.9.0-beta', '0.8.2-beta' => '0.9.0-beta', '0.9.0-beta' => '0.10.0-beta', '0.10.0-beta' => '0.11.0-beta')
+protected mixed $updates = array('3.2.0' => '3.3.0', '3.3.0' => '3.3.1', '3.3.1' => '3.3.2', '3.3.2' => '3.3.3', '3.3.3' => '0.6.1-beta', '0.5.0-beta' => '0.6.1-beta', '0.6.0-beta' => '0.6.1-beta', '0.6.1-beta' => '0.7.0-beta', '0.7.0-beta' => '0.9.0-beta', '0.7.1-beta' => '0.9.0-beta', '0.8.0-beta' => '0.9.0-beta', '0.8.1-beta' => '0.9.0-beta', '0.8.2-beta' => '0.9.0-beta', '0.9.0-beta' => '0.10.0-beta', '0.10.0-beta' => '0.11.0-beta', '0.11.0-beta' => '0.12.0-beta', '0.12.0-beta' => '0.12.1-beta')
 ```
 
 

@@ -6,6 +6,42 @@
   "dbUpdates": true,
   "versions": [
     {
+      "version": "0.12.1-beta",
+      "date": "2013-12-12",
+      "description": "Style added to the frontend editing views."
+    },
+    {
+      "version": "0.12.0-beta",
+      "date": "2013-12-03",
+      "description": "Added new cool URLs and implemented first prototype of frontend editing",
+      "changes": [
+        {
+          "title": "URL keys for pages will be auto generated from now",
+          "description": "A page named 'Hello, i like this' will automatically get the URL key 'hello-i-like-this'."
+        },
+        {
+          "title": "There are now four types of URL formats to choose from",
+          "description": "<ul><li>The simple keys format: /cool-url</li><li>The language and keys format: /en/cool-url</li><li>The ID based format: /1/cool-url</li><li>The legacy format: /?pid=1</li></ul>"
+        },
+        {
+          "title": "The homepage URL stays on /, for cleaner homepage URLs",
+          "description": ""
+        },
+        {
+          "title": "If a page doesn't exist, a 404 Not Found error is thrown.",
+          "description": ""
+        },
+        {
+          "title": "The first prototype of frontend editing is working",
+          "description": "Now text pages and blog posts are in-line editable."
+        },
+        {
+          "title": "We added an page type for creating external URLs",
+          "description": "From now you can open an external URL from the menus."
+        }
+      ]
+    },
+    {
       "version": "0.11.0-beta",
       "date": "2013-09-11",
       "description": "Diverse verbeteringen aan interne functies.",

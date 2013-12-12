@@ -1,3 +1,8 @@
+#### [Version 0.28.3 Beta](https://github.com/Tuxion/mokuji/tree/0.28.3-beta)
+_12-Dec-2013_
+
+* Added style to frontend editing.
+
 #### [Version 0.28.2 Beta](https://github.com/Tuxion/mokuji/tree/0.28.2-beta)
 _10-Dec-2013_
 

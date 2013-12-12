@@ -20,6 +20,7 @@
 * [`protected mixed $permissions`](#property-permissions)
 
 **Methods**
+* [`protected mixed external_url($options)`](#method-external_url)
 * [`protected mixed menu_link($options)`](#method-menu_link)
 * [`protected mixed menus($return)`](#method-menus)
 
@@ -98,7 +99,7 @@ protected mixed $default_permission = 2
 In class: [components\menu\Views](#top)
 
 ```
-protected mixed $permissions = array('menu_link' => 0)
+protected mixed $permissions = array('menu_link' => 0, 'external_url' => 0)
 ```
 
 
@@ -386,6 +387,28 @@ mixed dependencies\BaseComponent::view($module_name, $options)
 #### Arguments
 
 * $module_name **mixed**
+* $options **mixed**
+
+
+
+
+
+
+## Method `external_url`
+In class: [components\menu\Views](#top)
+
+```
+mixed components\menu\Views::external_url($options)
+```
+
+
+
+
+
+* Visibility: **protected**
+
+#### Arguments
+
 * $options **mixed**
 
 

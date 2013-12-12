@@ -21,8 +21,10 @@
 
 **Methods**
 * [`public mixed delete_menu_item($data, $arguments)`](#method-delete_menu_item)
+* [`protected mixed create_external_url($data, $params)`](#method-create_external_url)
 * [`protected mixed create_menu_item($data, $params)`](#method-create_menu_item)
 * [`protected mixed delete_menu_item_image($data, $params)`](#method-delete_menu_item_image)
+* [`protected mixed get_external_url($data, $params)`](#method-get_external_url)
 * [`protected mixed get_link($data, $params)`](#method-get_link)
 * [`protected mixed update_menu_item($data, $params)`](#method-update_menu_item)
 * [`protected mixed update_menu_items($data, $arguments)`](#method-update_menu_items)
@@ -101,7 +103,7 @@ protected mixed $default_permission = 2
 In class: [components\menu\Json](#top)
 
 ```
-protected mixed $permissions = array('get_link' => 0)
+protected mixed $permissions = array('get_link' => 0, 'get_external_url' => 2, 'create_external_url' => 2)
 ```
 
 
@@ -395,6 +397,29 @@ mixed dependencies\BaseComponent::view($module_name, $options)
 
 
 
+## Method `create_external_url`
+In class: [components\menu\Json](#top)
+
+```
+mixed components\menu\Json::create_external_url($data, $params)
+```
+
+
+
+
+
+* Visibility: **protected**
+
+#### Arguments
+
+* $data **mixed**
+* $params **mixed**
+
+
+
+
+
+
 ## Method `create_menu_item`
 In class: [components\menu\Json](#top)
 
@@ -423,6 +448,29 @@ In class: [components\menu\Json](#top)
 
 ```
 mixed components\menu\Json::delete_menu_item_image($data, $params)
+```
+
+
+
+
+
+* Visibility: **protected**
+
+#### Arguments
+
+* $data **mixed**
+* $params **mixed**
+
+
+
+
+
+
+## Method `get_external_url`
+In class: [components\menu\Json](#top)
+
+```
+mixed components\menu\Json::get_external_url($data, $params)
 ```
 
 

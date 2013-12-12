@@ -22,6 +22,7 @@
 **Methods**
 * [`public mixed install_1_1($dummydata, $forced)`](#method-install_1_1)
 * [`public mixed install_1_4($dummydata, $forced)`](#method-install_1_4)
+* [`public mixed update_to_0_3_1_beta($dummydata, $forced)`](#method-update_to_0_3_1_beta)
 * [`public mixed update_to_1_2($current_version, $forced)`](#method-update_to_1_2)
 * [`public mixed update_to_1_3($current_version, $forced)`](#method-update_to_1_3)
 * [`public mixed update_to_1_4($current_version, $forced)`](#method-update_to_1_4)
@@ -154,7 +155,7 @@ protected mixed $type
 In class: [components\menu\DBUpdates](#top)
 
 ```
-protected mixed $updates = array('1.1' => '1.2', '1.2' => '1.3', '1.3' => '1.4', '1.4' => '0.2.0-beta', '0.2.0-beta' => '0.3.0-beta')
+protected mixed $updates = array('1.1' => '1.2', '1.2' => '1.3', '1.3' => '1.4', '1.4' => '0.2.0-beta', '0.2.0-beta' => '0.3.0-beta', '0.3.0-beta' => '0.3.1-beta')
 ```
 
 
@@ -488,6 +489,29 @@ mixed components\update\classes\BaseDBUpdates::update($forced, $maybe_install)
 
 * $forced **mixed**
 * $maybe_install **mixed**
+
+
+
+
+
+
+## Method `update_to_0_3_1_beta`
+In class: [components\menu\DBUpdates](#top)
+
+```
+mixed components\menu\DBUpdates::update_to_0_3_1_beta($dummydata, $forced)
+```
+
+
+
+
+
+* Visibility: **public**
+
+#### Arguments
+
+* $dummydata **mixed**
+* $forced **mixed**
 
 
 

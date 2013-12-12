@@ -1,4 +1,4 @@
-#Mokuji (目次) - Version 0.28.2 Beta
+#Mokuji (目次) - Version 0.28.3 Beta
 
 * [Main site](http://mokuji.net/)
 * [Forum](http://forum.mokuji.net/)
@@ -56,9 +56,9 @@ The change-log can be found in `CHANGES.md` in this directory.
 
 [Explanation of the versioning system](http://development.mokuji.org/40/versioning?menu=43)
 
-* __framework__ : 0.12.0-beta
+* __framework__ : 0.12.1-beta
 * __account__   : 0.3.1-beta
-* __cms__       : 0.7.0-beta
+* __cms__       : 0.7.1-beta
 * __menu__      : 0.3.0-beta
 * __text__      : 0.2.2-beta
 * __update__    : 0.4.1-beta
