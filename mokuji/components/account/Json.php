@@ -11,7 +11,8 @@ class Json extends \dependencies\BaseComponent
       'create_new_account' => 0,
       'create_password_reset_request' => 0,
       'create_password_reset_finalization' => 0,
-      'create_user_session' => 0,
+      'create_user_session' => 0, 'post_user_session' => 0, //Alias
+      'delete_user_session' => 1,
       'update_password' => 1,
       'get_me' => 1,
       'get_login_status' => 0
@@ -49,6 +50,11 @@ class Json extends \dependencies\BaseComponent
       'target_url' => $target_url
     );
     
+  }
+  
+  // Alias for create_user_session
+  protected function post_user_session($data, $sub_routes, $options){
+    return $this->create_user_session($data, $sub_routes);
   }
   
   /**
