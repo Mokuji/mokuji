@@ -301,7 +301,7 @@ class EntryPoint extends \dependencies\BaseEntryPoint
           );
           
           //If we're in editable mode, load editing plug-ins and scripts.
-          if($this->helper('is_website_editable'))
+          if(tx('Component')->helpers('cms')->is_website_editable())
           {
             
             //CKEditor, ELFinder and jQuery Postpone.
