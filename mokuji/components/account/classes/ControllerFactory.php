@@ -37,7 +37,7 @@ class ControllerFactory
    * The instance cache.
    * @var controllers\base\Controller[]
    */
-  private $controllers = [];
+  private $controllers = array();
   
   /**
    * Private constructor.
