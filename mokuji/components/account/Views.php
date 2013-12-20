@@ -8,6 +8,7 @@ class Views extends \dependencies\BaseViews
     $permissions = array(
       
       'profile' => 0,
+      'email_user_invited' => 0,
       'email_password_reset_no_account' => 0,
       'email_password_reset_token' => 0,
       'email_password_reset_complete' => 0,

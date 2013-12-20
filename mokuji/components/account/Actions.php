@@ -448,8 +448,6 @@ class Actions extends \dependencies\BaseComponent
           $user_login = $row;
         });
       
-      tx('Logging')->log('LEDATE', $user_login->dt_expiry, date('Y-m-d H:i:s', time() + (2 * 3600)));
-      
       //Set user in session.
       tx('Data')->session->user->set(array(
         'id' => $account->id->get('int'),

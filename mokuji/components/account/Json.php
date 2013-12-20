@@ -9,12 +9,15 @@ class Json extends \dependencies\BaseComponent
     $default_permission = 2,
     $permissions = array(
       'create_new_account' => 0,
+      'create_user_invite' => 0, 'post_user_invite' => 0, //Alias
       'create_password_reset_request' => 0,
       'create_password_reset_finalization' => 0,
       'create_user_session' => 0, 'post_user_session' => 0, //Alias
       'delete_user_session' => 1,
       'update_password' => 1,
       'get_me' => 1,
+      'get_user_claim' => 0,
+      'put_user_claim' => 0,
       'get_login_status' => 0
     );
   
@@ -105,6 +108,116 @@ class Json extends \dependencies\BaseComponent
   ##
   ## USER ACCOUNTS
   ##
+  
+  protected function create_user_invite($data, $params)
+  {
+    
+    $request =  mk('Component')->helpers('account')->invite_user(array(
+      'email' => $data->email,
+      'for_title' => 'Webistor',
+      'for_link' => 'http://localhost/webistor/register'
+    ));
+    
+    if($request->exception)
+      throw $request->exception;
+    
+    return array(
+      'success' => !$request->exception,
+      'message' => $request->get_user_message()
+    );
+    
+  }
+  
+  //Alias for create_user_invite
+  protected function post_user_invite($data, $sub_routes, $options){
+    return $this->create_user_invite($data, $sub_routes);
+  }
+  
+  //Verifies a user_id & claim_key combination, getting the associated user information.
+  protected function get_user_claim($options, $sub_routes)
+  {
+    
+    $options = Data($options)->having('user_id', 'claim_key')
+      ->merge(array('user_id'=>$sub_routes->{0}))
+      ->user_id->validate('User ID', array('required', 'number'=>'integer', 'gt'=>0))->back()
+      ->claim_key->validate('Claim key', array('required', 'string', 'not_empty'))->back();
+    
+    return mk('Sql')->table('account', 'UserInfo')
+      ->where('user_id', $options->user_id->get('int'))
+      ->where('claim_key', "'{$options->claim_key}'")
+      ->where('status', '4')
+      ->join('Accounts', $A)
+      ->execute_single($A)
+      ->is('empty', function(){
+        throw new \exception\Validation('Invalid user claim.');
+      })
+      ->having('id', 'email', 'username');
+    
+  }
+  
+  //Claims a user based on it's ID and claim key.
+  protected function put_user_claim($data, $sub_routes, $options)
+  {
+    
+    $claim = array(
+      'user_id' => $sub_routes->{0}->otherwise($options->user_id),
+      'claim_key' => $options->claim_key
+    );
+    
+    //Validate claim.
+    $claim = $this->get_user_claim($claim, $sub_routes);
+    
+    //Validate data.
+    $data = Data($data)->having('username', 'password1', 'password2')
+      ->username->validate('Username', array('string'))->back()
+      ->password1->validate('Password', array('required', 'string', 'not_empty', 'password'))->back()
+      ->password2->validate('Confirm password', array('required', 'string', 'not_empty'))->back();
+    
+    //Check passwords match.
+    if($data->password1->get() !== $data->password2->get()){
+      $vex = new \exception\Validation(__($this->component, 'The passwords do not match', true));
+      $vex->key('password1');
+      $vex->errors(array(__($this->component, 'The passwords do not match', true)));
+      throw $vex;
+    }
+    
+    //Claim the user.
+    $user = mk('Sql')->table('account', 'Accounts')
+      ->pk($claim->id)
+      ->execute_single();
+    
+    //Add new information.
+    $user->merge(array(
+      'username' => $data->username,
+      'salt' => mk('Security')->random_string(),
+      'hashing_algorithm' => mk('Security')->pref_hash_algo()
+    ));
+    
+    //Hash using above information.
+    $user->merge(array(
+      'password' =>
+        mk('Security')->hash(
+          $user->salt->get() . $data->password1->get(),
+          $user->hashing_algorithm
+        )
+    ));
+    
+    //Store user data.
+    $user->save();
+    
+    //Claim the user in status information.
+    $user->user_info
+      ->merge(array('claim_key' => 'NULL'))
+      ->set_status('claimed')
+      ->save();
+    
+    //Be logged in after this.
+    mk('Account')->login($claim->email, $data->password1);
+    
+    //Return user status.
+    return $this->get_me(array(), array());
+    
+  }
   
   //Allows user to register.
   protected function create_new_account($data, $params)

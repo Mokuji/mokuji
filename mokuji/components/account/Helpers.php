@@ -123,10 +123,10 @@ class Helpers extends \dependencies\BaseComponent
       
       //Validate input.
       $data = Data(data_of($data))->having('username', 'email', 'level', 'for_title', 'for_link', 'name', 'preposition', 'family_name', 'comments')
-        ->email->validate('Email', array('required', 'email'))->back()
+        ->email->validate('Email', array('required', 'email', 'not_empty'))->back()
         ->username->validate('Username', array('string', 'between' => array(0, 30), 'no_html'))->back()
-        ->for_title->validate('For-title', array('required', 'string', 'no_html'))->back()
-        ->for_link->validate('For-link', array('required'))->back()
+        ->for_title->validate('For-title', array('required', 'string', 'no_html', 'not_empty'))->back()
+        ->for_link->validate('For-link', array('required', 'not_empty'))->back()
         ->name->validate('Name', array('string', 'between' => array(0, 30), 'no_html'))->back()
         ->preposition->validate('Preposition', array('string', 'between' => array(0, 30), 'no_html'))->back()
         ->family_name->validate('Family name', array('string', 'between' => array(0, 30), 'no_html'))->back()
