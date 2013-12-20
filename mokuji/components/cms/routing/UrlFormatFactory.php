@@ -70,7 +70,8 @@ abstract class UrlFormatFactory
       return new LegacyUrlFormat($url);
     
     //Strips the query string if any.
-    $base_url = explode('?', $url)[0];
+    $tmp = explode('?', $url);
+    $base_url = $tmp[0];
     
     //If we are loading the homepage, recurse.
     if($base_url === '/'){
@@ -122,7 +123,8 @@ abstract class UrlFormatFactory
       throw new \exception\InvalidArgument('The URL must be a string or UrlFormat instance.');
     
     //Strips the query string if any.
-    $base_url = explode('?', $url)[0];
+    $tmp = explode('?', $url);
+    $base_url = $tmp[0];
     $urlObj = url($url);
     $urlData = $urlObj->data;
     
