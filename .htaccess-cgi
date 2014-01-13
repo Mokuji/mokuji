@@ -18,15 +18,12 @@ RewriteEngine On
 RewriteRule ^/?rest/(.+)$ index.php?_RESTROUTE=$1&cgi_env=rest [E=MK_ENV:rest,L,QSA]
 
 # Rewrite for the different environments.
+# Change 'admin' to something else for different ADMIN_URL_KEY values.
 RewriteRule ^/?(admin|install)(/(.+))? $3?%{QUERY_STRING}&cgi_env=$1 [E=MK_ENV:$1]
 
-#Pages format: /<pid>/<pkey>
-RewriteRule ^/?mokuji - [S=1]
-RewriteRule ^/?(\d+)/?([\w-]*)(\.html|/)?$ index.php?pid=$1&pkey=$2 [L,QSA]
-
-#Pages format: /<pid>/<pkey>/<page_key_extensions>
-RewriteRule ^/?mokuji - [S=1]
-RewriteRule ^/?(\d+)/?([\w-]+)/([\w/-/]+)(\.html)?$ index.php?pid=$1&pkey=$2&pkey_ext=$3 [L,QSA]
+# Redirect to Mokuji index.
+RewriteRule ^/?mokuji/ - [S=1]
+RewriteRule ^.*$ index.php [L,QSA]
 
 
 # ----------------------------------------------------------------------
