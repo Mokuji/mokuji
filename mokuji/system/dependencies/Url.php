@@ -144,7 +144,7 @@ class Url extends \dependencies\Data
         
         $this->segments->path->set($prefix.$segments['path']);
         
-        if(strpos($this->segments->path->get(), '/'.(URL_PATH != '' ? URL_PATH.'/' : '').'admin/') === 0){
+        if(strpos($this->segments->path->get(), '/'.(URL_PATH != '' ? URL_PATH.'/' : '').ADMIN_URL_KEY.'/') === 0){
           $this->backend->set(true);
         }else{
           $this->backend->set(false);

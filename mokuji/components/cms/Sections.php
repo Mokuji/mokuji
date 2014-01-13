@@ -345,8 +345,8 @@ class Sections extends \dependencies\BaseViews
     return array(
       'website_url'=>url(URL_BASE.'?menu=KEEP&pid=KEEP'.($e ? '&action=cms/disable_editable' : ''), true),
       'edit_url'=>($e ? 'javascript:void(0)' : url(URL_BASE.'?action=cms/enable_editable')),
-      'advanced_url'=>url(URL_BASE.'admin/index.php?menu='.$menu->id.'&pid='.($url ? $url->getPageId() : 'KEEP'), true),
-      'admin_url'=>url(URL_BASE.'admin/index.php', true),
+      'advanced_url'=>url(URL_BASE.ADMIN_URL_KEY.'/index.php?menu='.$menu->id.'&pid='.($url ? $url->getPageId() : 'KEEP'), true),
+      'admin_url'=>url(URL_BASE.ADMIN_URL_KEY.'/index.php', true),
       'editable'=>$e
     );
     

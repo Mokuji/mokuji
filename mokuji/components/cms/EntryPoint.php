@@ -39,7 +39,7 @@ class EntryPoint extends \dependencies\BaseEntryPoint
           $targetScheme = 'https';
         
         //Redirect to custom login page is available.
-        if(url('')->segments->path == '/admin/' && tx('Config')->user()->login_page->not('empty')->get('bool')){
+        if(url('')->segments->path == '/'.ADMIN_URL_KEY.'/' && tx('Config')->user()->login_page->not('empty')->get('bool')){
           $goto = url(URL_BASE.tx('Config')->user()->login_page, true)->segments->merge(array('scheme' => $targetScheme))->back()->rebuild_output();
           header("Location: ".$goto);
           exit;
@@ -208,13 +208,13 @@ class EntryPoint extends \dependencies\BaseEntryPoint
           }
           
           else
-            mk('Url')->redirect('/admin/');
+            mk('Url')->redirect('/'.ADMIN_URL_KEY.'/');
           
         }
         
         //The homepage could not be parsed.
         catch(\exception\Exception $ex){
-          mk('Url')->redirect('/admin/');
+          mk('Url')->redirect('/'.ADMIN_URL_KEY.'/');
         }
 
       })

@@ -142,7 +142,7 @@ class Url
       'segments' => array(
         'scheme' => $scheme,
         'domain' => "$server$port",
-        'path' => tx('Config')->system('backend')->is_true() ? $path.'admin/' : $path,
+        'path' => tx('Config')->system('backend')->is_true() ? $path.ADMIN_URL_KEY.'/' : $path,
         'file' => $file,
         'query' => tx('Data')->server->QUERY_STRING->get()
       ),

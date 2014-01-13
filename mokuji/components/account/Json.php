@@ -41,7 +41,7 @@ class Json extends \dependencies\BaseComponent
     //If a target_url is set, go there.
     //Otherwise, '/admin/' for admins, the homepage for normal users or '/' if there is no homepage.
     $target_url = (string)url($data->target_url->otherwise(
-      mk('Account')->check_level(2) ? '/admin/' : mk('Config')->user('homepage')->otherwise('/')
+      mk('Account')->check_level(2) ? '/'.ADMIN_URL_KEY.'/' : mk('Config')->user('homepage')->otherwise('/')
     ), true);
     
     //Exception would have been thrown if it failed, return as successful.

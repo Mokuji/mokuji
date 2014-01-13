@@ -125,7 +125,7 @@ abstract class Environments
       
       //Check if we are going to the installer when Mokuji is already installed.
       if($environment === self::INSTALL && $init->is_installed()){
-        mk('Url')->redirect('/admin/');
+        mk('Url')->redirect('/'.ADMIN_URL_KEY.'/');
         mk('Router')->start();
         return;
       }

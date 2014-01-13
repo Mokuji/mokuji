@@ -36,7 +36,7 @@ $(function(){
       autologin: {
         defaultText: '<?php __($names->component, "Click here to go to the frontpage quickly"); ?>',
         successUrl: '<?php echo URL_BASE; ?>',
-        failureUrl: '<?php echo url("/admin/", true); ?>'
+        failureUrl: '<?php echo url("/'.ADMIN_URL_KEY.'/", true); ?>'
       },
       toolbar_Full: [
         {/* 0 */}, {/* 1 */}, {/* 2 */}, {/* 3 */}, '/',

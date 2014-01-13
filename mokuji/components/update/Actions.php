@@ -25,7 +25,7 @@ class Actions extends \dependencies\BaseComponent
     //Mark the fact the installation is done.
     file_put_contents(PATH_FRAMEWORK.DS.'.completed-install', '');
     
-    tx('Url')->redirect('/admin/');
+    tx('Url')->redirect('/'.ADMIN_URL_KEY.'/');
     
   }
   

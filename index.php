@@ -14,7 +14,7 @@ $env =  isset($_SERVER['REDIRECT_MK_ENV']) ? $_SERVER['REDIRECT_MK_ENV'] :
 
 switch($env){
   
-  case 'admin':
+  case 'admin': //change for other ADMIN_URL_KEY values.
     $init->set_environment(Environments::BACKEND);
     break;
   

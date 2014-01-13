@@ -23,7 +23,7 @@ class Actions extends \dependencies\BaseComponent
   protected function use_password_reset_token($data)
   {
     
-    tx('Url')->redirect(url('/admin/?password_forgotten=token&token=KEEP', true));
+    tx('Url')->redirect(url('/'.ADMIN_URL_KEY.'/?password_forgotten=token&token=KEEP', true));
     
   }
   
