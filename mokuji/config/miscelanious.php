@@ -1,6 +1,6 @@
 <?php if(!defined('TX')) die('No direct access.');
 
-define('ADMIN_URL_KEY', 'henk');
+define('ADMIN_URL_KEY', 'admin');
 define('ENTRYPOINT_FRONTEND', 'cms');
 define('ENTRYPOINT_BACKEND', 'cms');
 
