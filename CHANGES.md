@@ -1,3 +1,12 @@
+#### [Version 0.28.4 Beta](https://github.com/Tuxion/mokuji/tree/0.28.4-beta)
+_15-Jan-2014_
+
+* Added some function aliases to allow access through both REST interfaces.
+* Improved MySQL version detection for install script.
+* Fixed some PHP 5.3.8 compatibility bugs.
+* Updated CGI version of the `.htaccess` file.
+* Fixed problems with parallel calls using the same persistent authentication cookie to log in.
+
 #### [Version 0.28.3 Beta](https://github.com/Tuxion/mokuji/tree/0.28.3-beta)
 _12-Dec-2013_
 

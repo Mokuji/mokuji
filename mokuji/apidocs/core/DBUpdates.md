@@ -22,6 +22,7 @@
 **Methods**
 * [`public mixed install_3_2_0($dummydata, $forced)`](#method-install_3_2_0)
 * [`public mixed update_to_0_10_0_beta($current_version, $forced)`](#method-update_to_0_10_0_beta)
+* [`public mixed update_to_0_12_2_beta($current_version, $forced)`](#method-update_to_0_12_2_beta)
 * [`public mixed update_to_0_7_0_beta($current_version, $forced)`](#method-update_to_0_7_0_beta)
 * [`public mixed update_to_3_3_1($current_version, $forced)`](#method-update_to_3_3_1)
 * [`public mixed update_to_3_3_2($current_version, $forced)`](#method-update_to_3_3_2)
@@ -155,7 +156,7 @@ protected mixed $type
 In class: [core\DBUpdates](#top)
 
 ```
-protected mixed $updates = array('3.2.0' => '3.3.0', '3.3.0' => '3.3.1', '3.3.1' => '3.3.2', '3.3.2' => '3.3.3', '3.3.3' => '0.6.1-beta', '0.5.0-beta' => '0.6.1-beta', '0.6.0-beta' => '0.6.1-beta', '0.6.1-beta' => '0.7.0-beta', '0.7.0-beta' => '0.9.0-beta', '0.7.1-beta' => '0.9.0-beta', '0.8.0-beta' => '0.9.0-beta', '0.8.1-beta' => '0.9.0-beta', '0.8.2-beta' => '0.9.0-beta', '0.9.0-beta' => '0.10.0-beta', '0.10.0-beta' => '0.11.0-beta', '0.11.0-beta' => '0.12.0-beta', '0.12.0-beta' => '0.12.1-beta')
+protected mixed $updates = array('3.2.0' => '3.3.0', '3.3.0' => '3.3.1', '3.3.1' => '3.3.2', '3.3.2' => '3.3.3', '3.3.3' => '0.6.1-beta', '0.5.0-beta' => '0.6.1-beta', '0.6.0-beta' => '0.6.1-beta', '0.6.1-beta' => '0.7.0-beta', '0.7.0-beta' => '0.9.0-beta', '0.7.1-beta' => '0.9.0-beta', '0.8.0-beta' => '0.9.0-beta', '0.8.1-beta' => '0.9.0-beta', '0.8.2-beta' => '0.9.0-beta', '0.9.0-beta' => '0.10.0-beta', '0.10.0-beta' => '0.12.1-beta', '0.11.0-beta' => '0.12.1-beta', '0.12.0-beta' => '0.12.1-beta', '0.12.1-beta' => '0.12.2-beta')
 ```
 
 
@@ -477,6 +478,29 @@ In class: [core\DBUpdates](#top)
 
 ```
 mixed core\DBUpdates::update_to_0_10_0_beta($current_version, $forced)
+```
+
+
+
+
+
+* Visibility: **public**
+
+#### Arguments
+
+* $current_version **mixed**
+* $forced **mixed**
+
+
+
+
+
+
+## Method `update_to_0_12_2_beta`
+In class: [core\DBUpdates](#top)
+
+```
+mixed core\DBUpdates::update_to_0_12_2_beta($current_version, $forced)
 ```
 
 

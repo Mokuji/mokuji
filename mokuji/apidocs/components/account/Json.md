@@ -31,6 +31,7 @@
 * [`protected integer get_login_status(\dependencies\Data $data, $parameters)`](#method-get_login_status)
 * [`protected mixed get_mail_autocomplete($data, $parameters)`](#method-get_mail_autocomplete)
 * [`protected \dependencies\Data get_me(\dependencies\Data $data, $parameters)`](#method-get_me)
+* [`protected mixed post_user_session($data, $sub_routes, $options)`](#method-post_user_session)
 * [`protected mixed update_password($data, $parameters)`](#method-update_password)
 
 
@@ -107,7 +108,7 @@ protected mixed $default_permission = 2
 In class: [components\account\Json](#top)
 
 ```
-protected mixed $permissions = array('create_new_account' => 0, 'create_password_reset_request' => 0, 'create_password_reset_finalization' => 0, 'create_user_session' => 0, 'update_password' => 1, 'get_me' => 1, 'get_login_status' => 0)
+protected mixed $permissions = array('create_new_account' => 0, 'create_password_reset_request' => 0, 'create_password_reset_finalization' => 0, 'create_user_session' => 0, 'post_user_session' => 0, 'delete_user_session' => 1, 'update_password' => 1, 'get_me' => 1, 'get_login_status' => 0)
 ```
 
 
@@ -639,6 +640,30 @@ Requires a user to be logged in.
 
 **[dependencies\Data](../../dependencies/Data.md)** - Sort of like a user model but not really because this is Mokuji.
 
+
+
+
+
+
+
+## Method `post_user_session`
+In class: [components\account\Json](#top)
+
+```
+mixed components\account\Json::post_user_session($data, $sub_routes, $options)
+```
+
+
+
+
+
+* Visibility: **protected**
+
+#### Arguments
+
+* $data **mixed**
+* $sub_routes **mixed**
+* $options **mixed**
 
 
 
