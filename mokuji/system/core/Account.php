@@ -32,6 +32,21 @@ class Account
     //append user object for easy access
     $this->user =& tx('Data')->session->user;
     
+    //In case we just moved to this fresh session from a persistent authentication cookie.
+    if(mk('Data')->session->mk->remove_rebase_tokens->is_true())
+    {
+      
+      mk('Logging')->log('Account', 'Rebase tokens', 'Cleaning for '.mk('Sql')->escape(mk('Session')->id));
+      
+      mk('Sql')->execute_non_query(
+        "DELETE FROM `#__core_user_persistent_authentication_tokens` ".
+        "WHERE `rebase_session_id`=".mk('Sql')->escape(mk('Session')->id)
+      );
+      
+      mk('Data')->session->mk->remove_rebase_tokens->un_set();
+      
+    }
+    
     //User is not logged in? Proceed to try log them in using an authentication cookie.
     if(!$this->user->check('login')){
       $this->login_cookie();
@@ -272,13 +287,41 @@ class Account
       'series_token' => 2
     ));
     
-    //Find the token row by serial number.
-    $token = $sql->execute_single($sql->make_query(''
+    //Look for tokens in this series.
+    $tokens = $sql->execute_query($sql->make_query(''
       . 'SELECT * FROM #__core_user_persistent_authentication_tokens '
       . 'WHERE user_id = ? AND series_token = ?'
       , $data['user_id']
       , $data['series_token']
     ));
+    
+    //If there is more than one, that probably means a session rebase is going on.
+    //Find the most appropriate one.
+    if($tokens->size() > 1)
+    {
+      
+      foreach($tokens as $candidate_token)
+      {
+        
+        //If the access_token matches, this takes the win.
+        if($candidate_token->access_token->get() === $data->access_token->get()){
+          $token = $candidate_token;
+          break;
+        }
+        
+        //If this is not a rebase, it's the default value.
+        if(!isset($token) && $candidate_token->rebase_session_id->is_empty()){
+          $token = $candidate_token;
+        }
+        
+      }
+      
+    }
+    
+    //If 0 or 1 results, just use that.
+    else{
+      $token = $tokens->{0};
+    }
     
     //Find the user in the database.
     $user = $sql->execute_single($sql->make_query(''
@@ -379,8 +422,59 @@ class Account
       
     }
     
-    //At this point, we know that the authentication cookie is valid. Log the user in.
-    $this->_set_logged_in($user, null, true, $token->series_token->get());
+    //At this point, we know that the authentication cookie is valid.
+    
+    //Check if we should rebase.
+    if(!$token->rebase_session_id->is_empty()){
+      
+      //Get the main cookie as well.
+      $target = $sql->execute_single($sql->make_query(''
+        . 'SELECT * FROM #__core_user_persistent_authentication_tokens '
+        . 'WHERE user_id = ? AND series_token = ? AND rebase_session_id IS NULL'
+        , $token->user_id
+        , $token->series_token
+      ));
+      
+      //Store it.
+      $target_str = sprintf(
+        '%u.%s.%s',
+        $target->user_id->get(),
+        $target->access_token->get(),
+        $target->series_token->get()
+      );
+      setcookie('persistent_auth', $target_str, (time()+self::PERSISTENT_COOKIE_DURATION), '/'.URL_PATH.'/');
+      
+      $sess = mk('Session');
+      
+      //Close the current session.
+      session_write_close();
+      
+      //Rebase the session.
+      $sess->id = $token->rebase_session_id->get();
+      session_id($sess->id);
+      session_start();
+      
+      //Load the session data into the Data class.
+      mk('Data')->session = Data($_SESSION);
+      $this->user =& mk('Data')->session->user;
+      $_SESSION = array();
+      
+      mk('Logging')->log('Account', 'Session rebase', 'Rebased to '.$sess->id);
+      
+      //Let the current session know that on the next request it gets with this explicit session ID, the rebase value should be removed.
+      mk('Data')->session->mk->remove_rebase_tokens->set(true);
+      
+    }
+    
+    else{
+      
+      //Log the user in.
+      $this->_set_logged_in($user, null, true, $token->series_token->get());
+      
+      //Let the current session know that on the next request it gets with this explicit session ID, the rebase value should be removed.
+      mk('Data')->session->mk->remove_rebase_tokens->set(true);
+      
+    }
     
     //Success.
     return true;
@@ -681,9 +775,72 @@ class Account
   private function _set_logged_in($user, $expiry_date = null, $persistent = false, $series_token = null)
   {
     
-    //Regenerate the session ID.
-    tx('Session')->regenerate();
-    $sql = tx('Sql');
+    //Shortcut.
+    $sql = mk('Sql');
+    
+    //Track if session regenerate is needed.
+    $regenerate = true;
+    
+    //Is our database able to handle persistent log-in stuff?
+    if(!$sql->execute_single("SHOW TABLES LIKE '#__core_user_persistent_authentication_tokens'")->is_empty())
+    {
+      
+      //Do we give the user a persistent login cookie?
+      if($persistent === true)
+      {
+        
+        //Generate the token.
+        $token = $this->_generate_authentication_token($user->id, $series_token, $data);
+        
+        //Set the cookie.
+        setcookie('persistent_auth', $token, (time()+self::PERSISTENT_COOKIE_DURATION), '/'.URL_PATH.'/');
+        
+        //Create a new series in the database?
+        if(is_null($series_token)){
+          $sql->query($sql->make_query(''
+            . 'INSERT INTO #__core_user_persistent_authentication_tokens (`user_id`, `access_token`, `series_token`) '
+            . 'VALUES(?, ?, ?)'
+            , $data['user_id']
+            , $data['access_token']
+            , $data['series_token']
+          ));
+        }
+        
+        //Update an existing series in the database.
+        else{
+          
+          //Regenerate now.
+          tx('Session')->regenerate();
+          $regenerate = false;
+          
+          //To manage parallel requests with this *valid* cookie, keep this entry as a rebase value.
+          $sql->query($sql->make_query(''
+            . 'UPDATE #__core_user_persistent_authentication_tokens '
+            . 'SET rebase_session_id = ? '
+            . 'WHERE user_id = ? AND series_token = ?'
+            , mk('Session')->id
+            , $data['user_id']
+            , $data['series_token']
+          ));
+          
+          //Insert a new entry for the fresh token.
+          $sql->query($sql->make_query(''
+            . 'INSERT INTO #__core_user_persistent_authentication_tokens (`user_id`, `access_token`, `series_token`) '
+            . 'VALUES(?, ?, ?)'
+            , $data['user_id']
+            , $data['access_token']
+            , $data['series_token']
+          ));
+          
+        }
+        
+      }
+      
+    }
+    
+    //Regenerate the session ID if it's still needed.
+    if($regenerate)
+      tx('Session')->regenerate();
     
     //Backwards compatibility with old database structure.
     if($sql->execute_single("SHOW TABLES LIKE '#__core_user_logins'")->is_empty())
@@ -721,48 +878,6 @@ class Account
       ");
       
       tx('Logging')->log('Core', 'Login attempt', 'Setting expiry date to '.$dt_expiry.' for session ID '.tx('Session')->id);
-      
-    }
-    
-    //Is our database able to handle persistent log-in stuff?
-    if(!$sql->execute_single("SHOW TABLES LIKE '#__core_user_persistent_authentication_tokens'")->is_empty())
-    {
-      
-      
-      //Do we give the user a persistent login cookie?
-      if($persistent === true)
-      {
-        
-        //Generate the token.
-        $token = $this->_generate_authentication_token($user->id, $series_token, $data);
-        
-        //Set the cookie.
-        setcookie('persistent_auth', $token, (time()+self::PERSISTENT_COOKIE_DURATION), '/'.URL_PATH.'/');
-        
-        //Create a new series in the database?
-        if(is_null($series_token)){
-          $sql->query($sql->make_query(''
-            . 'INSERT INTO #__core_user_persistent_authentication_tokens '
-            . 'VALUES(?, ?, ?)'
-            , $data['user_id']
-            , $data['access_token']
-            , $data['series_token']
-          ));
-        }
-        
-        //Update an existing series in the database.
-        else{
-          $sql->query($sql->make_query(''
-            . 'UPDATE #__core_user_persistent_authentication_tokens '
-            . 'SET access_token = ? '
-            . 'WHERE user_id = ? AND series_token = ?'
-            , $data['access_token']
-            , $data['user_id']
-            , $data['series_token']
-          ));
-        }
-        
-      }
       
     }
     

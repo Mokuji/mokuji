@@ -29,11 +29,33 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
       
       '0.9.0-beta' => '0.10.0-beta',
       
-      '0.10.0-beta' => '0.11.0-beta', //No DB changes.
-      '0.11.0-beta' => '0.12.0-beta', //No DB changes.
-      '0.12.0-beta' => '0.12.1-beta' //No DB changes.
+      '0.10.0-beta' => '0.12.1-beta', //No DB changes.
+      '0.11.0-beta' => '0.12.1-beta', //No DB changes.
+      '0.12.0-beta' => '0.12.1-beta', //No DB changes.
+      
+      '0.12.1-beta' => '0.12.2-beta'
       
     );
+  
+  public function update_to_0_12_2_beta($current_version, $forced)
+  {
+    
+    try{
+      
+      //Add session rebase field to persistent authentication tokens.
+      mk('Sql')->query("
+        ALTER TABLE `#__core_user_persistent_authentication_tokens`
+          ADD COLUMN `rebase_session_id` varchar(255) NULL DEFAULT NULL,
+          ADD INDEX `rebase_session_id` (`rebase_session_id`)
+      ");
+      
+    }catch(\exception\Sql $ex){
+      //When it's not forced, this is a problem.
+      //But when forcing, ignore this.
+      if(!$forced) throw $ex;
+    }
+    
+  }
   
   public function update_to_0_10_0_beta($current_version, $forced)
   {

@@ -5,6 +5,7 @@ class Session
   
   public
     $id,
+    $requested_id,
     $keep_flashes=false;
   
   private

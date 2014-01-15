@@ -6,6 +6,11 @@
   "dbUpdates": true,
   "versions": [
     {
+      "version": "0.12.2-beta",
+      "date": "2014-01-15",
+      "description": "Fixed problems with parallel calls using the same persistent authentication cookie to log in."
+    },
+    {
       "version": "0.12.1-beta",
       "date": "2013-12-12",
       "description": "Style added to the frontend editing views."
