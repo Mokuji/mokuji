@@ -6,6 +6,7 @@ _15-Jan-2014_
 * Fixed some PHP 5.3.8 compatibility bugs.
 * Updated CGI version of the `.htaccess` file.
 * Fixed problems with parallel calls using the same persistent authentication cookie to log in.
+* Fixed a bug that caused the install wizard to fail when given a configuration value with a quotation symbol.
 
 #### [Version 0.28.3 Beta](https://github.com/Tuxion/mokuji/tree/0.28.3-beta)
 _12-Dec-2013_
