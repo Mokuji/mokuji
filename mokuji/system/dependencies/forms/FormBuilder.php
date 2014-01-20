@@ -129,6 +129,13 @@ class FormBuilder
     
     ?>
       <div class="ctrlHolder buttonHolder">
+        <?php
+          if(isset($options['buttons']) && is_array($options['buttons'])){
+            foreach($options['buttons'] as $btn_title => $classes){
+              echo '<a type="button" class="'.$classes.' button">'.(is_string($btn_title) ? __($this->model->component(), $btn_title, true) : '&nbsp;').'</a>';
+            }
+          }
+        ?>
         <input type="submit" class="black button primaryAction" value="<?php __('Save'); ?>" />
       </div>
     </form>

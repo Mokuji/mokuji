@@ -3,6 +3,11 @@
 class Json extends \dependencies\BaseComponent
 {
   
+  protected function update_profiles($data, $options)
+  {
+    return $data;
+  }
+  
   protected function get_execute_profile($options, $sub_routes)
   {
     

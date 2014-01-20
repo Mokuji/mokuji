@@ -19,11 +19,11 @@ class Helpers extends \dependencies\BaseComponent
     switch($profile->table_selection->get('string'))
     {
       
-      case 'ALL':
+      case 'ALL_TABLES':
         $like = '';
         break;
       
-      case 'PREFIXED':
+      case 'PREFIXED_TABLES':
         $like = ' LIKE "'.DB_PREFIX.'%"';
         break;
       
