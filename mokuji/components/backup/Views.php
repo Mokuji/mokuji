@@ -15,12 +15,13 @@ class Views extends \dependencies\BaseViews
     }catch(\Exception $e){}
     
     return array(
+      'model' => mk('Sql')->model('backup', 'Profiles'),
+      'backup_folder' => $folder,
+      'free_space' => $space,
       'profiles' => mk('Sql')
         ->table('backup', 'Profiles')
         ->order('name')
         ->execute(),
-      'backup_folder' => $folder,
-      'free_space' => $space
     );
     
   }

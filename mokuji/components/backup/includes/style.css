@@ -10,6 +10,23 @@
   position:relative;
 }
   
+  .new-profile-form{
+    display:none;
+  }
+  
+  .backup-profile.form input.invalid{
+    border:1px solid #f00;
+  }
+  .backup-profile.form label.invalid{
+    color:#f00;
+  }
+  .backup-profile.form .restform-error-message{
+    clear:both;
+  }
+  .backup-profile.form .validation-error{
+    display:none;
+  }
+  
   .backup-profile.form legend{
     display:none;
   }

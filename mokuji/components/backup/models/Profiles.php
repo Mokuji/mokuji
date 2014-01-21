@@ -20,10 +20,10 @@ class Profiles extends \dependencies\BaseModel
       'name' => array('required', 'string', 'not_empty', 'component_name', 'between'=>array(1, 255)),
       'title' => array('string', 'between'=>array(0, 255)),
       'table_selection' => array('required', 'string', 'not_empty', 'in'=>array('ALL_TABLES', 'PREFIXED_TABLES')),
-      'table_drop' => array('required', 'boolean'),
-      'table_structure' => array('required', 'boolean'),
-      'table_data' => array('required', 'boolean'),
-      'output_include_comments' => array('required', 'boolean')
+      'table_drop' => array('boolean'),
+      'table_structure' => array('boolean'),
+      'table_data' => array('boolean'),
+      'output_include_comments' => array('boolean')
     );
   
 }

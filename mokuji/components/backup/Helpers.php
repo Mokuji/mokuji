@@ -10,6 +10,9 @@ class Helpers extends \dependencies\BaseComponent
   protected function backup_database($profile)
   {
     
+    //Extend execution time 10 minutes.
+    @set_time_limit(10*60);
+    
     //File information and handler.
     $path = $this->get_backup_folder().DS.
       'db_'.DB_NAME.'__'.$profile->name.'_profile__'.date('Y-m-d_H-i-s').'.sql';
@@ -55,7 +58,7 @@ class Helpers extends \dependencies\BaseComponent
     foreach($tables as $table)
     {
       
-      $tableBackup = new classes\TableBackup($table->idx(0), $file, $profile->output_include_comments);
+      $tableBackup = new classes\TableBackup($table->idx(0), $file, $profile->output_include_comments->get('boolean'));
       
       if($profile->table_drop->get('boolean'))
         $tableBackup->write_drop_statement();
