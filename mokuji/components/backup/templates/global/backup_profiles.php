@@ -46,6 +46,9 @@ jQuery(function($){
   var hasFeedback = (window.app && app.Feedback);
   
   var restFormOpts = {
+    beforeSubmit: function(data, form){
+      data.name = $(form).find('input[name="name"]').val();
+    },
     success:function(result, form){
       $(form)
         .attr('method', 'PUT')

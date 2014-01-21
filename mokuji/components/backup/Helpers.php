@@ -67,7 +67,7 @@ class Helpers extends \dependencies\BaseComponent
         $tableBackup->write_structure();
       
       if($profile->table_data->get('boolean'))
-        $tableBackup->write_data($profile->table_rows_per_insert);
+        $tableBackup->write_data($profile->table_rows_per_insert->otherwise(50));
       
     }
     

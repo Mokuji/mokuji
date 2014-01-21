@@ -23,7 +23,7 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
         `table_drop` BIT(1) NOT NULL,
         `table_structure` BIT(1) NOT NULL,
         `table_data` BIT(1) NOT NULL,
-        `table_rows_per_insert` int(10) unsigned NOT NULL,
+        `table_rows_per_insert` int(10) unsigned NOT NULL DEFAULT \'50\',
         `output_include_comments` BIT(1) NOT NULL,
         PRIMARY KEY (`name`)
       ) ENGINE=MyISAM DEFAULT CHARSET=utf8
