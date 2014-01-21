@@ -51,8 +51,16 @@ class Json extends \dependencies\BaseComponent
   protected function get_execute_profile($options, $sub_routes)
   {
     
+    $profile = mk('Sql')
+      ->table('backup', 'Profiles')
+      ->pk("'".$sub_routes->{0}."'")
+      ->execute_single()
+      ->is('empty', function(){
+        throw new \exception\NotFound('No profile with that name.');
+      });
+    
     return array(
-      'path' => $this->helper('backup_database', mk('Sql')->table('backup', 'Profiles')->pk("'".$sub_routes->{0}."'")->execute_single())
+      'path' => $this->helper('backup_database', $profile)
     );
     
   }

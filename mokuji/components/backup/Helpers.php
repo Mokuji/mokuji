@@ -45,8 +45,8 @@ class Helpers extends \dependencies\BaseComponent
       $file->writeLine("# ");
       $file->writeLine("#   Mokuji database backup.");
       $file->writeLine("#   Generated: ".date('Y-m-d H:i:s'));
-      $file->writeLine("#   Profile: ".$profile->name);
-      $file->writeLine("#   Database: `".DB_NAME."`");
+      $file->writeLine("#   Profile: (".$profile->name.") ".$profile->title);
+      $file->writeLine("#   Database: ".DB_NAME);
       $file->writeLine("#   Hostname: ".DB_HOST);
       $file->writeLine("# ");
       $file->writeLine("# =========================================================");

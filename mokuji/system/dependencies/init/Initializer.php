@@ -288,7 +288,7 @@ class Initializer
     //Otherwise detect, assuming index.php is used from the root.
     else{
       
-      $url_path = str_replace('/index.php', '', $_SERVER['PHP_SELF']);
+      $url_path = str_replace(array('/index.php', 'cli.php'), '', $_SERVER['PHP_SELF']);
       
       if(strlen($url_path) > 0 && $url_path[0] === '/')
         $url_path = substr($url_path, 1);

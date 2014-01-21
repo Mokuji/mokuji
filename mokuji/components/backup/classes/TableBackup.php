@@ -51,7 +51,9 @@ class TableBackup
     
     //Write query.
     $this->file->writeLine("DROP TABLE IF EXISTS `{$this->table}`;");
-    $this->file->writeLine();
+    
+    if($this->comments)
+      $this->file->writeLine();
     
     //Track the drop.
     $this->dropped = true;
@@ -83,7 +85,9 @@ class TableBackup
     
     //Write the query.
     $this->file->writeLine($statement.';');
-    $this->file->writeLine();
+    
+    if($this->comments)
+      $this->file->writeLine();
     
     //Track the structure.
     $this->structured = true;
@@ -126,10 +130,10 @@ class TableBackup
     if($total == 0)
     {
       
-      if($this->comments)
-        $this->file->writeLine("# ".transf('backup', '0 rows.'));
+      $this->file->writeLine("# ".transf('backup', '0 rows.'));
       
-      $this->file->writeLine();
+      if($this->comments)
+        $this->file->writeLine();
       return;
       
     }
@@ -166,7 +170,8 @@ class TableBackup
       
     } while($round < $rounds);
     
-    $this->file->writeLine();
+    if($this->comments)
+      $this->file->writeLine();
     
   }
   

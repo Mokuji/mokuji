@@ -3,20 +3,20 @@
 class Actions extends \dependencies\BaseComponent
 {
   
-  /*
+  protected function execute_profile($options)
+  {
     
-    # The Actions.php file
+    $profile = mk('Sql')
+      ->table('backup', 'Profiles')
+      ->pk("'".$options->{0}->get('string')."'")
+      ->execute_single()
+      ->is('empty', function(){
+        throw new \exception\NotFound('No profile with that name.');
+      });
     
-    This is where you define actions.
-    Actions are used to perform operations that require a pageload.
-    For asynchronous operations you should probably use the Json.php file.
+    $path = $this->helper('backup_database', $profile);
+    echo 'Successfully executed backup.'.n;
     
-    Call an action using:
-      http://mysite.com/index.php?action=backup/function_name
-    
-    Read more about actions here:
-      https://github.com/Tuxion/mokuji/wiki/Actions.php
-    
-  */
+  }
   
 }

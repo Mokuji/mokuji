@@ -77,19 +77,25 @@ abstract class Defines
     define('PATH_SYSTEM_DEPENDENCIES', PATH_SYSTEM.DS.'dependencies');
     define('PATH_SYSTEM_EXCEPTIONS', PATH_SYSTEM.DS.'exceptions');
     
-    define('URL_BASE', ($https ? 'https' : 'http').'://'.$_SERVER['HTTP_HOST'].'/'.(URL_PATH ? URL_PATH.'/' : ''));
-    define('URL_FRAMEWORK', URL_BASE.'mokuji/');
-    
-    define('URL_PLUGINS', URL_FRAMEWORK.'plugins/');
-    define('URL_COMPONENTS', URL_FRAMEWORK.'components/');
-    define('URL_TEMPLATES', URL_FRAMEWORK.'templates/');
-    define('URL_THEMES', URL_FRAMEWORK.'themes/');
-    define('URL_SYSTEM_ASSETS', URL_FRAMEWORK.'system/assets/');
+    //Problematic for CLI.
+    if(isset($_SERVER['HTTP_HOST'])){
+      define('URL_BASE', ($https ? 'https' : 'http').'://'.$_SERVER['HTTP_HOST'].'/'.(URL_PATH ? URL_PATH.'/' : ''));
+      define('URL_FRAMEWORK', URL_BASE.'mokuji/');
+      
+      define('URL_PLUGINS', URL_FRAMEWORK.'plugins/');
+      define('URL_COMPONENTS', URL_FRAMEWORK.'components/');
+      define('URL_TEMPLATES', URL_FRAMEWORK.'templates/');
+      define('URL_THEMES', URL_FRAMEWORK.'themes/');
+      define('URL_SYSTEM_ASSETS', URL_FRAMEWORK.'system/assets/');
+    }
     
     //Backwards compatibility. Best not use them.
     define('PATH_INCLUDES', PATH_SYSTEM_ASSETS);
     define('PATH_HELPERS', PATH_SYSTEM_FUNCTIONS);
-    define('URL_INCLUDES', URL_SYSTEM_ASSETS);
+    
+    if(isset($_SERVER['HTTP_HOST'])){
+      define('URL_INCLUDES', URL_SYSTEM_ASSETS);
+    }
     
   }
   
