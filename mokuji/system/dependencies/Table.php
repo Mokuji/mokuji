@@ -1766,9 +1766,9 @@ class Table extends Successable
       $d = 'ASC';
     }
 
-    //if column is RAND, order by RAND()
-    if($c === 'RAND()'){
-      $r[] = 'RAND()';
+    //if column is a function like RAND(), order by it
+    if(is_string($c) && substr($c, -1) === ')'){
+      $r[] = $c;
     }
 
     //if column is a string, we check if it's a valid column name
