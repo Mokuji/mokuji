@@ -726,7 +726,7 @@ class Account
     });
     
     //Check if login is allowed. Throw an exception if it's not.
-    $ipinfo->login_level->eq(0, function(){
+    $ipinfo->login_level->eq(0, function()use($ipa){
       tx('Logging')->log('Core', 'Login attempt', 'FAILED: IP address '.$ipa.' is blacklisted.');
       throw new \exception\Validation('IP address blacklisted.');
     });
