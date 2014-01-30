@@ -111,7 +111,7 @@ class LegacyUrlFormat extends UrlFormat
       ->execute_single()
       ->info->{mk('Language')->id}
       ->is('empty', function($thingy)use($id){
-        throw new \exception\NotFound('Could not find a page with ID '.$id.'.');
+        // throw new \exception\NotFound('Could not find a page with ID '.$id.'.');
       })->url_key->get('string');
     
     return $this->urlKey;
