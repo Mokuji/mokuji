@@ -4,6 +4,7 @@ _30-Jan-2014_
 * Fixed an undefined variable bug with IP blacklisting.
 * Fixed a bug where `/index.php` was not detected by the LegacyUrlFormat.
 * Fixed a problem with `Data->filter()` not preserving models.
+* Fixed a bug with `jquery_datatables` plugin and it's i18n files.
 
 #### [Version 0.28.4 Beta](https://github.com/Tuxion/mokuji/tree/0.28.4-beta)
 _15-Jan-2014_
