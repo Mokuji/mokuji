@@ -19,7 +19,7 @@ class DatePickerField extends BaseFormField
     
     $value = $this->insert_value ? $this->value : '';
     
-    $uid = 'l_'.tx('Security')->random_string(); ?>
+    $uid = 'l_'.tx('Security')->random_string();
     
     ?>
     <div class="ctrlHolder for_<?php echo $this->column_name; ?>">
