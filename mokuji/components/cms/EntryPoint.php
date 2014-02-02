@@ -128,7 +128,7 @@ class EntryPoint extends \dependencies\BaseEntryPoint
     {
 
       $that = $this;
-      $url = $this->findPageUrl();;
+      $url = $this->findPageUrl();
       
       //If we need to claim our account, do that now before anything else.
       if(tx('Component')->helpers('account')->call('should_claim'))

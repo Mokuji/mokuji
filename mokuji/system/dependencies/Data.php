@@ -889,7 +889,7 @@ class Data extends Successable implements \Serializable, \IteratorAggregate, \Ar
     
     foreach($this as $k => $v){
       if($callback($v, $k) === true){
-        $return->__get($k)->set($v);
+        $return->__get($k)->become($v);
       }
     }
     
