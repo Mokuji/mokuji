@@ -17,7 +17,7 @@ $form_options = array(
   // 'method' => 'PUT',
   'fieldsets' => array(
     'Caption' => array('name', 'title'),
-    'Table selection mode' => array('table_selection'),
+    'Table selection mode:' => array('table_selection'),
     'Table options' => array('table_drop', 'table_structure', 'table_data'),
     'Output options' => array('output_include_comments')
   ),
@@ -96,7 +96,7 @@ jQuery(function($){
     .on('click', '.backup-profile .delete-profile',function(e){
       e.preventDefault();
       
-      if(confirm("<?php __($names->component, 'Are you sure?'); ?>")){
+      if(confirm("<?php __('Are you sure?'); ?>")){
         
         var $form = $(this).closest('.backup-profile');
         var $name = $form.find('input[name="name"]');

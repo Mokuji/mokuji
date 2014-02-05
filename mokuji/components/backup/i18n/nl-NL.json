@@ -1,0 +1,21 @@
+{
+  
+  "BACKUP_PROFILES_VIEW_TITLE": "Backup-profielen",
+  "BACKUP_PROFILES_VIEW_DESCRIPTION": "Hier kan je backup-profielen beheren en uitvoeren.",
+  
+  "Caption": "Titels",
+  "Profile name": "Profielnaam",
+  "Title": "Titel",
+  "Table selection mode:": "Tabelselectiemodus:",
+  "ALL": "Alles",
+  "PREFIXED": "Met prefix",
+  "Table options": "Tabel opties",
+  "Add DROP statements.": "Voeg DROP-statements toe.",
+  "Add table structure.": "Voeg tabelstructuur toe.",
+  "Add table data.": "Voeg tabeldata toe.",
+  "Output options": "Output opties",
+  "Include comments in output.": "Zet commentaar in de output.",
+  "Backups will be saved in {0}.": "Backups worden opgeslagen in {0}.",
+  "Disk space left in target folder is {0}GB.": "Vrije schijfruimte in de doel-folder is {0}GB."
+  
+}
