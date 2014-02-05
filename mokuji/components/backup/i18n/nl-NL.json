@@ -16,6 +16,16 @@
   "Output options": "Output opties",
   "Include comments in output.": "Zet commentaar in de output.",
   "Backups will be saved in {0}.": "Backups worden opgeslagen in {0}.",
-  "Disk space left in target folder is {0}GB.": "Vrije schijfruimte in de doel-folder is {0}GB."
+  "Disk space left in target folder is {0}GB.": "Vrije schijfruimte in de doel-folder is {0}GB.",
+  
+  "Executing {0} backup profile": "Backup-profiel {0} uitvoeren",
+  "Deleting {0} backup profile": "Backup-profiel {0} verwijderen",
+  "Successfully deleted profile": "Profiel succesvol verwijderd",
+  "Successfully executed profile": "Profiel succesvol uitgevoerd",
+  "Structure for `{0}` table.": "Structuur voor `{0}` tabel.",
+  "Data for `{0}` table.": "Data voor `{0}` tabel.",
+  "0 rows.": "0 rijen.",
+  "Backup of table `{0}`.": "Backup van tabel `{0}`.",
+  "Drop any `{0}` tables.": "Drop eventuele `{0}` tabellen."
   
 }

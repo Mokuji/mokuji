@@ -71,7 +71,7 @@ jQuery(function($){
       var name = $target.closest('form').find('.for_name input').val();
       
       //Notify user.
-      if(hasFeedback) app.Feedback.working('Executing '+name+' backup profile');
+      if(hasFeedback) app.Feedback.working('<?php echo transf($names->component, "Executing {0} backup profile", "'+name+'"); ?>');
       
       //Execute the profile.
       $.rest('GET', "<?php echo URL_BASE; ?>rest/backup/execute_profile/"+name)
@@ -79,8 +79,8 @@ jQuery(function($){
         //Success handler.
         .done(function(result){
           $target.addClass('grey');
-          if(hasFeedback) app.Feedback.success("Successfully executed backup");
-          else alert("Successfully executed backup.\n"+result.path);
+          if(hasFeedback) app.Feedback.success('<?php __($names->component, "Successfully executed profile"); ?>');
+          else alert('<?php __($names->component, "Successfully executed profile"); ?>.'+"\n"+result.path);
         })
         
         //Error handler.
@@ -102,7 +102,7 @@ jQuery(function($){
         var $name = $form.find('input[name="name"]');
         
         //Notify user.
-        if(hasFeedback) app.Feedback.working('Deleting '+name+' backup profile');
+        if(hasFeedback) app.Feedback.working('<?php echo transf($names->component, "Deleting {0} backup profile", "'+name+'"); ?>');
         
         //Including REST call.
         if($name.is(':disabled')){
@@ -112,8 +112,8 @@ jQuery(function($){
             //Success handler.
             .done(function(){
               $form.slideUp(function(){ $(this).remove(); });
-              if(hasFeedback) app.Feedback.success("Successfully deleted profile");
-              else alert("Successfully deleted profile.");
+              if(hasFeedback) app.Feedback.success('<?php __($names->component, "Successfully deleted profile"); ?>');
+              else alert('<?php __($names->component, "Successfully executed profile"); ?>.');
             })
             
             //Error handler.
@@ -127,8 +127,8 @@ jQuery(function($){
         //Without REST call.
         else{
           $form.slideUp(function(){ $(this).remove(); });
-          if(hasFeedback) app.Feedback.success("Successfully deleted profile");
-          else alert("Successfully deleted profile.");
+          if(hasFeedback) app.Feedback.success('<?php __($names->component, "Successfully deleted profile"); ?>');
+          else alert('<?php __($names->component, "Successfully executed profile"); ?>.');
         }
         
       }
