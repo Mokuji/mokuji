@@ -1,3 +1,9 @@
+#### [Version 0.29.0 Beta](https://github.com/Tuxion/mokuji/tree/0.29.0-beta)
+_05-Feb-2014_
+
+* Added a CLI for actions (useful for cronjobs).
+* Added database backup functionality.
+
 #### [Version 0.28.5 Beta](https://github.com/Tuxion/mokuji/tree/0.28.5-beta)
 _30-Jan-2014_
 

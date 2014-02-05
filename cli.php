@@ -2,6 +2,7 @@
 
 define('WHOAMI', 'Mokuji CLI');
 
+//Find the path to the base of the installation.
 $root = getcwd();
 if(!empty(dirname($_SERVER['PHP_SELF'])))
   $root .= '/'.dirname($_SERVER['PHP_SELF']);
@@ -36,10 +37,11 @@ mk('Account')->user->set(array(
   'username' => '[SHELL_USER]'
 ));
 
-//Do some routing: component action [arg1, arg2, ..., argN]
+//Do some routing: <component> <action> [arg1, arg2, ..., argN]
 if(empty($argv[1]) || empty($argv[2]))
-  die('Usage: php cli.php component action [arg1, arg2, ..., argN]'.n);
+  die('Usage: php cli.php <component> <action> [arg1, arg2, ..., argN]'.n);
 
+//Parse the arguments.
 array_shift($argv); //Script name.
 $component = array_shift($argv);
 $action = array_shift($argv);
