@@ -5,9 +5,9 @@
   "dbUpdates": true,
   "versions": [
     {
-      "version": "0.0.1-alpha",
-      "date": "2014-01-16",
-      "description": "First implementation.",
+      "version": "0.1.0-beta",
+      "date": "2014-02-05",
+      "description": "First beta version.",
       "changes": []
     }
   ]

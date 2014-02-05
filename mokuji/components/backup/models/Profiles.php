@@ -19,7 +19,7 @@ class Profiles extends \dependencies\BaseModel
     $validate = array(
       'name' => array('required', 'string', 'not_empty', 'component_name', 'between'=>array(1, 255)),
       'title' => array('string', 'between'=>array(0, 255)),
-      'table_selection' => array('required', 'string', 'not_empty', 'in'=>array('ALL_TABLES', 'PREFIXED_TABLES')),
+      'table_selection' => array('required', 'string', 'not_empty', 'in'=>array('ALL', 'PREFIXED')),
       'table_drop' => array('boolean'),
       'table_structure' => array('boolean'),
       'table_data' => array('boolean'),

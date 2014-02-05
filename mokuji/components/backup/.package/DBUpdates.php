@@ -8,7 +8,7 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
     $updates = array(
     );
   
-  public function install_0_0_1_alpha($dummydata, $forced)
+  public function install_0_1_0_beta($dummydata, $forced)
   {
     
     if($forced === true){

@@ -23,10 +23,12 @@ class Helpers extends \dependencies\BaseComponent
     {
       
       case 'ALL_TABLES':
+      case 'ALL':
         $like = '';
         break;
       
       case 'PREFIXED_TABLES':
+      case 'PREFIXED':
         $like = ' LIKE "'.DB_PREFIX.'%"';
         break;
       
