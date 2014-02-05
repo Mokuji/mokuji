@@ -8,7 +8,7 @@
 class LegacyUrlFormat extends UrlFormat
 {
   
-  const REGEX = '~^/?(index\.php)?(\?[^\?]*)$~';
+  const REGEX = '~^/?(index\.php)?(\?[^\?]*)?$~';
   
   /**
    * Validates the provided URL for formatting errors.

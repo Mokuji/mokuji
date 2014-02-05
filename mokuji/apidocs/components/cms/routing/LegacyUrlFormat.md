@@ -54,7 +54,7 @@ Detects, validates and formats various URLs.
 In class: [components\cms\routing\LegacyUrlFormat](#top)
 
 ```
-const mixed REGEX = '~^/?(index\.php)?(\?[^\?]*)$~'
+const mixed REGEX = '~^/?(index\.php)?(\?[^\?]*)?$~'
 ```
 
 
