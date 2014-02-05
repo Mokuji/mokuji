@@ -191,8 +191,7 @@ class Validator extends Successable
       return true;
     }
     
-    if(!$this->check_rule('boolean')){
-      $this->data = false;
+    if($this->check_rule('boolean') === true){
       return true;
     }
     

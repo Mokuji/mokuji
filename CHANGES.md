@@ -4,6 +4,11 @@ _05-Feb-2014_
 * Added a CLI for actions (useful for cronjobs).
 * Added database backup functionality.
 
+#### [Version 0.28.6 Beta](https://github.com/Tuxion/mokuji/tree/0.28.6-beta)
+_04-Feb-2014_
+
+* Fixed a bug which caused "required" form fields to not actually be required for the empty value to make it to the database.
+
 #### [Version 0.28.5 Beta](https://github.com/Tuxion/mokuji/tree/0.28.5-beta)
 _30-Jan-2014_
 
