@@ -1616,12 +1616,15 @@ class Table extends Successable
     //Convert custom syntax.
     switch($compare){
       case '!':
+      case '!=':
         $compare = '!=';
         break;
       case '|':
+      case 'LIKE':
         $compare = 'LIKE';
         break;
       case '!|':
+      case 'NOT LIKE':
         $compare = 'NOT LIKE';
         break;
     }
