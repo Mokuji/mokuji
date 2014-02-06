@@ -1,9 +1,21 @@
+#### [Version 0.29.0 Beta](https://github.com/Tuxion/mokuji/tree/0.29.0-beta)
+_05-Feb-2014_
+
+* Added a CLI for actions (useful for cronjobs).
+* Added database backup functionality.
+
+#### [Version 0.28.6 Beta](https://github.com/Tuxion/mokuji/tree/0.28.6-beta)
+_04-Feb-2014_
+
+* Fixed a bug which caused "required" form fields to not actually be required for the empty value to make it to the database.
+
 #### [Version 0.28.5 Beta](https://github.com/Tuxion/mokuji/tree/0.28.5-beta)
 _30-Jan-2014_
 
 * Fixed an undefined variable bug with IP blacklisting.
 * Fixed a bug where `/index.php` was not detected by the LegacyUrlFormat.
 * Fixed a problem with `Data->filter()` not preserving models.
+* Fixed a bug with `jquery_datatables` plugin and it's i18n files.
 
 #### [Version 0.28.4 Beta](https://github.com/Tuxion/mokuji/tree/0.28.4-beta)
 _15-Jan-2014_

@@ -6,8 +6,7 @@
   
   <?php
   
-  $i18n_file = $plugin.'media/language/'.mk('Language')->code.'.json';
-  if(file_exists($i18n_file))
+  if(file_exists($path.DS.'media'.DS.'language'.DS.mk('Language')->code.'.json'))
   {
     
     ?>
@@ -17,7 +16,7 @@
     $(document).ready(function() {
       $.extend( $.fn.dataTable.defaults, {
         "oLanguage": {
-          "sUrl": "<?php echo $i18n_file ?>"
+          "sUrl": "<?php echo $plugin.'media/language/'.mk('Language')->code.'.json'; ?>"
         }
       });
     });

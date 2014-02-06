@@ -24,14 +24,13 @@ RewriteEngine On
 RewriteRule ^/?rest/(.+)$ index.php?_RESTROUTE=$1 [E=MK_ENV:rest,L,QSA]
 
 # Rewrite for the different environments.
+# Change 'admin' to something else for different ADMIN_URL_KEY values.
 RewriteRule ^/?(admin|install)(/(.+))? $3 [E=MK_ENV:$1,QSA]
 
 # Redirect to Mokuji index.
 RewriteRule ^/?mokuji/ - [S=1]
 RewriteRule ^.*$ index.php [L,QSA]
 
-#Rewrite atom.xml to latest text items
-RewriteRule ^atom.xml$ index.php?section=timeline/feed
 
 # ----------------------------------------------------------------------
 # Gzip compression
