@@ -1,4 +1,4 @@
-#Mokuji (目次) - Version 0.29.0 Beta
+#Mokuji (目次) - Version 0.30.0 Beta
 
 * [Main site](http://mokuji.net/)
 * [Forum](http://forum.mokuji.net/)

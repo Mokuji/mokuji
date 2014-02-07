@@ -33,7 +33,7 @@
 * [`public mixed __destruct()`](#method-__destruct)
 * [`public int get_password_strength(String $password)`](#method-get_password_strength)
 * [`public mixed hash(string $input, string $algorithm, int $output_type)`](#method-hash)
-* [`public string pref_hash_algo(int $bits, bool $inclusive, $result_bits)`](#method-pref_hash_algo)
+* [`public string pref_hash_algo(integer $bits, boolean $inclusive, $result_bits)`](#method-pref_hash_algo)
 * [`public string random_string(int $length, int $output_type, bool $secure)`](#method-random_string)
 * [`private mixed _conv_rate($output_type)`](#method-_conv_rate)
 * [`private mixed _convert_bin($input, $output_type)`](#method-_convert_bin)
@@ -267,7 +267,7 @@ In class: [core\Security](#top)
 mixed core\Security::hash(string $input, string $algorithm, int $output_type)
 ```
 
-Generates a hash using php's hash() function.
+Generates a hash using PHP's hash() function.
 
 
 
@@ -288,25 +288,25 @@ Generates a hash using php's hash() function.
 In class: [core\Security](#top)
 
 ```
-string core\Security::pref_hash_algo(int $bits, bool $inclusive, $result_bits)
+string core\Security::pref_hash_algo(integer $bits, boolean $inclusive, $result_bits)
 ```
 
-Gets the prefered hashing algorithm for a certain amount of bits worth of entropy.
+Gets the preferred hashing algorithm for a certain amount of bits worth of entropy.
 
 When setting inclusive = false that means:
- The prefered algorithm that is used to it's optimum with the given entropy.
+ The preferred algorithm that is used to it's optimum with the given entropy.
  For instance: given 230 bits of entropy the best 224 bits algorithm is picked.
 
 When setting inclusive = true that means:
- The prefered algorithm that is able to contain the full entropy available.
+ The preferred algorithm that is able to contain the full entropy available.
  For instance: given 230 bits of entropy the best 256 bits algorithm is picked.
 
 * Visibility: **public**
 
 #### Arguments
 
-* $bits **int** - Amount of bits of entropy.
-* $inclusive **bool** - Whether or not to use the full entropy.
+* $bits **integer** - Amount of bits of entropy.
+* $inclusive **boolean** - Whether or not to use the full entropy.
 * $result_bits **mixed**
 
 
