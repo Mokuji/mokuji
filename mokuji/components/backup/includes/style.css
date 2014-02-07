@@ -1,0 +1,120 @@
+.backup-profile-controls.add-profile{
+  display:inline-block;
+  min-width:0px;
+}
+
+.backup-profile.form{
+  margin:1em 0;
+  padding:1em;
+  border-bottom:1px solid #ccc;
+  position:relative;
+}
+  
+  .new-profile-form{
+    display:none;
+  }
+  
+  .backup-profile.form input.invalid{
+    border:1px solid #f00;
+  }
+  .backup-profile.form label.invalid{
+    color:#f00;
+  }
+  .backup-profile.form .restform-error-message{
+    clear:both;
+  }
+  .backup-profile.form .validation-error{
+    display:none;
+  }
+  
+  .backup-profile.form legend{
+    display:none;
+  }
+  
+  .backup-profile.form .ctrlHolder{
+    border:none;
+    clear:none;
+  }
+  
+  .backup-profile.form .buttonHolder .button{
+    margin-left:5px;
+    vertical-align:middle;
+    height:29px;
+  }
+  .backup-profile.form .buttonHolder .delete-profile,
+  .backup-profile.form .buttonHolder .execute-profile{
+    display:inline-block;
+  }
+  
+  .backup-profile.form .for_name,
+  .backup-profile.form .for_title{
+    display:inline-block;
+  }
+  .backup-profile.form .for_name input{
+    font-weight:bold;
+  }
+  
+  .backup-profile.form .fieldset_table_selection_mode{
+    float:left;
+    width:202px;
+  }
+  
+  .backup-profile.form .fieldset_table_options{
+    padding:0.5em 0;
+  }
+  
+  .backup-profile.form .fieldset_table_options .ctrlHolder{
+    padding:1px 0 0 0;
+    margin-bottom:3px;
+  }
+  .backup-profile.form .fieldset_table_options label{
+    margin:0;
+  }
+  
+  .backup-profile.form .fieldset_output_options .ctrlHolder{
+    padding:0;
+  }
+  .backup-profile.form .fieldset_output_options label{
+    margin:0;
+  }
+
+@media screen and (min-width: 1630px){
+  .backup-profile.form .fieldset_caption,
+  .backup-profile.form .fieldset_table_options,
+  .backup-profile.form .fieldset_output_options{
+    float:left;
+    margin-right:25px;
+  }
+  .backup-profile.form .fieldset_output_options{
+    padding:0.5em 0;
+  }
+  .backup-profile.form .fieldset_table_selection_mode{
+    width:120px;
+    margin-right:25px;
+  }
+  
+  .backup-profile.form .buttonHolder{
+    position:absolute;
+    top:0;
+    right:0;
+    z-index:20;
+  }
+    .backup-profile.form .buttonHolder .button{
+      display:block;
+      margin-bottom:7px;
+    }
+    
+    .backup-profile.form .buttonHolder .primaryAction,
+    .backup-profile.form .buttonHolder .delete-profile{
+      min-width:0;
+      display:inline-block;
+    }
+    .backup-profile.form .buttonHolder .primaryAction{
+      width:55px;
+      font-size:13px;
+    }
+    .backup-profile.form .buttonHolder .delete-profile{
+      width:32px;
+    }
+    
+}

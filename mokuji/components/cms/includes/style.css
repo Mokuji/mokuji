@@ -1,0 +1,258 @@
+
+/* Editable *\
+\************/
+
+.editable.editing, .editable:hover{
+  border:solid 1px #ccc;
+  margin:-1px;
+  cursor:pointer;
+  background: #FFF;
+  padding: 10px;
+  margin: -11px;
+  position: relative;
+}
+
+.editable.editing{
+  cursor:auto !important;
+  margin-top:31px;
+}
+
+.editable-toolbar{
+  position: absolute;
+  top: -31px;
+  z-index: 99;
+  width: 100%;
+  left: -1px;
+}
+
+.editable-toolbar-button{
+  margin-right:10px;
+  cursor:pointer;
+  padding: 0 10px;
+	font-size: 0.750em;
+	line-height: 30px;
+	height: 30px;
+	-webkit-border-top-left-radius: 3px;
+  -webkit-border-top-right-radius: 3px;
+  -moz-border-radius-topleft: 3px;
+  -moz-border-radius-topright: 3px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+	color: #000000;
+	background: #FFFFFF;
+	text-transform: uppercase;
+	display: inline-block;
+	font-weight: 700;
+	border: 1px solid #ccc;
+  border-bottom: 0;
+	/*box-shadow: inset 0 1px 0 0; // Create more depth for the button. Change to lighter color of the background.
+	text-shadow: 0 1px #80c180;*/
+}
+  .editable-toolbar-button:hover {
+    box-shadow: inset 0 1px 0 0;
+  }
+
+.editable.preview .editable-toolbar{
+  display: none;
+}
+
+.editable.preview:hover .editable-toolbar{
+  display: block;
+}
+
+.editable-toolbar-button.revert {
+  color: #888888;
+  left: -3px;
+}
+  .editable-toolbar-button.revert::before {
+   content:"\f0e2";
+   font-family: FontAwesome;
+   margin-right: 10px;
+   font-size: 14px; 
+  }
+  .editable-toolbar-button.revert:hover {
+    box-shadow: #888888;
+    border-top: 1px solid #888888;
+  }
+
+.editable-toolbar-button.preview {
+  /*background: #3FA6DD;*/
+  float: right;
+  color: #3FA6DD;
+}
+  .editable-toolbar-button.preview::before {
+    content:"\f06e";
+    font-family: FontAwesome;
+    margin-right: 10px;
+    font-size: 14px;
+  }
+  .editable-toolbar-button.preview:hover {
+    box-shadow: #3FA6DD;
+    border-top: 1px solid #3FA6DD;
+  }
+
+.editable-toolbar-button.save {
+  /*background: #8ABA56;*/
+  float: right;
+  color: #8ABA56;
+  margin-right: -2px;
+}
+  .editable-toolbar-button.save::before {
+   content:"\f00c";
+   font-family: FontAwesome;
+   margin-right: 10px;
+   font-size: 14px; 
+  }
+  .editable-toolbar-button.save:hover {
+    box-shadow: #8ABA56;
+    border-top: 1px solid #8ABA56;
+  }
+
+
+
+.clear{
+  clear:both;
+}
+
+.config-column{
+  float:left;
+}
+
+#tx-backend .subtle-hint{
+  color:#999;
+}
+
+/* =Icons
+-------------------------------------------------------------- */
+
+.icon{
+  display:block;
+}
+
+/* title bar icons */
+
+.title-bar .icon{
+  width:20px;
+  height:20px;
+  background-repeat:no-repeat;
+  background-position:center center;
+  text-indent:-9999px;
+}
+.icon.menu-item-settings{
+  background-image:url('img/icons/title_bar/toggle_page_settings.png');
+}
+.icon.page-settings{
+  background-image:url('img/icons/title_bar/toggle_page_settings.png');
+}
+.icon.page-content{
+  background-image:url('img/icons/title_bar/toggle_page_content.png');
+}
+.icon.detach-page{
+  background-image:url('img/icons/title_bar/detach.png');
+  background-repeat:no-repeat;
+}
+
+._admin_toolbar{
+  width:auto;
+  list-style:none;
+  background-color:#FFF;
+}
+
+._admin_toolbar li {
+  float:left;
+  margin:0 10px;
+}
+
+/* =topbar menu
+-------------------------------------------------------------- */
+#topbar_menu{
+  position:fixed;
+  top:0px;
+  right:18px;
+  margin:0;
+  padding:0;
+  list-style:none;
+  z-index:50;
+}
+#topbar_menu > li{
+  float:left;
+  margin-left:7px;
+  margin-top:11px;
+  background:url('img/icons/topbar/button.png') center center no-repeat;
+}
+#topbar_menu > li > a{
+  line-height:20px;
+  color:#fff;
+  text-decoration:none;
+  display:inline-block;
+  text-indent:-9999px;
+  width:31px;
+  min-height:31px;
+  position:relative;
+  background:center center no-repeat;
+  opacity:0.5;
+}
+#topbar_menu li.advanced-edit{
+}
+#topbar_menu li.profile{
+  background:url('img/icons/topbar/button-wide.png') center top no-repeat;
+  width:79px;
+  padding-bottom:2px;
+}
+#topbar_menu li.profile > a{
+  width:100%;
+  line-height: 31px;
+  text-indent: 10px;
+  background:url('img/icons/topbar/profile.png') 50px 50% no-repeat;
+  cursor:default;
+}
+#topbar_menu li.profile > a span{
+  max-width:48px;
+  text-overflow: ellipsis;
+  overflow:hidden;
+  display:inline-block;
+}
+#topbar_menu li.logout{
+  background:none;
+  margin-right:25px;
+}
+#topbar_menu li.logout a{
+  background:none;
+  color:#ccc;
+  text-indent:0;
+  line-height:31px;
+  text-transform:lowercase;
+}
+#topbar_menu.frontend li.logout a{
+  color:#666;
+  opacity:0.75;
+}
+#topbar_menu.frontend li.logout a:hover{
+  opacity:1;
+}
+#topbar_menu li.website a{
+  background-image:url('img/icons/topbar/website.png');
+}
+#topbar_menu li.website-edit a{
+  background-image:url('img/icons/topbar/website_edit.png');
+}
+#topbar_menu li.advanced-edit a{
+  background-image:url('img/icons/topbar/advanced_edit.png');
+}
+#topbar_menu li.advanced a{
+  background-image:url('img/icons/topbar/advanced.png');
+}
+#topbar_menu li:hover a,
+#topbar_menu li.active a{
+  opacity:1;
+}
+
+#topbar_menu li.user-menu a{
+  width:auto;
+  padding-right:35px;
+  text-indent:0;
+}
+
+._logout {
+  margin:10px;
+}

@@ -1,0 +1,90 @@
+{
+  "title": "Account component",
+  "description": "Maakt uitgebreider beheer van gebruikers en gebruikersgroepen mogelijk.",
+  "type": "manual",
+  "dbUpdates": true,
+  "versions": [
+    {
+      "version": "0.3.1-beta",
+      "date": "2013-11-27",
+      "description": "Security updates and minor API features.",
+      "changes": []
+    },
+    {
+      "version": "0.3.0-beta",
+      "date": "2013-09-11",
+      "description": "Account registratie functie uitgewerkt, inclusief een registratieformulier module.",
+      "changes": []
+    },
+    {
+      "version": "0.2.1-beta",
+      "date": "2013-08-27",
+      "description": "Onthoud mij knopje toegevoegt aan het inlog formulier.",
+      "changes": []
+    },
+    {
+      "version": "0.2.0-beta",
+      "date": "2013-05-30",
+      "description": "Naar nieuwe versie systeem overgeschakeld.",
+      "changes": []
+    },
+    {
+      "version": "1.4",
+      "date": "2013-05-08",
+      "description": "Password reset functionaliteit toegevoegd voor gebruikers.",
+      "changes": []
+    },
+    {
+      "version": "1.3",
+      "date": "2012-10-25",
+      "description": "Vertaalbestanden aangepast aan nieuw vertaal systeem.",
+      "changes": []
+    },
+    {
+      "version": "1.2",
+      "date": "2012-09-27",
+      "description": "Automatische installatie mogelijk gemaakt.",
+      "changes": [
+        {
+          "title": "Automatische installatie",
+          "description": "Sinds deze update is het mogelijk om het account component zichzelf te laten installeren via het update component."
+        }
+      ]
+    },
+    {
+      "version": "1.1",
+      "date": "2012-09-11",
+      "description": "Autologin support en extra veiligheid.",
+      "changes": [
+        {
+          "title": "Autologin support",
+          "description": "Wanneer het autologin component is ge&iuml;nstalleerd wordt deze toegevoegd op de mail functionaliteit in het gebruikersbeheer.",
+          "url": "https://github.com/Tuxion/tx.cms-autologin"
+        },
+        {
+          "title": "Extra veiligheid",
+          "description": "Bij het wijzigen van je wachtwoord is het nu verplicht je oude wachtwoord op te geven. Iemand die het wachtwoord niet weet kan een account dan niet overnemen, bijvoorbeeld bij het weglopen van de PC kan een voorbijganger niet een ander wachtwoord instellen."
+        },
+        {
+          "title": "Bugfixes",
+          "description": "<ul><li>Bij het wisselen van tab in gebruikersbeheer verdwijnt geen informatie meer bij het laden.</li><li>'Gebruiker bewerken' en 'Groep bewerken' blijft niet meer staan bij het wisselen van tab.</li></ul>"
+        }
+      ]
+    },
+    {
+      "version": "1.0",
+      "date": "2012-09-04",
+      "description": "Nieuwe functionaliteit voor accountbeheer is beschikbaar.",
+      "changes": [
+        {
+          "title": "Gebruiker importeerfunctie",
+          "description": "Gebruikers kunnen nu door middel van CSV bestanden worden ge&iuml;mporteerd. Per bestand kunnen de nieuw toegevoegde gebruikers ook lid worden gemaakt van een of meerdere gebruikersgroepen om deze tegelijkertijd permissies te geven of later makkelijker te beheren."
+        },
+        {
+          "title": "Verbeterde email functionaliteit",
+          "description": "Het is gemakkelijker geworden om de ontvangers te selecteren door een nieuw ontwerp. Daarnaast is het nu ook mogelijk om naar gehele gebruikersgroepen te emailen."
+        }
+      ]
+    }
+  ]
+}

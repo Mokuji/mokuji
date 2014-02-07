@@ -1,0 +1,120 @@
+{
+  
+  "And": "En",
+  "Actions": "Acties",
+  "Accessible to": "Toegangkelijk voor",
+  "Address": "Adres",
+  "Administrator": "Beheerder",
+  "Administrators": "Beheerders",
+  "Admins": "Beheerders",
+  "Advanced editing": "Geavanceerd bewerken",
+  "Are you sure?": "Weet u het zeker?",
+  
+  "Back": "Terug",
+  "Browse": "Bladeren",
+  
+  "Cancel": "Annuleren",
+  "Comments": "Opmerkingen",
+  "Control panel": "Beheerderspaneel",
+  "CREATE_VERB": "Aanmaken",
+  
+  "Date": "Datum",
+  "Default": "Standaard",
+  "Delete": "Verwijder",
+  "Description": "Omschrijving",
+  "Dutch": "Nederlands",
+  
+  "Edit": "Bewerk",
+  "Email": "E-mail",
+  "Email address": "E-mailadres",
+  "English": "Engels",
+  "German": "Duits",
+  "Everyone": "Iedereen",
+  
+  "File": "Bestand",
+  "First name": "Voornaam",
+  
+  "Group members": "Groepsleden",
+  
+  "Homepage": "Home-pagina",
+  
+  "ID": "ID",
+  "Image": "Afbeelding",
+  "IN_LANGUAGE_NAME": "in het",
+  
+  "Last name": "Achternaam",
+  "Loading": "Laden",
+  "Logged in users": "Ingelogde gebruikers",
+  "LOGIN_VERB": "Inloggen",
+  "Login page": "Inlog-pagina",
+  
+  "Main menu": "Hoofdmenu",
+  "Menu": "Menu",
+  "Message": "Bericht",
+
+  "Name": "Naam",
+  
+  "OK": "OK",
+  "Or": "Of",
+  
+  "Page": "Pagina",
+  "Pages": "Pagina's",
+  "Password": "Wachtwoord",
+  "Please select an option": "Selecteer alstublieft een optie",
+  "Preposition": "Tussenvoegsel",
+  
+  "Save": "Opslaan",
+  "Save and return": "Opslaan en terug",
+  "Saved": "Opgeslagen",
+  "Saved page": "Pagina opgeslagen",
+  "Saving": "Opslaan",
+  "Saving page": "Pagina opslaan",
+  "Search": "Zoek",
+  "SEARCH_VERB": "Zoeken",
+  "Subject": "Onderwerp",
+  "Summary": "Samenvatting",
+  
+  "Template": "Template",
+  "Theme": "Thema",
+  "The value can not be empty.": "De waarde kan niet leeg zijn.",
+  "The value can not be empty": "De waarde kan niet leeg zijn",
+  "The value may not contain html.": "De waarde mag geen html bevatten.",
+  "The value must be an array.": "De waarde moet een array zijn.",
+  "The value must be a boolean.": "De waarde moet een boolean zijn.",
+  "The value must be a javascript variable name.": "De waarde moet een javascript variabele naam zijn.",
+  "The value must be a number.": "De waarde moet een nummer zijn.",
+  "The value must be a valid date-time value.": "De waarde moet een geldige datum/tijd waarde zijn.",
+  "The value must be a valid email address.": "De waarde moet een geldig e-mail adres zijn.",
+  "The value must be a url.": "De waarde moet een url zijn.",
+  "The value must be textual.": "De waarde moet textueel zijn.",
+  "The value must be between {0} and {1} characters.": "De waarde moet tussen de {0} en de {1} tekens zijn.",
+  "The value must be greater than {0}.": "De waarde moet groter zijn dan {0}.",
+  "The value must be one of the following values: {0}": "De waarde moet een van de volgende waarden zijn: {0}",
+  "The value is of a format which can not lie between 2 numbers: {0}": "De waarde is van een formaat dat niet tussen 2 getallen kan liggen: {0}",
+  "This is a required field.": "Dit is een verplicht veld.",
+  "Title": "Titel",
+  
+  "The value is too short for a password, please use at least {0} characters.": "De waarde is te kort voor een wachtwoord, gebruik ten minste 6 tekens.",
+  
+  "Untitled": "Geen titel",
+  "Username": "Gebruikersnaam",
+  "Users": "Gebruikers",
+  "User rights": "Gebruikersrechten",
+  
+  "Value": "Waarde",
+  
+  "Website": "Website",
+  
+  "PLEASE_CLAIM_ACCOUNT_P1": "",
+  "Confirm password": "Bevestig wachtwoord",
+  
+  "Claim your account": "Activeer je account",
+  "CLAIMING_ACCOUNT_SUCCEEDED": "Je account is nu geactiveerd.",
+  
+  "E-mail address": "E-mailadres",
+  "New password": "Nieuw wachtwoord",
+  
+  "Yes": "Ja",
+  "No": "Nee"
+  
+}

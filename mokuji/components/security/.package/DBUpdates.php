@@ -1,0 +1,42 @@
+<?php namespace components\security; if(!defined('TX')) die('No direct access.');
+
+//Make sure we have the things we need for this class.
+tx('Component')->check('update');
+
+class DBUpdates extends \components\update\classes\BaseDBUpdates
+{
+  
+  protected
+    $component = 'security',
+    $updates = array(
+      '0.1' => '0.0.2-alpha', //No DB changes.
+      '0.0.2-alpha' => '0.1.0-beta' //No DB changes.
+    );
+  
+  public function install_0_1($dummydata, $forced)
+  {
+    
+    //Queue self-deployment with CMS component.
+    $this->queue(array(
+      'component' => 'cms',
+      'min_version' => '3.0'
+      ), function($version){
+        
+        //Ensures the mail component and mailing view.
+        tx('Component')->helpers('cms')->_call('ensure_pagetypes', array(
+          array(
+            'name' => 'security',
+            'title' => 'Security component'
+          ),
+          array(
+            'settings_security' => 'SETTINGS'
+          )
+        ));
+        
+      }
+    ); //END - Queue CMS 3.0+
+    
+  }
+  
+}
+

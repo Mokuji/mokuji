@@ -1,3 +1,273 @@
+#### [Version 0.29.0 Beta](https://github.com/Tuxion/mokuji/tree/0.29.0-beta)
+_05-Feb-2014_
+
+* Added a CLI for actions (useful for cronjobs).
+* Added database backup functionality.
+
+#### [Version 0.28.6 Beta](https://github.com/Tuxion/mokuji/tree/0.28.6-beta)
+_04-Feb-2014_
+
+* Fixed a bug which caused "required" form fields to not actually be required for the empty value to make it to the database.
+
+#### [Version 0.28.5 Beta](https://github.com/Tuxion/mokuji/tree/0.28.5-beta)
+_30-Jan-2014_
+
+* Fixed an undefined variable bug with IP blacklisting.
+* Fixed a bug where `/index.php` was not detected by the LegacyUrlFormat.
+* Fixed a problem with `Data->filter()` not preserving models.
+* Fixed a bug with `jquery_datatables` plugin and it's i18n files.
+
+#### [Version 0.28.4 Beta](https://github.com/Tuxion/mokuji/tree/0.28.4-beta)
+_15-Jan-2014_
+
+* Added some function aliases to allow access through both REST interfaces.
+* Improved MySQL version detection for install script.
+* Fixed some PHP 5.3.8 compatibility bugs.
+* Updated CGI version of the `.htaccess` file.
+* Fixed problems with parallel calls using the same persistent authentication cookie to log in.
+* Fixed a bug that caused the install wizard to fail when given a configuration value with a quotation symbol.
+
+#### [Version 0.28.3 Beta](https://github.com/Tuxion/mokuji/tree/0.28.3-beta)
+_12-Dec-2013_
+
+* Added style to frontend editing.
+
+#### [Version 0.28.2 Beta](https://github.com/Tuxion/mokuji/tree/0.28.2-beta)
+_10-Dec-2013_
+
+* Updated underscore JavaScript plugin.
+
+#### [Version 0.28.1 Beta](https://github.com/Tuxion/mokuji/tree/0.28.1-beta)
+_5-Dec-2013_
+
+* Added external URL pagetype.
+* Added forced_template_id code to CMS.
+* Added status to curl function.
+* Fixed menu problems, by returning proper model instances with Resultset::hwalk.
+* Fixed 5.3.x compatibility bugs.
+* Removed a Tuxion CMS reference.
+
+#### [Version 0.28.0 Beta](https://github.com/Tuxion/mokuji/tree/0.28.0-beta)
+_3-Dec-2013_
+
+URL keys
+
+* Implemented URL format in CMS
+* Automatically generate URL keys for pages
+* Now no longer redirects for the homepage URL formatting (stays on root)
+* Throw 404 error if page doesn't exist.
+* Improved menu module, prettier LegacyUrlFormat and url_key validation in backend.
+
+First prototype of editable is working!
+
+* Added inline editing functionality (merge branch inline_editing).
+* Added LineTemplate and more.
+* Only save when there are changes, the proper way.
+* Made blog posts in-line editable.
+
+And many bugs and papercuts fixed.
+
+#### [Version 0.27.7 Beta](https://github.com/Tuxion/mokuji/tree/0.27.7-beta)
+_27-Okt-2013_
+
+* Fixed a bug which occurred when trying to log in. Ouch.
+
+#### [Version 0.27.6 Beta](https://github.com/Tuxion/mokuji/tree/0.27.6-beta)
+_27-Okt-2013_
+
+Account:
+* `/account/me` To get the user object.
+* `/account/login_status` To get the users access level.
+* Created controller factory and base controller.
+* Created SessionController.
+* Migrated user session business from Actions and Json to SessionController.
+
+Misc:
+* Added Mokuji logo to installation wizard.
+* Minor improvements in backend UI.
+* Fixed bug, so you can set a different entrypoint for front- and backend.
+* Added md5 to the hash algoritms to choose from. See commit message.
+* Fixed bugs caused by core updates and IE9.
+* Added ATOM feed based on timeline entries.
+
+#### [Version 0.27.5 Beta](https://github.com/Tuxion/mokuji/tree/0.27.5-beta)
+_13-Nov-2013_
+
+* The `url` validator rule now respects the `required` rule.
+* The `number` validator rule now validates float and double types appropriately.
+* Added two missing variables in the `/rest/` interface.
+
+#### [Version 0.27.4 Beta](https://github.com/Tuxion/mokuji/tree/0.27.4-beta)
+_31-Okt-2013_
+
+* The new REST interface now returns empty fields as NULL instead of letting the key disappear.
+* Fixed two translating bugs.
+
+#### [Version 0.27.3 Beta](https://github.com/Tuxion/mokuji/tree/0.27.3-beta)
+_18-Okt-2013_
+
+* Cleaned the page manager somewhat.
+* Added placeholder to show default value in language specific website settings.
+* Now copying website title to site meta-information as well as multi-site information during install.
+* CMS settings now has select fields for themes, templates and languages.
+
+#### [Version 0.27.2 Beta](https://github.com/Tuxion/mokuji/tree/0.27.2-beta)
+_16-Okt-2013_
+
+* Improved page title editing to be more user friendly and effective.
+
+#### [Version 0.27.1 Beta](https://github.com/Tuxion/mokuji/tree/0.27.1-beta)
+_15-Okt-2013_
+
+* The /rest/ interface now supports custom errors for (Model)Validation exceptions.
+
+#### [Version 0.27.0 Beta](https://github.com/Tuxion/mokuji/tree/0.27.0-beta)
+_14-Okt-2013_
+
+* Added a new REST interface at /rest/<path> (?rest=<path> still exists).
+
+#### [Version 0.26.9 Beta](https://github.com/Tuxion/mokuji/tree/0.26.9-beta)
+_9-Okt-2013_
+
+* Made some performance optimizations in the Data and BaseModel classes.
+* Fixed jQuery tmpl encoding problems, causing malformed data in most editors.
+
+#### [Version 0.26.8 Beta](https://github.com/Tuxion/mokuji/tree/0.26.8-beta)
+_7-Okt-2013_
+
+* Added functionality to log in as a specific user based on user ID, by using become_user().
+* Fixed a bugs in installation and update script.
+
+#### [Version 0.26.7 Beta](https://github.com/Tuxion/mokuji/tree/0.26.7-beta)
+_25-Sept-2013_
+
+* Security update: Improved random bits sources. Fixing several problems with weak or no random data.
+* Bugfixes:
+    - Corrected a typo in the update component.
+    - Setting config values using mk('Config') now checks if it needs to insert.
+    - The REST interface now properly implements UTF-8.
+
+#### [Version 0.26.6 Beta](https://github.com/Tuxion/mokuji/tree/0.26.6-beta)
+_23-Sept-2013_
+
+* Fixed Table::count() bug.
+* Fixed install bug when tables are not overwritten.
+
+#### [Version 0.26.5 Beta](https://github.com/Tuxion/mokuji/tree/0.26.5-beta)
+_21-Sept-2013_
+
+* Bugfix.
+* Fixed hyperlinks in docs/ORM.md.
+
+#### [Version 0.26.4 Beta](https://github.com/Tuxion/mokuji/tree/0.26.4-beta)
+_21-Sept-2013_
+
+* Added DocBlocks to the Table class.
+* Added documentation: Using the Mokuji ORM.
+
+#### [Version 0.26.3 Beta](https://github.com/Tuxion/mokuji/tree/0.26.3-beta)
+_18-Sept-2013_
+
+* Bugfixes and tweaks
+    - Improved compatibility for .htaccess rewrite rules.
+    - Added more licensing details for the login backgrounds (see `/mokuji/themes/tx_login/css/style.css`).
+    - Added `autofocus` option to the login and register forms.
+    - Added `target_url` parameter for the login REST call.
+    - Added a CSS class to fieldsets generated by `render_form` based on it's title.
+
+#### [Version 0.26.2 Beta](https://github.com/Tuxion/mokuji/tree/0.26.2-beta)
+_16-Sept-2013_
+
+Papercuts:
+* Made accounts/Accounts model better extendable.
+* Made formToObject JS work in Internet Explorer 8-.
+* Made Entrypoint Component adjustable.
+* Translations.
+* Small modifications.
+
+#### [Version 0.26.1 Beta](https://github.com/Tuxion/mokuji/tree/0.26.1-beta)
+_12-Sept-2013_
+
+* Bugfixes
+    - Added a .htaccess-cgi file to fix a CGI problem.
+    - Added the `old_title` key again to the core `package.json`.
+    - The `CoreUpdate` class now properly detects file references with HTTP vs HTTPS and including www or without.
+    - The `File` class leaves capitalization of file extensions alone now.
+
+#### [Version 0.26.0 Beta](https://github.com/Tuxion/mokuji/tree/0.26.0-beta)
+_11-Sept-2013_
+
+* Added account registration functionality.
+* Implemented a module to display a registration form.
+* Improved `$.restForm` by returning a form reference to callback functions.
+* Improved the PageType system with a `template(key, data)` javascript function.
+* Added `indenting_field` option with `Data()->as_options()`.
+* Added `$path` variable inside plugins.
+* Improved `str_max` which now trims whitespace.
+* Added fieldsets to `render_form`.
+* Improved `render_form` by allowing "bonus fields".
+* Improved `Image` class to detect diversions from the requested operations.
+* Bugfixes
+    - Fixed permission problem with the `keep_alive` call.
+    - Securimage now works with the new core structure.
+    - Restored the `.clearfix` class to `globals.css`.
+    - Outputbuffer core class had some typo's.
+    - Fixed a query in the core's `update_to_0_10_0_beta` function.
+    - Fixed a bug with the `create_file_reference_update` step of the core update script.
+    - Missed an update path in `update` component.
+
+#### [Version 0.25.1 Beta](https://github.com/Tuxion/mokuji/tree/0.25.1-beta)
+_3-Sept-2013_
+
+* Bugfixes in `update` component.
+    - Fixed update bug for inserting new components.
+
+#### [Version 0.25.0 Beta](https://github.com/Tuxion/mokuji/tree/0.25.0-beta)
+_3-Sept-2013_
+
+* Restructured the `update` component.
+    - New support for referencing packages by reference ID.
+    - New support for the `old_title` key in `package.json` files.
+
+#### [Version 0.24.0 Beta](https://github.com/Tuxion/mokuji/tree/0.24.0-beta)
+_29-Aug-2013_
+
+* Core
+  - Allow persistent login.
+* Account
+  - Added "remember me" button to login form.
+
+#### [Version 0.23.0 Beta](https://github.com/Tuxion/mokuji/tree/0.23.0-beta)
+_29-Aug-2013_
+
+* [Major core rework](http://development.mokuji.org/60/core-codenames?menu=62&action=language%2Fset_language&language_id=1).
+    - Moved files to a better folder structure.
+    - Created an Initializer class to replace the init.php script and improve 3rd party integration.
+    - Reduced reserved words for folders in the root. They are now `/admin`, `/install` and `/mokuji`.
+    - Extended the class autoloader to include component classes.
+    - Created an upgrade script to assist in upgrading to the new Ballistic Badger core.
+* Added new global I/O functions `recursive_move` and `recursive_delete`.
+* Fixed a bug in the Url class, you can now refer to sub-folders that have the same name as the `URL_PATH`.
+* Fixed a bug in the Sql class, setting DB connection data during installation now works again after PDO upgrade.
+
+#### [Version 0.22.2 Beta](https://github.com/Tuxion/mokuji/tree/0.22.2-beta)
+_9-Aug-2013_
+
+* Fixed a bug when installing with the new PDO setup.
+* Removed some Tuxion CMS references.
+
+#### [Version 0.22.1 Beta](https://github.com/Tuxion/mokuji/tree/0.22.1-beta)
+_7-Aug-2013_
+
+* Allowed FormBuilder class to be extended, switching private variables to protected.
+
+#### [Version 0.22.0 Beta](https://github.com/Tuxion/mokuji/tree/0.22.0-beta)
+_5-Aug-2013_
+
+* Updated core to work with PDO:MySql
+* Updated installation script to work with PDO:MySql
+* Fixed a bug in text component using a mysql function directly.
+
 #### [Version 0.21.4 Beta](https://github.com/Tuxion/mokuji/tree/0.21.4-beta)
 _1-Jul-2013_
 

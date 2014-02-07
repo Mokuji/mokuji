@@ -1,0 +1,14 @@
+{
+  "title": "Backup",
+  "description": "The Mokuji default backup functionality is provided by this component.",
+  "type": "manual",
+  "dbUpdates": true,
+  "versions": [
+    {
+      "version": "0.1.0-beta",
+      "date": "2014-02-05",
+      "description": "First beta version.",
+      "changes": []
+    }
+  ]
+}
