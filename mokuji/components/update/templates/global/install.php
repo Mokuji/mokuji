@@ -1,5 +1,7 @@
 <?php namespace components\update; if(!defined('TX')) die('No direct access.'); ?>
 
+<?php echo $data->plugins; ?>
+
 <script type="text/javascript">
   var installSteps = JSON.parse('<?php echo $data->install_steps->as_json(); ?>');
 </script>

@@ -6,6 +6,8 @@ if(!tx('Data')->session->user->check('login')){
   //Did the token turn out valid?
   if($data->is_valid->is_true()){
     
+    echo load_plugin('jquery_password_strength');
+    
     ?>
     
     <form method="POST" action="<?php echo url('rest=account/password_reset_finalization',1); ?>"  id="password_reset" class="login-form password-reset-form">
@@ -65,6 +67,8 @@ if(!tx('Data')->session->user->check('login')){
     jQuery(function($){
       
       $form = $('#password_reset');
+      
+      $form.find('#l_password1').PasswordStrength();
       
       $form.restForm({
         
