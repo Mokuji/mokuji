@@ -255,9 +255,15 @@
       
     });
     
-    //Strange bug: sometimes the field resizes later on.
+    //Some pending actions.
     setTimeout(function(){
+      
+      //Strange bug: sometimes the field resizes later on.
       $container.css('width', $this.outerWidth()+'px');
+      
+      //Also, password managers may have inserted a value now without a keyup event.
+      $this.trigger('keyup');
+      
     }, 50);
     
     return $this;
