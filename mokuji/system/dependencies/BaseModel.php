@@ -1314,7 +1314,7 @@ abstract class BaseModel extends Data
     $nullify = isset($options['nullify']) && $options['nullify'] === true;
     
     //Allow additional rules to be prepended.
-    $ruleSet = array_merge(
+    $ruleSet = array_merge_recursive(
       (isset($options['rules']) ? $options['rules'] : array()),
       static::$validate
     );

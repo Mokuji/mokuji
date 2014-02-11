@@ -392,7 +392,7 @@ class Validator extends Successable
       return true;
     }
     
-    return $this->ctransf("The value must be equal to {0}.", $number);
+    return $this->ctransf("The value must be equal to {0}.", $value);
     
   }
   
