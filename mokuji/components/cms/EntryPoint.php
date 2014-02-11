@@ -101,6 +101,7 @@ class EntryPoint extends \dependencies\BaseEntryPoint
           load_plugin('jquery_rest'),
           load_plugin('jquery_comboselect'),
           load_plugin('jquery_postpone'),
+          load_plugin('jquery_password_strength'),
           load_plugin('nestedsortable'),
           load_plugin('ckeditor'),
           load_plugin('elfinder'),

@@ -1,3 +1,9 @@
+#### [Version 0.30.0 Beta](https://github.com/Tuxion/mokuji/tree/0.30.0-beta)
+_07-Feb-2014_
+
+* Replaced the password strength check with a better one.
+* Added the jQuery.PasswordStrenght plug-in to display password strength and improvement tips.
+
 #### [Version 0.29.0 Beta](https://github.com/Tuxion/mokuji/tree/0.29.0-beta)
 _05-Feb-2014_
 

@@ -50,6 +50,7 @@ class Views extends \dependencies\BaseViews
       throw new \exception\Authorisation('The CMS is not in install mode.');
     
     return array(
+      'plugins' => CoreUpdates::need_core_upgrade() ? '' : load_plugin('jquery_password_strength'),
       'install_steps' => CoreUpdates::need_core_upgrade() ?
         array(
           array(

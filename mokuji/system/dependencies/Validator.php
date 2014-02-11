@@ -537,11 +537,12 @@ class Validator extends Successable
       return true;
     }
     
+    $min_length = 6;
+    
     //Validate a password is strong enough.
-    if(tx('Security')->get_password_strength($this->data) < SECURITY_PASSWORD_STRENGTH)
-      return $this->ctransf('The value must be a strong password please mix at least {0}'.
-        ' of the following: uppercase letters, lowercase letters, numbers and special characters.',
-        SECURITY_PASSWORD_STRENGTH);
+    if(strlen($this->data) < $min_length)
+      return $this->ctransf('The value is too short for a password, please use at least {0} characters.',
+        $min_length);
     
     return true;
     

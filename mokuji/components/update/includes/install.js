@@ -22,6 +22,12 @@
         .filter('[data-step='+step+']')
         .addClass('active');
       $('#app').html(result);
+      
+      //Add password strength where needed.
+      $('#app').find('input[type="password"].js-add-strength-meter').each(function(){
+        $(this).PasswordStrength();
+      });
+      
     });
   };
   

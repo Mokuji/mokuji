@@ -22,7 +22,7 @@
       
       <div class="ctrlHolder">
         <label for="l_password" accesskey="p">Password</label>
-        <input class="big large" type="password" id="l_password" name="password" required />
+        <input class="big large js-add-strength-meter" type="password" id="l_password" name="password" required />
       </div>
       
       <p class="actions">

@@ -105,6 +105,8 @@ $(function(){
   var pass_val = '';
   var notify = $('#<?php echo $uid; ?> #l_notify_user');
   
+  pass_field.PasswordStrength();
+  
   $('#<?php echo $uid; ?> #l_choose_password').on('change', function(){
   
     if($(this).is(':checked')){

@@ -94,7 +94,7 @@
   "This is a required field.": "Dit is een verplicht veld.",
   "Title": "Titel",
   
-  "The value must be a strong password please mix at least {0} of the following: uppercase letters, lowercase letters, numbers and special characters.": "De waarde moet een sterk wachtwoord zijn. Mix alsjeblieft tenminste {0} van de volgende zaken: hoofdletters, 'kleine' letters, cijfers en speciale tekens.",
+  "The value is too short for a password, please use at least {0} characters.": "De waarde is te kort voor een wachtwoord, gebruik ten minste 6 tekens.",
   
   "Untitled": "Geen titel",
   "Username": "Gebruikersnaam",
