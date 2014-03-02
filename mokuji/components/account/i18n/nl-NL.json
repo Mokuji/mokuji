@@ -78,6 +78,7 @@
   
   "Reciever(s)": "Ontvanger(s)",
   "Recover": "Terughalen",
+  "Recover password": "Wachtwoord opvragen",
   "Reset": "Resetten",
   "Reset password": "Wachtwoord resetten",
   "Request reset": "Reset verzoeken",
@@ -92,6 +93,7 @@
   "Skip this user": "Sla deze gebruiker over",
   
   "The passwords do not match": "De wachtwoorden komen niet overeen",
+  "Security code": "Beveiligingscode",
   "The security code is invalid": "De beveilingscode is ongeldig",
   "The token is invalid": "Het kenmerk is ongeldig",
   "The token is invalid, it may have expired in the meantime": "Het kenmerk is ongeldig, het kan ondertussen zijn verlopen",

@@ -22,8 +22,14 @@ class Actions extends \dependencies\BaseComponent
   
   protected function use_password_reset_token($data)
   {
+          
+    //Link to custom login page is available.
+    if( mk('Config')->user()->login_page->not('empty')->get('bool') )
+      $redirect_url = url(mk('Config')->user()->login_page.'&password_forgotten=token&token=KEEP', true);
+    else
+      $redirect_url = url('/admin/?password_forgotten=token&token=KEEP', true);
     
-    tx('Url')->redirect(url('/admin/?password_forgotten=token&token=KEEP', true));
+    mk('Url')->redirect($redirect_url);
     
   }
   
@@ -32,12 +38,12 @@ class Actions extends \dependencies\BaseComponent
     
     $id = $data->user_id->get('int');
     
-    tx('Attempting to become another user.', function()use($id){
+    mk('Attempting to become another user.', function()use($id){
       CF::getInstance()->Session->becomeUser($id);
     })
     
     ->failure(function($info){
-      tx('Controller')->message(array(
+      mk('Controller')->message(array(
         'error' => $info->get_user_message()
       ));
     });
@@ -77,12 +83,12 @@ class Actions extends \dependencies\BaseComponent
   protected function logout($data)
   {
     
-    tx('Logging out.', function(){
+    mk('Logging out.', function(){
       CF::getInstance()->Session->logoutUser();
     })
     
     ->failure(function($info){
-      tx('Controller')->message(array(
+      mk('Controller')->message(array(
         'error' => $info->get_user_message()
       ));
     });
@@ -94,31 +100,31 @@ class Actions extends \dependencies\BaseComponent
 
     $data = $data->having('email', 'username', 'password');
 
-    tx('Registering a new account.', function()use($data){
+    mk('Registering a new account.', function()use($data){
 
       $data
         -> email   ->validate('Email address', array('required', 'not_empty', 'email'))->back()
         -> username->validate('Username', array('no_html'))->back()
         -> password->validate('Password', array('required', 'not_empty', 'between'=>array(3, 30)));
-      tx('Account')->register($data->email, $data->username, $data->password);
+      mk('Account')->register($data->email, $data->username, $data->password);
 
     })
 
     ->failure(function($info){
-      tx('Controller')->message(array(
+      mk('Controller')->message(array(
         'error' => $info->get_user_message()
       ));
 
     });
 
-    tx('Url')->redirect('email=NULL&username=NULL&password=NULL');
+    mk('Url')->redirect('email=NULL&username=NULL&password=NULL');
 
   }
   
   protected function edit_profile($data)
   {
     
-    tx('Editing profile', function()use($data){
+    mk('Editing profile', function()use($data){
       
       //Validate input.
       $data = $data->having('id', 'avatar_image_id', 'username', 'password_old', 'password1', 'password2', 'name', 'preposition', 'family_name')
@@ -126,17 +132,17 @@ class Actions extends \dependencies\BaseComponent
       
       //Check if operation is allowed.
       //Asuming default permission requirement of level 1.
-      if(tx('Account')->user->level->get('int') !== 2 && tx('Account')->user->id->get('int') !== $data->id->get('int')){
+      if(mk('Account')->user->level->get('int') !== 2 && mk('Account')->user->id->get('int') !== $data->id->get('int')){
         throw new \exception\Authorisation('You\'re not allowed to edit this user profile.');
       }
       
       //Get the user object.
-      $user = tx('Sql')->table('account', 'Accounts')
+      $user = mk('Sql')->table('account', 'Accounts')
         ->pk($data->id)
         ->execute_single();
         
       //Get the user info object.
-      $user_info = tx('Sql')->table('account', 'UserInfo')
+      $user_info = mk('Sql')->table('account', 'UserInfo')
         ->where('user_id', $data->id)
         ->execute_single();
       
@@ -150,7 +156,7 @@ class Actions extends \dependencies\BaseComponent
       $data->password1->is('empty', function()use(&$data){
         
         //See if a password should have been given.
-        if(tx('Component')->helpers('account')->should_claim())
+        if(mk('Component')->helpers('account')->should_claim())
           throw new \exception\Validation('You are required to set a new password.');
         
         //If no new password is given; un_set the password.
@@ -169,7 +175,7 @@ class Actions extends \dependencies\BaseComponent
           ->success(function()use($user, &$data){
             
             //See if we need an old password.
-            if(tx('Account')->user->level->get('int') !== 2)
+            if(mk('Account')->user->level->get('int') !== 2)
             {
               
               //See if we're using improved hashing.
@@ -182,7 +188,7 @@ class Actions extends \dependencies\BaseComponent
                   $spass = $user->salt->otherwise('')->get('string') . $data->password_old->get();
                   
                   //Apply hashing algorithm.
-                  $hspass = tx('Security')->hash($spass, $user->hashing_algorithm);
+                  $hspass = mk('Security')->hash($spass, $user->hashing_algorithm);
 
                   //Compare hashes.
                   if($user->password->get() !== $hspass)
@@ -207,11 +213,11 @@ class Actions extends \dependencies\BaseComponent
             //Now defaults to the default hashing algorithm and salt settings defined by core-security.
             
             //Get salt and algorithm.
-            $data->salt = tx('Security')->random_string();
-            $data->hashing_algorithm = tx('Security')->pref_hash_algo();
+            $data->salt = mk('Security')->random_string();
+            $data->hashing_algorithm = mk('Security')->pref_hash_algo();
             
             //Hash using above information.
-            $data->password = tx('Security')->hash(
+            $data->password = mk('Security')->hash(
               $data->salt->get() . $data->password1->get(),
               $data->hashing_algorithm
             );
@@ -251,20 +257,20 @@ class Actions extends \dependencies\BaseComponent
     
     //Show error message.
     ->failure(function($info){
-      tx('Controller')->message(array(
+      mk('Controller')->message(array(
         'error' => $info->get_user_message()
       ));
     })
     
     //Show notification.
     ->success(function($info){
-      tx('Controller')->message(array(
+      mk('Controller')->message(array(
         'notification' => $info->get_user_message()
       ));
     });
     
     //Redirect.
-    tx('Url')->redirect(url(($data->redirect_url->is_set() ? $data->redirect_url : 'id=NULL'), true));
+    mk('Url')->redirect(url(($data->redirect_url->is_set() ? $data->redirect_url : 'id=NULL'), true));
     
   }
   
@@ -272,15 +278,15 @@ class Actions extends \dependencies\BaseComponent
   {
 
     //Check if operation is allowed.
-    if(tx('Account')->user->level->get('int') !== 2 && tx('Account')->user->id->get('int') !== $data->user_id->get('int')){
+    if(mk('Account')->user->level->get('int') !== 2 && mk('Account')->user->id->get('int') !== $data->user_id->get('int')){
       throw new \exception\Authorisation('You\'re not allowed to edit this user profile.');
     }
     
     tx($data->user_id->get('int') > 0 ? 'Updating an avatar.' : 'Adding a new avatar.', function()use($data){
 
-      tx('Sql')->table('account', 'UserInfo')->pk($data->user_id)->execute_single()->is('empty')
+      mk('Sql')->table('account', 'UserInfo')->pk($data->user_id)->execute_single()->is('empty')
         ->success(function($user_info)use($data){
-          tx('Sql')->model('account', 'UserInfo')->set($data->having('avatar_image_id'))->save();
+          mk('Sql')->model('account', 'UserInfo')->set($data->having('avatar_image_id'))->save();
         })
         ->failure(function($user_info)use($data){
           $user_info->merge($data->having('avatar_image_id'))->save();
@@ -290,13 +296,13 @@ class Actions extends \dependencies\BaseComponent
 
     ->failure(function($info){
 
-      tx('Controller')->message(array(
+      mk('Controller')->message(array(
         'error' => $info->get_user_message()
       ));
 
     });
 
-    // tx('Url')->redirect('section=sevendays/project_list&project_id=NULL');
+    // mk('Url')->redirect('section=sevendays/project_list&project_id=NULL');
     
   }
   
@@ -311,7 +317,7 @@ class Actions extends \dependencies\BaseComponent
     $uid = $data->user_id->validate('User #ID', array('required', 'number'));
     
     //Set status.
-    tx('Sql')
+    mk('Sql')
       ->table('account', 'UserInfo')
       ->pk($uid)
     ->execute_single()
@@ -325,7 +331,7 @@ class Actions extends \dependencies\BaseComponent
   protected function set_user_status($data)
   {
     
-    tx('Changing user-status.', function()use($data){
+    mk('Changing user-status.', function()use($data){
       
       //Validate input.
       $data = $data->having('user_id', 'status')
@@ -333,7 +339,7 @@ class Actions extends \dependencies\BaseComponent
         ->status->validate('New User Status', array('required', 'string'))->back();
       
       //Set status.
-      tx('Sql')
+      mk('Sql')
         ->table('account', 'UserInfo')
         ->pk($data->user_id)
       ->execute_single()
@@ -343,12 +349,12 @@ class Actions extends \dependencies\BaseComponent
     })
     
     ->failure(function($info){
-      tx('Controller')->message(array(
+      mk('Controller')->message(array(
         'error' => $info->get_user_message()
       ));
     });
     
-    tx('Url')->redirect('user_id=NULL&status=NULL');
+    mk('Url')->redirect('user_id=NULL&status=NULL');
     
   }
   
@@ -358,13 +364,13 @@ class Actions extends \dependencies\BaseComponent
     $this->helper('reset_password', $data->user_id)
     
     ->failure(function($info){
-      tx('Controller')->message(array(
+      mk('Controller')->message(array(
         'error' => $info->get_user_message()
       ));
     })
     
     ->success(function($info){
-      tx('Controller')->message(array(
+      mk('Controller')->message(array(
         'notification' => $info->get_user_message()
       ));
     });
@@ -376,14 +382,14 @@ class Actions extends \dependencies\BaseComponent
   protected function claim_account($data)
   {
     
-    tx('Claiming account.', function()use($data){
+    mk('Claiming account.', function()use($data){
       
       //Validate input.
       $data = $data->having('id', 'claim_key')
         ->id->validate('User ID', array('required', 'number', 'gt'=>0))->back()
         ->claim_key->validate('Claim key', array('required', 'string'))->back();
       
-      $user = tx('Sql')
+      $user = mk('Sql')
         ->table('account', 'UserInfo')
         ->where('user_id', $data->id)
         ->execute_single();
@@ -420,26 +426,26 @@ class Actions extends \dependencies\BaseComponent
         throw new \exception\User('Claim is invalid.');
       
       //Don't claim the user in the database here.
-      //Use tx('Component')->helpers('account')->should_claim() to check if the account should be claimed.
+      //Use mk('Component')->helpers('account')->should_claim() to check if the account should be claimed.
       //Then do the actual claiming when editing the user profile.
       
       //Get the account data.
       $account = $user->account;
       
       //Insert this login session in the database.
-      tx('Sql')
+      mk('Sql')
         ->table('account', 'UserLogins')
-        ->where('session_id', "'".tx('Session')->id."'")
+        ->where('session_id', "'".mk('Session')->id."'")
         ->execute_single()
         ->is('empty', function()use($account, &$user_login){
 
-          $user_login = tx('Sql')->model('account', 'UserLogins')
+          $user_login = mk('Sql')->model('account', 'UserLogins')
             ->set(array(
               'user_id' => $account->id,
-              'session_id' => tx('Session')->id,
+              'session_id' => mk('Session')->id,
               'dt_expiry' => date('Y-m-d H:i:s', time() + (2 * 3600)), //2 hours to set your password.
-              'IPv4' => tx('Data')->server->REMOTE_ADDR,
-              'user_agent' => tx('Data')->server->HTTP_USER_AGENT,
+              'IPv4' => mk('Data')->server->REMOTE_ADDR,
+              'user_agent' => mk('Data')->server->HTTP_USER_AGENT,
               'date' => time()
             ))
             ->save();
@@ -448,33 +454,33 @@ class Actions extends \dependencies\BaseComponent
           $user_login = $row;
         });
       
-      tx('Logging')->log('LEDATE', $user_login->dt_expiry, date('Y-m-d H:i:s', time() + (2 * 3600)));
+      mk('Logging')->log('LEDATE', $user_login->dt_expiry, date('Y-m-d H:i:s', time() + (2 * 3600)));
       
       //Set user in session.
-      tx('Data')->session->user->set(array(
+      mk('Data')->session->user->set(array(
         'id' => $account->id->get('int'),
         'email' => $account->email->get('string'),
         'username' => $account->username->get('string'),
         'level' => $account->level->get('int'),
         'login' => true
       ));
-      tx('Account')->user->set(tx('Data')->session->user);
+      mk('Account')->user->set(mk('Data')->session->user);
       
     })
     
     ->failure(function($info){
-      tx('Controller')->message(array(
+      mk('Controller')->message(array(
         'error' => $info->get_user_message()
       ));
     })
     
     ->success(function($info){
-      tx('Controller')->message(array(
+      mk('Controller')->message(array(
         'notification' => $info->get_user_message()
       ));
     });
     
-    tx('Url')->redirect('id=NULL&claim_key=NULL');
+    mk('Url')->redirect('id=NULL&claim_key=NULL');
     
   }
   
@@ -488,7 +494,7 @@ class Actions extends \dependencies\BaseComponent
   protected function insert_user_groups($data)
   {
     
-    tx('Creating user group.', function()use($data){
+    mk('Creating user group.', function()use($data){
       
       //Store members, because validator will otherwise remove it.
       $members = $data->members;
@@ -502,7 +508,7 @@ class Actions extends \dependencies\BaseComponent
         ->save();
       
       //Set group members.
-      tx('Component')->helpers('account')
+      mk('Component')->helpers('account')
         ->set_group_members($group->id, $members);
       
       return $group;
@@ -510,25 +516,25 @@ class Actions extends \dependencies\BaseComponent
     })
     
     ->failure(function($info){
-      tx('Controller')->message(array(
+      mk('Controller')->message(array(
         'error' => $info->get_user_message()
       ));
     })
     
     ->success(function($info){
-      tx('Controller')->message(array(
+      mk('Controller')->message(array(
         'notification' => $info->get_user_message()
       ));
     });
     
-    tx('Url')->redirect('section=account/group_list');
+    mk('Url')->redirect('section=account/group_list');
     
   }
   
   protected function update_user_groups($data)
   {
 
-    tx('Updating user group.', function()use($data){
+    mk('Updating user group.', function()use($data){
       
       //Store members, because validator will otherwise remove it.
       $members = $data->members;
@@ -544,7 +550,7 @@ class Actions extends \dependencies\BaseComponent
       string_if_null($data, 'description');
       
       //Merge data.
-      $group = tx('Sql')
+      $group = mk('Sql')
         ->table('account', 'UserGroups')
         ->pk($data->id)
         ->execute_single()
@@ -555,7 +561,7 @@ class Actions extends \dependencies\BaseComponent
         ->save();
       
       //Set group members.
-      tx('Component')->helpers('account')
+      mk('Component')->helpers('account')
         ->set_group_members($group->id, $members);
 
       return $group;
@@ -563,32 +569,32 @@ class Actions extends \dependencies\BaseComponent
     })
     
     ->failure(function($info){
-      tx('Controller')->message(array(
+      mk('Controller')->message(array(
         'error' => $info->get_user_message()
       ));
     })
     
     ->success(function($info){
-      tx('Controller')->message(array(
+      mk('Controller')->message(array(
         'notification' => $info->get_user_message()
       ));
     });
     
-    tx('Url')->redirect('section=account/group_list');
+    mk('Url')->redirect('section=account/group_list');
     
   }
   
   protected function delete_user_group($data)
   {
     
-    tx('Deleting user group.', function()use($data){
+    mk('Deleting user group.', function()use($data){
       
       //Validate.
       $data = $data->having('user_group_id')
         ->user_group_id->validate('ID', array('required', 'number'=>'integer'))->back();;
       
       //Find record.
-      return tx('Sql')
+      return mk('Sql')
         ->table('account', 'UserGroups')
         ->pk($data->user_group_id)
         ->execute_single()
@@ -600,18 +606,18 @@ class Actions extends \dependencies\BaseComponent
     })
     
     ->failure(function($info){
-      tx('Controller')->message(array(
+      mk('Controller')->message(array(
         'error' => $info->get_user_message()
       ));
     })
     
     ->success(function($info){
-      tx('Controller')->message(array(
+      mk('Controller')->message(array(
         'notification' => $info->get_user_message()
       ));
     });
     
-    tx('Url')->redirect('section=account/group_list');
+    mk('Url')->redirect('section=account/group_list');
     
   }
   
@@ -619,14 +625,14 @@ class Actions extends \dependencies\BaseComponent
   {
     
     //If a tmp file is present, delete it.
-    tx('Data')->session->account->import->file->is('set', function($file){
+    mk('Data')->session->account->import->file->is('set', function($file){
       @unlink($file->get());
     });
     
     //Clear all other session data, since we're quitting...
-    tx('Data')->session->account->import->un_set();
+    mk('Data')->session->account->import->un_set();
     
-    tx('Url')->redirect('section=account/import_users');
+    mk('Url')->redirect('section=account/import_users');
     
   }
   
