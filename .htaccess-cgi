@@ -25,7 +25,7 @@ RewriteRule ^/?rest/(.+)$ index.php?_RESTROUTE=$1&cgi_env=rest [E=MK_ENV:rest,L,
 
 # Rewrite for the different environments.
 # Change 'admin' to something else for different ADMIN_URL_KEY values.
-RewriteRule ^/?(admin|install)(/(.+))? $3?%{QUERY_STRING}&cgi_env=$1 [E=MK_ENV:$1]
+RewriteRule ^/?(admin|install)(/(.+))?$ $3?%{QUERY_STRING}&cgi_env=$1 [E=MK_ENV:$1]
 
 # Redirect to Mokuji index.
 RewriteRule ^/?mokuji/ - [S=1]
