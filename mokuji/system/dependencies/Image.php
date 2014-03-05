@@ -718,10 +718,12 @@ class Image extends File
     $intRes   = $intA + $intB * $intFinal + $intC * $intFinal * $intFinal;
 
     $sharp = max(round($intRes), 0);
+    
+    # Use doubles here to fix a 5.5.9 bug: https://bugs.php.net/bug.php?id=66714
     $matrix = array(
-        array(-1, -2, -1),
-        array(-2, $sharp + 12, -2),
-        array(-1, -2, -1)
+        array(-1.0, -2.0, -1.0),
+        array(-2.0, (double)$sharp + 12, -2.0),
+        array(-1.0, -2.0, -1.0)
     );
 
     imageconvolution($image, $matrix, $sharp, 0);
