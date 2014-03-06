@@ -2,9 +2,20 @@
 
 use \PDO;
 use components\update\tasks\CoreUpdates;
+use \components\update\packages\ReadmePackage;
+use \components\update\packages\PackageFactory;
+use \components\update\enums\PackageType;
 
 class Json extends \dependencies\BaseViews
 {
+  
+  protected function get_template_test($options, $sub_routes)
+  {
+    
+    $filename = PackageFactory::directory(PackageType::TEMPLATE, 'install_me').DS.'README.md';
+    return ReadmePackage::parse_readme($filename);
+    
+  }
   
   protected function get_update_count($options, $params)
   {

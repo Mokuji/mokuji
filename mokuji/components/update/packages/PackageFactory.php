@@ -1,4 +1,4 @@
-<?php namespace components\update\classes; if(!defined('MK')) die('No direct access.');
+<?php namespace components\update\packages; if(!defined('MK')) die('No direct access.');
 
 use \components\update\enums\PackageType;
 

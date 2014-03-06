@@ -1,4 +1,4 @@
-<?php namespace components\update\classes; if(!defined('MK')) die('No direct access.');
+<?php namespace components\update\packages; if(!defined('MK')) die('No direct access.');
 
 use \components\update\enums\PackageType;
 
@@ -190,14 +190,6 @@ class ManualPackage extends AbstractPackage
   }
   
   /**
-   * Gets the (absolute) base directory of this package.
-   * @return string The base directory of this package.
-   */
-  public function directory(){
-    return PackageFactory::directory($this->type, $this->name);
-  }
-  
-  /**
    * Retrieves the raw package data from the package files.
    * @return \dependencies\Data The raw package data.
    */
@@ -310,7 +302,7 @@ class ManualPackage extends AbstractPackage
   }
   
   /**
-   * Gets an instance of the DBUpdates class associated with this package, or null if not DBUpdates are used.
+   * Gets an instance of the DBUpdates class associated with this package, or null if DBUpdates are not used.
    * @return mixed The DBUpdates instance or null.
    */
   public function db_updates()
