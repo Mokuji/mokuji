@@ -191,8 +191,7 @@ class Validator extends Successable
       return true;
     }
     
-    if(!$this->check_rule('boolean')){
-      $this->data = false;
+    if($this->check_rule('boolean') === true){
       return true;
     }
     
@@ -244,11 +243,14 @@ class Validator extends Successable
   private function _number($type='int')
   {
     
+    $estimate = true;
+    
     switch($type)
     {
       
       case 'int':
       case 'integer':
+        $estimate = false;
         $converted = (integer) $this->data;
         break;
       
@@ -265,12 +267,30 @@ class Validator extends Successable
       
     }
     
-    if(is_string($this->data) ? (string) $converted === $this->data : $converted === $this->data){
-      $this->data = $converted;
-      return true;
+    //When dealing with absolute values.
+    if(!$estimate){
+      
+      //Check either by string conversion or direct comparison.
+      if(is_string($this->data) ? (string) $converted === $this->data : $converted === $this->data){
+        $this->data = $converted;
+        return true;
+      }
+      
     }
     
-    if(!$this->check_rule('required')){
+    //When dealing with floating point values, we can't perform a string check, only a comparison when the types are the same.
+    else {
+      
+      //When the types match, we can compare, otherwise just skip checking.
+      if(gettype($converted) == gettype($this->data) ? $converted === $this->data : true){
+        $this->data = $converted;
+        return true;
+      }
+
+    }
+    
+    $raw_data = data_of($this->data);
+    if(empty($raw_data) && !$this->check_rule('required')){
       $this->data = null;
       return true;
     }
@@ -461,7 +481,13 @@ class Validator extends Successable
   
   private function _url()
   {
-  
+    
+    $raw_data = data_of($this->data);
+    if(empty($raw_data) && !$this->check_rule('required')){
+      $this->data = null;
+      return true;
+    }
+    
     try{
       
       $url = $this->data;
@@ -511,11 +537,12 @@ class Validator extends Successable
       return true;
     }
     
+    $min_length = 6;
+    
     //Validate a password is strong enough.
-    if(tx('Security')->get_password_strength($this->data) < SECURITY_PASSWORD_STRENGTH)
-      return $this->ctransf('The value must be a strong password please mix at least {0}'.
-        ' of the following: uppercase letters, lowercase letters, numbers and special characters.',
-        SECURITY_PASSWORD_STRENGTH);
+    if(strlen($this->data) < $min_length)
+      return $this->ctransf('The value is too short for a password, please use at least {0} characters.',
+        $min_length);
     
     return true;
     

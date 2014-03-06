@@ -13,8 +13,40 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
       '1.2' => '1.3',
       '1.3' => '1.4',
       '1.4' => '0.2.0-beta', //No DB changes.
-      '0.2.0-beta' => '0.3.0-beta' //No DB changes.
+      '0.2.0-beta' => '0.3.0-beta', //No DB changes.
+      '0.3.0-beta' => '0.3.1-beta'
     );
+
+  public function update_to_0_3_1_beta($dummydata, $forced)
+  {
+       
+    tx('Sql')->query('
+      ALTER TABLE `#__menu_items`
+        ADD COLUMN `link_url` VARCHAR(255) NULL DEFAULT NULL AFTER `page_id`,
+        ADD COLUMN `link_target` VARCHAR(255) NULL DEFAULT NULL AFTER `link_url`
+    ');
+
+    //Queue self-deployment with CMS component.
+    $this->queue(array(
+      'component' => 'cms',
+      'min_version' => '3.0'
+      ), function($version){
+        
+        tx('Component')->helpers('cms')->_call('ensure_pagetypes', array(
+          array(
+            'name' => 'menu',
+            'title' => 'Menu component'
+          ),
+          array(
+            'menu_link' => 'PAGETYPE',
+            'external_url' => 'PAGETYPE'
+          )
+        ));
+        
+      }
+    ); //END - Queue CMS 3.0+
+    
+  }
   
   //Add new installer to prevent pagetype problems.
   public function install_1_4($dummydata, $forced)

@@ -20,6 +20,7 @@
 * [`protected mixed $permissions`](#property-permissions)
 
 **Methods**
+* [`public \components\menu\models\MenuItem get_active_menu_item()`](#method-get_active_menu_item)
 * [`public mixed get_menu_items(array $options)`](#method-get_menu_items)
 * [`public mixed get_root_item($options)`](#method-get_root_item)
 
@@ -97,7 +98,7 @@ protected mixed $default_permission = 2
 In class: [components\menu\Helpers](#top)
 
 ```
-protected mixed $permissions = array('get_menu_items' => 0, 'get_root_item' => 0)
+protected mixed $permissions = array('get_menu_items' => 0, 'get_root_item' => 0, 'get_active_menu_item' => 0)
 ```
 
 
@@ -220,6 +221,24 @@ mixed dependencies\BaseComponent::filters()
 
 * Visibility: **public**
 * This method is defined by [dependencies\BaseComponent](../../dependencies/BaseComponent.md)
+
+
+
+
+
+
+## Method `get_active_menu_item`
+In class: [components\menu\Helpers](#top)
+
+```
+\components\menu\models\MenuItem components\menu\Helpers::get_active_menu_item()
+```
+
+Finds the menu item that's currently active.
+
+
+
+* Visibility: **public**
 
 
 

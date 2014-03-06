@@ -22,6 +22,10 @@ switch($env){
     $init->set_environment(Environments::INSTALL);
     break;
   
+  case 'rest':
+    $init->set_environment(Environments::REST);
+    break;
+  
   /*
     Assume front-end by default, because this IS the Mokuji index.php.
     This means you should not try to use it for a minimal environment.

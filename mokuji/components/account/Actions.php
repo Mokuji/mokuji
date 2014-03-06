@@ -1,5 +1,7 @@
 <?php namespace components\account; if(!defined('TX')) die('No direct access.');
 
+use \components\account\classes\ControllerFactory as CF;
+
 class Actions extends \dependencies\BaseComponent
 {
   
@@ -27,51 +29,62 @@ class Actions extends \dependencies\BaseComponent
   
   protected function become_user($data)
   {
-    mk('Account')->become_user($data->user_id);
+    
+    $id = $data->user_id->get('int');
+    
+    tx('Attempting to become another user.', function()use($id){
+      CF::getInstance()->Session->becomeUser($id);
+    })
+    
+    ->failure(function($info){
+      tx('Controller')->message(array(
+        'error' => $info->get_user_message()
+      ));
+    });
+    
   }
   
   protected function login($data)
   {
-
+    
+    //Extract needed data.
     $data = $data->having('email', 'pass');
-
-    tx('Logging in.', function()use($data){
-
-      $data
-        -> email   ->validate('Email address', array())->back()
-        -> pass    ->validate('Password', array('required', 'not_empty', 'between'=>array(3, 30)));
-
-      tx('Account')->login($data->email, $data->pass);
+    
+    //Wrap in exception handler.
+    mk('Logging in.', function()use($data){
+      
+      //Use the Session controller to log the user in.
+      CF::getInstance()->Session->loginUser(
+        $data->email->get(),
+        $data->password->get(),
+        ($data->persistent->get('string') === '1')
+      );
 
     })
-
+    
+    //Pass on the exception.
     ->failure(function($info){
-
       throw $info->exception;
-      // tx('Controller')->message(array(
-      //   'error' => $info->get_user_message()
-      // ));
-
     });
-
-    $prev = tx('Url')->previous();
-
-    if($prev !== false){
-      tx('Url')->redirect($prev);
-    }
-
-    tx('Url')->redirect(url('email=NULL&pass=NULL', false, ($prev !== false)));
+    
+    //Build the URL and redirect.
+    $prev = mk('Url')->previous();
+    if($prev !== false) mk('Url')->redirect($prev);
+    mk('Url')->redirect(url('email=NULL&pass=NULL', false, ($prev !== false)));
 
   }
 
   protected function logout($data)
   {
-
-    tx('Logging out.', function(){tx('Account')->logout();})->failure(function($info){
+    
+    tx('Logging out.', function(){
+      CF::getInstance()->Session->logoutUser();
+    })
+    
+    ->failure(function($info){
       tx('Controller')->message(array(
         'error' => $info->get_user_message()
       ));
-
     });
 
   }

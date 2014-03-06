@@ -1,3 +1,6 @@
+///////////////////
+// Notifications //
+///////////////////
 ;jQuery(function($){
   
   //Init notifications.
@@ -55,118 +58,10 @@
   
 });
 
-//Do an ajax request.
-var GET=1, POST=2, PUT=4, DELETE=8;
-function request(){
-  
-  //Predefine variables.
-  var method, model, data;
-  
-  //Handle arguments.
-  switch(arguments.length){
-    
-    //A get request to the given model name.
-    case 1:
-      method = GET;
-      model = arguments[0];
-      data = {};
-      break;
-    
-    //A custom request to the given model name, or a PUT request with the given data.
-    case 2:
-      if(_(arguments[0]).isNumber()){
-        method = arguments[0];
-        model = arguments[1];
-        data = {};
-      }else{
-        method = PUT;
-        model = arguments[0];
-        data = arguments[1];
-      }
-      break;
-    
-    //A custom request to given model name with given data.
-    case 3:
-      method = arguments[0];
-      model = arguments[1];
-      data = arguments[2];
-      break;
-    
-  }
-  
-  //Should data be processed by jQuery?
-  var process = (method == GET);
-  
-  //Stringify our JSON?
-  if(!process) data = JSON.stringify(data);
-  
-  //Convert method to string for use in the jQuery ajax API.
-  method = (method == GET && 'GET')
-        || (method == POST && 'POST')
-        || (method == PUT && 'PUT')
-        || (method == DELETE && 'DELETE')
-        || 'GET';
-  
-  //Build the url
-  var url = window.location.protocol + '//' + window.location.host + window.location.pathname + '?rest=' + model;
-  
-  //Do it, jQuery!
-  return $.ajax({
-    url: url,
-    type: method,
-    data: data,
-    dataType: 'json',
-    contentType: 'application/json',
-    processData: process,
-    headers: {
-      'X-Requested-With': 'XMLHttpRequest'
-    }
-  });
-  
-}
-
+/////////////////////
+// CMS Application //
+/////////////////////
 ;(function(root, $, _, undefined){
-  
-  //A template helper function.
-  function tmpl(id){
-    
-    return function(){
-      var tmpl;
-      if(!$.domReady){
-        throw "Can not generate templates before DOM is ready.";
-      }else{
-        tmpl = tmpl || _.template($('#'+id).html());
-        return $(tmpl.apply(this, arguments));
-      }
-    }
-    
-  }
-  
-  //A data-id extractor helper function.
-  $.fn.id = function(setter){
-    
-    if(setter){
-      return $(this).attr('data-id', setter);
-    }
-    
-    return parseInt( $(this).attr('data-id') , 10 );
-    
-  };
-  
-  //Mixin a logging functions into underscore.
-  _.mixin({
-    
-    log: function(object){
-      console.log(object);
-      return object;
-    },
-    
-    dir: function(object){
-      console.dir(object);
-      return object;
-    }
-    
-  });
   
   //The overall feedback object.
   var FeedbackController = Controller.sub({
@@ -927,18 +822,39 @@ function request(){
       
       'keyup on urlKeys': function(e){
         
-        var $target = $(e.target)
-          , val = $target.val();
-          
-        if(val.length == 0)
-          val = $target.attr('placeholder');
+        var $target = $(e.target);
         
+        //First of all, keep the key valid.
+        $target.val(this.asUrlKey($target.val(), true));
+        
+        //Secondly, fall back on the recommendation if there's no value.
+        var val = $target.val() || $target.attr('placeholder');
+        
+        //Insert the URL-key into the example.
         $target.closest('.ctrlHolder').find('.key-section').text(val);
         
+        this.detectUrlKeyProblems();
+        
+      },
+      
+      'blur on urlKeys': function(e){
+        var $target = $(e.target);
+        var newVal = this.asUrlKey($target.val());
+        if($target.val() !== newVal){
+          $target.val(newVal);
+          $target.trigger('keyup');
+        }
+        this.detectUrlKeyProblems();
       },
       
       'keyup on pageTitle': function(e){
         this.updateDefault(e.target, 'title');
+        var $what = $(e.target);
+        var val = $what.val() || $what.closest('.multilingual-section').find('.page-title-recommendation').val();
+        var lang = $what.closest('.multilingual-section').attr('data-language-id');
+        this.updateUrlKey(val, lang);
+        if(lang == app.options.language_id)
+          app.Page.updateTitle(val);
       },
       
       'keyup on pageDescription': function(e){
@@ -953,10 +869,41 @@ function request(){
     
     render: function(data){
       
+      var self = this;
       this.view
         .html($(this.template).tmpl(data))
         .find(this.form)
-        .restForm();
+        .restForm({
+          beforeSubmit:function(data){
+            
+            //For each language, check whether the URL-key should use it's recommendation.
+            //And while we're at it, do a final validation.
+            for(var langId in data.info){
+              
+              $target = self.view
+                .find('.multilingual-section[data-language-id='+langId+']')
+                .find('.page-key');
+              
+              data.info[langId].url_key = self.asUrlKey(
+                (!data.info[langId].url_key) ? $target.attr('placeholder') : $target.val()
+              );
+              
+            }
+            
+          }
+        });
+      
+      //For each language, check whether the URL-key is equal to the recommendation.
+      for(var langId in data.page.info){
+        var title = data.page.info[langId].title || data.page.info[langId].title_recommendation;
+        var areEqual = this.asUrlKey(title) === data.page.info[langId].url_key;
+         self.view
+          .find('.multilingual-section[data-language-id='+langId+']')
+          .find('.page-key')
+          //Set the URL-key on the placeholder besides the field contents.
+          .attr('placeholder', this.asUrlKey(title))
+          .val(areEqual ? '' : data.page.info[langId].url_key);
+      }
       
       this.refreshElements();
       this.pageTitle.trigger('keyup');
@@ -976,22 +923,100 @@ function request(){
     recommendTitle: function(title, languageId){
       if(languageId === 'ALL'){
         this.view.find('.page-title-recommendation').val(title);
-        this.view.find('.page-title')
+        var $title = this.view
+          .find('.page-title')
           .attr('placeholder', title)
           .trigger('keyup');
+        app.Page.updateTitle($title.val() ? $title.val() : $title.attr('placeholder'));
       }else{
         $langSection = this.view.find('.multilingual-section[data-language-id='+languageId+']');
         $langSection.find('.page-title-recommendation').val(title);
-        $langSection.find('.page-title')
+        var $title = $langSection
+          .find('.page-title')
           .attr('placeholder', title)
           .trigger('keyup');
+        if(app.options.language_id == languageId)
+          app.Page.updateTitle($title.val() ? $title.val() : $title.attr('placeholder'));
       }
+      this.updateUrlKey(title, languageId);
     },
     
     updateDefault: function(which, what){
       var $which = $(which)
         , $targets = $which.closest('.multilingual-section').find('.defaults-to-'+what);
       $targets.attr('placeholder', $which.val() ? $which.val() : $which.attr('placeholder'));
+    },
+    
+    detectUrlKeyProblems: function(){
+      
+      var self = this;
+      
+      this.view.find('.page-key').each(function(){
+        
+        var $key = $(this);
+        var val = self.asUrlKey($key.val() ? $key.val() : $key.attr('placeholder'));
+        var error = null;
+        
+        if(val.length < 3 || val.length > 255)
+          error = transf('cms', 'Invalid URL-key, length must be between 3 and 255 characters.');
+        else if(parseInt(val, 10).toString() === val)
+          error = transf('cms', 'Invalid URL-key, value may not be a number.');
+        
+        var $ctrl = $key.closest('div');
+        $ctrl.find('.validation-error').remove();
+        if(error){
+          $ctrl.append($('<span>', {text:error, 'class':'validation-error'}));
+        }
+        
+      });
+      
+    },
+    
+    updateUrlKey: function(title, languageId){
+      
+      var urlKey = this.asUrlKey(title);
+      
+      if(languageId === 'ALL'){
+        this.view
+          
+          //Update key.
+          .find('.page-key').attr('placeholder', urlKey)
+          
+          //Update preview.
+          .closest('.ctrlHolder').find('.key-section').text(urlKey);
+          
+      }
+      
+      else{
+        
+        $langSection = this.view.find('.multilingual-section[data-language-id='+languageId+']');
+        
+        $langSection
+          .find('.page-key').attr('placeholder', urlKey)
+          .closest('.ctrlHolder').find('.key-section').text(urlKey);
+        
+      }
+      
+      this.detectUrlKeyProblems();
+      
+    },
+    
+    asUrlKey: function(title, typing){
+      
+      var urlKey = (title || '').toLowerCase();
+      typing = !!typing;
+      
+      //Phase 1: Remove weird characters and replace some with dashes.
+      urlKey = urlKey.replace(/[\s_\.\-]+/g, '-').replace(/[^\w\-]+/g, '');
+      
+      //Phase 2: Trim start and end dashes.
+      urlKey = urlKey.replace(/^[-]+/, '');
+      
+      //End slashes should only be trimmed when not typing.
+      if(!typing)
+        urlKey = urlKey.replace(/[-]+$/, '');
+      
+      return urlKey;
     }
     
   });
@@ -1153,6 +1178,7 @@ function request(){
       btn_detach: '#detach-page',
       btn_save_page: '#save-page',
       select_pageLink: '#page-link',
+      title_text: '.title-bar.page-title .title',
       pageTypes: '#new-page-wrap .pagetypes-list li a'
     },
     
@@ -1292,6 +1318,28 @@ function request(){
 
     },
     
+    loadDashboard: function(){
+
+      var self = this;
+      
+      this.isEmpty = true;
+      this.unsubscribe();
+      
+      console.log('loadDashboard');
+
+      return $.ajax('?section=cms/dashboard')
+      
+      //Add a done callback.
+      .done(function(data){
+        self.data = {};
+        self.view.html(data);
+        self.Tabs = null;
+        self.Languages = null;
+        self.refreshElements();
+      });
+
+    },
+
     loadNewPage: function(){
       
       var self = this;
@@ -1316,8 +1364,9 @@ function request(){
       
       //Reference to this.
       var self = this;
-      
-      if(!pid) return this.loadNewPage();
+
+      if(!pid)
+        return this.loadNewPage();
       
       this.isEmpty = false;
       this.unsubscribe();
@@ -1397,6 +1446,10 @@ function request(){
       //Show the tabs.
       this.Tabs.renderTabs();
       
+    },
+    
+    updateTitle: function(title){
+      this.title_text.text(title);
     }
     
   });
@@ -1625,9 +1678,15 @@ function request(){
       //Grab the Home button.
       $('#topbar_menu .website a').on('click, mousedown', function(e){
         
-        var url = app.options.url_base +
-                  (app.Page.data.page ? '?pid=' + app.Page.data.page.id + '&' : '?') +
-                  (app.Item.data.item ? 'menu=' + app.Item.data.item.id : '');
+        var pid = app.Page.data.page ? 'pid=' + app.Page.data.page.id : null;
+        var menu = app.Item.data.item && app.Item.data.item.id ? 'menu=' + app.Item.data.item.id : null;
+        var url = app.options.url_base;
+        
+        if(pid)
+          url += '?'+pid;
+        
+        if(menu)
+          url += (pid ? '&' : '?')+menu;
         
         $(this).attr('href', url);
         

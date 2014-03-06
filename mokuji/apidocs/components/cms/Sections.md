@@ -25,6 +25,7 @@
 * [`protected mixed config_app($options)`](#method-config_app)
 * [`protected mixed configbar()`](#method-configbar)
 * [`protected mixed context_menus()`](#method-context_menus)
+* [`protected mixed dashboard()`](#method-dashboard)
 * [`protected mixed edit_menu_item($data)`](#method-edit_menu_item)
 * [`protected mixed edit_page($options)`](#method-edit_page)
 * [`protected mixed edit_site($options)`](#method-edit_site)
@@ -503,6 +504,24 @@ In class: [components\cms\Sections](#top)
 
 ```
 mixed components\cms\Sections::context_menus()
+```
+
+
+
+
+
+* Visibility: **protected**
+
+
+
+
+
+
+## Method `dashboard`
+In class: [components\cms\Sections](#top)
+
+```
+mixed components\cms\Sections::dashboard()
 ```
 
 

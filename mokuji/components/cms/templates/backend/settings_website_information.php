@@ -19,7 +19,8 @@
           <div class="ctrlHolder">
             <label for="l_value_<?php echo $name; ?>_<?php echo $lang->id; ?>"><?php __($names->component, $data->titles->{$name}); ?></label>
             <input type="text" class="big large" id="l_value_<?php echo $name; ?>_<?php echo $lang->id; ?>"
-              name="<?php echo $name."[{$lang->id}]"; ?>" value="<?php echo $setting->{'value_'.$lang->id}; ?>" />
+              name="<?php echo $name."[{$lang->id}]"; ?>" value="<?php echo $setting->{'value_'.$lang->id}; ?>"
+              placeholder="<?php echo $lang->id->get() !== 'default' ? $setting->value_default : '';?>" />
           </div>
           
         <?php endforeach; ?>

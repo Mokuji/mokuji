@@ -306,30 +306,34 @@ abstract class CoreUpdates
     
     $source_extract = '~^'.sprintf($source_format, '([^\\'.DS.']+)').'$~';
     $sources = glob(sprintf($source_format, '*'));
-    foreach($sources as $source){
-      
-      if(!preg_match($source_extract, $source, $matches))
-        throw new \exception\Exception('Unable to match name in '.$source.' with pattern '.$source_extract);
-      
-      $name = isset($matches[1]) ? $matches[1] : null;
-      $target = sprintf($target_format, $name);
-      
-      if(!file_exists($source))
-        throw new \exception\Exception('Matched '.$source.' with glob but it does not exist? Weird...');
-      
-      $clean = !file_exists($target);
-      $action = $clean ? 'MOVE' : strtoupper($fallback);
-      $actions[] = array(
-        'source' => self::strip_base($source),
-        'target' => $action === 'DELETE' ? '-' : self::strip_base($target),
-        'action' => $action,
-        'details' => $clean ? 
-          'Can be cleanly moved.' :
-          'Already exists in target.'
-      );
-      
+
+    if($sources)
+    {
+      foreach($sources as $source){
+        
+        if(!preg_match($source_extract, $source, $matches))
+          throw new \exception\Exception('Unable to match name in '.$source.' with pattern '.$source_extract);
+        
+        $name = isset($matches[1]) ? $matches[1] : null;
+        $target = sprintf($target_format, $name);
+        
+        if(!file_exists($source))
+          throw new \exception\Exception('Matched '.$source.' with glob but it does not exist? Weird...');
+        
+        $clean = !file_exists($target);
+        $action = $clean ? 'MOVE' : strtoupper($fallback);
+        $actions[] = array(
+          'source' => self::strip_base($source),
+          'target' => $action === 'DELETE' ? '-' : self::strip_base($target),
+          'action' => $action,
+          'details' => $clean ? 
+            'Can be cleanly moved.' :
+            'Already exists in target.'
+        );
+        
+      }
     }
-    
+
     return $actions;
     
   }

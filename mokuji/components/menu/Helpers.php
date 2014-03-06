@@ -7,8 +7,36 @@ class Helpers extends \dependencies\BaseComponent
     $default_permission = 2,
     $permissions = array(
       'get_menu_items' => 0,
-      'get_root_item' => 0
+      'get_root_item' => 0,
+      'get_active_menu_item' => 0
     );
+  
+  /**
+   * Finds the menu item that's currently active.
+   * @return \components\menu\models\MenuItem
+   */
+  public function get_active_menu_item()
+  {
+    
+    //Try the URL first.
+    $menu = mk('Url')->url->data->menu;
+    
+    //Fallback is to find a unique link.
+    if($menu->is_empty() || $menu->get('string') === 'false'){
+      
+      return mk('Sql')->table('menu', 'MenuItems')
+        ->where('page_id', mk('Url')->url->data->pid)
+        ->execute_single();
+      
+    } else {
+      
+      return mk('Sql')->table('menu', 'MenuItems')
+        ->pk($menu)
+        ->execute_single();
+      
+    }
+    
+  }
   
   /**
    * Returns a result set with the menu items you asked for.
@@ -42,7 +70,7 @@ class Helpers extends \dependencies\BaseComponent
     if($options->select_from_root->is_set()){
       $options->parent_pk = $root_item;
     }
-    
+
     //Get menu items.
     $menu_items =
       
@@ -95,7 +123,7 @@ class Helpers extends \dependencies\BaseComponent
   public function get_root_item($options)
   {
 
-    $options->menu_item_id = ($options->menu_item_id->is('set')->get('bool') ? $options->menu_item_id : tx('Data')->get->menu);
+    $options->menu_item_id = ($options->menu_item_id->is('set')->get('bool') ? $options->menu_item_id : tx('Component')->helpers('menu')->call('get_active_menu_item')->id);
 
     //if $select_from_root is true: select root item to show items from.
     $no_menu_items_found = false;

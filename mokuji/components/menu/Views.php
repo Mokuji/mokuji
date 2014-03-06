@@ -6,7 +6,8 @@ class Views extends \dependencies\BaseViews
   protected
     $default_permission = 2,
     $permissions = array(
-      'menu_link' => 0
+      'menu_link' => 0,
+      'external_url' => 0
     );
   
   protected function menus($return=null)
@@ -73,4 +74,23 @@ class Views extends \dependencies\BaseViews
     
   }
   
+  protected function external_url($options)
+  {
+    
+    $pid =
+      ($options->pid->is_set() ? $options->pid->value : tx('Data')->filter('cms')->pid);
+    
+    $link = tx('Sql')
+      ->table('menu', 'MenuItems')
+      ->where('page_id', $pid)
+      ->execute_single();
+    
+    $link->is('empty', function(){
+      throw new \exception\Expected('We couldn\'t find a menu item linked to this \'external url\'-page.');
+    });
+
+    return $link;
+   
+  }
+
 }

@@ -273,19 +273,19 @@ class Resultset extends Data
       throw new \exception\Programmer('Can only use hierarchy methods on models. Now using an instance of %s.', $this->model);
     }
     
-    $model = $this->model;
+    $model_class = $this->model;
     
     // hierarchy fields must be present in model
-    if(!(array_key_exists('left', $model::model_data('hierarchy')) && array_key_exists('right', $model::model_data('hierarchy')))){
-      throw new \exception\NotFound("Not all hierarchy fields (left and right) have been defined in %s.", $model);
+    if(!(array_key_exists('left', $model_class::model_data('hierarchy')) && array_key_exists('right', $model_class::model_data('hierarchy')))){
+      throw new \exception\NotFound("Not all hierarchy fields (left and right) have been defined in %s.", $model_class);
     }
     
-    $lft = array_get($model::model_data('hierarchy'), 'left');
-    $rgt = array_get($model::model_data('hierarchy'), 'right');
+    $lft = array_get($model_class::model_data('hierarchy'), 'left');
+    $rgt = array_get($model_class::model_data('hierarchy'), 'right');
     
-    $walker = function($models) use ($lft, $rgt, &$walker, $callback)
+    $walker = function($models) use ($lft, $rgt, $model_class, &$walker, $callback)
     {
-
+      
       $models = data_of($models);
 
       if($models == NULL)
@@ -300,7 +300,9 @@ class Resultset extends Data
       {
         
         $key = key($models);
-        $model = Data(current($models));
+        $model = new $model_class();
+        $model->set(current($models));
+        // $model = Data(current($models));
         
         // calculate the gap unless this is a reitteration
         $gap = $model->{$rgt}->get('int') - $model->{$lft}->get('int');

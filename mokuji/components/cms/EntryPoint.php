@@ -1,5 +1,7 @@
 <?php namespace components\cms; if(!defined('TX')) die('No direct access.');
 
+use \components\cms\routing\UrlFormatFactory;
+
 class EntryPoint extends \dependencies\BaseEntryPoint
 {
 
@@ -40,6 +42,7 @@ class EntryPoint extends \dependencies\BaseEntryPoint
         if(url('')->segments->path == '/admin/' && tx('Config')->user()->login_page->not('empty')->get('bool')){
           $goto = url(URL_BASE.tx('Config')->user()->login_page, true)->segments->merge(array('scheme' => $targetScheme))->back()->rebuild_output();
           header("Location: ".$goto);
+          exit;
         }
         
         if($targetScheme !== tx('Url')->url->segments->scheme->get())
@@ -98,6 +101,7 @@ class EntryPoint extends \dependencies\BaseEntryPoint
           load_plugin('jquery_rest'),
           load_plugin('jquery_comboselect'),
           load_plugin('jquery_postpone'),
+          load_plugin('jquery_password_strength'),
           load_plugin('nestedsortable'),
           load_plugin('ckeditor'),
           load_plugin('elfinder'),
@@ -107,6 +111,7 @@ class EntryPoint extends \dependencies\BaseEntryPoint
           load_plugin('idtabs3')
         ),
         'scripts' => array(
+          'cms_cms' => t.t.'<script type="text/javascript" src="'.URL_COMPONENTS.'cms/includes/cms.js"></script>',
           'cms_backend' => t.t.'<script type="text/javascript" src="'.URL_COMPONENTS.'cms/includes/backend.js"></script>',
           'cms_backend_pagetype' => t.t.'<script type="text/javascript" src="'.URL_COMPONENTS.'cms/includes/PageType.js"></script>',
           'i18nSetup' => t.t.'<script type="text/javascript">i18nSetup("'.tx('Language')->code.'", "'.URL_BASE.'");</script>'
@@ -124,6 +129,7 @@ class EntryPoint extends \dependencies\BaseEntryPoint
     {
 
       $that = $this;
+      $url = $this->findPageUrl();
       
       //If we need to claim our account, do that now before anything else.
       if(tx('Component')->helpers('account')->call('should_claim'))
@@ -153,24 +159,24 @@ class EntryPoint extends \dependencies\BaseEntryPoint
       }
       
       //Validate input variables to see if they will generate proper content.
-      tx('Validating input.', function()use($that){
+      tx('Validating input.', function()use($that, $url){
         
         //Address page ID.
-        tx('Data')->get->pid
-        
-        //Validate it.
-        ->validate('Page ID', array('required', 'number'=>'integer', 'gt'=>0));
+        $pageId = Data($url->getPageId())
+          
+          //Validate it.
+          ->validate('Page ID', array('required', 'number'=>'integer', 'gt'=>0));
         
         //Get the record for this page from the database.
         $page = tx('Sql')
-        ->table('cms', 'Pages')
-        ->pk(tx('Data')->get->pid)
-        ->execute_single()
+          ->table('cms', 'Pages')
+          ->pk($pageId)
+          ->execute_single()
         
-        //If the records didn't exist. We assume the page-id is invalid.
-        ->is('empty', function(){
-          throw new \exception\EmptyResult('The page ID does not refer to an existing page.');
-        });
+          //If the records didn't exist. We assume the page-id is invalid.
+          ->is('empty', function(){
+            throw new \exception\EmptyResult('The page ID does not refer to an existing page.');
+          });
         
         //Check user permissions.
         tx('Component')->helpers('cms')->page_authorisation($page->id);
@@ -179,52 +185,43 @@ class EntryPoint extends \dependencies\BaseEntryPoint
         tx('Data')->get->mid->is('set', function($mid){
           $mid->validate('Module ID', array('number'=>'integer', 'gt'=>0));
         });
-
+        
+        //All is valid, store the URL information.
+        mk('Config')->system('cms_url', $url);
+        
       })
       
       //If any of the above validations failed..
       ->failure(function(){
         
-        //Don't redirect user to previous. Since this can be forged.
-        
-        //Address the user-defined home page in the configuration.
-        tx('Config')->user('homepage')
-        
-        //Check if it's set.
-        ->is('set')
-        
-        //In case it is.. We will attempt to redirect there.
-        ->success(function($homepage){
+        //Try and redirect to the homepage.
+        try{
           
-          //Make the redirect URL.
-          $redirect = url($homepage);
+          $homepage = UrlFormatFactory::format('/');
+          $isPresent = mk('Sql')->table('cms', 'Pages')
+            ->pk($homepage->getPageId())
+            ->execute_single()
+            ->is_set();
           
-          //Validate if the homepage will lead to a valid page.
-          $redirect->data->pid->is('set')->and_is(function($pid){
-            return tx('Sql')
-              ->table('cms', 'Pages')
-              ->pk($pid)
-              ->execute_single()
-              ->is_set();
-          })
+          if($isPresent){
+            header('Location: '.$homepage);
+            exit;
+          }
           
-          //In case it does - redirect there.
-          ->success(function()use($redirect){tx('Url')->redirect($redirect);})
+          else
+            mk('Url')->redirect('/admin/');
           
-          //Otherwise we'll redirect to the administrators panel.
-          ->failure(function(){tx('Url')->redirect('/admin/');});
-
-        })
+        }
         
-        //In case there is no home page defined, we'll redirect to the administrators panel.
-        ->failure(function(){
-          tx('Url')->redirect('/admin/');
-        });
+        //The homepage could not be parsed.
+        catch(\exception\Exception $ex){
+          mk('Url')->redirect('/admin/');
+        }
 
       })
       
       //In case all validations succeeded, we can load the requested page.
-      ->success(function()use($that, &$output){
+      ->success(function()use($that, $url, &$output){
         
         //load a layout-part
         if(tx('Data')->get->part->is_set()){
@@ -232,25 +229,25 @@ class EntryPoint extends \dependencies\BaseEntryPoint
         }
         
         //or are we going to load an entire page?
-        elseif(tx('Data')->get->pid->is_set()){
+        elseif($url->getPageId()){
           
-          $pi = $that->helper('get_page_info', tx('Data')->get->pid);
+          $pi = $that->helper('get_page_info', $url->getPageId());
           $mid = tx('Data')->get->menu->get();
-          $lpi = $pi->info->{tx('Language')->get_language_id()};
+          $languageId = $url->getLanguageId() ? $url->getLanguageId() : mk('Language')->id;
+          $lpi = $pi->info->{$languageId};
           
-          //See if the URL key is correct.
-          $url_key = $lpi->url_key;
-          $pretty_url = URL_BASE."{$pi->id}/{$url_key}?menu={$mid}";
-          if($url_key->is_set() && $url_key->get() != tx('Data')->get->pkey->get()){
-            header('Location: '.$pretty_url);
-            return;
-          }
+          $pretty_url = $url->output(mk('Data')->get);
           
           //If forced theme is set: re-set theme id.
           if(tx('Config')->user('forced_theme_id')->get() > 0){
             $pi->theme->set($that->table('Themes')->pk(tx('Config')->user('forced_theme_id'))->execute_single()->name);
           }
-
+          
+          //If forced template is set: re-set template id.
+          if(tx('Config')->user('forced_template_id')->get() > 0){
+            $pi->template->set($that->table('Templates')->pk(tx('Config')->user('forced_template_id'))->execute_single()->name);
+          }
+          
           /* ------- Set all the headers! ------- */
           
           //TODO: improve some of the default site-wide settings
@@ -304,13 +301,25 @@ class EntryPoint extends \dependencies\BaseEntryPoint
             load_plugin('jquery')
           );
           
-          //If EDITABLE: load ckeditor & elfinder.
-          if(EDITABLE){
+          //If we're in editable mode, load editing plug-ins and scripts.
+          if(tx('Component')->helpers('cms')->is_website_editable())
+          {
+            
+            //CKEditor, ELFinder and jQuery Postpone.
             $plugins = array_merge($plugins, array(
               load_plugin('ckeditor'),
               load_plugin('elfinder'),
-              load_plugin('jquery_postpone')
+              load_plugin('jquery_postpone'),
+              load_plugin('jsFramework'),
+              load_plugin('underscore')
             ));
+            
+            //Our own editable scrips.
+            tx('Ob')->add('<script src="'.URL_COMPONENTS.'cms/includes/cms.js"></script>', 'script', 'cms_editable_cms');
+            tx('Ob')->add('<script src="'.URL_COMPONENTS.'cms/includes/jslite.min.js"></script>', 'script', 'cms_editable_jslite');
+            tx('Ob')->add('<script src="'.URL_COMPONENTS.'cms/includes/ejs.js"></script>', 'script', 'cms_editable_ejs');
+            tx('Ob')->add('<script src="'.URL_COMPONENTS.'cms/includes/editable.js"></script>', 'script', 'cms_editable_editable');
+            
           }
           
           $output = $that->template($pi->template, $pi->theme, array(
@@ -334,6 +343,77 @@ class EntryPoint extends \dependencies\BaseEntryPoint
 
     }
 
+  }
+  
+  protected function findPageUrl()
+  {
+    
+    //First get a basic URL without query string.
+    $request_uri = mk('Data')->server->REQUEST_URI->get('string');
+    
+    //Strip the URL_PATH.
+    if(URL_PATH)
+      $request_uri = str_replace('/'.URL_PATH, '', $request_uri);
+    
+    try{
+      
+      //Detect the URL format.
+      $url = UrlFormatFactory::format($request_uri, $cast, $homepage);
+      
+      #TODO: Get rid of this by improving the core URL classes.
+      //Implement a little hack, until the core classes are better.
+      $QS = mk('Url')->url->data->merge(array(
+        'pid' => $url->getPageId()
+      ))->as_array();
+      mk('Url')->url->segments->query->set(http_build_query($QS, null, '&'));
+      mk('Url')->url->rebuild_output();
+      
+      //To check for legacy / ID based pages.
+      $url->getUrlKey();
+      
+    }
+    
+    catch(\exception\NotFound $nfex){
+      
+      //Improve 404 message.
+      set_status_header(404);
+      throw new \exception\NotFound(transf('cms', 'The page you\'re looking for could not be found.'));
+      
+    }
+    
+    
+    //Change language?
+    if($url->getLanguageId()){
+      mk('Data')->session->tx->language->set($url->getLanguageId());
+    }
+    
+    //If we should redirect, do that now.
+    if($cast && !$homepage)
+    {
+      
+      //By the way, if a ?menu=1 optimization is in order, do that now as well.
+      if(mk('Data')->get->menu->is_set())
+      {
+        
+        $menu = mk('Component')->helpers('menu')->call('get_active_menu_item');
+        
+        if($menu->is_unique_link()){
+          mk('Data')->get->menu->un_set();
+        }
+        
+      }
+      
+      header('Location: '.$url->output(mk('Data')->get));
+      exit;
+      
+    }
+    
+    //If not, we might want to adjust our language right away.
+    elseif($url->getLanguageId())
+      mk('Language')->set_language_id($url->getLanguageId());
+    
+    return $url;
+    
   }
 
 }

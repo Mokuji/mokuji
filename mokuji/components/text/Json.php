@@ -87,8 +87,14 @@ class Json extends \dependencies\BaseComponent
     
     //If it does.. update the existing row.
     ->failure(function($item)use($data, $user_id, &$item_id){
-      $item->merge($data->having('page_id', 'order_nr', 'dt_created'))->merge(array('user_id' => $user_id))->save();
+      
+      $item
+      ->merge($data->having('page_id', 'order_nr', 'dt_created'))
+      ->merge(array('user_id' => $user_id))
+      ->save();
+      
       $item_id = $item->id->get('int');
+      
     });
     
     //Delete existing item info.
@@ -100,7 +106,11 @@ class Json extends \dependencies\BaseComponent
     $data->info->each(function($info)use($data, $item_id){
 
       $language_id = $info->key();
-      tx('Sql')->model('text', 'ItemInfo')->set($info->having('title', 'description', 'text'))->merge(array('item_id' => $item_id, 'language_id' => $language_id))->save();
+      
+      tx('Sql')->model('text', 'ItemInfo')
+      ->set($info->having('title', 'description', 'text'))
+      ->merge(array('item_id' => $item_id, 'language_id' => $language_id))
+      ->save();
 
     });
     
@@ -109,5 +119,24 @@ class Json extends \dependencies\BaseComponent
     
   }
   
+  /**
+   * Stores given text info to the database
+   *
+   * @param \dependencies\Data $data The data to store to the database.
+   */
+  protected function update_text_info($data)
+  {
+    
+    $model = $this->table('ItemInfo')->pk($data->id)->execute_single()
+    
+    ->is('empty', function(){
+      return tx('Sql')->model('text', 'ItemInfo');
+    });
+    
+    $model->merge($data)->save();
+    
+    return $model;
+    
+  }
   
 }

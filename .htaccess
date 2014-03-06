@@ -1,5 +1,12 @@
 # ----------------------------------------------------------------------
-# URL keys
+# Options
+# ----------------------------------------------------------------------
+# Don't index directories.
+Options -Indexes
+Options +FollowSymlinks
+
+# ----------------------------------------------------------------------
+# URL routing
 # ----------------------------------------------------------------------
 
 RewriteEngine On
@@ -7,21 +14,22 @@ RewriteEngine On
 ###
 # Reserved words for root level URL keys:
 ###
+# rest
 # admin
 # install
 # mokuji
 ###
 
+# Rewrite for REST access.
+RewriteRule ^/?rest/(.+)$ index.php?_RESTROUTE=$1 [E=MK_ENV:rest,L,QSA]
+
 # Rewrite for the different environments.
+# Change 'admin' to something else for different ADMIN_URL_KEY values.
 RewriteRule ^/?(admin|install)(/(.+))? $3 [E=MK_ENV:$1,QSA]
 
-#Pages format: /<pid>/<pkey>
-RewriteRule ^/?mokuji - [S=1]
-RewriteRule ^/?(\d+)/?([\w-]*)(\.html|/)?$ index.php?pid=$1&pkey=$2 [L,QSA]
-
-#Pages format: /<pid>/<pkey>/<page_key_extensions>
-RewriteRule ^/?mokuji - [S=1]
-RewriteRule ^/?(\d+)/?([\w-]+)/([\w/-/]+)(\.html)?$ index.php?pid=$1&pkey=$2&pkey_ext=$3 [L,QSA]
+# Redirect to Mokuji index.
+RewriteRule ^/?mokuji/ - [S=1]
+RewriteRule ^.*$ index.php [L,QSA]
 
 
 # ----------------------------------------------------------------------
@@ -97,7 +105,7 @@ RewriteRule ^/?(\d+)/?([\w-]+)/([\w/-/]+)(\.html)?$ index.php?pid=$1&pkey=$2&pke
 # Accept REST calls
 # ----------------------------------------------------------------------
 
-<Limit POST PUT DELETE>
+<Limit POST PUT PATCH DELETE>
   Order allow,deny
   Allow from all
 </Limit>

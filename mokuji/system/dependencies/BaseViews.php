@@ -20,7 +20,9 @@ abstract class BaseViews extends BaseComponent
     unset($s, $m);
     
     // we expect the template for the view to be in either the /backend/ or /frontend/ directories
-    $path_view = PATH_COMPONENTS.DS.$this->component.DS.'templates'.DS.(tx('Config')->system()->check('backend') || EDITABLE ? 'backend' : 'frontend').DS.$prefix.$view.EXT;
+    $path_view = PATH_COMPONENTS.DS.$this->component.DS.'templates'.DS.(
+      tx('Config')->system()->check('backend') ? 'backend' : 'frontend'
+    ).DS.$prefix.$view.EXT;
     
     // if it was not, we get it from the /global/ directory
     if(!is_file($path_view)){

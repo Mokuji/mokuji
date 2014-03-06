@@ -1,5 +1,7 @@
 <?php namespace components\update; if(!defined('TX')) die('No direct access.'); ?>
 
+<?php echo $data->plugins; ?>
+
 <script type="text/javascript">
   var installSteps = JSON.parse('<?php echo $data->install_steps->as_json(); ?>');
 </script>
@@ -22,6 +24,6 @@
 </div>
 
 <div id="page-topbar">
-  <h1 id="logo"><a href="<?php echo url('/install/', true); ?>"></a></h1>
+  <h1 id="logo"><a href="<?php echo url('/install/', true); ?>">Mokuji <i class="icon-circle-arrow-up"></i></a></h1>
   <div class="clear"></div>
 </div>

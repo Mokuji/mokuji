@@ -17,6 +17,7 @@
 **Properties**
 * [`public mixed $id`](#property-id)
 * [`public mixed $keep_flashes`](#property-keep_flashes)
+* [`public mixed $requested_id`](#property-requested_id)
 * [`private mixed $opened`](#property-opened)
 
 **Methods**
@@ -59,6 +60,20 @@ In class: [core\Session](#top)
 
 ```
 public mixed $keep_flashes = false
+```
+
+
+
+
+
+* Visibility: **public**
+
+
+## Property `$requested_id`
+In class: [core\Session](#top)
+
+```
+public mixed $requested_id
 ```
 
 

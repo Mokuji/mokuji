@@ -53,6 +53,9 @@ class Data
 	
   public function xss_clean($str)
 	{
+
+    return $str;//#TODO
+
 		// http://svn.bitflux.ch/repos/public/popoon/trunk/classes/externalinput.php
 		// +----------------------------------------------------------------------+
 		// | Copyright (c) 2001-2006 Bitflux GmbH                                 |

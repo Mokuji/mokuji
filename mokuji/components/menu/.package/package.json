@@ -5,6 +5,12 @@
   "dbUpdates": true,
   "versions": [
     {
+      "version": "0.3.1-beta",
+      "date": "2013-12-03",
+      "description": "Added pagetype: external url",
+      "changes": []
+    },
+    {
       "version": "0.3.0-beta",
       "date": "2013-06-03",
       "description": "De 'as_hoptions' optie toegevoegd aan menu module.",

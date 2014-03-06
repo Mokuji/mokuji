@@ -32,12 +32,13 @@ class Modules extends \dependencies\BaseViews
   {
 
     $menu_items = $this->helper('get_menu_items', $options);
-    
+
     #TEMP: Default options.
     $options = Data(array(
       'show_unlinked' => false,
       'show_unauthorised' => false
     ))->merge($options);
+
 
     //Create menu.
     $menu =
@@ -48,13 +49,13 @@ class Modules extends \dependencies\BaseViews
 
         //If menu items are found:
         ->success(function($items)use($options, $menu_items){
-          
+
           //Get the selected items.
           $selected_items = tx('Sql')
             ->table('menu', 'MenuItems')
-            ->where('page_id', tx('Data')->get->pid->get('int'))
+            ->where('page_id', tx('Url')->url->data->pid->get('int'))
             ->execute();
-          
+
           //Show a 'select menu'.
           if($options->display_select_menu->get('bool') == true){
 
@@ -76,7 +77,7 @@ class Modules extends \dependencies\BaseViews
             return $items->as_options('menu', 'title', 'id', array(
               'placeholder_text' => __('Select a season', 1),
               'rel' => 'page_id',
-              'default' => ($menu_items->root_item->otherwise(tx('Data')->get->menu))
+              'default' => ($menu_items->root_item->otherwise(tx('Component')->helpers('menu')->call('get_active_menu_item')->id))
             ));
 
           }
@@ -86,7 +87,7 @@ class Modules extends \dependencies\BaseViews
           
           //Show a normal menu.
           $method = $options->as_hoptions->is_true() ? 'as_hoptions' : 'as_hlist';
-          return $items->{$method}(array('id'=>null, 'classes'=>$classes, 'value-location'=>$options->as_hoptions->is_true()), function($item, $key, $delta, &$properties)use(&$active_depth, $selected_items, $options){
+          return $items->{$method}(array('id'=>null, 'classes'=>$classes, 'value-location'=>$options->as_hoptions->is_true()), function($item, $key, $delta, &$properties)use(&$active_depth, $selected_items, $options, $items){
             
             //Test if we are allowed to view this item.
             if(1
@@ -97,7 +98,7 @@ class Modules extends \dependencies\BaseViews
               $properties['class'] = '';
               
               //Add class 'active' if this is the active menu item.
-              if($options->no_active->get() != true && $item->page_id->get('int') === tx('Data')->get->pid->get('int')){
+              if($options->no_active->get() != true && $item->page_id->get('int') === tx('Url')->url->data->pid->get('int')){
                 $properties['class'] .= ' active';
                 $active_depth = $item->depth->get('int');
               }
@@ -118,16 +119,52 @@ class Modules extends \dependencies\BaseViews
               
               $properties['class'] = trim($properties['class']);
               
-              if($options->as_hoptions->is_true()){
+              //Select menu:
+              if($options->as_hoptions->is_true())
+              {
                 $properties['value'] = (string)url('pid='.$item->page_id.($options->keep_menu->get() == false ? '&menu='.$item->id : '&menu=KEEP'), true);
                 return $item->depth->get() <= $options->max_depth->get() ? $item->title->get() : false;
-              } else {
-                return $item->depth->get() > $options->max_depth->get() ? false :
-                  '<a href="'.
-                    url('pid='.$item->page_id.($options->keep_menu->get() == false ? '&menu='.$item->id : '&menu=KEEP'), true).
-                  '">'.$item->title.'</a>';
               }
               
+              //Normal menu:
+              else
+              {
+                
+                //If depth > max depth: return nothing.
+                if( $item->depth->get() > $options->max_depth->get() ){
+                  return false;
+                }
+
+                //Otherwise:
+                else
+                {
+
+                  //If an external URL is set: use link URL.
+                  if( !$item->link_url->is_empty() ){
+                    $link_url = $item->link_url;
+                  }
+
+                  //Else: generate internal link.
+                  else
+                  {
+                    $link_url =
+                      \components\cms\routing\UrlFormatFactory::format('/?pid='.$item->page_id)->output(array(
+                        'menu' => ($options->keep_menu->get() == false ? ($item->is_unique_link() ? null : $item->id) : mk('Url')->url->menu->get())
+                      ));
+                  }
+
+                  return 
+                    //Link href.
+                    '<a href="'.$link_url.'"'.
+                    //Link target.
+                    ($item->link_target->not('empty') ? ' target="'.$item->link_target.'"' : '').'>'.
+                    //Link title.
+                    $item->title.
+                    '</a>';
+
+                }
+                  
+              }
 
             }
             
@@ -155,18 +192,14 @@ class Modules extends \dependencies\BaseViews
     return
       tx('Sql')
       ->table('menu', 'MenuItems')
-      ->where('page_id', tx('Data')->get->pid->get('int'))
+      ->where('page_id', tx('Url')->url->data->pid->get('int'))
       ->execute_single();
   }
 
   protected function breadcrumbs($options)
   {
    
-    $menu_item_info =
-      tx('Sql')
-      ->table('menu', 'MenuItems')
-      ->pk($options->menu_item_id)
-      ->execute_single();
+    $menu_item_info = $this->helper('get_active_menu_item');
 
     return array(
 

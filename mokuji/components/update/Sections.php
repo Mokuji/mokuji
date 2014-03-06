@@ -102,8 +102,8 @@ class Sections extends \dependencies\BaseViews
     
     //Try using mysqli and mysql calls for client version.
     $mySqlVersion =
-      function_exists('mysqli_get_client_info') ? explode('.', mysqli_get_client_info()) :
-      function_exists('mysql_get_client_info') ? explode('.', @mysql_get_client_info()) :
+      function_exists('mysqli_get_client_info') ? @mysqli_get_client_info() :
+      function_exists('mysql_get_client_info') ? @mysql_get_client_info() :
       false;
     
     //If those fail but PDO + mysql is available, try using the default socket to get the client version.
@@ -112,7 +112,7 @@ class Sections extends \dependencies\BaseViews
       
       try{
         $pdo = new \PDO('mysql:');
-        $mySqlVersion = explode('.', $pdo->getAttribute(PDO::ATTR_CLIENT_VERSION));
+        $mySqlVersion = $pdo->getAttribute(PDO::ATTR_CLIENT_VERSION);
         $pdo = null;
       }
       
@@ -120,6 +120,11 @@ class Sections extends \dependencies\BaseViews
         //Best effort, I guess we don't have a proper setup here.
       }
       
+    }
+    
+    //Now that we've got a client version string, parse the version number.
+    if($mySqlVersion){
+      preg_match('~(\d+)\.(\d+)\.(\d+)~', $mySqlVersion, $mySqlVersion);
     }
     
     return array(
@@ -138,7 +143,7 @@ class Sections extends \dependencies\BaseViews
         'MySQL 5.x client API' => array(
           'component' => 'Mokuji Core',
           'passed' => $mySqlVersion &&
-            $mySqlVersion[0] >= 5
+            $mySqlVersion[1] >= 5
         )
         
       )

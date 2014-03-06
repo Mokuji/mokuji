@@ -26,6 +26,7 @@
 * [`public mixed get_page_options($pid)`](#method-get_page_options)
 * [`public mixed get_page_permissions($pid)`](#method-get_page_permissions)
 * [`public mixed get_settings($key)`](#method-get_settings)
+* [`public mixed is_website_editable()`](#method-is_website_editable)
 * [`public mixed page_authorisation($pid)`](#method-page_authorisation)
 * [`public mixed set_page_permissions($pid, $permissions)`](#method-set_page_permissions)
 
@@ -103,7 +104,7 @@ protected mixed $default_permission = 2
 In class: [components\cms\Helpers](#top)
 
 ```
-protected mixed $permissions = array('page_authorisation' => 0, 'check_page_authorisation' => 0, 'get_page_info' => 0, 'get_page_options' => 0, 'get_page_permissions' => 0)
+protected mixed $permissions = array('page_authorisation' => 0, 'check_page_authorisation' => 0, 'get_page_info' => 0, 'get_page_options' => 0, 'is_website_editable' => 0, 'get_page_permissions' => 0)
 ```
 
 
@@ -382,6 +383,24 @@ mixed dependencies\BaseComponent::helper($controller)
 #### Arguments
 
 * $controller **mixed**
+
+
+
+
+
+
+## Method `is_website_editable`
+In class: [components\cms\Helpers](#top)
+
+```
+mixed components\cms\Helpers::is_website_editable()
+```
+
+
+
+
+
+* Visibility: **public**
 
 
 

@@ -23,6 +23,7 @@ class Component
   {
     
     $this->components = Data();
+    $this->use_includes = true;
     
   }
   
@@ -131,7 +132,7 @@ class Component
     $this->check($component);
     
     //if this component was not used before, we're also going to put the stylesheet and javascript into the html if they exist
-    if(!$this->components->{$component}->is_set()){
+    if(!$this->components->{$component}->is_set() && $this->use_includes){
       if(file_exists(PATH_COMPONENTS.DS."$component/includes/style.css")){
         tx('Ob')->add(t.t."<link rel=\"stylesheet\" type=\"text/css\" href=\"".URL_COMPONENTS."$component/includes/style.css\" />", 'link', array('tx', 'components', $component));
       }

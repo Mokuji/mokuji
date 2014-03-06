@@ -14,6 +14,8 @@
 
 
 ## Class index
+**Constants**
+* [`OPTION_UNSET_AS_NULL`](#constant-option_unset_as_null)
 
 **Properties**
 * [`private mixed $context`](#property-context)
@@ -35,7 +37,7 @@
 * [`public mixed add_rules()`](#method-add_rules)
 * [`public mixed all($callback)`](#method-all)
 * [`public mixed any($callback)`](#method-any)
-* [`public mixed as_array($serialized)`](#method-as_array)
+* [`public mixed as_array($serialized, $unset_as_null)`](#method-as_array)
 * [`public mixed as_json($flags, $options)`](#method-as_json)
 * [`public mixed as_list()`](#method-as_list)
 * [`public mixed as_options()`](#method-as_options)
@@ -120,6 +122,20 @@
 * [`public mixed failure($callback)`](#method-failure)
 * [`public mixed success($callback)`](#method-success)
 * [`private mixed _do_check($check)`](#method-_do_check)
+
+# Constants
+
+
+## Constant `OPTION_UNSET_AS_NULL`
+In class: [dependencies\Data](#top)
+
+```
+const mixed OPTION_UNSET_AS_NULL = 1
+```
+
+
+
+
 
 
 
@@ -521,7 +537,7 @@ mixed dependencies\Data::any($callback)
 In class: [dependencies\Data](#top)
 
 ```
-mixed dependencies\Data::as_array($serialized)
+mixed dependencies\Data::as_array($serialized, $unset_as_null)
 ```
 
 
@@ -533,6 +549,7 @@ mixed dependencies\Data::as_array($serialized)
 #### Arguments
 
 * $serialized **mixed**
+* $unset_as_null **mixed**
 
 
 

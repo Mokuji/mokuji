@@ -1,6 +1,7 @@
 <?php
 
 echo $user_profile->image_uploader;
+echo load_plugin('jquery_password_strength');
 
 ?>
 <div id="edit-profile-form">
@@ -18,7 +19,7 @@ echo $user_profile->image_uploader;
         <?php if($data->has_media->is_true()): ?>
           <div class="avatar_holder">
             <input type="hidden" id="avatar_image_id" name="avatar_image_id" value="<?php $user_profile->user->avatar_image_id->get('int'); ?>" />
-            <?php if($data->user->user_info->avatar != false){ ?>
+            <?php if($data->user->user_info->avatar->is_set()){ ?>
             <img src="<?php echo $data->user->user_info->avatar->generate_url(array('resize_width' => 146)); ?>" />
             <?php } ?>
           </div>
@@ -119,5 +120,9 @@ window.plupload_avatar_image_id_report = function(up, ids, file_id)
     console.log("Failed to save avatar.");
   });
 }
+
+jQuery(function($){
+  $('#edit-profile-form input[name="password1"]').PasswordStrength();
+});
 
 </script>

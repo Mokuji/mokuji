@@ -1,4 +1,4 @@
-#Mokuji (目次) - Version 0.26.9 Beta
+#Mokuji (目次) - Version 0.30.0 Beta
 
 * [Main site](http://mokuji.net/)
 * [Forum](http://forum.mokuji.net/)
@@ -16,6 +16,7 @@ built to make it as easy as we can to extend the CMS. The 'base' components are:
 * __update__  : Installing and updating other components or the framework itself.
 * __security__: Provides security tools and settings for good site-wide security.
 * __timeline__: Creating and managing timelines, such as a blog or news page.
+* __backup__  : A basic set of backup features.
 
 For more specific components, you can take a look at our
 [repository list](https://github.com/Tuxion). All repositories prefixed with `mokuji-` are
@@ -56,14 +57,15 @@ The change-log can be found in `CHANGES.md` in this directory.
 
 [Explanation of the versioning system](http://development.mokuji.org/40/versioning?menu=43)
 
-* __framework__ : 0.11.0-beta
-* __account__   : 0.3.0-beta
-* __cms__       : 0.6.0-beta
-* __menu__      : 0.3.0-beta
+* __framework__ : 0.12.2-beta
+* __account__   : 0.3.1-beta
+* __cms__       : 0.7.1-beta
+* __menu__      : 0.3.1-beta
 * __text__      : 0.2.1-beta
 * __update__    : 0.4.1-beta
 * __security__  : 0.1.0-beta
 * __timeline__  : 0.1.0-beta
+* __backup__    : 0.1.0-beta
 
 ## Licenses
 

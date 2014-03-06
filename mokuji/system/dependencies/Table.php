@@ -1284,6 +1284,28 @@ class Table extends Successable
   }
   
   /**
+   * Works the same as execute_single, except that it will create an empty model if there was no result.
+   *
+   * @param string $as
+   *
+   * @return BaseModel A model.
+   */
+  public function execute_model($as=null)
+  {
+    
+    $result = $this->execute_single($as);
+    
+    if($result->is_empty()){
+      $minfo = $this->models[(is_string($as) ? $as : $this->model)];
+      $model = load_model($minfo['component'], $minfo['name']);
+      return new $model;
+    }
+    
+    return $result;
+    
+  }
+  
+  /**
    * Print the query to the output.
    *
    * **This method may be used for debugging purposed and it is not recommended to have it
@@ -1565,7 +1587,7 @@ class Table extends Successable
     $value = func_get_arg(func_num_args()-1);
 
     //The comparator must be one of the following.
-    if(!in_array($compare, array('=', '>', '<', '>=', '<=', '!', '|', '!|', '', 'IN', 'NOT IN'))){
+    if(!in_array($compare, array('=', '>', '<', '>=', '<=', '!', '!=', '|', 'LIKE', '!|', 'NOT LIKE', '', 'IN', 'NOT IN'))){
       throw new \exception\InvalidArgument("Invalid comparison type given (%s).", $compare);
     }
     
@@ -1594,12 +1616,15 @@ class Table extends Successable
     //Convert custom syntax.
     switch($compare){
       case '!':
+      case '!=':
         $compare = '!=';
         break;
       case '|':
+      case 'LIKE':
         $compare = 'LIKE';
         break;
       case '!|':
+      case 'NOT LIKE':
         $compare = 'NOT LIKE';
         break;
     }

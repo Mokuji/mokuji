@@ -46,5 +46,16 @@ class MenuItems extends \dependencies\BaseModel
       ->execute_single();
 
   }
+  
+  public function is_unique_link()
+  {
+    
+    //See if there are others out there.
+    return $this->table('MenuItems')
+      ->where('id', '!', $this->id)
+      ->where('page_id', $this->page_id)
+      ->count()->get('int') === 0;
+    
+  }
 
 }

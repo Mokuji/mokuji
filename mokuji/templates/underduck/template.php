@@ -6,7 +6,7 @@
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
     <meta name="viewport" content="width=device-width">
     <base href="<?php echo $head->base->href; ?>" target="<?php echo $head->base->target; ?>" />
-    
+        
     <title><?php echo $head->title; ?></title>
     <meta name="revisit-after" content="5 days" />
     <?php
