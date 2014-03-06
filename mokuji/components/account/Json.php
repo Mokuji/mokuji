@@ -9,7 +9,7 @@ class Json extends \dependencies\BaseComponent
     $default_permission = 2,
     $permissions = array(
       'create_new_account' => 0,
-      'create_password_reset_request' => 0,
+      'create_password_reset_request' => 0, 'post_password_reset_request' => 0, //Alias
       'create_password_reset_finalization' => 0,
       'create_user_session' => 0, 'post_user_session' => 0, //Alias
       'delete_user_session' => 1,
@@ -127,7 +127,7 @@ class Json extends \dependencies\BaseComponent
     }
     
     //Check Captcha.
-    if(!tx('Component')->helpers('security')->call('validate_captcha', array('form_data'=>$raw_data))){
+    if(!mk('Component')->helpers('security')->call('validate_captcha', array('form_data'=>$raw_data))){
       $vex = new \exception\Validation(__($this->component, 'The security code is invalid', true));
       $vex->key('captcha_section');
       $vex->errors(array(__($this->component, 'The security code is invalid', true)));
@@ -148,10 +148,10 @@ class Json extends \dependencies\BaseComponent
       throw $vex;
     }
     
-    $success = tx('Account')->register($data->email, null, $data->password1);
+    $success = mk('Account')->register($data->email, null, $data->password1);
     
     if($success === true)
-      tx('Account')->login($data->email, $data->password1);
+      mk('Account')->login($data->email, $data->password1);
     
     return array(
       'success' => $success
@@ -173,7 +173,7 @@ class Json extends \dependencies\BaseComponent
       throw $vex;
     }
     
-    $token = tx('Sql')
+    $token = mk('Sql')
       ->table('account', 'PasswordResetTokens')
       ->where('token', "'{$data->token}'")
       ->execute_single();
@@ -181,7 +181,7 @@ class Json extends \dependencies\BaseComponent
     if(!$token->is_expired->is_false())
       throw new \exception\User(__($this->component, 'The token is invalid, it may have expired in the meantime', true));
     
-    $user = tx('Sql')
+    $user = mk('Sql')
       ->table('account', 'Accounts')
       ->pk($token->user_id)
       ->execute_single()
@@ -191,14 +191,14 @@ class Json extends \dependencies\BaseComponent
     
     //Get salt and algorithm.
     $user->merge(array(
-      'salt' => tx('Security')->random_string(),
-      'hashing_algorithm' => tx('Security')->pref_hash_algo()
+      'salt' => mk('Security')->random_string(),
+      'hashing_algorithm' => mk('Security')->pref_hash_algo()
     ));
     
     //Hash using above information.
     $user->merge(array(
       'password' =>
-        tx('Security')->hash(
+        mk('Security')->hash(
           $user->salt->get() . $data->password1->get(),
           $user->hashing_algorithm
         )
@@ -212,19 +212,19 @@ class Json extends \dependencies\BaseComponent
     
     //Send a message to the user about this.
     $subject = __($this->component, 'Password has been reset', 1);
-    $body = tx('Component')->views('account')->get_html('email_password_reset_complete', array(
+    $body = mk('Component')->views('account')->get_html('email_password_reset_complete', array(
       'email' => $user->email->get(),
       'site_url' => url('/', true)->output,
-      'site_name' => tx('Config')->user('site_name')->otherwise(url('/', true)->output),
-      'ipa' => tx('Data')->server->REMOTE_ADDR,
-      'user_agent' => tx('Data')->server->HTTP_USER_AGENT,
+      'site_name' => mk('Config')->user('site_name')->otherwise(url('/', true)->output),
+      'ipa' => mk('Data')->server->REMOTE_ADDR,
+      'user_agent' => mk('Data')->server->HTTP_USER_AGENT,
       'target_url' => url('/?action=account/use_password_reset_token/get&token='.$token->token->get(), true)
     ));
     
     //Use fancy method to send if it's available.
-    if(tx('Component')->available('mail')){
+    if(mk('Component')->available('mail')){
       
-      tx('Component')->helpers('mail')->send_fleeting_mail(array(
+      mk('Component')->helpers('mail')->send_fleeting_mail(array(
         'to' => array('name'=>$user->info->full_name->get(), 'email'=>$user->email->get()),
         'from' => array('name'=>EMAIL_NAME_AUTOMATED_MESSAGES, 'email'=>EMAIL_ADDRESS_AUTOMATED_MESSAGES),
         'subject' => $subject,
@@ -257,7 +257,7 @@ class Json extends \dependencies\BaseComponent
     $data = Data($data)
       ->email->validate('E-mail address', array('required', 'string', 'not_empty', 'email'))->back();
     
-    if(!tx('Component')->helpers('security')->call('validate_captcha', array('form_data'=>$data))){
+    if(!mk('Component')->helpers('security')->call('validate_captcha', array('form_data'=>$data))){
       $vex = new \exception\Validation(__($this->component, 'The security code is invalid', true));
       $vex->key('captcha_section');
       $vex->errors(array(__($this->component, 'The security code is invalid', true)));
@@ -267,11 +267,11 @@ class Json extends \dependencies\BaseComponent
     $data = $data->having('email');
     
     $com_name = $this->component;
-    
+
     //Catch all exceptions here. We don't want to leak information to the user.
     try{
       
-      tx('Sql')
+      mk('Sql')
         ->table('account', 'Accounts')
         ->where('email', "'{$data->email}'")
         ->execute_single()
@@ -283,7 +283,7 @@ class Json extends \dependencies\BaseComponent
           //First of all, clear expired token.
           //Not required for this operation, but keeps things clean.
           //And it makes generating unique tokens more efficient later on.
-          tx('Sql')
+          mk('Sql')
             ->table('account', 'PasswordResetTokens')
             ->where('dt_expiry', '>', time())
             ->execute()
@@ -292,26 +292,26 @@ class Json extends \dependencies\BaseComponent
             });
           
           //Now create a new one.
-          $token = tx('Sql')
+          $token = mk('Sql')
             ->model('account', 'PasswordResetTokens')
             ->generate($user->id)
             ->save();
           
           //Send it.
           $subject = __($com_name, 'Password reset', 1);
-          $body = tx('Component')->views('account')->get_html('email_password_reset_token', array(
+          $body = mk('Component')->views('account')->get_html('email_password_reset_token', array(
             'email' => $user->email->get(),
             'site_url' => url('/', true)->output,
-            'site_name' => tx('Config')->user('site_name')->otherwise(url('/', true)->output),
-            'ipa' => tx('Data')->server->REMOTE_ADDR,
-            'user_agent' => tx('Data')->server->HTTP_USER_AGENT,
+            'site_name' => mk('Config')->user('site_name')->otherwise(url('/', true)->output),
+            'ipa' => mk('Data')->server->REMOTE_ADDR,
+            'user_agent' => mk('Data')->server->HTTP_USER_AGENT,
             'target_url' => url('/?action=account/use_password_reset_token/get&token='.$token->token->get(), true)
           ));
           
           //Use fancy method to send if it's available.
-          if(tx('Component')->available('mail')){
+          if(mk('Component')->available('mail')){
             
-            tx('Component')->helpers('mail')->send_fleeting_mail(array(
+            mk('Component')->helpers('mail')->send_fleeting_mail(array(
               'to' => array('name'=>$user->info->full_name->get(), 'email'=>$user->email->get()),
               'from' => array('name'=>EMAIL_NAME_AUTOMATED_MESSAGES, 'email'=>EMAIL_ADDRESS_AUTOMATED_MESSAGES),
               'subject' => $subject,
@@ -338,18 +338,18 @@ class Json extends \dependencies\BaseComponent
         ->failure(function()use($data, $com_name){
           
           $subject = __($com_name, 'Password reset', 1);
-          $body = tx('Component')->views('account')->get_html('email_password_reset_no_account', array(
+          $body = mk('Component')->views('account')->get_html('email_password_reset_no_account', array(
             'email' => $data->email->get(),
             'site_url' => url('/', true)->output,
-            'site_name' => tx('Config')->user('site_name')->otherwise(url('/', true)->output),
-            'ipa' => tx('Data')->server->REMOTE_ADDR,
-            'user_agent' => tx('Data')->server->HTTP_USER_AGENT
+            'site_name' => mk('Config')->user('site_name')->otherwise(url('/', true)->output),
+            'ipa' => mk('Data')->server->REMOTE_ADDR,
+            'user_agent' => mk('Data')->server->HTTP_USER_AGENT
           ));
           
           //Use fancy method to send if it's available.
-          if(tx('Component')->available('mail')){
+          if(mk('Component')->available('mail')){
             
-            tx('Component')->helpers('mail')->send_fleeting_mail(array(
+            mk('Component')->helpers('mail')->send_fleeting_mail(array(
               'to' => array('email'=>$data->email->get()),
               'from' => array('name'=>EMAIL_NAME_AUTOMATED_MESSAGES, 'email'=>EMAIL_ADDRESS_AUTOMATED_MESSAGES),
               'subject' => $subject,
@@ -373,7 +373,7 @@ class Json extends \dependencies\BaseComponent
         });
       
     }catch(\Exception $ex){
-      tx('Logging')->log('Account', 'Password reset request', 'Exception occurred: '.$ex->getMessage());
+      mk('Logging')->log('Account', 'Password reset request', 'Exception occurred: '.$ex->getMessage());
     }
     
     return array(
@@ -381,12 +381,17 @@ class Json extends \dependencies\BaseComponent
     );
     
   }
-  
+
+  // Alias for create_password_reset_request
+  protected function post_password_reset_request($data, $sub_routes, $options){
+    return $this->create_password_reset_request($data, $sub_routes);
+  }
+
   protected function update_password($data, $parameters)
   {
     
     //See if a password should have been given.
-    if(!tx('Component')->helpers('account')->should_claim())
+    if(!mk('Component')->helpers('account')->should_claim())
       throw new \exception\Validation('You have already claimed this account.');
     
     //Validate.
@@ -401,17 +406,17 @@ class Json extends \dependencies\BaseComponent
     });
     
     //Get salt and algorithm.
-    $data->salt = tx('Security')->random_string();
-    $data->hashing_algorithm = tx('Security')->pref_hash_algo();
+    $data->salt = mk('Security')->random_string();
+    $data->hashing_algorithm = mk('Security')->pref_hash_algo();
     
     //Hash using above information.
-    $data->password = tx('Security')->hash(
+    $data->password = mk('Security')->hash(
       $data->salt->get() . $data->password->get(),
       $data->hashing_algorithm
     );
     
     //Get the old user model from the database.
-    $user = tx('Sql')->table('account', 'Accounts')->pk(tx('Account')->user->id)->execute_single()
+    $user = mk('Sql')->table('account', 'Accounts')->pk(mk('Account')->user->id)->execute_single()
     
     //If it's empty, throw an exception.
     ->is('empty', function(){
@@ -453,7 +458,7 @@ class Json extends \dependencies\BaseComponent
     {
       
       //Invite the user.
-      $user = tx('Component')->helpers('account')->call('invite_user', array(
+      $user = mk('Component')->helpers('account')->call('invite_user', array(
         'email' => $data->email,
         'username' => $data->username,
         'level' => $data->level,
@@ -473,7 +478,7 @@ class Json extends \dependencies\BaseComponent
     {
 
       //Create the user.
-      $user = tx('Component')->helpers('account')->call('create_user', array(
+      $user = mk('Component')->helpers('account')->call('create_user', array(
         'email' => $data->email,
         'username' => $data->username,
         'password' => $data->password,
@@ -495,14 +500,14 @@ class Json extends \dependencies\BaseComponent
       {
         
         //Send email.
-        tx('Component')->helpers('mail')->send_fleeting_mail(array(
+        mk('Component')->helpers('mail')->send_fleeting_mail(array(
           'to' => $data->username.' <'.$user->email.'>',
           'subject' => __('Account created', 1),
-          'html_message' => tx('Component')->views('account')->get_html('email_user_created', $data->having('email', 'username', 'user_id', 'level'))
+          'html_message' => mk('Component')->views('account')->get_html('email_user_created', $data->having('email', 'username', 'user_id', 'level'))
         ))
         
         ->failure(function($info){
-          tx('Controller')->message(array(
+          mk('Controller')->message(array(
             'error' => $info->get_user_message()
           ));
         }); 
@@ -532,11 +537,11 @@ class Json extends \dependencies\BaseComponent
     ->success(function()use(&$data){
       
       //Get salt and algorithm.
-      $data->salt = tx('Security')->random_string();
-      $data->hashing_algorithm = tx('Security')->pref_hash_algo();
+      $data->salt = mk('Security')->random_string();
+      $data->hashing_algorithm = mk('Security')->pref_hash_algo();
       
       //Hash using above information.
-      $data->password = tx('Security')->hash(
+      $data->password = mk('Security')->hash(
         $data->salt->get() . $data->password->get(),
         $data->hashing_algorithm
       );
@@ -549,7 +554,7 @@ class Json extends \dependencies\BaseComponent
     });
     
     //Get the old user model from the database.
-    $user = tx('Sql')->table('account', 'Accounts')->pk($data->id)->execute_single()
+    $user = mk('Sql')->table('account', 'Accounts')->pk($data->id)->execute_single()
     
     //If it's empty, throw an exception.
     ->is('empty', function(){
@@ -566,14 +571,14 @@ class Json extends \dependencies\BaseComponent
     ->save();
     
     //Get the old user information from the database.
-    tx('Sql')->table('account', 'UserInfo')->pk($user->id)->execute_single()
+    mk('Sql')->table('account', 'UserInfo')->pk($user->id)->execute_single()
     
     //Test if it's empty.
     ->is('empty')
     
     //If it was, en thus does not exist, create a new row.
     ->success(function($user_info)use($data, $user){
-      tx('Sql')->model('account', 'UserInfo')->set($data->having('name', 'preposition', 'family_name', 'comments')->merge($user->having(array('user_id'=>'id'))))->save();
+      mk('Sql')->model('account', 'UserInfo')->set($data->having('name', 'preposition', 'family_name', 'comments')->merge($user->having(array('user_id'=>'id'))))->save();
     })
     
     //If it already exists, merely update the row.
@@ -598,11 +603,11 @@ class Json extends \dependencies\BaseComponent
     
     $resultset = Data();
     
-    tx('Sql')
+    mk('Sql')
       ->table('account', 'Accounts')
       ->join('UserInfo', $ui)
       ->where("(`$ui.status` & (1|4))", '>', 0)
-      ->where(tx('Sql')->conditions()
+      ->where(mk('Sql')->conditions()
         ->add('1', array('email', '|', "'%{$parameters->{0}}%'"))
         ->add('2', array("$ui.name", '|', "'%{$parameters->{0}}%'"))
         ->add('3', array("$ui.family_name", '|', "'%{$parameters->{0}}%'"))
@@ -619,7 +624,7 @@ class Json extends \dependencies\BaseComponent
         ));
       });
     
-    tx('Sql')
+    mk('Sql')
       ->table('account', 'UserGroups')
       ->where('title', '|', "'%{$parameters->{0}}%'")
       ->execute()
@@ -642,7 +647,7 @@ class Json extends \dependencies\BaseComponent
     $recievers = Data();
     
     //Add groups.
-    tx('Sql')
+    mk('Sql')
       ->table('account', 'AccountsToUserGroups')
       ->where('user_group_id', $data->group)
       ->join('Accounts', $A)
@@ -655,7 +660,7 @@ class Json extends \dependencies\BaseComponent
       });
     
     //Add individual users.
-    tx('Sql')
+    mk('Sql')
       ->table('account', 'Accounts')
       ->pk($data->user)
       ->join('UserInfo', $UI)
@@ -682,7 +687,7 @@ class Json extends \dependencies\BaseComponent
       $message = $data->message->get();
       
       //If we have autologin component available.
-      if(tx('Component')->available('autologin')){
+      if(mk('Component')->available('autologin')){
         
         //Find all autologin links.
         preg_match_all('~<a[^>]+data-autologin="true"[^>]+>~', $data->message->get(), $autologinElements, PREG_SET_ORDER);
@@ -706,7 +711,7 @@ class Json extends \dependencies\BaseComponent
           }
           
           //Replace the element with the resulting link.
-          $link = tx('Component')->helpers('autologin')->call('generate_autologin_link', $linkParams);
+          $link = mk('Component')->helpers('autologin')->call('generate_autologin_link', $linkParams);
           $message = str_replace($autologinElement[0], '<a class="autologin" data-autologin="true" href="'.$link->output.'">', $message);
           
         }
@@ -714,7 +719,7 @@ class Json extends \dependencies\BaseComponent
       }
       
       //Validate email through mail component.
-      tx('Component')->helpers('mail')->send_fleeting_mail(array(
+      mk('Component')->helpers('mail')->send_fleeting_mail(array(
         'to' => $reciever,
         'subject' => $data->subject->get(),
         'html_message' => $message,
@@ -741,7 +746,7 @@ class Json extends \dependencies\BaseComponent
       }
     });
     
-    tx('Logging')->log('Account', 'Mail sent', 'Sent '.$mailers->size().' email.');
+    mk('Logging')->log('Account', 'Mail sent', 'Sent '.$mailers->size().' email.');
     
   }
   

@@ -1305,7 +1305,7 @@ abstract class BaseModel extends Data
       Loading other models while running this function breaks the static:: call.
       Therefore keep a reference to the value for the length of this function at least.
     */
-    $generatedLabels = static::$generatedLabels;
+    $generatedLabels = $this->labels();
     
     //Filter out what we don't need.
     $data = $this->having(array_keys($generatedLabels));
@@ -1314,7 +1314,7 @@ abstract class BaseModel extends Data
     $nullify = isset($options['nullify']) && $options['nullify'] === true;
     
     //Allow additional rules to be prepended.
-    $ruleSet = array_merge(
+    $ruleSet = array_merge_recursive(
       (isset($options['rules']) ? $options['rules'] : array()),
       static::$validate
     );

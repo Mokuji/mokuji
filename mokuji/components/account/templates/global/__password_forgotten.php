@@ -20,6 +20,7 @@ if(!tx('Data')->session->user->check('login')){
       </div>
       
       <div class="ctrlHolder clearfix">
+        <label><?php __('Security code'); ?></label>
         <?php echo $data->captcha; ?>
       </div>
       

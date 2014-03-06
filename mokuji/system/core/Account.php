@@ -873,7 +873,7 @@ class Account
           {$dt_expiry},
           ".$sql->escape(tx('Data')->server->REMOTE_ADDR).",
           ".$sql->escape(tx('Data')->server->HTTP_USER_AGENT).",
-          NULL
+          DEFAULT
         )
       ");
       

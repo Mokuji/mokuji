@@ -651,7 +651,7 @@ class Helpers extends \dependencies\BaseComponent
                 ->add('to_ics', array("`$S.$local`", "`$T.$foreign`"))
                 
                 //Access level is 2, means any user can only see, when in one of the right groups.
-                ->add('in_my_groups', array("`$T.{$meta->user_group_id_field}`", $groups))
+                ->add('in_my_groups', array("`$T.{$meta->user_group_id_field}`", 'IN', $groups))
                 
                 //Put it together.
                 ->combine('valid_group_paths', array('to_ics', 'in_my_groups'), 'AND')
@@ -741,7 +741,7 @@ class Helpers extends \dependencies\BaseComponent
           
           //Access level 2 means we need to be in the right group.
           ->add('group_check_level', array($access_level, 2))
-          ->add('in_group', array($group_id, $groups))
+          ->add('in_group', array($group_id, 'IN', $groups))
           ->combine('group_member', array('group_check_level', 'in_group'), 'AND')
           
           //Combine these scenario's.
