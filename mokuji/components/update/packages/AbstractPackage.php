@@ -79,10 +79,174 @@ abstract class AbstractPackage
   }
   
   /**
+   * Retrieves the latest available version of this package.
+   * @return string The latest available version of this package.
+   */
+  public function latest_version()
+  {
+    
+    //Try our cache first.
+    if(isset($this->latest_version))
+      return $this->latest_version;
+    
+    //Find the latest version.
+    $latest = Data();
+    
+    //Go over each version.
+    $this->raw_data()->versions->each(function($version)use(&$latest){
+      
+      //Bump latest version if needed.
+      $version->timestamp->set(strtotime($version->date->get()));
+      if($version->timestamp->get() > $latest->timestamp->get())
+        $latest = $version;
+      
+      //The timestamps are the same, try and parse the version name to see which one is more recent.
+      elseif($version->timestamp->get() == $latest->timestamp->get()){
+        
+        if(
+          preg_match('~^(\d+)\.(\d+)\.(\d+)-(stable|beta|alpha)$~', $version->version->get(), $version_in) > 0 &&
+          preg_match('~^(\d+)\.(\d+)\.(\d+)-(stable|beta|alpha)$~', $latest->version->get(), $version_current) > 0
+        ){
+          
+          /*
+            Match them by integers first.
+            Then by stable, beta or alpha, which conveniently is both in alphabetical and version order.
+          */
+          for($index = 1; $index <= 4; $index++){
+            
+            //The first 3 are integers, so compare them as such.
+            if($index < 4){
+              $vin = (int)$version_in[$index];
+              $vcur = (int)$version_current[$index];
+            }
+            
+            //The last ones are strings.
+            else {
+              $vin = $version_in[$index];
+              $vcur = $version_current[$index];
+            }
+            
+            if($vin > $vcur){
+              $latest = $version;
+              break;
+            }
+            
+          }
+          
+        }
+        
+      }
+      
+    });
+    
+    //Store the latest version by name only.
+    $this->latest_version = $latest->version->otherwise(false)->get();
+    return $this->latest_version;
+    
+  }
+  
+  /**
+   * Retrieves the currently installed version of this package.
+   * @return string The currently installed version of this package.
+   */
+  public function current_version(){
+    return $this->model()->installed_version->get('string');
+  }
+  
+  /**
    * Update the update system information to match the package information.
    * @return boolean Whether or not syncing was completed successfully.
    */
-  abstract public function synchronize();
+  public function synchronize()
+  {
+    
+    //Find the package.
+    $dbPackage = $this->model();
+    
+    //Update the package data.
+    $dbPackage->merge(array(
+      'title' => $this->raw_data()->title,
+      'type' => static::TYPE_ID,
+      'description' => $this->raw_data()->description
+    ))->save();
+    
+    //Update the versions and their changes.
+    $this->raw_data()->versions->each(function($version)use($dbPackage){
+      
+      //Try find this version.
+      $dbVersion = mk('Sql')
+        ->table('update', 'PackageVersions')
+        ->where('package_id', $dbPackage->id)
+        ->where('version', "'{$version->version}'")
+        ->execute_single()
+        
+        //If it doesn't exist, create it now.
+        ->is('empty', function()use($version, $dbPackage){
+          
+          $dbVersion = mk('Sql')
+            ->model('update', 'PackageVersions')
+            ->set($version->having('version', 'date', 'description'))
+            ->package_id->set($dbPackage->id)->back()
+            ->save();
+          
+          //Insert the changes of this version.
+          $version->changes->each(function($change)use($dbVersion){
+            
+            mk('Sql')
+              ->model('update', 'PackageVersionChanges')
+              ->set($change->having('title', 'description', 'url'))
+              ->url->is('empty', function($url){ $url->set('NULL'); })->back()
+              ->package_version_id->set($dbVersion->id)->back()
+              ->save();
+            
+          });
+          
+        })
+        
+        //Otherwise, only update the information.
+        ->failure(function($dbVersion)use($version, $dbPackage){
+          
+          //First the version itself.
+          $dbVersion
+            ->merge($version->having('date', 'description'))
+            ->save();
+          
+          //Then the changes.
+          //Note: to prevent ridiculous auto incrementing, treat existing changes as an ID pool.
+          $dbChanges = $dbVersion->get_changes()->get('array');
+          
+          $version->changes->each(function($change)use($dbVersion, &$dbChanges){
+            
+            $dbChange = array_shift($dbChanges);
+            
+            //When we exhausted our ID pool.
+            if(!$dbChange){
+              $dbChange = mk('Sql')
+                ->model('update', 'PackageVersionChanges')
+                ->set(array(
+                  'package_version_id' => $dbVersion->id
+                ));
+            }
+            
+            //Update our stuff.
+            $dbChange
+              ->merge($change->having('title', 'description', 'url'))
+              ->url->is('empty', function($url){ $url->set('NULL'); })->back()
+              ->save();
+            
+          });
+          
+          //Delete any changes left in our ID pool. We apparently have less changes than before.
+          while($dbChange = array_shift($dbChanges))
+            $dbChange->delete();
+          
+        });
+      
+    });
+    
+    return true;
+    
+  }
   
   /**
    * Perform an update to the latest version of the package.
@@ -103,18 +267,6 @@ abstract class AbstractPackage
    * @return \dependencies\Data The raw package data.
    */
   abstract public function raw_data();
-  
-  /**
-   * Retrieves the currently installed version of this package.
-   * @return string The currently installed version of this package.
-   */
-  abstract public function current_version();
-  
-  /**
-   * Retrieves the latest available version of this package.
-   * @return string The latest available version of this package.
-   */
-  abstract public function latest_version();
   
   /**
    * Determines the next version that should be installed in the update order defined.
