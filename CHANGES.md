@@ -1,3 +1,8 @@
+#### [Version 0.31.0 Beta](https://github.com/Tuxion/mokuji/tree/0.31.0-beta)
+_07-Mar-2014_
+
+* README.md can now be used for themes and templates as package information.
+
 #### [Version 0.30.0 Beta](https://github.com/Tuxion/mokuji/tree/0.30.0-beta)
 _07-Feb-2014_
 

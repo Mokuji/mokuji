@@ -51,7 +51,7 @@
 * [`private mixed _phonenumber($countrycode)`](#method-_phonenumber)
 * [`private mixed _required()`](#method-_required)
 * [`private mixed _string()`](#method-_string)
-* [`private mixed _url()`](#method-_url)
+* [`private mixed _url($type)`](#method-_url)
 * [`private mixed ctransf()`](#method-ctransf)
 
 
@@ -906,7 +906,7 @@ mixed dependencies\Validator::_string()
 In class: [dependencies\Validator](#top)
 
 ```
-mixed dependencies\Validator::_url()
+mixed dependencies\Validator::_url($type)
 ```
 
 
@@ -914,6 +914,10 @@ mixed dependencies\Validator::_url()
 
 
 * Visibility: **private**
+
+#### Arguments
+
+* $type **mixed**
 
 
 
