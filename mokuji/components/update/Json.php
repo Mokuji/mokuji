@@ -2,6 +2,9 @@
 
 use \PDO;
 use components\update\tasks\CoreUpdates;
+use \components\update\packages\ReadmePackage;
+use \components\update\packages\PackageFactory;
+use \components\update\enums\PackageType;
 
 class Json extends \dependencies\BaseViews
 {

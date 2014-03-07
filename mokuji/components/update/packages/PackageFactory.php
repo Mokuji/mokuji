@@ -1,4 +1,4 @@
-<?php namespace components\update\classes; if(!defined('MK')) die('No direct access.');
+<?php namespace components\update\packages; if(!defined('MK')) die('No direct access.');
 
 use \components\update\enums\PackageType;
 
@@ -53,8 +53,13 @@ abstract class PackageFactory
         
     }
     
-    #TODO: We only have one package class so far. Later on, detect the differences.
-    $package = new ManualPackage($type, $name);
+    //Use the check function to detect package types.
+    //The order matters here, advanced types take priority over simpler types.
+    if    (ManualPackage::check($type, $name)) $package = new ManualPackage($type, $name);
+    elseif(ReadmePackage::check($type, $name)) $package = new ReadmePackage($type, $name);
+    
+    //Don't use caching for when no package is matched.
+    else return null;
     
     //Now cache this package.
     switch ($type) {

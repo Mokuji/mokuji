@@ -28,6 +28,7 @@ class PackageVersions extends \dependencies\BaseModel
     return tx('Sql')
       ->table('update', 'PackageVersionChanges')
       ->where('package_version_id', $this->id)
+      ->order('id')
       ->execute();
     
   }
