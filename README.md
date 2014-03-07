@@ -42,6 +42,11 @@ Ready to rock.
 * [Users manual](http://manual.mokuji.net/)
 * [Development documentation](http://development.mokuji.net/)
 
+_Developers note:_
+
+Please use `git config --global merge.ff false` to ensure merges maintain branch history.
+See details [here](http://nvie.com/posts/a-successful-git-branching-model/) as to why.
+
 ## Updates
 
 * [Blog](http://blog.mokuji.net/)

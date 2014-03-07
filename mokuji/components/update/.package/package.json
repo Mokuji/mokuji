@@ -10,9 +10,9 @@
       "description": "Readme is nu te gebruiken als paket informatie voor thema's en templates.",
       "changes": [
         {
-          "title": "#TODO",
-          "description": "",
-          "url": "http://dev.mokuji.net/101"
+          "title": "Het README.md formaat",
+          "description": "Informatie over hoe dit formaat werkt is te vinden op de volgende pagina.",
+          "url": "http://dev.mokuji.net/nl/readme-md"
         }
       ]
     },
