@@ -221,7 +221,7 @@ class ReadmePackage extends AbstractPackage
     }
     
     //If we have a next version to update to.
-    if($this->next_version() || $this->current_version() === ''){
+    if($this->next_version()){
       
       //Go straight to the target version.
       return $this->version_bump($this->next_version()) || $modified;
@@ -290,10 +290,11 @@ class ReadmePackage extends AbstractPackage
    * @param boolean $allow_sync Whether or not to allow the package to be synced, to obtain version information.
    * @return boolean Whether or not the version update was successful.
    */
-  public function version_bump($version, $allow_sync=false){
+  public function version_bump($version, $allow_sync=false)
+  {
     
     $self = $this;
-
+    
     raw($version);
     
     //If we can sync, why not do so?

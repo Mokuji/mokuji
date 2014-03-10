@@ -5,6 +5,18 @@
   "dbUpdates": true,
   "versions": [
     {
+      "version": "0.5.0-beta",
+      "date": "2014-03-07",
+      "description": "Readme is nu te gebruiken als paket informatie voor thema's en templates.",
+      "changes": [
+        {
+          "title": "Het README.md formaat",
+          "description": "Informatie over hoe dit formaat werkt is te vinden op de volgende pagina.",
+          "url": "http://dev.mokuji.net/nl/readme-md"
+        }
+      ]
+    },
+    {
       "version": "0.4.1-beta",
       "date": "2013-09-03",
       "description": "Bug opgelost bij het invoegen van nieuwe pakketten.",

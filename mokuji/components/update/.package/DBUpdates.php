@@ -7,14 +7,15 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
     $component = 'update',
     $updates = array(
       '1.1' => '1.2',
-      '1.2'        => '0.3.0-beta', //No DB changes.
-      '0.2.0-beta' => '0.3.0-beta', //No DB changes.
-      '0.2.1-beta' => '0.3.0-beta', //No DB changes.
-      '0.2.2-beta' => '0.3.0-beta', //No DB changes.
-      '0.2.3-beta' => '0.3.0-beta', //No DB changes.
-      '0.2.4-beta' => '0.3.0-beta', //No DB changes.
+      '1.2'        => '0.4.0-beta', //No DB changes.
+      '0.2.0-beta' => '0.4.0-beta', //No DB changes.
+      '0.2.1-beta' => '0.4.0-beta', //No DB changes.
+      '0.2.2-beta' => '0.4.0-beta', //No DB changes.
+      '0.2.3-beta' => '0.4.0-beta', //No DB changes.
+      '0.2.4-beta' => '0.4.0-beta', //No DB changes.
       '0.3.0-beta' => '0.4.0-beta',
-      '0.4.0-beta' => '0.4.1-beta' //No DB changes.
+      '0.4.0-beta' => '0.5.0-beta', //No DB changes.
+      '0.4.1-beta' => '0.5.0-beta' //No DB changes.
     );
   
   public function update_to_0_4_0_beta($current_version, $forced)
