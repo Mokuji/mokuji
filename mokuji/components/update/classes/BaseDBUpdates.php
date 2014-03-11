@@ -1,7 +1,7 @@
 <?php namespace components\update\classes; if(!defined('TX')) die('No direct access.');
 
 use \components\update\enums\PackageType;
-use \components\update\classes\PackageFactory;
+use \components\update\packages\PackageFactory;
 
 abstract class BaseDBUpdates
 {

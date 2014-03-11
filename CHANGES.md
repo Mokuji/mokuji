@@ -1,3 +1,19 @@
+#### [Version 0.31.0 Beta](https://github.com/Tuxion/mokuji/tree/0.31.0-beta)
+_07-Mar-2014_
+
+* README.md can now be used for themes and templates as package information.
+  See the developement page [README.md](http://dev.mokuji.net/en/readme-md).
+* The password forgotten functionality now respects custom login page settings.
+* Bugfixes:
+    - The `BaseModel->validate_model` function now handles the `rules` option properly.
+    - The `url` validation rule now has the option `"url" => "web"` to use a more robust external URL validator ([from Gruber](https://gist.github.com/gruber/8891611)).
+    - `validate_model` no longer breaks on `$generatedLabels` not being populated yet.
+    - Fixed a regex bug where `/admin-anything` would still show the backend.
+    - Added the `text-item` class to text items in the frontend.
+    - Fixed a PHP 5.5.9 bug that caused image sharpening to make images extremely bright.
+    - Now using explicit `DEFAULT` on insert statement that caused MySQL to throw an error on specific environments during login. (Fixes [#64](https://github.com/Mokuji/mokuji/issues/64))
+    - Fixed a problem with `account`'s query helpers causing errors when members were part of multiple groups.
+
 #### [Version 0.30.0 Beta](https://github.com/Tuxion/mokuji/tree/0.30.0-beta)
 _07-Feb-2014_
 

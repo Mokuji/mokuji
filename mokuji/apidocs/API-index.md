@@ -117,10 +117,7 @@
         * [Sections](components/update/Sections.md)
         * [Views](components/update/Views.md)
         * **components\update\classes**
-            * [AbstractPackage](components/update/classes/AbstractPackage.md)
             * [BaseDBUpdates](components/update/classes/BaseDBUpdates.md)
-            * [ManualPackage](components/update/classes/ManualPackage.md)
-            * [PackageFactory](components/update/classes/PackageFactory.md)
         * **components\update\enums**
             * [PackageType](components/update/enums/PackageType.md)
         * **components\update\models**
@@ -128,6 +125,11 @@
             * [PackageVersions](components/update/models/PackageVersions.md)
             * [Packages](components/update/models/Packages.md)
             * [UserLastReads](components/update/models/UserLastReads.md)
+        * **components\update\packages**
+            * [AbstractPackage](components/update/packages/AbstractPackage.md)
+            * [ManualPackage](components/update/packages/ManualPackage.md)
+            * [PackageFactory](components/update/packages/PackageFactory.md)
+            * [ReadmePackage](components/update/packages/ReadmePackage.md)
         * **components\update\tasks**
             * [CoreUpdates](components/update/tasks/CoreUpdates.md)
 * **core**

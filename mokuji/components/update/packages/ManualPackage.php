@@ -1,9 +1,15 @@
-<?php namespace components\update\classes; if(!defined('MK')) die('No direct access.');
+<?php namespace components\update\packages; if(!defined('MK')) die('No direct access.');
 
 use \components\update\enums\PackageType;
 
 class ManualPackage extends AbstractPackage
 {
+  
+  /**
+   * The type ID used in the packages table.
+   * @var int
+   */
+  const TYPE_ID = 0;
   
   /**
    * The latest version as defined by the raw package data.
@@ -18,6 +24,19 @@ class ManualPackage extends AbstractPackage
   protected $db_updates;
   
   /**
+   * Checks whether the requirements are met for this type of Package.
+   * @return boolean
+   */
+  public static function check($type, $name=null)
+  {
+    
+    //There should be a package.json file in the .package directory for this type.
+    $directory = PackageFactory::directory($type, $name);
+    return is_file($directory.DS.'.package'.DS.'package.json');
+    
+  }
+  
+  /**
    * Create a new instance.
    * @param \components\update\enums\PackageType $type The type of package the instance will refer to.
    * @param string $name The name of the package the instance will refer to.
@@ -27,49 +46,8 @@ class ManualPackage extends AbstractPackage
     
     parent::__construct($type, $name);
     
-    //Find the latest version.
-    $latest = Data();
-    
     if(!$this->raw_data()->type->get('string') === 'manual')
       throw new \exception\Programmer('ManualPackage class used for a package of type %s', $this->raw_data()->type->get('string'));
-    
-    //Go over each version.
-    $this->raw_data()->versions->each(function($version)use(&$latest){
-      
-      //Bump latest version if needed.
-      $version->timestamp->set(strtotime($version->date->get()));
-      if($version->timestamp->get() > $latest->timestamp->get())
-        $latest = $version;
-      
-      //The timestamps are the same, try and parse the version name to see which one is more recent.
-      elseif($version->timestamp->get() == $latest->timestamp->get()){
-        
-        if(
-          preg_match('~^(\d+)\.(\d+)\.(\d+)-(stable|beta|alpha)$~', $version->version->get(), $version_in) > 0 &&
-          preg_match('~^(\d+)\.(\d+)\.(\d+)-(stable|beta|alpha)$~', $latest->version->get(), $version_current) > 0
-        ){
-          
-          /*
-            Match them by integers first.
-            Then by stable, beta or alpha, which conveniently is both in alphabetical and version order.
-          */
-          for($index = 1; $index < 5; $index++){
-            
-            if((int)$version_in[$index] > (int)$version_current[$index]){
-              $latest = $version;
-              break;
-            }
-            
-          }
-          
-        }
-        
-      }
-      
-    });
-    
-    //Store the latest version by name only.
-    $this->latest_version = $latest->version->otherwise(false)->get();
     
     //Check whether database updates are present.
     $this->db_updates = $this->raw_data()->dbUpdates->get('boolean');
@@ -80,58 +58,9 @@ class ManualPackage extends AbstractPackage
    * Update the update system information to match the package information.
    * @return boolean Whether or not syncing was completed successfully.
    */
-  public function synchronize()
-  {
-    
+  public function synchronize(){
     mk('Logging')->log('ManualPackage', 'Syncing', $this->raw_data()->title);
-    
-    //Find the package.
-    $dbPackage = $this->model();
-    
-    //Update the package data.
-    $dbPackage->merge(array(
-      'title' => $this->raw_data()->title,
-      'type' => 0, //manual type
-      'description' => $this->raw_data()->description
-    ))->save();
-    
-    //Update the versions and their changes.
-    $this->raw_data()->versions->each(function($version)use($dbPackage){
-      
-      //Try find this version.
-      $dbVersion = mk('Sql')
-        ->table('update', 'PackageVersions')
-        ->where('package_id', $dbPackage->id)
-        ->where('version', "'{$version->version}'")
-        ->execute_single()
-        
-        //If it doesn't exist, create it now.
-        ->is('empty', function()use($version, $dbPackage){
-          
-          $dbVersion = mk('Sql')
-            ->model('update', 'PackageVersions')
-            ->set($version->having('version', 'date', 'description'))
-            ->package_id->set($dbPackage->id)->back()
-            ->save();
-          
-          //Insert the changes of this version.
-          $version->changes->each(function($change)use($dbVersion){
-            
-            mk('Sql')
-              ->model('update', 'PackageVersionChanges')
-              ->set($change->having('title', 'description', 'url'))
-              ->url->is('empty', function($url){ $url->set('NULL'); })->back()
-              ->package_version_id->set($dbVersion->id)->back()
-              ->save();
-            
-          });
-          
-        });
-      
-    });
-    
-    return true;
-    
+    return parent::synchronize();
   }
   
   /**
@@ -147,7 +76,7 @@ class ManualPackage extends AbstractPackage
       $this->synchronize();
     
     //If we have a next version to update to.
-    if($this->next_version() || $this->current_version() === ''){
+    if($this->next_version() !== false || $this->current_version() === ''){
       
       //And we have DB updates...
       if($this->db_updates()){
@@ -190,14 +119,6 @@ class ManualPackage extends AbstractPackage
   }
   
   /**
-   * Gets the (absolute) base directory of this package.
-   * @return string The base directory of this package.
-   */
-  public function directory(){
-    return PackageFactory::directory($this->type, $this->name);
-  }
-  
-  /**
    * Retrieves the raw package data from the package files.
    * @return \dependencies\Data The raw package data.
    */
@@ -222,22 +143,6 @@ class ManualPackage extends AbstractPackage
   }
   
   /**
-   * Retrieves the currently installed version of this package.
-   * @return string The currently installed version of this package.
-   */
-  public function current_version(){
-    return $this->model()->installed_version->get('string');
-  }
-  
-  /**
-   * Retrieves the latest available version of this package.
-   * @return string The latest available version of this package.
-   */
-  public function latest_version(){
-    return $this->latest_version;
-  }
-  
-  /**
    * Determines the next version that should be installed in the update order defined.
    * @param  string $version The version that is currently installed.
    * @return string The version that should be installed next.
@@ -246,7 +151,7 @@ class ManualPackage extends AbstractPackage
   {
     
     //When there are no DB updates, there is no upgrade order.
-    if(!$this->db_updates)
+    if(!$this->db_updates())
     {
       
       //If we're already at the latest version, don't do anything.
@@ -279,7 +184,7 @@ class ManualPackage extends AbstractPackage
     raw($version);
     
     //We need to clear this cache regularly, because otherwise this may mess up the ORM during install.
-    if($this->db_updates){
+    if($this->db_updates()){
       \dependencies\BaseModel::clear_table_data_cache();
     }
     
@@ -307,10 +212,12 @@ class ManualPackage extends AbstractPackage
       'installed_version_date' => $version->date
     ))->save();
     
+    return true;
+    
   }
   
   /**
-   * Gets an instance of the DBUpdates class associated with this package, or null if not DBUpdates are used.
+   * Gets an instance of the DBUpdates class associated with this package, or null if DBUpdates are not used.
    * @return mixed The DBUpdates instance or null.
    */
   public function db_updates()
@@ -349,6 +256,9 @@ class ManualPackage extends AbstractPackage
     //We can only do manual types.
     if($this->raw_data()->type->get() !== 'manual')
       throw new \exception\Exception('Package type other than manual has not been implemented yet.');
+    
+    //Empty model, used for checks later on.
+    $model = Data();
     
     //Reference this instance.
     $that = $this;
@@ -453,7 +363,7 @@ class ManualPackage extends AbstractPackage
       return mk('Sql')->model('update', 'Packages')->set(array(
         'title' => $this->raw_data()->title,
         'description' => $this->raw_data()->description,
-        'type' => 0,
+        'type' => self::TYPE_ID,
         'reference_id' => $reference
       ));
       

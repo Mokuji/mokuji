@@ -1,4 +1,4 @@
-#Mokuji (目次) - Version 0.30.0 Beta
+#Mokuji (目次) - Version 0.31.0 Beta
 
 * [Main site](http://mokuji.net/)
 * [Forum](http://forum.mokuji.net/)
@@ -42,6 +42,11 @@ Ready to rock.
 * [Users manual](http://manual.mokuji.net/)
 * [Development documentation](http://development.mokuji.net/)
 
+_Developers note:_
+
+Please use `git config --global merge.ff false` to ensure merges maintain branch history.
+See details [here](http://nvie.com/posts/a-successful-git-branching-model/) as to why.
+
 ## Updates
 
 * [Blog](http://blog.mokuji.net/)
@@ -62,7 +67,7 @@ The change-log can be found in `CHANGES.md` in this directory.
 * __cms__       : 0.7.1-beta
 * __menu__      : 0.3.1-beta
 * __text__      : 0.2.1-beta
-* __update__    : 0.4.1-beta
+* __update__    : 0.5.0-beta
 * __security__  : 0.1.0-beta
 * __timeline__  : 0.1.0-beta
 * __backup__    : 0.1.0-beta
