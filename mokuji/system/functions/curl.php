@@ -1,6 +1,6 @@
 <?php if(!defined('TX')) die('No direct access.');
 
-function curl_call($url, $post=array())
+function curl_call($url, $post=array(), $cookie_file=null)
 {
   
   raw($url, $post);
@@ -26,6 +26,12 @@ function curl_call($url, $post=array())
   
   //Take the URL and post fields from arguments.
   $options[CURLOPT_URL] = $url;
+  
+  //Cookies?
+  if($cookie_file){
+    $options[CURLOPT_COOKIEFILE] = $cookie_file;
+    $options[CURLOPT_COOKIEJAR] = $cookie_file;
+  }
   
   //Only set postfields if they are present.
   if(isset($post) && is_array($post) && count($post) > 0)
