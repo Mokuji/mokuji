@@ -1,17 +1,13 @@
-<?php namespace core; if(!defined('TX')) die('No direct access.');
+<?php namespace core; if(!defined('MK')) die('No direct access.');
+
+use \dependencies\account\AuthenticationTasks;
+use \dependencies\account\CookieTasks;
 
 /**
  * Handles the basic account operations and manages the users session.
  */
 class Account
 {
-  
-  /**
-   * The duration in seconds a "remember-me" cookie may be valid for.
-   * Value: 7 days.
-   * @var int
-   */
-  const PERSISTENT_COOKIE_DURATION = 604800;
   
   /**
    * The basic user information for the current session.
@@ -32,125 +28,34 @@ class Account
     //append user object for easy access
     $this->user =& tx('Data')->session->user;
     
-    //In case we just moved to this fresh session from a persistent authentication cookie.
-    if(mk('Data')->session->mk->remove_rebase_tokens->is_true())
-    {
-      
-      mk('Logging')->log('Account', 'Rebase tokens', 'Cleaning for '.mk('Sql')->escape(mk('Session')->id));
-      
-      mk('Sql')->execute_non_query(
-        "DELETE FROM `#__core_user_persistent_authentication_tokens` ".
-        "WHERE `rebase_session_id`=".mk('Sql')->escape(mk('Session')->id)
-      );
-      
-      mk('Data')->session->mk->remove_rebase_tokens->un_set();
-      
-    }
+    //Allow the cookie system to clean up.
+    CookieTasks::cleanSessionRebase();
     
     //User is not logged in? Proceed to try log them in using an authentication cookie.
     if(!$this->user->check('login')){
-      $this->login_cookie();
+      CookieTasks::tryLogin();
       return;
     }
     
-    //Backwards compatibility with old login method.
-    if(tx('Sql')->execute_single("SHOW TABLES LIKE '#__core_user_logins'")->is_empty())
-    {
-      
-      //Get the current user session from the database.
-      tx('Sql')->execute_scalar(
-        "SELECT id FROM `#__core_users` WHERE id = {$this->user->id} AND session = ".tx('Sql')->escape(tx('Session')->id)
-      )
-      
-      //No exist? Shoo!
-      ->is('empty', function(){
-        tx('Account')->logout();
-      });
-      
-      //Progress user activity.
-      tx('Data')->server->REQUEST_TIME->copyto($this->user->activity);
-      
-      //Cut if off here, because the other stuff is for the people who update their databases.
+    //Double check the session.
+    $session = AuthenticationTasks::verifySession($this->user)
+    if($session === false){
+      $this->logout();
       return;
-      
     }
     
-    //Get active login sessions from the database.
-    $login = tx('Sql')->execute_single("
-      SELECT * FROM `#__core_user_logins`
-      WHERE 1
-        AND user_id = '{$this->user->id}'
-        AND (dt_expiry IS NULL OR dt_expiry > '".date('Y-m-d H:i:s')."')
-        AND session_id = ".tx('Sql')->escape(tx('Session')->id)."
-    ");
-    
-    //No login data found? Away with you!
-    if($login->is_empty()){
-      tx('Logging')->log('Core', 'Account check', 'Logged out, because there is no login session.');
-      $lastlogin = tx('Sql')->table('account', 'UserLogins')
-        ->where('user_id', $this->user->id)
-        ->order('date', 'DESC')->limit(1)
-        ->execute_single();
-      tx('Logging')->log('Core', 'Account check', 'Last login dump: '.$lastlogin->dump());
-      return $this->logout();
-    }
-    
+    #TODO: Make this prettier.
     //This means we're logged in.
     //Check for https in the on-login mode.
-    if(tx('Config')->user('tls_mode')->get() === 'logged-in' && tx('Url')->url->segments->scheme->get() !== 'https')
-      tx('Url')->redirect(url('')->segments->merge(array('scheme' => 'https'))->back()->rebuild_output());
+    if(mk('Config')->user('tls_mode')->get() === 'logged-in' && mk('Url')->url->segments->scheme->get() !== 'https')
+      mk('Url')->redirect(url('')->segments->merge(array('scheme' => 'https'))->back()->rebuild_output());
     
-    //Check if we're interested in shared sessions.
-    if(tx('Config')->user()->check('log_shared_login_sessions'))
-    {
-      
-      //Get the exact same session.
-      $session = tx('Sql')->execute_scalar("
-        SELECT id FROM `#__core_user_logins`
-        WHERE 1
-          AND user_id = {$this->user->id}
-          AND session_id = ".tx('Sql')->escape(tx('Session')->id)."
-          AND IPv4 = '".tx('Data')->server->REMOTE_ADDR."'
-          AND user_agent = ".tx('Sql')->escape(tx('Data')->server->HTTP_USER_AGENT)."
-      ");
-      
-      //Is the same session being used in a different environment?
-      if($session->is_empty())
-      {
-        
-        //Log it.
-        tx('Sql')->query("
-          INSERT INTO `#__core_user_login_shared_sessions` VALUES(
-            NULL,
-            '{$login->id}',
-            '".tx('Data')->server->REMOTE_ADDR."',
-            ".tx('Sql')->escape(tx('Data')->server->HTTP_USER_AGENT).",
-            NULL
-          )
-        ");
-        
-      }
-      
-    }
+    //Look for session sharing signs.
+    AuthenticationTasks::verifySharedSession($user, $session);
     
-    //Should we update the expiry date?
-    if($login->check('dt_expiry'))
-    {
-      
-      //Get the initial lifetime.
-      $lifetime = strtotime($login->dt_expiry->get('string')) - strtotime($login->date->get('string'));
-      
-      //Create the new expiry date.
-      $dt_expiry = date('Y-m-d H:i:s', time() + $lifetime);
-      
-      //Update it in the database.
-      tx('Sql')->query("UPDATE `#__core_user_logins` SET dt_expiry = '$dt_expiry' WHERE id = '{$login->id}'");
-      tx('Logging')->log('Account', 'Update expiry time', 'From '.$login->dt_expiry.' to '.$dt_expiry.' lifetime was '.$lifetime);
-      
-    }
-    
+    #TODO: Check if this can be deprecated.
     //Progress user activity.
-    tx('Data')->server->REQUEST_TIME->copyto($this->user->activity);
+    mk('Data')->server->REQUEST_TIME->copyto($this->user->activity);
     
   }
   
@@ -252,232 +157,7 @@ class Account
     
     //Log the user in.
     $user->level->set(min($user->level->get(), $ipinfo->login_level->get()));
-    $this->_set_logged_in($user, $expiry_date, $persistent);
-    
-  }
-  
-  /**
-   * Looks for a login cookie, and if present, attempts to log the user in with it.
-   *
-   * @return boolean Whether the user was logged in.
-   */
-  public function login_cookie()
-  {
-    
-    //Get the SQL singleton.
-    $sql = tx('Sql');
-    
-    //Is our database even able to handle persistent log-in stuff?
-    if($sql->execute_single("SHOW TABLES LIKE '#__core_user_persistent_authentication_tokens'")->is_empty()){
-      return false;
-    }
-    
-    //Reference the authentication cookie.
-    $cookie = tx('Data')->cookie->persistent_auth;
-    
-    //Check if it exists. If it doesn't; abort.
-    if(!$cookie->is_set()){
-      return false;
-    }
-    
-    //Parse the cookie.
-    $data = $cookie->split('.')->having(array(
-      'user_id' => 0,
-      'access_token' => 1,
-      'series_token' => 2
-    ));
-    
-    //Look for tokens in this series.
-    $tokens = $sql->execute_query($sql->make_query(''
-      . 'SELECT * FROM #__core_user_persistent_authentication_tokens '
-      . 'WHERE user_id = ? AND series_token = ?'
-      , $data['user_id']
-      , $data['series_token']
-    ));
-    
-    //If there is more than one, that probably means a session rebase is going on.
-    //Find the most appropriate one.
-    if($tokens->size() > 1)
-    {
-      
-      foreach($tokens as $candidate_token)
-      {
-        
-        //If the access_token matches, this takes the win.
-        if($candidate_token->access_token->get() === $data->access_token->get()){
-          $token = $candidate_token;
-          break;
-        }
-        
-        //If this is not a rebase, it's the default value.
-        if(!isset($token) && $candidate_token->rebase_session_id->is_empty()){
-          $token = $candidate_token;
-        }
-        
-      }
-      
-    }
-    
-    //If 0 or 1 results, just use that.
-    else{
-      $token = $tokens->{0};
-    }
-    
-    //Find the user in the database.
-    $user = $sql->execute_single($sql->make_query(''
-      . 'SELECT * FROM #__core_users '
-      . 'WHERE id = ?'
-      , $data['user_id']
-    ));
-    
-    //If either row is not found; remove the cookie and abort.
-    if($token->is_empty() || $user->is_empty()){
-      setcookie('persistent_auth', '', time()-3600, '/'.URL_PATH.'/');
-      $cookie->un_set();
-      return false;
-    }
-    
-    //If the series has had a new access token assigned to it, we can assume cookie theft.
-    if($token->access_token->get() !== $data->access_token->get())
-    {
-      
-      //Get the website title for use in the email.
-      $title = tx('Site')->title;
-      
-      //Warn the user.
-      $mailed = mail(
-        $user->email->get(), 
-        sprintf('%s: Possible security breach.', $title),
-        sprintf(''
-          
-          //The email message.
-          . 'Dear %s,'
-          . n.n
-          . 'It seems you visited %s with an expired authentication cookie (created by '
-          . 'the "remember me" check box).'
-          . n.n
-          . 'The cookie might have expired because some one else has used it to gain '
-          . 'access to your account illegally.'
-          . n
-          . 'Your account has been logged out from all computers, therefore the attacker '
-          . 'will no longer have access to the account without your password.'
-          . n.n
-          . 'The attacker should not have had access to vital actions, as they all '
-          . 'require a password to be provided. To be on the safe-side, however, we '
-          . 'recommend that you change your password.'
-          . n.n
-          . 'To prevent this happening in the future, only use "remember me" on devices '
-          . 'that you trust and don\'t visit dodgy websites that may steal your cookies.'
-          . n.n
-          . 'Our apologies for the inconveniences this may have caused.'
-          . n.n
-          . '-----'
-          . n.n
-          . 'This was an automated message.'
-          
-          //The parameters for insertion into the email message.
-          , ($user->username->is_empty() ? $title.' user' : $user->username)
-          , $title
-          
-        )
-      );
-      
-      //Remove all tokens for this user.
-      $sql->query($sql->make_query(''
-        . 'DELETE FROM #__core_user_persistent_authentication_tokens '
-        . 'WHERE user_id = ?'
-        , $user->id
-      ));
-      
-      //Now.
-      $now = date('Y-m-d H:i:s');
-      
-      //Expire all active login-sessions for this user.
-      $sql->query($sql->make_query(''
-        . 'UPDATE #__core_user_logins '
-        . 'SET dt_expiry = ? '
-        . 'WHERE user_id = ? AND (dt_expiry IS NULL OR dt_expiry < ?)'
-        , $now
-        , $user->id
-        , $now
-      ));
-      
-      //Unset the cookie.
-      setcookie('persistent_auth', '', time()-3600, '/'.URL_PATH.'/');
-      $cookie->un_set();
-      
-      //Warn the user more.
-      #TODO: A nicer way to get this message into the output HTML.
-      print(''
-        . 'WARNING: Your account may have been compromised. '
-        . ($mailed
-            ? 'Please check the email associated with the account. '
-            : 'We failed to send an email about this matter to your account. '
-          )
-        . 'You have been logged out.'
-      );
-      
-      //Abort.
-      return false;
-      
-    }
-    
-    //At this point, we know that the authentication cookie is valid.
-    
-    //Check if we should rebase.
-    if(!$token->rebase_session_id->is_empty()){
-      
-      //Get the main cookie as well.
-      $target = $sql->execute_single($sql->make_query(''
-        . 'SELECT * FROM #__core_user_persistent_authentication_tokens '
-        . 'WHERE user_id = ? AND series_token = ? AND rebase_session_id IS NULL'
-        , $token->user_id
-        , $token->series_token
-      ));
-      
-      //Store it.
-      $target_str = sprintf(
-        '%u.%s.%s',
-        $target->user_id->get(),
-        $target->access_token->get(),
-        $target->series_token->get()
-      );
-      setcookie('persistent_auth', $target_str, (time()+self::PERSISTENT_COOKIE_DURATION), '/'.URL_PATH.'/');
-      
-      $sess = mk('Session');
-      
-      //Close the current session.
-      session_write_close();
-      
-      //Rebase the session.
-      $sess->id = $token->rebase_session_id->get();
-      session_id($sess->id);
-      session_start();
-      
-      //Load the session data into the Data class.
-      mk('Data')->session = Data($_SESSION);
-      $this->user =& mk('Data')->session->user;
-      $_SESSION = array();
-      
-      mk('Logging')->log('Account', 'Session rebase', 'Rebased to '.$sess->id);
-      
-      //Let the current session know that on the next request it gets with this explicit session ID, the rebase value should be removed.
-      mk('Data')->session->mk->remove_rebase_tokens->set(true);
-      
-    }
-    
-    else{
-      
-      //Log the user in.
-      $this->_set_logged_in($user, null, true, $token->series_token->get());
-      
-      //Let the current session know that on the next request it gets with this explicit session ID, the rebase value should be removed.
-      mk('Data')->session->mk->remove_rebase_tokens->set(true);
-      
-    }
-    
-    //Success.
-    return true;
+    AuthenticationTasks::setLoggedIn($user, $expiry_date, $persistent);
     
   }
 
@@ -492,7 +172,7 @@ class Account
   {
 
     //Extract raw data.
-    raw($user_id, $pass, $expiry_date);
+    raw($user_id, $pass);
     
     tx('Logging')->log('Core', 'Become user attempt', 'Starting for user ID "'.$user_id.'"');
     
@@ -512,7 +192,7 @@ class Account
     
     //Log the user in.
     $user->level->set(min($user->level->get(), $ipinfo->login_level->get()));
-    $this->_set_logged_in($user, $expiry_date, $persistent);
+    AuthenticationTasks::setLoggedIn($user, null, $persistent);
     
   }
 
@@ -552,36 +232,8 @@ class Account
         
       }
       
-      //Is our database able to handle persistent log-in stuff?
-      if(!$sql->execute_single("SHOW TABLES LIKE '#__core_user_persistent_authentication_tokens'")->is_empty())
-      {
-        
-        //Get the token cookie.
-        $cookie = tx('Data')->cookie->persistent_auth;
-        
-        //If the cookie exists.
-        if($cookie->is_set())
-        {
-          
-          //Get the user ID and series token.
-          $user_id = $this->user->id->get();
-          $series_token = $cookie->split('.')->{2}->get();
-          
-          //Remove the series from the database.
-          $sql->query($sql->make_query(''
-            . 'DELETE FROM #__core_user_persistent_authentication_tokens '
-            . 'WHERE user_id = ? AND series_token = ?'
-            , $user_id
-            , $series_token
-          ));
-          
-          //Unset the cookie.
-          setcookie('persistent_auth', '', time()-3600, '/'.URL_PATH.'/');
-          $cookie->un_set();
-          
-        }
-        
-      }
+      //Do all the things that need to be done with cookies for logging out.
+      CookieTasks::onLogout();
       
       //Regenerate the session ID.
       tx('Session')->regenerate();
@@ -734,163 +386,5 @@ class Account
     return $ipinfo;
 
   }
-
-  /**
-   * Return a persistent authentication token with the given user ID.
-   *
-   * @param integer $user_id The ID of the user to include in the token.
-   * @param string $series_token An optional series token to include. Will be generated when null is given.
-   * @param array $data An out-parameter that will be filled with an array of the different components:
-   *                    * `user_id`: The given user ID.
-   *                    * `access_token`: The generated access token.
-   *                    * `series_token`: The given or generated series token.
-   *
-   * @return string The full token.
-   */
-  private function _generate_authentication_token($user_id, $series_token = null, &$data=null)
-  {
-    
-    $data = array(
-      'user_id' => data_of($user_id),
-      'access_token' => tx('Security')->random_string(24),
-      'series_token' => (is_null($series_token) ? tx('Security')->random_string(24) : data_of($series_token))
-    );
-    
-    return sprintf(
-      '%u.%s.%s',
-      $data['user_id'],
-      $data['access_token'],
-      $data['series_token']
-    );
-    
-  }
   
-  /**
-   * Sets the log-in session for a given user object.
-   *
-   * @param \dependencies\Data $user A row from the users table.
-   * 
-   * @return self Chaining enabled.
-   */
-  private function _set_logged_in($user, $expiry_date = null, $persistent = false, $series_token = null)
-  {
-    
-    //Shortcut.
-    $sql = mk('Sql');
-    
-    //Track if session regenerate is needed.
-    $regenerate = true;
-    
-    //Is our database able to handle persistent log-in stuff?
-    if(!$sql->execute_single("SHOW TABLES LIKE '#__core_user_persistent_authentication_tokens'")->is_empty())
-    {
-      
-      //Do we give the user a persistent login cookie?
-      if($persistent === true)
-      {
-        
-        //Generate the token.
-        $token = $this->_generate_authentication_token($user->id, $series_token, $data);
-        
-        //Set the cookie.
-        setcookie('persistent_auth', $token, (time()+self::PERSISTENT_COOKIE_DURATION), '/'.URL_PATH.'/');
-        
-        //Create a new series in the database?
-        if(is_null($series_token)){
-          $sql->query($sql->make_query(''
-            . 'INSERT INTO #__core_user_persistent_authentication_tokens (`user_id`, `access_token`, `series_token`) '
-            . 'VALUES(?, ?, ?)'
-            , $data['user_id']
-            , $data['access_token']
-            , $data['series_token']
-          ));
-        }
-        
-        //Update an existing series in the database.
-        else{
-          
-          //Regenerate now.
-          tx('Session')->regenerate();
-          $regenerate = false;
-          
-          //To manage parallel requests with this *valid* cookie, keep this entry as a rebase value.
-          $sql->query($sql->make_query(''
-            . 'UPDATE #__core_user_persistent_authentication_tokens '
-            . 'SET rebase_session_id = ? '
-            . 'WHERE user_id = ? AND series_token = ?'
-            , mk('Session')->id
-            , $data['user_id']
-            , $data['series_token']
-          ));
-          
-          //Insert a new entry for the fresh token.
-          $sql->query($sql->make_query(''
-            . 'INSERT INTO #__core_user_persistent_authentication_tokens (`user_id`, `access_token`, `series_token`) '
-            . 'VALUES(?, ?, ?)'
-            , $data['user_id']
-            , $data['access_token']
-            , $data['series_token']
-          ));
-          
-        }
-        
-      }
-      
-    }
-    
-    //Regenerate the session ID if it's still needed.
-    if($regenerate)
-      tx('Session')->regenerate();
-    
-    //Backwards compatibility with old database structure.
-    if($sql->execute_single("SHOW TABLES LIKE '#__core_user_logins'")->is_empty())
-    {
-      
-      //Update the login session.
-      $sql->execute_non_query("
-        UPDATE `#__core_users` SET
-          session = ".$sql->escape(tx('Session')->id).",
-          ipa = ".$sql->escape(tx('Data')->server->REMOTE_ADDR).",
-          dt_last_login = '".date('Y-m-d H:i:s')."'
-        WHERE id = '{$user->id}'
-      ");
-      
-    }
-    
-    //This stuff is only for the people who update their database structures.
-    else
-    {
-      
-      //Compute the expiry date.
-      $dt_expiry = is_null($expiry_date) ? 'NULL' : "'".strtotime($expiry_date)."'";
-      
-      //Insert this login session in the database.
-      $sql->execute_non_query("
-        INSERT INTO `#__core_user_logins` VALUES(
-          NULL,
-          '{$user->id}',
-          ".$sql->escape(tx('Session')->id).",
-          {$dt_expiry},
-          ".$sql->escape(tx('Data')->server->REMOTE_ADDR).",
-          ".$sql->escape(tx('Data')->server->HTTP_USER_AGENT).",
-          DEFAULT
-        )
-      ");
-      
-      tx('Logging')->log('Core', 'Login attempt', 'Setting expiry date to '.$dt_expiry.' for session ID '.tx('Session')->id);
-      
-    }
-    
-    //Set meta-data.
-    $this->user->id = $user->id;
-    $this->user->email = $user->email;
-    $this->user->username = $user->username;
-    $this->user->level = $user->level->get();
-    $this->user->login = true;
-    
-    //Enable chaining.
-    return $this;
-    
-  }
-
 }

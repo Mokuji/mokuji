@@ -89,3 +89,5 @@ Best to offer:
 
 * Login throttling = yes / no
 * Allow registration = yes / no
+* Persistent cookie support = yes / no
+* Persistent cookie name = <string>
