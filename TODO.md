@@ -4,11 +4,11 @@ Make sure to delete this when done.
 
 ## Principles
 
-- The core never provides management tasks. Use components for that.
+- The core never provides full management tasks, only the tools needed to perform it properly.
+- Use components for the actual management implementations.
 - Functions provided by the core should be related to core tables.
-  IE: group permission functions are only allowed if groups are defined in the core tables.
-- The core delegates all logic to the designated component.
-- When no component is designated, do not run the framework.
+- Usergroups will not be part of the core.
+- The core handles the majority of the logic, to provide a consistent API.
 
 ## Sub-components
 
@@ -16,8 +16,7 @@ Make sure to delete this when done.
 2. Authentication tasks
 3. Permission tasks
 4. User management tasks
-5. Group management tasks
-6. Configuration
+5. Configuration
 
 ### 1. Cooperating with the core
 
@@ -36,13 +35,12 @@ Current dependencies:
 
 Desirable setup:
 
-* All authentication and permission tasks should be handled by the account component, not the core.
+* All authentication and permission tasks should be handled by the core.
+* Management tasks should be initiated by the account component, however the core is responsible for maintaining a stable state.
 * A proper interface should be written for the `mk('Account')` properties and methods.
 * `mk('Account')` should provide easy yet predictable access to common permission and authentication checking features.
 * `mk('Account')->user` should be information about the user only (ID, username, email, etc...). Not permissions.
-* The account component should be able to alter the `mk('Account')` class.
-* It should be possible to define which component takes care of implementing / extending the account features.
-* Deprecation warnings should be issued by the account component, not the core.
+* Deprecation warnings for security related reasons should be issued by the core.
 
 ### 2. Authentication tasks
 
@@ -51,14 +49,12 @@ Desirable setup:
 * Create remember me cookie
 * Verify remember me cookie
 * Claiming??
-* Banning??
+* Email verification??
 
 ### 3. Permission tasks
 
 Because introducing new permission systems will take a while to propagate to all components,
 backward compatibility should be maintained for components. The core may be altered though.
-
-However, the ability to extend or swap out permission systems would be nice.
 
 Minimum for backward compatibility:
 
@@ -89,19 +85,7 @@ Best to offer:
 * Claiming??
 * Banning??
 
-#### 5. Group management tasks
+#### 5. Configuration
 
-* Create group
-* Edit group
-* Delete group
-
-#### 6. Configuration
-
-* Which component handles the core link
-* Login throttling
-* Allow registration
-* Logging levels
-* User settings (language, font size, theme, html or markdown editor, ...)??
-* User level mode or permissions mode??
-
-Would be nice to set a class that handles the storage part.
+* Login throttling = yes / no
+* Allow registration = yes / no
