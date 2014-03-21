@@ -91,3 +91,8 @@ Best to offer:
 * Allow registration = yes / no
 * Persistent cookie support = yes / no
 * Persistent cookie name = <string>
+* Max session lifetime (seconds) = <int>
+* Max become_user session lifetime (seconds) = <int>
+* Minimum level for become_user action = <int> (0:anyone, 1:users+admins, 2:admins, 3+:nobody)
+
+* ??? Restrict become_user to level 1 = yes / no

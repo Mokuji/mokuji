@@ -13,7 +13,7 @@ class Account
    * The basic user information for the current session.
    */
   public $user;
-
+  
   /**
    * Initializes the class.
    *
@@ -38,7 +38,7 @@ class Account
     }
     
     //Double check the session.
-    $session = AuthenticationTasks::verifySession($this->user)
+    $session = AuthenticationTasks::verifySession($this->user);
     if($session === false){
       $this->logout();
       return;
@@ -51,7 +51,7 @@ class Account
       mk('Url')->redirect(url('')->segments->merge(array('scheme' => 'https'))->back()->rebuild_output());
     
     //Look for session sharing signs.
-    AuthenticationTasks::verifySharedSession($user, $session);
+    AuthenticationTasks::verifySharedSession($this->user, $session);
     
     #TODO: Check if this can be deprecated.
     //Progress user activity.
@@ -63,139 +63,59 @@ class Account
    * Returns true if the user is logged in. Short for $this->user->check('login').
    * @return boolean
    */
-  public function is_login()
-  {
-    
+  public function is_login(){
     return $this->user->check('login');
-    
   }
   
   /**
    * Performs a login attempt for the current session.
-   * @param String $email The email or user-name of the user to log in with.
-   * @param String $pass The plain text password to log in with.
+   * @param string $identifier The email or username of the user to log in with.
+   * @param string $password The plain text password to log in with.
+   * @param string $expiry_date The absolute expiry date of the session, should the attempt succeed (optional).
+   * @param boolean $persistent Whether "remember-me" functionality is desired (optional).
    * @return self Returns $this for chaining.
    * @throws \exception\Validation If the IP address of the remote connection is blacklisted.
    * @throws \exception\EmptyResult If the user account is not found.
    * @throws \exception\Validation If the password is invalid.
    */
-  public function login($email, $pass, $expiry_date = null, $persistent = false)
+  public function login($identifier, $password, $expiry_date = null, $persistent = false)
   {
     
-    //If we're already logged in: Do nothing. :)
-    if($this->user->check('login')){
-      return $this;
-    }
+    raw($identifier, $password, $expiry_date, $persistent);
     
-    //Extract raw data.
-    raw($email, $pass, $expiry_date);
+    //Let the task handle this.
+    AuthenticationTasks::login($identifier, $password, $expiry_date, $persistent);
     
-    tx('Logging')->log('Core', 'Login attempt', 'Starting for email/username "'.$email.'"');
-    
-    //Check if login is allowed, based on the IP permissions.
-    $ipinfo = $this->_check_ip_permissions();
-    
-    //Let's be optimistic.
-    $failed = false;
-    
-    //Get the user record based on the given email address or user name.
-    $user = tx('Sql')->execute_single(''
-      . "SELECT * FROM #__core_users WHERE email = ".tx('Sql')->escape($email)
-      . " "
-      . "OR username = ".tx('Sql')->escape($email)
-    )
-    
-    //If the user record wasn't found, fail the login attempt.
-    ->is('empty', function(){
-      tx('Logging')->log('Core', 'Login attempt', 'FAILED: User account not found.');
-      $failed = true;
-    });
-    
-    //If we haven't failed yet, we will compare passwords.
-    if(!$failed)
-    {
-      
-      //See if we're using improved hashing.
-      $user->hashing_algorithm->not('empty')
-        
-      //Use improved hashing.
-      ->success(function()use($user, $pass, &$failed){
-        
-        //Apply salt, if any.
-        $spass = $user->salt->otherwise('')->get('string') . $pass;
-        
-        //Apply hashing algorithm.
-        $hspass = tx('Security')->hash($spass, $user->hashing_algorithm);
-
-        //Compare hashes.
-        if($user->password->get() !== $hspass){
-          tx('Logging')->log('Core', 'Login attempt', 'FAILED: Invalid password.');
-          $failed = true;
-        }
-        
-      })
-      
-      //Use the old hashing method.
-      ->failure(function()use($user, $pass, &$failed){
-        
-        if(md5($pass) !== $user->password->get()){
-          tx('Logging')->log('Core', 'Login attempt', 'FAILED: Invalid password.');
-          $failed = true;
-        }
-        
-      });
-      
-    }
-    
-    //Check if we failed at any of the above.
-    if($failed){
-      throw new \exception\Validation('Invalid user name and password combination.');
-    }
-    
-    //Log a successful login attempt.
-    tx('Logging')->log('Core', 'Login attempt', 'SUCCESS: Logged in as user ID '.$user->id);
-    
-    //Log the user in.
-    $user->level->set(min($user->level->get(), $ipinfo->login_level->get()));
-    AuthenticationTasks::setLoggedIn($user, $expiry_date, $persistent);
+    //Add some chaining.
+    return $this;
     
   }
-
+  
   /**
-   * Logins a login attempt for the current session.
-   * @param Integer $user_id The user ID of the user to log in with.
+   * Assume the identity of another user.
+   * @param integer $user_id The user ID of the user to log in with.
+   * @param boolean $persistent DEPRECATED: become_user is never persistent.
    * @return self Returns $this for chaining.
    * @throws \exception\Validation If the IP address of the remote connection is blacklisted.
    * @throws \exception\EmptyResult If the user account is not found.
    */
-  public function become_user($user_id, $persistent = false)
+  public function become_user($user_id, $persistent = null)
   {
-
-    //Extract raw data.
-    raw($user_id, $pass);
     
-    tx('Logging')->log('Core', 'Become user attempt', 'Starting for user ID "'.$user_id.'"');
+    #TODO: Remove this after a while.
+    if(!is_null($persistent)){
+      throw new \exception\Deprecated('The $persistent flag is no longer supported.');
+    }
     
-    //Check if login is allowed, based on the IP permissions.
-    $ipinfo = $this->_check_ip_permissions();
+    //Go for it.
+    raw($user_id);
+    AuthenticationTasks::becomeUser($user_id);
     
-    //Get the user record based on the given email address or user name.
-    $user = tx('Sql')->execute_single("SELECT * FROM #__core_users WHERE id = ".tx('Sql')->escape($user_id))
-    
-    //If the user record wasn't found, fail the login attempt.
-    ->is('empty', function(){
-      tx('Logging')->log('Core', 'Become user attempt', 'FAILED: User account not found.');
-    });
-    
-    //Log a successful login attempt.
-    tx('Logging')->log('Core', 'Become user attempt', 'SUCCESS: Logged in as user ID '.$user->id);
-    
-    //Log the user in.
-    $user->level->set(min($user->level->get(), $ipinfo->login_level->get()));
-    AuthenticationTasks::setLoggedIn($user, null, $persistent);
+    //Enable chaining.
+    return $this;
     
   }
-
+  
   /**
    * Logs out the current user.
    * @return self Returns $this for chaining.
@@ -203,47 +123,8 @@ class Account
   public function logout()
   {
     
-    //Get the SQL singleton.
-    $sql = tx('Sql');
-    
-    //Really logged in? Log out from the database.
-    if($this->user->check('login'))
-    {
-      
-      mk('Logging')->log('Core', 'Account', 'Logging out');
-      
-      //Log out the old way.
-      if($sql->execute_single("SHOW TABLES LIKE '#__core_user_logins'")->is_empty()){
-        $sql->execute_non_query("UPDATE `#__core_users` SET session = NULL, ipa = NULL WHERE id = '{$this->user->id}'");
-      }
-      
-      //Log out the new way.
-      else
-      {
-        
-        $sql->execute_non_query("
-          UPDATE `#__core_user_logins`
-            SET
-              dt_expiry = '".date('Y-m-d H:i:s')."'
-            WHERE 1
-              AND user_id = '{$this->user->id}'
-              AND session_id = ".$sql->escape(tx('Session')->id)."
-        ");
-        
-      }
-      
-      //Do all the things that need to be done with cookies for logging out.
-      CookieTasks::onLogout();
-      
-      //Regenerate the session ID.
-      tx('Session')->regenerate();
-      
-    }
-    
-    //Unset meta-data.
-    $this->user->un_set('id', 'email', 'activity', 'username');
-    $this->user->login = false;
-    $this->user->level = 0;
+    //Let the task handle this.
+    AuthenticationTasks::logout();
     
     //Enable chaining.
     return $this;
@@ -321,7 +202,9 @@ class Account
   public function check_level($level, $exact=false)
   {
     
-    return ($exact===true ? $this->user->level->get('int') == $level : $this->user->level->get('int') >= $level);
+    return $exact===true ?
+      $this->user->level->get('int') == $level:
+      $this->user->level->get('int') >= $level;
     
   }
   
@@ -335,56 +218,25 @@ class Account
    */
   public function page_authorisation($level, $exact=false)
   {
-
+    
     if($this->check_level($level, $exact)){
       return;
     }
-
+    
     if(tx('Config')->user('login_page')->is_set()){
       $redirect = url(URL_BASE.'?'.tx('Config')->user('login_page'), true);
     }
-
+    
     else{
       $redirect = url(URL_BASE.'?'.tx('Config')->user('homepage'), true);
     }
-
+    
     if($redirect->compare(tx('Url')->url)){
       throw new \exception\User('The login page requires you to be logged in. Please contact the system administrator.');
     }
-
+    
     tx('Url')->redirect($redirect);
-
-  }
-
-  /**
-   * Check if a user is allowed to login based on IP.
-   * @throws \exception\Validation If the IP address of the remote connection is blacklisted.
-   * @return Object $ipinfo.
-   */
-  private function _check_ip_permissions()
-  {
-
-    //Get the client IP address.
-    $ipa = tx('Data')->server->REMOTE_ADDR->get();
     
-    //Get IP permissions.
-    $ipinfo = tx('Sql')->execute_single(
-      "SELECT * FROM #__core_ip_addresses WHERE address = ".tx('Sql')->escape($ipa)
-    )
-      
-    //If no specific entry is available, get the global settings.
-    ->is('empty', function(){
-      return tx('Sql')->execute_single("SELECT * FROM #__core_ip_addresses WHERE address = '*'");
-    });
-    
-    //Check if login is allowed. Throw an exception if it's not.
-    $ipinfo->login_level->eq(0, function()use($ipa){
-      tx('Logging')->log('Core', 'Login attempt', 'FAILED: IP address '.$ipa.' is blacklisted.');
-      throw new \exception\Validation('IP address blacklisted.');
-    });
-
-    return $ipinfo;
-
   }
   
 }

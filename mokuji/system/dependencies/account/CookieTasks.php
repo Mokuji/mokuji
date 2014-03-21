@@ -58,8 +58,6 @@ abstract class CookieTasks
       return;
     }
     
-    raw($userId, $series_token);
-    
     //Generate the token.
     $cookie = CookieTasks::generateCookie($userId, $series_token);
     
@@ -157,6 +155,7 @@ abstract class CookieTasks
   public static function onLogout()
   {
     
+    //Only when we're actually using cookies.
     if(CookieTasks::isLoginCookieEnabled())
     {
       
