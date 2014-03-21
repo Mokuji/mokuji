@@ -133,9 +133,9 @@ class Account
   
   /**
    * Registers a new user account.
-   * @param String $email The email address to set.
-   * @param String $username The optional username to set.
-   * @param String $password The password to set.
+   * @param string $email The email address to set.
+   * @param string $username The optional username to set.
+   * @param string $password The password to set.
    * @param int $level The user level to set. (1 = Normal user, 2 = Administrator)
    * @return boolean Whether registering the user was successful.
    */

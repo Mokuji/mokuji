@@ -1,7 +1,7 @@
 <?php namespace dependencies\account; if(!defined('MK')) die('No direct access.');
 
 /**
- * Provides static methods to perform authentication logic.
+ * Provides static methods to perform persistent cookie logic.
  * 
  * ## About session rebasing
  *   

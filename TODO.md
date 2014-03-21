@@ -95,4 +95,6 @@ Best to offer:
 * Max become_user session lifetime (seconds) = <int>
 * Minimum level for become_user action = <int> (0:anyone, 1:users+admins, 2:admins, 3+:nobody)
 
+* Notify admins of newly registered users = yes / no
+
 * ??? Restrict become_user to level 1 = yes / no

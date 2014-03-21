@@ -9,6 +9,12 @@ use \dependencies\Data;
 abstract class AuthenticationTasks
 {
   
+  /*
+    #TODO
+    * Claiming??
+    * Email verification??
+  */
+  
   /**
    * Check for support of the core user logins database tables.
    * @return boolean
@@ -196,10 +202,6 @@ abstract class AuthenticationTasks
     
   }
   
-  //Claiming??
-  
-  //Email verification??
-  
   /**
    * Looks for a user based on email or username identifier.
    * 
@@ -262,6 +264,39 @@ abstract class AuthenticationTasks
     });
     
     return $valid;
+    
+  }
+  
+  /**
+   * Hashes the given password into a format that meets our security settings.
+   * 
+   * Most likely the return data will include a hashed password, a salt and hashing algorithm information.
+   * 
+   * @param  string $password A plain text password to hash.
+   * @return Data A bundle of data that can be merged into a (core) user model.
+   */
+  public static function hashPassword($password)
+  {
+    
+    raw($password);
+    
+    //Start with a salt and algorithm.
+    $data = Data(array(
+      'salt' => mk('Security')->random_string(),
+      'hashing_algorithm' => mk('Security')->pref_hash_algo()
+    ));
+    
+    //Hash using above information.
+    $data->merge(array(
+      
+      'password' => mk('Security')->hash(
+        $data->salt->get() . $password->get(),
+        $data->hashing_algorithm
+      )
+      
+    ));
+    
+    return $data;
     
   }
   
