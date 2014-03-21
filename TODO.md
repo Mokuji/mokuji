@@ -75,7 +75,7 @@ Making sure only the proper fields are filled in is a trivial task for them.
 
 * **Effectiveness vs spammers**: High
 * **Effectiveness vs hackers**: N/A
-* **Performance**: Perfect! - Very high. Minor disk I/O is involved (session variables).
+* **Performance**: Very high. Minor disk I/O is involved (session variables).
 * **Privacy awareness**: Perfect! Content does not need to be logged or shared.
 
 Checks the time it took between showing the form to the user and them sending it back.
@@ -131,7 +131,7 @@ A hacker could execute the same code in any other language, or just run the give
 
 * **Effectiveness vs spammers**: High
 * **Effectiveness vs hackers**: Medium
-* **Performance**: Perfect! O(1)
+* **Performance**: Very high. Minor disk I/O is involved (database queries).
 * **Privacy awareness**: High. The IP should be logged along with a reputation, but does not need to be shared.
 
 Whenever any other method gives an indicator of spam or hacking attempts,
@@ -152,7 +152,7 @@ If the IP-address doesn't visit for a while, the suspicion rate goes back to neu
 
 * **Effectiveness vs spammers**: High
 * **Effectiveness vs hackers**: Medium
-* **Performance**: Perfect! O(1)
+* **Performance**: Very high. Minor disk I/O is involved (database queries).
 * **Privacy awareness**: Very High. Content does not need to be logged or shared, but may show patterns when users are active and when spammers are active.
 
 Whenever any other method gives an indicator of spam or hacking attempts,
