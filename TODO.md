@@ -1,4 +1,4 @@
-# Form protection
+  # Form protection
 
 A.K.A.: project no more captcha's!
 
@@ -17,9 +17,10 @@ A.K.A.: project no more captcha's!
 
 1. Design preliminary interface.
 2. Implement a few of the quickest to implement layers.
-3. Use that to perfection the interface.
-4. Add local effectiveness tracking database.
-5. Add configuration options.
+--- currently here ---
+3. Add configuration options.
+4. Use that to perfection the interface.
+5. Add local effectiveness tracking database.
 6. Implement a few highly effective layers.
 7. Add reporting option to send effectiveness statistics to mokuji.net.
 8. Document the interface.
@@ -141,6 +142,7 @@ Optionally you can track positive results too and gradually come to trust an IP-
 
 The worse the reputation gets, the result of this check may increase.
 Example order:
+
 1. PASS (this guy is trusted)
 2. UNKNOWN (we have no reason to suspect them yet)
 3. MAYBE (some issues have come up, but they are not decisive yet)
@@ -175,6 +177,7 @@ If nobody visits the site for a while, the suspicion rate goes back to neutral o
 
 This method is only effective when you want to defend against repeated attempts at something.
 Such as sending comments (10.000 spam messages are worse than 1), or log in attempts.
+Particularly effective when normal users would not need repeated attempts at the same form.
 
 Ask the client to run a script that solves a mathematical problem (fully automatic, but slow).
 If the problem is solved, this gives high credibility that it's a legitimate user.
@@ -209,6 +212,6 @@ to a user without javascript support. In which case you can either mark them as 
 send them some other challenge, like "Human, please click this button.".
 
 **Conclusion:**
-Use this for important and repeatedly attempted forms only, when it makes sense to slow down
-the client computer for additional security. Can be used in two stages to avoid CPU-impact
-for submissions that don't need it.
+Use this for important and repeatedly attempted forms only (that normal users wouldn't try to repeat so often),
+when it makes sense to slow down the client computer for additional security.
+Can be used in two stages to avoid CPU-impact for submissions that don't need it.
