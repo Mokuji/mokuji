@@ -18,10 +18,10 @@ abstract class BaseFormField
    *
    * @param string $column_name The table column name for this field.
    * @param string $title The preferred and translated title to use for this field.
-   * @param BaseModel $model The model that this field is related to.
+   * @param Data $model The model that this field is related to.
    * @param array $options An optional set of options to further customize this field.
    */
-  public function __construct($column_name, $title, BaseModel $model, array $options=array())
+  public function __construct($column_name, $title, Data $model, array $options=array())
   {
     
     $this->model = $model;
