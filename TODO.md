@@ -44,10 +44,10 @@ Desirable setup:
 
 ### 2. Authentication tasks
 
-* Login
-* Logout
-* Create remember me cookie
-* Verify remember me cookie
+- Login
+- Logout
+- Create remember me cookie
+- Verify remember me cookie
 * Claiming??
 * Email verification??
 
@@ -77,13 +77,18 @@ Best to offer:
 
 #### 4. User management tasks
 
+- Register user
+* Check for problems (like duplicates).
+  Send mail to admin every week when duplicates exist.
+  Send mail when user blocked because of duplicates.
 * Create user
 * Edit user
 * Delete user
-* Register user
 * Password forgotten
 * Claiming??
 * Banning??
+* Require password change??
+* Action tokens (random keys to authenticate e-mail actions like claiming, email verification or password reset).
 
 #### 5. Configuration
 

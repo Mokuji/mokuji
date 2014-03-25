@@ -21,11 +21,10 @@ abstract class ManagementTasks
     * Email verification??
   */
   
-  private static $USER_DEFAULTS = array(
+  private static $REGISTER_DEFAULTS = array(
     'is_active' => true,
-    'is_verified_email' => false,
-    'is_claimable' => false,
-    ''
+    'is_banned' => false,
+    'is_claimable' => false
   );
   
   /**
@@ -42,13 +41,13 @@ abstract class ManagementTasks
    * @return boolean
    */
   public static function isExtendedCoreUsersSupported(){
-    return !mk('Sql')->execute_single("DESCRIBE #__core_users status")->is_empty();
+    return !mk('Sql')->execute_single("DESCRIBE #__core_users is_active")->is_empty();
   }
   
   /**
    * Registers a new user account.
    * 
-   * Note: Attempts at registering should ALWAYS be protected with captchas.
+   * Note: Attempts at registering should ALWAYS be protected at the form handling level.
    * Otherwise attackers will be able to discover existing e-mail addresses and usernames.
    * As well as create unlimited accounts for spamming or even DOS attacks by taking up the
    * entire username and e-mail space.
@@ -56,23 +55,25 @@ abstract class ManagementTasks
    * @param  Data $data The set of data to insert.
    * @return BaseModel The user that has been created.
    */
-  public static function registerUser($data)
+  public static function registerUser(Data $data)
   {
     
     //Lets use a model.
-    $user = new \dependencies\BaseModel($data);
+    #TODO: Use core models.
+    $user = new \components\account\models\Accounts();
+    $user->merge($data);
     
     //Validate given fields.
     $user->validate_model(array(
       
       'force_create' => true,
+      'nullify' => true,
       
-      #TODO: Use core models.
-      'fields' => array(
-        'email' => array('required', 'email'),
+      'rules' => array(
         'password' => array('required', 'password'),
-        'level' => array('required', 'number'=>'int', 'in'=>array(0, 1, 2)),
-        'username' => array('string')
+        'level' => array('required', 'number'=>'int', 'in'=>array(1, 2)),
+        'first_name' => array('string', 'between'=>array(0, 255), 'no_html'),
+        'last_name' => array('string', 'between'=>array(0, 255), 'no_html')
       )
       
     ));
@@ -102,25 +103,37 @@ abstract class ManagementTasks
     if(ManagementTasks::isExtendedCoreUsersSupported())
     {
       
-      $user->merge(array(
-        ''
-      ));
+      //Set the default account flags.
+      $user->merge(self::$REGISTER_DEFAULTS);
+      
+      //We're done it seems.
+      $user->save();
       
     }
     
     //Set these values the old fashioned way.
     else{
       
+      //We need an ID, so save first.
+      $user->save();
+      
       #TODO: Deprecate this.
-      mk('Sql')
-        ->model('account', 'UserInfo')
-        ->set(array(
-          'user_id' => $user->id,
-          'status' => 1
-        ))
-        ->save();
+      if(mk('Component')->available('account'))
+      {
+        
+        mk('Sql')
+          ->model('account', 'UserInfo')
+          ->set(array(
+            'user_id' => $user->id
+          ))
+          ->set_status('activated')
+          ->save();
+        
+      }
       
     }
+    
+    return $user;
     
   }
   

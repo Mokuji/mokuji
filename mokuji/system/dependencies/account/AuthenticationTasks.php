@@ -282,6 +282,7 @@ abstract class AuthenticationTasks
     
     //Start with a salt and algorithm.
     $data = Data(array(
+      'dt_password_changed' => date('Y-m-d H:i:s'),
       'salt' => mk('Security')->random_string(),
       'hashing_algorithm' => mk('Security')->pref_hash_algo()
     ));
@@ -290,7 +291,7 @@ abstract class AuthenticationTasks
     $data->merge(array(
       
       'password' => mk('Security')->hash(
-        $data->salt->get() . $password->get(),
+        $data->salt->get() . $password,
         $data->hashing_algorithm
       )
       

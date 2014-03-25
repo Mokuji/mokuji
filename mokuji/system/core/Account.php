@@ -1,6 +1,7 @@
 <?php namespace core; if(!defined('MK')) die('No direct access.');
 
 use \dependencies\account\AuthenticationTasks;
+use \dependencies\account\ManagementTasks;
 use \dependencies\account\CookieTasks;
 
 /**
@@ -142,49 +143,15 @@ class Account
   public function register($email, $username = NULL, $password, $level=1)
   {
     
-    //Prepare variables.
-    $data = Data();
-    raw($email, $username, $level);
-    
-    //Defaults to the default hashing algorithm and salt settings defined by core-security.
-    $password->is('set')->and_not('empty')->success(function()use(&$data, &$password){
-      
-      //Get salt and algorithm.
-      $data->salt = tx('Security')->random_string();
-      $data->hashing_algorithm = tx('Security')->pref_hash_algo();
-      
-      //Hash using above information.
-      $password = tx('Security')->hash(
-        $data->salt->get() . $password->get(),
-        $data->hashing_algorithm
-      );
-    
-    })->failure(function()use(&$data, &$password){
-      $password->un_set();
-    });
+    //Let the management tasks handle this.
+    $user = ManagementTasks::registerUser(Data(array(
+      'email' => $email,
+      'username' => $username,
+      'password' => $password,
+      'level' => $level
+    )));
     
     mk('Logging')->log('Core', 'Account', 'Registered user '.$email);
-    
-    tx('Session')->regenerate();
-    $sid = tx('Session')->id;
-    $ipa = tx('Data')->server->REMOTE_ADDR->get();
-    
-    tx('Sql')->execute_non_query(
-      "INSERT INTO `#__core_users`
-        (id,   dt_created, email,    username,    password,    level,    hashing_algorithm,            salt) VALUES
-        (NULL, NOW(), ".tx('Sql')->escape($email).", ".tx('Sql')->escape($username).", ".
-        tx('Sql')->escape($password).", ".tx('Sql')->escape($level).", '{$data->hashing_algorithm}', '{$data->salt}')"
-    );
-    
-    if(tx('Component')->available('account'))
-    {
-      
-      tx('Sql')->execute_non_query(
-        "INSERT INTO #__account_user_info (user_id, status) VALUES (".abs(mk('Sql')->get_insert_id()).", 1)"
-      );
-      
-    }
-    
     return true;
     
   }

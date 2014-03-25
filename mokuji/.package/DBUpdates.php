@@ -33,9 +33,98 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
       '0.11.0-beta' => '0.12.1-beta', //No DB changes.
       '0.12.0-beta' => '0.12.1-beta', //No DB changes.
       
-      '0.12.1-beta' => '0.12.2-beta'
+      '0.12.1-beta' => '0.12.2-beta',
+      
+      '0.12.2-beta' => '0.13.0-beta'
       
     );
+  
+  public function update_to_0_13_0_beta($current_version, $forced)
+  {
+    
+    //When forced, delete new tables first.
+    if($forced){
+      mk('Sql')->query("DROP TABLE IF EXISTS `#__core_user_email_tokens`");
+    }
+    
+    mk('Sql')->query("
+      CREATE TABLE `#__core_user_email_tokens` (
+        `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+        `user_id` INT(10) UNSIGNED NOT NULL,
+        `token` varchar(255) NOT NULL,
+        `purpose` varchar(255) NOT NULL,
+        `ip` varchar(255) NOT NULL,
+        `user_agent` varchar(255) NOT NULL,
+        `date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        `dt_expiry` TIMESTAMP NOT NULL,
+        PRIMARY KEY (`id`),
+        UNIQUE INDEX `user_token` (`user_id`, `token`)
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8
+    ");
+    
+    try{
+      
+      //Add more user data to core accounts.
+      mk('Sql')->query("
+        ALTER TABLE `#__core_users`
+          ADD COLUMN `dt_password_changed` DATETIME NULL DEFAULT NULL,
+          ADD COLUMN `first_name` varchar(255) NULL DEFAULT NULL,
+          ADD COLUMN `last_name` varchar(255) NULL DEFAULT NULL,
+          ADD COLUMN `dt_email_verified` DATETIME NULL DEFAULT NULL,
+          ADD COLUMN `is_active` bit(1) NOT NULL DEFAULT b'0',
+          ADD COLUMN `is_banned` bit(1) NOT NULL DEFAULT b'0',
+          ADD COLUMN `is_claimable` bit(1) NOT NULL DEFAULT b'0'
+      ");
+      
+      //Add missing index for performance.
+      mk('Sql')->query("
+        ALTER TABLE `#__core_users`
+          ADD INDEX `email` (`email`)
+      ");
+      
+      //Alter existing columns.
+      mk('Sql')->query("
+        ALTER TABLE `#__core_users`
+          CHANGE COLUMN `username` `username` varchar(255) NULL DEFAULT NULL after `email`,
+          CHANGE COLUMN `level` `level` tinyint(3) unsigned NOT NULL DEFAULT '0' after `username`
+      ");
+      
+    }catch(\exception\Sql $ex){
+      //When it's not forced, this is a problem.
+      //But when forcing, ignore this.
+      if(!$forced) throw $ex;
+    }
+    
+    //Transfer status codes from account component.
+    if(mk('Component')->available('account'))
+    {
+      
+      mk('Sql')->table('account', 'Accounts')
+        ->execute()
+        ->each(function($account){
+          
+          //Skip those without user info.
+          if($account->user_info->is_empty())
+            return;
+          
+          $info = get_class($account->user_info);
+          $status = $account->user_info->status->get('int');
+          
+          $account->merge(array(
+            'first_name' => $account->user_info->name,
+            'last_name' => trim($account->user_info->preposition.' '.$account->user_info->family_name),
+            'is_active' => ($status & $info::STATUS_ACTIVATED) === $info::STATUS_ACTIVATED,
+            'is_banned' => ($status & $info::STATUS_BANNED) === $info::STATUS_BANNED,
+            'is_claimable' => ($status & $info::STATUS_CLAIMABLE) === $info::STATUS_CLAIMABLE
+          ));
+          
+          $account->save();
+          
+        });
+        
+    }
+    
+  }
   
   public function update_to_0_12_2_beta($current_version, $forced)
   {

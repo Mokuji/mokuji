@@ -1307,17 +1307,26 @@ abstract class BaseModel extends Data
     */
     $generatedLabels = $this->labels();
     
-    //Filter out what we don't need.
-    $data = $this->having(array_keys($generatedLabels));
-    
-    //Do we nullify?
-    $nullify = isset($options['nullify']) && $options['nullify'] === true;
-    
     //Allow additional rules to be prepended.
     $ruleSet = array_merge_recursive(
       (isset($options['rules']) ? $options['rules'] : array()),
       static::$validate
     );
+    
+    //Check if labels are missing for these rules.
+    if(isset($options['rules'])){
+      foreach($options['rules'] as $col => $rules){
+        if(!array_key_exists($col, $generatedLabels)){
+          $generatedLabels[$col] = ucfirst(str_replace('_', ' ', $col));
+        }
+      }
+    }
+    
+    //Filter out what we don't need.
+    $data = $this->having(array_keys($generatedLabels));
+    
+    //Do we nullify?
+    $nullify = isset($options['nullify']) && $options['nullify'] === true;
     
     $table_data = $this->table_data();
     
