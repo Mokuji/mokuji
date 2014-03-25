@@ -11,10 +11,8 @@ abstract class ManagementTasks
   
   /*
     #TODO
-    * Create user
     * Edit user
     * Delete user
-    * Register user
     * Password forgotten
     * Claiming??
     * Banning??
@@ -45,7 +43,7 @@ abstract class ManagementTasks
   }
   
   /**
-   * Registers a new user account.
+   * Creates a new user account.
    * 
    * Note: Attempts at registering should ALWAYS be protected at the form handling level.
    * Otherwise attackers will be able to discover existing e-mail addresses and usernames.
@@ -55,7 +53,7 @@ abstract class ManagementTasks
    * @param  Data $data The set of data to insert.
    * @return BaseModel The user that has been created.
    */
-  public static function registerUser(Data $data)
+  public static function createUser(Data $data)
   {
     
     //Lets use a model.
@@ -133,6 +131,46 @@ abstract class ManagementTasks
       
     }
     
+    return $user;
+    
+  }
+  
+  /**
+   * Edits a user account.
+   * 
+   * @param  integer $userId The ID for the user to edit.
+   * @param  Data $data The set of data to insert.
+   * @return BaseModel The user that has been edited.
+   */
+  public static function editUser($userId, Data $data)
+  {
+    
+    #TODO: User core models.
+    //Get the old user model from the database.
+    $user = mk('Sql')->table('account', 'Accounts')
+      ->pk($userId)
+      ->execute_single()
+      
+      //Make sure we found it.
+      ->is('empty', function()use($data){
+        throw new \exception\User('Could not update because no entry was found in the database with id %s.', $data->id);
+      });
+    
+    //Merge the fields from the given data.
+    $user->merge($data->having('email', 'username', 'first_name', 'last_name', 'level', 'is_active', 'is_banned'));
+    
+    //Handle one alias for the level value.
+    if($data->is_admin->is_set()){
+      $user->merge(array('level', $data->check('is_admin') ? 2 : 1));
+    }
+    
+    //Check if the password was given and filled in..
+    if(!$data->password->is_empty()){
+      $user->merge(AuthenticationTasks::hashPassword($data->password));
+    }
+    
+    //Save to database.
+    $user->save();
     return $user;
     
   }

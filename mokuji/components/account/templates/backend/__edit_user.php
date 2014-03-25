@@ -19,17 +19,19 @@ $uid = tx('Security')->random_string(20);
   
   <div class="ctrlHolder">
     <label for="l_password" accesskey="p"><?php __('Password'); ?></label>
+    <label><input type="radio" name="password_method" value="claim"<?php if($data->password->is_empty()) echo ' checked="checked"'; ?>> Let user decide</label>
+    <label><input type="radio" name="password_method" value="admin"<?php if(!$data->password->is_empty()) echo ' checked="checked"'; ?>> Manually set one</label>
     <input class="big large" type="password" id="l_password" name="password" value="" placeholder="<?php __($names->component, 'Password hidden'); ?>" />
   </div>
   
   <div class="ctrlHolder">
-    <label for="l_name" accesskey="f"><?php __('First name'); ?></label>
-    <input class="big large" type="text" id="l_name" name="name" value="<?php echo $edit_user->name; ?>" />
+    <label for="l_first_name" accesskey="f"><?php __('First name'); ?></label>
+    <input class="big large" type="text" id="l_first_name" name="first_name" value="<?php echo $edit_user->first_name; ?>" />
   </div>
   
   <div class="ctrlHolder">
-    <label for="l_family_name" accesskey="l"><?php __('Last name'); ?></label>
-    <input class="big large" type="text" id="l_family_name" name="family_name" value="<?php echo $edit_user->family_name; ?>" />
+    <label for="l_last_name" accesskey="l"><?php __('Last name'); ?></label>
+    <input class="big large" type="text" id="l_last_name" name="last_name" value="<?php echo $edit_user->last_name; ?>" />
   </div>
   
   <div class="ctrlHolder">
@@ -44,6 +46,14 @@ $uid = tx('Security')->random_string(20);
   <?php endif; ?>
   
   <div class="ctrlHolder">
+    <label for="l_is_active">
+      <input class="big large" type="checkbox" id="l_is_active" name="is_active"<?php echo ($data->check('is_active') ? ' checked="checked"' : ''); ?> />
+      <?php __('Activated'); ?>
+    </label>
+    <label for="l_is_banned">
+      <input class="big large" type="checkbox" id="l_is_banned" name="is_banned"<?php echo ($data->check('is_banned') ? ' checked="checked"' : ''); ?> />
+      <?php __('Banned'); ?>
+    </label>
     <label for="l_admin" accesskey="a">
       <input class="big large" type="checkbox" id="l_admin" name="admin"<?php echo ($data->level->get('int') === 2 ? ' checked="checked"' : ''); ?> />
       <?php __('Administrator'); ?>

@@ -77,11 +77,10 @@ Best to offer:
 
 #### 4. User management tasks
 
-- Register user
 * Check for problems (like duplicates).
   Send mail to admin every week when duplicates exist.
   Send mail when user blocked because of duplicates.
-* Create user
+- Create user
 * Edit user
 * Delete user
 * Password forgotten

@@ -35,12 +35,15 @@ if($data->num_user_groups->get() > 0) $cols = array_merge($cols, array(
 //Last columns.
 $cols = array_merge($cols, array(
   __('Administrator', 1)                         => function($row){ return $row->is_administrator->get('boolean') ? __('Yes', true) : __('No', true); },
+  __('Activated', 1) => function($row){ return $row->is_active->get('boolean') ? __('Yes', true) : __('No', true); },
+  __('Banned', 1) => function($row){ return $row->is_banned->get('boolean') ? __('Yes', true) : __('No', true); },
+  __('Claimable', 1) => function($row){ return $row->is_claimable->get('boolean') ? __('Yes', true) : __('No', true); },
   __($names->component, 'Last login', 1)         => function($row)use($names){
     return ($row->last_login != '' ? $row->last_login : __($names->component, 'Never logged in', 1));
   },
   __('Actions', 1)                               => array(
     function($row){return '<a class="edit" href="'.url('section=account/edit_user&user_id='.$row->id).'">'.__('Edit', 1).'</a>';},
-    function($row){return ($row->status->get('int') > 0 ? '<a class="delete" href="'.url('action=account/delete_user&user_id='.$row->id).'">'.__('Delete', 1).'</a>' : '');}
+    function($row){return ('<a class="delete" href="'.url('action=account/delete_user&user_id='.$row->id).'">'.__('Delete', 1).'</a>');}
   )
 ));
 

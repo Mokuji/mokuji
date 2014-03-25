@@ -65,6 +65,18 @@ abstract class AuthenticationTasks
       throw new \exception\Validation('Invalid username and password combination');
     }
     
+    //Banned?
+    if($user->check('is_banned')){
+      mk('Logging')->log('Core', 'Login attempt', 'Login failed, banned user.');
+      throw new \exception\Validation('Your account has been banned.');
+    }
+    
+    //Active?
+    if(!$user->check('is_active')){
+      mk('Logging')->log('Core', 'Login attempt', 'Login failed, deactivated user.');
+      throw new \exception\Validation('Your account is currently deactivated.');
+    }
+    
     //Limit the login level to the IP restrictions, if any.
     $user->level->set(min($user->level->get('int'), $ipinfo->login_level->get('int')));
     
@@ -212,12 +224,16 @@ abstract class AuthenticationTasks
   {
     
     #TODO: Use core models.
-    return mk('Sql')->execute_single(mk('Sql')->make_query(''
+    $user = mk('Sql')->execute_single(mk('Sql')->make_query(''
       . 'SELECT * FROM #__core_users '
       . 'WHERE email = ? OR username = ?'
       , $identifier
       , $identifier
     ));
+    
+    return mk('Sql')->table('account', 'Accounts')
+      ->pk($user->id)
+      ->execute_single();
     
   }
   

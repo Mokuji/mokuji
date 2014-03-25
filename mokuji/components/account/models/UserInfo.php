@@ -27,8 +27,23 @@ class UserInfo extends \dependencies\BaseModel
     
   }
   
+  //Should it be empty,
+  public function get_name(){
+    return $this->account->first_name;
+  }
+  
+  //Should it be empty,
+  public function get_family_name(){
+    return $this->account->last_name;
+  }
+  
   public function get_full_name()
   {
+    
+    //Try to get it from the main model.
+    $full = $this->account->full_name;
+    if(!$full->is_empty())
+      return $full;
     
     $parts = Data();
     

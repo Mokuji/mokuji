@@ -144,7 +144,7 @@ class Account
   {
     
     //Let the management tasks handle this.
-    $user = ManagementTasks::registerUser(Data(array(
+    $user = ManagementTasks::createUser(Data(array(
       'email' => $email,
       'username' => $username,
       'password' => $password,
@@ -186,23 +186,25 @@ class Account
   public function page_authorisation($level, $exact=false)
   {
     
+    #TODO: Deprecate this, in favor of controller level permission checking.
+    
     if($this->check_level($level, $exact)){
       return;
     }
     
-    if(tx('Config')->user('login_page')->is_set()){
-      $redirect = url(URL_BASE.'?'.tx('Config')->user('login_page'), true);
+    if(mk('Config')->user('login_page')->is_set()){
+      $redirect = url(URL_BASE.'?'.mk('Config')->user('login_page'), true);
     }
     
     else{
-      $redirect = url(URL_BASE.'?'.tx('Config')->user('homepage'), true);
+      $redirect = url(URL_BASE.'?'.mk('Config')->user('homepage'), true);
     }
     
-    if($redirect->compare(tx('Url')->url)){
+    if($redirect->compare(mk('Url')->url)){
       throw new \exception\User('The login page requires you to be logged in. Please contact the system administrator.');
     }
     
-    tx('Url')->redirect($redirect);
+    mk('Url')->redirect($redirect);
     
   }
   

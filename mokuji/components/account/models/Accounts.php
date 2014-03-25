@@ -76,4 +76,8 @@ class Accounts extends \dependencies\BaseModel
       ->date;
   }
   
+  public function get_full_name(){
+    return trim($this->first_name.' '.$this->last_name);
+  }
+  
 }
