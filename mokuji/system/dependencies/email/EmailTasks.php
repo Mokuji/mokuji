@@ -34,7 +34,7 @@ abstract class EmailTasks
     $params = $messageData;
     
     //Apply the format we picked.
-    $params['html_message'] = $output;//EmailFormatting::format($template['type'], $output);
+    $params['html_message'] = EmailFormatting::format($template['type'], $output);
     
     #TODO: Support fallback methods.
     //Send email.
