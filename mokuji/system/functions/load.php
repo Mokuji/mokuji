@@ -1,10 +1,10 @@
 <?php if(!defined('TX')) die('No direct access.');
 
-function __autoload($class)
+function mk__autoload($class)
 {
   
   if(substr_count($class, '\\') === 0){
-    return __autoload('dependencies\\'.$class);
+    return mk__autoload('dependencies\\'.$class);
   }
   
   $class_array = explode('\\', $class);
@@ -14,7 +14,7 @@ function __autoload($class)
     
     //Some servers freak out if you start with \\ in the namespace.
     case '':
-      return __autoload(substr($class, 1));
+      return mk__autoload(substr($class, 1));
     
     case 'dependencies':
       array_shift($class_array);
@@ -53,6 +53,7 @@ function __autoload($class)
   return $class;
   
 }
+spl_autoload_register('mk__autoload', true, true);
 
 function load_model($component_name, $model_name)
 {

@@ -12,7 +12,9 @@
 !jquery_ui
 !jsFramework
 !nestedsortable
+!php_markdown
 !securimage
 !to_hierarchy
+!twig
 !underscore
 !.gitignore
