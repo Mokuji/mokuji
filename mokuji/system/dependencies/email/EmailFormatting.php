@@ -13,9 +13,15 @@ abstract class EmailFormatting
     
     switch ($type) {
       
+      //Html is easy. It's already the target format.
+      case EmailFormatting::HTML:
+        return $input;
+      
+      //Format markdown.
       case EmailFormatting::MARKDOWN:
         return EmailFormatting::formatMarkdown($input);
       
+      //We don't know.
       default:
         throw new \exception\Programmer('Unsupported formatting, %s', $type);
       
