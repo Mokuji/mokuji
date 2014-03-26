@@ -1,6 +1,8 @@
 <?php namespace components\account; if(!defined('TX')) die('No direct access.');
 
 use components\account\classes\ControllerFactory as CF;
+use \dependencies\account\ManagementTasks;
+use \components\account\models\UserInfo;
 
 class Json extends \dependencies\BaseComponent
 {
@@ -450,77 +452,86 @@ class Json extends \dependencies\BaseComponent
   public function create_user($data, $parameters)
   {
     
-    //Calculate user-level.
-    $level = $data->admin->eq('on')->success(function(){return '2';})->otherwise('1');
-    
-    //If the user is to choose their own password.
-    if($data->choose_password->get('boolean'))
+    //First check if password should be filtered.
+    $method = strtolower($data->password_method->get('string'));
+    switch($method)
     {
       
-      //Invite the user.
-      $user = mk('Component')->helpers('account')->call('invite_user', array(
-        'email' => $data->email,
-        'username' => $data->username,
-        'level' => $data->level,
-        'for_title' => url('/', true)->output,
-        'for_link' => '/'
-      ))
+      case 'set':
+        #TODO: Require password field.
+        //Notify the user?
+        break;
       
-      //Pass the exception on to the REST handler.
-      ->failure(function($info){        
-        throw $info->exception;
-      });
-
+      case 'claim':
+        //Ignore password.
+        $data = $data->without('password', 'password_method');
+        
+        //Invite the user.
+        // $user = mk('Component')->helpers('account')->call('invite_user', array(
+        //   'email' => $data->email,
+        //   'username' => $data->username,
+        //   'level' => $data->level,
+        //   'for_title' => url('/', true)->output,
+        //   'for_link' => '/'
+        // ))
+        
+        // //Pass the exception on to the REST handler.
+        // ->failure(function($info){        
+        //   throw $info->exception;
+        // });
+        break;
+      
     }
     
-    //If the user is merely to be added..
-    else
-    {
-
-      //Create the user.
-      $user = mk('Component')->helpers('account')->call('create_user', array(
-        'email' => $data->email,
-        'username' => $data->username,
-        'password' => $data->password,
-        'name' => $data->name,
-        'preposition' => $data->preposition,
-        'family_name' => $data->family_name,
-        'level' => $level,
+    //Handle one alias for the level value.
+    $data->merge(array('level' => $data->check('is_admin') ? 2 : 1));
+    
+    //Do the basic user create call.
+    $user = ManagementTasks::createUser($data);
+    
+    //Add our component's additional data as well.
+    $userInfo = $this->model('UserInfo')
+      ->set(array(
+        'user_id' => $user->id,
         'comments' => $data->comments
-      ))
+      ));
+    
+    //If we need to store things the old way, do that.
+    if(!ManagementTasks::isExtendedCoreUsersSupported())
+    {
       
-      //Pass on any exceptions to the REST hander.
-      ->failure(function($info){
-        throw $info->exception;
-      });
-      
-      //If we need to notify the user.
-      #TEMP: Disabled until improved.
-      if(false && $data->notify_user->get('boolean'))
-      {
+      $userInfo
         
-        //Send email.
-        mk('Component')->helpers('mail')->send_fleeting_mail(array(
-          'to' => $data->username.' <'.$user->email.'>',
-          'subject' => __('Account created', 1),
-          'html_message' => mk('Component')->views('account')->get_html('email_user_created', $data->having('email', 'username', 'user_id', 'level'))
-        ))
+        //Store the name.
+        ->merge($data->having(array(
+          'name' => 'first_name',
+          'family_name' => 'last_name'
+        )))
         
-        ->failure(function($info){
-          mk('Controller')->message(array(
-            'error' => $info->get_user_message()
-          ));
-        }); 
-        
-      }
+        //Merge the status information to a bitwise field.
+        ->merge(array(
+          'status' =>
+            ($data->check('is_active') ? UserInfo::STATUS_ACTIVE : 0) |
+            ($data->check('is_banned') ? UserInfo::STATUS_BANNED : 0) |
+            ($data->check('is_claimable') ? UserInfo::STATUS_CLAIMABLE : 0)
+        ));
       
     }
+    
+    //Store that.
+    $userInfo->save();
     
     //Set the proper groups.
     $this->helper('set_user_group_memberships', Data(array(
       'user_group' => $data->user_group,
       'user_id' => $user->id
     )));
+    
+    #TODO: Make prettier.
+    $user->user_info;
+    $user->full_name;
+    
+    return $user;
     
   }
   

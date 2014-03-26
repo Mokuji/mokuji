@@ -102,3 +102,7 @@ Best to offer:
 * Notify admins of newly registered users = yes / no
 
 * ??? Restrict become_user to level 1 = yes / no
+
+# Finally
+
+* Clean up email templating stub.

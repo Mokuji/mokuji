@@ -1,7 +1,8 @@
 <?php namespace dependencies\account; if(!defined('MK')) die('No direct access.');
 
-use \dependencies\BaseModel;
 use \dependencies\Data;
+use \dependencies\BaseModel;
+use \dependencies\email\EmailTasks;
 
 /**
  * Provides static methods to perform account management tasks.
@@ -51,9 +52,10 @@ abstract class ManagementTasks
    * entire username and e-mail space.
    * 
    * @param  Data $data The set of data to insert.
+   * @param  boolean $silent When true, no e-mail notifications will be sent.
    * @return BaseModel The user that has been created.
    */
-  public static function createUser(Data $data)
+  public static function createUser(Data $data, $silent=false)
   {
     
     //Lets use a model.
@@ -82,7 +84,10 @@ abstract class ManagementTasks
       . 'WHERE email = ?'
       , $user->email
     ))->gt(0, function(){
-      throw new \exception\Validation('A user with this e-mail address already exists.');
+      $vex = new \exception\Validation('A user with this e-mail address already exists.');
+      $vex->key('email');
+      $vex->errors(array('A user with this e-mail address already exists.'));
+      throw $vex;
     });
     
     //Check for duplicate username.
@@ -91,7 +96,10 @@ abstract class ManagementTasks
       . 'WHERE username = ?'
       , $user->username
     ))->gt(0, function(){
-      throw new \exception\Validation('A user with this username already exists.');
+      $vex = new \exception\Validation('A user with this username already exists.');
+      $vex->key('username');
+      $vex->errors(array('A user with this username already exists.'));
+      throw $vex;
     });
     
     //Hash the password.
@@ -131,6 +139,24 @@ abstract class ManagementTasks
       
     }
     
+    //Notify the user.
+    if(!$silent)
+    {
+      
+      ManagementTasks::emailUser(
+        
+        $user, 'account.created',
+        __('Account created', true),
+        
+        array(
+          'site_name' => mk('Config')->user('site_name')->otherwise('My Mokuji Website'),
+          'user' => $user,
+          'verify_email_url' => (string)url('hi=true', true)
+        )
+        
+      );
+    }
+    
     return $user;
     
   }
@@ -152,8 +178,8 @@ abstract class ManagementTasks
       ->execute_single()
       
       //Make sure we found it.
-      ->is('empty', function()use($data){
-        throw new \exception\User('Could not update because no entry was found in the database with id %s.', $data->id);
+      ->is('empty', function()use($userId){
+        throw new \exception\User('Could not update because no entry was found in the database with id %s.', $userId);
       });
     
     //Merge the fields from the given data.
@@ -172,6 +198,32 @@ abstract class ManagementTasks
     //Save to database.
     $user->save();
     return $user;
+    
+  }
+  
+  /**
+   * Sends an email message to the user.
+   * @param  Data   $user    The user model.
+   * @param  string $key     The key for the message. Note: use built-in messages only.
+   * @param  string $subject The e-mail message subject.
+   * @param  array  $data    Input data for the template.
+   * @return void
+   */
+  public static function emailUser($user, $key, $subject, $data)
+  {
+    
+    //Gather message info.
+    $file = PATH_SYSTEM_ASSETS.DS.'email_templates'.DS.$key.'.md.tpl';
+    $meta = array(
+      'to' => array('name'=>$user->full_name->get(), 'email'=>$user->email->get()),
+      'subject' => $subject,
+      'debug' => true
+    );
+    
+    //Send message.
+    EmailTasks::SendFormattedMessage(
+      $key, $meta, $data, EmailTasks::MarkdownTemplateGetter($file)
+    );
     
   }
   

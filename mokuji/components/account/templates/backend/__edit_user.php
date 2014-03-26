@@ -20,7 +20,7 @@ $uid = tx('Security')->random_string(20);
   <div class="ctrlHolder">
     <label for="l_password" accesskey="p"><?php __('Password'); ?></label>
     <label><input type="radio" name="password_method" value="claim"<?php if($data->password->is_empty()) echo ' checked="checked"'; ?>> Let user decide</label>
-    <label><input type="radio" name="password_method" value="admin"<?php if(!$data->password->is_empty()) echo ' checked="checked"'; ?>> Manually set one</label>
+    <label><input type="radio" name="password_method" value="set"<?php if(!$data->password->is_empty()) echo ' checked="checked"'; ?>> Manually set one</label>
     <input class="big large" type="password" id="l_password" name="password" value="" placeholder="<?php __($names->component, 'Password hidden'); ?>" />
   </div>
   
@@ -54,8 +54,8 @@ $uid = tx('Security')->random_string(20);
       <input class="big large" type="checkbox" id="l_is_banned" name="is_banned"<?php echo ($data->check('is_banned') ? ' checked="checked"' : ''); ?> />
       <?php __('Banned'); ?>
     </label>
-    <label for="l_admin" accesskey="a">
-      <input class="big large" type="checkbox" id="l_admin" name="admin"<?php echo ($data->level->get('int') === 2 ? ' checked="checked"' : ''); ?> />
+    <label for="l_is_admin" accesskey="a">
+      <input class="big large" type="checkbox" id="l_is_admin" name="is_admin"<?php echo ($data->level->get('int') === 2 ? ' checked="checked"' : ''); ?> />
       <?php __('Administrator'); ?>
     </label>
   </div>
