@@ -284,6 +284,10 @@ abstract class ManagementTasks
     
     raw($userId);
     
+    //This makes sure that you don't lock yourself out of the system.
+    if(mk('Account')->user->id->get('int') === $userId)
+      throw new \exception\User('Cannot delete yourself while logged in');
+    
     mk('Logging')->log('Account', 'Deleting user', 'ID: '.$userId);
     
     //Check the account exists.

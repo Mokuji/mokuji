@@ -317,7 +317,13 @@ class Actions extends \dependencies\BaseComponent
     
     $uid = $data->user_id->validate('User #ID', array('required', 'number'));
     
-    ManagementTasks::deleteUser($data->user_id);
+    try{
+      ManagementTasks::deleteUser($data->user_id);
+    }
+    catch(\exception $ex){
+      set_status_header('500', $ex->getMessage());
+      die($ex->getMessage());
+    }
     exit;
     
   }

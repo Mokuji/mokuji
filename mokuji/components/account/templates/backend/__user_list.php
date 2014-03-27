@@ -16,7 +16,10 @@
 
 //First columns.
 $cols = array(
-  '<input type="checkbox" class="select-all" />' => function($row){ return '<input type="checkbox" class="select-row" name="user_id[]" value="'.$row->id.'" />'; },
+  '<input type="checkbox" class="select-all" />' => function($row){ return
+    '<input type="checkbox" class="select-row" name="user_id[]" value="'.$row->id.'" />'.n.
+    '<input type="hidden" class="edit-url" data-edit="'.url('section=account/edit_user&user_id='.$row->id).'" />';
+  },
   __('Name', 1)                                  => function($row){ return $row->user_info->full_name->otherwise('-'); },
   __('Email address', 1)                         => 'email'
 );
@@ -46,7 +49,7 @@ $cols = array_merge($cols, array(
     return ($row->last_login != '' ? $row->last_login : __($names->component, 'Never logged in', 1));
   },
   __('Actions', 1)                               => array(
-    function($row){return '<a class="edit" href="'.url('section=account/edit_user&user_id='.$row->id).'">'.__('Edit', 1).'</a>';},
+    function($row){return ('<a class="edit" href="javascript:;">'.__('Edit', 1).'</a>');},
     function($row){return ('<a class="delete" href="'.url('action=account/delete_user&user_id='.$row->id).'">'.__('Delete', 1).'</a>');}
   )
 ));
@@ -154,20 +157,25 @@ echo $data->users->as_table($cols);
     
     
     /* ---------- Edit/add user ---------- */
-    $('#tab-users .edit').on('click', function(e){
-
+    $('#tab-users .tx-table').on('click', 'td, .edit', function(e){
+      
+      //Only when you're not clicking something else.
+      if(this !== e.target)
+        return;
+      
       e.preventDefault();
-
-      $.ajax({
-        url: $(this).attr('href')
-      }).done(function(data){
+      
+      var url = $(this).closest('tr').find('.edit-url').attr('data-edit');
+      
+      $.ajax(url)
+      .done(function(data){
         $("#tab-user").addClass('no-refresh').html(data);
         $('#tabber-user')
           .find('a')
             .trigger('click')
             .text("<?php __($names->component, 'Edit user'); ?>");
       });
-
+      
     });
 
     /* ---------- Mail user ---------- */
@@ -205,11 +213,15 @@ echo $data->users->as_table($cols);
 
       if(confirm("<?php __('Are you sure?'); ?>")){
 
-        $(this).closest('tr').fadeOut();
+        var $row = $(this).closest('tr');
 
-        $.ajax({
-          url: $(this).attr('href')
-        });
+        $.ajax($(this).attr('href'))
+          .done(function(){
+            $row.fadeOut();
+          })
+          .error(function(xhr, state, message){
+            alert(message);
+          });
       }
 
     });
