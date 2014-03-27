@@ -482,6 +482,7 @@ abstract class CookieTasks
     //Get the website title for use in the email.
     $title = mk('Site')->title;
     
+    #TODO: Use core email formatting.
     //Warn the user.
     $mailed = mail(
       $user->email->get(), 

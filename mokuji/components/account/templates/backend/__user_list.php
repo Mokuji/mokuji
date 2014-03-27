@@ -32,12 +32,16 @@ if($data->num_user_groups->get() > 0) $cols = array_merge($cols, array(
   }
 ));
 
+//Shorthand
+$yes = '<i class="fa fa-check icon-ok"></i>';
+$no = '<i class="fa fa-times icon-remove"></i>';
+
 //Last columns.
 $cols = array_merge($cols, array(
-  __('Administrator', 1)                         => function($row){ return $row->is_administrator->get('boolean') ? __('Yes', true) : __('No', true); },
-  __('Activated', 1) => function($row){ return $row->is_active->get('boolean') ? __('Yes', true) : __('No', true); },
-  __('Banned', 1) => function($row){ return $row->is_banned->get('boolean') ? __('Yes', true) : __('No', true); },
-  __('Claimable', 1) => function($row){ return $row->is_claimable->get('boolean') ? __('Yes', true) : __('No', true); },
+  __('Active', 1) => function($row)use($yes,$no){ return $row->is_active->get('boolean') ? $yes : $no; },
+  __('Banned', 1) => function($row)use($yes,$no){ return $row->is_banned->get('boolean') ? $yes : $no; },
+  __('Admin', 1) => function($row)use($yes,$no){ return $row->is_administrator->get('boolean') ? $yes : $no; },
+  // __('Claimable', 1) => function($row)use($yes,$no){ return $row->is_claimable->get('boolean') ? $yes : $no; },
   __($names->component, 'Last login', 1)         => function($row)use($names){
     return ($row->last_login != '' ? $row->last_login : __($names->component, 'Never logged in', 1));
   },

@@ -3,6 +3,7 @@
 use components\account\classes\ControllerFactory as CF;
 use \dependencies\account\ManagementTasks;
 use \components\account\models\UserInfo;
+use \dependencies\Data;
 
 class Json extends \dependencies\BaseComponent
 {
@@ -452,48 +453,62 @@ class Json extends \dependencies\BaseComponent
   public function create_user($data, $parameters)
   {
     
-    //First check if password should be filtered.
-    $method = strtolower($data->password_method->get('string'));
-    switch($method)
-    {
-      
-      case 'set':
-        #TODO: Require password field.
-        //Notify the user?
-        break;
-      
-      case 'claim':
-        //Ignore password.
-        $data = $data->without('password', 'password_method');
-        
-        //Invite the user.
-        // $user = mk('Component')->helpers('account')->call('invite_user', array(
-        //   'email' => $data->email,
-        //   'username' => $data->username,
-        //   'level' => $data->level,
-        //   'for_title' => url('/', true)->output,
-        //   'for_link' => '/'
-        // ))
-        
-        // //Pass the exception on to the REST handler.
-        // ->failure(function($info){        
-        //   throw $info->exception;
-        // });
-        break;
-      
-    }
+    //Does not check permissions, so access level 2.
     
     //Handle one alias for the level value.
     $data->merge(array('level' => $data->check('is_admin') ? 2 : 1));
     
+    //Check if password should be filtered.
+    $method = strtolower($data->password_method->get('string'));
+    
     //Do the basic user create call.
-    $user = ManagementTasks::createUser($data);
+    $user = ManagementTasks::createUser($data, array('claim' => $method === 'claim'));
+    
+    //Add our component's additional data as well.
+    $this->_update_user_info($user, $data);
+    
+    #TODO: Make prettier.
+    $user->user_info;
+    $user->full_name;
+    
+    return $user;
+    
+  }
+  
+  //Updates an existing user.
+  public function update_user($data, $parameters)
+  {
+    
+    //Does not check permissions, so access level 2.
+    
+    //Handle one alias for the level value.
+    $data->merge(array('level' => $data->check('is_admin') ? 2 : 1));
+    
+    //Do the core edit.
+    $user = ManagementTasks::editUser($parameters->{0}, $data);
+    
+    //Do component data edit.
+    $this->_update_user_info($user, $data);
+    
+    #TODO: Make prettier.
+    $user->user_info;
+    $user->full_name;
+    
+    return $user;
+    
+  }
+  
+  /**
+   * Helper function that sets form data to the UserInfo model.
+   */
+  private function _update_user_info(Data $user, Data $data)
+  {
     
     //Add our component's additional data as well.
     $userInfo = $this->model('UserInfo')
       ->set(array(
         'user_id' => $user->id,
-        'comments' => $data->comments
+        'comments' => $data->comments->otherwise('NULL')
       ));
     
     //If we need to store things the old way, do that.
@@ -520,82 +535,6 @@ class Json extends \dependencies\BaseComponent
     
     //Store that.
     $userInfo->save();
-    
-    //Set the proper groups.
-    $this->helper('set_user_group_memberships', Data(array(
-      'user_group' => $data->user_group,
-      'user_id' => $user->id
-    )));
-    
-    #TODO: Make prettier.
-    $user->user_info;
-    $user->full_name;
-    
-    return $user;
-    
-  }
-  
-  //Updates an existing user.
-  public function update_user($data, $parameters)
-  {
-    
-    //Does not check permissions, so access level 2.
-    
-    //Check if the password was given and filled in..
-    $data->password->is('set')->and_not('empty')
-    
-    //In case it was given.
-    ->success(function()use(&$data){
-      
-      //Get salt and algorithm.
-      $data->salt = mk('Security')->random_string();
-      $data->hashing_algorithm = mk('Security')->pref_hash_algo();
-      
-      //Hash using above information.
-      $data->password = mk('Security')->hash(
-        $data->salt->get() . $data->password->get(),
-        $data->hashing_algorithm
-      );
-      
-    })
-    
-    //In case of no password, unset it from the data.
-    ->failure(function()use(&$data){
-      $data->password->un_set();
-    });
-    
-    //Get the old user model from the database.
-    $user = mk('Sql')->table('account', 'Accounts')->pk($data->id)->execute_single()
-    
-    //If it's empty, throw an exception.
-    ->is('empty', function(){
-      throw new \exception\User('Could not update because no entry was found in the database with id %s.', $data->id);
-    })
-    
-    //Merge the fields from the given data.
-    ->merge($data->having('email','username', 'password', 'salt', 'hashing_algorithm'))
-    
-    //Calculate user-level.
-    ->push('level', $data->admin->eq('on')->success(function(){return '2';})->otherwise('1'))
-    
-    //Save to database.
-    ->save();
-    
-    //Get the old user information from the database.
-    mk('Sql')->table('account', 'UserInfo')->pk($user->id)->execute_single()
-    
-    //Test if it's empty.
-    ->is('empty')
-    
-    //If it was, en thus does not exist, create a new row.
-    ->success(function($user_info)use($data, $user){
-      mk('Sql')->model('account', 'UserInfo')->set($data->having('name', 'preposition', 'family_name', 'comments')->merge($user->having(array('user_id'=>'id'))))->save();
-    })
-    
-    //If it already exists, merely update the row.
-    ->failure(function($user_info)use($data){
-      $user_info->merge($data->having('name', 'preposition', 'family_name', 'comments'))->save();
-    });
     
     //Set the proper groups.
     $this->helper('set_user_group_memberships', Data(array(

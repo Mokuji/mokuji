@@ -1,6 +1,7 @@
 <?php namespace components\account; if(!defined('TX')) die('No direct access.');
 
 use \components\account\classes\ControllerFactory as CF;
+use \dependencies\account\ManagementTasks;
 
 class Actions extends \dependencies\BaseComponent
 {
@@ -316,13 +317,8 @@ class Actions extends \dependencies\BaseComponent
     
     $uid = $data->user_id->validate('User #ID', array('required', 'number'));
     
-    //Set status.
-    mk('Sql')
-      ->table('account', 'UserInfo')
-      ->pk($uid)
-    ->execute_single()
-      ->set_status(0)
-      ->save();
+    ManagementTasks::deleteUser($data->user_id);
+    exit;
     
   }
   

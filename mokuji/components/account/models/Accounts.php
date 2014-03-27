@@ -17,6 +17,7 @@ class Accounts extends \dependencies\BaseModel
     ),
     
     $validate = array(
+      'id' => array('required', 'number'=>'integer', 'gt'=>0),
       'email' => array('required', 'email'),
       'username' => array('string', 'between'=>array(0, 255), 'no_html')
       

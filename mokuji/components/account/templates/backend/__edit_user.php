@@ -3,7 +3,7 @@ $create = $data->id->get('int') < 1;
 $uid = tx('Security')->random_string(20);
 ?>
 
-<form method="<?php echo ($create ? 'post' : 'put') ?>" id="<?php echo $uid; ?>" action="<?php echo url('rest=account/user'); ?>" class="form edit-user-form">
+<form method="<?php echo ($create ? 'post' : 'put') ?>" id="<?php echo $uid; ?>" action="<?php echo url('rest=account/user'.($create ? '' : '/'.$data->id)); ?>" class="form edit-user-form">
   
   <input type="hidden" name="id" value="<?php echo $edit_user->id ?>" />
   
@@ -18,10 +18,16 @@ $uid = tx('Security')->random_string(20);
   </div>
   
   <div class="ctrlHolder">
-    <label for="l_password" accesskey="p"><?php __('Password'); ?></label>
-    <label><input type="radio" name="password_method" value="claim"<?php if($data->password->is_empty()) echo ' checked="checked"'; ?>> Let user decide</label>
-    <label><input type="radio" name="password_method" value="set"<?php if(!$data->password->is_empty()) echo ' checked="checked"'; ?>> Manually set one</label>
-    <input class="big large" type="password" id="l_password" name="password" value="" placeholder="<?php __($names->component, 'Password hidden'); ?>" />
+    <?php if($create): ?>
+      <label for="l_password" accesskey="p"><?php __('Password'); ?></label>
+      <label><input type="radio" name="password_method" value="claim" checked="checked"> Let user decide</label>
+      <label><input type="radio" name="password_method" value="set"> Set a password</label>
+      <input class="big large" type="password" id="l_password" name="password" value="" placeholder="<?php __($names->component, 'Password hidden'); ?>" />
+    <?php else: ?>
+      <label for="l_password" accesskey="p"><?php __('Change password'); ?></label>
+      <p><?php __($names->component, 'Leave empty if you don\'t want to change the password'); ?>.</p>
+      <input class="big large" type="password" id="l_password" name="password" value="" placeholder="<?php __($names->component, 'Password hidden'); ?>" />
+    <?php endif; ?>
   </div>
   
   <div class="ctrlHolder">
@@ -39,23 +45,17 @@ $uid = tx('Security')->random_string(20);
     <textarea class="big large" id="l_comments" name="comments"><?php echo $edit_user->user_info->comments; ?></textarea>
   </div>
   
-  <?php if(false && $create): ?>
-    <div class="ctrlHolder">
-      <label for="l_choose_password" accesskey="a"><input class="big large" type="checkbox" id="l_choose_password" name="choose_password" value="1" /> <?php __($names->component, 'Let user choose password'); ?></label>
-    </div>
-  <?php endif; ?>
-  
   <div class="ctrlHolder">
     <label for="l_is_active">
-      <input class="big large" type="checkbox" id="l_is_active" name="is_active"<?php echo ($data->check('is_active') ? ' checked="checked"' : ''); ?> />
+      <input class="big large" type="checkbox" value="1" id="l_is_active" name="is_active"<?php echo ($create || $data->check('is_active') ? ' checked="checked"' : ''); ?> />
       <?php __('Activated'); ?>
     </label>
     <label for="l_is_banned">
-      <input class="big large" type="checkbox" id="l_is_banned" name="is_banned"<?php echo ($data->check('is_banned') ? ' checked="checked"' : ''); ?> />
+      <input class="big large" type="checkbox" value="1" id="l_is_banned" name="is_banned"<?php echo ($data->check('is_banned') ? ' checked="checked"' : ''); ?> />
       <?php __('Banned'); ?>
     </label>
     <label for="l_is_admin" accesskey="a">
-      <input class="big large" type="checkbox" id="l_is_admin" name="is_admin"<?php echo ($data->level->get('int') === 2 ? ' checked="checked"' : ''); ?> />
+      <input class="big large" type="checkbox" value="1" id="l_is_admin" name="is_admin"<?php echo ($data->level->get('int') === 2 ? ' checked="checked"' : ''); ?> />
       <?php __('Administrator'); ?>
     </label>
   </div>

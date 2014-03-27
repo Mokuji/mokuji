@@ -50,6 +50,7 @@ Desirable setup:
 - Verify remember me cookie
 * Claiming??
 * Email verification??
+* Action tokens (random keys to authenticate e-mail actions like claiming, email verification or password reset).
 
 ### 3. Permission tasks
 
@@ -81,13 +82,12 @@ Best to offer:
   Send mail to admin every week when duplicates exist.
   Send mail when user blocked because of duplicates.
 - Create user
-* Edit user
-* Delete user
+- Edit user
+- Delete user
 * Password forgotten
 * Claiming??
 * Banning??
 * Require password change??
-* Action tokens (random keys to authenticate e-mail actions like claiming, email verification or password reset).
 
 #### 5. Configuration
 
@@ -106,3 +106,4 @@ Best to offer:
 # Finally
 
 * Clean up email templating stub.
+* Create and Edit user are very similar, make more DRY?

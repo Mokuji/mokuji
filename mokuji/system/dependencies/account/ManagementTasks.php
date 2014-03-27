@@ -12,7 +12,6 @@ abstract class ManagementTasks
   
   /*
     #TODO
-    * Edit user
     * Delete user
     * Password forgotten
     * Claiming??
@@ -20,7 +19,7 @@ abstract class ManagementTasks
     * Email verification??
   */
   
-  private static $REGISTER_DEFAULTS = array(
+  private static $CREATE_USER_DEFAULTS = array(
     'is_active' => true,
     'is_banned' => false,
     'is_claimable' => false
@@ -51,12 +50,24 @@ abstract class ManagementTasks
    * As well as create unlimited accounts for spamming or even DOS attacks by taking up the
    * entire username and e-mail space.
    * 
+   * Options:
+   *   * silent = whether or not to send messages to the user.
+   *   * claim = whether or not to use the claiming process instead of setting the password.
+   * 
    * @param  Data $data The set of data to insert.
-   * @param  boolean $silent When true, no e-mail notifications will be sent.
+   * @param  array $options Options to alter the process slightly.
    * @return BaseModel The user that has been created.
    */
-  public static function createUser(Data $data, $silent=false)
+  public static function createUser(Data $data, $options=array())
   {
+    
+    //Data class comes in handy here.
+    $options = Data($options);
+    
+    //Use claiming process?
+    if($options->check('claim')){
+      $data->password->un_set();
+    }
     
     //Lets use a model.
     #TODO: Use core models.
@@ -70,7 +81,7 @@ abstract class ManagementTasks
       'nullify' => true,
       
       'rules' => array(
-        'password' => array('required', 'password'),
+        'password' => $options->check('claim') ? array() : array('required', 'password', 'not_empty'),
         'level' => array('required', 'number'=>'int', 'in'=>array(1, 2)),
         'first_name' => array('string', 'between'=>array(0, 255), 'no_html'),
         'last_name' => array('string', 'between'=>array(0, 255), 'no_html')
@@ -78,6 +89,7 @@ abstract class ManagementTasks
       
     ));
     
+    #TODO: Delegate this to the core model.
     //Check for duplicate email.
     mk('Sql')->execute_scalar(mk('Sql')->make_query(''
       . 'SELECT COUNT(*) FROM #__core_users '
@@ -90,6 +102,7 @@ abstract class ManagementTasks
       throw $vex;
     });
     
+    #TODO: Delegate this to the core model.
     //Check for duplicate username.
     mk('Sql')->execute_scalar(mk('Sql')->make_query(''
       . 'SELECT COUNT(*) FROM #__core_users '
@@ -110,7 +123,15 @@ abstract class ManagementTasks
     {
       
       //Set the default account flags.
-      $user->merge(self::$REGISTER_DEFAULTS);
+      $user->merge(self::$CREATE_USER_DEFAULTS);
+      
+      //Claiming should deactivate the account until claimed.
+      if($options->check('claim')){
+        $user->merge(array(
+          'is_claimable' => true,
+          'is_active' => false
+        ));
+      }
       
       //We're done it seems.
       $user->save();
@@ -139,8 +160,15 @@ abstract class ManagementTasks
       
     }
     
-    //Notify the user.
-    if(!$silent)
+    //Notify the user. (Can't use silent option for claims.)
+    if($options->check('claim')){
+      
+      #TODO: send claim link.
+      
+    }
+    
+    //Silent is only possible for normal create mail.
+    elseif(!$options->check('silent'))
     {
       
       ManagementTasks::emailUser(
@@ -149,12 +177,13 @@ abstract class ManagementTasks
         __('Account created', true),
         
         array(
-          'site_name' => mk('Config')->user('site_name')->otherwise('My Mokuji Website'),
+          'site_name' => mk('Config')->user('site_name')->otherwise(URL_BASE),
           'user' => $user,
           'verify_email_url' => (string)url('hi=true', true)
         )
         
       );
+        
     }
     
     return $user;
@@ -185,12 +214,52 @@ abstract class ManagementTasks
     //Merge the fields from the given data.
     $user->merge($data->having('email', 'username', 'first_name', 'last_name', 'level', 'is_active', 'is_banned'));
     
-    //Handle one alias for the level value.
-    if($data->is_admin->is_set()){
-      $user->merge(array('level', $data->check('is_admin') ? 2 : 1));
+    //Check if the password was given and filled in..
+    if(!$data->password->is_empty()){
+      $user->merge($data->having('password'));
     }
     
-    //Check if the password was given and filled in..
+    //Validate given fields.
+    $user->validate_model(array(
+      
+      'nullify' => true,
+      
+      'rules' => array(
+        'password' => array('required', 'password'),
+        'level' => array('required', 'number'=>'int', 'in'=>array(1, 2)),
+        'first_name' => array('string', 'between'=>array(0, 255), 'no_html'),
+        'last_name' => array('string', 'between'=>array(0, 255), 'no_html')
+      )
+      
+    ));
+    
+    #TODO: Delegate this to the core model.
+    //Check for duplicate email.
+    mk('Sql')->execute_scalar(mk('Sql')->make_query(''
+      . 'SELECT COUNT(*) FROM #__core_users '
+      . 'WHERE email = ?'
+      , $user->email
+    ))->gt(1, function(){
+      $vex = new \exception\Validation('A user with this e-mail address already exists.');
+      $vex->key('email');
+      $vex->errors(array('A user with this e-mail address already exists.'));
+      throw $vex;
+    });
+    
+    #TODO: Delegate this to the core model.
+    //Check for duplicate username.
+    mk('Sql')->execute_scalar(mk('Sql')->make_query(''
+      . 'SELECT COUNT(*) FROM #__core_users '
+      . 'WHERE username = ?'
+      , $user->username
+    ))->gt(1, function(){
+      $vex = new \exception\Validation('A user with this username already exists.');
+      $vex->key('username');
+      $vex->errors(array('A user with this username already exists.'));
+      throw $vex;
+    });
+    
+    //Seems the given password was valid.
     if(!$data->password->is_empty()){
       $user->merge(AuthenticationTasks::hashPassword($data->password));
     }
@@ -198,6 +267,85 @@ abstract class ManagementTasks
     //Save to database.
     $user->save();
     return $user;
+    
+  }
+  
+  /**
+   * Deletes a user.
+   * Permanently... so be careful alright?
+   * @param  integer $userId The ID of the user to delete.
+   * @return boolean Whether or not the user was deleted.
+   */
+  public static function deleteUser($userId)
+  {
+    
+    #TODO: User core models.
+    #TODO: User transaction.
+    
+    raw($userId);
+    
+    mk('Logging')->log('Account', 'Deleting user', 'ID: '.$userId);
+    
+    //Check the account exists.
+    $exists = mk('Sql')->execute_scalar(mk('Sql')->make_query(''
+      .'SELECT count(*) FROM `#__core_users` '
+      .'WHERE id=?'
+      , $userId
+    ));
+    
+    if($exists->get('int') <= 0){
+      throw new \exception\NotFound('User with ID %u was not found', $userId);
+    }
+    
+    //Find shared sessions.
+    $sessions = mk('Sql')->execute_query(mk('Sql')->make_query(''
+      .'SELECT * FROM `#__core_user_logins` '
+      .'WHERE user_id=?'
+      , $userId
+    ));
+    
+    //Remove shared session data.
+    foreach($sessions as $session){
+      mk('Sql')->execute_non_query(mk('Sql')->make_query(''
+        .'DELETE FROM `#__core_user_login_shared_sessions` '
+        .'WHERE login_id=?'
+        , $session->id
+      ));
+    }
+    
+    //Remove the sessions.
+    mk('Sql')->execute_non_query(mk('Sql')->make_query(''
+      .'DELETE FROM `#__core_user_logins` '
+      .'WHERE user_id=?'
+      , $userId
+    ));
+    
+    //Remove email tokens.
+    mk('Sql')->execute_non_query(mk('Sql')->make_query(''
+      .'DELETE FROM `#__core_user_email_tokens` '
+      .'WHERE id=?'
+      , $userId
+    ));
+    
+    //Last but not least, remove user.
+    mk('Sql')->execute_non_query(mk('Sql')->make_query(''
+      .'DELETE FROM `#__core_users` '
+      .'WHERE id=?'
+      , $userId
+    ));
+    
+    #TODO: Deprecate this.
+    //Some components may break if we don't do this.
+    if(mk('Component')->available('account')){
+      mk('Sql')->table('account', 'UserInfo')
+        ->pk($userId)
+        ->execute_single()
+        ->delete();
+    }
+    
+    mk('Logging')->log('Account', 'Deleted user', 'SUCCESS');
+    
+    return true;
     
   }
   
