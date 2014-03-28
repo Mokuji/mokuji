@@ -107,3 +107,8 @@ Best to offer:
 
 * Clean up email templating stub.
 * Create and Edit user are very similar, make more DRY?
+* Add installer to core dbupdates to skip the old update methods.
+
+Regex to check for deprecated usage.
+
+`(tx|mk)\(['"]Account['"]\)->(user-|become_user|register|is_login|check_level|page_authorisation)`
