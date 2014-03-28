@@ -1,5 +1,6 @@
 <?php namespace core; if(!defined('MK')) die('No direct access.');
 
+use \dependencies\Data;
 use \dependencies\account\AuthenticationTasks;
 use \dependencies\account\ManagementTasks;
 use \dependencies\account\CookieTasks;
@@ -13,7 +14,7 @@ class Account
   /**
    * The basic user information for the current session.
    */
-  public $user;
+  protected $_user;
   
   /**
    * Initializes the class.
@@ -26,14 +27,15 @@ class Account
   public function init()
   {
     
-    //append user object for easy access
-    $this->user =& tx('Data')->session->user;
+    //Instead of a direct reference, now use a clone.
+    //This prevents funny people from manipulating the session data.
+    $this->_user = mk('Data')->session->user->having('id', 'email', 'username', 'level');
     
     //Allow the cookie system to clean up.
     CookieTasks::cleanSessionRebase();
     
     //User is not logged in? Proceed to try log them in using an authentication cookie.
-    if(!$this->user->check('login')){
+    if(!$this->isLoggedIn()){
       CookieTasks::tryLogin();
       return;
     }
@@ -54,18 +56,54 @@ class Account
     //Look for session sharing signs.
     AuthenticationTasks::verifySharedSession($this->user, $session);
     
-    #TODO: Check if this can be deprecated.
-    //Progress user activity.
-    mk('Data')->server->REQUEST_TIME->copyto($this->user->activity);
+  }
+  
+  /**
+   * Read-only access with short writing style.
+   */
+  public function __get($key)
+  {
+    
+    //Special case, share a clone of the user object.
+    if($key === 'user'){
+      #TODO: Deprecate.
+      $clone = $this->_user->having('id', 'email', 'username', 'level');
+      $clone->merge(array('login' => $this->isLoggedIn()));
+      return $clone;
+    }
+    
+    //Limit what can be accessed.
+    if(!in_array($key, array('id', 'email', 'username', 'level')))
+      throw new \exception\Programmer('Account has no property %s', $key);
+    
+    //Give them what they wanted, as a raw value.
+    return $this->_user->{$key}->get();
     
   }
   
   /**
-   * Returns true if the user is logged in. Short for $this->user->check('login').
+   * Returns true if the user is logged in.
    * @return boolean
    */
-  public function is_login(){
-    return $this->user->check('login');
+  public function isLoggedIn(){
+    return $this->level >= 1;
+  }
+  
+  /**
+   * Returns true if the user is logged in as an administrator.
+   * @return boolean
+   */
+  public function isAdmin(){
+    return $this->level == 2;
+  }
+  
+  /**
+   * Returns true if the user has exactly the provided level.
+   * @param  integer $level The level to match.
+   * @return boolean
+   */
+  public function isLevel($level){
+    return $this->level === $level;
   }
   
   /**
@@ -93,31 +131,6 @@ class Account
   }
   
   /**
-   * Assume the identity of another user.
-   * @param integer $user_id The user ID of the user to log in with.
-   * @param boolean $persistent DEPRECATED: become_user is never persistent.
-   * @return self Returns $this for chaining.
-   * @throws \exception\Validation If the IP address of the remote connection is blacklisted.
-   * @throws \exception\EmptyResult If the user account is not found.
-   */
-  public function become_user($user_id, $persistent = null)
-  {
-    
-    #TODO: Remove this after a while.
-    if(!is_null($persistent)){
-      throw new \exception\Deprecated('The $persistent flag is no longer supported.');
-    }
-    
-    //Go for it.
-    raw($user_id);
-    AuthenticationTasks::becomeUser($user_id);
-    
-    //Enable chaining.
-    return $this;
-    
-  }
-  
-  /**
    * Logs out the current user.
    * @return self Returns $this for chaining.
    */
@@ -133,12 +146,23 @@ class Account
   }
   
   /**
-   * Registers a new user account.
-   * @param string $email The email address to set.
-   * @param string $username The optional username to set.
-   * @param string $password The password to set.
-   * @param int $level The user level to set. (1 = Normal user, 2 = Administrator)
-   * @return boolean Whether registering the user was successful.
+   * Sets the given user data.
+   * Note: only supports id, email, username and level.
+   * @param Data $userData The data to set on the user.
+   */
+  public function setUserData(Data $userData){
+    mk('Logging')->log('Account', 'Setting user data', $userData->dump());
+    $this->_user->merge($userData->having('id','email','username','level'));
+    tx('Data')->session->user->become($this->_user);
+  }
+  
+  /**
+   * DEPRECATED: Use \dependencies\account\ManagementTasks::register(...).
+   * @param string $email
+   * @param string $username
+   * @param string $password
+   * @param int $level
+   * @return boolean
    */
   public function register($email, $username = NULL, $password, $level=1)
   {
@@ -157,14 +181,18 @@ class Account
   }
   
   /**
-   * Checks whether the currently logged in user has a certain user level.
-   *
-   * When not checking the exact level,
-   * it checks whether the user level is greater than or equal to the provided level.
-   *
-   * @param int $level The level the user should be checked against.
-   * @param boolean $exact Whether the `$level` parameter should be exactly matched.
-   * @return boolean Whether or not the user meets the level requirements.
+   * DEPRECATED: use isLoggedIn().
+   * @return boolean
+   */
+  public function is_login(){
+    return $this->isLoggedIn();
+  }
+  
+  /**
+   * DEPRECATED: use level, isLoggedIn(), isAdmin() or isLevel($level).
+   * @param int $level
+   * @param boolean $exact
+   * @return boolean
    */
   public function check_level($level, $exact=false)
   {
@@ -176,12 +204,9 @@ class Account
   }
   
   /**
-   * Checks whether the currently logged in user has permission to view this page.
-   * Similar to check_level except it redirects the user if the user is not authorized.
-   * @param int $level The level the user should be checked against.
-   * @param boolean $exact Whether the `$level` parameter should be exactly matched.
-   * @return void
-   * @throws \exception\User If the redirect target requires the user to be logged in as well.
+   * DEPRECATED: Use controller level permissions instead. See \dependencies\BaseComponent.
+   * @param int $level
+   * @param boolean $exact
    */
   public function page_authorisation($level, $exact=false)
   {
@@ -205,6 +230,29 @@ class Account
     }
     
     mk('Url')->redirect($redirect);
+    
+  }
+  
+  /**
+   * DEPRECATED: Use \dependencies\account\AuthenticationTasks::becomeUser(...).
+   * @param integer $user_id
+   * @param boolean $persistent
+   * @return self
+   */
+  public function become_user($user_id, $persistent = null)
+  {
+    
+    #TODO: Remove this after a while.
+    if(!is_null($persistent)){
+      throw new \exception\Deprecated('The $persistent flag is no longer supported.');
+    }
+    
+    //Go for it.
+    raw($user_id);
+    AuthenticationTasks::becomeUser($user_id);
+    
+    //Enable chaining.
+    return $this;
     
   }
   
