@@ -420,20 +420,18 @@ class Json extends \dependencies\BaseViews
     if(INSTALLING !== true)
       throw new \exception\Authorisation('Mokuji is not in install mode.');
     
-    //Validate input.
-    $data = $data->having('email', 'username', 'password')
-      ->email->validate('Email address', array('required', 'email'))->back()
-      ->username->validate('Username', array('string'))->back()
-      ->password->validate('Password', array('required', 'password'))->back()
-    ;
-    
     //Since we're in install mode, we need to include the database settings manually.
     require_once(PATH_FRAMEWORK.DS.'config'.DS.'database'.EXT);
     mk('Sql')->set_connection_data(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PREFIX);
     
+    //Let the management tasks create the first user.
+    $data = $data->having('email', 'username', 'password');
+    $data->merge(array('level'=>2));
+    $user = \dependencies\account\ManagementTasks::createUser($data);
+    
     //Create this user in the core tables.
     return array(
-      'success' => mk('Account')->register($data->email, $data->username, $data->password, 2),
+      'success' => !!$user,
       'message' => 'Administrator account created, you can now finalize the installation.'
     );
     

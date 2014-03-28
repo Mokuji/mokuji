@@ -98,28 +98,25 @@ class Actions extends \dependencies\BaseComponent
 
   protected function register($data)
   {
-
-    $data = $data->having('email', 'username', 'password');
-
+    
     mk('Registering a new account.', function()use($data){
-
-      $data
-        -> email   ->validate('Email address', array('required', 'not_empty', 'email'))->back()
-        -> username->validate('Username', array('no_html'))->back()
-        -> password->validate('Password', array('required', 'not_empty', 'between'=>array(3, 30)));
-      mk('Account')->register($data->email, $data->username, $data->password);
-
+      
+      $data = $data->having('email', 'username', 'password');
+      $data->merge(array('level' => 1));
+      
+      $user = \dependencies\account\ManagementTasks::createUser($data);
+      
     })
-
+    
     ->failure(function($info){
       mk('Controller')->message(array(
         'error' => $info->get_user_message()
       ));
-
+      
     });
-
+    
     mk('Url')->redirect('email=NULL&username=NULL&password=NULL');
-
+    
   }
   
   protected function edit_profile($data)

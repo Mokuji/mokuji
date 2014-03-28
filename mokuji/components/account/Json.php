@@ -113,10 +113,9 @@ class Json extends \dependencies\BaseComponent
   protected function create_new_account($data, $params)
   {
     
-    #TODO: Add username and account info support.
     //Check basic formatting.
     $raw_data = $data;
-    $data = Data($data)->having('email', 'password1', 'password2')
+    $data = Data($data)->having('email', 'username', 'password1', 'password2')
       ->email->validate('E-mail', array('required', 'string', 'not_empty', 'email'))->back()
       ->password1->validate('Password', array('required', 'string', 'not_empty', 'password'))->back()
       ->password2->validate('Confirm password', array('required', 'string', 'not_empty'))->back();
@@ -137,24 +136,13 @@ class Json extends \dependencies\BaseComponent
       throw $vex;
     }
     
-    //Check if the email already exists.
-    //Note: Captcha should be done first, otherwise we can automatically scan for existing e-mail addresses.
-    if(
-      mk('Sql')
-        ->table('account', 'Accounts')
-        ->where('email', $data->email)
-        ->count()->get('int') > 0
-      ){
-      $vex = new \exception\Validation(__($this->component, 'An account with this e-mail address already exists', true));
-      $vex->key('email');
-      $vex->errors(array(__($this->component, 'An account with this e-mail address already exists', true)));
-      throw $vex;
-    }
+    //Lets go!
+    $userData = $data->having('email', 'username');
+    $userData->merge(array('password'=>$data->password1, 'level'=>1));
+    $user = \dependencies\account\ManagementTasks::createUser($userData);
     
-    $success = mk('Account')->register($data->email, null, $data->password1);
-    
-    if($success === true)
-      mk('Account')->login($data->email, $data->password1);
+    //No exceptions, so try to log in now.
+    mk('Account')->login($data->email, $data->password1);
     
     return array(
       'success' => $success
