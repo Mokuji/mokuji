@@ -2,6 +2,7 @@
 
 use components\account\controllers\base\Controller;
 use \dependencies\Validator;
+use \dependencies\account\AuthenticationTasks;
 
 class SessionController extends Controller
 {
@@ -47,7 +48,7 @@ class SessionController extends Controller
   public function getLoginStatus()
   {
     
-    mk('Account')->is_login() ? $this->userObject->level->get('int') : 0;
+    mk('Account')->isLoggedIn() ? mk('Account')->level : 0;
     
   }
   
@@ -102,7 +103,7 @@ class SessionController extends Controller
   {
     
     //Use core/Account to become the new user.
-    mk('Account')->become_user($userId);
+    AuthenticationTasks::becomeUser($userId);
     
     //Enable chaining.
     return $this;

@@ -1,4 +1,4 @@
-<?php namespace components\menu; if(!defined('TX')) die('No direct access.'); tx('Account')->page_authorisation(2); ?>
+<?php namespace components\menu; if(!defined('MK')) die('No direct access.'); ?>
 
 <p>
   Do you want to link to an external web page, e.g. <a href="http://mokuji.net" target="_blank">http://mokuji.net</a>? Fill in the URL (and optional target) below.

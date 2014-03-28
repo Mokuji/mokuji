@@ -84,7 +84,7 @@ abstract class AuthenticationTasks
     AuthenticationTasks::setLoggedIn($user, $expiry_date, $persistent);
     
     //Log a successful login attempt.
-    mk('Logging')->log('Core', 'Login attempt', 'SUCCESS: Logged in as user ID '.mk('Account')->user->id);
+    mk('Logging')->log('Core', 'Login attempt', 'SUCCESS: Logged in as user ID '.mk('Account')->id);
     
     # できた!
     return true;
@@ -101,15 +101,15 @@ abstract class AuthenticationTasks
   {
     
     //If we are not actually logged in, return false.
-    if(!mk('Account')->is_login()){
+    if(!mk('Account')->isLoggedIn()){
       return false;
     }
     
     //Get the SQL singleton.
     $sql = mk('Sql');
     
-    //Get the user.
-    $user =& mk('Account')->user;
+    //Get the user ID.
+    $userId = mk('Account')->id;
     
     //Start the log.
     mk('Logging')->log('Core', 'Account', 'Logging out');
@@ -126,7 +126,7 @@ abstract class AuthenticationTasks
             AND user_id = ?
             AND session_id = ?"
         , date('Y-m-d H:i:s')
-        , $user->id
+        , $userId
         , mk('Session')->id
       ));
       
@@ -137,7 +137,7 @@ abstract class AuthenticationTasks
     {
       
       #TODO: Use core models.
-      $sql->execute_non_query("UPDATE `#__core_users` SET session = NULL, ipa = NULL WHERE id = '{$user->id}'");
+      $sql->execute_non_query("UPDATE `#__core_users` SET session = NULL, ipa = NULL WHERE id = '{$userId}'");
       
     }
     
@@ -148,9 +148,12 @@ abstract class AuthenticationTasks
     mk('Session')->regenerate();
     
     //Unset meta-data.
-    $user->un_set('id', 'email', 'activity', 'username');
-    $user->login = false;
-    $user->level = 0;
+    mk('Account')->setUserData(Data(array(
+      'id' => null,
+      'email' => null,
+      'username' => null,
+      'level' => 0
+    )));
     
     # じゃ、またね。
     return true;
@@ -169,12 +172,12 @@ abstract class AuthenticationTasks
     
     #TODO: Make configurable global permission restriction on this.
     //Never allow guests to do this.
-    if(!mk('Account')->is_login()){
+    if(!mk('Account')->isLoggedIn()){
       throw new \exception\Authorisation('You must be logged in to do this');
     }
     
     //When we're trying to become the same user, abort.
-    if($userId === mk('Account')->user->id->get('int')){
+    if($userId === mk('Account')->id){
       mk('Logging')->log(
         'Core', 'Become user attempt',
         'FAILED: Tried to become the same user ID "'.$userId.'".'
@@ -184,7 +187,7 @@ abstract class AuthenticationTasks
     
     mk('Logging')->log(
       'Core', 'Become user attempt',
-      'Starting for user ID "'.$userId.'" by user ID "'.mk('Account')->user->id->otherwise('guest').'".'
+      'Starting for user ID "'.$userId.'" by user ID "'.(mk('Account')->id ? mk('Account')->id : 'guest').'".'
     );
     
     //Check if login is allowed, based on the IP permissions.
@@ -484,7 +487,7 @@ abstract class AuthenticationTasks
   {
     
     //If we were logged in, perform a logout first.
-    if(mk('Account')->is_login()){
+    if(mk('Account')->isLoggedIn()){
       mk('Logging')->log('Core', 'Account login', 'Already logged in, logging out first.');
       AuthenticationTasks::logout();
     }
@@ -546,14 +549,8 @@ abstract class AuthenticationTasks
       
     }
     
-    #TODO: Make this prettier.
-    //Set meta-data.
-    $that = mk('Account');
-    $that->user->id = $user->id;
-    $that->user->email = $user->email;
-    $that->user->username = $user->username;
-    $that->user->level = $user->level->get();
-    $that->user->login = true;
+    //Set meta-data on the account information.
+    mk('Account')->setUserData($user);
     
   }
   

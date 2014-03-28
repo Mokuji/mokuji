@@ -1,4 +1,4 @@
-<?php namespace components\account; if(!defined('TX')) die('No direct access.'); tx('Account')->page_authorisation(2);
+<?php namespace components\account; if(!defined('MK')) die('No direct access.');
 
 echo $data->group->as_form($id, array(
   'id' => array('type' => 'hidden', 'label'=>'ID'),

@@ -95,7 +95,7 @@ class DBUpdates extends \components\update\classes\BaseDBUpdates
       if(!$forced) throw $ex;
     }
     
-    //Transfer status codes from account component.
+    //Transfer status codes and names from account component.
     if(mk('Component')->available('account'))
     {
       

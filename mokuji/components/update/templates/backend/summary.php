@@ -1,4 +1,4 @@
-<?php namespace components\update; if(!defined('TX')) die('No direct access.'); tx('Account')->page_authorisation(2); ?>
+<?php namespace components\update; if(!defined('MK')) die('No direct access.'); ?>
 
 <h1><?php __($names->component, 'Update management'); ?></h1>
 <input type="button" id="check_updates" class="button grey" value="<?php __($names->component, 'Check for updates'); ?>" />

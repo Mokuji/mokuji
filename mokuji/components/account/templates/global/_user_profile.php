@@ -10,7 +10,7 @@ echo load_plugin('jquery_password_strength');
 
   <form method="post" action="<?php echo url('?action=account/edit_profile/post', true); ?>">
   
-    <input type="hidden" name="id" value="<?php echo tx('Account')->user->id->get('int'); ?>" />
+    <input type="hidden" name="id" value="<?php echo mk('Account')->id; ?>" />
     <input type="hidden" name="redirect_url" value="<?php echo $user_profile->options->redirect_url; ?>" />
   
     <div class="left">
@@ -42,7 +42,7 @@ echo load_plugin('jquery_password_strength');
       <fieldset>
         <div class="ctrlHolder">
           <label for="l_email"><?php __('Email address'); ?>:</label>
-          <input type="text" name="email_address" id="l_email" value="<?php echo tx('Account')->user->email->get('string'); ?>" disabled="disabled" />
+          <input type="text" name="email_address" id="l_email" value="<?php echo mk('Account')->email; ?>" disabled="disabled" />
         </div>
       </fieldset>
       <fieldset>
@@ -104,7 +104,7 @@ window.plupload_avatar_image_id_report = function(up, ids, file_id)
     url: '<?php echo url('action=account/save_avatar/post'); ?>',
     type: 'POST',
     data: {
-      user_id: <?php echo tx('Account')->user->id->get('int'); ?>,
+      user_id: <?php echo mk('Account')->id; ?>,
       avatar_image_id: file_id
     }
   })

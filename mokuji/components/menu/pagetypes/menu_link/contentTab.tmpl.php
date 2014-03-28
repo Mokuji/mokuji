@@ -1,4 +1,4 @@
-<?php namespace components\menu; if(!defined('TX')) die('No direct access.'); tx('Account')->page_authorisation(2); ?>
+<?php namespace components\menu; if(!defined('MK')) die('No direct access.'); ?>
 
 <form id="menu_linker" method="post" action="<?php echo url('action=cms/save_menu_link/post', true); ?>" class="form-inline-elements">
   <div class="ctrlHolder">

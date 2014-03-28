@@ -1,4 +1,4 @@
-<?php namespace components\cms; if(!defined('TX')) die('No direct access.'); tx('Account')->page_authorisation(2);
+<?php namespace components\cms; if(!defined('MK')) die('No direct access.');
 
 echo $data->item->as_form($form_id, array(
   'title'=>array('required'=>true),

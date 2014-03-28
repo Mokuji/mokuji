@@ -17,7 +17,7 @@ jQuery(function($){
 });
 </script>
 
-<?php if(tx('Config')->system()->check('backend')): ?>
+<?php if(mk('Config')->system()->check('backend')): ?>
 
 <!-- Back-end top-bar. -->
 <div id="topbar">
@@ -28,8 +28,8 @@ jQuery(function($){
     <li class="profile dropdown">
       
       <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
-        <span title="<?php echo tx('Account')->user->username; ?>">
-          <?php echo tx('Account')->user->username; ?>
+        <span title="<?php echo mk('Account')->username; ?>">
+          <?php echo mk('Account')->username; ?>
         </span>
       </a>
       
@@ -66,7 +66,7 @@ jQuery(function($){
 <!-- Front-end top-bar. -->
 <ul id="topbar_menu">
   
-  <?php if(tx('Account')->check_level(2)): ?>
+  <?php if(tx('Account')->isAdmin()): ?>
     
   <li class="website<?php if(!$data->check('editable')) echo ' active'; ?>">
     <a title="<?php __($names->component, 'View this page'); ?>" href="<?php echo $admin_toolbar->website_url; ?>"><?php __('Website'); ?></a>

@@ -1,4 +1,4 @@
-<?php namespace components\cms; if(!defined('TX')) die('No direct access.'); tx('Account')->page_authorisation(2); ?>
+<?php namespace components\cms; if(!defined('MK')) die('No direct access.'); ?>
 
 <!--
 A list of all menu items linked to current page.<br />

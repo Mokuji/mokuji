@@ -157,7 +157,7 @@ class Account
   }
   
   /**
-   * DEPRECATED: Use \dependencies\account\ManagementTasks::register(...).
+   * DEPRECATED: Use \dependencies\account\ManagementTasks::createUser(...).
    * @param string $email
    * @param string $username
    * @param string $password

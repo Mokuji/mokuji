@@ -30,7 +30,7 @@ class EntryPoint extends \dependencies\BaseEntryPoint
     {
       
       //Display a login page?
-      if(!tx('Account')->user->check('login'))
+      if(!tx('Account')->isLoggedIn())
       {
         
         //Use the previous scheme unless the on-login option is desired.

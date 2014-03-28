@@ -31,11 +31,12 @@ $init->set_environment(Environments::MINIMAL);
 $init->run_environment();
 
 //Pretend to be ADMIN.
-mk('Account')->user->set(array(
-  'login' => true,
-  'level' => 2,
-  'username' => '[SHELL_USER]'
-));
+mk('Account')->setUserData(Data(array(
+  'id' => 0,
+  'email' => EMAIL_ADDRESS_WEBMASTER,
+  'username' => '[SHELL_USER]',
+  'level' => 2
+)));
 
 //Do some routing: <component> <action> [arg1, arg2, ..., argN]
 if(empty($argv[1]) || empty($argv[2]))

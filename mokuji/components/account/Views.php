@@ -37,16 +37,16 @@ class Views extends \dependencies\BaseViews
   protected function profile()
   {
     
-    $is_logged_in = tx('Account')->user->check('login');
+    $is_logged_in = mk('Account')->isLoggedIn();
     if($is_logged_in){
       
-      $user = tx('Sql')->table('account', 'Accounts')
-        ->pk(tx('Account')->user->id)
+      $user = mk('Sql')->table('account', 'Accounts')
+        ->pk(mk('Account')->id)
         ->execute_single();
       
     }
     
-    $has_media = tx('Component')->available('media');
+    $has_media = mk('Component')->available('media');
     if($is_logged_in && $has_media){
       #TODO: Load image uploader plugin.
       #TODO: Load profile image.
@@ -71,8 +71,8 @@ class Views extends \dependencies\BaseViews
   protected function claim_account()
   {
     return array(
-      'email' => tx('Account')->user->email,
-      'username' => tx('Account')->user->username
+      'email' => mk('Account')->email,
+      'username' => mk('Account')->username
     );
   }
   

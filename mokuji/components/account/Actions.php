@@ -132,8 +132,8 @@ class Actions extends \dependencies\BaseComponent
         ->id->validate('User ID', array('required', 'number', 'gt'=>0))->back();
       
       //Check if operation is allowed.
-      //Asuming default permission requirement of level 1.
-      if(mk('Account')->user->level->get('int') !== 2 && mk('Account')->user->id->get('int') !== $data->id->get('int')){
+      //Must be admin or your account.
+      if(!(mk('Account')->isAdmin() || mk('Account')->id === $data->id->get('int'))){
         throw new \exception\Authorisation('You\'re not allowed to edit this user profile.');
       }
       
@@ -176,7 +176,7 @@ class Actions extends \dependencies\BaseComponent
           ->success(function()use($user, &$data){
             
             //See if we need an old password.
-            if(mk('Account')->user->level->get('int') !== 2)
+            if(!mk('Account')->isAdmin())
             {
               
               //See if we're using improved hashing.
@@ -279,7 +279,7 @@ class Actions extends \dependencies\BaseComponent
   {
 
     //Check if operation is allowed.
-    if(mk('Account')->user->level->get('int') !== 2 && mk('Account')->user->id->get('int') !== $data->user_id->get('int')){
+    if(!(mk('Account')->isAdmin() || mk('Account')->id === $data->user_id->get('int'))){
       throw new \exception\Authorisation('You\'re not allowed to edit this user profile.');
     }
     
@@ -456,17 +456,10 @@ class Actions extends \dependencies\BaseComponent
           $user_login = $row;
         });
       
-      mk('Logging')->log('LEDATE', $user_login->dt_expiry, date('Y-m-d H:i:s', time() + (2 * 3600)));
+      mk('Logging')->log('Account', $user_login->dt_expiry, date('Y-m-d H:i:s', time() + (2 * 3600)));
       
       //Set user in session.
-      mk('Data')->session->user->set(array(
-        'id' => $account->id->get('int'),
-        'email' => $account->email->get('string'),
-        'username' => $account->username->get('string'),
-        'level' => $account->level->get('int'),
-        'login' => true
-      ));
-      mk('Account')->user->set(mk('Data')->session->user);
+      mk('Account')->setUserData($account->having('id', 'email', 'username', 'level'));
       
     })
     

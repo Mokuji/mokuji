@@ -279,7 +279,7 @@ class Helpers extends \dependencies\BaseComponent
   {
     
     $user_info = $this->table('UserInfo')
-      ->pk(tx('Account')->user->id->get('int'))
+      ->pk(mk('Account')->id)
       ->execute_single();
     
     //If there's no user info found for the logged in user then return false.
@@ -292,7 +292,7 @@ class Helpers extends \dependencies\BaseComponent
     $user_info->check_status('claimable')
     ->success(function()use(&$should_claim){
       //If it is then check if the user is logged in.
-      $should_claim = tx('Account')->user->check('login');
+      $should_claim = mk('Account')->isLoggedIn();
     });
     
     return $should_claim;
@@ -538,7 +538,7 @@ class Helpers extends \dependencies\BaseComponent
     else
     {
       //Just remove all of them.
-      tx('Sql')
+      mk('Sql')
         ->table('account', 'AccountsToUserGroups')
         ->where('user_id', $data->user_id)
         ->execute()
@@ -557,14 +557,14 @@ class Helpers extends \dependencies\BaseComponent
     $meta = Data($meta)->having('access_level_field', 'group_permissions_join', 'user_group_id_field');
     
     //Get the user info we need.
-    if($user_id == null || (int)$user_id === tx('Account')->user->id->get('int')){
-      $user_id = tx('Account')->user->id->get('int');
-      $user_level = tx('Account')->user->level->get('int');
+    if($user_id == null || (int)$user_id === mk('Account')->id){
+      $user_id = mk('Account')->id;
+      $user_level = mk('Account')->level;
     }
     
     elseif($user_id > 0){
       $user_id = (int)$user_id;
-      $user_level = tx('Sql')
+      $user_level = mk('Sql')
         ->table('account', 'Accounts')
         ->pk($user_id)
         ->execute_single()
@@ -693,14 +693,14 @@ class Helpers extends \dependencies\BaseComponent
     raw($access_level, $group_id, $user_id);
     
     //Get the user info we need.
-    if($user_id == null || (int)$user_id === tx('Account')->user->id->get('int')){
-      $user_id = tx('Account')->user->id->get('int');
-      $user_level = tx('Account')->user->level->get('int');
+    if($user_id == null || (int)$user_id === mk('Account')->id){
+      $user_id = mk('Account')->id;
+      $user_level = mk('Account')->level;
     }
     
     elseif($user_id > 0){
       $user_id = (int)$user_id;
-      $user_level = tx('Sql')
+      $user_level = mk('Sql')
         ->table('account', 'Accounts')
         ->pk($user_id)
         ->execute_single()

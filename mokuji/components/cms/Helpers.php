@@ -75,17 +75,17 @@ class Helpers extends \dependencies\BaseComponent
     }
     
     //If we have the right userlevel, return.
-    if(tx('Account')->check_level($baseLevels[$page->access_level->get()])){
+    if(mk('Account')->level >= $baseLevels[$page->access_level->get()]){
       return true;
     }
     
     //If we did not meet the right userlevel, only a group can save us now from being denied access.
     //Which is only when the page access level is set to 2 (logged in and part of a group which is allowed access).
     //But we must still have userlevel 1. Banned users can't have access even if they are part of a group. o_0
-    if($page->access_level->get('integer') === 2 && tx('Account')->check_level(1)){
+    if($page->access_level->get('integer') === 2 && mk('Account')->isLevel(1)){
       
       //Find the groups that have access to this page.
-      $allowedGroups = tx('Sql')
+      $allowedGroups = mk('Sql')
         ->table('cms', 'PageGroupPermissions')
         ->where('page_id', $page->id)
         ->where('access_level', '>=', '1')
@@ -95,11 +95,11 @@ class Helpers extends \dependencies\BaseComponent
         });
       
       //Find if we're a member of any of those.
-      $howMany = tx('Sql')
+      $howMany = mk('Sql')
         ->table('account', 'UserGroups', $UG)
         ->where('id', 'IN', $allowedGroups)
         ->join('AccountsToUserGroups', $ATUG)
-          ->where("$ATUG.user_id", tx('Account')->user->id)
+          ->where("$ATUG.user_id", mk('Account')->id)
         ->count();
       
       //If there's one or more, we get to see the page.
@@ -125,7 +125,7 @@ class Helpers extends \dependencies\BaseComponent
     
     $return = Data();
     
-    $result = tx('Sql')->table('cms', 'Pages', $p)
+    $result = mk('Sql')->table('cms', 'Pages', $p)
       ->pk($pid)
       ->join('Templates', $te)
       ->join('Themes', $th)
@@ -364,7 +364,7 @@ class Helpers extends \dependencies\BaseComponent
     }
     
     //The user must be logged in as an administrator.
-    if(!tx('Account')->check_level(2)){
+    if(!tx('Account')->isAdmin()){
       return false;
     }
     

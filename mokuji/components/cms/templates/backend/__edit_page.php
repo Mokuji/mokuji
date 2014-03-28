@@ -1,4 +1,4 @@
-<?php namespace components\cms; if(!defined('TX')) die('No direct access.'); tx('Account')->page_authorisation(2); ?>
+<?php namespace components\cms; if(!defined('MK')) die('No direct access.'); ?>
 
 <script id="edit_page_tmpl" type="text/x-jquery-tmpl">
   

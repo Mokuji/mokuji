@@ -1,4 +1,4 @@
-<?php namespace components\cms; if(!defined('TX')) die('No direct access.'); tx('Account')->page_authorisation(2);
+<?php namespace components\cms; if(!defined('MK')) die('No direct access.');
 
 echo $data->as_table(array(
   __('Address', 1) => 'address',

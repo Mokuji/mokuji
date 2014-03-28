@@ -36,7 +36,7 @@ try{
 	mk('Account');
 	
 	//check for admin.
-	if(!mk('Account')->check_level(2)){
+	if(!mk('Account')->isAdmin()){
 	  throw new \Exception("You need to be logged in as admin to use this function.");
 	}
 	

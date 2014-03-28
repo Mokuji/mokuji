@@ -1,4 +1,4 @@
-<?php namespace components\account; if(!defined('TX')) die('No direct access.'); tx('Account')->page_authorisation(2);
+<?php namespace components\account; if(!defined('MK')) die('No direct access.');
 $create = $data->id->get('int') < 1;
 $uid = tx('Security')->random_string(20);
 ?>

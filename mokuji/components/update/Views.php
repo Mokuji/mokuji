@@ -15,16 +15,16 @@ class Views extends \dependencies\BaseViews
   {
     
     //Get last read value.
-    tx('Sql')
+    mk('Sql')
       ->table('update', 'UserLastReads')
-      ->pk(tx('Account')->user->id)
+      ->pk(mk('Account')->id)
       ->execute_single()
       
       //Make a new entry if it doesn't exist yet.
       ->is('empty', function(){
-        return tx('Sql')
+        return mk('Sql')
           ->model('update', 'UserLastReads')
-          ->set(array('user_id' => tx('Account')->user->id));
+          ->set(array('user_id' => mk('Account')->id));
       })
       
       //Store current date.
@@ -33,7 +33,7 @@ class Views extends \dependencies\BaseViews
     
     //Return latest 8 updates.
     return array(
-      'latest_updates' => tx('Sql')
+      'latest_updates' => mk('Sql')
         ->table('update', 'PackageVersions')
         ->order('date', 'DESC')
         ->order('version', 'DESC')

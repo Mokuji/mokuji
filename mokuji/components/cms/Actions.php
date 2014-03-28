@@ -635,7 +635,7 @@ class Actions extends \dependencies\BaseComponent
   {
     
     //Enable editable if the user is logged in.
-    if(tx('Account')->check_level(2)){
+    if(tx('Account')->isAdmin()){
       tx('Data')->session->tx->editable->set(true);
     }
     

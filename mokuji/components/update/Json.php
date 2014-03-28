@@ -14,7 +14,7 @@ class Json extends \dependencies\BaseViews
     
     $last_read = mk('Sql')
       ->table('update', 'UserLastReads')
-      ->pk(mk('Account')->user->id)
+      ->pk(mk('Account')->id)
       ->execute_single();
     
     return array(

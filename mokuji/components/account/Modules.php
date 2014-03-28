@@ -15,11 +15,11 @@ class Modules extends \dependencies\BaseViews
   {
     
     return array(
-      'logged_in' => mk('Account')->is_login(),
+      'logged_in' => mk('Account')->isLoggedIn(),
       'model' => mk('Sql')->model('account', 'Accounts'),
       'target_url' => $options->target_url->otherwise(url('pid=KEEP&menu=KEEP',true)->output),
-      'captcha' => mk('Account')->is_login() ? '' : mk('Component')->helpers('security')->call('generate_captcha'),
-      'captcha_reload' => mk('Account')->is_login() ? '' : mk('Component')->helpers('security')->call('reload_captcha_js')
+      'captcha' => mk('Account')->isLoggedIn() ? '' : mk('Component')->helpers('security')->call('generate_captcha'),
+      'captcha_reload' => mk('Account')->isLoggedIn() ? '' : mk('Component')->helpers('security')->call('reload_captcha_js')
     );
     
   }
@@ -34,7 +34,7 @@ class Modules extends \dependencies\BaseViews
     
     //set user_id if not given
     $options->user_id =
-      ($options->user_id->get('int') > 0 ? $options->user_id->get('int') : tx('Account')->user->id->get('int'));
+      ($options->user_id->get('int') > 0 ? $options->user_id->get('int') : mk('Account')->id);
     
     //Validate input.
     $options
@@ -59,13 +59,13 @@ class Modules extends \dependencies\BaseViews
     #TODO: Check for permissions here.
     
     return array(
-      'has_media' => tx('Component')->available('media'),
-      'editable' => $options->user_id->get('int') === tx('Data')->session->user->id->get('int'),
-      'need_old_password' => tx('Account')->user->level->get('int') !== 2,
+      'has_media' => mk('Component')->available('media'),
+      'editable' => $options->user_id->get('int') === mk('Data')->session->user->id->get('int'),
+      'need_old_password' => !mk('Account')->isAdmin(),
       'user' => $user,
       'options' => $options,
-      'image_uploader' => !tx('Component')->available('media') ? '' :
-        tx('Component')->modules('media')->get_html('image_uploader', array(
+      'image_uploader' => !mk('Component')->available('media') ? '' :
+        mk('Component')->modules('media')->get_html('image_uploader', array(
           'ids' => array(
             'main' => 'file-container',
             'header' => 'file-header',
