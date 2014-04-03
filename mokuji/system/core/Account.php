@@ -151,8 +151,9 @@ class Account
    * @param Data $userData The data to set on the user.
    */
   public function setUserData(Data $userData){
-    mk('Logging')->log('Account', 'Setting user data', $userData->dump());
-    $this->_user->merge($userData->having('id','email','username','level'));
+    $pruned = $userData->having('id','email','username','level');
+    mk('Logging')->log('Account', 'Setting user data', $pruned->dump());
+    $this->_user->merge($pruned);
     tx('Data')->session->user->become($this->_user);
   }
   

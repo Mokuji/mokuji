@@ -424,6 +424,9 @@ class Json extends \dependencies\BaseViews
     require_once(PATH_FRAMEWORK.DS.'config'.DS.'database'.EXT);
     mk('Sql')->set_connection_data(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PREFIX);
     
+    //We also need the email info for confirmation messages.
+    require_once(PATH_FRAMEWORK.DS.'config'.DS.'email'.EXT);
+    
     //Let the management tasks create the first user.
     $data = $data->having('email', 'username', 'password');
     $data->merge(array('level'=>2));

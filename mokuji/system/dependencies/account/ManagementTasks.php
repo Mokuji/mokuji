@@ -171,6 +171,8 @@ abstract class ManagementTasks
     elseif(!$options->check('silent'))
     {
       
+      #TODO: verify link.
+      
       ManagementTasks::emailUser(
         
         $user, 'account.created',

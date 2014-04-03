@@ -20,34 +20,10 @@ Make sure to delete this when done.
 
 ### 1. Cooperating with the core
 
-Current dependencies:
-
-- Core classes use the `mk('Account')->check_level` function.
-- The `mk('Account')->user` data is abused all over the place.
-- The account component uses the majority of `mk('Account')` features.
-- The `mk('Account')->page_authorisation(2)` clause used to be a thing, before the level 2 default permissions probably.
-- The cms component uses various checks and even login logic from `mk('Account')`.
-- External components (like community) uses the `mk('Account')->user` object for things like comparing user ID's with owner ID's.
-- External components use the `->check('login')` function on the user object for checking user level 1+.
-- External components use the `mk('Account')->is_login()` function on object for checking user level 1+.
-- Update component uses `mk('Account')->register()` for the install script's first admin user.
-- Some old components made their own `mk('Account')->login()` calls (same for register).
-
-Desirable setup:
-
-* All authentication and permission tasks should be handled by the core.
-* Management tasks should be initiated by the account component, however the core is responsible for maintaining a stable state.
-* A proper interface should be written for the `mk('Account')` properties and methods.
-* `mk('Account')` should provide easy yet predictable access to common permission and authentication checking features.
-* `mk('Account')->user` should be information about the user only (ID, username, email, etc...). Not permissions.
-* Deprecation warnings for security related reasons should be issued by the core.
+**Done**
 
 ### 2. Authentication tasks
 
-- Login
-- Logout
-- Create remember me cookie
-- Verify remember me cookie
 * Claiming??
 * Email verification??
 * Action tokens (random keys to authenticate e-mail actions like claiming, email verification or password reset).
@@ -81,9 +57,6 @@ Best to offer:
 * Check for problems (like duplicates).
   Send mail to admin every week when duplicates exist.
   Send mail when user blocked because of duplicates.
-- Create user
-- Edit user
-- Delete user
 * Password forgotten
 * Claiming??
 * Banning??
@@ -106,6 +79,7 @@ Best to offer:
 # Finally
 
 * Clean up email templating stub.
+* Maybe move php_mailer to base and move send_fleeting_mail features.
 * Create and Edit user are very similar, make more DRY?
 * Add installer to core dbupdates to skip the old update methods.
 
