@@ -78,6 +78,8 @@ Best to offer:
 
 # Finally
 
+* Remove account component dependency for email verification / claiming.
+* Show a prettier message when claim / verify tokens are invalid.
 * Clean up email templating stub.
 * Maybe move php_mailer to base and move send_fleeting_mail features.
 * Create and Edit user are very similar, make more DRY?

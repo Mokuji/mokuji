@@ -12,7 +12,6 @@ abstract class ManagementTasks
   
   /*
     #TODO
-    * Delete user
     * Password forgotten
     * Claiming??
     * Banning??
@@ -60,6 +59,8 @@ abstract class ManagementTasks
    */
   public static function createUser(Data $data, $options=array())
   {
+    
+    #TODO: Check for registration enabled setting.
     
     //Data class comes in handy here.
     $options = Data($options);
@@ -163,7 +164,26 @@ abstract class ManagementTasks
     //Notify the user. (Can't use silent option for claims.)
     if($options->check('claim')){
       
-      #TODO: send claim link.
+      //Create a verify token with a long lifetime.
+      //The maximum lifetime is still considered proper validation, so use that for user friendliness.
+      $token = EmailTokenTasks::generate(
+        $user->id, 'account.claim',
+        EmailTokenTasks::MAX_TOKEN_LIFETIME
+      );
+      
+      //Send the email now.
+      ManagementTasks::emailUser(
+        
+        $user, 'account.claim',
+        __('You can claim your account', true),
+        
+        array(
+          'site_name' => mk('Config')->user('site_name')->otherwise(URL_BASE),
+          'user' => $user,
+          'claim_url' => (string)url('action=account/claim_account&uid='.$user->id.'&token='.$token, true)
+        )
+        
+      );
       
     }
     
@@ -171,17 +191,23 @@ abstract class ManagementTasks
     elseif(!$options->check('silent'))
     {
       
-      #TODO: verify link.
+      //Create a verify token with a long lifetime.
+      //We only need to know that the user can read the e-mail messages at all.
+      $token = EmailTokenTasks::generate(
+        $user->id, 'account.verify_email',
+        EmailTokenTasks::MAX_TOKEN_LIFETIME
+      );
       
+      //Send the email now.
       ManagementTasks::emailUser(
         
         $user, 'account.created',
-        __('Account created', true),
+        __('Your account has been created', true),
         
         array(
           'site_name' => mk('Config')->user('site_name')->otherwise(URL_BASE),
           'user' => $user,
-          'verify_email_url' => (string)url('hi=true', true)
+          'verify_email_url' => (string)url('action=account/verify_email&uid='.$user->id.'&token='.$token, true)
         )
         
       );
@@ -370,8 +396,7 @@ abstract class ManagementTasks
     $file = PATH_SYSTEM_ASSETS.DS.'email_templates'.DS.$key.'.md.tpl';
     $meta = array(
       'to' => array('name'=>$user->full_name->get(), 'email'=>$user->email->get()),
-      'subject' => $subject,
-      'debug' => true
+      'subject' => $subject
     );
     
     //Send message.

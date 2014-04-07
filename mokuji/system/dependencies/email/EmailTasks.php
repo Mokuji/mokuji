@@ -40,7 +40,6 @@ abstract class EmailTasks
     if(mk('Component')->available('mail'))
     {
       
-      
       //Send email.
       mk('Component')->helpers('mail')->send_fleeting_mail($params)
       

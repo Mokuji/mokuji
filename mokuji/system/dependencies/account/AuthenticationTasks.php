@@ -16,7 +16,7 @@ abstract class AuthenticationTasks
   */
   
   /**
-   * Check for support of the core user logins database tables.
+   * Check for support of the core user logins database table.
    * @return boolean
    */
   public static function isLoginStructureSupported()
@@ -509,7 +509,7 @@ abstract class AuthenticationTasks
     
     #TODO: Remove this support.
     //Backward compatibility with old database structure.
-    if($sql->execute_single("SHOW TABLES LIKE '#__core_user_logins'")->is_empty())
+    if(!AuthenticationTasks::isLoginStructureSupported())
     {
       
       #TODO: Use core models.

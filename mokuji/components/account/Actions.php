@@ -2,6 +2,7 @@
 
 use \components\account\classes\ControllerFactory as CF;
 use \dependencies\account\ManagementTasks;
+use \dependencies\account\EmailTokenTasks;
 
 class Actions extends \dependencies\BaseComponent
 {
@@ -14,12 +15,25 @@ class Actions extends \dependencies\BaseComponent
       'register' => 0,
       'claim_account' => 0,
       'use_password_reset_token' => 0,
+      'verify_email' => 0,
       
       'logout' => 1,
       'save_avatar' => 1,
       'edit_profile' => 1
       
     );
+  
+  protected function verify_email($data)
+  {
+    
+    #TODO: Show a prettier message.
+    if(!EmailTokenTasks::validate($data->uid, $data->token, 'account.verify_email')){
+      die('Invalid token. Did it expire?');
+    }
+    
+    mk('Url')->redirect('uid=NULL&token=NULL');
+    
+  }
   
   protected function use_password_reset_token($data)
   {
