@@ -529,7 +529,7 @@ abstract class AuthenticationTasks
     {
       
       //Compute the expiry date.
-      $dt_expiry = is_null($expiry_date) ? 'NULL' : "'".strtotime($expiry_date)."'";
+      $dt_expiry = is_null($expiry_date) ? 'NULL' : mk('Sql')->escape($expiry_date);
       
       #TODO: Use core models.
       //Insert this login session in the database.
@@ -538,7 +538,7 @@ abstract class AuthenticationTasks
           NULL,
           '{$user->id}',
           ".$sql->escape(mk('Session')->id).",
-          {$dt_expiry},
+          $dt_expiry,
           ".$sql->escape(mk('Data')->server->REMOTE_ADDR).",
           ".$sql->escape(mk('Data')->server->HTTP_USER_AGENT).",
           DEFAULT

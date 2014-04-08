@@ -117,7 +117,7 @@ abstract class EmailTasks
       $success = @mail(
         $quickformat($messageData['to']),
         $messageData['subject'],
-        strip_tags($params['html_message']),
+        html_entity_decode(strip_tags($params['html_message'])),
         $headers
       );
       

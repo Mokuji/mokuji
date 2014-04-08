@@ -168,6 +168,7 @@ class Account
   public function register($email, $username = NULL, $password, $level=1)
   {
     
+    mk('Logging')->log('Account', 'DEPRECATED', 'Used deprecated register function.');
     //Let the management tasks handle this.
     $user = ManagementTasks::createUser(Data(array(
       'email' => $email,
@@ -186,6 +187,7 @@ class Account
    * @return boolean
    */
   public function is_login(){
+    mk('Logging')->log('Account', 'DEPRECATED', 'Used deprecated is_login function.');
     return $this->isLoggedIn();
   }
   
@@ -198,6 +200,7 @@ class Account
   public function check_level($level, $exact=false)
   {
     
+    mk('Logging')->log('Account', 'DEPRECATED', 'Used deprecated check_level function.');
     return $exact===true ?
       $this->user->level->get('int') == $level:
       $this->user->level->get('int') >= $level;
@@ -213,7 +216,7 @@ class Account
   {
     
     #TODO: Deprecate this, in favor of controller level permission checking.
-    
+    mk('Logging')->log('Account', 'DEPRECATED', 'Used deprecated page_authorisation function.');
     if($this->check_level($level, $exact)){
       return;
     }
@@ -243,6 +246,7 @@ class Account
   public function become_user($user_id, $persistent = null)
   {
     
+    mk('Logging')->log('Account', 'DEPRECATED', 'Used deprecated become_user function.');
     #TODO: Remove this after a while.
     if(!is_null($persistent)){
       throw new \exception\Deprecated('The $persistent flag is no longer supported.');
