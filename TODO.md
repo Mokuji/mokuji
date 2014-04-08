@@ -24,9 +24,7 @@ Make sure to delete this when done.
 
 ### 2. Authentication tasks
 
-* Claiming??
-* Email verification??
-* Action tokens (random keys to authenticate e-mail actions like claiming, email verification or password reset).
+**Done**
 
 ### 3. Permission tasks
 
@@ -57,8 +55,6 @@ Best to offer:
 * Check for problems (like duplicates).
   Send mail to admin every week when duplicates exist.
   Send mail when user blocked because of duplicates.
-* Password forgotten
-* Claiming??
 * Banning??
 * Require password change??
 
@@ -78,6 +74,8 @@ Best to offer:
 
 # Finally
 
+* Fix the unexpected behavior of the "send activation mail" action. Do real claiming.
+* Build option to create inactive accounts without a password without sending claiming links.
 * Remove account component dependency for email verification / claiming.
 * Show a prettier message when claim / verify tokens are invalid.
 * Clean up email templating stub.

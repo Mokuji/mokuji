@@ -1,5 +1,7 @@
 <?php namespace components\account; if(!defined('TX')) die('No direct access.');
 
+use \dependencies\account\ManagementTasks;
+
 class Helpers extends \dependencies\BaseComponent
 {
   
@@ -50,6 +52,11 @@ class Helpers extends \dependencies\BaseComponent
           
           tx('Logging')->log('Account', 'Reset password', 'Init for user: '.$user->email->get('string'));
           
+          //See if we can do it the new way.
+          if(ManagementTasks::isExtendedCoreUsersSupported()){
+            return ManagementTasks::passwordReset($user->email, '/admin/?password_forgotten=token&uid=%u&token=%s');
+          }
+          
           //Create claim key.
           $claim_key = tx('Security')->random_string(10);
           
@@ -91,8 +98,8 @@ class Helpers extends \dependencies\BaseComponent
             #TODO #BUG
             mail(
               $user->email,
-              __('Invitation for', 1).': '.$data->for_title,
-              tx('Component')->views('account')->get_html('email_user_invited', $data->having('for_link', 'for_title', 'claim_link', 'unsubscribe_link')->merge(array('username' => $username)))
+              __('Claim your account', 1),
+              tx('Component')->views('account')->get_html('email_user_password_reset', $links->having('for_link', 'claim_link', 'unsubscribe_link')->merge(array('username' => $username)))
             );
             
           }
@@ -272,31 +279,10 @@ class Helpers extends \dependencies\BaseComponent
   /**
    * Whether the logged in user should claim their account or not.
    *
-   * @author Beanow
    * @return Boolean Whether the logged in user should claim their account or not.
    */
-  public function should_claim()
-  {
-    
-    $user_info = $this->table('UserInfo')
-      ->pk(mk('Account')->id)
-      ->execute_single();
-    
-    //If there's no user info found for the logged in user then return false.
-    if(!$user_info->is_set())
-      return false;
-    
-    $should_claim = false;
-    
-    //Check the user status is claimable.
-    $user_info->check_status('claimable')
-    ->success(function()use(&$should_claim){
-      //If it is then check if the user is logged in.
-      $should_claim = mk('Account')->isLoggedIn();
-    });
-    
-    return $should_claim;
-    
+  public function should_claim(){
+    return ManagementTasks::shouldClaim();
   }
   
   public function set_group_members($group_id, $members)

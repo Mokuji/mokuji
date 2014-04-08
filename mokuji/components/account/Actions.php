@@ -1,6 +1,7 @@
 <?php namespace components\account; if(!defined('TX')) die('No direct access.');
 
 use \components\account\classes\ControllerFactory as CF;
+use \dependencies\account\AuthenticationTasks;
 use \dependencies\account\ManagementTasks;
 use \dependencies\account\EmailTokenTasks;
 
@@ -27,8 +28,13 @@ class Actions extends \dependencies\BaseComponent
   {
     
     #TODO: Show a prettier message.
-    if(!EmailTokenTasks::validate($data->uid, $data->token, 'account.verify_email')){
-      die('Invalid token. Did it expire?');
+    try{
+      if(!EmailTokenTasks::validate($data->uid, $data->token, 'account.verify_email')){
+        die('Invalid token. Did it expire?');
+      }
+    }
+    catch(\exception\Exception $ex){
+      die($ex->getMessage());
     }
     
     mk('Url')->redirect('uid=NULL&token=NULL');
@@ -118,7 +124,9 @@ class Actions extends \dependencies\BaseComponent
       $data = $data->having('email', 'username', 'password');
       $data->merge(array('level' => 1));
       
-      $user = \dependencies\account\ManagementTasks::createUser($data);
+      $user = \dependencies\account\ManagementTasks::createUser($data, array(
+        'url' => '/?action=account/verify_email&uid=%u&token=%s'
+      ));
       
     })
     
@@ -395,6 +403,44 @@ class Actions extends \dependencies\BaseComponent
   protected function claim_account($data)
   {
     
+    //See if we get to use the new claim links.
+    if($data->uid->is_set() && $data->token->is_set()){
+      
+      try{
+        
+        //Check the token, but don't consume it. Should the user not complete the claim, the token remains valid.
+        if(!EmailTokenTasks::validate($data->uid, $data->token, 'account.claim', array('consume_token'=>false))){
+          die('Invalid token. Did it expire?');
+        }
+        
+        //Get the account.
+        $user = $this->table('Accounts')->pk($data->uid)->execute_single();
+        
+        //If you're trying to use the token for an account that was already claimed, consume it.
+        if(!$user->check('is_claimable')){
+          EmailTokenTasks::consumeToken($data->uid, $data->token);
+          die('You have already claimed this account. Please log in with the password you\'ve set.');
+        }
+        
+        //Otherwise, log us in for two hours.
+        else{
+          
+          //You don't need much longer just to be able to set your password.
+          AuthenticationTasks::setLoggedIn($user, date('Y-m-d H:i:s', time()+7200));
+          
+        }
+        
+      }
+      
+      catch(\exception\Exception $ex){
+        die($ex->getMessage());
+      }
+      
+      mk('Url')->redirect('uid=NULL&token=NULL');
+      return;
+      
+    }
+    
     mk('Claiming account.', function()use($data){
       
       //Validate input.
@@ -417,9 +463,17 @@ class Actions extends \dependencies\BaseComponent
       //Check if user is claimable.
       if(!$error){
         
-        $user->check_status('not_claimable', function($user)use(&$error){
-          $error = true;
-        });
+        //Check the proper way.
+        if(ManagementTasks::isExtendedCoreUsersSupported()){
+          $error = !$user->account->check('is_claimable');
+        }
+        
+        //Check the old fashioned way.
+        else{
+          $user->check_status('not_claimable', function($user)use(&$error){
+            $error = true;
+          });
+        }
         
       }
       
@@ -445,32 +499,8 @@ class Actions extends \dependencies\BaseComponent
       //Get the account data.
       $account = $user->account;
       
-      //Insert this login session in the database.
-      mk('Sql')
-        ->table('account', 'UserLogins')
-        ->where('session_id', "'".mk('Session')->id."'")
-        ->execute_single()
-        ->is('empty', function()use($account, &$user_login){
-
-          $user_login = mk('Sql')->model('account', 'UserLogins')
-            ->set(array(
-              'user_id' => $account->id,
-              'session_id' => mk('Session')->id,
-              'dt_expiry' => date('Y-m-d H:i:s', time() + (2 * 3600)), //2 hours to set your password.
-              'IPv4' => mk('Data')->server->REMOTE_ADDR,
-              'user_agent' => mk('Data')->server->HTTP_USER_AGENT,
-              'date' => time()
-            ))
-            ->save();
-
-        })->failure(function($row)use(&$user_login){
-          $user_login = $row;
-        });
-      
-      mk('Logging')->log('Account', $user_login->dt_expiry, date('Y-m-d H:i:s', time() + (2 * 3600)));
-      
-      //Set user in session.
-      mk('Account')->setUserData($account->having('id', 'email', 'username', 'level'));
+      //Log in for 2 hours.
+      AuthenticationTasks::setLoggedIn($account, date('Y-m-d H:i:s', time()+7200));
       
     })
     

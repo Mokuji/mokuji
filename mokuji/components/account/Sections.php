@@ -1,5 +1,7 @@
 <?php namespace components\account; if(!defined('TX')) die('No direct access.');
 
+use \dependencies\account\EmailTokenTasks;
+
 class Sections extends \dependencies\BaseViews
 {
   
@@ -132,6 +134,26 @@ class Sections extends \dependencies\BaseViews
   
   protected function password_forgotten_token($options)
   {
+    
+    //Use new format?
+    if(!$options->uid->is_empty()){
+      
+      $token = EmailTokenTasks::findToken($options->uid, $options->token);
+      $user = $this->table('Accounts')->pk($token->user_id)->execute_single();
+      
+      return array(
+        'token' => $token->token,
+        'uid' => $token->user_id,
+        'email' => $user->email,
+        'is_valid' => EmailTokenTasks::validate(
+          $options->uid,
+          $options->token,
+          'account.password_reset',
+          array('consume_token'=>false)
+        )
+      );
+      
+    }
     
     $token = tx('Sql')
       ->table('account', 'PasswordResetTokens')

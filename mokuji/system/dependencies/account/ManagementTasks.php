@@ -12,17 +12,8 @@ abstract class ManagementTasks
   
   /*
     #TODO
-    * Password forgotten
-    * Claiming??
     * Banning??
-    * Email verification??
   */
-  
-  private static $CREATE_USER_DEFAULTS = array(
-    'is_active' => true,
-    'is_banned' => false,
-    'is_claimable' => false
-  );
   
   /**
    * Check if registration is enabled.
@@ -42,6 +33,51 @@ abstract class ManagementTasks
   }
   
   /**
+   * Checks if the currently logged in user should claim their account or not.
+   * @return boolean
+   */
+  public static function shouldClaim()
+  {
+    
+    //When not logged in, we don't have access to an account to claim.
+    if(!mk('Account')->isLoggedIn())
+      return false;
+    
+    if(ManagementTasks::isExtendedCoreUsersSupported()){
+      
+      //Look for the claimable flag.
+      $claimable = mk('Sql')->execute_scalar(mk('Sql')->make_query(''
+        ."SELECT is_claimable FROM `#__core_users`"
+        ."WHERE id = ?"
+        ,mk('Account')->id
+      ))->get('string');
+      
+      return $claimable === "\x01";
+      
+    }
+    
+    $user_info = $this->table('UserInfo')
+      ->pk(mk('Account')->id)
+      ->execute_single();
+    
+    //If there's no user info found for the logged in user then return false.
+    if(!$user_info->is_set())
+      return false;
+    
+    $should_claim = false;
+    
+    //Check the user status is claimable.
+    $user_info->check_status('claimable')
+    ->success(function()use(&$should_claim){
+      //If it is then check if the user is logged in.
+      $should_claim = mk('Account')->isLoggedIn();
+    });
+    
+    return $should_claim;
+    
+  }
+  
+  /**
    * Creates a new user account.
    * 
    * Note: Attempts at registering should ALWAYS be protected at the form handling level.
@@ -52,6 +88,7 @@ abstract class ManagementTasks
    * Options:
    *   * silent = whether or not to send messages to the user.
    *   * claim = whether or not to use the claiming process instead of setting the password.
+   *   * url = the sprintf formatted url that will handle email verification / claiming links.
    * 
    * @param  Data $data The set of data to insert.
    * @param  array $options Options to alter the process slightly.
@@ -64,6 +101,11 @@ abstract class ManagementTasks
     
     //Data class comes in handy here.
     $options = Data($options);
+    
+    //Make sure that a URL is provided when we need it.
+    if($options->url->is_empty() && ($options->check('claim') || !$options->check('silent'))){
+      throw new \exception\Programmer('The url option is required when sending verification / claim e-mails.');
+    }
     
     //Use claiming process?
     if($options->check('claim')){
@@ -85,7 +127,10 @@ abstract class ManagementTasks
         'password' => $options->check('claim') ? array() : array('required', 'password', 'not_empty'),
         'level' => array('required', 'number'=>'int', 'in'=>array(1, 2)),
         'first_name' => array('string', 'between'=>array(0, 255), 'no_html'),
-        'last_name' => array('string', 'between'=>array(0, 255), 'no_html')
+        'last_name' => array('string', 'between'=>array(0, 255), 'no_html'),
+        'is_active' => array('boolean'),
+        'is_banned' => array('boolean')
+        //is_claimable will be determined by the given options.
       )
       
     ));
@@ -123,14 +168,21 @@ abstract class ManagementTasks
     if(ManagementTasks::isExtendedCoreUsersSupported())
     {
       
-      //Set the default account flags.
-      $user->merge(self::$CREATE_USER_DEFAULTS);
-      
       //Claiming should deactivate the account until claimed.
+      //When silent, no claim link will be available, so it's a deactivated account.
       if($options->check('claim')){
         $user->merge(array(
-          'is_claimable' => true,
+          'is_claimable' => !$options->check('silent'),
           'is_active' => false
+        ));
+      }
+      
+      //Otherwise, apply some defaults.
+      else{
+        $user->merge(array(
+          'is_claimable' => false, //Don't use claiming here.
+          'is_active' => $user->is_active->otherwise(true),
+          'is_banned' => $user->is_banned->otherwise(false)
         ));
       }
       
@@ -161,58 +213,63 @@ abstract class ManagementTasks
       
     }
     
-    //Notify the user. (Can't use silent option for claims.)
-    if($options->check('claim')){
+    //Only when we want to be sending messages.
+    if(!$options->check('silent'))
+    {
       
-      //Create a verify token with a long lifetime.
-      //The maximum lifetime is still considered proper validation, so use that for user friendliness.
-      $token = EmailTokenTasks::generate(
-        $user->id, 'account.claim',
-        EmailTokenTasks::MAX_TOKEN_LIFETIME
-      );
+      //Notify the user they can claim an account.
+      if($options->check('claim')){
+        
+        //Create a verify token with a long lifetime.
+        //The maximum lifetime is still considered proper validation, so use that for user friendliness.
+        $lifetime = EmailTokenTasks::MAX_TOKEN_LIFETIME;
+        $token = EmailTokenTasks::generate($user->id, 'account.claim', $lifetime);
+        
+        //Send the email now.
+        ManagementTasks::emailUser(
+          
+          $user, 'account.claim',
+          __('You can claim your account', true),
+          
+          array(
+            'site_name' => mk('Config')->user('site_name')->otherwise(URL_BASE),
+            'user' => $user,
+            'claim_url' => (string)url(sprintf($options->url->get('string'), $user->id->get('int'), $token), true),
+            'token_expires' => date('j F Y, H:i', time()+$lifetime)
+          )
+          
+        );
+        
+      }
       
-      //Send the email now.
-      ManagementTasks::emailUser(
+      //Send a normal create mail.
+      else
+      {
         
-        $user, 'account.claim',
-        __('You can claim your account', true),
+        //Create a verify token with a long lifetime.
+        //We only need to know that the user can read the e-mail messages at all.
+        $lifetime = EmailTokenTasks::MAX_TOKEN_LIFETIME;
+        $token = EmailTokenTasks::generate($user->id, 'account.verify_email', $lifetime);
         
-        array(
-          'site_name' => mk('Config')->user('site_name')->otherwise(URL_BASE),
-          'user' => $user,
-          'claim_url' => (string)url('action=account/claim_account&uid='.$user->id.'&token='.$token, true)
-        )
-        
-      );
+        //Send the email now.
+        ManagementTasks::emailUser(
+          
+          $user, 'account.created',
+          __('Your account has been created', true),
+          
+          array(
+            'site_name' => mk('Config')->user('site_name')->otherwise(URL_BASE),
+            'user' => $user,
+            'verify_email_url' => (string)url('/?action=account/verify_email&uid='.$user->id.'&token='.$token, true),
+            'token_expires' => date('j F Y, H:i', time()+$lifetime)
+          )
+          
+        );
+          
+      }
       
     }
     
-    //Silent is only possible for normal create mail.
-    elseif(!$options->check('silent'))
-    {
-      
-      //Create a verify token with a long lifetime.
-      //We only need to know that the user can read the e-mail messages at all.
-      $token = EmailTokenTasks::generate(
-        $user->id, 'account.verify_email',
-        EmailTokenTasks::MAX_TOKEN_LIFETIME
-      );
-      
-      //Send the email now.
-      ManagementTasks::emailUser(
-        
-        $user, 'account.created',
-        __('Your account has been created', true),
-        
-        array(
-          'site_name' => mk('Config')->user('site_name')->otherwise(URL_BASE),
-          'user' => $user,
-          'verify_email_url' => (string)url('action=account/verify_email&uid='.$user->id.'&token='.$token, true)
-        )
-        
-      );
-        
-    }
     
     return $user;
     
@@ -222,7 +279,7 @@ abstract class ManagementTasks
    * Edits a user account.
    * 
    * @param  integer $userId The ID for the user to edit.
-   * @param  Data $data The set of data to insert.
+   * @param  Data $data The set of data to update.
    * @return BaseModel The user that has been edited.
    */
   public static function editUser($userId, Data $data)
@@ -240,7 +297,7 @@ abstract class ManagementTasks
       });
     
     //Merge the fields from the given data.
-    $user->merge($data->having('email', 'username', 'first_name', 'last_name', 'level', 'is_active', 'is_banned'));
+    $user->merge($data->having('email', 'username', 'first_name', 'last_name', 'level', 'is_active', 'is_banned', 'is_claimable'));
     
     //Check if the password was given and filled in..
     if(!$data->password->is_empty()){
@@ -256,7 +313,10 @@ abstract class ManagementTasks
         'password' => array('required', 'password'),
         'level' => array('required', 'number'=>'int', 'in'=>array(1, 2)),
         'first_name' => array('string', 'between'=>array(0, 255), 'no_html'),
-        'last_name' => array('string', 'between'=>array(0, 255), 'no_html')
+        'last_name' => array('string', 'between'=>array(0, 255), 'no_html'),
+        'is_active' => array('boolean'),
+        'is_banned' => array('boolean'),
+        'is_claimable' => array('boolean')
       )
       
     ));
@@ -292,6 +352,14 @@ abstract class ManagementTasks
       $user->merge(AuthenticationTasks::hashPassword($data->password));
     }
     
+    //If the user has no password at this point, is_active can not be set to true.
+    if($user->check('is_active') && $user->password->is_empty()){
+      $vex = new \exception\Validation('Account must have a password to be activated.');
+      $vex->key('is_active');
+      $vex->errors(array('Account must have a password to be activated.'));
+      throw $vex;
+    }
+    
     //Save to database.
     $user->save();
     return $user;
@@ -313,10 +381,10 @@ abstract class ManagementTasks
     raw($userId);
     
     //This makes sure that you don't lock yourself out of the system.
-    if(mk('Account')->id === $userId)
+    if(mk('Account')->id == $userId)
       throw new \exception\User('Cannot delete yourself while logged in');
     
-    mk('Logging')->log('Account', 'Deleting user', 'ID: '.$userId);
+    mk('Logging')->log('Account', 'Deleting user', 'ID: '.$userId. ' by user: '.mk('Account')->id);
     
     //Check the account exists.
     $exists = mk('Sql')->execute_scalar(mk('Sql')->make_query(''
@@ -382,6 +450,70 @@ abstract class ManagementTasks
   }
   
   /**
+   * Initiate the password reset process for the given user.
+   * 
+   * Note: if the given email address does not match a user, a message is sent to notify the user of this.
+   * 
+   * @param  integer $email The email for the user to reset the password of.
+   * @param  string $url The sprintf formatted url that will handle email verification / claiming links.
+   * @return void
+   */
+  public static function passwordReset($email, $url)
+  {
+    
+    #TODO: Use core models.
+    $user = mk('Sql')->execute_single(mk('Sql')->make_query(''
+      . 'SELECT * FROM #__core_users '
+      . 'WHERE email = ?'
+      , $email
+    ));
+    
+    //If the email doesn't match, send a notification to the user about it.
+    if($user->is_empty())
+    {
+      
+      $user = Data(array('email'=>$email));
+      
+      //Send the email now.
+      ManagementTasks::emailUser(
+        
+        $user, 'account.password_reset.wrong_email',
+        __('Password reset attempt', true),
+        
+        array(
+          'site_name' => mk('Config')->user('site_name')->otherwise(URL_BASE),
+          'user' => $user
+        )
+        
+      );
+      
+      return;
+      
+    }
+    
+    //Create a token with a short lifetime.
+    //This is because a password reset is usually completed right away.
+    $lifetime = EmailTokenTasks::MIN_TOKEN_LIFETIME;
+    $token = EmailTokenTasks::generate($user->id, 'account.password_reset', $lifetime);
+    
+    //Send the email now.
+    ManagementTasks::emailUser(
+      
+      $user, 'account.password_reset',
+      __('Reset your password', true),
+      
+      array(
+        'site_name' => mk('Config')->user('site_name')->otherwise(URL_BASE),
+        'user' => $user,
+        'claim_url' => (string)url(sprintf((string)$url, $user->id->get('int'), $token), true),
+        'token_expires' => date('H:i', time()+$lifetime)
+      )
+      
+    );
+    
+  }
+  
+  /**
    * Sends an email message to the user.
    * @param  Data   $user    The user model.
    * @param  string $key     The key for the message. Note: use built-in messages only.
@@ -389,7 +521,7 @@ abstract class ManagementTasks
    * @param  array  $data    Input data for the template.
    * @return void
    */
-  public static function emailUser($user, $key, $subject, $data)
+  public static function emailUser(Data $user, $key, $subject, $data)
   {
     
     //Gather message info.

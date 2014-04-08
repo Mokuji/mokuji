@@ -18,6 +18,7 @@ if(!tx('Data')->session->user->check('login')){
         
         <?php /* Future option: add second factor to do 2FA or use secret question. */ ?>
         
+        <input type="hidden" name="uid" value="<?php echo $data->uid; ?>" />
         <input type="hidden" name="token" value="<?php echo $data->token; ?>" />
         
         <!-- This is for some password managers to auto-update correctly -->

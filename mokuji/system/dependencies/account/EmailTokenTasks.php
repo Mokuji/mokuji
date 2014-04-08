@@ -85,7 +85,7 @@ abstract class EmailTokenTasks
     //Check the lifetime is in the valid range.
     if(EmailTokenTasks::MIN_TOKEN_LIFETIME > $lifetime || $lifetime > EmailTokenTasks::MAX_TOKEN_LIFETIME){
       throw new \exception\InvalidArument(
-        'The token lifetime is out of range. It should be between %u and %u',
+        'The token lifetime is out of range. It should be between %u and %u.',
         EmailTokenTasks::MIN_TOKEN_LIFETIME, EmailTokenTasks::MAX_TOKEN_LIFETIME
       );
     }
@@ -181,14 +181,10 @@ abstract class EmailTokenTasks
     raw($userId, $token, $purpose);
     $options = Data(array_merge(self::$GENERATE_DEFAULTS, $options));
     
+    #TODO: Use SQL transactions when bump or consume is needed.
     #TODO: Use core models.
     //Look for a token match at all.
-    $entry = mk('Sql')->execute_single(mk('Sql')->make_query(''
-      ."SELECT * FROM `#__core_user_email_tokens` "
-      ."WHERE user_id = ? and token = ?"
-      ,$userId
-      ,$token
-    ));
+    $entry = EmailTokenTasks::findToken($userId, $token);
     
     //No token was found.
     if($entry->is_empty()){
@@ -223,9 +219,9 @@ abstract class EmailTokenTasks
       return false;
     }
     
-    #TODO: Consume and bump verification.
     //See if we should update our record of when we last verified our e-mail.
-    if($options->check('bump_email_verification') && ManagementTasks::isExtendedCoreUsersSupported()){
+    if($options->check('bump_email_verification')){
+      #TODO: Use core models.
       mk('Sql')->execute_non_query(mk('Sql')->make_query(''
         ."UPDATE `#__core_users` "
         ."SET dt_email_verified = ? "
@@ -233,20 +229,61 @@ abstract class EmailTokenTasks
         ,date('Y-m-d H:i:s')
         ,$userId
       ));
+      mk('Logging')->log('Account', 'EmailTokenTasks', 'Email verification date bumped.');
     }
     
     //See if the token should be consumed now.
     if($options->check('consume_token')){
-      #TODO: Use core models.
-      mk('Sql')->execute_non_query(mk('Sql')->make_query(
-        "DELETE FROM `#__core_user_email_tokens` WHERE id = ?", $entry->id
-      ));
+      if(EmailTokenTasks::consumeToken($userId, $token)){
+        mk('Logging')->log('Account', 'EmailTokenTasks', 'Token consumed.');
+      }
     }
     
-    mk('Logging')->log('Account', 'EmailTokenTasks', sprintf('Successfully used "%s" token for user %u.', $purpose, $userId));
+    mk('Logging')->log(
+      'Account', 'EmailTokenTasks',
+      sprintf('Successfully used "%s" token for user %u.', $purpose, $userId)
+    );
     
     //Looks like we're all good :]
     return true;
+    
+  }
+  
+  /**
+   * Tries to find a token.
+   * @param  integer $userId The user the token is intended for.
+   * @param  string $token   The token that was provided as a verification.
+   * @return Data
+   */
+  public static function findToken($userId, $token)
+  {
+    
+    return mk('Sql')->execute_single(mk('Sql')->make_query(''
+      ."SELECT * FROM `#__core_user_email_tokens` "
+      ."WHERE user_id = ? and token = ?"
+      ,$userId
+      ,$token
+    ));
+    
+  }
+  
+  /**
+   * Regardless of the purpose, consume the given token.
+   * @param  integer $userId The user the token is intended for.
+   * @param  string $token   The token that was provided as a verification.
+   * @return boolean Whether a token was deleted or not.
+   */
+  public static function consumeToken($userId, $token)
+  {
+    
+    #TODO: Use core models.
+    $result = mk('Sql')->query(mk('Sql')->make_query(''
+      ."DELETE FROM `#__core_user_email_tokens` "
+      ."WHERE user_id = ? AND token = ?"
+      ,$userId, $token
+    ));
+    
+    return $result->rowCount() > 0;
     
   }
   

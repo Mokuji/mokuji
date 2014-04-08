@@ -1,6 +1,7 @@
 <?php namespace components\account; if(!defined('TX')) die('No direct access.');
 
 use components\account\classes\ControllerFactory as CF;
+use \dependencies\account\EmailTokenTasks;
 use \dependencies\account\ManagementTasks;
 use \components\account\models\UserInfo;
 use \dependencies\Data;
@@ -139,7 +140,9 @@ class Json extends \dependencies\BaseComponent
     //Lets go!
     $userData = $data->having('email', 'username');
     $userData->merge(array('password'=>$data->password1, 'level'=>1));
-    $user = \dependencies\account\ManagementTasks::createUser($userData);
+    $user = \dependencies\account\ManagementTasks::createUser($userData, array(
+      'url' => '/?action=account/verify_email&uid=%u&token=%s'
+    ));
     
     //No exceptions, so try to log in now.
     mk('Account')->login($data->email, $data->password1);
@@ -153,7 +156,7 @@ class Json extends \dependencies\BaseComponent
   protected function create_password_reset_finalization($data, $params)
   {
     
-    $data = Data($data)->having('token', 'password1', 'password2')
+    $data = Data($data)->having('token', 'uid', 'password1', 'password2')
       ->password1->validate('New password', array('required', 'string', 'not_empty', 'password'))->back()
       ->password2->validate('Confirm new password', array('required', 'string', 'not_empty'))->back();
     
@@ -162,6 +165,29 @@ class Json extends \dependencies\BaseComponent
       $vex->key('password1');
       $vex->errors(array(__($this->component, 'The passwords do not match', true)));
       throw $vex;
+    }
+    
+    //See if we want to use the new method.
+    if(!$data->uid->is_empty())
+    {
+      
+      $valid = EmailTokenTasks::validate(
+        $data->uid,
+        $data->token,
+        'account.password_reset'
+      );
+      
+      if(!$valid){
+        throw new \exception\User(__($this->component, 'The token is invalid, it may have expired in the meantime', true));
+      }
+      
+      //Set the new password.
+      ManagementTasks::editUser($data->uid, $data->having(array('password' => 'password1')));
+      
+      return array(
+        'message' => __($this->component, 'PASSWORD_RECOVERED_SUCCESSFULLY_P1', true)
+      );
+      
     }
     
     $token = mk('Sql')
@@ -253,6 +279,18 @@ class Json extends \dependencies\BaseComponent
       $vex->key('captcha_section');
       $vex->errors(array(__($this->component, 'The security code is invalid', true)));
       throw $vex;
+    }
+    
+    //If the new method is available. Go for it.
+    if(EmailTokenTasks::isEmailTokensSupported())
+    {
+      
+      ManagementTasks::passwordReset($data->email, '/admin/?password_forgotten=token&uid=%u&token=%s');
+      
+      return array(
+        'message' => __($this->component, 'An e-mail has been sent to the specified address with further instructions', true).'.'
+      );
+      
     }
     
     $data = $data->having('email');
@@ -393,45 +431,32 @@ class Json extends \dependencies\BaseComponent
     
     //If passwords are not equal, throw exception.
     $data->password->eq($data->password_check)->failure(function(){
-      throw new \exception\Validation('Passwords are not the same.');
+      $vex = new \exception\Validation('Passwords are not the same.');
+      $vex->key('password');
+      $vex->errors(array('Passwords are not the same.'));
+      throw $vex;
     });
     
-    //Get salt and algorithm.
-    $data->salt = mk('Security')->random_string();
-    $data->hashing_algorithm = mk('Security')->pref_hash_algo();
+    //Also make sure we claim the account.
+    $info = Data(array(
+      'password' => $data->password,
+      'is_claimable' => false,
+      'is_active' => true
+    ));
     
-    //Hash using above information.
-    $data->password = mk('Security')->hash(
-      $data->salt->get() . $data->password->get(),
-      $data->hashing_algorithm
-    );
+    //Update the user password and flags.
+    $user = ManagementTasks::editUser(mk('Account')->id, $info);
     
-    //Get the old user model from the database.
-    $user = mk('Sql')->table('account', 'Accounts')->pk(mk('Account')->id)->execute_single()
+    //See if we should claim the user the old way.
+    if(!ManagementTasks::isExtendedCoreUsersSupported()){
+      $user->user_info
+        ->set_status('claimed')
+        ->merge(array('claim_key'=>'NULL'))
+        ->save();
+    }
     
-    //If it's empty, throw an exception.
-    ->is('empty', function(){
-      throw new \exception\User('Could not update because no entry was found in the database with id %s.', $data->id);
-    })
-    
-    //Merge the fields from the given data.
-    ->merge($data->having('password', 'salt', 'hashing_algorithm'))
-    
-    //Save to database.
-    ->save();
-    
-    //See if we should claim the user.
-    $user_info = $user->user_info;
-    $user_info
-      ->check_status('claimable', function($user_info){
-        
-        //Set status and unset claim key.
-        $user_info
-          ->set_status('claimed')
-          ->claim_key->set('NULL')->back()
-          ->save();
-        
-      });
+    //Also, we want to get rid of our 2 hour limited session.
+    mk('Account')->login($user->email, $data->password);
     
     return $user->having('id', 'email', 'username', 'level');
     
@@ -450,7 +475,13 @@ class Json extends \dependencies\BaseComponent
     $method = strtolower($data->password_method->get('string'));
     
     //Do the basic user create call.
-    $user = ManagementTasks::createUser($data, array('claim' => $method === 'claim'));
+    $claim = $method === 'claim';
+    $user = ManagementTasks::createUser($data, array(
+      'claim' => $claim,
+      'url' => $claim ? 
+        '/?action=account/claim_account&uid=%u&token=%s':
+        '/?action=account/verify_email&uid=%u&token=%s'
+    ));
     
     //Add our component's additional data as well.
     $this->_update_user_info($user, $data);

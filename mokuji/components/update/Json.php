@@ -430,7 +430,9 @@ class Json extends \dependencies\BaseViews
     //Let the management tasks create the first user.
     $data = $data->having('email', 'username', 'password');
     $data->merge(array('level'=>2));
-    $user = \dependencies\account\ManagementTasks::createUser($data);
+    $user = \dependencies\account\ManagementTasks::createUser($data, array(
+      'url' => '/?action=account/verify_email&uid=%u&token=%s'
+    ));
     
     //Create this user in the core tables.
     return array(

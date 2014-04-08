@@ -67,7 +67,7 @@ class EntryPoint extends \dependencies\BaseEntryPoint
             load_plugin('jquery'),
             load_plugin('jquery_rest')
           )), array(
-            'content' => tx('Component')->sections('account')->get_html('password_forgotten_token', tx('Data')->get->having('token'))
+            'content' => tx('Component')->sections('account')->get_html('password_forgotten_token', tx('Data')->get->having('uid', 'token'))
           ));
           
         }
@@ -127,7 +127,7 @@ class EntryPoint extends \dependencies\BaseEntryPoint
     //Frontend
     else
     {
-
+      
       $that = $this;
       $url = $this->findPageUrl();
       
