@@ -8,10 +8,10 @@ class Account
   
   /**
    * The duration in seconds a "remember-me" cookie may be valid for.
-   * Value: 30 days.
+   * Value: 7 days.
    * @var int
    */
-  const PERSISTENT_COOKIE_DURATION = 2592000;
+  const PERSISTENT_COOKIE_DURATION = 604800;
   
   /**
    * The basic user information for the current session.
