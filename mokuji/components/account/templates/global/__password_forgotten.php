@@ -12,6 +12,7 @@ if(!tx('Data')->session->user->check('login')){
       
       <div class="ctrlHolder clearfix">
         <p><?php __($names->component, 'PASSWORD_FORGOTTEN_INTRO_P1'); ?></p>
+        <input type="hidden" name="pid" value="<?php echo $data->pid; ?>" />
       </div>
       
       <div class="ctrlHolder clearfix">
@@ -39,6 +40,13 @@ if(!tx('Data')->session->user->check('login')){
     
     $form.restForm({
       
+      beforeSubmit: function(){
+        
+        //Disable form to prevent submitting more than once.
+        $form.find('input[type="submit"]').attr('disabled', 'disabled');
+        
+      },
+      
       success: function(result){
         
         //Clear fields.
@@ -59,6 +67,9 @@ if(!tx('Data')->session->user->check('login')){
         
         //Reloads the captcha if needed.
         <?php echo $data->captcha_reload_js; ?>
+        
+        //Re-enable the form to try again.
+        $form.find('input[type="submit"]').removeAttr('disabled');
         
       }
       

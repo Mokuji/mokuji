@@ -23,9 +23,14 @@ class Actions extends \dependencies\BaseComponent
   protected function use_password_reset_token($data)
   {
           
+    //Link to page provided in URL.
+    if( $data->pid->get('int') > 0 )
+      $redirect_url = url('/?pid='.$data->pid.'&password_forgotten=token&token=KEEP', true);
+    
     //Link to custom login page is available.
-    if( mk('Config')->user()->login_page->not('empty')->get('bool') )
+    elseif( mk('Config')->user()->login_page->not('empty')->get('bool') )
       $redirect_url = url(mk('Config')->user()->login_page.'&password_forgotten=token&token=KEEP', true);
+    
     else
       $redirect_url = url('/admin/?password_forgotten=token&token=KEEP', true);
     
