@@ -255,7 +255,8 @@ class Json extends \dependencies\BaseComponent
   {
     
     $data = Data($data)
-      ->email->validate('E-mail address', array('required', 'string', 'not_empty', 'email'))->back();
+      ->email->validate('E-mail address', array('required', 'string', 'not_empty', 'email'))->back()
+      ->pid->validate('Login page ID', array('number'=>'integer', 'gt'=>0))->back();
     
     if(!mk('Component')->helpers('security')->call('validate_captcha', array('form_data'=>$data))){
       $vex = new \exception\Validation(__($this->component, 'The security code is invalid', true));
@@ -264,7 +265,7 @@ class Json extends \dependencies\BaseComponent
       throw $vex;
     }
     
-    $data = $data->having('email');
+    $data = $data->having('email', 'pid');
     
     $com_name = $this->component;
 
@@ -278,7 +279,7 @@ class Json extends \dependencies\BaseComponent
         ->is('set')
         
         //User found, create token and send it.
-        ->success(function($user)use($com_name){
+        ->success(function($user)use($com_name, $data){
           
           //First of all, clear expired token.
           //Not required for this operation, but keeps things clean.
@@ -305,7 +306,12 @@ class Json extends \dependencies\BaseComponent
             'site_name' => mk('Config')->user('site_name')->otherwise(url('/', true)->output),
             'ipa' => mk('Data')->server->REMOTE_ADDR,
             'user_agent' => mk('Data')->server->HTTP_USER_AGENT,
-            'target_url' => url('/?action=account/use_password_reset_token/get&token='.$token->token->get(), true)
+            'target_url' => url(
+              '/?action=account/use_password_reset_token/get'.
+                '&token='.$token->token->get().
+                '&pid='.$data->pid->otherwise('NULL'),
+              true
+            )
           ));
           
           //Use fancy method to send if it's available.

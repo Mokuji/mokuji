@@ -72,6 +72,13 @@ if(!tx('Data')->session->user->check('login')){
       
       $form.restForm({
         
+        beforeSubmit: function(){
+        
+          //Disable form to prevent submitting more than once.
+          $form.find('input[type="submit"]').attr('disabled', 'disabled');
+          
+        },
+        
         success: function(result){
           
           $form.hide();
@@ -86,6 +93,9 @@ if(!tx('Data')->session->user->check('login')){
           //Hides the error message if validation errors are added to specific fields.
           if($form.find('.validation-error').size() > 0)
             $form.find('.restform-error-message').hide();
+          
+          //Re-enable the form to try again.
+          $form.find('input[type="submit"]').removeAttr('disabled');
           
         }
         
