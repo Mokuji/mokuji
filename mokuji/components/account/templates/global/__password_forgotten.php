@@ -40,6 +40,13 @@ if(!tx('Data')->session->user->check('login')){
     
     $form.restForm({
       
+      beforeSubmit: function(){
+        
+        //Disable form to prevent submitting more than once.
+        $form.find('input[type="submit"]').attr('disabled', 'disabled');
+        
+      },
+      
       success: function(result){
         
         //Clear fields.
@@ -60,6 +67,9 @@ if(!tx('Data')->session->user->check('login')){
         
         //Reloads the captcha if needed.
         <?php echo $data->captcha_reload_js; ?>
+        
+        //Re-enable the form to try again.
+        $form.find('input[type="submit"]').removeAttr('disabled');
         
       }
       
