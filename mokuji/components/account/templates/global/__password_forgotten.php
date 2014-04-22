@@ -12,6 +12,7 @@ if(!tx('Data')->session->user->check('login')){
       
       <div class="ctrlHolder clearfix">
         <p><?php __($names->component, 'PASSWORD_FORGOTTEN_INTRO_P1'); ?></p>
+        <input type="hidden" name="pid" value="<?php echo $data->pid; ?>" />
       </div>
       
       <div class="ctrlHolder clearfix">

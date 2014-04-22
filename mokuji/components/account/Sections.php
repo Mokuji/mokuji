@@ -130,8 +130,9 @@ class Sections extends \dependencies\BaseViews
   {
     
     return array(
-      'captcha' => tx('Component')->helpers('security')->call('generate_captcha'),
-      'captcha_reload_js' => tx('Component')->helpers('security')->call('reload_captcha_js')
+      'pid' => mk('Url')->url->data->pid,
+      'captcha' => mk('Component')->helpers('security')->call('generate_captcha'),
+      'captcha_reload_js' => mk('Component')->helpers('security')->call('reload_captcha_js')
     );
     
   }
@@ -139,7 +140,7 @@ class Sections extends \dependencies\BaseViews
   protected function password_forgotten_token($options)
   {
     
-    $token = tx('Sql')
+    $token = mk('Sql')
       ->table('account', 'PasswordResetTokens')
       ->where('token', "'{$options->token}'")
       ->execute_single();
@@ -154,7 +155,7 @@ class Sections extends \dependencies\BaseViews
 
   protected function profile()
   {
-    return tx('Data')->session->user;
+    return mk('Data')->session->user;
   }
   
   protected function import_users()
