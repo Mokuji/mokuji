@@ -77,8 +77,11 @@ class ReadmePackage extends AbstractPackage
     
     //The following lines are either blank or changes.
     while(array_key_exists($i, $lines)){
+
       $line = trim($lines[$i]);
       
+      $trimmed_line = trim($line);
+
       //See if we have a change line.
       if(preg_match(static::$change_line, $line, $match)){
         $timestamp = strtotime(trim($match[1]));
@@ -95,7 +98,7 @@ class ReadmePackage extends AbstractPackage
       }
       
       //When there's something besides a change line or empty line, break the changes loop.
-      elseif(!empty(trim($line))){
+      elseif(!empty($trimmed_line)){
         break;
       }
       
