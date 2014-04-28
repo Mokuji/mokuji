@@ -1,3 +1,8 @@
+#### [Version 0.30.1 Beta](https://github.com/Tuxion/mokuji/tree/0.30.1-beta)
+_28-Apr-2014_
+
+* Fixed a bug in `?rest=cms/settings` which now handles boolean values properly.
+
 #### [Version 0.30.0 Beta](https://github.com/Tuxion/mokuji/tree/0.30.0-beta)
 _07-Feb-2014_
 

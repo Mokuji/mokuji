@@ -23,82 +23,81 @@ class Json extends \dependencies\BaseComponent
     //Go over each key set.
     $data->each(function($set)use($site_id){
       
-      //Skip empty ones.
-      $set->not('empty', function($set)use($site_id){
-        
-        //Find out which can be replaced. (Prevents auto_increment from going too fast)
-        $newKeys = array_combine($set->keys()->get('array'), $set->keys()->get('array'));
-        
-        //Replace all old config nodes.
-        tx('Sql')
-          ->table('cms', 'CmsConfig')
-          ->where('key', "'{$set->key()}'")
-          ->where('site_id', "'$site_id'")
-          ->execute()
-          ->each(function($setting)use($set, &$newKeys){
-            
-            //When we have a match on language, replace the old data.
-            if($setting->language_id->is_set() &&
-              array_key_exists($setting->language_id->get(), $newKeys) &&
-              !$set->{$setting->language_id}->is_empty()){
-              
-              //Set the new value.
-              $setting
-                ->merge(array(
-                  'value' => $set->{$setting->language_id}->get()
-                ))
-                ->save();
-              
-              //Remove, so we know what's left for us to do.
-              unset($newKeys[$setting->language_id->get()]);
-              
-            }
-            
-            //When we have a match on the default setting.
-            elseif($setting->language_id->is_empty() &&
-              array_key_exists('default', $newKeys) &&
-              !$set->default->is_empty()){
-              
-              //Set the new value.
-              $setting
-                ->merge(array(
-                  'value' => $set->default->get()
-                ))
-                ->save();
-              
-              //Remove, so we know what's left for us to do.
-              unset($newKeys['default']);
-              
-            }
-            
-            //If it's not on our list, we assume deletion was intended.
-            else{
-              $setting->delete();
-            }
-            
-          });
-        
-        //Insert whatever is left.
-        foreach($newKeys as $key){
-          
-          if($set->{$key}->is_empty())
-            continue;
-          
-          tx('Sql')
-            ->model('cms', 'CmsConfig')
-            ->set(array(
-              'key' => $set->key(),
-              'site_id' => $site_id,
-              'autoload' => 1,
-              'language_id' => $key == 'default' ? 'NULL' : $key,
-              'value' => $set->{$key}->get()
-            ))
-            ->save();
-          
-        }
-        
-      });
+      //Find out which can be replaced. (Prevents auto_increment from going too fast)
+      $newKeys = array_combine($set->keys()->get('array'), $set->keys()->get('array'));
       
+      //Replace all old config nodes.
+      tx('Sql')
+        ->table('cms', 'CmsConfig')
+        ->where('key', "'{$set->key()}'")
+        ->where('site_id', "'$site_id'")
+        ->execute()
+        ->each(function($setting)use($set, &$newKeys){
+          
+          //When we have a match on language, replace the old data.
+          if($setting->language_id->is_set() &&
+            array_key_exists($setting->language_id->get(), $newKeys)){
+            
+            $value = $set->{$setting->language_id}->get();
+            if($value === "") $value = 'NULL';
+            
+            //Set the new value.
+            $setting
+              ->merge(array(
+                'value' => $value
+              ))
+              ->save();
+            
+            //Remove, so we know what's left for us to do.
+            unset($newKeys[$setting->language_id->get()]);
+            
+          }
+          
+          //When we have a match on the default setting.
+          elseif($setting->language_id->is_empty() &&
+            array_key_exists('default', $newKeys)){
+            
+            $value = $set->default->get();
+            if($value === "") $value = 'NULL';
+            
+            //Set the new value.
+            $setting
+              ->merge(array(
+                'value' => $value
+              ))
+              ->save();
+            
+            //Remove, so we know what's left for us to do.
+            unset($newKeys['default']);
+            
+          }
+          
+          //If it's not on our list, we assume deletion was intended.
+          else{
+            $setting->delete();
+          }
+          
+        });
+      
+      //Insert whatever is left.
+      foreach($newKeys as $key){
+        
+        $value = $set->{$key}->get();
+        if($value === "") $value = 'NULL';
+        
+        $setting = tx('Sql')
+          ->model('cms', 'CmsConfig')
+          ->set(array(
+            'key' => $set->key(),
+            'site_id' => $site_id,
+            'autoload' => 1,
+            'language_id' => $key == 'default' ? 'NULL' : $key,
+            'value' => $value
+          ))
+          ->save();
+        
+      }
+        
     });
     
     return array(
