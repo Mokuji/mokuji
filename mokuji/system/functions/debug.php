@@ -36,7 +36,7 @@ function rest_exception_handler($e)
       'line' => $e->getLine(),
       'trace' => $e->getTrace()
     )
-  ), JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
+  ), JSON_PRETTY_PRINT);
   
   exit;
   

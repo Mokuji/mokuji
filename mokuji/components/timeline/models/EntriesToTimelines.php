@@ -10,6 +10,7 @@ class EntriesToTimelines extends \dependencies\BaseModel
     $relations = array(
       'Entries' => array('entry_id' => 'Entries.id'),
       'Timelines' => array('timeline_id' => 'Timelines.id')
+      'Pages' => array('timeline_id' => 'Pages.timeline_id'),
     );
   
 }
