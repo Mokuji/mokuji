@@ -84,6 +84,20 @@ abstract class UrlFormat
     $this->urlExtensions = $url->getUrlExtensions();
     $this->languageId = $url->getLanguageId();
   }
+
+  /**
+   * Gets random page from CMS.
+   * @return (string) $url Url of page
+   */
+  protected function getRandomPage()
+  {
+
+    //#TODO
+    //if(NO PAGES FOR THIS SITE)
+    //throw new \exception\Unexpected('Could not parse the homepage URL format: '.$uex->getMessage());
+    return mk('Cms')->model('Page')->order('RAND()')->limit(1)->execute_single();
+
+  }
   
   /**
    * If the format is used to load the homepage,
@@ -96,7 +110,13 @@ abstract class UrlFormat
     //That is, if we even have a homepage.
     if(!mk('Config')->user('homepage')->is_set()){
       #TODO: Notify admin.
-      throw new \exception\Expected('No homepage has been set.');
+      #TODO: Set 404 header.
+      //Load helper redirect-to-page template.
+      echo mk('Component')->views('cms')->get_html('redirect_to_page', array(
+        'url' => this::getRandomPage();
+        'message' => __('cms', 'No homepage is set. We take you with us on adventure. Let\'s go!')
+      ));
+      exit;
     }
     
     //Try parse the homepage setting for the URL information (regardless of it's format).

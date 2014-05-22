@@ -7,7 +7,8 @@ class Views extends \dependencies\BaseViews
     $default_permission = 2,
     $permissions = array(
       'page' => 0,
-      'modules' => 0
+      'modules' => 0,
+      'redirect_to_page' => 0
     );
   
   protected function page()
@@ -260,6 +261,11 @@ class Views extends \dependencies\BaseViews
         ->execute()
     );
     
+  }
+
+  protected function redirect_to_page($options)
+  {
+    return $options;
   }
   
 }
