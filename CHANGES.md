@@ -13,6 +13,12 @@ _07-Mar-2014_
     - Fixed a PHP 5.5.9 bug that caused image sharpening to make images extremely bright.
     - Now using explicit `DEFAULT` on insert statement that caused MySQL to throw an error on specific environments during login. (Fixes [#64](https://github.com/Mokuji/mokuji/issues/64))
     - Fixed a problem with `account`'s query helpers causing errors when members were part of multiple groups.
+    - Password forgotten form does not submit multiple times anymore if you press enter / submit too fast.
+
+#### [Version 0.30.1 Beta](https://github.com/Tuxion/mokuji/tree/0.30.1-beta)
+_28-Apr-2014_
+
+* Fixed a bug in `?rest=cms/settings` which now handles boolean values properly.
 
 #### [Version 0.30.0 Beta](https://github.com/Tuxion/mokuji/tree/0.30.0-beta)
 _07-Feb-2014_

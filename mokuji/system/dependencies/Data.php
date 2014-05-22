@@ -229,7 +229,8 @@ class Data extends Successable implements \Serializable, \IteratorAggregate, \Ar
     
   }
 
-  // the extract function accepts different input types to return a childnode, most importantly; an array to create a chain - array('user', 'name') = ->user->name
+  // the extract function accepts different input types to return a childnode, most importantly;
+  //    an array to create a chain - array('user', 'name') = ->user->name
   public function extract($id=null)
   {
     

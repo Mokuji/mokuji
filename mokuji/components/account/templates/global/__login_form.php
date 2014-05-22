@@ -37,7 +37,7 @@ if(!$user->check('login')):
     </div>
     
     <div class="ctrlHolder clearfix">
-      <a class="tx-link password-forgotten" href="<?php echo url('?password_forgotten=init', true); ?>"><?php __('account', 'Password forgotten'); ?></a>
+      <a class="tx-link password-forgotten" href="<?php echo url('?pid=KEEP&password_forgotten=init', true); ?>"><?php __('account', 'Password forgotten'); ?></a>
       <input type="submit" name="login" value="<?php __('LOGIN_VERB'); ?>" />
     </div>
     
