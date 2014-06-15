@@ -1043,6 +1043,28 @@ body.cursor_disabled{
     color:#fff;
   }
 
+/* title bar icons */
+
+.title-bar .icon{
+  width:20px;
+  height:20px;
+  background-repeat:no-repeat;
+  background-position:center center;
+  text-indent:-9999px;
+}
+.icon.menu-item-settings{
+  background-image:url('../img/icons/title_bar/toggle_page_settings.png');
+}
+.icon.page-settings{
+  background-image:url('../img/icons/title_bar/toggle_page_settings.png');
+}
+.icon.page-content{
+  background-image:url('../img/icons/title_bar/toggle_page_content.png');
+}
+.icon.detach-page{
+  background-image:url('../img/icons/title_bar/detach.png');
+  background-repeat:no-repeat;
+}
 
 /*
   Config pages, new navigators
@@ -1787,7 +1809,7 @@ body.cursor_disabled{
         position:relative;
       }
       #page-findability fieldset .page-findability-preview .card-content .arrow{
-        background-image:url("img/social-preview-arrow.png");
+        background-image:url("../img/social-preview-arrow.png");
         background-position:left center;
         background-repeat:no-repeat;
         position:absolute;
