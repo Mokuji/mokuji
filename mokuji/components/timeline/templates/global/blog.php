@@ -1,13 +1,13 @@
 <?php namespace components\timeline; if(!defined('TX')) die('No direct access.');
 
 //Function to make the pagination.
-$__pagination = function()use($data, $names){
+$__pagination = function($options)use($data, $names){
   
   if($data->pages->get('int') <= 1)
     return;
   
   ?>
-  <div class="pagination blog-pagination">
+  <div class="pagination blog-pagination <?php echo $options['classes']; ?>">
     
     <label class="pagination-label"><?php __($names->component, 'Pages') ?></label>
     
@@ -36,7 +36,7 @@ $__pagination = function()use($data, $names){
 };
 
 //Insert pagination at top.
-$__pagination();
+$__pagination(array('classes' => 'pagination-top'));
 
 echo '<div class="entries blog-entries'.( ! $data->page->is_set() ? ' single-post' : '').'">';
 
@@ -52,4 +52,4 @@ $data->entries->each(function($entry){
 echo '</div>';
 
 //Insert pagination at bottom.
-$__pagination();
+$__pagination(array('classes' => 'pagination-bottom'));

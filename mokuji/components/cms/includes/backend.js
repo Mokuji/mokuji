@@ -1564,7 +1564,6 @@
                 $.rest('GET', '?rest=media/generate_url/'+file_id, {
                   resize_height: 150
                 }).done(function(res){
-                  console.log(res);
                   self.menu_item_image
                     .attr('src', res.url)
                     .show();
