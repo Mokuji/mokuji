@@ -96,8 +96,8 @@ class Controller
       'head' => Data(array(
         'title' => 'An error occured.',
         'meta' => array(
-          'robots' => 'noindex, nofollow',
-          'description' => 'This used to be a nicely looking properly working web page - until YOU broke it!'
+          'robots' => 'noindex, nofollow'
+          // 'description' => 'This used to be a nicely looking properly working web page - until YOU broke it!'
         ),
         'theme' => load_html(PATH_THEMES.DS.'error'.DS.'theme'.EXT, $paths)
       )),
@@ -107,7 +107,7 @@ class Controller
       'exception' => $e
     );
     
-    
+    set_status_header(500); //Make this an actual error.
     echo load_html(PATH_TEMPLATES.DS.'error'.DS.'template'.EXT, array_merge($data, $paths));
     
     exit;

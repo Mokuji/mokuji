@@ -8,6 +8,7 @@
   
     <title><?php echo $head->title; ?></title>
     
+    <meta type="robots" content="<?php echo $head->meta->robots; ?>" />
     <?php echo $head->theme; ?>
     
   </head>
