@@ -1560,9 +1560,15 @@
               serverFileIdReport: function(up, ids, file_id){
                 self.data.item.image_id = file_id;
                 self.menu_item_image_id.val(file_id);
-                self.menu_item_image
-                  .attr('src', '?section=media/image&resize=0/150&id='+file_id)
-                  .show();
+
+                $.rest('GET', '?rest=media/generate_url/'+file_id, {
+                  resize_height: 150
+                }).done(function(res){
+                  self.menu_item_image
+                    .attr('src', res.url)
+                    .show();
+                  });
+
                 self.delete_image.show();
                 self.save();
                 

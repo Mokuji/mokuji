@@ -40,13 +40,33 @@ class MenuItems extends \dependencies\BaseModel
 
   public function get_image()
   {
-
-    return tx('Sql')->table('media', 'Images')
+    
+    if(!tx('Component')->available('media'))
+      return false;
+    
+    $image = tx('Sql')
+      ->table('media', 'Images')
       ->pk($this->image_id)
       ->execute_single();
-
+    
+    if($image->is_empty())
+      return false;
+    
+    $resizeType = tx('Config')->user('menu.menu_item_thumbnail.resize-type')->get() == 'fit' ? 'fit' : 'fill';
+    $resizeWidth = tx('Config')->user('menu.menu_item_thumbnail.resize-width')->otherwise(220)->get('int');
+    $resizeHeight = tx('Config')->user('menu.menu_item_thumbnail.resize-height')->otherwise(150)->get('int');
+    
+    return array(
+      'id' => $image->id,
+      'url' => (string)$image->generate_url(array(
+          $resizeType.'_width' => $resizeWidth,
+          $resizeType.'_height' => $resizeHeight,
+        ), array('allow_growth')),
+      'image' => $image
+    );
+    
   }
-  
+
   public function is_unique_link()
   {
     

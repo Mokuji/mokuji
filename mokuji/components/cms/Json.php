@@ -437,6 +437,7 @@ class Json extends \dependencies\BaseComponent
         ->table('menu', 'MenuItems')
         ->pk($menu)
         ->execute_single()
+        ->image->back()
         ->info->back();
       
     }

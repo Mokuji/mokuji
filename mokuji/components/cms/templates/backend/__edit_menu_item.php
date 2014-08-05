@@ -63,7 +63,7 @@
                 
                 <div class="ctrlHolder">
                   <label for="menu_item_image"><?php __('Image'); ?></label><br />
-                  <img id="menu_item_image" {{if item && item.image_id > 0}}src="<?php echo url(URL_BASE.'?section=media/image&resize=0/150&id=NULL'); ?>&id=${item.image_id}"{{else}}style="display:none;"{{/if}} />
+                  <img id="menu_item_image" height="150" {{if item && item.image_id > 0}}src="${item.image.url}"{{else}}style="display:none;"{{/if}} />
                 </div>
                 
                 <div class="ctrlHolder">

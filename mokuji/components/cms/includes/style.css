@@ -129,28 +129,7 @@
   display:block;
 }
 
-/* title bar icons */
 
-.title-bar .icon{
-  width:20px;
-  height:20px;
-  background-repeat:no-repeat;
-  background-position:center center;
-  text-indent:-9999px;
-}
-.icon.menu-item-settings{
-  background-image:url('img/icons/title_bar/toggle_page_settings.png');
-}
-.icon.page-settings{
-  background-image:url('img/icons/title_bar/toggle_page_settings.png');
-}
-.icon.page-content{
-  background-image:url('img/icons/title_bar/toggle_page_content.png');
-}
-.icon.detach-page{
-  background-image:url('img/icons/title_bar/detach.png');
-  background-repeat:no-repeat;
-}
 
 ._admin_toolbar{
   width:auto;
