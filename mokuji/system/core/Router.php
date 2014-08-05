@@ -400,7 +400,7 @@ class Router
         if($i == $total-2) $sep = " $AND ";
       }
       mk('Logging')->log('Core', 'REST call', 'Validation error. '.'{"'.$ex->key().'":"'.ucfirst($msg).'."}');
-      die(json_encode(array($ex->key() => ucfirst($msg)));
+      die(json_encode(array($ex->key() => ucfirst($msg))));
     }
     
     //Return field specific errors in JSON for ModelValidation exceptions.
