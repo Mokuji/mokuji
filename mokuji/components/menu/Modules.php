@@ -192,7 +192,7 @@ class Modules extends \dependencies\BaseViews
     return
       tx('Sql')
       ->table('menu', 'MenuItems')
-      ->where('page_id', tx('Url')->url->data->pid->get('int'))
+      ->where('page_id', mk('Url')->url->data->pid->get('int'))
       ->execute_single();
   }
 
