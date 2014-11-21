@@ -188,7 +188,7 @@ class Modules extends \dependencies\BaseViews
   }
 
   protected function menu_image($options)
-  
+  {
 
     //Get menu item info.
     $menu_item =
