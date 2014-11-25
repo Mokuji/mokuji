@@ -189,11 +189,21 @@ class Modules extends \dependencies\BaseViews
 
   protected function menu_image($options)
   {
-    return
+
+    //Get menu item info.
+    $menu_item =
       tx('Sql')
       ->table('menu', 'MenuItems')
-      ->where('page_id', tx('Url')->url->data->pid->get('int'))
+      ->where('page_id', mk('Url')->url->data->pid->get('int'))
       ->execute_single();
+
+    //Return if menu item does not have an image.
+    if($menu_item->is_empty() || $menu_item->image_id->get() <= 0)
+      return;
+
+    //Otherwise: return image URL.
+    return $menu_item->image->image->generate_url()->output;
+
   }
 
   protected function breadcrumbs($options)

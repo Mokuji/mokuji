@@ -39,9 +39,9 @@ class EntryPoint extends \dependencies\BaseEntryPoint
           $targetScheme = 'https';
         
         //Redirect to custom login page is available.
-        if(url('')->segments->path == '/admin/' && tx('Config')->user()->login_page->not('empty')->get('bool')){
+        if(mk('Data')->get->redirect_url->get() == '' && url('')->segments->path == '/admin/' && tx('Config')->user()->login_page->not('empty')->get('bool')){
           $goto = url(URL_BASE.tx('Config')->user()->login_page, true)->segments->merge(array('scheme' => $targetScheme))->back()->rebuild_output();
-          header("Location: ".$goto);
+          header("Location: ".tx('Config')->user()->login_page);
           exit;
         }
         
