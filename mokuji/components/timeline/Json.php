@@ -6,6 +6,7 @@ class Json extends \dependencies\BaseComponent
   protected
     $default_permission = 2,
     $permissions = array(
+      'get_entry' => 0,
       'get_entries' => 0
     );
   
