@@ -543,7 +543,12 @@ class Image extends File
     if(!is_resource($this->image)){
       return parent::save($save);
     }
-
+    
+    // In case we are saving a jpeg, use progressive features.
+    if($this->info['type']=='jpeg'){
+      imageinterlace($this->image, true);
+    }
+    
     $image_function = 'image'.$this->info['type'];
 
     if(!is_callable($image_function)){
@@ -588,6 +593,11 @@ class Image extends File
     header("Accept-Ranges:bytes");
     $this->create_output_headers();
     header("Content-type: image/".$this->info['type'], true);
+    
+    // In case we are saving a jpeg, use progressive features.
+    if($this->info['type']=='jpeg'){
+      imageinterlace($this->image, true);
+    }
     
     $image_function = 'image'.$this->info['type'];
     $image_function($this->image, null, ($this->info['type']=='jpeg' ? $this->jpeg_quality : null), null);
@@ -701,7 +711,14 @@ class Image extends File
 
     ini_set('memory_limit', '-1');
     $this->image = $image_function($this->source);
-
+    
+    //Do an early rotate if the exif dictates this.
+    if(array_key_exists('angle', $this->info) && $this->info['angle'] !== 0){
+      $new = imagerotate($this->image, $this->info['angle'], 0);
+      imagedestroy($this->image);
+      $this->image = $new;
+    }
+    
     return $this;
 
   }
@@ -763,7 +780,9 @@ class Image extends File
 
     if(is_resource($source))
     {
-
+      
+      throw new \exception\Deprecated("Getting info from GD resource is deprecated.");
+      
       $info = array(
         'width' => imagesx($source),
         'height' => imagesy($source),
@@ -776,12 +795,32 @@ class Image extends File
     {
 
       $info = getimagesize($source);
-
+      $type = image_type_to_extension($info[2], false);
+      $exif = @exif_read_data($source);
+      
+      # Get our orientation angle. (Let's forget about flipping for now.)
+      $angle = 0;
+      if($exif && !empty($exif['Orientation'])){
+        switch ($exif['Orientation']) {
+          case 3:  $angle = 180; break;
+          case 6:  $angle = -90; break;
+          case 8:  $angle =  90; break;
+        }
+      }
+      
+      # Flip landscape / portrait dimensions?
+      if(abs($angle) == 90){
+        $flip = $info[0];
+        $info[0] = $info[1];
+        $info[1] = $flip;
+      }
+      
       $info = array(
         'width' => $info[0],
         'height' => $info[1],
-        'type' => image_type_to_extension($info[2], false),
-        'mime' => $info['mime']
+        'type' => $type,
+        'mime' => $info['mime'],
+        'angle' => $angle
       );
 
     }
