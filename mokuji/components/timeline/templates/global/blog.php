@@ -53,3 +53,22 @@ echo '</div>';
 
 //Insert pagination at bottom.
 $__pagination(array('classes' => 'pagination-bottom'));
+
+
+if(mk('Data')->get->post->is_set()){
+
+  ?>
+
+  <div class="timeline-post specific-post" data-id="<?php echo mk('Data')->get->post; ?>">
+    <a class="js-open-entry"></a>
+  </div>
+
+  <script>
+  $(function(){
+    $('.specific-post.timeline-post .js-open-entry').trigger('click');
+  });
+  </script
+
+  <?php
+
+}

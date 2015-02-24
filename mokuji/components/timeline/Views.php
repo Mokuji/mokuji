@@ -40,7 +40,7 @@ class Views extends \dependencies\BaseViews
       });
     
     //If a specific item is requested.
-    if($post->is_set()){
+    if(false && $post->is_set()){
       
       //Verify it's in the timeline.
       tx('Sql')
